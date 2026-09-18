@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entorno de trabajo — Herramientas (Mockup)</title>
+  <style>
+    :root {
+      --bg-base: #05070d;
+      --bg-elevated: #0b0f19;
+      --accent: #22d3ee;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border: rgba(255,255,255,0.1);
+      --logistica: #34d399;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      background: var(--bg-elevated);
+      border-right: 1px solid var(--border);
+      padding: 1rem;
+      flex-shrink: 0;
+    }
+    .panel-right {
+      width: 240px;
+      background: var(--bg-elevated);
+      border-left: 1px solid var(--border);
+      padding: 1rem;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+    }
+    .main { flex: 1; padding: 1.5rem 2rem; max-width: 640px; }
+    .top a { color: var(--accent); font-size: 0.75rem; text-decoration: none; }
+    h1 { font-size: 1.35rem; margin: 0.75rem 0 0.25rem; }
+    .sub { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .section-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(148,163,184,0.6);
+      margin-bottom: 0.6rem;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.5rem; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+      font-size: 0.68rem;
+      text-decoration: none;
+    }
+    .chip:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
+    .chip.primary {
+      border-color: rgba(34, 211, 238, 0.45);
+      color: var(--accent);
+      background: rgba(34, 211, 238, 0.08);
+    }
+    .notif-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+    }
+    .badge-pend {
+      float: right;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      background: rgba(251,191,36,0.2);
+      color: #fcd34d;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+    }
+    .accordion-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--logistica);
+      margin: 0.75rem 0 0.35rem;
+    }
+    .nav-right-item {
+      padding: 0.35rem 0.5rem;
+      color: var(--text-secondary);
+      border-radius: 6px;
+      margin-bottom: 0.15rem;
+    }
+    .nav-right-item.hl {
+      background: rgba(52, 211, 153, 0.12);
+      color: var(--logistica);
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div style="font-size:0.8rem;font-weight:600;margin-bottom:1rem;">Control de <span style="color:var(--accent)">Proyectos</span></div>
+    <div style="font-size:0.7rem;color:var(--text-secondary);padding:0.4rem 0.5rem;">Todos los proyectos</div>
+  </aside>
+
+  <main class="main">
+    <p class="top"><a href="index.html">← Mockups</a></p>
+    <h1>Entorno — Logística</h1>
+    <p class="sub">PROM-MJ-Av-0009 — Movimiento de tierra…</p>
+
+    <p class="section-label">Herramientas</p>
+    <div class="chips">
+      <span class="chip">Enviar notificación</span>
+      <span class="chip">Todas las notificaciones</span>
+      <span class="chip">Cargar documento</span>
+      <a href="requerimiento-de-servicios-crear.html" class="chip primary">Crear requerimiento de servicios</a>
+    </div>
+
+    <p class="section-label">Notificaciones de este grupo</p>
+    <div class="notif-card">
+      <span class="badge-pend">Pendiente</span>
+      Nuevo requerimiento PROM-MJ-Av-0009-RQ-0003 en PROM-MJ-Av-0009
+      <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:0.35rem;">19/08/2026 18:05</div>
+    </div>
+  </main>
+
+  <aside class="panel-right">
+    <p class="section-label">Accesos rápidos</p>
+    <div class="chip" style="margin-bottom:0.25rem;display:inline-block;">Requerimiento</div>
+    <div class="accordion-title">Logística</div>
+    <div class="nav-right-item hl">Requerimiento de servicios</div>
+    <div class="nav-right-item">Notificaciones</div>
+    <div class="nav-right-item">Registro de costos…</div>
+  </aside>
+</body>
+</html>

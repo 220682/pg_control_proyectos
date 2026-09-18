@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Requerimiento de servicios — Listado (Mockup)</title>
+  <style>
+    :root {
+      --bg-base: #05070d;
+      --bg-elevated: #0b0f19;
+      --accent: #22d3ee;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border: rgba(255,255,255,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    .top { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .top a { color: var(--accent); text-decoration: none; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    h1 { font-size: 1.5rem; font-weight: 600; }
+    .btn-create {
+      background: var(--accent);
+      color: var(--bg-base);
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-sol { background: rgba(251, 191, 36, 0.2); color: #fcd34d; }
+    .badge-tram { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+    .badge-ok { background: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+    .empty {
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    .note {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      border: 1px dashed rgba(34,211,238,0.25);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="top"><a href="index.html">← Todos los mockups</a></p>
+    <nav class="breadcrumb">
+      <a href="#">PROM-MJ-Av-0009 — Movimiento de tierra…</a> › Requerimiento de servicios
+    </nav>
+    <div class="head">
+      <h1>Requerimiento de servicios</h1>
+      <a href="requerimiento-de-servicios-crear.html" class="btn-create">+ Crear requerimiento de servicios</a>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Fecha req.</th>
+            <th>Fecha entrega</th>
+            <th>Solicitante</th>
+            <th style="text-align:center">Ítems</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PROM-MJ-Av-0009-RQ-0003</td>
+            <td>19/08/2026</td>
+            <td>26/08/2026</td>
+            <td>María López</td>
+            <td style="text-align:center">2</td>
+            <td><span class="badge badge-sol">Solicitado</span></td>
+          </tr>
+          <tr>
+            <td>PROM-MJ-Av-0009-RQ-0002</td>
+            <td>12/08/2026</td>
+            <td>15/08/2026</td>
+            <td>Carlos Ruiz</td>
+            <td style="text-align:center">5</td>
+            <td><span class="badge badge-tram">En trámite</span></td>
+          </tr>
+          <tr>
+            <td>PROM-MJ-Av-0009-RQ-0001</td>
+            <td>01/08/2026</td>
+            <td>05/08/2026</td>
+            <td>María López</td>
+            <td style="text-align:center">1</td>
+            <td><span class="badge badge-ok">Atendido</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      <strong>Logística</strong> — ítem del nav &quot;Requerimiento de servicios&quot; (antes Status de requerimiento).
+      Desde aquí se listan los RQ del servicio y se accede a <em>Crear requerimiento de servicios</em>.
+      El flujo de trazabilidad OC / recepción / kardex es fase siguiente (formato 013).
+    </p>
+  </div>
+</body>
+</html>

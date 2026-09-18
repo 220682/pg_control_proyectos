@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mockups — Control de Proyectos</title>
+  <style>
+    :root {
+      --bg-base: #05070d;
+      --bg-elevated: #0b0f19;
+      --accent: #22d3ee;
+      --accent-secondary: #4f7df3;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border: rgba(255,255,255,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.35rem;
+    }
+    .sub {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+    .card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .card:hover {
+      border-color: rgba(34, 211, 238, 0.35);
+      background: #0d1220;
+    }
+    .card a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+    }
+    .card h2 {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .card p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-secondary);
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Visual companion</h1>
+    <p class="sub">
+      Mockups HTML generados para alinear la interfaz de
+      <strong>py_control_proyectos_web</strong>. Abre cada archivo en el navegador
+      (doble clic). Nomenclatura: <em>Requerimiento de servicios</em> /
+      acción <em>Crear requerimiento de servicios</em>.
+    </p>
+
+    <div class="card">
+      <a href="requerimiento-de-servicios-crear.html">
+        <h2>Crear requerimiento de servicios</h2>
+        <p>Formulario con N° OT, fechas, ítems y botón Ver partidas.</p>
+        <span class="tag">Principal</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <a href="requerimiento-de-servicios-listado.html">
+        <h2>Requerimiento de servicios — listado</h2>
+        <p>Vista Logística: bandeja de RQ del servicio con estados.</p>
+        <span class="tag">Logística</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <a href="requerimiento-de-servicios-partidas.html">
+        <h2>Ver partidas (referencia)</h2>
+        <p>Modal WBS / Partida / Unidad / Metrado — sin costos.</p>
+        <span class="tag">Modal</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <a href="crear-rdts.html">
+        <h2>Crear RDTs</h2>
+        <p>PROM-GP-002 a una página: 10 personas, + Actividad / Persona / Material / Equipo.</p>
+        <span class="tag">Supervisión operativa</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <a href="entorno-trabajo-herramientas.html">
+        <h2>Entorno de trabajo — Herramientas</h2>
+        <p>Chip &quot;Crear requerimiento de servicios&quot; en el entorno del grupo.</p>
+        <span class="tag">Entorno</span>
+      </a>
+    </div>
+
+    <footer>
+      Carpeta: pg_control_proyectos/docs/visual-companion · Generado 2026-08-19
+    </footer>
+  </div>
+</body>
+</html>

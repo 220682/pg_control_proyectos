@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear RDTs — PROM-GP-002</title>
+  <style>
+    :root {
+      --bg: #05070d;
+      --elev: #0b0f19;
+      --accent: #22d3ee;
+      --muted: #94a3b8;
+      --line: rgba(255,255,255,0.12);
+      --ink: #111;
+      --paper: #fff;
+      --paper-head: #f3f4f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: #f8fafc;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--elev);
+    }
+    header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .meta {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .chips {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 11px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: #f8fafc;
+      white-space: nowrap;
+    }
+    button.primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+    main {
+      flex: 1;
+      min-height: 0;
+      padding: 8px 10px 10px;
+      display: flex;
+    }
+    .hoja {
+      flex: 1;
+      min-height: 0;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid #000;
+      display: flex;
+      flex-direction: column;
+      font-size: 10px;
+      line-height: 1.2;
+      overflow: hidden;
+    }
+    .cab-doc {
+      display: grid;
+      grid-template-columns: 110px 1fr 130px;
+      border-bottom: 1px solid #000;
+      flex: 0 0 auto;
+    }
+    .cab-doc > div {
+      border-right: 1px solid #000;
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .cab-doc > div:last-child { border-right: 0; text-align: left; font-size: 9px; }
+    .cab-doc strong { font-size: 11px; }
+    .sec {
+      background: var(--paper-head);
+      border-bottom: 1px solid #000;
+      padding: 2px 6px;
+      font-weight: 700;
+      font-size: 10px;
+      flex: 0 0 auto;
+    }
+    .ident {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr 0.9fr 0.8fr 0.8fr 0.8fr;
+      border-bottom: 1px solid #000;
+      flex: 0 0 auto;
+    }
+    .ident label {
+      display: block;
+      font-size: 8px;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .ident > div {
+      border-right: 1px solid #000;
+      padding: 3px 5px;
+      min-width: 0;
+    }
+    .ident > div:nth-child(6n) { border-right: 0; }
+    .ident input, .ident select, .hoja select {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+    }
+    td.cnc { white-space: normal; }
+    select.cnc { font-size: 8px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 2px 4px;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    th {
+      background: var(--paper-head);
+      font-size: 8px;
+      font-weight: 700;
+      text-align: left;
+    }
+    td input {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+      min-width: 0;
+    }
+    .avance { flex: 0 0 auto; }
+    .avance td.desc { white-space: nowrap; }
+    .cuerpo {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.7fr);
+      border-top: 1px solid #000;
+    }
+    .tareo { min-width: 0; overflow: auto; }
+    .lado {
+      border-left: 1px solid #000;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: auto;
+    }
+    .num, .ta, .un, .hh { text-align: center; }
+    .tot { background: var(--paper-head); font-weight: 700; }
+    .firma {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid #000;
+    }
+    .firma > div { border-right: 1px solid #000; padding: 3px 5px; min-height: 42px; }
+    .firma > div:last-child { border-right: 0; }
+    .firma .cargo {
+      font-size: 8px;
+      font-weight: 700;
+      background: var(--paper-head);
+      margin: -3px -5px 4px;
+      padding: 2px 5px;
+      border-bottom: 1px solid #000;
+      text-align: center;
+    }
+    .firma .linea {
+      margin-top: 10px;
+      border-top: 1px solid #000;
+      padding-top: 2px;
+      font-size: 8px;
+      color: #555;
+    }
+    .toast {
+      display: none;
+      font-size: 11px;
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    .toast.on { display: inline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Crear RDTs</h1>
+    <span class="meta">PROM-GP-002 · una página · 10 personas de entrada</span>
+    <span class="toast" id="toast">RDT listo para guardar (mockup)</span>
+    <div class="chips">
+      <button class="ghost" type="button" id="btn-t">+ Actividad</button>
+      <button class="ghost" type="button" id="btn-p">+ Persona</button>
+      <button class="ghost" type="button" id="btn-m">+ Material</button>
+      <button class="ghost" type="button" id="btn-e">+ Equipo</button>
+      <button class="ghost" type="button">Salir a Mi entorno</button>
+      <button class="primary" type="button" id="btn-guardar">Guardar RDT</button>
+    </div>
+  </header>
+
+  <main>
+    <article class="hoja" id="hoja">
+      <div class="cab-doc">
+        <div>LOGO<br />PROMCOSER</div>
+        <div>
+          CONTROL DE PROYECTOS<br />
+          <strong>REPORTE DIARIO DE TRABAJO (RDT)</strong>
+        </div>
+        <div>
+          Código: PROM-GP-002<br />
+          Revisión: 001<br />
+          Fecha: 20/08/2026
+        </div>
+      </div>
+
+      <div class="sec">1.0 IDENTIFICACIÓN</div>
+      <div class="ident">
+        <div>
+          <label>N° OT vigente</label>
+          <select>
+            <option>PS-0001 · Bancoductos Rampa Sur / Norte</option>
+            <option>PS-0002 · Tie-in HDPE — GCI 06</option>
+          </select>
+        </div>
+        <div>
+          <label>Cliente</label>
+          Marcobre
+        </div>
+        <div>
+          <label>Unidad / Área</label>
+          Mina · Rampa Sur
+        </div>
+        <div>
+          <label>Especialidad</label>
+          <select>
+            <option selected>Civil</option>
+            <option>Mecánica</option>
+          </select>
+        </div>
+        <div>
+          <label>Turno</label>
+          <select>
+            <option>Día</option>
+            <option>Noche</option>
+          </select>
+        </div>
+        <div>
+          <label>Fecha Lima</label>
+          06-08-2026
+        </div>
+        <div>
+          <label>Nombre proyecto (DCI)</label>
+          Bancoductos Rampa Sur / Norte
+        </div>
+        <div>
+          <label>Ubicación</label>
+          Marcona
+        </div>
+        <div>
+          <label>Razón social</label>
+          Marcobre S.A.C.
+        </div>
+        <div>
+          <label>Semana N.°</label>
+          <input value="32" />
+        </div>
+        <div>
+          <label>N° RDT</label>
+          al guardar
+        </div>
+        <div>
+          <label>Registro N°</label>
+          al guardar
+        </div>
+      </div>
+
+      <div class="sec">2.0 REPORTE DE AVANCE</div>
+      <div class="avance">
+        <table id="tbl-avance">
+          <colgroup>
+            <col style="width:4%" />
+            <col />
+            <col style="width:8%" />
+            <col style="width:4%" />
+            <col style="width:5%" />
+            <col style="width:8%" />
+            <col style="width:8%" />
+            <col style="width:14%" />
+            <col style="width:14%" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Ítem</th>
+              <th>Descripción de la actividad / partida</th>
+              <th>WBS</th>
+              <th class="ta">TA</th>
+              <th>Unid.</th>
+              <th>Metrado prog.</th>
+              <th>Metrado ejec.</th>
+              <th>Restricciones</th>
+              <th>CNC</th>
+            </tr>
+          </thead>
+          <tbody id="avance-body">
+            <tr>
+              <td class="num">T1</td>
+              <td class="desc">Excavación de zanja para bancoductos — tramo km 0+450</td>
+              <td>PART-01</td><td class="ta">D</td><td class="un">m3</td>
+              <td class="hh">40</td><td class="hh">42</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T2</td>
+              <td class="desc">Fabricación y curado de bancoductos prefabricados</td>
+              <td>PART-02</td><td class="ta">D</td><td class="un">und</td>
+              <td class="hh">14</td><td class="hh">15</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T3</td>
+              <td class="desc">Izaje e instalación de bancoductos con grúa</td>
+              <td>PART-03</td><td class="ta">D</td><td class="un">ml</td>
+              <td class="hh">8</td><td class="hh">7</td>
+              <td>Grúa ocupada 2 h</td>
+              <td class="cnc" data-cnc="Falta de equipos y herramientas"></td>
+            </tr>
+            <tr>
+              <td class="num">T4</td>
+              <td class="desc">Vaciado de concreto f'c=210 — pedestal L-12</td>
+              <td>PART-04</td><td class="ta">D</td><td class="un">m3</td>
+              <td class="hh">3</td><td class="hh">3</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T5</td>
+              <td class="desc">Montaje de estructura metálica — columna C-08</td>
+              <td>PART-05</td><td class="ta">D</td><td class="un">kg</td>
+              <td class="hh">200</td><td class="hh">210</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T6</td>
+              <td class="desc">Transporte interno de materiales y herramientas</td>
+              <td>—</td><td class="ta">C</td><td class="un">—</td>
+              <td class="hh">—</td><td class="hh">—</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T7</td>
+              <td class="desc">Charla de seguridad e instrucciones de trabajo</td>
+              <td>—</td><td class="ta">C</td><td class="un">—</td>
+              <td class="hh">—</td><td class="hh">—</td><td></td>
+              <td class="cnc" data-cnc=""></td>
+            </tr>
+            <tr>
+              <td class="num">T8</td>
+              <td class="desc">Espera de tubería HDPE (grúa parada)</td>
+              <td>—</td><td class="ta">NC</td><td class="un">—</td>
+              <td class="hh">—</td><td class="hh">—</td>
+              <td>Falta tubería HDPE</td>
+              <td class="cnc" data-cnc="Falta de suministro oportuno de materiales."></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sec">3.0 TAREO PERSONAL · MATERIALES · EQUIPOS</div>
+      <div class="cuerpo">
+        <div class="tareo">
+          <table id="tbl-tareo">
+            <thead>
+              <tr id="tareo-head">
+                <th style="width:28px">#</th>
+                <th style="width:72px">DNI</th>
+                <th>Apellido y nombre</th>
+                <th style="width:110px">Cargo</th>
+                <th class="hh" style="width:28px">T1</th>
+                <th class="hh" style="width:28px">T2</th>
+                <th class="hh" style="width:28px">T3</th>
+                <th class="hh" style="width:28px">T4</th>
+                <th class="hh" style="width:28px">T5</th>
+                <th class="hh" style="width:28px">T6</th>
+                <th class="hh" style="width:28px">T7</th>
+                <th class="hh" style="width:28px">T8</th>
+                <th class="hh" style="width:36px">Total</th>
+              </tr>
+            </thead>
+            <tbody id="tareo-body">
+              <tr><td class="num">1</td><td>71234567</td><td>RAMOS QUISPE, Jhonny</td><td>Operador excavadora</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">2</td><td>72345678</td><td>HUARANCCA TORRES, Elmer</td><td>Ayudante</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">3</td><td>73456789</td><td>PACHECO LIMA, Rosa</td><td>Vigía</td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">4</td><td>73095782</td><td>BARDALES TRUJILLO, Sandro Luis</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">5</td><td>75715613</td><td>ALVAREZ CRESPO, Moises Juan</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">6</td><td>70521512</td><td>CAYO GUTIERREZ, Juan Wilfredo</td><td>Operario civil</td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">7</td><td>48380481</td><td>GALVEZ RAVINES, Hector</td><td>Operador grúa</td><td class="hh"></td><td class="hh"></td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh tot">10</td></tr>
+              <tr><td class="num">8</td><td>75002233</td><td>QUISPE MAMANI, Edgar</td><td>Oficial</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">9</td><td>47665722</td><td>CALACHIHUA HUAYCHAY, Ciro A.</td><td>Op. mecánico / eléctrico</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">10</td><td>72009900</td><td>FLORES ESPINOZA, Walter</td><td>Cond. camión baranda</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr class="tot" id="tareo-total">
+                <td></td><td></td><td>TOTAL HH</td><td></td>
+                <td class="hh">28</td><td class="hh">20</td><td class="hh">18</td><td class="hh">10</td>
+                <td class="hh">10</td><td class="hh">10</td><td class="hh">2</td><td class="hh">2</td>
+                <td class="hh">100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="lado">
+          <div class="sec">Materiales</div>
+          <table id="tbl-mat">
+            <thead>
+              <tr><th>Descripción</th><th style="width:58px">WBS</th><th style="width:36px">Unid.</th><th style="width:40px">Cant.</th></tr>
+            </thead>
+            <tbody id="mat-body">
+              <tr><td>Concreto f'c=210</td><td>PART-04</td><td class="un">m3</td><td class="hh">3</td></tr>
+              <tr><td>Acero estructura metálica</td><td>PART-05</td><td class="un">kg</td><td class="hh">210</td></tr>
+            </tbody>
+          </table>
+          <div class="sec">Equipos</div>
+          <table id="tbl-eq">
+            <thead>
+              <tr><th>Descripción</th><th style="width:58px">WBS</th><th style="width:36px">Unid.</th><th style="width:40px">hm</th></tr>
+            </thead>
+            <tbody id="eq-body">
+              <tr><td>Excavadora CAT 320</td><td>PART-01</td><td class="un">hm</td><td class="hh">10</td></tr>
+              <tr><td>Grúa 25 t</td><td>PART-03</td><td class="un">hm</td><td class="hh">8</td></tr>
+              <tr><td>Camión baranda</td><td>—</td><td class="un">hm</td><td class="hh">10</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec">4.0 APROBACIÓN</div>
+      <div class="firma">
+        <div>
+          <div class="cargo">Responsable cuadrilla</div>
+          RAMOS QUISPE, Jhonny
+          <div class="linea">Firma</div>
+        </div>
+        <div>
+          <div class="cargo">Supervisor de especialidad</div>
+          quien crea el RDT
+          <div class="linea">Firma</div>
+        </div>
+        <div>
+          <div class="cargo">Jefe de especialidad</div>
+          Pendiente
+          <div class="linea">Firma</div>
+        </div>
+        <div>
+          <div class="cargo">Recepción — Oficina Técnica</div>
+          Pendiente
+          <div class="linea">Firma</div>
+        </div>
+        <div>
+          <div class="cargo">Recepción — Administración</div>
+          Pendiente
+          <div class="linea">Firma</div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    var CAUSAS_CNC = [
+      "Falta de capacitación específica.",
+      "Falta de movilidad",
+      "Planificación y programación inadecuadas.",
+      "Falta de suministro oportuno de materiales.",
+      "Cambios en el diseño o alcance del proyecto.",
+      "Condiciones climáticas adversas.",
+      "Mano de obra insuficiente.",
+      "Mano de obra no calificada",
+      "Uso de materiales inadecuados o de baja calidad.",
+      "Mala comunicación y coordinación entre equipos.",
+      "Demoras en permisos y aprobaciones legales.",
+      "Falta de equipos y herramientas",
+    ];
+    function selCnc(valor) {
+      var h = '<select class="cnc"><option value="">—</option>';
+      CAUSAS_CNC.forEach(function (c) {
+        h += "<option" + (c === valor ? " selected" : "") + ">" + c + "</option>";
+      });
+      return h + "</select>";
+    }
+    document.querySelectorAll("#avance-body td.cnc").forEach(function (td) {
+      td.innerHTML = selCnc(td.getAttribute("data-cnc") || "");
+    });
+    function nActividades() {
+      return document.querySelectorAll("#avance-body tr").length;
+    }
+    function personas() {
+      return document.querySelectorAll("#tareo-body tr:not(.tot)");
+    }
+    function recalcularTotales() {
+      const nT = nActividades();
+      const filas = personas();
+      const col = Array(nT).fill(0);
+      let gran = 0;
+      filas.forEach((tr) => {
+        const celdas = tr.querySelectorAll("td.hh:not(.tot)");
+        let fila = 0;
+        celdas.forEach((td, i) => {
+          const v = parseFloat(td.textContent) || 0;
+          col[i] += v;
+          fila += v;
+        });
+        const tot = tr.querySelector("td.tot");
+        if (tot) tot.textContent = fila || "";
+        gran += fila;
+      });
+      const totalTr = document.getElementById("tareo-total");
+      const tds = totalTr.querySelectorAll("td");
+      for (let i = 0; i < nT; i++) {
+        tds[4 + i].textContent = col[i] || "0";
+      }
+      tds[tds.length - 1].textContent = String(gran);
+    }
+    document.getElementById("btn-p").onclick = function () {
+      const n = personas().length + 1;
+      const nT = nActividades();
+      const tr = document.createElement("tr");
+      let horas = "";
+      for (let i = 0; i < nT; i++) horas += '<td class="hh"></td>';
+      tr.innerHTML =
+        '<td class="num">' + n + "</td>" +
+        "<td>—</td>" +
+        "<td>PERSONA " + n + "</td>" +
+        "<td>—</td>" +
+        horas +
+        '<td class="hh tot">0</td>';
+      document.getElementById("tareo-body").insertBefore(tr, document.getElementById("tareo-total"));
+      recalcularTotales();
+    };
+    document.getElementById("btn-t").onclick = function () {
+      const n = nActividades() + 1;
+      const codigo = "T" + n;
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td class="num">' + codigo + "</td>" +
+        '<td class="desc">Actividad ' + n + "</td>" +
+        "<td>—</td><td class=\"ta\">D</td><td class=\"un\">—</td>" +
+        '<td class="hh">—</td><td class="hh">—</td><td></td>' +
+        '<td class="cnc">' + selCnc("") + "</td>";
+      document.getElementById("avance-body").appendChild(tr);
+      const th = document.createElement("th");
+      th.className = "hh";
+      th.style.width = "28px";
+      th.textContent = codigo;
+      const head = document.getElementById("tareo-head");
+      head.insertBefore(th, head.lastElementChild);
+      personas().forEach((row) => {
+        const td = document.createElement("td");
+        td.className = "hh";
+        row.insertBefore(td, row.querySelector("td.tot"));
+      });
+      const tot = document.getElementById("tareo-total");
+      const tdTot = document.createElement("td");
+      tdTot.className = "hh";
+      tdTot.textContent = "0";
+      tot.insertBefore(tdTot, tot.lastElementChild);
+      recalcularTotales();
+    };
+    document.getElementById("btn-m").onclick = function () {
+      const n = document.querySelectorAll("#mat-body tr").length + 1;
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>Material " + n + "</td><td>—</td><td class=\"un\">—</td><td class=\"hh\"></td>";
+      document.getElementById("mat-body").appendChild(tr);
+    };
+    document.getElementById("btn-e").onclick = function () {
+      const n = document.querySelectorAll("#eq-body tr").length + 1;
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>Equipo " + n + "</td><td>—</td><td class=\"un\">hm</td><td class=\"hh\"></td>";
+      document.getElementById("eq-body").appendChild(tr);
+    };
+    document.getElementById("btn-guardar").onclick = function () {
+      document.getElementById("toast").classList.add("on");
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,1410 @@
+================================================================================
+CONTROL DE PROYECTOS - OFICINA TECNICA
+Flujo de trabajo, roles, mediciones y formatos, desde la adjudicacion del
+servicio hasta el acta de conformidad
+================================================================================
+
+Version: 5 (2026-08-17) -- reescritura integral para que el documento se lea
+de corrido como referencia unica del sistema (las versiones anteriores eran
+una sucesion de parches, dificiles de leer sin el historial en la cabeza).
+No cambia ninguna decision de fondo respecto a la version 4: reorganiza el
+contenido en un orden narrativo y agrega la seccion 2 (Mediciones), que
+antes no existia. El historial completo de cambios, version por version,
+esta en la seccion 10, al final -- no hace falta leerlo para entender el
+sistema, solo para saber por que algo quedo como quedo.
+
+Metodologia base: hibrida Last Planner System (LPS) + PMI / Valor Ganado
+(EVM). Referencia de fondo (teoria completa, con formulas y ejemplos
+numericos): conocimiento/01-fundamentos-control-de-proyectos-evm-lps.md --
+este documento NO repite esa teoria, la aplica al flujo real de la
+contratista.
+
+Como leer este documento:
+  0. Principio de diseño         -- la regla que hace que todo lo demas
+                                     funcione (por que existe este sistema)
+  1. Roles                       -- quien es quien en la Oficina Tecnica
+  2. Mediciones                  -- que se mide, con que formula, de donde
+                                     sale cada dato
+  3. Flujo completo del proyecto -- que pasa, en que orden, quien lo hace,
+                                     desde la adjudicacion hasta el cierre
+  4. Status de Proyectos         -- el tablero maestro (todos los proyectos
+                                     a la vez)
+  5. Formatos                    -- indice + detalle de cada documento del
+                                     sistema (que es, para que sirve, quien
+                                     lo hace)
+  6. MOF                         -- ficha de funciones por integrante
+  7. Pendientes                  -- que falta y que sigue
+  8. Navegacion del frontend     -- como se organiza esto en la web
+  9. Mapa de datos               -- que alimenta a que, estado real vs.
+                                     diseñado (por que algunos campos hoy
+                                     estan en cero)
+  10. Historial de versiones     -- que cambio, cuando y por que
+
+--------------------------------------------------------------------------------
+0. PRINCIPIO DE DISENO
+--------------------------------------------------------------------------------
+
+El sistema controla 4 dimensiones en todo momento: ALCANCE, TIEMPO, COSTO y
+CALIDAD. Lo hace en dos frecuencias simultaneas, que se retroalimentan:
+
+  - Corto plazo (semanal/diario, campo)  -> Last Planner System
+    RDT diario -> Plan Semanal -> PPC + Causas de No Cumplimiento (CNC)
+
+  - Mediano plazo (mensual/acumulado, gerencia-cliente) -> EVM
+    RDT (validado) -> PR (PV / EV / AC) -> SPI / CPI / EAC / VAC
+
+Condicion no negociable para que ambas frecuencias midan lo mismo:
+cada PARTIDA DE CONTROL debe mapear 1 a 1 contra una actividad del
+cronograma/presupuesto. Esa condicion no depende de una tabla Work Package
+aparte: el DP (y el PR que nace de el) construye esa relacion directamente
+al importarse desde el presupuesto (dp_partidas / pr_partidas, identificadas
+por WBS) -- ver seccion 3.2. Sin ese mapeo, PPC y SPI/CPI terminan
+describiendo avances distintos del mismo trabajo y el sistema pierde
+credibilidad.
+
+--------------------------------------------------------------------------------
+1. ROLES (organigrama funcional de la Oficina Tecnica)
+--------------------------------------------------------------------------------
+
+NOTA: "Oficina Tecnica", "Costos", "Planner", "Logistica" y "Administracion"
+son las AREAS (no se les cambia el nombre). El PUESTO formal de la persona
+responsable de cada area, salvo donde se indica lo contrario, es
+"Supervisor de <Area>".
+
+  Puesto formal                | Area              | Reporta a
+  ------------------------------|-------------------|---------------------
+  Jefe de Proyectos             | Gerencia Proyectos| Gerencia
+  Jefe de Oficina Tecnica       | Oficina Tecnica   | Jefe de Proyectos
+  Supervisor Oficina Tecnica    | Oficina tecnica   | Jefe de Proyectos
+  Supervisor Planner            | Oficina tecnica   | Jefe de Proyectos
+  Supervisor Costos             | Oficina tecnica   | Jefe de Proyectos
+  Supervisor Operativo          | Operaciones/Campo | Jefe de Proyectos
+  Supervisor de Logistica       | Logistica         | Jefe de Proyectos
+  Supervisor de Administracion  | Administracion    | Jefe de Proyectos
+  RRHH                          | Recursos Humanos  | Jefe de Proyectos
+  Cliente                       | externo           | -- (dispara e informa)
+
+  Nota: el sistema (py_control_proyectos_web) tiene ademas un rol
+  "Administrador" que NO es un puesto de este organigrama -- es un rol
+  tecnico que gestiona usuarios, roles y permisos de la aplicacion (ver
+  db/002_seed_roles_y_catalogo.sql y specs/2026-08-15-nucleo-design.md).
+
+--------------------------------------------------------------------------------
+2. MEDICIONES: COMO SE MIDE EL DESEMPEÑO DEL PROYECTO
+--------------------------------------------------------------------------------
+
+Esta seccion resume, de forma aplicada, que mide cada indicador del sistema,
+con que formula, y en que formato/tabla aparece. No repite la teoria de EVM/
+LPS (para eso esta conocimiento/01-fundamentos-control-de-proyectos-evm-lps.md,
+con desarrollo completo y ejemplos numericos) -- aqui solo se deja lo
+minimo para que el resto del documento se pueda leer sin saltar a otro
+archivo.
+
+2.1 Valor Ganado (EVM) -- desempeño de costo y cronograma, nivel mensual /
+    gerencia-cliente
+--------------------------------------------------------------------------------
+
+  Indicador           | Que responde                          | Formula
+  ---------------------|----------------------------------------|-------------------
+  PV (Valor Planif.)   | Cuanto deberia llevar avanzado, a      | linea base
+                        | costo de presupuesto, segun la fecha   | (cronograma)
+                        | de corte                                |
+  EV (Valor Ganado)    | Cuanto avance real se completo, a      | metrado real x
+                        | costo de presupuesto -- la variable    | precio unitario
+                        | clave: "cuanto vale, a precio de        |
+                        | presupuesto, lo que de verdad avance"   |
+  AC (Costo Real)      | Cuanto costo realmente ese avance       | HH + HM +
+                        | (mano de obra, equipos, materiales,     | materiales +
+                        | subcontratos)                           | subcontratos
+                        |                                          | reales
+  BAC                  | Presupuesto total aprobado del          | --
+                        | proyecto (o de la partida)              |
+  CPI                  | Eficiencia de costo (>1 bien, <1: cada  | EV / AC
+                        | sol gastado rinde menos de 1 en valor)  |
+  SPI                  | Eficiencia de cronograma, EN VALOR, no  | EV / PV
+                        | en dias -- para dias de atraso reales   |
+                        | hace falta el cronograma CPM del        |
+                        | Sistema LPS, no solo el SPI              |
+  EAC                  | Proyeccion de costo final, si el CPI    | AC + (BAC-EV) /
+                        | actual se mantiene en lo que falta      | CPI
+  VAC                  | Utilidad o perdida proyectada respecto  | BAC - EAC
+                        | al presupuesto original                 |
+
+  De donde sale cada dato en el sistema, hoy (aclarado con Victor el
+  2026-08-17: "no construido todavia" y "sin fuente definida" NO son lo
+  mismo -- la mayoria de estos datos SI tienen fuente y responsable
+  definidos, aunque el formato en si no este construido todavia):
+
+  Dato                 | Fuente diseñada (como se va a trabajar)   | Estado real hoy
+  ----------------------|---------------------------------------------|--------------------
+  BAC                   | DP/PR (costo contractual = metrado          | Existe, poblado.
+                         | contractual x precio unitario)               |
+  PV                    | Lookahead (Sistema LPS, formato 011):       | El Lookahead YA
+                         | trae el metrado planificado a ejecutar      | corre hoy con
+                         | por partida en la semana/ventana de 3       | datos reales, cada
+                         | semanas. PV = metrado planificado           | semana (en Excel)
+                         | acumulado x precio unitario (DP/PR).        | -- no es un dato
+                         |                                              | inexistente. Falta
+                         |                                              | integrarlo al
+                         |                                              | sistema web (el
+                         |                                              | formato 011 sigue
+                         |                                              | siendo el Excel)
+                         |                                              | para que el calculo
+                         |                                              | sea automatico.
+  EV                    | RDT (metrado ejecutado real por partida)    | A diferencia del
+                         | -> PR (pr_partidas.metrado_acumulado)       | Lookahead, el RDT
+                         |                                              | NO tiene NINGUN
+                         |                                              | dato real
+                         |                                              | capturado, ni en
+                         |                                              | Excel ni en la web
+                         |                                              | -- vacio de datos,
+                         |                                              | no solo de
+                         |                                              | integracion.
+  AC (mano de obra y    | RDT -> PR (pr_recursos.costo_acumulado)     | Mismo bloqueo que
+  equipos: HH, HM)      |                                              | EV: RDT sin
+                         |                                              | capturar.
+  AC (materiales)       | Registro de gastos por RQ (formato 014,     | Formato con fuente
+                         | Sup. Logistica)                              | y responsable
+                         |                                              | definidos, pero NO
+                         |                                              | CONSTRUIDO todavia
+                         |                                              | (estado "Nuevo" en
+                         |                                              | 5.1) -- Victor
+                         |                                              | confirmo que se va
+                         |                                              | a implementar.
+  AC (subcontratos)     | -- sin definir --                           | UNICO dato que de
+                         |                                              | verdad queda al
+                         |                                              | aire en todo este
+                         |                                              | mapeo: no hay
+                         |                                              | formato ni
+                         |                                              | responsable
+                         |                                              | asignado hoy.
+  CPI, SPI, EAC, VAC    | Calculados sobre PV/EV/AC/BAC                | Heredan la
+                         |                                              | disponibilidad de
+                         |                                              | sus insumos:
+                         |                                              | listos en cuanto
+                         |                                              | (a) el Lookahead se
+                         |                                              | integre a la web
+                         |                                              | (PV) y (b) el RDT +
+                         |                                              | Registro de gastos
+                         |                                              | por RQ tengan
+                         |                                              | captura real
+                         |                                              | (EV/AC). No son
+                         |                                              | "pendientes sin
+                         |                                              | fuente", son
+                         |                                              | calculos ya
+                         |                                              | programables.
+
+  % de avance fisico (usado en Status de Proyectos, en la Orden de Trabajo,
+  y en el futuro Dashboard): se calcula como EV / BAC, a cualquier nivel de
+  agregacion -- una partida, un proyecto completo, el portafolio entero --
+  NUNCA como promedio simple del % de metrado de cada partida, porque una
+  partida grande y una pequeña no pesan igual en el resultado. Depende de
+  EV -> bloqueado por el mismo motivo (RDT sin capturar). Formula de
+  detalle en la memoria del proyecto (reference_evm_avance_fisico_formula).
+
+2.2 Last Planner System (LPS) -- confiabilidad de la planificacion, nivel
+    semanal / operativo
+--------------------------------------------------------------------------------
+
+  Indicador | Que responde                                | Formula
+  ----------|----------------------------------------------|--------------------
+  PPC       | Que tan confiable fue la promesa semanal.    | (tareas cumplidas
+            | Es BINARIO por tarea: una tarea al 90% de     | al 100% / tareas
+            | avance cuenta como NO cumplida (0), no como   | comprometidas)
+            | 0.9 -- mide confiabilidad de la promesa, no   | x 100
+            | avance fisico parcial (para eso ya esta el    |
+            | % de avance fisico de EVM, arriba)            |
+  CNC       | Por que no se cumplio cada tarea incumplida   | categoria por
+            | -- diagnostico, no solo sintoma                | tarea incumplida:
+            |                                                | trabajo previo /
+            |                                                | mano de obra /
+            |                                                | materiales /
+            |                                                | equipos / diseño-
+            |                                                | informacion /
+            |                                                | clima / permisos-
+            |                                                | SSOMA /
+            |                                                | reprogramacion
+
+  Referencia rapida de la industria (no una meta formal de la contratista
+  todavia): un PPC de 70-85% se considera "en control"; por debajo de 60%
+  sostenido indica un problema serio de planificacion o de gestion de
+  restricciones. El Pareto de CNC acumulado, mes a mes, es la herramienta
+  que revela el cuello de botella sistemico del proyecto (no de una semana
+  puntual).
+
+  De donde salen estos datos en el sistema: el Sistema LPS (Planner)
+  calcula PPC+CNC sobre el RDT ya validado por Oficina Tecnica. HOY este
+  calculo NO corre con datos reales -- el Lookahead y el Plan Semanal SI se
+  ejecutan cada semana (es planificacion real y en uso), pero el cierre
+  real de PPC/CNC depende del mismo RDT sin capturar (ver 3.4 y el detalle
+  en la seccion 9).
+
+2.3 Indice de Productividad (IP) -- eficiencia de mano de obra por partida
+--------------------------------------------------------------------------------
+
+  Indicador | Que mide                                    | Formula
+  ----------|-----------------------------------------------|---------------------
+  IP        | Eficiencia de la mano de obra en una partida: | HH reales / HH
+            | cuantas HH reales se necesitaron frente a las  | presupuestadas
+            | HH presupuestadas para la misma unidad de      | (por partida)
+            | produccion                                      |
+
+  Fuente diseñada: denominador (HH presupuestadas) -> DP/PR (campo "hh por
+  partida" de cada partida). Numerador (HH reales) -> RDT (tabla de tareo,
+  horas por partida) -> PR.
+
+  Estado real hoy: el denominador YA EXISTE (DP/PR esta poblado al
+  importar el presupuesto). El numerador esta bloqueado por el mismo
+  motivo que EV/AC: el RDT no tiene captura real todavia.
+
+2.4 Por que estas mediciones conviven
+--------------------------------------------------------------------------------
+
+  EVM (via el PR) responde "cuanto vale lo que avance, frente a lo que
+  gaste y a lo que debia avanzar" -- sirve a gerencia y cliente, es mensual
+  y acumulado. LPS (PPC+CNC, via el Sistema LPS) responde "que tan
+  confiable es mi promesa de esta semana" -- sirve a produccion y campo, es
+  semanal. IP mide, dentro de LPS, la eficiencia de la mano de obra en una
+  partida especifica.
+
+  El Lookahead alimenta el lado PLANIFICADO de estas mediciones (PV en
+  EVM, los compromisos que sostienen el PPC en LPS) y YA corre hoy con
+  datos reales, en Excel -- solo falta integrarlo al sistema web. El RDT
+  alimenta el lado REAL de todas ellas (EV, AC de mano de obra/equipos, el
+  cierre de PPC/CNC, el numerador de IP) y HOY NO tiene ningun dato
+  capturado -- es, con diferencia, el cuello de botella mas grande del
+  sistema: bloquea simultaneamente EV, AC, CPI, SPI, EAC, VAC, % de avance
+  fisico, PPC, CNC e IP, todo al mismo tiempo (ver el mapa completo en la
+  seccion 9). El unico dato sin ningun diseño de fuente todavia es el
+  costo real de subcontratos (ver 2.1).
+
+--------------------------------------------------------------------------------
+3. FLUJO COMPLETO DEL PROYECTO
+--------------------------------------------------------------------------------
+
+
+3.1 ADJUDICACION DEL SERVICIO
+--------------------------------------------------------------------------------
+  - El Cliente comunica que el presupuesto fue aprobado, a:
+       Jefe de Proyectos, Jefe de Oficina Tecnica, Supervisor de Costos,
+       Supervisor de Oficina Tecnica
+
+  - El Jefe de Oficina Tecnica marca el proyecto como ADJUDICADO en el
+    Status de Proyectos ......................... Jefe de Oficina Tecnica
+    Antes de confirmar, revisa el catalogo de documentos "Al inicio"
+    (presupuesto del proyecto, DP, PR, listado de recursos hh/hm/
+    materiales sin costo, listado de materiales con costo, listado
+    estimado de PETS, alcance, listado de personal requerido,
+    requerimiento del proyecto) y selecciona cuales aplica a este
+    proyecto especifico (no todos los proyectos necesitan todos los
+    formatos). Al confirmar, se registra la fecha de adjudicacion, el
+    proyecto queda en estado EN PLANEACION, y se notifica a cada
+    interesado (responsable por defecto de cada documento marcado) que
+    documento debe subir.
+
+
+3.2 AL INICIO DEL PROYECTO
+--------------------------------------------------------------------------------
+  - Presupuesto del proyecto (archivo del presupuesto aprobado, tal como
+    llega del cliente) ............................ Jefe de Oficina
+                                                       Tecnica
+    Es el insumo de origen del DP (ver abajo). Se sube como documento del
+    checklist "Al inicio" en el Status de Proyectos.
+
+  - DP (Datos del Proyecto) ..................... Supervisor de Oficina
+                                                       Tecnica
+    Se importa desde el Excel del presupuesto aprobado. Incluye, en una
+    sola estructura, lo que antes eran "Partidas de control" y "Tabla
+    Work Package": partidas (WBS, descripcion, unidad, metrado
+    contractual, precio unitario, hh por partida) y recursos (mano de
+    obra, equipos, materiales, subcontratos). Cada proyecto es distinto:
+    no hay una lista fija de partidas.
+    Al importarse el DP, el sistema genera automaticamente el PR en la
+    misma transaccion (ver abajo) -- no es un paso manual aparte.
+
+  - PR (Reporte del Proyecto) ................... Supervisor de Oficina
+                                                       Tecnica
+    Se genera solo, junto con el DP: misma linea base (partidas y
+    recursos) mas columnas de avance acumulado (metrado acumulado,
+    cantidad acumulada) que nacen en 0. Es el documento que, cuando
+    exista la captura de RDT en la web, se ira alimentando con el avance
+    real -- reemplaza la funcion que antes cumplia el RDO. No se edita a
+    mano.
+
+  - Sistema LPS (Plan Maestro, Lookahead+Restricciones, Plan Semanal,
+    PPC+CNC) ...................................... Planner
+    Archivo unico Excel, una hoja por componente (ver detalle en
+    seccion 5). El Plan Maestro es especifico de este proyecto
+    (duracion estimada, fecha estimada de inicio y fin); las hojas de
+    Lookahead, Plan Semanal y PPC+CNC son MULTI-PROYECTO: el Planner
+    gestiona la ventana corta de todos los proyectos activos en el
+    mismo archivo, no uno distinto por proyecto.
+
+  - Alcance del proyecto (si no existe) ........ Supervisor de Costos
+
+  - Listado de recursos hh, hm, materiales (sin costo) ... Supervisor de
+                                                              Oficina
+                                                              Tecnica
+    (version que se entrega a campo, sin exponer informacion comercial)
+  - Listado de materiales CON costo ............ Supervisor de Costos
+  - Listado de Personal requerido .............. Supervisor de Oficina
+                                                    Tecnica
+  - Listado estimado de PETS ................... Supervisor de Oficina
+                                                    Tecnica
+    (version que se entrega a campo, sin exponer informacion comercial)
+
+  - Requerimiento del proyecto (si ya se identifica una necesidad desde
+    el arranque -- su ciclo principal es durante la ejecucion, ver 3.4)
+    ............................................ Supervisor Operativo +
+                                                    Supervisor de Oficina
+                                                    Tecnica
+
+
+3.3 ENTREGA DE INFORMACION DE PROYECTO
+--------------------------------------------------------------------------------
+
+  Quien recibe que, al iniciar cada ciclo de trabajo:
+
+    Supervisor Operativo recibe:
+      - Alcance
+      - Listado de recursos hh, hm, materiales (sin costo)
+      - Partidas de control (del DP/PR)
+      - Sistema LPS: hoja Plan Maestro (de este proyecto) + hoja Plan
+        Semanal vigente (filtrado a su proyecto, dentro del archivo
+        multi-proyecto)
+      - Listado estimado de PETS
+        Supervisor operativo realiza la elaboracion de Pets y plan de trabajo
+
+    Supervisor de Logistica recibe:
+      - Listado de materiales CON costo
+      - Requerimientos(materiales, equipos) aprobados por Oficina Tecnica
+
+    Administracion recibe:
+      - Listado de Personal requerido
+
+  3.4 DURANTE EL SERVICIO
+--------------------------------------------------------------------------------
+
+ - Status de Proyectos: pasa a EJECUCION cuando todos los documentos
+    requeridos del checklist de EN PLANEACION estan subidos (el sistema
+    notifica al Jefe de Oficina Tecnica que el proyecto esta listo); el
+    Jefe de Oficina Tecnica confirma el paso y registra la fecha de
+    inicio real, segun el Lookahead o Plan Semanal vigente del Sistema
+    LPS ........................................... Jefe de Oficina Tecnica
+
+  Ciclo semanal (Planner, multi-proyecto — el archivo Sistema LPS
+  agrupa todos los proyectos activos, no uno por proyecto):
+    - Lookahead (ventana movil de 3 semanas): la entrega semanal del
+      Planner. En la misma hoja, por proyecto, se ve: el PPC y las
+      CNC de la semana que cierra, la matriz de restricciones vigente
+      (actividad, tipo de restriccion, responsable de liberarla,
+      fecha compromiso, estado — el dueno real de cada restriccion
+      puede ser cualquier area, el Planner solo consolida y hace
+      seguimiento), y los PPC propuestos (compromisos) para la
+      semana entrante ........................................ Planner
+    - Plan Semanal de Trabajo: tareas comprometidas de la semana, ya
+      libres de restriccion (logica LPS Should -> Can -> Will), por
+      proyecto y frente ....................................... Planner
+    - Al cerrar la semana, Oficina Tecnica valida el cumplimiento
+      real de estos compromisos a traves de los RDT del proyecto; con
+      esa validacion, el Planner calcula el PPC+CNC real de la
+      semana, que alimenta directamente el Lookahead de la semana
+      siguiente (ver ciclo semanal de Oficina Tecnica, abajo).
+
+      ESTADO REAL (2026-08-17, aclarado por Victor): el Lookahead y el
+      Plan Semanal YA se ejecutan hoy, cada semana -- es planificacion
+      real y ya en uso. Pero el calculo real de PPC+CNC descrito arriba
+      TODAVIA NO recibe datos: depende del RDT validado, y el RDT
+      todavia no tiene captura poblada con datos reales (ver 010 en
+      5.1/5.2). Osea: hoy el Lookahead es solo planificacion, sin el
+      cierre real de PPC/CNC que retroalimenta al siguiente. Esto
+      importa para cualquier documento que quiera mostrar PPC/CNC por
+      servicio (ej. la Orden de Trabajo, ver seccion 9): hoy no hay ese
+      dato para mostrar, no es un problema del documento nuevo, es que
+      la cadena RDT -> PPC todavia no esta corriendo con datos reales en
+      ningun lado del sistema.
+
+  Ciclo diario (Planner, multi-proyecto):
+    - Programacion diaria: desglose, cada manana, de que tareas del
+      Plan Semanal ya comprometido se ejecutan HOY en cada proyecto
+      activo — el ultimo eslabon antes de que el RDT reporte lo
+      realmente hecho ......................................... Planner
+
+  Ciclo diario/semanal (Supervisor Operativo):
+    - RDT(HH, HM, MAT, avance cuantificable) ....... Supervisor Operativo
+    - Informe semanal: cumplimiento del Plan Semanal, alimenta el
+      calculo de PPC ............................. Supervisor Operativo
+    - Requerimiento del proyecto (materiales/recursos que faltan)
+      ............................................ Supervisor Operativo +
+                                                     Supervisor de Oficina
+                                                     Tecnica
+
+  Ciclo semanal (Supervisor de Oficina Tecnica):
+    - Valida los RDT de la semana (consistencia entre lo reportado y
+      lo comprometido en el Plan Semanal), ANTES de que el Planner
+      calcule el PPC+CNC real de la semana y de que ese avance quede
+      reflejado en el PR del proyecto .............. Supervisor de
+                                                        Oficina Tecnica
+      (el calculo de PPC+CNC en si, y su categorizacion de causas —
+      trabajo previo no terminado / mano de obra / materiales /
+      equipos / diseno-informacion / clima / permisos-SSOMA /
+      reprogramacion — ahora lo hace el Planner, dentro del Sistema
+      LPS; ver ciclo semanal del Planner, arriba)
+    - Control de requerimiento (seguimiento del tramite) ....... idem
+
+  Ciclo continuo (Supervisor de Logistica):
+    - Status de requerimiento, con flujo trazable:
+      cuadro de necesidades -> orden de compra -> recepcion verificada
+      -> vale de salida -> kardex ................. Supervisor de Logistica
+    - Registro de gastos del proyecto (control de costo real de
+      materiales) ................................. Supervisor de Logistica
+    - Costo de RQ de proyectos (antes "Informe de costos de proyecto"),
+      de entrega SEMANAL -- PENDIENTE definir si cubre por si solo la
+      visibilidad completa del gasto de materiales, ver seccion 7 ..
+      Supervisor de Logistica
+
+  Ciclo continuo (Supervisor de Administracion):
+    - Status de capacitacion del personal (verifica el cumplimiento de
+      la programacion que elabora el Planner) ......... Supervisor de
+                                                          Administracion
+    - Tareo diario del personal indirecto (controla los gastos
+      generales de mano de obra indirecta; la MOI directa ya se
+      controla via RDT/PR) .............................  idem
+
+  Ciclo continuo (Supervisor de Costos):
+    - Da seguimiento al % de avance fisico y a las alertas de costo del
+      Status de Proyectos, que el sistema calcula automaticamente a
+      partir del PR (el estado del proyecto lo cambia el Jefe de
+      Oficina Tecnica, ver ciclo semanal arriba y cierre abajo) ..
+      PENDIENTE DE CONSTRUIR -- hoy, mientras el calculo automatico no
+      exista, este campo sigue dependiendo de captura manual .....
+      Supervisor de Costos
+
+  Que se controla y con que, durante el servicio:
+    - Alcance y Tiempo .... RDT + informe semanal + PR (SPI, cuando
+                            exista la captura de RDT en la web) +
+                            Sistema LPS (Lookahead/restricciones,
+                            PPC+CNC)
+    - Costo ................ PR (EVM, CPI, cuando exista la captura de
+                              RDT en la web) + registro de gastos de
+                              Logistica + tareo de indirectos
+                              (Administracion)
+    - Calidad .............. informe semanal + informe de proyecto
+                              (PETS y liberaciones de calidad como
+                              precondicion de "partida ganada", no solo
+                              ejecutada)
+
+
+3.5 CONTROL DE COSTO DIRECTO (detalle, por componente)
+--------------------------------------------------------------------------------
+  - Mano de obra directa .......... via PR (HH del RDT valorizadas, una
+                                       vez que exista esa captura)
+  - Materiales ..................... via informe de gastos por proyecto
+                                       de Logistica
+  - Equipos (HM) ................... via PR
+  - Gastos generales / mano de obra
+    indirecta ....................... via Tareo diario de personal
+                                       indirecto (Administracion)
+
+  Los 4 componentes anteriores son costo DIRECTO del proyecto. El
+  sistema, en esta version, no cubre gastos generales de estructura
+  (overhead corporativo) fuera de la mano de obra indirecta asignada
+  al proyecto.
+
+
+3.6 CIERRE DEL SERVICIO
+--------------------------------------------------------------------------------
+  Entregables:
+    - Informe de proyecto .......................... Supervisor Operativo
+    - Acta de conformidad ......................... Supervisor Operativo
+                                                       (visto bueno: Jefe de
+                                                        Proyectos)
+    - PR consolidado (con el avance acumulado final) . Supervisor de
+                                                          Oficina Tecnica
+    - RDTs (todo el historico) ..................... Supervisor de Oficina
+                                                        Tecnica
+
+  (El "Costo de RQ de proyectos", antes listado aqui como "Informe de
+  costos de proyecto", dejo de ser un entregable exclusivo de cierre --
+  Supervisor de Logistica lo entrega semanalmente durante todo el
+  proyecto, ver ciclo continuo en 3.4.)
+
+  Status de Proyectos:
+    - Pasa a CERRADO cuando se sube el Acta de conformidad (por ahora,
+      unico documento del checklist de esta fase); el sistema notifica
+      al Jefe de Oficina Tecnica, quien confirma el cierre. Se registra
+      fecha de cierre = fecha de firma del acta de conformidad, % de
+      avance = 100% ................................ Jefe de Oficina
+                                                          Tecnica
+
+--------------------------------------------------------------------------------
+4. STATUS DE PROYECTOS (formato maestro, transversal)
+--------------------------------------------------------------------------------
+
+Responsable de la ficha (datos generales): Jefe de Oficina Tecnica (ver
+seccion 6.2), dueno tambien del flujo de estado (ADJUDICADO -> EN
+PLANEACION -> EJECUCION -> CERRADO) y de su checklist de documentos por
+fase. El % de avance fisico y las alertas de costo, en el diseño
+vigente, los calcula el sistema automaticamente a partir del PR (EVM) --
+PENDIENTE DE CONSTRUIR (sub-proyecto "Dashboard EVM+LPS"); hasta que se
+entregue, Supervisor de Costos sigue dando seguimiento manual a ese dato.
+Se actualiza de forma iterativa, cada vez que se adjudica, avanza o
+cierra un servicio (y, idealmente, en cada corte semanal/mensual de
+avance).
+
+Campos minimos:
+  - N.o de proyecto
+  - Nombre del proyecto
+  - Cliente
+  - Fecha de adjudicacion
+  - Fecha estimada de inicio / fin (del cronograma base)
+  - Fecha real de inicio
+  - Fecha de cierre (= firma del acta de conformidad)
+  - Estado: EN PLANEACION / EJECUCION / CERRADO (nace en EN PLANEACION
+    al marcarse ADJUDICADO)
+  - % de avance fisico (desde el PR/EVM -- ver formula en 2.1)
+  - Responsable del proyecto (Jefe de Proyectos)
+
+Proposito: dar visibilidad de cuantos proyectos existen y en que estado,
+sin tener que revisar cada PR individualmente.
+
+--------------------------------------------------------------------------------
+5. FORMATOS: INDICE, FINALIDAD, ESTRUCTURA Y RESPONSABLE
+--------------------------------------------------------------------------------
+
+5.1 Indice rapido
+--------------------------------------------------------------------------------
+
+  N.   | Formato                             | Fase        | Responsable        | Estado
+  -----|--------------------------------------|-------------|---------------------|--------
+  001  | Presupuesto del proyecto             | Al inicio   | Jefe de Of. Tecnica | Existe (subida manual)
+  002  | DP (Datos del proyecto)              | Al inicio   | Sup. Of. Tecnica    | Construido (import desde Excel)
+  003  | PR (Reporte del proyecto)            | Al inicio   | Sup. Of. Tecnica    | Construido (se genera solo, junto al DP)
+  004  | Listado de recursos hh, hm,          | Al inicio   | Sup. Of. Tecnica    | No creado
+       | materiales (sin costo)               |             |                     |
+  005  | Listado de materiales con costo      | Al inicio   | Sup. Costos         | No creado
+  006  | Listado estimado de PETS             | Al inicio   | Sup. Of. Tecnica    | No creado
+  007  | Alcance del proyecto                 | Al inicio   | Sup. Costos         | No creado
+  008  | Requerimiento del proyecto           | Al inicio y | Sup.Op + Of.Tec.    | No creado
+       |                                       | durante     |                     |
+  009  | Listado de Personal requerido        | Al inicio   | Sup. Of. Tecnica    | No creado
+  010  | RDT (Reporte Diario de Trabajo)      | Durante     | Sup. Operativo      | Existe (RDT.xlsx, ajustar; sin captura web todavia)
+  011  | Sistema LPS / Cronograma (Plan       | Durante     | Planner             | Nuevo (archivo unico,
+       | Maestro, Lookahead+Restricciones,    |             |                     |   multi-proyecto)
+       | Plan Semanal, PPC+CNC)               |             |                     |
+  012  | Programacion diaria                  | Durante     | Planner             | Nuevo (archivo unico,
+       |                                       |             |                     |   multi-proyecto)
+  013  | Status de requerimiento              | Durante     | Sup. Logistica      | Nuevo
+  014  | Registro de gastos por RQ            | Durante     | Sup. Logistica      | Nuevo
+  015  | Programacion de capacitaciones       | Durante     | Planner             | Nuevo
+  016  | Status de capacitacion               | Durante     | Sup. Admin.         | Nuevo
+  017  | Tareo diario de personal indirecto   | Durante     | Sup. Admin.         | Nuevo
+  018  | Status de tareo MOI                  | Durante     | Sup. Admin.         | Nuevo
+  019  | Informe de proyecto                  | Cierre      | Sup. Operativo      | Nuevo
+  020  | Acta de conformidad                  | Cierre      | Sup. Operativo      | Nuevo
+  021  | Status de Proyectos (dashboard)      | Transversal | Sistema (en base    | No creado -- PENDIENTE
+       |                                       |             | al PR)              |   (sub-proyecto Dashboard)
+  --   | Costo de RQ de proyectos             | Durante     | Sup. Logistica      | Sin numero formal -- PENDIENTE,
+       | (antes "Informe de costos de         | (semanal)   |                     |   ver seccion 7
+       | proyecto")                            |             |                     |
+  022  | Orden de Trabajo (OT)                | Al inicio   | Jefe de Of. Tecnica | Spec escrito
+       |                                       |             |                     |   (2026-08-17), sin
+       |                                       |             |                     |   construir
+
+5.2 Cuadro detallado (finalidad y estructura por formato)
+--------------------------------------------------------------------------------
+
+  001. Presupuesto del proyecto
+     Finalidad:  Dejar registrado, tal como llega del cliente, el
+                 presupuesto aprobado que da origen al DP y al PR.
+     Estructura: Archivo del presupuesto (formato del cliente/APU).
+     Responsable: Jefe de Oficina Tecnica.
+
+  002. DP (Datos del proyecto)
+     Finalidad:  Traducir el presupuesto aprobado en la linea base
+                 operable del proyecto: partidas de control (con su
+                 mapeo WBS, lo que antes era la "Tabla Work Package") y
+                 recursos (mano de obra, equipos, materiales,
+                 subcontratos). Es el insumo de origen del PR.
+     Estructura: Partidas (WBS, descripcion, unidad, metrado
+                 contractual, precio unitario, hh por partida) +
+                 recursos por tipo (cantidad contractual, precio
+                 unitario, costo contractual).
+     Responsable: Supervisor de Oficina Tecnica (importa el Excel del
+                 presupuesto).
+
+  003. PR (Reporte del proyecto)
+     Finalidad:  Sostener el avance acumulado del proyecto para el
+                 calculo de valor ganado (PV, EV, AC, SPI, CPI, EAC,
+                 VAC -- ver formulas en 2.1), reemplazando la funcion
+                 que antes cumplia el RDO. Se genera automaticamente
+                 junto con el DP; no se edita a mano.
+     Estructura: Misma linea base del DP (partidas y recursos) +
+                 columnas de avance acumulado (metrado acumulado,
+                 cantidad acumulada) -- hoy en 0, a la espera de que
+                 exista la captura de RDT en la web.
+     Responsable: Se genera solo; Supervisor de Oficina Tecnica lo
+                 custodia.
+
+  004. Listado de recursos hh, hm, materiales (sin costo)
+     Finalidad:  Entregar a campo la lista de recursos del proyecto
+                 (mano de obra, equipos, materiales) sin exponer
+                 informacion comercial. Fusiona lo que antes eran dos
+                 formatos separados: "Listado de materiales SIN costo"
+                 y "Listado de equipos HM".
+     Estructura: Codigo, descripcion, unidad, cantidad estimada -- sin
+                 columna de precio.
+     Responsable: Supervisor de Oficina Tecnica.
+
+  005. Listado de materiales con costo
+     Finalidad:  Base de precios unitarios para que Costos presupueste
+                 y valorice el consumo real de materiales.
+     Estructura: Codigo, descripcion, unidad, precio unitario,
+                 proveedor referencial.
+     Responsable: Supervisor de Costos.
+
+  006. Listado estimado de PETS
+     Finalidad:  Catalogo/checklist de los Procedimientos Escritos de
+                 Trabajo Seguro que aplican a las actividades del
+                 proyecto, previo al inicio de campo. Cada PETS
+                 especifico lo redacta el Supervisor Operativo.
+     Estructura: Actividad, PETS aplicable, estado (pendiente /
+                 elaborado / aprobado), responsable de elaboracion.
+     Responsable: Supervisor de Oficina Tecnica (mantiene el listado);
+                 Supervisor Operativo (elabora cada PETS).
+
+  007. Alcance del proyecto
+     Finalidad:  Dejar por escrito que incluye y que NO incluye el
+                 servicio adjudicado, como referencia de control de
+                 cambios ante trabajos no contemplados.
+     Estructura: Descripcion general, entregables, exclusiones
+                 explicitas, supuestos y restricciones contractuales,
+                 criterios de aceptacion.
+     Responsable: Supervisor de Costos.
+
+  008. Requerimiento del proyecto
+     Finalidad:  Formalizar la necesidad de materiales/recursos que
+                 surge en campo (o ya desde el arranque), para iniciar
+                 su tramite en Logistica.
+     Estructura: Item, cantidad, fecha necesaria, partida/proyecto
+                 asociado, solicitante.
+     Responsable: Supervisor Operativo + Supervisor de Oficina
+                 Tecnica.
+
+  009. Listado de Personal requerido
+     Finalidad:  Informar a Administracion la dotacion de personal
+                 (directo e indirecto) que necesita el proyecto, para
+                 tareo y control de gastos generales.
+     Estructura: Cargo, cantidad requerida, especialidad, fecha de
+                 incorporacion estimada.
+     Responsable: Supervisor de Oficina Tecnica (entrega a
+                 Administracion).
+
+  010. RDT (Reporte Diario de Trabajo)
+     Finalidad:  Capturar el avance fisico real y las HH/HM/materiales
+                 ejecutados cada dia en campo, partida por partida.
+                 Es la fuente primaria de todo el sistema: alimentara
+                 el PR (EVM) y, ya validado por Oficina Tecnica, el
+                 calculo de PPC+CNC del Planner (ver seccion 2.3).
+     Estructura: Encabezado (proyecto, fecha, turno); tabla de avance
+                 por partida de control (WBS, unidad, cant. programada,
+                 cant. ejecutada); tabla de tareo (trabajador, cargo,
+                 horas por partida); equipos/HM usados; materiales
+                 consumidos; incidencias/restricciones detectadas.
+     Responsable: Supervisor Operativo.
+
+  011. Sistema LPS — archivo unico, MULTI-PROYECTO (Cronograma)
+     Finalidad:  Sostener toda la cascada Last Planner (que deberia
+                 hacerse -> que se puede hacer -> que se hara -> que
+                 se hizo) de todos los proyectos activos en un solo
+                 lugar, porque el Planner gestiona la ventana corta de
+                 todos a la vez.
+     Estructura: 4 hojas —
+                 (a) Plan Maestro: por proyecto, hitos y cronograma
+                     base (fecha inicio/fin, duracion).
+                 (b) Lookahead + Restricciones: ventana movil de 3
+                     semanas por proyecto; por actividad/partida:
+                     metrado planificado a ejecutar (fuente del Valor
+                     Planificado -- PV, ver seccion 2.1), tipo de
+                     restriccion, responsable de liberarla, fecha
+                     compromiso, estado; en la misma hoja, resumen del
+                     PPC/CNC de la semana que cierra y los PPC
+                     propuestos (compromisos) de la semana entrante.
+                 (c) Plan Semanal: tareas comprometidas de la semana,
+                     ya libres de restriccion, por proyecto y frente.
+                 (d) PPC + CNC: calculo semanal real (comprometido vs.
+                     cumplido) por proyecto, con causa de no
+                     cumplimiento categorizada por tarea incumplida —
+                     calculado por el Planner sobre el RDT ya validado
+                     por Oficina Tecnica.
+     Responsable: Planner.
+
+  012. Programacion diaria — archivo unico, MULTI-PROYECTO
+     Finalidad:  Desglosar, cada manana, cuales de las tareas ya
+                 comprometidas en el Plan Semanal se ejecutan HOY en
+                 cada proyecto — el ultimo eslabon antes de que el RDT
+                 reporte lo realmente hecho.
+     Estructura: Proyecto, tarea (referida al Plan Semanal), frente /
+                 cuadrilla, fecha, responsable de campo.
+     Responsable: Planner.
+
+  013. Status de requerimiento
+     Finalidad:  Dar trazabilidad al tramite de cada requerimiento
+                 desde que se pide hasta que se entrega en obra.
+     Estructura: Requerimiento, cuadro de necesidades, orden de
+                 compra, fecha de recepcion verificada, vale de
+                 salida, kardex, estado.
+     Responsable: Supervisor de Logistica.
+
+  014. Registro de gastos por RQ
+     Finalidad:  Controlar el costo real de materiales consumidos por
+                 el proyecto (fuente del AC de materiales en el PR).
+     Estructura: Fecha, item, cantidad, costo unitario, costo total,
+                 proyecto/partida asociada.
+     Responsable: Supervisor de Logistica.
+
+  015. Programacion de capacitaciones
+     Finalidad:  Planificar que capacitaciones necesita el personal
+                 del proyecto y cuando se dictaran.
+     Estructura: Tema, personal objetivo, fecha programada, responsable
+                 de dictarla.
+     Responsable: Planner (Administracion verifica el cumplimiento via
+                 el Status de capacitacion).
+
+  016. Status de capacitacion
+     Finalidad:  Verificar el cumplimiento real de la programacion de
+                 capacitaciones, por trabajador.
+     Estructura: Trabajador, capacitacion, fecha realizada, estado
+                 (pendiente / realizada / vencida).
+     Responsable: Supervisor de Administracion.
+
+  017. Tareo diario de personal indirecto
+     Finalidad:  Controlar el gasto de mano de obra indirecta (gastos
+                 generales); la MOI directa se controla via RDT/PR.
+     Estructura: Trabajador, cargo, horas del dia, proyecto/area
+                 asignada.
+     Responsable: Supervisor de Administracion.
+
+  018. Status de tareo MOI
+     Finalidad:  Dar visibilidad del cumplimiento/consistencia del
+                 tareo diario de personal indirecto.
+     Estructura: Trabajador, dias tareados, alertas de inconsistencia.
+     Responsable: Supervisor de Administracion.
+
+  019. Informe de proyecto
+     Finalidad:  Cerrar tecnicamente el proyecto con un resumen de lo
+                 ejecutado frente a lo planificado.
+     Estructura: Resumen de alcance ejecutado, desviaciones relevantes,
+                 lecciones aprendidas, indicadores finales (PPC
+                 promedio, SPI/CPI final).
+     Responsable: Supervisor Operativo.
+
+  020. Acta de conformidad
+     Finalidad:  Documento contractual que certifica que el cliente
+                 recibe el servicio conforme, y cierra el proyecto.
+     Estructura: Datos del proyecto, declaracion de conformidad,
+                 observaciones (si las hay), firmas (cliente, Jefe de
+                 Proyectos, Supervisor Operativo).
+     Responsable: Supervisor Operativo (visto bueno: Jefe de
+                 Proyectos).
+
+  021. Status de Proyectos (maestro) — MULTI-PROYECTO
+     Finalidad:  Dar visibilidad del estado de todos los proyectos de
+                 la empresa sin revisar cada PR individualmente.
+     Estructura: ver seccion 4 (N° proyecto, nombre, cliente, fechas,
+                 estado, % avance, responsable).
+     Responsable: el sistema lo genera en base al PR (dashboard) --
+                 PENDIENTE DE CONSTRUIR, ver seccion 4.
+
+  --. Costo de RQ de proyectos (antes "Informe de costos de proyecto";
+      sin numero formal -- ver nota v4/v5 en seccion 10)
+     Finalidad:  Dar visibilidad periodica del costo real de los
+                 requerimientos del proyecto. PENDIENTE: Victor aclaro
+                 (2026-08-17) que este entregable, por si solo, "no es
+                 un punto importante para conocer el gasto de
+                 materiales y otros" -- falta definir como se cubre esa
+                 visibilidad completa del gasto (y como se relaciona
+                 con el item 014, Registro de gastos por RQ).
+     Estructura: Sin definir todavia.
+     Responsable: Supervisor de Logistica, entrega SEMANAL.
+
+  022. Orden de Trabajo (OT)
+     Finalidad:  Documento de control de UN servicio completo (no de una
+                 tarea, como se usa "orden de trabajo" normalmente):
+                 identifica y autoriza el servicio, y mide su avance y
+                 gasto para controlarlo de punta a punta. Se genera desde
+                 el sistema con datos que ya existen (igual que DP/PR),
+                 no es un formulario manual.
+     Estructura: 6 bloques -- (1) Datos generales: N° de OT (correlativo
+                 interno, clave que agrupa todo lo del servicio), N° de
+                 OC/orden del cliente, servicio, cliente, fechas,
+                 responsable; (2) Descripcion del servicio: alcance,
+                 partidas de control; (3) Control del servicio (semanal):
+                 avance fisico + PPC/CNC (ver formulas en 2.1/2.2),
+                 alimentado por el "Reporte semanal del servicio" (formato
+                 nuevo, generado por el sistema en base al avance de cada
+                 servicio); (4) Gastos del servicio: HH/HM/subcontratos/
+                 requerimientos, BAC/AC/CPI/EAC; (5) Seguridad y Calidad:
+                 reservado, sin fuente de datos todavia; (6) Resumen
+                 ejecutivo: texto + semaforo, fecha real del Acta de
+                 conformidad. Detalle completo y fuente exacta de cada
+                 campo en
+                 ../py_control_proyectos_web/docs/superpowers/specs/2026-08-17-orden-de-trabajo-design.md.
+     Responsable: Jefe de Oficina Tecnica (identidad del documento);
+                 Supervisor de Oficina Tecnica genera cada corte semanal.
+
+--------------------------------------------------------------------------------
+6. MOF - MANUAL DE ORGANIZACION Y FUNCIONES (ficha por integrante)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+6.1 JEFE DE PROYECTOS
+--------------------------------------------------------------------------------
+Area:            Gerencia de Proyectos
+Reporta a:       Gerencia General / Cliente
+Objetivo:        Ser el responsable unico ante el cliente por el
+                 cumplimiento de alcance, plazo, costo y calidad del
+                 servicio adjudicado, desde la adjudicacion hasta la
+                 firma del acta de conformidad.
+Funciones:
+  - Recibir la comunicacion de adjudicacion del servicio.
+  - Supervisar el desempeno del proyecto a traves del Status de
+    Proyectos y del PR.
+  - Escalar y decidir ante desviaciones criticas (CPI/SPI fuera de
+    rango, PPC sostenidamente bajo).
+  - Dar el visto bueno final al acta de conformidad ante el cliente.
+Recibe:          Comunicacion de adjudicacion, Status de Proyectos, PR
+                 (resumen EVM), informe de proyecto, Costo de RQ de
+                 proyectos.
+Entrega:         Decisiones/escalamientos, visto bueno de cierre.
+Indicadores:     SPI y CPI del proyecto, cumplimiento de hitos
+                 contractuales.
+
+--------------------------------------------------------------------------------
+6.2 JEFE DE OFICINA TECNICA
+--------------------------------------------------------------------------------
+Area:            Oficina Tecnica
+Reporta a:       Jefe de Proyectos
+Objetivo:        Ser el dueno del ciclo de vida del proyecto en el Status
+                 de Proyectos: decidir que documentos aplican a cada
+                 proyecto, marcar la adjudicacion, y confirmar cada
+                 transicion de estado (EN PLANEACION -> EJECUCION ->
+                 CERRADO) cuando el checklist de documentos de la fase
+                 esta completo. Rol distinto de Supervisor de Oficina
+                 Tecnica (seccion 6.3), que conserva intactas sus
+                 funciones documentarias (DP, PR, validacion de RDT,
+                 listados, PETS).
+Funciones:
+  - Recibir la comunicacion de adjudicacion del servicio.
+  - Subir el Presupuesto del proyecto (documento 001), tal como llega
+    aprobado del cliente.
+  - Marcar el proyecto como ADJUDICADO: seleccionar, del catalogo de
+    documentos "Al inicio", cuales aplican a este proyecto especifico.
+  - Al confirmar la adjudicacion, el sistema notifica a cada interesado
+    (responsable de cada documento marcado) que documento debe subir.
+  - Recibir la notificacion de que el checklist de EN PLANEACION esta
+    completo, y confirmar el paso a EJECUCION, registrando la fecha de
+    inicio real segun el Lookahead o Plan Semanal vigente.
+  - Recibir la notificacion de que el Acta de conformidad fue subida, y
+    confirmar el cierre del proyecto (paso a CERRADO).
+Recibe:          Comunicacion de adjudicacion, presupuesto aprobado (del
+                 Cliente), notificaciones de checklist completo (EN
+                 PLANEACION y cierre).
+Entrega:         Presupuesto del proyecto (subido en el checklist),
+                 proyecto adjudicado (con su checklist de documentos
+                 requeridos), confirmacion de paso a EJECUCION,
+                 confirmacion de cierre.
+Indicadores:     Tiempo entre adjudicacion y confirmacion de EJECUCION,
+                 tiempo entre checklist completo y confirmacion de
+                 cierre.
+
+--------------------------------------------------------------------------------
+6.3 SUPERVISOR DE OFICINA TECNICA
+--------------------------------------------------------------------------------
+Area:            Oficina Tecnica
+Reporta a:       Jefe de Proyectos
+Objetivo:        Custodiar la trazabilidad documentaria y tecnica del
+                 proyecto; traducir el presupuesto en el DP/PR operables
+                 en campo; validar el reporte diario antes de que
+                 alimente el PR.
+Funciones:
+  - Importar el DP a partir del presupuesto aprobado (el sistema genera
+    el PR automaticamente en la misma operacion).
+  - Recibir y validar los RDT diarios del Supervisor Operativo, antes
+    de que el Planner calcule el PPC+CNC de la semana y de que ese
+    avance quede reflejado en el PR.
+  - Gestionar el requerimiento del proyecto junto al Supervisor
+    Operativo, y controlar su tramite.
+  - Mantener el Listado de Personal requerido, el Listado estimado de
+    PETS, y el Listado de recursos hh/hm/materiales (sin costo).
+  - Custodiar PR y RDTs para el cierre del proyecto.
+  - Participar en la elaboracion del PETS antes del inicio de campo.
+Recibe:          Presupuesto aprobado, RDT diario, requerimientos de
+                 campo.
+Entrega:         DP, PR (generado automaticamente), RDT validado
+                 (insumo del Planner para el PPC+CNC), control de
+                 requerimiento, PR/RDTs consolidados al cierre.
+Indicadores:     Consistencia RDT <-> PR, tiempo de validacion del
+                 RDT.
+
+--------------------------------------------------------------------------------
+6.4 PLANNER
+--------------------------------------------------------------------------------
+Area:            Planeamiento
+Reporta a:       Jefe de Proyectos (coordina con Sup. Oficina Tecnica)
+Objetivo:        Sostener la planificacion de TODOS los proyectos
+                 activos en sus distintos horizontes (maestro,
+                 lookahead, semanal, diario) y proteger el flujo de
+                 trabajo liberando restricciones a tiempo.
+Funciones:
+  - Elaborar y mantener el archivo unico "Sistema LPS" (hojas: Plan
+    Maestro por proyecto; Lookahead + matriz de restricciones,
+    Plan Semanal y PPC+CNC, estas tres multi-proyecto).
+  - Elaborar y actualizar semanalmente el Lookahead (3 semanas) con
+    su matriz de restricciones (responsable + fecha compromiso por
+    restriccion), y el Plan Semanal de Trabajo con objetivos medibles
+    via PPC.
+  - Elaborar cada dia la Programacion diaria (multi-proyecto):
+    desglose de que tareas del Plan Semanal se ejecutan hoy.
+  - Calcular el PPC+CNC real de cada semana, sobre el RDT ya validado
+    por Oficina Tecnica, y usarlo como insumo del Lookahead siguiente.
+  - Elaborar la programacion de capacitaciones (coordina con
+    Administracion, que verifica el cumplimiento real via el Status de
+    capacitacion).
+Recibe:          Presupuesto aprobado, DP/PR, RDT validado por Oficina
+                 Tecnica.
+Entrega:         Plan Maestro, Lookahead + matriz de restricciones,
+                 Plan Semanal, Programacion diaria, PPC + CNC semanal
+                 (de todos los proyectos activos), Programacion de
+                 capacitaciones.
+Indicadores:     Cumplimiento del Plan Maestro (SPI de plazo), PPC
+                 semanal y su tendencia, % de restricciones liberadas
+                 a tiempo, Pareto de CNC.
+
+--------------------------------------------------------------------------------
+6.5 SUPERVISOR DE COSTOS
+--------------------------------------------------------------------------------
+Area:            Costos
+Reporta a:       Jefe de Proyectos
+Objetivo:        Controlar el costo directo del proyecto (materiales,
+                 HM, mano de obra) y dejar por escrito el alcance
+                 contractual del servicio (el flujo de estado del
+                 proyecto en si lo gestiona el Jefe de Oficina Tecnica,
+                 ver seccion 6.2; el % de avance fisico y las alertas
+                 de costo del Status de Proyectos pasan a calcularlos
+                 el sistema en base al PR, ver seccion 4).
+Funciones:
+  - Elaborar el listado de materiales con costo.
+  - Elaborar el alcance del proyecto (funcion transferida desde
+    Planner).
+Recibe:          PR (EVM, para seguimiento), informe de gastos de
+                 Logistica.
+Entrega:         Listado de materiales con costo, Alcance del proyecto.
+Indicadores:     CPI del proyecto.
+
+--------------------------------------------------------------------------------
+6.6 SUPERVISOR OPERATIVO
+--------------------------------------------------------------------------------
+Area:            Operaciones / Campo
+Reporta a:       Jefe de Proyectos (coordina con Planner y Of. Tecnica)
+Objetivo:        Ejecutar el trabajo de campo conforme al alcance,
+                 cronograma y partidas de control, y reportar el avance
+                 real de forma diaria y confiable.
+Funciones:
+  - Elaborar el PETS antes del inicio de campo (con Oficina Tecnica).
+  - Recibir alcance, listado de recursos (sin costo), cronograma y
+    partidas de control (del DP/PR).
+  - Comprometer y ejecutar el Plan Semanal.
+  - Emitir el RDT diario.
+  - Emitir el informe semanal (cumplimiento del Plan Semanal, alimenta
+    el PPC).
+  - Levantar el requerimiento del proyecto junto a Oficina Tecnica.
+  - Al cierre: elaborar el informe de proyecto y el acta de
+    conformidad.
+Recibe:          Alcance, listado de recursos sin costo, cronograma,
+                 partidas de control, Plan Semanal.
+Entrega:         RDT diario, informe semanal, requerimientos, informe
+                 de proyecto, acta de conformidad.
+Indicadores:     PPC de su frente, avance fisico real vs. programado.
+
+--------------------------------------------------------------------------------
+6.7 SUPERVISOR DE LOGISTICA
+--------------------------------------------------------------------------------
+Area:            Logistica
+Reporta a:       Jefe de Proyectos (coordina con Sup. de Costos)
+Objetivo:        Abastecer oportunamente los materiales requeridos y
+                 controlar el gasto real de materiales del proyecto.
+Funciones:
+  - Recibir el listado de materiales con costo y los requerimientos
+    aprobados por Oficina Tecnica.
+  - Gestionar el flujo: cuadro de necesidades -> orden de compra ->
+    recepcion verificada -> vale de salida -> kardex.
+  - Mantener el status de requerimiento visible para Oficina Tecnica y
+    Supervisor Operativo.
+  - Elaborar el registro/informe de gastos del proyecto.
+  - Entregar semanalmente el Costo de RQ de proyectos (antes "informe de
+    costos de proyecto al cierre"; ya no es exclusivo del cierre).
+Recibe:          Listado de materiales con costo, requerimientos
+                 aprobados.
+Entrega:         Status de requerimiento, registro de gastos, Costo de
+                 RQ de proyectos (semanal).
+Indicadores:     Tiempo de atencion de requerimientos, desviacion de
+                 gasto real de materiales vs. presupuesto.
+
+--------------------------------------------------------------------------------
+6.8 SUPERVISOR DE ADMINISTRACION
+--------------------------------------------------------------------------------
+Area:            Administracion
+Reporta a:       Jefe de Proyectos
+Objetivo:        Controlar el gasto de mano de obra indirecta y
+                 verificar la capacitacion del personal del proyecto.
+Funciones:
+  - Verificar el cumplimiento de la programacion de capacitaciones que
+    elabora el Planner (Status de capacitacion, por trabajador).
+  - Elaborar el tareo diario del personal indirecto y su status
+    (fuente de control de gastos generales, ya que la MOI directa se
+    controla via RDT/PR).
+Recibe:          Programacion de capacitaciones (del Planner),
+                 asistencia real.
+Entrega:         Status de capacitacion, tareo diario de personal
+                 indirecto y su status.
+Indicadores:     % de personal capacitado segun programa, gasto real de
+                 MOI vs. presupuestado.
+
+--------------------------------------------------------------------------------
+6.9 RRHH
+--------------------------------------------------------------------------------
+Area:            Recursos Humanos
+Reporta a:       Jefe de Proyectos / Gerencia
+Objetivo:        Asegurar la disponibilidad oportuna de personal
+                 calificado antes y durante el proyecto.
+Funciones:
+  - Reclutamiento de personal segun requerimiento de campo o
+    administracion, antes del inicio y durante la ejecucion del
+    proyecto.
+Recibe:          Requerimiento de personal.
+Entrega:         Personal contratado / asignado.
+Indicadores:     Tiempo de cobertura de vacantes.
+
+--------------------------------------------------------------------------------
+6.10 CLIENTE (externo, referencial)
+--------------------------------------------------------------------------------
+No forma parte de la Oficina Tecnica. Dispara el flujo comunicando la
+adjudicacion del servicio, y lo cierra firmando el acta de conformidad.
+
+--------------------------------------------------------------------------------
+7. PENDIENTES / PROXIMOS PASOS
+--------------------------------------------------------------------------------
+  1. Confirmar con Victor el alcance real del rol "Jefe de Proyectos"
+     (seccion 1).
+  2. Decidir si se consolidan tambien, en archivo unico multi-hoja
+     (misma logica que el Sistema LPS), los formatos de Logistica
+     (Status de requerimiento + Registro de gastos) y de Administracion
+     (Tareo de indirectos + Status de capacitacion) — sugerido, no
+     aplicado todavia.
+  3. Diseñar/construir cada formato "Al inicio" que sigue sin captura
+     (004 recursos sin costo, 005 materiales con costo, 006 PETS
+     estimado, 007 alcance, 008 requerimiento, 009 personal) -- DP (002)
+     y PR (003) ya estan construidos.
+  4. Construir el archivo Sistema LPS (Plan Maestro, Lookahead+
+     Restricciones, Plan Semanal, PPC+CNC) y la Programacion diaria,
+     ambos multi-proyecto.
+  5. Construir la captura de RDT en la web y su pipeline hacia el PR
+     (reemplaza lo que iba a ser "ajustar RDT.xlsx y RDO") -- este es el
+     unico bloqueo que afecta simultaneamente al avance fisico real,
+     al costo real, a PPC+CNC, y a la Orden de Trabajo (ver seccion 9).
+  6. Construir el Status de Proyectos (maestro, multi-proyecto) como
+     dashboard generado por el sistema en base al PR -- ver sub-proyecto
+     "Dashboard EVM+LPS en la web" (spec y plan ya escritos, pendiente
+     elegir modo de ejecucion).
+  7. Una vez cerrado el set de formatos, correr un proyecto de ejemplo
+     sencillo aplicando todo el sistema de punta a punta, para detectar
+     puntos criticos y mejoras antes de darlo por definitivo.
+  8. Disenar la capa de permisos de VISIBILIDAD de datos (quien ve datos
+     economicos/presupuesto y quien no, que campos/archivos ve cada rol
+     dentro de lo que si puede ver, quien ingresa vs. solo lectura) --
+     distinta del permiso de accion que ya existe en la web (quien sube
+     cada documento). Borrador inicial en permisos_visibilidad_datos.md,
+     con la mayoria de los roles todavia PENDIENTE de confirmar.
+  9. Definir la estructura y el numero formal de "Costo de RQ de
+     proyectos" (antes "Informe de costos de proyecto", Sup. Logistica,
+     ahora de entrega semanal -- ver 3.4/3.6/5.2), y como se cubre la
+     visibilidad completa del gasto de materiales del proyecto (Victor
+     aclaro que este entregable, por si solo, no la cubre) -- aclarado
+     parcialmente por Victor el 2026-08-17, sigue PENDIENTE de cerrar.
+  10. Orden de Trabajo (OT): diseño cerrado y spec escrito 2026-08-17 (ver
+      item 022 en 5.1/5.2 y el spec en py_control_proyectos_web). Falta
+      construirla (migracion db/009_ot.sql, pagina /proyectos/[id]/ot) --
+      plan de implementacion es el siguiente paso.
+  11. Construir el "Reporte semanal del servicio" (formato nuevo que
+      alimenta el bloque 3 de la OT) depende de que exista captura de RDT
+      en la web -- mismo bloqueo que el Dashboard Completo (item 5 arriba).
+
+--------------------------------------------------------------------------------
+8. ARQUITECTURA DE NAVEGACION DEL FRONTEND (WEB)
+--------------------------------------------------------------------------------
+
+Definida por Victor en "Flujo y diseño.xlsx" (2026-08-16). Transcrita tal
+como esta en el Excel; algunas notas quedaron abreviadas/informales y se
+marcan como tal.
+
+  PORTAFOLIO (vista de entrada)
+    - Desplegable con la lista de proyectos; primera fila fija "+ Nuevo
+      Proyecto". Al elegir un proyecto, se muestra su contenido (nota
+      original de Victor: "DEBE SALIR UN DESPLEGABLE CON PROYECTOS Y EN
+      PRIMERA FILA NEW PROYECT, una vez que se escoge el proyecto se
+      muestra el contenido de abajo").
+
+  PROYECTO (una vez seleccionado), agrupado en 6 secciones:
+
+    - Inf. Proyecto: 001 Presupuesto del proyecto, 004 Listado de
+      recursos hh/hm/materiales (sin costo), 005 Listado de materiales
+      con costo, 006 Listado estimado de PETS, 007 Alcance del
+      proyecto, 009 Listado de Personal requerido, 019 Informe de
+      proyecto, 020 Acta de conformidad, 010 RDT.
+
+    - Planificacion: 011 Cronograma (Sistema LPS: Plan Maestro,
+      Lookahead+Restricciones, Plan Semanal, PPC+CNC), 012
+      Programacion diaria.
+
+    - Requerimiento: 008 Nuevo requerimiento, 013 Status de
+      requerimiento, 014 Registro de gastos por RQ, Costo de RQ de
+      proyectos (semanal, sin numero formal -- ver seccion 7).
+
+    - Capacitaciones: 015 Programacion de capacitaciones, 016 Status
+      de capacitaciones.
+
+    - Gasto indirecto: 017 Tareo MOI, 018 Status de tareo MOI.
+
+    - Seguridad: Pets. Aclarado por Victor (2026-08-17): NO es un
+      listado por proyecto -- es un repositorio UNICO para toda la
+      contratista, con los PETS de TODOS los proyectos juntos. Cada
+      responsable de proyecto sube sus PETS ahi ("Cargar Pets"); los
+      descarga cualquier personal con los permisos pertinentes (ver
+      permisos_visibilidad_datos.md). Al vivir en un repositorio unico
+      y no por proyecto, esta seccion en realidad no es parte de la
+      navegacion PROYECTO -> secciones como las demas de este bloque,
+      aunque el Excel la haya puesto en la misma columna -- posiblemente
+      sea una vista de PORTAFOLIO (como el Status de Proyectos, ver
+      abajo) accesible tambien desde dentro de cada proyecto.
+
+  003 PR aparece anotado aparte, con la nota de Victor: "Proyectos
+  (lista todos los proyectos para cargarlos a su PR)" -- interpretacion
+  literal, sin confirmar todavia con Victor que significa exactamente
+  ese flujo (posible vista a nivel Portafolio que lista proyectos para
+  ver/generar su PR).
+
+  021 Status de Proyectos (dashboard) vive a nivel Portafolio, no
+  dentro de un proyecto especifico (es multi-proyecto, ver seccion 4).
+
+--------------------------------------------------------------------------------
+9. QUE ALIMENTA A QUE (mapa de datos, estado real vs diseñado)
+--------------------------------------------------------------------------------
+
+Agregado 2026-08-17 porque Victor pidio dejar explicito el flujo de datos
+antes de diseñar cualquier documento nuevo que consuma varias fuentes a la
+vez (primer caso: la Orden de Trabajo -- OT -- por servicio, ver item 022
+en 5.1/5.2, spec cerrado el mismo dia). Un documento nuevo no puede
+mostrar un dato que ninguna otra parte del sistema esta produciendo
+todavia.
+
+  Dato                          | Fuente real hoy                   | Estado (2026-08-17)
+  -------------------------------|-------------------------------------|---------------------
+  Datos generales del servicio   | proyectos (Status de Proyectos)     | Existe, poblado
+  (nombre, cliente, fechas,      |                                      |
+  responsable, adjudicacion)     |                                      |
+  Linea base / BAC (partidas,    | DP (importado del presupuesto) ->   | Existe, poblado
+  recursos, costo contractual)   | PR (se genera junto al DP)          |
+  Avance planificado (PV,        | Sistema LPS -- Lookahead (formato   | El Lookahead YA
+  metrado programado por         | 011)                                | corre hoy con datos
+  partida/semana -- ver 2.1)     |                                      | reales en Excel;
+                                  |                                      | falta integrarlo al
+                                  |                                      | sistema web (el
+                                  |                                      | formato 011 aun no
+                                  |                                      | esta construido como
+                                  |                                      | sistema)
+  Avance fisico real (metrado    | RDT -> PR (pr_partidas.metrado_     | Formato existe
+  ejecutado -- EV en la          | acumulado)                          | (RDT.xlsx), SIN
+  seccion 2.1)                   |                                      | ningun dato real
+                                  |                                      | capturado -- ver 010
+  Costo real de mano de obra     | RDT -> PR (pr_recursos.costo_       | Mismo bloqueo que
+  y equipos (HH, HM -- AC en     | acumulado / cantidad_acumulada)     | EV: RDT sin
+  la seccion 2.1)                |                                      | capturar
+  Gasto de materiales / almacen  | Registro de gastos por RQ (formato  | Formato 014 CON
+  (AC de materiales -- ver 2.1)  | 014, Supervisor de Logistica)       | fuente y responsable
+                                  |                                      | definidos, pero NO
+                                  |                                      | CONSTRUIDO todavia
+                                  |                                      | (estado "Nuevo" en
+                                  |                                      | 5.1) -- se va a
+                                  |                                      | implementar
+  Costo real de subcontratos     | Sin definir                         | PENDIENTE genuino --
+  (AC de subcontratos)           |                                      | unico dato de todo
+                                  |                                      | este mapa sin
+                                  |                                      | formato ni
+                                  |                                      | responsable asignado
+  PPC de la semana + CNC (ver    | Sistema LPS (Planner), sobre el     | El lado planificado
+  seccion 2.2)                   | RDT validado por Oficina Tecnica    | (Lookahead/Plan
+                                  |                                      | Semanal) SI corre
+                                  |                                      | hoy; el cierre real
+                                  |                                      | (comparar contra el
+                                  |                                      | RDT) NO -- ver nota
+                                  |                                      | en 3.4
+  Indice de Productividad (IP,   | DP/PR (HH presupuestadas) + RDT     | Denominador existe;
+  ver seccion 2.3)               | (HH reales, tabla de tareo)         | numerador bloqueado
+                                  |                                      | por RDT sin capturar
+  Seguridad y Calidad (HH sin    | Ninguna todavia                     | PENDIENTE -- no
+  incidentes, PETS, liberaciones)|                                      | existe fuente de
+                                  |                                      | datos en el sistema
+
+Consecuencia directa para el diseño de la OT (y de cualquier documento
+futuro similar): sus bloques de "Datos generales" y "Descripcion del
+servicio" pueden poblarse 100% automaticos desde hoy (DP/PR/proyectos ya
+tienen el dato). El avance PLANIFICADO (PV, via Lookahead) podria mostrarse
+antes que el resto, en cuanto el Sistema LPS se integre al sistema web. El
+avance REAL, el costo real (salvo subcontratos, que ni siquiera tiene
+fuente definida) y la Seguridad y Calidad van a mostrar campos vacios/en
+cero mientras el RDT no tenga captura real -- no es un defecto del diseño
+de la OT, es el mismo cuello de botella que ya bloquea a Dashboard Completo
+(ver memoria del proyecto).
+
+--------------------------------------------------------------------------------
+10. HISTORIAL DE VERSIONES
+--------------------------------------------------------------------------------
+
+Version 5 (2026-08-17) -- Reescritura integral. Objetivo: que el documento
+se lea de corrido como referencia unica del sistema, en vez de exigir
+reconstruir el historial de parches para entenderlo. Cambios:
+  - Se agrega la seccion 2 (Mediciones), nueva: resume de forma aplicada
+    las formulas de EVM (PV/EV/AC/BAC/CPI/SPI/EAC/VAC, % de avance fisico)
+    y de LPS (PPC/CNC), con la fuente exacta de cada dato en el sistema y
+    su estado real (que ya se calcula vs. que sigue en cero por falta de
+    captura de RDT).
+  - Se renumeran las secciones para un orden narrativo: Roles (1) ->
+    Mediciones (2) -> Flujo (3, antes 2) -> Status de Proyectos (4, antes
+    3) -> Formatos (5, antes 4) -> MOF (6, antes 5) -> Pendientes (7,
+    antes 6) -> Navegacion frontend (8, antes 7) -> Mapa de datos (9,
+    antes 8). Ningun contenido de fondo cambia, solo su ubicacion y las
+    referencias cruzadas entre secciones.
+  - El extenso changelog que antes vivia en la cabecera del archivo (todo
+    el contenido de la version 4, mas los resumenes de v1-v3) se traslada
+    integro a esta seccion, mas abajo, para que la cabecera del documento
+    quede como una introduccion breve.
+  - Correccion el mismo dia, tras revision de Victor: la primera version
+    de la seccion 2 confundia "formato no construido todavia" con "sin
+    fuente de datos definida" -- por ejemplo, decia que PV no tenia fuente,
+    cuando en realidad el Lookahead (formato 011) YA calcula el metrado
+    planificado por partida cada semana, en Excel, con datos reales; solo
+    falta integrarlo al sistema web. Se separo el desglose de AC en sus
+    3 componentes (mano de obra/equipos via RDT, materiales via Registro
+    de gastos por RQ -- formato con dueño pero sin construir, subcontratos
+    -- sin fuente definida, el UNICO dato realmente pendiente de todo el
+    mapeo). Se agrego el Indice de Productividad (IP) como seccion 2.3
+    (antes faltaba). Se corrigio tambien la seccion 9 con el mismo criterio.
+
+Version 4 (2026-08-17) -- Reconciliada contra "Flujo y diseño.xlsx"
+(correccion de Victor del 2026-08-16) y contra el estado ya construido en
+py_control_proyectos_web. Fuente de todos los cambios de esta version:
+Flujo y diseño.xlsx + db/006_actualizar_catalogo_al_inicio.sql +
+docs/superpowers/specs/2026-08-16-pr-design.md (los tres en
+py_control_proyectos_web).
+
+  Cambios de fondo:
+  - DP (Datos del Proyecto) y PR (Reporte del Proyecto) se formalizan como
+    items 002/003 del catalogo, YA CONSTRUIDOS: el DP se importa desde el
+    Excel del presupuesto aprobado y el PR se genera automaticamente en la
+    misma transaccion (misma linea base que el DP, con columnas de avance
+    acumulado que hoy quedan en 0 porque la captura de RDT en la web
+    todavia no existe).
+  - "Partidas de control" y "Tabla Work Package" dejan de existir como
+    items separados del catalogo: quedan absorbidos por el DP (el mapeo
+    partida de control <-> WBS ya vive en dp_partidas/pr_partidas).
+  - RDO deja de existir como formato propio. Su funcion (consolidar los
+    RDT del proyecto y calcular PV/EV/AC/SPI/CPI/EAC/VAC) la asume el PR:
+    hoy el PR nace con el acumulado en 0 y, cuando se construya la captura
+    de RDT en la web (sub-proyecto aparte, todavia no iniciado), lo
+    alimentara directamente -- sin un documento RDO intermedio. Hasta que
+    eso exista, el RDT diario sigue siendo el archivo Excel RDT.xlsx de
+    siempre.
+  - Responsables que cambian:
+      Presupuesto del proyecto:  Supervisor de Costos -> Jefe de Oficina
+                                  Tecnica.
+      Alcance del proyecto:      Planner -> Supervisor de Costos.
+      Listado de materiales SIN costo + Listado de equipos HM se
+        fusionan en un solo item, "Listado de recursos hh, hm,
+        materiales (sin costo)", a cargo de Supervisor de Oficina
+        Tecnica (antes ambos eran de Supervisor de Costos).
+      Programacion de capacitaciones: Supervisor de Administracion
+        (coordinando con Planner) -> Planner (Administracion pasa a
+        verificar el cumplimiento via Status de capacitacion, no a
+        elaborar la programacion).
+  - Requerimiento del proyecto pasa de fase "Durante" a "Al inicio y
+    durante" (se puede levantar desde el arranque del proyecto, no solo
+    en ejecucion).
+  - Status de Proyectos (maestro): el % de avance fisico y las alertas de
+    costo pasan, en el diseño, a calcularse automaticamente por el
+    sistema en base al PR -- ya no los actualiza a mano Supervisor de
+    Costos. PENDIENTE DE CONSTRUIR (sub-proyecto "Dashboard EVM+LPS en la
+    web", ver memoria del proyecto; hoy el campo % de avance sigue
+    dependiendo de captura manual mientras ese sub-proyecto no se
+    entregue).
+  - Correccion de nombres de puesto en la seccion 1 (organigrama):
+    "Logistico" -> "Supervisor de Logistica", "Administrador" ->
+    "Supervisor de Administracion", para que coincidan con los roles
+    reales del sistema (ver db/002_seed_roles_y_catalogo.sql). El rol
+    "Administrador" que si existe en el sistema es tecnico (gestiona
+    usuarios/roles de la app), no un puesto del organigrama.
+  - Se agrega la seccion de arquitectura de navegacion del frontend
+    (Portafolio -> Proyecto -> secciones) tal como la definio Victor en
+    Flujo y diseño.xlsx, que hasta esa version no estaba documentada en
+    este archivo.
+
+  Abierto / sin resolver todavia (heredado hasta hoy, ver seccion 7):
+  - "Informe de costos de proyecto" (antes item 20, Supervisor de
+    Logistica) se renombra a "Costo de RQ de proyectos" (2026-08-17,
+    aclaracion de Victor): sigue siendo entregable de Supervisor de
+    Logistica, pero pasa a ser de entrega SEMANAL, no solo al cierre.
+    Victor aclaro ademas que este entregable, por si solo, "no es un
+    punto importante para conocer el gasto de materiales y otros" --
+    o sea, PENDIENTE definir como se cubre la visibilidad completa del
+    gasto de materiales (su relacion con el item 014, Registro de gastos
+    por RQ, tambien queda sin resolver). Sigue sin numero formal.
+  - La seccion "Seguridad" del frontend no es un listado de PETS por
+    proyecto: es un repositorio UNICO para toda la contratista, con los
+    PETS de todos los proyectos. Los sube el responsable de cada
+    proyecto; los descarga cualquier personal con los permisos
+    pertinentes (aclaracion de Victor, 2026-08-17).
+
+Orden de Trabajo (OT) -- ciclo de diseño cerrado el 2026-08-17 (mismo dia
+que la version 4). Investigacion de referencia (AMSAC/El Abra, formatos de
+orden de servicio en mineria; concepto de "valorizacion de obra" en Peru;
+estandares de reporte semanal de avance en construccion) -> guia de campos
+revisada por Victor -> maqueta en blanco (Orden de Trabajo.xlsx, mismo
+patron que el 3WLA) -> spec formal en
+py_control_proyectos_web/docs/superpowers/specs/2026-08-17-orden-de-trabajo-design.md,
+commit ef84a8b. Definiciones clave: la OT es el documento de control de un
+"servicio" completo (= una fila de la tabla proyectos; NO una orden de
+trabajo a nivel de tarea, que es el uso mas comun del termino), combina
+autorizacion + seguimiento en un solo documento, 6 bloques (ver item 022
+en 5.1/5.2). Tablas nuevas planeadas: proyecto_ot (se genera junto con
+DP/PR) y ot_valorizaciones (historico semanal, el "Reporte semanal del
+servicio"). Sujeta al mismo cuello de botella de RDT que el resto del
+sistema (ver seccion 9).
+
+v3 (anterior a 2026-08-17) -- ajustada por Victor: rol nuevo Jefe de
+Oficina Tecnica, separado de Supervisor de Oficina Tecnica, dueno del
+ciclo de vida del proyecto en el Status de Proyectos -- adjudicado,
+checklist de documentos por fase, y confirmacion de cada transicion de
+estado (En Planeacion / Ejecucion / Cerrado) -- permiso que antes tenia
+Supervisor de Costos. Decidido junto con el diseno del Nucleo de
+py_control_proyectos_web, ver
+../py_control_proyectos_web/docs/superpowers/specs/2026-08-15-nucleo-design.md.
+
+v2/v1 -- ajustada por Victor: Planner y Costos agrupados bajo Oficina
+Tecnica, Listado de Personal/PETS agregados, LPS consolidado en archivo
+unico multi-proyecto, Programacion diaria agregada, cuadro de formatos
+con finalidad/estructura.
+
+================================================================================
+FIN DEL DOCUMENTO (version 5 - referencia integra del sistema, se sigue
+afinando de forma iterativa)
+================================================================================

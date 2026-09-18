@@ -1,0 +1,669 @@
+
+
+w14:paraId="492BDDDC" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">CONTROL DE PROYECTOS
+w14:paraId="32EB1212" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Oficina Técnica
+w14:paraId="7F210B83" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Flujo de trabajo, roles, mediciones y formatos, desde la adjudicación del servicio hasta el acta de conformidad
+w14:paraId="31C38BAA" w14:textId="77777777" w:rsidR="00F51A12" w:rsidRDefault="00F51A12">
+w14:paraId="35D1C1F7" w14:textId="77777777" w:rsidR="00F51A12" w:rsidRDefault="00F51A12">
+w14:paraId="4B0AE5F7" w14:textId="77777777" w:rsidR="00F51A12" w:rsidRPr="00501E40" w:rsidRDefault="00F51A12">
+w14:paraId="7C250846" w14:textId="77777777" w:rsidR="00925008" w:rsidRPr="00501E40" w:rsidRDefault="003F40DF">Metodología base: híbrida Last Planner System (LPS) + PMI / Valor Ganado (EVM)
+w14:paraId="33BB5393" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">
+w14:paraId="348208D8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F51A12">Apartados
+w14:paraId="7B9A0328" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">0. Principio de diseño — la regla que hace que todo lo demás funcione.
+w14:paraId="5E781AAD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">1. Roles — quién es quién en la Oficina Técnica.
+w14:paraId="40A45682" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2. Mediciones — qué se mide, con qué fórmula, de dónde sale cada dato.
+w14:paraId="7B979622" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3. Flujo completo del proyecto — qué pasa, en qué orden, quién lo hace, desde la adjudicación hasta el cierre.
+w14:paraId="01679F8D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">4. Formatos — índice + detalle de cada documento del sistema.
+w14:paraId="03E82A24" w14:textId="15BF2BBC" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00501E40">5. MOF — ficha de funciones por integrante.
+w14:paraId="7CA54B31" w14:textId="54CD0569" w:rsidR="00925008" w:rsidRDefault="00501E40">6. Mapa de datos — que alimenta a que, estado real vs. diseñado.
+w14:paraId="6C4285C4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">
+w14:paraId="4F12B0DB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">0. Principio de diseño
+w14:paraId="1B1796C1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El sistema controla 4 dimensiones en todo momento: ALCANCE, TIEMPO, COSTO y CALIDAD. Lo hace en dos frecuencias simultáneas, que se retroalimentan:
+w14:paraId="72FF31BE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Corto plazo (semanal/diario, campo) → Last Planner System — RDT diario → Plan Semanal → PPC + Causas de No Cumplimiento (CNC).
+w14:paraId="432438BD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mediano plazo (mensual/acumulado, gerencia-cliente) → EVM — RDT (validado) → PR (PV / EV / AC) → SPI / CPI / EAC / VAC.
+w14:paraId="5FA18818" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Condición no negociable para que ambas frecuencias midan lo mismo: cada PARTIDA DE CONTROL debe mapear 1 a 1 contra una actividad del cronograma/presupuesto. Esa condición no depende de una tabla Work Package aparte: el DP (y el PR que nace de el) construye esa relación directamente al importarse desde el presupuesto (dp_partidas / pr_partidas, identificadas por WBS) — ver sección 3.2. Sin ese mapeo, PPC y SPI/CPI terminan describiendo avances distintos del mismo trabajo y el sistema pierde credibilidad.
+w14:paraId="52EEEDF7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">
+w14:paraId="332BF020" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">1. Roles (organigrama funcional de la Oficina Técnica)
+w14:paraId="37A7DBD5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">"Oficina Técnica", "Costos", "Planner", "Logística" y "Administración" son las ÁREAS (no se les cambia el nombre). El PUESTO formal de la persona responsable de cada área, salvo donde se indica lo contrario, es "Supervisor de <Área>".
+w14:paraId="3DA95CE9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Puesto formal
+w14:paraId="255E2B04" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área
+w14:paraId="28A50029" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a
+w14:paraId="7C562F37" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Proyectos
+w14:paraId="115E5E00" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gerencia Proyectos
+w14:paraId="6C48D3C7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gerencia
+w14:paraId="0AB4F020" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Oficina Técnica
+w14:paraId="5A6CBB50" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Oficina Técnica
+w14:paraId="185AD50A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Proyectos
+w14:paraId="271E0829" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisor Oficina Técnica
+w14:paraId="462BDA25" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Oficina Técnica
+w14:paraId="1B5CA1B3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F51A12">Jefe de Oficina Técnica
+w14:paraId="542AFB35" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisor Planner
+w14:paraId="0FF3FC32" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Oficina Técnica
+w14:paraId="1E1EB8C6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F51A12">Jefe de Oficina Técnica
+w14:paraId="5F74A3BF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisor Costos
+w14:paraId="18BAB2A0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Oficina Técnica
+w14:paraId="4D636E9A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F51A12">Jefe de Oficina Técnica
+w14:paraId="0CD8033A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisor Operativo
+w14:paraId="56006FDB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Operaciones/Campo
+w14:paraId="69D00FB4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F51A12">Jefe de Oficina Técnica
+w14:paraId="469825B4" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Logística
+w14:paraId="55EB426E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Logística
+w14:paraId="3D606036" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Jefe de Oficina Técnica
+w14:paraId="028D23E4" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Administración
+w14:paraId="7BA68F02" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Administración
+w14:paraId="3FC92DE0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Proyectos
+w14:paraId="0AC81D43" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RRHH
+w14:paraId="3A1750B5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recursos Humanos
+w14:paraId="2B800087" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Proyectos
+w14:paraId="05914074" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Cliente
+w14:paraId="30624309" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Externo
+w14:paraId="44B28025" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008"/>
+w14:paraId="6248A566" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="17FE232F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">
+w14:paraId="0B986F7C" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2. Mediciones: cómo se mide el desempeño del proyecto
+w14:paraId="71F99E5E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Esta sección resume, de forma aplicada, que mide cada indicador del sistema, con que fórmula, y en que formato/tabla aparece. 
+w14:paraId="103D7071" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2.1 Valor Ganado (EVM) — desempeño de costo y cronograma, nivel mensual / gerencia-cliente
+w14:paraId="200F4EEF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicador
+w14:paraId="0653DCED" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Que responde
+w14:paraId="5A4F291E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Fórmula
+w14:paraId="75429E33" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PV (Valor Planificado)
+w14:paraId="17BBF47B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Cuánto debería llevar avanzado, a costo de presupuesto, según la fecha de corte.
+w14:paraId="209EC02B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">línea base (cronograma)
+w14:paraId="5A6050D0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EV (Valor Ganado)
+w14:paraId="3C09122E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Cuánto avance real se completó, a costo de presupuesto. La variable clave: cuánto vale, a precio de presupuesto, lo que de verdad se avanzó.
+w14:paraId="430B47A7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">metrado real × precio unitario
+w14:paraId="0526A5E6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">AC (Costo Real)
+w14:paraId="36B70BEC" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Cuanto costo realmente ese avance (mano de obra, equipos, materiales, subcontratos).
+w14:paraId="27512C63" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">HH + HM + materiales + subcontratos reales
+w14:paraId="2B27AC2A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">BAC
+w14:paraId="2C0488F9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Presupuesto total aprobado del proyecto (o de la partida).
+w14:paraId="45077766" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">—
+w14:paraId="1DBE07CD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">CPI
+w14:paraId="1E3DFE4B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Eficiencia de costo (>1 bien; <1: cada sol gastado rinde menos de 1 en valor).
+w14:paraId="4B514D46" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EV / AC
+w14:paraId="07D09A39" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">SPI
+w14:paraId="68B9223E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Eficiencia de cronograma, EN VALOR, no en días — para días de atraso reales hace falta el cronograma CPM del 3WLA.
+w14:paraId="2163A4CE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EV / PV
+w14:paraId="14BA9ECE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EAC
+w14:paraId="566B136F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Proyección de costo final si el CPI actual se mantiene en lo que falta.
+w14:paraId="64D577EB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">AC + (BAC − EV) / CPI
+w14:paraId="2C1BFE91" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">VAC
+w14:paraId="4901C3BD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Utilidad o perdida proyectada respecto al presupuesto original.
+w14:paraId="63BEF2F0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">BAC − EAC
+w14:paraId="161A628A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="0D43104B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">De dónde sale cada dato en el Sistema:
+w14:paraId="60D4BDA6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Dato
+w14:paraId="5C7C702E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Fuente diseñada (cómo se va a trabajar)
+w14:paraId="2CE87D9D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003207FD">Fuente
+w14:paraId="036D969C" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">BAC
+w14:paraId="1E378543" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">DP-PR (costo directo contractual = metrado contractual × precio unitario).
+w14:paraId="530023B8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003207FD">Se extrae del DP-PR
+w14:paraId="5D7CE377" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PV
+w14:paraId="1B2F3642" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Lookahead (3WLA, formato 010): trae el metrado planificado a ejecutar por partida en la semana. PV = metrado planificado acumulado × precio unitario (DP/PR).
+w14:paraId="7D413646" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003207FD" w:rsidP="004C32F2">Se extrae del plan maestro (línea base)
+w14:paraId="3510B5D3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EV
+w14:paraId="5D1C38F7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RDT (metrado ejecutado real por partida) → PR (pr_partidas.metrado_acumulado).
+w14:paraId="1EC2495A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="008756AF">Se extrae del PR
+w14:paraId="686899A4" w14:textId="77777777" w:rsidR="00925008" w:rsidRPr="00204B90" w:rsidRDefault="003F40DF">AC (mano de obra y equipos: HH, HM)
+w14:paraId="0FDB0CFC" w14:textId="77777777" w:rsidR="003207FD" w:rsidRDefault="00204B90"> (materiales)
+w14:paraId="618DE24E" w14:textId="77777777" w:rsidR="003207FD" w:rsidRDefault="003207FD">(subcontratos)
+w14:paraId="1B2FC479" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">RDT → PR (pr_recursos.costo_acumulado).Registro de costos por servicios (formato 021, Logística).Registro de costos por servicios (formato 021, Logística).
+w14:paraId="12910C48" w14:textId="77777777" w:rsidR="00204B90" w:rsidRDefault="00204B90">
+w14:paraId="6190F414" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003207FD">Se extrae del PR por costo unitario
+w14:paraId="10F09FE0" w14:textId="77777777" w:rsidR="00204B90" w:rsidRDefault="00204B90" w:rsidP="00204B90">Se extrae del Registro de costos por servicios
+w14:paraId="7A320A78" w14:textId="77777777" w:rsidR="00204B90" w:rsidRDefault="00204B90" w:rsidP="00204B90">Se extrae del Registro de costos por servicios
+w14:paraId="682F2349" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">CPI, SPI, EAC, VAC
+w14:paraId="736989E6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Calculados sobre PV/EV/AC/BAC.
+w14:paraId="32DC295A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008"/>
+w14:paraId="6B1C5983" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="39A2D6E0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">% de avance físico (usado en Status de servicios, en la Orden de Trabajo, y en el Dashboard): se calcula como EV / BAC (pendiente)
+w14:paraId="371A1296" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2.2 Last Planner System (LPS) — confiabilidad de la planificación, nivel semanal / operativo
+w14:paraId="7E47DBB5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicador
+w14:paraId="25C49914" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Que responde
+w14:paraId="02316485" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Fórmula
+w14:paraId="16DDFD13" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PPC
+w14:paraId="5D42772D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Qué tan confiable fue la promesa semanal. Es BINARIO por tarea: una tarea al 90% de avance cuenta como NO cumplida (0), no como 0.9 — mide confiabilidad de la promesa, no avance físico parcial (para eso ya está el % de avance físico de EVM, arriba).
+w14:paraId="59E2D8CE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">(tareas cumplidas al 100% / tareas comprometidas) × 100
+w14:paraId="2E47D35D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">CNC
+w14:paraId="14845AC0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Por qué no se cumplió cada tarea incumplida — diagnóstico, no solo síntoma.
+w14:paraId="349A2190" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">categoría por tarea incumplida: trabajo previo / mano de obra / materiales / equipos / diseño-información / clima / permisos-SSOMA / reprogramación
+w14:paraId="4594F384" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="7E4EF993" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Referencia rápida de la industria (no una meta formal de la contratista todavía): un PPC de 70-85% se considera "en control"; por debajo de 60% sostenido indica un problema serio de planificación o de gestión de restricciones. El Pareto de CNC acumulado, mes a mes, es la herramienta que revela el cuello de botella sistémico del proyecto 
+w14:paraId="36C96873" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2.3 Índice de Productividad (IP) — eficiencia de mano de obra por partida
+w14:paraId="67B8DAEB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicador
+w14:paraId="39B34CBA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Que mide
+w14:paraId="2E934FDE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Fórmula
+w14:paraId="138D8569" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00E17C11">IP
+w14:paraId="3743BFA6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Eficiencia de la mano de obra en una partida: cuántas HH se ganaron (valor ganado en horas) frente a las HH realmente acumuladas para el mismo trabajo.
+w14:paraId="3D1C071E" w14:textId="77777777" w:rsidR="000D4255" w:rsidRDefault="000D4255" w:rsidP="000D4255">HH ganadas se calcula: 
+w14:paraId="7749CC22" w14:textId="77777777" w:rsidR="000D4255" w:rsidRDefault="000D4255">Metrado Real × Rendimiento Estándar (HH/Und).
+w14:paraId="65292411" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">HH ganadas / HH acumuladas (por partida)
+w14:paraId="666D864A" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="000D4255">2.4 Avance físico (% avance físico) — metrado real ejecutado
+w14:paraId="12C5AFCF" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="008968AD">Indicador
+w14:paraId="44F65365" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="008968AD">Que mide
+w14:paraId="38EA1033" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="008968AD">Fórmula
+w14:paraId="696722DD" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="008968AD">% avance físico
+w14:paraId="34B158F2" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRPr="002C722B" w:rsidRDefault="002C722B" w:rsidP="008968AD">Mide el porcentaje de obra ejecutada físicamente en campo respecto al total contratado para esa partida."
+w14:paraId="12ADFB88" w14:textId="77777777" w:rsidR="004C32F2" w:rsidRDefault="004C32F2" w:rsidP="008968AD">Metrado acumulado / metrado contractual
+w14:paraId="424D58AD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">2.5 Por qué estas mediciones conviven
+w14:paraId="2C4FC967" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">EVM (vía el PR) responde "cuanto vale lo que avance, frente a lo que gaste y a lo que debía avanzar" — sirve a gerencia y cliente, es mensual y acumulado. LPS (PPC+CNC, vía el 3WLA) responde "que tan confiable es mi promesa de esta semana" — sirve a producción y campo, es semanal. IP mide, dentro de LPS, la eficiencia de la mano de obra en una partida específica.
+w14:paraId="0BEE451F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3. Flujo completo del proyecto
+w14:paraId="4EDE5B6D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3.1 Adjudicación del servicio
+w14:paraId="43664209" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El Cliente comunica al Jefe de Oficina Técnica que el servicio fue adjudicado. El Jefe de Proyectos también se entera, ya sea directamente del Cliente o a través del Jefe de Oficina Técnica.
+w14:paraId="45001A27" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Jefe de Oficina Técnica: comunica la adjudicación a Supervisor de Costos, quien la registra en el Status de servicios en dos columnas separadas: adjudicado (sí/no) y estado; al marcar adjudicado, el estado pasa automáticamente a EN PLANEACION.
+w14:paraId="2FF81D91" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El Jefe de Oficina Técnica revisa el catálogo de documentos "Al inicio" (presupuesto del proyecto, DP (datos del proyecto), PR (Proyect report), listado de recursos hh/hm/materiales sin costo, listado de materiales con costo, alcance, Personal NUEVO, requerimiento del proyecto) y decide cuáles aplican a este proyecto específico (no todos los proyectos necesitan todos los formatos); esa decisión queda formalizada en el Checklist de inicio (formato 025, ver 4.1/4.2), que indica además el responsable de cada documento. Al confirmarlo, se registra la fecha de adjudicación, el estado del servicio pasa a EN PLANEACION, y se notifica a cada responsable qué documento le corresponde generar.
+w14:paraId="5C92FD85" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3.2 Al inicio del Proyecto
+w14:paraId="0E14B9DA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00C14AF7">OT (Orden de trabajo) - Jefe de Oficina Técnica genera la OT asignando número correlativo de servicio; la apertura requiere la aprobación del Jefe de Proyectos. El Supervisor de Oficina Técnica la actualiza semanalmente (documento dinámico, sin aprobación adicional); el cierre lo confirma el Jefe de Oficina Técnica y requiere la firma del Jefe de Proyectos.
+w14:paraId="4C2A8E33" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Consolidado de servicio — Jefe de Oficina Técnica. Se inicializa con los datos del DP/PR y se mantiene actualizado durante todo el servicio.
+w14:paraId="179E289A" w14:textId="77777777" w:rsidR="00C14AF7" w:rsidRDefault="00C14AF7" w:rsidP="00C14AF7">Presupuesto del proyecto — Jefe de Oficina Técnica. Carga el presupuesto aprobado, tal como llega del cliente; es el insumo de origen del DP. Se sube en el checklist "Al inicio".
+w14:paraId="298848E7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">DP (Datos del Proyecto) — Supervisor de Oficina Técnica. Se genera desde el presupuesto (partidas, WBS, descripción, unidad, metrado contractual, precio unitario, hh por partida) y recursos (mano de obra, equipos, materiales, subcontratos). Cada proyecto es distinto: no hay una lista fija de partidas. Al importar el DP, el Supervisor de Oficina Técnica genera el PR en la misma operación — no es un paso manual aparte.
+w14:paraId="6C619F28" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00F146DE">PR (Reporte del Proyecto) — Supervisor de Oficina Técnica. Se genera con el DP: misma línea base (partidas y recursos) más columnas de avance acumulado que nacen en 0. A medida que el Supervisor de Oficina Técnica registra el avance real del RDT, el PR se va actualizando.
+w14:paraId="7823A82E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Alcance del servicio — Supervisor de Costos. Crear alcance en caso no existiera.
+w14:paraId="0AF7E739" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="002C7B9A">Recursos hh, hm, materiales (sin costo) — Supervisor de Oficina Técnica. Lo genera desde el DP (versión que se entrega a campo, sin exponer información comercial).
+w14:paraId="636E2895" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Listado de materiales CON costo — Supervisor de Costos. Lo genera desde el DP versión que se entrega a logística para seguimiento en la procura)
+w14:paraId="1417C2C9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00F146DE">Personal NUEVO — Supervisor de Oficina Técnica. Lo entrega a Administración.
+w14:paraId="6E9846A6" w14:textId="77777777" w:rsidR="00D96053" w:rsidRDefault="00D96053">Elaboración de Pets - Supervisor Operativo + Supervisor de Oficina Técnica. (Se elabora según coordinación)
+w14:paraId="62DB3FE5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Requerimiento del servicio — Supervisor Operativo + Supervisor de Oficina Técnica. Se realiza los RQs parciales o completos para el inicio de las actividades.
+w14:paraId="102F1C1F" w14:textId="77777777" w:rsidR="00D96053" w:rsidRDefault="00D96053">Otros – En caso el servicio lo requiera.
+w14:paraId="7A568243" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3.2.1 Entrega de información de proyecto
+w14:paraId="63D03C99" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Quién recibe qué, al iniciar cada ciclo de trabajo:
+w14:paraId="46B1A7F4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisor Operativo recibe: 
+w14:paraId="28850479" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Alcance (debe incluir las partidas contractuales o partidas de control según sea el servicio, las partidas de control  ayudan a la medición más clara del servicio)
+w14:paraId="12095EB7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00D96053">Listado de recursos hh, hm, materiales (sin costo)
+w14:paraId="0C835445" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="006F2DE6">3WLA (se debe incluir en servicio en la planificación semanal)
+w14:paraId="2544A0FA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="006F0C30">Pets aprobados
+w14:paraId="54E05C5A" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6">Formato RDT
+w14:paraId="3E43D81D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Logística recibe: 
+w14:paraId="4BC6AE32" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Listado de materiales c/c
+w14:paraId="20158FF4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Requerimientos (materiales, equipos) aprobados por Oficina Técnica
+w14:paraId="76404AAB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Administración recibe: 
+w14:paraId="1B7D89D2" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Personal NUEVO
+w14:paraId="3A1CEEF8" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6" w:rsidP="006F2DE6">
+w14:paraId="030863FC" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6" w:rsidP="006F2DE6">Planner recibe: 
+w14:paraId="73F05D63" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6" w:rsidP="006F2DE6">PR
+w14:paraId="673B8A90" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3.3 Durante el servicio
+w14:paraId="723FA0EF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Status de servicios: pasa a EJECUCION cuando todos los documentos requeridos del checklist de EN PLANEACION están subidos (el Jefe de Oficina Técnica verifica que el checklist esté completo) y confirma el paso, registrando la fecha de inicio real, según el Lookahead o Plan Semanal vigente del 3WLA.
+w14:paraId="0E0DDCE0" w14:textId="77777777" w:rsidR="00540721" w:rsidRDefault="0064530A">PR (Reporte del Proyecto) — Supervisor de Oficina Técnica. Actualiza el PR con los RDT ya validados de la semana.
+w14:paraId="44DF2E27" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo semanal (Planner, multi-proyecto)
+w14:paraId="40FA7186" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El archivo 3WLA agrupa todos los proyectos activos, no uno por proyecto.
+w14:paraId="62E1F5F9" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6">3WLA (ventana móvil de 3 semanas) — la entrega semanal del Planner. En la misma hoja, por proyecto, se ve: 
+w14:paraId="11A63890" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="003F40DF" w:rsidP="006F2DE6">PPC y las CNC de la semana que cierra, 
+w14:paraId="30D49D64" w14:textId="77777777" w:rsidR="006F2DE6" w:rsidRDefault="006F2DE6" w:rsidP="006F2DE6">La matriz de restricciones vigente (actividad, tipo de restricción, responsable de liberarla, fecha compromiso, estado — el dueño real de cada restricción)
+w14:paraId="67A6DE31" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="006F2DE6">PPC propuestos (compromisos) para la semana entrante.
+w14:paraId="07A6E7FA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00733096">Plan Semanal de Trabajo (tareas comprometidas de la semana, ya libres de restricción (lógica LPS Should → Can → Will), por proyecto y frente.
+w14:paraId="291E240F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Al cerrar la semana — Oficina Técnica valida el cumplimiento real de estos compromisos a través de los RDT del proyecto; con esa validación, el Planner calcula el PPC+CNC real de la semana, que alimenta directamente el Lookahead de la semana siguiente.
+w14:paraId="045A1CCF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo diario (Planner, multi-proyecto)
+w14:paraId="100FDE02" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Programación diaria — desglose, cada mañana, de que tareas del Plan Semanal ya comprometido se ejecutan HOY en cada proyecto activo — el último eslabón antes de que el RDT reporte lo realmente hecho.
+w14:paraId="4BC4BE07" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo continuo (Planner)
+w14:paraId="55BB0170" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Programación de capacitaciones — se actualiza de forma continua (vencimiento de cursos y necesidad de recapacitación), independiente de los servicios activos.
+w14:paraId="0232F8F0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Status de capacitación del personal — verifica el cumplimiento real de la programación, por trabajador.
+w14:paraId="7884BB18" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo diario/semanal (Supervisor Operativo)
+w14:paraId="170A727F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RDT (HH, HM, MAT, avance cuantificable) — Supervisor Operativo.
+w14:paraId="06D73666" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Informe de avance (017 Informe de servicio) — cumplimiento del Plan Semanal, alimenta el cálculo de PPC.
+w14:paraId="094EACBE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Requerimiento del servicio (materiales/recursos que faltan) — Supervisor Operativo
+w14:paraId="2A45A5A7" w14:textId="77777777" w:rsidR="00540721" w:rsidRDefault="0064530A">Elaboración/actualización de PETS (según necesidad de la actividad, no exclusivo del inicio) — Supervisor Operativo + Supervisor de Oficina Técnica.
+w14:paraId="4CF0CD16" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo diario/semanal (Supervisor de Oficina Técnica)
+w14:paraId="4CF8A187" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Valida los RDT de la semana — consistencia entre lo reportado y lo comprometido en el Plan Semanal. Con esa validación, actualiza el PR y el Planner calcula el PPC+CNC de la semana.
+w14:paraId="79599E64" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00FA029D">Status del requerimiento de servicios — seguimiento del requerimiento.
+w14:paraId="7E1E672C" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Revisa el 3WLA
+w14:paraId="6F690522" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Seguimiento de informes de avance
+w14:paraId="2AF6D6D3" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Seguimiento de registro de costo de servicios
+w14:paraId="5A9C1EAA" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Seguimiento de Status de capacitaciones
+w14:paraId="32513A92" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Seguimiento de tarea MOI
+w14:paraId="7140D292" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Seguimiento de status de servicios
+w14:paraId="5EDB1B94" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="00733096" w:rsidRDefault="00733096">Supervisa la programación diaria
+w14:paraId="16BDF661" w14:textId="77777777" w:rsidR="00733096" w:rsidRPr="000842C2" w:rsidRDefault="00733096">Analiza los PR
+w14:paraId="10A19326" w14:textId="77777777" w:rsidR="000842C2" w:rsidRDefault="000842C2">Actualización semanal de la OT (002).
+w14:paraId="2196DD37" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo continuo (Logística)
+w14:paraId="33B15A9A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Status de requerimiento  de almacén— Listado de requerimientos, N° OT, status, fecha de pedido, fecha de llegada,  
+w14:paraId="35ED94B2" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00F50C50" w:rsidP="00FA029D">Vale de salidas – Requerimientos enviados a cada servicio
+w14:paraId="766E46D4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00FA029D">Registro de costos de servicios — de entrega SEMANAL para el control de costos, debe estar disgregado por servicios.
+w14:paraId="7FA02EDE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo continuo (Administración)
+w14:paraId="3F330498" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Tareo diario del personal indirecto — Con esta tarea se controla los gastos generales de mano de obra indirecta.
+w14:paraId="2343FE22" w14:textId="77777777" w:rsidR="00540721" w:rsidRDefault="0064530A">Consolidado MOI — acumulado de la mano de obra indirecta (Administración).
+w14:paraId="027919B3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ciclo continuo (Supervisor de Costos)
+w14:paraId="7ADB961B" w14:textId="77777777" w:rsidR="00D52CE4" w:rsidRDefault="00D52CE4" w:rsidP="007E2AC4">Status de servicios — Actualización del status de los servicios adjudicados.
+w14:paraId="551A7ED9" w14:textId="77777777" w:rsidR="007E2AC4" w:rsidRPr="00D52CE4" w:rsidRDefault="007E2AC4" w:rsidP="00BB5B5C">
+w14:paraId="7481311B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Que se controla y con que, durante el servicio
+w14:paraId="1B45D6B1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Alcance y Tiempo — RDT + informe de servicio + PR + 3WLA (Lookahead/restricciones, PPC+CNC).
+w14:paraId="6149FDC5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Costo — PR (hh, hm) + registro de costo por servicio ( Logística) + tareo de indirectos (Administración).
+w14:paraId="6E99549E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Calidad — informe de avance (sup. Operativa)
+w14:paraId="0B501A60" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Control de costo directo (detalle, por componente)
+w14:paraId="1B109AC9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mano de obra directa — vía PR.
+w14:paraId="670ED68D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Materiales — vía informe de gastos por proyecto de Logística.
+w14:paraId="3F49CEA4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Equipos (HM) — vía PR.
+w14:paraId="0D89473E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gastos generales / mano de obra indirecta — vía Tareo diario de personal indirecto (Administración).
+w14:paraId="667ECAF2" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Los 3  primeros componentes anteriores son costo DIRECTO del proyecto. El plan, en esta versión, no cubre gastos generales queda fuera, solo se controlará la mano de obra indirecta total.
+w14:paraId="293C9350" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3.4 Cierre del servicio
+w14:paraId="13EC1F09" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entregables: 
+w14:paraId="646F4DDF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Informe final del servicio (017 Informe de servicio) — Supervisor Operativo
+w14:paraId="1D0B474B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Acta de conformidad — Supervisor Operativo (elabora; firman Cliente, Jefe de Proyectos y Supervisor Operativo). Documento distinto de la OT: certifica la conformidad del Cliente y cierra el proyecto ante él.
+w14:paraId="54BAD592" w14:textId="77777777" w:rsidR="00201C0B" w:rsidRDefault="00201C0B">OT cerrada – Jefe de Oficina Técnica (requiere firma de cierre del Jefe de Proyectos).
+w14:paraId="1EA02D44" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PR consolidado (con el avance acumulado final) — Supervisor de Oficina Técnica
+w14:paraId="01F53A69" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RDTs (todo el histórico) — Supervisor de Oficina Técnica
+w14:paraId="37CE842B" w14:textId="77777777" w:rsidR="00201C0B" w:rsidRDefault="00201C0B">Registro de costo por servicio – Logística
+w14:paraId="08B13E0B" w14:textId="77777777" w:rsidR="00201C0B" w:rsidRDefault="00201C0B" w:rsidP="00F332B1">
+w14:paraId="12A5DD01" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Status de servicios: 
+w14:paraId="001C1AE7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Pasa a CERRADO cuando se cumplen con los documentos, acción realizada por el jefe de oficina técnica.
+w14:paraId="5140B17C" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF" w:rsidP="00D9647E">
+w14:paraId="39E5CA46" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">4. Formatos: índice, finalidad, estructura y responsable
+w14:paraId="3F8DBAB1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">4.1 Índice rápido
+w14:paraId="3B3FFB48" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">N.
+w14:paraId="2097D0F9" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Formato
+w14:paraId="7B38B5CC" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Área
+w14:paraId="49A34F0A" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Fase
+w14:paraId="191C1D42" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Responsable
+w14:paraId="6AF35462" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">001
+w14:paraId="13F92F63" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Dashboard
+w14:paraId="599B9F23" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="4234E811" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">No aplica
+w14:paraId="02B7B2AA" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Jefe de Of. Técnica
+w14:paraId="318EC73D" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">002
+w14:paraId="4D7E4541" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">OT (Orden de trabajo)
+w14:paraId="00339D24" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="57202F57" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Transversal
+w14:paraId="08C4FE78" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Jefe de Of. Técnica
+w14:paraId="55105FDA" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">003
+w14:paraId="703A0C87" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Presupuesto del proyecto
+w14:paraId="7DFF8B2E" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="4F8B5287" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="2EE9F7C2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Jefe de Of. Técnica
+w14:paraId="0CF0BA06" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">004
+w14:paraId="0A1D2956" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">DP (Datos del proyecto)
+w14:paraId="1BC781B7" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="4FC8092B" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="48149F98" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Of. Técnica
+w14:paraId="363AA570" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">005
+w14:paraId="02E986DE" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Recursos hh, hm, mat. (s/c)
+w14:paraId="53E7A992" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="79612559" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="1EE2B9FA" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Of. Técnica
+w14:paraId="17A73DF9" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">006
+w14:paraId="06014883" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Materiales (c/c)
+w14:paraId="7A476EE7" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="21767F4B" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="59FE1EF6" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Costos
+w14:paraId="042AA9BB" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">007
+w14:paraId="73BE24A0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Alcance del servicio
+w14:paraId="60900915" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="10B94752" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="2EF1BC5A" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Costos
+w14:paraId="738539A5" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">008
+w14:paraId="590174B0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Personal NUEVO
+w14:paraId="27E6669F" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="4CFB9DB4" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio
+w14:paraId="6BDDE837" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Of. Técnica
+w14:paraId="35A534DB" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">009
+w14:paraId="1DE980F0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Consolidado de servicio
+w14:paraId="220446B0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Proyecto
+w14:paraId="19189D11" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">No aplica
+w14:paraId="604E4175" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Jefe de Of. Técnica
+w14:paraId="5C202D7D" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">010
+w14:paraId="597E0B65" w14:textId="1DCC2066" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">3WLA / Cron. (Plan Maestro, Lookahead+Restricciones, Plan Semanal, PPC+CNC)
+w14:paraId="53880C9D" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planificación
+w14:paraId="2558C498" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio y durante
+w14:paraId="597AC1BA" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planner
+w14:paraId="64CC30DC" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">011
+w14:paraId="087B4895" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Programación diaria
+w14:paraId="7C9C3BBD" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planificación
+w14:paraId="10ACCA08" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante
+w14:paraId="4FCF5EDC" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planner
+w14:paraId="2DA6D305" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">012
+w14:paraId="73FA3257" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">PR (Reporte del proyecto)
+w14:paraId="606A3767" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planificación
+w14:paraId="65DC57BD" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Transversal
+w14:paraId="511EC806" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Of. Técnica
+w14:paraId="1CB5959C" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">013
+w14:paraId="7D395284" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Status de capacitaciones
+w14:paraId="1B1F91C9" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planificación
+w14:paraId="25287B00" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante
+w14:paraId="1D038492" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Planner
+w14:paraId="775D24E9" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">014
+w14:paraId="4B5E043E" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Programación de capacitaciones
+w14:paraId="70D59344" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planificación
+w14:paraId="4C7F8240" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante
+w14:paraId="52B4B67A" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Planner
+w14:paraId="3AF6BC50" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">015
+w14:paraId="26A329F2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Status de servicios
+w14:paraId="5C8CFD6F" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Costos
+w14:paraId="27E360F8" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Transversal
+w14:paraId="590BD52C" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Costos
+w14:paraId="65937A10" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">016
+w14:paraId="65BEAF52" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">RDT (Reporte Diario de Trabajo)
+w14:paraId="5F58D220" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Supervisión Operativa
+w14:paraId="6D8200B2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante
+w14:paraId="2F619C29" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Operativo
+w14:paraId="6670EF8F" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">017
+w14:paraId="15A32EB9" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Informe de servicio
+w14:paraId="304426A8" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Supervisión Operativa
+w14:paraId="418BBE64" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante y cierre
+w14:paraId="2913E77C" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Operativo
+w14:paraId="66959F20" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">018
+w14:paraId="15066F10" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Requerimiento del servicio
+w14:paraId="32DF6386" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Supervisión Operativa
+w14:paraId="3EF9D3B0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio y durante
+w14:paraId="113ACFC5" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Op. + Of. Tec.
+w14:paraId="240B0EF1" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">019
+w14:paraId="5748F975" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Acta de conformidad
+w14:paraId="2596E967" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Supervisión Operativa
+w14:paraId="2984DD7A" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Cierre
+w14:paraId="6931489D" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Operativo
+w14:paraId="15894579" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">020
+w14:paraId="4E3AEDED" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Status de requerimiento
+w14:paraId="45C67510" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Logística
+w14:paraId="6985CA17" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante
+w14:paraId="4CA6C80B" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Logística
+w14:paraId="2180F06A" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">021
+w14:paraId="6A93C887" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Registro de costos por servicios
+w14:paraId="4280E1D2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Logística
+w14:paraId="65641C04" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Durante y cierre
+w14:paraId="4C93A06A" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Logística
+w14:paraId="386C321F" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">022
+w14:paraId="29CBA31C" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Tareo MOI
+w14:paraId="043D2678" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Administración
+w14:paraId="38F96D09" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Transversal
+w14:paraId="53D8C8E3" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Administración
+w14:paraId="08CDB190" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">023
+w14:paraId="56219F6D" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Consolidado MOI
+w14:paraId="62EE08B0" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Administración
+w14:paraId="60D03DF3" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Transversal
+w14:paraId="2FE57057" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Administración
+w14:paraId="57BC28BA" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">024
+w14:paraId="687345E7" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Pets
+w14:paraId="294DA30F" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">SSOMA
+w14:paraId="22753EC2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Al inicio y transversal
+w14:paraId="06F556D2" w14:textId="77777777" w:rsidR="00BC4E35" w:rsidRDefault="00BC4E35">Sup. Of. Técnica
+w14:paraId="4A6E4D99" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">025
+w14:paraId="04A3C4C5" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Checklist de inicio
+w14:paraId="19C07968" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Proyecto
+w14:paraId="07FE5B55" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Al inicio
+w14:paraId="44028978" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRDefault="00501E40">Jefe de Of. Técnica
+w14:paraId="06D79191" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="16F81BC1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">4.2 Cuadro detallado (finalidad y estructura por formato)
+w14:paraId="474D77CE" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">001. Dashboard
+w14:paraId="01F9F8A0" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Dar visibilidad consolidada de las métricas EVM y LPS (PV/EV/AC/CPI/SPI, PPC/CNC, % de avance físico) de todos los proyectos.
+w14:paraId="6DC3BCFB" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Vista resumen por proyecto: % de avance físico, CPI, SPI, PPC de la semana, alertas de costo — se arma con datos que ya existen en el PR y en el Status de servicios.
+w14:paraId="0935E57F" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Jefe de Oficina Técnica (compilación manual y periódica, a partir del PR y del Status de servicios de Supervisor de Costos).
+w14:paraId="73B1EA5D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">002. Orden de Trabajo (OT)
+w14:paraId="0B78D897" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Documento de control de un servicio completo (no de una tarea, como se usa "orden de trabajo" normalmente): identifica y autoriza el servicio, y mide su avance y gasto para controlarl. Se arma con datos que ya existen en el DP/PR (igual que ellos) — no es un formulario manual desde cero; lo genera el Jefe de Oficina Técnica; el Supervisor de Oficina Técnica la actualiza en cada corte semanal.
+w14:paraId="3619D46D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: 6 bloques: (1) Datos generales — N.° OT (correlativo interno, clave que agrupa todo lo del servicio), N.° de OC/orden del cliente, servicio, cliente, fechas, responsable; (2) Descripción del servicio — alcance, partidas de control; (3) Control del servicio (semanal) — avance físico + PPC/CNC (ver fórmulas en 2.1/2.2), alimentado por el "Reporte semanal del servicio" (formato nuevo); (4) Gastos del servicio — HH/HM/subcontratos/requerimientos, BAC/AC/CPI/EAC; (5) Seguridad y Calidad — reservado, sin fuente de datos todavía; (6) Resumen ejecutivo — Resumen con métricas del proyecto.
+w14:paraId="17F71C96" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Jefe de Oficina Técnica
+w14:paraId="7E1068CD" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Aprobación: el Jefe de Proyectos aprueba la apertura y firma el cierre; las actualizaciones semanales no requieren aprobación adicional; las realiza el Supervisor de Oficina Técnica (documento dinámico). Es un documento distinto del Acta de conformidad (019): la OT abre, controla y cierra administrativamente el servicio; el Acta certifica la conformidad del Cliente ante él.
+w14:paraId="56917728" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">003. Presupuesto del proyecto
+w14:paraId="25952EF2" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Dejar registrado, tal como llega del cliente, el presupuesto aprobado que da origen al DP y al PR.
+w14:paraId="6736C597" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Archivo del presupuesto (formato del cliente/APU).
+w14:paraId="3B471D3A" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Jefe de Oficina Técnica.
+w14:paraId="32391F13" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">004. DP (Datos del proyecto)
+w14:paraId="5469F00C" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Traducir el presupuesto aprobado en la línea base operable del proyecto: partidas de control (con su mapeo WBS, lo que antes era la "Tabla Work Package") y recursos (mano de obra, equipos, materiales, subcontratos). Es el insumo de origen del PR.
+w14:paraId="7F2AD585" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Partidas (WBS, descripción, unidad, metrado contractual, precio unitario, hh por partida) + recursos por tipo (cantidad contractual, precio unitario, costo contractual).
+w14:paraId="294E555D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Oficina Técnica.
+w14:paraId="3D2DA8FA" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">005. Recursos hh, hm, mat. (s/c)
+w14:paraId="1BB850A5" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Entregar a campo la lista de recursos del proyecto (mano de obra, equipos, materiales) sin exponer información comercial. Fusiona lo que antes eran dos formatos separados.
+w14:paraId="08FA8AE8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Código, descripción, unidad, cantidad estimada — sin columna de precio.
+w14:paraId="0EAFAC45" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Oficina Técnica.
+w14:paraId="04707935" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">006. Materiales (c/c)
+w14:paraId="69E6AB30" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Base de precios unitarios, sirve para que logística tenga conocimiento del costo contractual de mateirales.
+w14:paraId="51422E79" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Código, descripción, unidad, precio unitario, proveedor referencial.
+w14:paraId="72FDB038" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Costos.
+w14:paraId="095E5380" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">007. Alcance del servicio
+w14:paraId="02B6126C" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Dejar por escrito que incluye y que NO incluye el servicio adjudicado.
+w14:paraId="1DED6033" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Descripción general, entregables, exclusiones explícitas, supuestos y restricciones contractuales, criterios de aceptación.
+w14:paraId="36904964" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Costos.
+w14:paraId="585C4909" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">008. Personal NUEVO
+w14:paraId="676AB196" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Informar a Administración la dotación de personal (directo e indirecto) que necesita el proyecto.
+w14:paraId="032BC719" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Cargo, cantidad requerida, especialidad, fecha de incorporación estimada.
+w14:paraId="4181CA5F" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Oficina Técnica (entrega a Administración).
+w14:paraId="2B3D7283" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">009. Consolidado de servicio
+w14:paraId="6F5EC774" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Formato que reúne en un solo archivo todos los datos del proyecto, para alimentar el Dashboard, la OT y cualquier documento entregable que requiera esos datos, sin tener que ir a buscarlos por separado a cada formato.
+w14:paraId="2216B25E" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Datos generales del proyecto + resumen de las fuentes que consolida (DP/PR).
+w14:paraId="5BC57220" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Jefe de Oficina Técnica.
+w14:paraId="40B81562" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">010. 3WLA — archivo único, MULTI-PROYECTO (Cronograma)
+w14:paraId="71192FAF" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Sostener toda la cascada Last Planner (que debería hacerse → que se puede hacer → que se hará → que se hizo) de todos los proyectos activos en un solo lugar, porque el Planner gestiona la ventana corta de todos a la vez.
+w14:paraId="6E4739AB" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: 4 hojas: (a) Plan Maestro — por proyecto, hitos y cronograma base; (b) Lookahead + Restricciones — ventana móvil de 3 semanas por proyecto; por actividad/partida incluye el metrado planificado a ejecutar (fuente del Valor Planificado — PV, ver sección 2.1), además del tipo de restricción, responsable de liberarla, fecha compromiso y estado, y un resumen de PPC/CNC de la semana que cierra + los PPC propuestos de la semana entrante; (c) Plan Semanal — tareas comprometidas, ya libres de restricción, por proyecto y frente; (d) PPC + CNC — cálculo semanal real por proyecto, con causa de no cumplimiento categorizada por tarea, sobre el RDT ya validado por Oficina Técnica.
+w14:paraId="3D7C40F2" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Planner.
+w14:paraId="62D44613" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">011. Programación diaria — archivo único, MULTI-PROYECTO
+w14:paraId="04912FA8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Desglose de las tareas ya comprometidas en el Plan Semanal se ejecutan HOY en cada proyecto — el último eslabón antes de que el RDT reporte lo realmente hecho.
+w14:paraId="50DDF0F5" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Proyecto, tarea (referida al Plan Semanal), frente/cuadrilla, fecha, responsable de campo.
+w14:paraId="6D71D84B" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Planner.
+w14:paraId="4383A7A9" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">012. PR (Reporte del proyecto)
+w14:paraId="2CC3E652" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Sostener el avance acumulado del proyecto para el cálculo de valor ganado (PV, EV, AC, SPI, CPI, EAC, VAC — ver fórmulas en 2.1).
+w14:paraId="7267AF27" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Misma línea base del DP (partidas y recursos) + columnas de avance acumulado (metrado acumulado, cantidad acumulada) —se van llenando conforme el Supervisor de Oficina Técnica registra el avance real del RDT.
+w14:paraId="0EB7636E" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Oficina Técnica
+w14:paraId="2C6E3AF8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">013. Status de capacitaciones
+w14:paraId="1BD904ED" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Verificar el cumplimiento real de la programación de capacitaciones, por trabajador.
+w14:paraId="6F9EC0DA" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Trabajador, capacitación, fecha realizada, estado (pendiente / realizada / vencida).
+w14:paraId="38595359" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Planner.
+w14:paraId="55DF4364" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">014. Programación de capacitaciones
+w14:paraId="712926CC" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Planificar qué capacitaciones necesita el personal del proyecto y cuándo se dictarán.
+w14:paraId="52C24749" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Tema, personal objetivo, fecha programada, responsable de dictarla.
+w14:paraId="02359A02" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Planner.
+w14:paraId="5D61F413" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">015. Status de servicios — MULTI-PROYECTO
+w14:paraId="11DD6356" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Dar visibilidad del estado de todos los proyectos de la empresa sin revisar cada PR individualmente.
+w14:paraId="753889F8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: N.° de proyecto, nombre, cliente, fechas (adjudicación, inicio, cierre), estado (EN PLANEACION/EJECUCION/CERRADO), % de avance físico, responsable del proyecto.
+w14:paraId="1511E3FC" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Costos (actualización manual y continua).
+w14:paraId="6A63FBCF" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">016. RDT (Reporte Diario de Trabajo)
+w14:paraId="18C0160F" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Capturar el avance físico real y las HH/HM/materiales ejecutados cada día en campo, partida por partida. Es la fuente primaria de todo el sistema: alimenta el PR (EVM) y, ya validado por Oficina Técnica, el cálculo de PPC+CNC del Planner (ver sección 2.2).
+w14:paraId="1C1AF978" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Encabezado (proyecto, fecha, turno); tabla de avance por partida de control (WBS, unidad, cant. programada, cant. ejecutada); tabla de tareo (trabajador, cargo, horas por partida); equipos/HM usados; materiales consumidos; incidencias/restricciones detectadas y CNC
+w14:paraId="51E13707" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor Operativo.
+w14:paraId="4808D77E" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">017. Informe de servicio
+w14:paraId="163FCF59" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Documentar el avance del servicio en dos momentos, con el mismo formato: informe de avance (durante, resume el cumplimiento del Plan Semanal) e informe final (al cierre, resumen de lo ejecutado frente a lo planificado).
+w14:paraId="29024341" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Resumen de alcance ejecutado, desviaciones relevantes, lecciones aprendidas. El informe de avance usa un corte parcial; el informe final consolida todo el histórico del servicio.
+w14:paraId="56DAD7BF" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor Operativo.
+w14:paraId="2493B100" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">018. Requerimiento del servicio
+w14:paraId="50FA1515" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Formalizar la necesidad de materiales/recursos que surge en campo (o ya desde el arranque), para iniciar su trámite en Logística.
+w14:paraId="2507966E" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Ítem, cantidad, fecha necesaria, partida/proyecto asociado, solicitante.
+w14:paraId="2F22BE99" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor Operativo + Supervisor de Oficina Técnica.
+w14:paraId="62F6B5BE" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">019. Acta de conformidad
+w14:paraId="2DA722C6" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Documento contractual que certifica que el cliente recibe el servicio conforme, y cierra el proyecto.
+w14:paraId="7FEDDD38" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Datos del proyecto, declaración de conformidad, observaciones (si las hay), firmas (cliente, Jefe de Proyectos, Supervisor Operativo).
+w14:paraId="634C9EA2" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor Operativo.
+w14:paraId="0D6E9F45" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Nota: documento distinto de la OT (002); la OT es el documento interno que abre, controla y cierra administrativamente el servicio, el Acta es el cierre formal firmado por el Cliente.
+w14:paraId="67E0DB8D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">020. Status de requerimiento
+w14:paraId="3853A6FC" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Dar trazabilidad al trámite de cada requerimiento desde que se pide hasta que se entrega en obra.
+w14:paraId="7C39E790" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Requerimiento, cuadro de necesidades, orden de compra, fecha de recepción verificada, vale de salida, kardex, estado.
+w14:paraId="54756D3B" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Logística.
+w14:paraId="37EC5C42" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">021. Registro de costos por servicios
+w14:paraId="019C1211" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Controlar el costo real de los requerimientos del proyecto y dar visibilidad periódica (semanal) de ese gasto por servicio.
+w14:paraId="5B6DD198" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Fecha, ítem, cantidad, costo unitario, costo total, proyecto/servicio asociado — con corte semanal para reporte a Oficina Técnica.
+w14:paraId="1F0E8FA3" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Logística.
+w14:paraId="0CA90FDF" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">022. Tareo MOI
+w14:paraId="4CD2A591" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Controlar el gasto de mano de obra indirecta (gastos generales).
+w14:paraId="4826976C" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Trabajador, cargo, horas del día, proyecto/área asignada.
+w14:paraId="0B8BEBB8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Administración.
+w14:paraId="11DEB163" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">023. Consolidado MOI
+w14:paraId="2747D7A4" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Acumular el tareo de personal indirecto de todo el proyecto, dando visibilidad del cumplimiento/consistencia del tareo diario.
+w14:paraId="0A287CA8" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Trabajador, días tareados acumulados, horas por proyecto/área.
+w14:paraId="4E42F6D9" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Administración.
+w14:paraId="7A04B70C" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">024. Pets
+w14:paraId="21EF4DDC" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Catálogo/checklist de los Procedimientos Escritos de Trabajo Seguro (PETS) que aplican a las actividades del proyecto.
+w14:paraId="748AA631" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Actividad, PETS aplicable, estado (pendiente / elaborado / aprobado), responsable de elaboración.
+w14:paraId="0616ABA0" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Supervisor de Oficina Técnica (mantiene el listado); Supervisor Operativo (elabora cada PETS).
+w14:paraId="2EC2DC7D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">025. Checklist de inicio
+w14:paraId="04916634" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Finalidad: Formalizar, para cada proyecto, qué documentos del catálogo "Al inicio" aplican y quién es responsable de generar cada uno — deja registro de la decisión del Jefe de Oficina Técnica y del aviso a cada responsable.
+w14:paraId="590A949B" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Estructura: Documento (columna), responsable (columna); una fila por cada documento del catálogo "Al inicio" que aplique a este proyecto.
+w14:paraId="05F3F599" w14:textId="2378628B" w:rsidR="004141C7" w:rsidRDefault="00360636">Responsable: Jefe de Oficina Técnica.
+w14:paraId="5C6945A3" w14:textId="4DA16192" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="4328F255" w14:textId="14E58DFC" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="4584ADA0" w14:textId="0E05ABFE" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="0AA3F316" w14:textId="4EB1553A" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="041F81CB" w14:textId="47C2F58E" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="1D5313E4" w14:textId="172EDA5D" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="7B7BCEAA" w14:textId="57B44864" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="3A4A0F40" w14:textId="77777777" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="7B21A8A6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5. MOF — Manual de Organización y Funciones (ficha por integrante)
+w14:paraId="554FDFBD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.1 Jefe de Proyectos
+w14:paraId="7447442D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Gerencia de Proyectos
+w14:paraId="6D0F6F7A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Gerencia General / Cliente
+w14:paraId="0434825A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Ser el responsable único ante el cliente por el cumplimiento de alcance, plazo, costo y calidad del servicio adjudicado, desde la adjudicación hasta la firma del acta de conformidad.
+w14:paraId="6D7960E1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="64867BB1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibir la comunicación de adjudicación del servicio.
+w14:paraId="16441B22" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisar el desempeño del proyecto a través del PR.
+w14:paraId="4DD1950F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Escalar y decidir ante desviaciones críticas.
+w14:paraId="7C5032A4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Dar el visto bueno final al acta de conformidad ante el cliente.
+w14:paraId="2BB3C7BF" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Aprobar la apertura de la OT y firmar su cierre.
+w14:paraId="2B02C221" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Comunicación de adjudicación, Status de servicios, PR (resumen EVM), Informe de servicio, Registro de costos por servicios, OT (para aprobar su apertura y cierre).
+w14:paraId="23DE3A5E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Decisiones/escalamientos, aprobación de apertura de la OT, firma de cierre de la OT, visto bueno de cierre del Acta de conformidad.
+w14:paraId="1F71DB7A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: % avance físico, CPI y SPI.
+w14:paraId="6DFD9B0E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.2 Jefe de Oficina Técnica
+w14:paraId="353249B8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Oficina Técnica
+w14:paraId="6542E565" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Proyectos
+w14:paraId="52672D74" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Responsable del ciclo de vida del proyecto en el Status de servicios: decidir qué documentos aplican a cada proyecto, y confirmar cada transición de estado (EN PLANEACION → EJECUCION → CERRADO). 
+w14:paraId="5B47AC35" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="67A64AC3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibir la comunicación de adjudicación del servicio.
+w14:paraId="718F0F0D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Comunicar la adjudicación a Supervisor de Costos.
+w14:paraId="18415B5D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Subir el Presupuesto del proyecto tal como llega aprobado del cliente.
+w14:paraId="1E5AB928" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Generar la OT (002) al inicio del servicio, solicitando la aprobación del Jefe de Proyectos en la apertura; confirmar y firmar su cierre junto con el Jefe de Proyectos.
+w14:paraId="197DFA1E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="004404CF">Notificar a cada responsable qué documento del Checklist de inicio (025) le corresponde generar.
+w14:paraId="10F1086C" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Verificar que el checklist de EN PLANEACION esta completo, y confirmar el paso a EJECUCION, registrando la fecha de inicio real según el Lookahead o Plan Semanal vigente.
+w14:paraId="09DCE191" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Verificar que el Acta de conformidad fue subida, y confirmar el cierre del proyecto (paso a CERRADO).
+w14:paraId="79C63257" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Mantener actualizado el Consolidado de servicio (009) con los datos del proyecto.
+w14:paraId="43863C6D" w14:textId="77777777" w:rsidR="004141C7" w:rsidRDefault="00360636">Compilar el Dashboard (001) con las métricas del PR y el Status de servicios.
+w14:paraId="0FC8EF27" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Comunicación de adjudicación, presupuesto aprobado (del Cliente), PR y Status de servicios (para compilar el Dashboard).
+w14:paraId="2A8B5E92" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Comunicación de adjudicación (a Supervisor de Costos), Presupuesto del proyecto (subido en el checklist), proyecto adjudicado (con su checklist de documentos requeridos), confirmación de paso a EJECUCION, confirmación de cierre, Consolidado de servicio actualizado, Dashboard del proyecto.
+w14:paraId="3FB7D1BE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Tiempo entre adjudicación y confirmación de EJECUCION, tiempo entre documentos de cierre completos y confirmación de CERRADO.
+w14:paraId="09F6438A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.3 Supervisor de Oficina Técnica
+w14:paraId="4789AC9F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Oficina Técnica
+w14:paraId="07B01F0A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Oficina Técnica
+w14:paraId="0AA37CDB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Custodiar la trazabilidad documentaria y técnica del proyecto; traducir el presupuesto en el DP/PR operables en campo; validar el reporte diario antes de que alimente el PR.
+w14:paraId="3CF99634" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="4E042F04" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Importar el DP a partir del presupuesto aprobado, generando el PR en la misma operación (mismo archivo, fórmulas vinculadas).
+w14:paraId="118C9C66" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibir y validar los RDT diarios del Supervisor Operativo, antes de que el Planner calcule el PPC+CNC de la semana y de que ese avance quede reflejado en el PR.
+w14:paraId="5A58B6C4" w14:textId="77777777" w:rsidR="00A11497" w:rsidRDefault="008F23DD">Actualizar el PR cada semana con los RDT ya validados, antes de que el Planner calcule el PPC+CNC.
+w14:paraId="18686282" w14:textId="77777777" w:rsidR="00A11497" w:rsidRDefault="008F23DD">Actualizar la OT (002) en cada corte semanal con el avance físico y el PPC/CNC del servicio.
+w14:paraId="7797DEE1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gestionar el requerimiento del proyecto junto al Supervisor Operativo, y controlar su trámite.
+w14:paraId="184E4CC9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mantener el Personal NUEVO y el Listado de recursos hh/hm/materiales (sin costo).
+w14:paraId="0EE475FE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Custodiar PR y RDTs para el cierre del proyecto.
+w14:paraId="6D8F42E0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Participar en la elaboración del PETS antes del inicio de campo.
+w14:paraId="2C056EA8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Revisar el 3WLA (010) — verificar que el Lookahead y el Plan Semanal estén vigentes.
+w14:paraId="6772F06E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguimiento del Informe de servicio (017) — verificar que el Supervisor Operativo lo esté generando.
+w14:paraId="3F7E9E27" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguimiento del Registro de costos por servicios (021) — verificar que Logística lo mantenga actualizado.
+w14:paraId="7786111C" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguimiento del Status de capacitaciones (013) — verificar que el Planner lo mantenga actualizado.
+w14:paraId="6D4B624B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguimiento del Tareo MOI (022) — verificar que Administración lo mantenga actualizado.
+w14:paraId="0006D2A8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguimiento del Status de servicios (015) — verificar que Supervisor de Costos lo mantenga actualizado.
+w14:paraId="20CC30CE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Supervisar la Programación diaria (011) del Planner.
+w14:paraId="54790409" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Analizar el PR (012) para identificar desviaciones de costo y avance.
+w14:paraId="419CB366" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Presupuesto aprobado, RDT diario, requerimientos de campo.
+w14:paraId="339B19A3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: DP, PR (generado y actualizado semanalmente), RDT validado (insumo del Planner para el PPC+CNC), control de requerimiento, Personal NUEVO (a Administración), PR/RDTs consolidados al cierre.
+w14:paraId="603343ED" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Consistencia RDT ↔ PR, tiempo de validación del RDT.
+w14:paraId="29C1C067" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.4 Planner
+w14:paraId="08FEF913" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Planeamiento
+w14:paraId="38A61695" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Oficina Técnica
+w14:paraId="56BD334F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Sostener la planificación de todos los servicios activos en sus distintos horizontes (maestro, lookahead, semanal, diario) y proteger el flujo de trabajo liberando restricciones a tiempo.
+w14:paraId="33664E18" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="76CEB3E0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar y mantener el archivo único "3WLA" (hojas: Plan Maestro por proyecto; Lookahead + matriz de restricciones, Plan Semanal y PPC+CNC).
+w14:paraId="72D78B50" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar y actualizar semanalmente el Lookahead (3 semanas) con su matriz de restricciones (responsable + fecha compromiso por restricción), y el Plan Semanal de Trabajo con objetivos medibles vía PPC.
+w14:paraId="52086E7A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar cada día la Programación diaria (multi-proyecto): desglose de que tareas del Plan Semanal se ejecutan hoy.
+w14:paraId="2883263F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Calcular el PPC+CNC real de cada semana, sobre el RDT ya validado por Oficina Técnica, y usarlo como insumo del Lookahead siguiente.
+w14:paraId="4A5F1641" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar la programación de capacitaciones.
+w14:paraId="3CE58D83" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Verificar el cumplimiento real de la programación de capacitaciones, por trabajador (Status de capacitaciones, 013).
+w14:paraId="4D72A285" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Presupuesto aprobado, DP/PR, RDT validado por Oficina Técnica, asistencia real.
+w14:paraId="41D1B08B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Plan Maestro, Lookahead + matriz de restricciones, Plan Semanal, Programación diaria, PPC + CNC semanal (de todos los proyectos activos), Programación de capacitaciones, Status de capacitaciones actualizado.
+w14:paraId="246E9160" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Cumplimiento del Plan Maestro (SPI de plazo), PPC semanal y su tendencia, % de restricciones liberadas a tiempo, Pareto de CNC, % de personal capacitado según programa.
+w14:paraId="40CBD14A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.5 Supervisor de Costos
+w14:paraId="6628CD4F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Costos
+w14:paraId="46595034" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Oficina Técnica
+w14:paraId="6B66A212" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Estimar el costo directo de los servicios (materiales, HM, mano de obra), gastos generales, y dejar por escrito el alcance contractual del servicio.
+w14:paraId="5B647BCE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="38EE8400" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar el listado de materiales con costo.
+w14:paraId="314AB8A3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar el alcance del servicio (función transferida desde Planner).
+w14:paraId="1A9A0761" w14:textId="77777777" w:rsidR="00A11497" w:rsidRDefault="008F23DD">Mantener actualizado el Status de servicios: estado y % de avance físico de todos los servicios adjudicados.
+w14:paraId="2219D6A0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Comunicación de adjudicación (del Jefe de Oficina Técnica).
+w14:paraId="544B8F6A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Listado de materiales con costo, Alcance del servicio, Status de servicios actualizado.
+w14:paraId="71C9C6CC" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: IP.
+w14:paraId="64DC7286" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.6 Supervisor Operativo
+w14:paraId="7822669A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Operaciones / Campo
+w14:paraId="5AC71FAC" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Oficina Técnica
+w14:paraId="241701E5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Ejecutar el trabajo de campo conforme al alcance, cronograma y partidas de control, y reportar el avance real de forma diaria y confiable.
+w14:paraId="21B08410" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="0BC71370" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar y actualizar el PETS (al inicio de campo y durante el servicio, según necesidad de la actividad) con Oficina Técnica.
+w14:paraId="6F4156F3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibir alcance, listado de recursos (sin costo), cronograma y partidas de control (del DP/PR).
+w14:paraId="38B18903" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Comprometer y ejecutar el Plan Semanal.
+w14:paraId="0DE1FEC0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Emitir el RDT diario.
+w14:paraId="31F6CA3E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Emitir el informe semanal (cumplimiento del Plan Semanal, alimenta el PPC).
+w14:paraId="63B972BB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Levantar el requerimiento del proyecto junto a Oficina Técnica.
+w14:paraId="5C735157" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Al cierre: elaborar el informe de servicio (017) y el acta de conformidad.
+w14:paraId="4F04558A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Alcance, listado de recursos sin costo, cronograma, partidas de control, Plan Semanal, Pets aprobados (en caso el servicio lo requiera).
+w14:paraId="74526E4A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: RDT diario, informe semanal, requerimientos, Informe de servicio, acta de conformidad.
+w14:paraId="195E00F3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: PPC de su frente, avance físico real vs. programado.
+w14:paraId="46572BB1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.7 Logística
+w14:paraId="1933EEBC" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Logística
+w14:paraId="785A5612" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Oficina Técnica
+w14:paraId="3CA4DE16" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Abastecer oportunamente los materiales requeridos y controlar el gasto real de materiales del proyecto.
+w14:paraId="1BE8BB0D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="4A5C9905" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibir el listado de materiales con costo y los requerimientos aprobados por Oficina Técnica.
+w14:paraId="5D67309A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gestionar el flujo: cuadro de necesidades → orden de compra → recepción verificada → vale de salida → kardex.
+w14:paraId="5AC07157" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mantener el status de requerimiento visible para Oficina Técnica y Supervisor Operativo.
+w14:paraId="23C8F7F0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="000B6D31">Actualizar el registro de costos por servicios (021)
+w14:paraId="6FDC8A27" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entregar semanalmente el Registro de costos por servicios (021)
+w14:paraId="7AACDD72" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Listado de materiales con costo, requerimientos aprobados.
+w14:paraId="54B8522D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Status de requerimiento, Registro de costos por servicios (021, semanal).
+w14:paraId="3E357A9D" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Tiempo de atención de requerimientos, desviación de gasto real de materiales vs. presupuesto.
+w14:paraId="24ADB2F3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.8 Administración
+w14:paraId="36B6ECEB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Administración
+w14:paraId="22ABC8A4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Proyectos
+w14:paraId="333D0A2E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Controlar el gasto de mano de obra indirecta del proyecto.
+w14:paraId="47BC4EF1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="1E2D514A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Elaborar el tareo diario del personal indirecto y su status (fuente de control de gastos generales)
+w14:paraId="4B944046" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mantener el Consolidado MOI (023), acumulando el tareo de personal indirecto de todo el proyecto.
+w14:paraId="1172A6B5" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Personal NUEVO (del Supervisor de Oficina Técnica).
+w14:paraId="76722918" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Tareo diario de personal indirecto y su status, Consolidado MOI actualizado.
+w14:paraId="149F7887" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Gasto real de MOI vs. presupuestado.
+w14:paraId="44DFA1CB" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.9 RRHH
+w14:paraId="524EBEEA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Área: Recursos Humanos
+w14:paraId="31FEEC81" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reporta a: Jefe de Proyectos / Gerencia
+w14:paraId="1BC3CE02" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Objetivo: Asegurar la disponibilidad oportuna de personal calificado antes y durante el proyecto.
+w14:paraId="41C2DE98" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Funciones: 
+w14:paraId="6BE24C13" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Reclutamiento de personal según requerimiento de campo o administración, antes del inicio y durante la ejecución del proyecto.
+w14:paraId="638D7374" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Recibe: Requerimiento de personal.
+w14:paraId="44932167" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Entrega: Personal contratado / asignado.
+w14:paraId="5B753459" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Indicadores: Tiempo de cobertura de vacantes.
+w14:paraId="3A66228F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">5.10 Cliente (externo, referencial)
+w14:paraId="7B4894D3" w14:textId="51D16D7B" w:rsidR="00925008" w:rsidRDefault="003F40DF">No forma parte de la Oficina Técnica. Dispara el flujo comunicando la adjudicación del servicio, y lo cierra firmando el acta de conformidad.
+w14:paraId="6A61EDA9" w14:textId="49E74E67" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="49B78F5F" w14:textId="22041411" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="1182A0E0" w14:textId="5B627CE7" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="6C5E875A" w14:textId="017B74F2" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="78421518" w14:textId="1A3027DE" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="44762F1D" w14:textId="04FA3F9C" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="0F66EF82" w14:textId="7AFF0BAA" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="256F76DD" w14:textId="402FCABC" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="04816EF5" w14:textId="748A6C9D" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="7D75CB67" w14:textId="77777777" w:rsidR="00F923D0" w:rsidRDefault="00F923D0"/>
+w14:paraId="5675058F" w14:textId="02E1714A" w:rsidR="00925008" w:rsidRDefault="00E7060F">6. Qué alimenta a qué (mapa de datos, estado real vs. diseñado)
+w14:paraId="626312B8" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Agregado 2026-08-17 porque Víctor pidió dejar explícito el flujo de datos antes de diseñar cualquier documento nuevo que consuma varias fuentes a la vez (primer caso: la Orden de Trabajo — OT — por servicio, ver ítem 002 en 4.1/4.2, spec cerrado el mismo día). Un documento nuevo no puede mostrar un dato que ninguna otra parte del sistema está produciendo todavía.
+w14:paraId="0DD1F989" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Dato
+w14:paraId="4B5EA455" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Fuente real hoy
+w14:paraId="08D32720" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Estado (2026-08-17)
+w14:paraId="743F1496" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Datos generales del servicio (nombre, cliente, fechas, responsable, adjudicación)
+w14:paraId="3305C776" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRPr="00E7060F" w:rsidRDefault="00501E40">proyectos (Status de servicios)
+w14:paraId="7FC1D534" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Existe, poblado
+w14:paraId="58DBACF3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Línea base / BAC (partidas, recursos, costo contractual)
+w14:paraId="7E86C9EE" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">DP (importado del presupuesto) → PR (se genera junto al DP)
+w14:paraId="13FD9FA2" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Existe, poblado
+w14:paraId="05B0569F" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Avance planificado (PV, metrado programado por partida/semana — ver 2.1)
+w14:paraId="58F7D86B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3WLA — Lookahead (formato 010)
+w14:paraId="373665BA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El Lookahead YA corre hoy con datos reales en Excel; falta integrarlo al sistema web (el formato 010 aún no está construido como sistema)
+w14:paraId="5EB2F1B3" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Avance físico real (metrado ejecutado — EV en la sección 2.1)
+w14:paraId="11EF3EF7" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RDT → PR (pr_partidas.metrado_acumulado)
+w14:paraId="224F4287" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Formato existe (RDT.xlsx), SIN ningún dato real capturado — ver 016
+w14:paraId="0F4E1ABA" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Costo real de mano de obra y equipos (HH, HM — AC en la sección 2.1)
+w14:paraId="42641408" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">RDT → PR (pr_recursos.costo_acumulado / cantidad_acumulada)
+w14:paraId="1461552B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Mismo bloqueo que EV: RDT sin capturar
+w14:paraId="12955D64" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Gasto de materiales / almacén (AC de materiales — ver 2.1)
+w14:paraId="072C834C" w14:textId="77777777" w:rsidR="009F4D4B" w:rsidRPr="00E7060F" w:rsidRDefault="00501E40">Registro de costos por servicios (formato 021, Logística)
+w14:paraId="51B5B667" w14:textId="77777777" w:rsidR="004141C7" w:rsidRPr="00E7060F" w:rsidRDefault="00360636">Formato 021 CON fuente y responsable definidos, pero NO CONSTRUIDO todavía (estado "Nuevo" en 4.1) — se va a implementar
+w14:paraId="3FF26403" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Costo real de subcontratos (AC de subcontratos)
+w14:paraId="50F39889" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Sin definir
+w14:paraId="2C2FAA9E" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PENDIENTE genuino — único dato de todo este mapa sin formato ni responsable asignado
+w14:paraId="1B70398B" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PPC de la semana + CNC (ver sección 2.2)
+w14:paraId="3B5C39AD" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">3WLA (Planner), sobre el RDT validado por Oficina Técnica
+w14:paraId="5C1D73D1" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">El lado planificado (Lookahead/Plan Semanal) SÍ corre hoy; el cierre real (comparar contra el RDT) NO — ver nota en 3.4
+w14:paraId="6ABA2B8A" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Índice de Productividad (IP, ver sección 2.3)
+w14:paraId="032540C0" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">DP/PR (HH presupuestadas) + RDT (HH reales, tabla de tareo)
+w14:paraId="4731C3A4" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Denominador existe; numerador bloqueado por RDT sin capturar
+w14:paraId="26206338" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Seguridad y Calidad (HH sin incidentes, PETS, liberaciones)
+w14:paraId="438B2E37" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Ninguna todavía
+w14:paraId="4D78C9C6" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">PENDIENTE — no existe fuente de datos en el sistema
+w14:paraId="4075DAA9" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="00925008">
+w14:paraId="045265C2" w14:textId="77777777" w:rsidR="00925008" w:rsidRDefault="003F40DF">Consecuencia directa para el diseño de la OT (y de cualquier documento futuro similar): sus bloques de "Datos generales" y "Descripción del servicio" pueden poblarse 100% automáticos desde hoy (DP/PR/proyectos ya tienen el dato). El avance PLANIFICADO (PV, vía Lookahead) podría mostrarse antes que el resto, en cuanto el 3WLA se integre al sistema web. El avance REAL, el costo real (salvo subcontratos, que ni siquiera tiene fuente definida) y la Seguridad y Calidad van a mostrar campos vacíos/en cero mientras el RDT no tenga captura real — no es un defecto del diseño de la OT, es el mismo cuello de botella que ya bloquea al 001 Dashboard (ver memoria del proyecto).
+w14:paraId="68166737" w14:textId="2B091EBD" w:rsidR="00925008" w:rsidRDefault="00925008"/>

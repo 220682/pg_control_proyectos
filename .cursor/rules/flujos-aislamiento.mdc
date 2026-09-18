@@ -1,0 +1,18 @@
+---
+description: Aislamiento de flujos y actualización de MDs al desplegar. Control de Proyectos.
+alwaysApply: true
+---
+
+# Flujos y mejoras
+
+La app real está en `C:\Users\BRANDY\Downloads\VICTOR\CLAUDE CODE\py_control_proyectos_web`.
+
+Docs: `py_control_proyectos_web/docs/Flujos de trabajo/` y `docs/Mejoras continuas/COMO-SE-TRABAJA.md`.
+
+- Al tocar un flujo, no modificar otros. Archivo compartido: cambio mínimo + tests + declarar “compartido” en el MD del lote.
+- Al desplegar a main/prod: actualizar el MD de ese flujo.
+- Geren = administrador + jefe_de_oficina_tecnica + jefe_de_proyectos.
+- Status RQ ≠ Consolidado RQ (mismo flujo 05; consolidado = materiales). Borrar RQ solo Status, solo admin.
+- OT (flujo 13) no está en UI y no es RDT; solo se cruzan por N° OT.
+- Importar DP y generar PR son flujos independientes.
+- Una mejora no está hecha hasta las pantallas del flujo. No commitear fetch a 127.0.0.1 de debug.

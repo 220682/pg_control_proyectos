@@ -22,6 +22,8 @@ Fuente de verdad de cada flujo: pantallas, roles, subflujos, archivos. Al desple
 | 16 | Paneles | [16-paneles.md](16-paneles.md) |
 | 17 | Chat agéntico | [17-chat-agentico.md](17-chat-agentico.md) |
 | 18 | Control de avance | [18-control-avance.md](18-control-avance.md) |
+| 19 | Paquetes de trabajo y jerarquía de control | [19-paquetes de trabajo y jerarquia de control.md](19-paquetes%20de%20trabajo%20y%20jerarquia%20de%20control.md) |
+| 20 | Plan Maestro | [20-plan-maestro.md](20-plan-maestro.md) |
 
 **Borrado administrador** no es un flujo: es una regla transversal (solo admin destruye RQ / RDT / proyecto / programa / portafolio). Está citada en 05, 06 y 08.
 

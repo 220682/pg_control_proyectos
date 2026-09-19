@@ -156,6 +156,8 @@ Los flujos documentados con mayor detalle son:
 - [docs/Flujos de trabajo/16-paneles.md](docs/Flujos%20de%20trabajo/16-paneles.md)
 - [docs/Flujos de trabajo/17-chat-agentico.md](docs/Flujos%20de%20trabajo/17-chat-agentico.md)
 - [docs/Flujos de trabajo/18-control-avance.md](docs/Flujos%20de%20trabajo/18-control-avance.md)
+- [docs/Flujos de trabajo/19-paquetes de trabajo y jerarquia de control.md](docs/Flujos%20de%20trabajo/19-paquetes%20de%20trabajo%20y%20jerarquia%20de%20control.md)
+- [docs/Flujos de trabajo/20-plan-maestro.md](docs/Flujos%20de%20trabajo/20-plan-maestro.md)
 
 ## Reglas de interfaz
 
@@ -269,6 +271,7 @@ Antes de cerrar una tarea, revisar:
 - [control_de_proyectos.txt](control_de_proyectos.txt)
 - [docs/Flujos de trabajo/README.md](docs/Flujos%20de%20trabajo/README.md)
 - [docs/Flujos de trabajo/18-control-avance.md](docs/Flujos%20de%20trabajo/18-control-avance.md)
+- [docs/Flujos de trabajo/20-plan-maestro.md](docs/Flujos%20de%20trabajo/20-plan-maestro.md)
 - [.cursor/rules/flujos-aislamiento.mdc](.cursor/rules/flujos-aislamiento.mdc)
 - [.cursor/rules/memoria-sesion-control-proyectos.mdc](.cursor/rules/memoria-sesion-control-proyectos.mdc)
 

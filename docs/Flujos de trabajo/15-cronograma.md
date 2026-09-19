@@ -1,10 +1,12 @@
 # 15 — Cronograma
 
-**Fase 1 implementada (en main, 2026-09-16/17).** Importa Excel (plantilla EDT/Nombre de tarea/Duración/Comienzo/Fin/Predecesoras/Sucesoras) o PDF exportado de MS Project, y genera un **informe de extracción** (cuántas actividades se leyeron, cuántas quedaron completas, cuántas se enlazaron al DP). No lee `.mpp` nativo.
+**Fase 1 implementada (en main, 2026-09-16/17).** Importa Excel (plantilla WBS de programación, rotulada EDT si así viene del origen/Nombre de tarea/Duración/Comienzo/Fin/Predecesoras/Sucesoras) o PDF exportado de MS Project, y genera un **informe de extracción** (cuántas actividades se leyeron, cuántas quedaron completas, cuántas se enlazaron al DP). No lee `.mpp` nativo.
 
 Un cronograma por servicio (`proyecto_cronograma`, `proyecto_id` como llave — volver a subir reemplaza el anterior completo). Actividades en `cronograma_actividades`, tipo TAREA/HITO/RESUMEN.
 
-**Enlace de trazabilidad: SOLO contra DP** (`dp_partidas`/`dp_subpresupuestos`/`dp_paquetes` por EDT), **nunca contra PR** — Victor piensa eliminar PR a futuro.
+**Terminología:** EDT y WBS son la misma estructura de descomposición. Para evitar ambigüedad, este flujo llama **WBS de programación** al código de la actividad del cronograma, aunque MS Project o el PDF lo rotule como `EDT`; llama **WBS presupuestal** al código contractual de la partida en DP. Pueden coincidir literalmente, pero no se reescriben para forzarlo.
+
+**Enlace de trazabilidad: SOLO contra DP.** El cronograma relaciona cada tarea con la partida `dp_partidas` que ejecuta (WBS presupuestal), **nunca contra PR**. Si WBS de programación y WBS presupuestal coinciden, el enlace se propone automáticamente; si difieren, se registra un vínculo explícito sin cambiar ninguno de los dos códigos.
 
 Predecesoras/sucesoras son informativas: su ausencia no marca la fila como incompleta.
 

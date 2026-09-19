@@ -1,145 +1,388 @@
-# 18. Control de avance
+
+# 18 — Control de avance — versión mejorada
 
 ## Objetivo
 
-Establecer el control del avance del proyecto integrando:
-- presupuesto y alcance
-- cronograma
-- Plan Maestro
-- Plan semanal / 3WLA
-- RDTs
-- PR (Reporte del Proyecto)
-- Dashboard con Curva S
+Integrar en una sola cadena de control:
 
-La idea es construir una cadena lógica de control donde el avance real se compare contra lo programado sin mezclar conceptos.
+```text
+Presupuesto / DP
+→ Partidas y WBS
+→ Paquetes opcionales
+→ Cronograma
+→ Plan Maestro aprobado
+→ 3WLA / Plan semanal
+→ RDT validado
+→ PR
+→ Dashboard
+```
 
-## Flujo base
+El sistema debe distinguir siempre entre:
 
-1. Presupuesto + alcance
-   - Define la línea base contractual.
-   - Nace el WBS / partida de obra.
-   - Cada WBS trae unidad, metrado contractual, costo base y descripción del trabajo.
+- Lo que se aprobó planificar.
+- Lo que se prepara y compromete semanalmente.
+- Lo que se ejecutó realmente.
+- Lo que se consolida.
+- Lo que se visualiza.
 
-2. Cronograma
-   - Define fechas, duración y secuencia de actividades.
-   - La actividad del cronograma recibe el WBS que le corresponde.
-   - El WBS no vive aislado: se une a la programación del cronograma.
-
-3. Relación WBS ↔ cronograma
-   - Conecta cada partida contractual con la actividad del cronograma que la ejecuta.
-   - Es la pieza clave para poder repartir metrado en el tiempo.
-   - Aquí nace la vinculación: WBS + fecha + actividad + duración.
-   - Sin esta relación, no se puede transformar el presupuesto en un plan temporal real.
-
-4. Plan Maestro
-   - Toma el WBS, la relación con el cronograma y la duración de cada actividad.
-   - Reparte el metrado y el costo por semana.
-   - Genera PV semanal y PV acumulado.
-   - Es la base del avance programado.
-   - Es la respuesta a la pregunta: ¿cuánto trabajo y cuánto costo se debía haber ejecutado en cada semana?
-
-5. Plan semanal / 3WLA
-   - Se crea a partir del Plan Maestro y se ajusta a corto plazo.
-   - Define qué se compromete a ejecutar esta semana.
-   - Se modifica durante la obra, pero no reemplaza al Plan Maestro.
-   - Es la programación operativa del trabajo real que va a ejecutarse.
-   - Responde a: ¿qué se va a hacer esta semana?
-
-6. RDT
-   - Se alimenta de la ejecución del campo.
-   - Registra avance físico, HH, HM, observaciones y productividad real.
-   - Es la medición real que valida si lo que se ejecutó coincide con lo programado.
-   - Responde a: ¿qué se hizo realmente?
-
-7. PR (Reporte del Proyecto)
-   - Recibe dos entradas principales:
-     - Plan Maestro (programado)
-     - RDT (real)
-   - Consolida por partida el plan y la ejecución.
-   - Compara WBS por WBS y calcula el estado real del proyecto.
-   - Es la fuente técnica del control del proyecto.
-   - Responde a: ¿qué estaba planificado, qué se ejecutó, cuánto costó y qué tan bien va cada WBS?
-
-8. Dashboard
-   - Toma el PR y el historial semanal.
-   - Muestra Curva S, acumulados, variación y tendencia del proyecto.
-   - Es la vista ejecutiva, no el detalle técnico.
-   - Responde a: ¿cómo va el proyecto en conjunto?
-
-### Qué debe quedarse muy claro sobre el Plan Maestro
-
-El Plan Maestro no es un cronograma simple ni una vista de avance. Es la capa intermedia que convierte el presupuesto + cronograma en una línea base temporal semanal.
-
-Su función es construir el PV y el costo planificado por semana para cada WBS, a partir de:
-- metrado contractual del presupuesto
-- duración y fechas del cronograma
-- relación WBS ↔ cronograma
-
-Esto hace que el avance programado exista como dato medible, y así pueda compararse con la ejecución real del RDT.
-
-## Criterio de datos
-
-### Presupuesto y alcance
-- Son la base contractual del proyecto.
-- No cambian por la ejecución en campo.
-
-### Cronograma
-- Define cuándo se ejecuta.
-- No tiene la lógica de metrado semanal por sí solo.
+## Tres universos del control
 
 ### Plan Maestro
-- Sí define el metrado/costo programado por semana.
-- Es la base del PV.
 
-### Plan semanal / 3WLA
-- Define el compromiso operativo real de la semana.
-- Puede ajustarse sobre la marcha.
+Es la línea base físico-económica completa del servicio. Define, para cada partida y cada periodo, qué metrado y qué costo se esperaba ejecutar.
 
-### RDT
-- Es la medición real del trabajo ejecutado.
-- Alimenta EV, AC real medido y avance físico real.
+Responde:
 
-### PR
-- Es el consolidado operando con plan + real.
-- Es la fuente principal para análisis por partida y para el dashboard.
+```text
+¿Qué debía hacerse según presupuesto, cronograma y línea base?
+```
 
-### Dashboard
-- Resume el proyecto para la toma de decisiones.
-- La Curva S vive dentro del dashboard y se alimenta del historial semanal.
+Contiene:
 
-## Qué debe quedarse claro
+- Partida.
+- Unidad.
+- Metrado contractual.
+- Precio unitario.
+- BAC.
+- Actividad de cronograma.
+- Fecha de inicio y fin.
+- Metrado programado por día o semana.
+- Costo programado por día o semana.
+- PV semanal y acumulado.
+- HH programadas.
 
-### Avance programado
-- Se registra en el Plan Maestro.
-- Es el PV.
+El Plan Maestro aprobado no se sobrescribe por la ejecución real. Cualquier cambio aprobado debe generar una nueva revisión.
 
-### Avance real
-- Se registra en el RDT.
-- Es el EV.
+### 3WLA / Plan semanal
+
+Es la planificación operativa móvil de corto plazo. Se construye a partir del Plan Maestro, pero incorpora restricciones, condiciones de preparación y compromisos reales.
+
+Responde:
+
+```text
+¿Qué trabajo está listo y qué se intentará o comprometerá ejecutar?
+```
+
+El 3WLA y el Plan semanal no modifican automáticamente el PV de la línea base.
+
+Deben registrar:
+
+- Partida o paquete.
+- Actividad.
+- Semana.
+- Responsable.
+- Cantidad comprometida.
+- Restricciones.
+- Condiciones de satisfacción.
+- Estado de preparación.
+- Cumplido o no cumplido.
+- Causa de incumplimiento.
+- Acción siguiente.
+
+### Ejecución real
+
+La ejecución real proviene de RDT validados. Cada registro debe alimentar la fecha, partida, paquete opcional, cantidad, HH, costo y evidencia correspondiente.
+
+Responde:
+
+```text
+¿Qué se ejecutó realmente?
+```
+
+El RDT no modifica la programación base. Es una capa real que se superpone al Plan Maestro.
+
+## Ejemplo de desviación
+
+Plan Maestro:
+
+```text
+30/08 — Montaje de estructura: 5 t.
+```
+
+RDT validado:
+
+```text
+30/08 — Montaje de estructura: 0 t.
+30/08 — Vaciado de concreto: 4 m³.
+```
+
+El sistema debe conservar ambos datos:
+
+```text
+Montaje de estructura:
+Plan: 5 t.
+Real: 0 t.
+
+Vaciado de concreto:
+Plan: 0 m³.
+Real: 4 m³.
+```
+
+No se suman toneladas y metros cúbicos. La variación física se muestra por partida y la variación global se calcula mediante valor económico.
+
+## Estructura longitudinal del Plan Maestro
+
+La interfaz se lee de izquierda a derecha:
+
+```text
+Columnas fijas
+→ Semana 1
+→ Semana 2
+→ Semana 3
+→ ...
+```
+
+Las columnas fijas deben incluir:
+
+- WBS.
+- Área.
+- Disciplina.
+- Frente.
+- Paquete.
+- Código de partida.
+- Descripción.
+- Unidad.
+- Metrado contractual.
+- Precio unitario.
+- BAC.
+- HH contractuales.
+- Duración.
+- Inicio base.
+- Fin base.
+- Método de medición.
+
+Cada semana agrupa:
+
+- Sábado a viernes, según configuración del servicio.
+- Metrado programado diario.
+- Metrado real diario validado.
+- Cierre semanal.
+
+El cierre semanal muestra:
+
+- Metrado programado.
+- Metrado real.
+- Variación.
+- Avance económico programado.
+- Avance físico programado.
+- HH programadas.
+- Avance económico real.
+- Avance físico real.
+- HH reales.
+- Incidencias.
+- Causa y acción siguiente.
+
+Las semanas deben agregarse horizontalmente según la duración del servicio. No se debe limitar la interfaz a un número fijo de semanas.
+
+## Cálculos
+
+### Metrado acumulado
+
+```text
+Metrado acumulado = suma del metrado real validado hasta la fecha de corte
+```
+
+### Metrado restante
+
+```text
+Metrado restante = metrado contractual - metrado acumulado
+```
+
+Si el resultado es negativo, debe generarse una alerta de sobre-ejecución.
+
+### Avance físico por partida
+
+```text
+Avance físico = metrado real acumulado / metrado contractual × 100
+```
+
+Para hitos o paquetes ponderados se aplica el método de medición configurado.
+
+### Valor planificado
+
+```text
+PV de partida y periodo = cantidad programada × precio unitario
+```
+
+```text
+PV semanal = suma del PV de las partidas programadas en la semana
+PV acumulado = suma del PV semanal desde el inicio
+BAC = suma del presupuesto de las partidas
+PV final = BAC
+```
+
+### Valor ganado
+
+```text
+EV = avance físico real validado × BAC de la partida
+```
+
+El EV no se obtiene simplemente del dinero gastado.
 
 ### Costo real
-- MO, equipos y subcontratos medidos: costo real.
-- Materiales sin control real: estimación provisional.
-- AC material estimado no debe confundirse con AC real medido.
 
-## Regla de diseño
+El AC proviene de costos validados de:
 
-Las capas deben mantenerse separadas:
-- plan
-- real
-- estimación
-- consolidado
-- dashboard
+- Mano de obra.
+- Equipos.
+- Subcontratos.
+- Materiales con control real.
 
-Esto evita mezclar el avance programado con lo ejecutado y evitar que el material no medido se vuelva “real” sin validación.
+Los materiales no medidos deben permanecer como estimación provisional y no confundirse con AC real.
 
-## En resumen
+### HH restantes
 
-El sistema se construye así:
+```text
+HH restantes = HH contractuales - HH reales acumuladas
+```
 
-Presupuesto + alcance -> cronograma -> WBS↔cronograma -> Plan Maestro -> Plan semanal / 3WLA -> RDT -> PR -> Dashboard
+Si se usa una proyección, debe mostrarse como `HH estimadas para terminar`.
 
-Y la regla final es:
+### Rendimiento
 
-- los materiales, si no tienen control real, quedan como estimación provisional;
-- la medición de avance y costo real proviene de la ejecución registrada y validada.
+```text
+Rendimiento real = metrado ejecutado / HH reales
+Rendimiento base = metrado contractual / HH contractuales
+```
+
+### HH ganadas
+
+```text
+HH ganadas = avance físico real × HH contractuales
+```
+
+### IP
+
+Definir el significado de IP en la configuración del sistema. Recomendación inicial:
+
+```text
+IP = HH ganadas / HH reales
+```
+
+Debe mostrarse nombre, fórmula y unidad, no solo la abreviatura IP.
+
+### Indicadores EVM
+
+```text
+SV = EV - PV
+CV = EV - AC
+SPI = EV / PV
+CPI = EV / AC
+```
+
+### Indicador LPS
+
+```text
+PPC = compromisos completados / compromisos planificados × 100
+```
+
+PPC y SPI miden cosas diferentes y no deben mezclarse.
+
+## Flujo de datos RDT → Plan Maestro
+
+1. El usuario registra un RDT asociado a una OT vigente.
+2. El RDT identifica servicio, fecha, partida y paquete opcional.
+3. El usuario registra cantidad, unidad, HH, HM, costo y evidencia.
+4. El sistema valida que la partida pertenezca al servicio.
+5. El sistema valida unidad y cantidad.
+6. El registro queda en estado `Registrado`.
+7. Un usuario autorizado lo revisa.
+8. El registro pasa a `Validado` o `Rechazado`.
+9. Solo un RDT validado alimenta las casillas `Real` del Plan Maestro.
+10. El sistema recalcula acumulados, avance físico, EV, HH reales, rendimiento, HH ganadas e IP.
+11. El PR recibe los datos consolidados.
+12. El Dashboard actualiza sus indicadores.
+
+Estados:
+
+```text
+Registrado → Revisado → Validado
+                         └→ Rechazado
+```
+
+Un RDT corregido debe mantener historial de la corrección.
+
+## Historial y reprogramación
+
+El sistema no debe mover automáticamente una actividad no ejecutada a otra semana.
+
+Debe conservar:
+
+```text
+Plan base:
+Semana 1 — 5 t de estructura.
+
+Real:
+Semana 1 — 0 t.
+
+Reprogramación aprobada:
+Semana 2 — 5 t.
+
+Causa:
+Falta de pernos.
+```
+
+El Plan Maestro original se conserva como línea base. Una reprogramación aprobada genera una nueva revisión:
+
+```text
+PM-Rev-01 — línea base original.
+PM-Rev-02 — reprogramación aprobada.
+```
+
+El PR debe poder comparar contra la línea base original y contra la revisión vigente.
+
+## Relación con PR y Dashboard
+
+El PR es el consolidado técnico. Debe poder consultar:
+
+```text
+Servicio
+→ Área
+→ Disciplina
+→ Frente
+→ Paquete
+→ Partida
+→ Actividad
+→ Día / semana
+```
+
+El Dashboard es una vista derivada y debe mostrar:
+
+- Curva S PV, EV y AC.
+- Avance físico.
+- SPI y CPI.
+- PPC.
+- Paquetes atrasados.
+- Partidas sin asignar.
+- Partidas sin actividad.
+- Incidencias abiertas.
+- Tendencia.
+
+## Reglas de diseño
+
+1. No sobrescribir el Plan Maestro aprobado con RDT.
+2. No convertir un RDT registrado en real oficial sin validación.
+3. No usar 3WLA para modificar el PV automáticamente.
+4. No mezclar unidades físicas incompatibles.
+5. No mezclar avance semanal con acumulado.
+6. No usar PR como fuente original del alcance.
+7. No convertir un paquete en una partida contractual.
+8. No tratar materiales estimados como AC real.
+9. Mantener historial de revisiones y correcciones.
+10. Permitir rastrear cada EV, AC y avance hasta partida y RDT.
+
+## Resultado esperado
+
+El sistema debe permitir ver, por cada partida:
+
+```text
+Qué estaba programado cada día.
+Qué se ejecutó realmente cada día.
+Qué se esperaba al cierre de la semana.
+Qué ocurrió al cierre de la semana.
+Qué metrado falta.
+Cuántas HH se planificaron y utilizaron.
+Cuál fue el rendimiento.
+Qué incidencias ocurrieron.
+Qué se debe preparar o comprometer después.
+```

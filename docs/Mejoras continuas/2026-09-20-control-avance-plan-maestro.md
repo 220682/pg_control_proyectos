@@ -190,6 +190,36 @@ Causa: `position: sticky` combinado con un alto forzado en dos `<tr>` apiladas e
 - Verificado: tsc limpio, eslint limpio, 409 tests, build limpio. Sigue sin verificación visual (Playwright no conectó) — pendiente que Victor confirme en vivo, con especial atención a si esta vez sí queda estable al hacer scroll.
 - No requiere migración.
 
+## Avance — sub-lote 1, ronda 15: cierre de sesión (2026-09-20)
+
+**Commits realizados:**
+
+- **pg_control_proyectos**: commit 4efc478
+  - Creado `docs/visual-companion/design.md` (v1.2.4) como sistema de diseño oficial, reemplazando convenciones dispersas en README.
+  - Actualizado `docs/README.md`, `docs/Flujos de trabajo/README.md`, `docs/visual-companion/README.md` — todos apuntan a `design.md` como referencia normativa para interfaces.
+  - Actualizado este archivo (`2026-09-20-control-avance-plan-maestro.md`) con todas las rondas 1-14 y el resumen de implementación.
+
+- **py_control_proyectos_web**: commit 6f1e7a1
+  - Sumadas todas las migraciones 041-044 (rdt_partes_historial, accion, motivo_correccion, jornada_horas).
+  - Sumados todos los cambios de componentes y API para rechazo, historial, modal, y correcciones de layout.
+  - Sumadas todas las correcciones de rondas 14-15 (TablaStatusRdts con sticky en <th>, flex-1 min-h-0, spacing sin gap sumado, SelectFiltro con ancho variable).
+  - Build: tsc limpio, eslint limpio, 409 tests pasando, build completo sin errores.
+
+**Estado del sub-lote 1:**
+- ✅ Código: 100% implementado y testeado en local.
+- ✅ Documentación: design.md v1.2.4 lista como sistema oficial.
+- ⏳ Verificación en vivo de Victor: pendiente. Ítems críticos a confirmar:
+  - Ancho de página llena el panel central (sin `max-w-*`).
+  - Espaciado entre encabezado y tabla es fijo (`mb-2` en cada bloque, sin `gap` sumado).
+  - Filtros en fila 2 permanecen visible al desplazar (sticky en `<th>`, no en `<tr>`).
+  - Tabla llena alto disponible (`flex-1 min-h-0`, borde con barra de scroll siempre visible).
+  - SelectFiltro más angosto funciona sin quebrar columnas (N°OT, Turno, Especialidad).
+
+**Status:**
+- Sub-lote 1 completo en código/docs.
+- Migraciones SQL: falta aplicar 041-044 en Supabase (Victor debe hacerlo o indicar si ya se aplicaron).
+- Siguiente paso: Victor verifica en navegador con ventana en varios tamaños, confirma Punch List, y toca Go/No-Go para pasar a Sub-lote 2 (pertenencia usuario por servicio/proyecto).
+
 ## Mejoras a flujos
 
 (vacío por ahora)

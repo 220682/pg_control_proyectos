@@ -2,6 +2,10 @@
 
 Artefactos de interfaz para alinear **py_control_proyectos_web** con el diseño acordado.
 
+## Convención de interfaz → [design.md](design.md)
+
+**Antes de crear o modificar cualquier pantalla**, leer [`design.md`](design.md) completo — es el sistema de diseño obligatorio (layout, tokens, componentes, columnas, accesibilidad). Este `README.md` ya no contiene la convención; solo el índice de mockups y la nomenclatura oficial.
+
 ## Cómo verlos
 
 1. Abre **`index.html`** en el navegador (doble clic).

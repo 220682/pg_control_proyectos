@@ -2,6 +2,8 @@
 
 Fuente de verdad de cada flujo: pantallas, roles, subflujos, archivos. Al desplegar una mejora, actualizar el MD del flujo.
 
+**Interfaz:** al crear una pantalla nueva o modificar una existente en `py_control_proyectos_web`, la convención obligatoria de diseño/UI es [`visual-companion/design.md`](../visual-companion/design.md) — layout, tokens, componentes, columnas, accesibilidad. Leerlo antes de tocar cualquier interfaz.
+
 | # | Flujo | Archivo |
 |---|--------|---------|
 | 01 | Interfaz / workspace | [01-interfaz.md](01-interfaz.md) |

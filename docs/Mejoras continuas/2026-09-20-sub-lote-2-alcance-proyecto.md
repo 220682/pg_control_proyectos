@@ -219,3 +219,21 @@ Continuación del lote 2026-09-20, iniciado con Sub-lote 1 (RDT rechazo + histor
    - [x] F7: Avisos preventivos en interfaz
 
 4. Marca Sub-lote 2 como **COMPLETO** en Punch List.
+
+---
+
+## Resultados
+
+**Verificación en vivo completada (2026-09-21).** Los 7 ítems de la Punch List quedaron en **Conforme**.
+
+Durante la prueba del ítem F7 apareció un bug real: **López Cáceres (Supervisor Operativo) no podía crear RDT en ninguna OT**, pese a tener todas asignadas por la semilla de la migración 045. Causa encontrada: `proyecto_miembros` nunca recibió `enable row level security` ni una política de lectura — a diferencia de todas las demás tablas del sistema (`perfiles`, `proyectos`, `roles`, ver `db/003_rls.sql`). El panel Admin > Usuarios lee con el cliente de servicio (bypassa RLS) y mostraba las OT bien asignadas; pero el chequeo de alcance al guardar (`obtenerProyectosACargo` en `usuario-actual.ts`) usa el cliente autenticado normal, que sin política no leía ninguna fila — así que todo usuario no-administrador quedaba sin ninguna OT a cargo, para cualquier servicio.
+
+**Fix:** `db/048_proyecto_miembros_rls.sql` — agrega `enable row level security` + política `lectura_autenticados_proyecto_miembros` (`using (true)`), mismo patrón que el resto de tablas. Aplicada en Supabase por Victor.
+
+**Verificación final (Playwright, login real):** López Cáceres (jeyger22@gmail.com) creó un RDT en PS-0001 sin ningún rechazo — quedó registrado en Status de RDTs a su nombre, estado REGISTRADO, 8 HH. Confirma que el fix funciona de punta a punta.
+
+**Commits:**
+- `py_control_proyectos_web`: `db/048_proyecto_miembros_rls.sql`.
+- `pg_control_proyectos`: cierre de este archivo.
+
+**CERRADO 100%**

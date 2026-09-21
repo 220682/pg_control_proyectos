@@ -31,6 +31,15 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 **Pendiente de decisión de Victor** (no bloqueante, anotado en el cierre de PR Fase 1): tarifa retroactiva para los RDT que ya estaban validados antes de esta sesión — quedan con `costo_real_acum = 0` en el motor nuevo porque no se quiso re-resolver la tarifa de hoy sobre RDT validados hace semanas sin una decisión explícita.
 
+## Flujo 011 — Dashboard
+
+| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2026-09-21 | Dashboard Fase 3 (Agente C) — Dashboard profesional con EVM real | "Dashboard Fase 3 — Dashboard profesional con EVM real" | [2026-09-21-dashboard-fase-3-agente-c.md](2026-09-21-dashboard-fase-3-agente-c.md) | 17 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Punch List todavía no cargada; la implementación no arranca sin ella |
+| 2 | 2026-09-21 | Curva S Fase 3 (Agente D) — serie temporal PV/EV/AC | "Curva S Fase 3 — serie temporal PV/EV/AC" | [2026-09-21-curva-s-fase-3-agente-d.md](2026-09-21-curva-s-fase-3-agente-d.md) | 19 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Incluye una decisión previa (D0: ubicación y nombre del chip) que Victor confirma antes de que el agente escriba código de navegación |
+
+**Nota:** estas dos filas se agregan con la Punch List **propuesta**, no cargada. Al aprobarlas, se cargan en la Punch List de Mejoras y esta tabla se actualiza con los conteos reales, igual que las fases anteriores.
+
 ## Cómo se actualiza esta tabla
 
 Al cerrar cada sesión (o al menos al cerrar un checklist), agregar o actualizar la fila correspondiente con el conteo real leído de la Punch List. Un checklist nuevo (nueva fase, nuevo sub-lote, nueva mejora) siempre se agrega como fila nueva, nunca se reemplaza una fila existente salvo para actualizar sus conteos.

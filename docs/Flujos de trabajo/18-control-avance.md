@@ -211,6 +211,8 @@ BAC = suma del presupuesto de las partidas
 PV final = BAC
 ```
 
+**Sin Plan Maestro aprobado no hay PV.** Los indicadores que dependen de él (PV, SV, SPI) muestran "Pendiente" — nunca 0 ni un número inventado. Es el mismo patrón que ya usa la app para otros indicadores sin dato.
+
 ### Valor ganado
 
 ```text
@@ -244,6 +246,14 @@ Si se usa una proyección, debe mostrarse como `HH estimadas para terminar`.
 Rendimiento real = metrado ejecutado / HH reales
 Rendimiento base = metrado contractual / HH contractuales
 ```
+
+### % de trabajo productivo
+
+```text
+% trabajo productivo = HH en actividades D / HH reales totales de la partida
+```
+
+Cuánto de las horas reales de la partida fue trabajo directo (D) frente a contributorio o no contributorio (C/NC) — análisis LPS. No confundir con avance físico: una partida puede tener HH sin generar metrado (C/NC).
 
 ### HH ganadas
 
@@ -370,6 +380,18 @@ El Dashboard es una vista derivada y debe mostrar:
 8. No tratar materiales estimados como AC real.
 9. Mantener historial de revisiones y correcciones.
 10. Permitir rastrear cada EV, AC y avance hasta partida y RDT.
+11. **El sistema calcula solo COSTO DIRECTO.** El DP extrae únicamente de la hoja CD del presupuesto. Gastos generales, utilidad y todo lo que no sea costo directo no entran a ningún cálculo. BAC, AC, PV y EV quedan todos en la misma base de costo directo (así el CPI es comparable). Todo dato derivado de estos (BAC, AC, EAC…) se rotula explícitamente "costo directo" en la interfaz, para que nadie lo lea como el monto total del contrato.
+12. **Las HH del personal indirecto (MOI) se acumulan como horas en el consolidado de RDTs, pero no se valorizan** (`tarifa_hh` NULL por diseño). Horas sí, costo no — el MOI no aporta a AC ni a ningún indicador monetario.
+13. **Todo el sistema trabaja en USD.** No hay multi-moneda.
+
+### Terminología — dos cosas distintas que NO se deben confundir
+
+| Término | Qué es | Dónde vive |
+|---|---|---|
+| Actividad **Contributoria (C)** / **No Contributoria (NC)** | Categoría de la **actividad**: traslado, charla, espera. No genera metrado, pero sí se carga a una partida y aporta horas y costo. | `rdt_actividades.ta` |
+| **Mano de obra indirecta (MOI)** | Categoría de la **persona**: supervisor, ingeniero. No es un tipo de actividad. | `dp_moi` |
+
+Son ejes independientes: una persona MOI puede declarar horas en actividades D, C o NC. **Nunca llamar "indirectas" a las HH de actividades C/NC** — se nombran por su tipo (contributorias / no contributorias). "Indirecto" queda reservado exclusivamente para MOI (regla 12).
 
 ## Resultado esperado
 

@@ -13,7 +13,15 @@
 
 Mismo modo de trabajo que los Agentes A y B (Fases 1 y 2 del PR):
 
-- **Rama propia en `py_control_proyectos_web`**, no directo a `main`. Rama sugerida: `feat/curva-s-serie-temporal`. Al 100 % del checklist, abre un **PR** para que Victor lo revise antes de mergear.
+- **Rama propia en `py_control_proyectos_web`**, no directo a `main`:
+
+  ```
+  feat/curva-s-fase-3-serie-temporal
+  ```
+
+  **Nombre fijo, no sugerido** — sigue la convención de los Agentes A y B (`feat/pr-fase-1-pipeline-rdt`, `feat/pr-fase-2-linea-base-evm`): `feat/<módulo>-fase-<n>-<qué hace>`. El agente **no la renombra ni trabaja en otra**.
+
+- Al 100 % del checklist, abre un **PR** con título **"Curva S Fase 3 (Agente D): serie temporal PV/EV/AC en pantalla propia"**, para que Victor lo revise antes de mergear.
 - **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `mejoras-futuras.md`), leyendo **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres; el Agente A aplicó sus migraciones vía Management API de Supabase. Si vuelve a pasar, usar esa vía y dejarlo anotado.*
 - **Rango de migraciones asignado a esta fase: `070`–`079`.** No usar otro rango — evita choque con cualquier fase futura.
 - Credenciales de verificación: **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`**.
@@ -365,8 +373,9 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Curva S Fase 3 —
 
 | | Agente D (esta fase) | Agente C (Dashboard) |
 |---|---|---|
+| **Rama** | `feat/curva-s-fase-3-serie-temporal` | `feat/dashboard-fase-3-parcial-completo` |
 | **Migraciones** | `070`–`079` | ninguna |
-| **Pantalla** | Curva S (nueva, chip propio) | `(workspace)/proyectos/[id]/dashboard` |
+| **Pantalla** | `(workspace)/proyectos/[id]/curva-s` | `(workspace)/proyectos/[id]/dashboard` |
 | **Archivos propios** | módulo de serie temporal, su pantalla, `db/070_*` | `dashboard/page.tsx`, `src/lib/dashboard/dashboard.ts` |
 | **Flujo que edita** | flujo nuevo de Curva S + `14-accesos` | `11-dashboard.md` |
 | **No toca** | Dashboard, `dashboard.ts`, `evm.ts` | Curva S, serie temporal, `evm.ts` |

@@ -15,7 +15,15 @@
 
 Mismo modo de trabajo que los Agentes A y B (Fases 1 y 2 del PR):
 
-- **Rama propia en `py_control_proyectos_web`**, no directo a `main`. Rama sugerida: `feat/dashboard-fase-3-evm`. Al llegar al 100% del checklist, abre un **PR** para que Victor lo revise antes de mergear.
+- **Rama propia en `py_control_proyectos_web`**, no directo a `main`:
+
+  ```
+  feat/dashboard-fase-3-parcial-completo
+  ```
+
+  **Nombre fijo, no sugerido** — sigue la convención de los Agentes A y B (`feat/pr-fase-1-pipeline-rdt`, `feat/pr-fase-2-linea-base-evm`): `feat/<módulo>-fase-<n>-<qué hace>`. El agente **no la renombra ni trabaja en otra**.
+
+- Al llegar al 100 % del checklist, abre un **PR** con título **"Dashboard Fase 3 (Agente C): los dos Dashboards — Parcial mejorado y Completo construido"**, para que Victor lo revise antes de mergear.
 - **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `mejoras-futuras.md`). Cadena de conexión en la variable de entorno **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres — el Agente A terminó aplicando sus migraciones vía Management API de Supabase. Si pasa lo mismo, usar esa vía y dejarlo anotado, no quedarse bloqueado.* **Esta fase, de todos modos, no debería necesitar ninguna migración** (ver C0).
 - Credenciales de verificación: **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** (permisos altos) y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`** (sin permisos de administración), mismo entorno.
 - Cada decisión, convención nueva o modificación acordada con Victor **se escribe en este archivo** conforme ocurre, no al final de memoria.
@@ -471,7 +479,8 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Dashboard Fase 3 �
 
 | | Agente C (Dashboard) | Agente D (Curva S) |
 |---|---|---|
-| **Pantalla** | `(workspace)/proyectos/[id]/dashboard` | pantalla nueva, chip propio |
+| **Rama** | `feat/dashboard-fase-3-parcial-completo` | `feat/curva-s-fase-3-serie-temporal` |
+| **Pantalla** | `(workspace)/proyectos/[id]/dashboard` | `(workspace)/proyectos/[id]/curva-s` |
 | **Archivos propios** | `dashboard/page.tsx`, `src/lib/dashboard/dashboard.ts` | módulo de serie temporal + su pantalla |
 | **Flujo que edita** | `11-dashboard.md` | su propio archivo de flujo |
 | **No toca** | Curva S, serie temporal, `evm.ts` | Dashboard, `dashboard.ts`, `evm.ts` |

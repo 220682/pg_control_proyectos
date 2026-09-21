@@ -35,8 +35,8 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 | # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | 2026-09-21 | Dashboard Fase 3 (Agente C) — Dashboard profesional con EVM real | "Dashboard Fase 3 — Dashboard profesional con EVM real" | [2026-09-21-dashboard-fase-3-agente-c.md](2026-09-21-dashboard-fase-3-agente-c.md) | 17 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Punch List todavía no cargada; la implementación no arranca sin ella |
-| 2 | 2026-09-21 | Curva S Fase 3 (Agente D) — serie temporal PV/EV/AC | "Curva S Fase 3 — serie temporal PV/EV/AC" | [2026-09-21-curva-s-fase-3-agente-d.md](2026-09-21-curva-s-fase-3-agente-d.md) | 19 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Incluye una decisión previa (D0: ubicación y nombre del chip) que Victor confirma antes de que el agente escriba código de navegación |
+| 1 | 2026-09-21 | Dashboard Fase 3 (Agente C) — los dos Dashboards: Parcial mejorado y Completo construido | "Dashboard Fase 3 — los dos Dashboards" | [2026-09-21-dashboard-fase-3-agente-c.md](2026-09-21-dashboard-fase-3-agente-c.md) | 25 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Punch List todavía no cargada; la implementación no arranca sin ella |
+| 2 | 2026-09-21 | Curva S Fase 3 (Agente D) — serie temporal PV/EV/AC en pantalla propia | "Curva S Fase 3 — serie temporal PV/EV/AC" | [2026-09-21-curva-s-fase-3-agente-d.md](2026-09-21-curva-s-fase-3-agente-d.md) | 20 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Incluye una decisión previa (D0: ubicación y nombre del chip) que Victor confirma antes de que el agente escriba código de navegación |
 
 **Nota:** estas dos filas se agregan con la Punch List **propuesta**, no cargada. Al aprobarlas, se cargan en la Punch List de Mejoras y esta tabla se actualiza con los conteos reales, igual que las fases anteriores.
 

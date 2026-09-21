@@ -1,13 +1,15 @@
-# Dashboard Fase 3 (Agente C): Dashboard profesional con EVM real
+# Dashboard Fase 3 (Agente C): los dos Dashboards — Parcial mejorado y Completo construido
 
 **Estado (2026-09-21):** PLAN INICIAL — **pendiente de aprobación de Victor** (plan + Punch List). Sin checklist aprobado, la implementación no arranca. Trabaja en paralelo con [Curva S / Fase 3 (Agente D)](2026-09-21-curva-s-fase-3-agente-d.md).
 
 **Ya resuelto, no volver a preguntar:**
-- El Dashboard **no** lleva Curva S. Va en pantalla aparte con chip propio (Agente D) — decisión de Victor: "la curva S debería ir en otro apartado ya que falta espacio, debe ser otra interfaz con su propio chip".
+- **Son dos Dashboards, no uno.** `proyectos.tipo_dashboard` (`'PARCIAL'` | `'COMPLETO'`) existe desde `db/008_dashboard.sql` (PR #6, agosto). Hoy **solo el Parcial está construido**; marcar un proyecto como `COMPLETO` únicamente muestra un aviso. Esta fase construye el Completo y mejora el Parcial.
+- **Los "dos matices" son uno por Dashboard.** Las dos plantillas de `Dashboard ejemplo/` (`3a23aefc-…jpg` y `47acdc6f-…jpg`) se usan **ambas**: un matiz para el Parcial, otro para el Completo, sobre el mismo sistema de diseño. Son referencia de **estructura y densidad**, no de contenido ni de marca.
+- La **Curva S no va dentro de ningún Dashboard**. El diseño original la tenía como Bloque G del Completo; Victor la saca a **pantalla propia con chip propio** (Agente D) por falta de espacio. El Completo la **enlaza**.
 - El **resumen ejecutivo va al final de la página y es de un par de líneas**, puntual — no el bloque de texto plano largo que hay hoy (decisión de Victor, 2026-09-21).
-- Referencias visuales: las **dos** plantillas de `Dashboard ejemplo/` (`3a23aefc-…jpg` y `47acdc6f-…jpg`) se usan **ambas**, para tomar dos matices del mismo patrón. Son referencia de **estructura y densidad**, no de contenido ni de marca.
 - Paleta de series: ya validada, ver "Colores" más abajo. No se eligen colores a ojo.
 - `docs/visual-companion/design.md` es de **lectura obligatoria completa** antes de tocar interfaz. No es opcional ni resumible.
+- **La Punch List se cierra en loop, no en una pasada.** Ver protocolo: el agente verifica, corrige y vuelve a verificar hasta que el 100 % de los ítems esté en Completado. No se entrega con ítems abiertos.
 
 ## Ejecución en la nube
 
@@ -27,6 +29,25 @@ El Dashboard fue construido en el PR #6 (`feature/dashboard-parcial`, 2026-08-17
 - El semáforo, que estaba clavado en `PENDIENTE` porque `AC = 0`, ahora toma color real.
 
 Lo que quedó pendiente es la interfaz: es funcional pero básica, y hoy ni siquiera comparte el layout del resto de la app.
+
+### Los dos Dashboards: por qué el Completo ya se puede construir
+
+El spec original (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, en el repo web) dejó el reparto escrito:
+
+| | Parcial (construido) | Completo (nunca construido) |
+|---|---|---|
+| Bloques | A, B, B2, C+D, F | Todo lo del Parcial + **Bloque E (PPC + Pareto de CNC)** + **Bloque G (Curva S)** |
+| Por qué se separó | Todo se calcula ya mismo | (1) Necesita "un historial semanal de snapshots, equivalente a `HISTORIAL` del Excel" · (2) "Depende del RDT, que es su propio sub-proyecto futuro y **hoy no captura nada**" |
+
+**Las dos razones del bloqueo ya no aplican:**
+
+1. **"Depende del RDT que no captura nada"** → resuelto. Las Fases 1 y 2 del PR están mergeadas: el RDT validado alimenta el PR con metrado, HH por tipo, HM, costo real y conteo de CNC.
+2. **"Necesita una tabla de snapshots semanales"** → **no hace falta**, verificado contra el esquema real el 2026-09-21. El dato diario ya vive en `plan_maestro_asignaciones.fecha` y `rdt_partes.fecha_lima`; la serie se agrega por fecha, no se guarda una foto semanal. El spec de agosto asumía que había que replicar la hoja `HISTORIAL` del Excel — esa suposición quedó obsoleta.
+
+Y las dos piezas del **Bloque E** ya están disponibles:
+
+- **PPC** ya está calculado en `src/lib/pr/evm.ts:202` — `(actividades_acum − actividades_con_cnc_acum) / actividades_acum`, alimentado por el motor del Agente A.
+- **Pareto de CNC**: el catálogo `catalogo_cnc` existe desde `db/054_catalogo_cnc.sql`, con `cnc_causa_id` resuelta contra él. El propio Agente A dejó anotado en esa migración que la semilla no se reordena **"porque el Pareto de CNC compara mes a mes"** — el terreno ya estaba preparado.
 
 ### Hallazgo de arquitectura (verificado 2026-09-21)
 
@@ -48,16 +69,19 @@ Por eso el Dashboard se ve "suelto": no tiene el shell. **Moverlo no cambia la U
 
 ## Alcance
 
-Rehacer la interfaz del Dashboard de proyecto sobre los datos que **ya existen** en el PR, y dejarla dentro del shell de la aplicación.
+1. Rehacer la interfaz del **Dashboard Parcial** sobre los datos que ya existen en el PR, y dejarla dentro del shell de la aplicación.
+2. **Construir el Dashboard Completo**: todo lo del Parcial + **Bloque E (PPC + Pareto de CNC)**, con su propio matiz visual.
+3. Hacer que el **toggle `tipo_dashboard` funcione de verdad** — hoy marcar `COMPLETO` solo muestra un aviso.
 
 ## Fuera de alcance (explícito)
 
-- **Curva S y cualquier serie temporal** — Agente D.
-- **`src/lib/pr/evm.ts`** — es del Agente B (Fase 2). Esta fase puede **importar y leer**, nunca modificar.
+- **Curva S y cualquier serie temporal** — Agente D. El Completo **la enlaza**, no la dibuja.
+- **`src/lib/pr/evm.ts`** — es del Agente B (Fase 2). Esta fase puede **importar y leer**, nunca modificar. PPC ya viene calculado de ahí.
 - **El motor de RDT → PR** (`recalcular_pr_desde_rdt`, `src/lib/pr/acumulacion-rdt.ts`, `src/app/api/rdts/**`) — Agente A.
 - **La pantalla del PR** (`(workspace)/proyectos/[id]/pr/page.tsx`) — quedó terminada en la Fase 2.
-- **Pareto de CNC y cierre semanal auditado** — dependen de trabajo posterior.
-- **El rollup de portafolio** — solo se toca si el ítem 13 de la Punch List detecta que se rompió; no se rediseña.
+- **El catálogo CNC como pantalla de mantenimiento** — ya existe (Agente A). Esta fase lo **lee** para el Pareto, no lo administra.
+- **Cierre semanal auditado y 3WLA** — dependen de trabajo posterior.
+- **El rollup de portafolio** — solo se toca si la Punch List detecta que se rompió; no se rediseña.
 
 ---
 
@@ -182,26 +206,58 @@ Lo que exige atención, tomado de datos que ya existen:
 
 Cada punto con su conteo y un camino claro a la pantalla donde se corrige.
 
-### C8. Resumen ejecutivo — al final, dos líneas
+### C8. Dashboard Completo — Bloque E (PPC + Pareto de CNC)
 
-Reemplaza el bloque de texto plano actual. **Un par de líneas puntuales**, al pie de la página, en lenguaje llano: cómo va el servicio en plazo y en costo, y el hecho que más pesa. Nada de párrafos, ni repetir los números que ya están arriba.
+Lo que el spec de agosto dejó pendiente y hoy ya es construible.
 
-### C9. Actualizar flujos y este archivo
+**PPC (Percent Plan Complete).** Ya viene calculado de `evm.ts` — leer, no recalcular. Se muestra:
+
+- Con **nombre, fórmula y unidad**, no solo la sigla.
+- **Separado y rotulado aparte de SPI.** `18-control-avance.md` es explícito: "PPC y SPI miden cosas diferentes y no deben mezclarse". No comparten tarjeta, ni gráfico, ni eje.
+- Es un indicador **LPS**, no EVM — decirlo en la interfaz.
+
+**Pareto de CNC.** Barras horizontales de las causas de no cumplimiento, ordenadas de mayor a menor frecuencia, con su acumulado.
+
+- Fuente: `rdt_actividades.cnc_causa_id` contra `catalogo_cnc` (`db/054`), de actividades de partes **VALIDADO**.
+- El catálogo **no se reordena ni se altera** — el Agente A lo dejó anotado: la semilla se mantiene estable porque el Pareto compara período contra período.
+- Ordenado por frecuencia, no alfabético. Un Pareto que no está ordenado no es un Pareto.
+- Causas de cola larga: se agrupan en "Otras" a partir de un umbral, en vez de generar una barra por cada una.
+- **Hover con causa y conteo** en cada barra; la tabla de abajo tiene el detalle completo.
+- Usa **un solo color de serie** (es una sola magnitud, no categorías que compitan) — el orden ya transmite la jerarquía. No pintar cada barra de un color distinto.
+
+**Enlace a la Curva S**: el Completo incluye el acceso a la pantalla del Agente D — un enlace claro, no un gráfico embebido.
+
+### C9. Toggle `tipo_dashboard` funcional y matiz visual del Completo
+
+Hoy la columna existe y se puede editar, pero marcar un proyecto como `COMPLETO` solo muestra un aviso de "no construido". Esta tarea lo vuelve real:
+
+- `PARCIAL` → Dashboard Parcial (matiz visual 1).
+- `COMPLETO` → Dashboard Parcial **+ Bloque E + enlace a Curva S** (matiz visual 2).
+- **El permiso no cambia**: el toggle se edita con el mismo permiso que ya edita el proyecto (`puedeAdjudicarProyecto`, spec §7). No se crea un permiso nuevo.
+- **El aviso de "Dashboard Completo no construido" desaparece** — reportarlo en el informe de limpieza.
+- Los dos matices comparten el sistema de diseño: mismos tokens, mismos componentes, misma densidad. **El matiz es de composición y jerarquía, no de colores nuevos** — `design.md` §4.1 prohíbe agregar colores "porque se ven mejor".
+- Cambiar el toggle no debe requerir recargar a mano ni dejar la pantalla en un estado intermedio.
+
+### C10. Resumen ejecutivo — al final, dos líneas
+
+Reemplaza el bloque de texto plano actual, **en los dos Dashboards**. **Un par de líneas puntuales**, al pie de la página, en lenguaje llano: cómo va el servicio en plazo y en costo, y el hecho que más pesa. Nada de párrafos, ni repetir los números que ya están arriba.
+
+### C11. Actualizar flujos y este archivo
 
 Victor autorizó expresamente actualizar el flujo, siguiendo el precedente de la tarea B7 de la Fase 2:
 
-- **`11-dashboard.md`** — hoy es un stub de dos líneas ("Parcial; no exige captura de RDT"). Pasa a describir el Dashboard real: secciones, filtros, indicadores, y que la Curva S **no** vive aquí sino en su propia pantalla.
+- **`11-dashboard.md`** — hoy es un stub de dos líneas ("Parcial; no exige captura de RDT"), que además **quedó desactualizado**: esa frase describía el estado de agosto. Pasa a describir los **dos** Dashboards: qué bloques tiene cada uno, el toggle, filtros, indicadores, que el PPC es LPS y no se mezcla con SPI, y que la Curva S **no** vive aquí sino en su propia pantalla.
 - **`14-accesos-y-restricciones.md`** — registrar cualquier acceso nuevo (si lo hay).
 - **`design.md`** — si aparece una regla visual nueva y reutilizable (§ "Regla de evolución"), **proponerla**, no aplicarla en silencio. Si Victor la aprueba, agregarla con su fila en el historial de cambios.
 - **Este archivo** — decisiones, convenciones y cambios acordados durante la ejecución, escritos conforme ocurren.
 
 ⚠️ **Coordinación de flujos con el Agente D:** `11-dashboard.md` lo edita **solo el Agente C**. El Agente D documenta la Curva S en su propio archivo de flujo. Ninguno de los dos toca `10-generacion-pr.md`, `18-control-avance.md` ni `20-plan-maestro.md`, que quedaron cerrados en la Fase 2.
 
-### C10. Verificación
+### C12. Verificación
 
 - `tsc --noEmit` limpio, `eslint` limpio, suite completa en verde, `next build` sin errores.
-- Tests nuevos para cualquier función pura que se agregue. **No se modifica `evm.ts` ni sus tests.**
-- Verificación funcional con Playwright: ver protocolo.
+- Tests nuevos para cualquier función pura que se agregue (el agregado del Pareto es candidato natural). **No se modifica `evm.ts` ni sus tests.**
+- Verificación funcional con Playwright, **en loop hasta cerrar**: ver protocolo.
 
 ---
 
@@ -226,11 +282,15 @@ Victor autorizó expresamente actualizar el flujo, siguiendo el precedente de la
 Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 
 1. **Antes de implementar — Victor aprueba el checklist.** El resultado esperado se define **antes** de escribir código.
-2. **Implementación** de C0 a C10.
-3. **Autoverificación con el MCP de Playwright**: cada ítem del checklist se verifica **en la app real, con login real** — no razonando sobre el código.
-4. **El agente llena el checklist** con el resultado de cada ítem y su evidencia.
-5. **Loop hasta cerrar.** Mientras quede un ítem que no esté en Completado, corrige y vuelve a verificar.
-6. **Fin del trabajo del agente:** 100 % de los ítems en Completado.
+2. **Implementación** de C0 a C12.
+3. **Autoverificación con el MCP de Playwright**: cada ítem del checklist se verifica **en la app real, con login real** — no razonando sobre el código, no "debería funcionar".
+4. **El agente llena el checklist** con el resultado de cada ítem y su evidencia concreta (captura, número exacto, mensaje textual).
+5. **🔁 LOOP HASTA CERRAR — el paso que no se salta.** Mientras quede **un solo** ítem que no esté en **Completado**, el agente **corrige y vuelve a verificar el ítem completo**, las veces que haga falta. No hay límite de vueltas. Reglas del loop:
+   - Un ítem solo pasa a **Completado** con evidencia verificada en la app real, nunca por inspección de código.
+   - **No se entrega con ítems abiertos**, ni marcados "Observado", "parcial" o "pendiente de Victor". Si un ítem no se puede cerrar, **no se deja abierto en silencio**: se escribe por qué y se consulta a Victor.
+   - Arreglar un ítem puede romper otro: tras cada corrección, **volver a verificar los ítems que toca el cambio**, no solo el que se estaba arreglando. Esto vale especialmente para la UI, donde un ajuste de layout suele mover otra cosa.
+   - Cada vuelta del loop **se anota en este archivo** (qué falló, qué se cambió), para que Victor vea el recorrido y no solo el resultado.
+6. **Fin del trabajo del agente:** 100 % de los ítems en Completado, no antes.
 7. **Recién entonces Victor hace la revisión final.**
 
 **Verificación de UI, específicamente** (es donde más falla):
@@ -255,11 +315,13 @@ Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 - [ ] C5 · Dona revisada + barras de desviación por partida, SVG sin dependencias, hover en cada marca, paleta validada, sin doble eje
 - [ ] C6 · Matriz de partidas con pre-vuelo §11 respondido, sticky de celda, `flex-1 min-h-0`, `scope="col"`, alerta de sobre-ejecución
 - [ ] C7 · Panel de diagnóstico con los cuatro puntos y camino a la pantalla que corrige
-- [ ] C8 · Resumen ejecutivo de dos líneas, al final
-- [ ] C9 · `11-dashboard.md` reescrito; `design.md` solo si Victor aprueba la regla nueva; este archivo actualizado con las decisiones tomadas
-- [ ] C10 · tsc, eslint, tests y build limpios
-- [ ] C11 · Autoverificación Playwright completa, Punch List 100 % Completado
-- [ ] C12 · Informe de limpieza entregado
+- [ ] C8 · Bloque E del Completo: PPC (separado de SPI, rotulado como LPS) + Pareto de CNC ordenado por frecuencia, con "Otras" y hover; enlace a Curva S
+- [ ] C9 · Toggle `tipo_dashboard` funcional, matiz visual del Completo, aviso viejo retirado, permiso sin cambios
+- [ ] C10 · Resumen ejecutivo de dos líneas, al final, en los dos Dashboards
+- [ ] C11 · `11-dashboard.md` reescrito con los dos Dashboards; `design.md` solo si Victor aprueba la regla nueva; este archivo actualizado con decisiones y vueltas del loop
+- [ ] C12 · tsc, eslint, tests y build limpios
+- [ ] C13 · **Autoverificación Playwright en loop hasta cerrar: Punch List 100 % Completado, sin ítems abiertos ni observados**
+- [ ] C14 · Informe de limpieza entregado
 
 ## Punch List — a aprobar ANTES de implementar
 
@@ -279,11 +341,21 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Dashboard Fase 3 �
 | 10 | Matriz de partidas con scroll | Encabezado sticky visible al final de la tabla; barra de scroll horizontal alcanzable sin bajar la página | Pendiente | |
 | 11 | Partida sobre-ejecutada | Alerta visible con icono + texto en `1.3` y `2.1.5` de PS-0004 (dato real, no forzado) | Pendiente | |
 | 12 | Panel de diagnóstico | Muestra sobre-ejecutadas, sin actividad, recursos sin tarifa y HH de MOI (horas, sin costo) | Pendiente | |
-| 13 | Rollup de portafolio | Sigue funcionando igual que antes de esta fase | Pendiente | |
-| 14 | Resumen ejecutivo | Dos líneas, al final de la página, sin repetir los números de arriba | Pendiente | |
-| 15 | Móvil | La página se recorre sin desbordes ni columnas cortadas | Pendiente | |
-| 16 | Teclado | Los `<select>` se operan con teclado y el foco es visible | Pendiente | |
-| 17 | Cuenta sin permisos de administración | Ve lo que le corresponde, sin filtrar datos de más ni romperse | Pendiente | |
+| 13 | Cambiar el toggle a `COMPLETO` | La pantalla pasa al Dashboard Completo sin recargar a mano ni quedar en estado intermedio; el aviso viejo de "no construido" ya no aparece | Pendiente | |
+| 14 | Permiso del toggle | Lo edita quien ya podía editar el proyecto; una cuenta sin ese permiso no puede cambiarlo | Pendiente | |
+| 15 | PPC en el Completo | Se muestra con nombre, fórmula y unidad, **separado de SPI** y rotulado como indicador LPS | Pendiente | |
+| 16 | PPC contra cálculo a mano | Coincide con `(actividades − actividades con CNC) / actividades` de PS-0004 | Pendiente | |
+| 17 | Pareto de CNC | Barras ordenadas de mayor a menor frecuencia (no alfabético), con acumulado y agrupación "Otras" | Pendiente | |
+| 18 | Pareto contra los datos reales | Las causas y conteos coinciden con los CNC de los RDT validados de PS-0004 | Pendiente | |
+| 19 | Enlace a Curva S desde el Completo | Lleva a la pantalla del Agente D; no hay curva embebida en el Dashboard | Pendiente | |
+| 20 | Los dos matices | Parcial y Completo se distinguen visualmente pero usan los mismos tokens y componentes; ningún color fuera del sistema | Pendiente | |
+| 21 | Rollup de portafolio | Sigue funcionando igual que antes de esta fase | Pendiente | |
+| 22 | Resumen ejecutivo | Dos líneas, al final de la página, en los dos Dashboards, sin repetir los números de arriba | Pendiente | |
+| 23 | Móvil | Las dos páginas se recorren sin desbordes ni columnas cortadas | Pendiente | |
+| 24 | Teclado | Los `<select>` y el toggle se operan con teclado y el foco es visible | Pendiente | |
+| 25 | Cuenta sin permisos de administración | Ve lo que le corresponde, sin filtrar datos de más ni romperse | Pendiente | |
+
+**Cierre de esta Punch List:** se cierra **en loop** (ver protocolo, paso 5). El agente verifica, corrige y vuelve a verificar hasta que los 25 ítems estén en **Completado**, con evidencia real de la app. No se entrega con ítems abiertos ni observados; si uno no se puede cerrar, se consulta a Victor en vez de dejarlo a medias.
 
 ## Coordinación con el Agente D
 

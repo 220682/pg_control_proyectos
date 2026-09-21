@@ -3,10 +3,11 @@
 **Estado (2026-09-21):** PLAN INICIAL — **pendiente de aprobación de Victor** (plan + Punch List). Sin checklist aprobado, la implementación no arranca. Trabaja en paralelo con [Dashboard / Fase 3 (Agente C)](2026-09-21-dashboard-fase-3-agente-c.md).
 
 **Ya resuelto, no volver a preguntar:**
-- La Curva S **no va dentro del Dashboard**. Es una **pantalla propia con su propio chip** de navegación — decisión de Victor: "la curva S debería ir en otro apartado ya que falta espacio, debe ser otra interfaz con su propio chip".
-- **No hace falta ninguna tabla de snapshots históricos.** El dato diario ya existe en las tablas de origen (ver "Por qué esto se puede construir hoy"). Verificado contra el esquema real el 2026-09-21.
+- La Curva S era el **Bloque G del Dashboard Completo** en el diseño original (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo web). **Victor la saca de ahí**: va en **pantalla propia con su propio chip**, porque dentro del Dashboard no hay espacio. El Dashboard Completo (Agente C) **la enlaza**, no la dibuja.
+- **No hace falta ninguna tabla de snapshots históricos.** Esto **contradice el supuesto del spec de agosto**, que daba por hecho que el Completo necesitaba "un historial semanal de snapshots, equivalente a `HISTORIAL` del Excel". Verificado contra el esquema real el 2026-09-21: el dato diario ya existe en las tablas de origen (ver "Por qué esto se puede construir hoy"). **Ese supuesto quedó obsoleto y así hay que documentarlo.**
 - Paleta de series: ya validada y **compartida con el Agente C** — ver "Colores".
 - `docs/visual-companion/design.md` es de **lectura obligatoria completa** antes de tocar interfaz.
+- **La Punch List se cierra en loop, no en una pasada.** Ver protocolo: verificar, corregir y volver a verificar hasta el 100 % en Completado. No se entrega con ítems abiertos.
 
 ## Ejecución en la nube
 
@@ -21,7 +22,14 @@ Mismo modo de trabajo que los Agentes A y B (Fases 1 y 2 del PR):
 
 ## Contexto
 
-La Curva S quedó **explícitamente fuera de alcance** en las dos fases del PR ("necesita el histórico, va después"). Ahora que las Fases 1 y 2 están mergeadas, la pregunta era si el modelo de datos podía sostenerla. **Sí puede, sin estructura nueva.**
+La Curva S viene postergada desde agosto. El spec del Dashboard (`2026-08-16-dashboard-parcial-design.md` §2) la dejó como **Bloque G del Dashboard Completo**, fuera de alcance por dos razones: dependía del RDT — que entonces "no capturaba nada" — y se creía que necesitaba una tabla de snapshots semanales. Las dos fases del PR la volvieron a dejar fuera por lo mismo ("necesita el histórico, va después").
+
+**Las dos razones cayeron:**
+
+1. El RDT ya captura y alimenta el PR (Fases 1 y 2, mergeadas el 2026-09-21).
+2. **No hace falta la tabla de snapshots.** El dato diario ya está en las tablas de origen — verificado contra el esquema real.
+
+Y por decisión de Victor ya no es un bloque del Dashboard: **sale a pantalla propia con chip propio**, porque dentro del Dashboard no le alcanza el espacio.
 
 ### Por qué esto se puede construir hoy (verificado contra el esquema real)
 
@@ -176,6 +184,8 @@ Sin plan aprobado no hay PV. La pantalla muestra el aviso explicando por qué y 
 ### D9. Flujos y este archivo
 
 - **Flujo nuevo o sección nueva** que describa la pantalla de Curva S: de dónde sale cada serie, la regla de que la curva real no se extiende más allá del corte, y la granularidad semanal por defecto.
+- **Dejar registrado que el supuesto del spec de agosto quedó obsoleto**: el Dashboard Completo **no** necesitaba una tabla de snapshots semanales (`HISTORIAL` del Excel); la serie se agrega por fecha desde las tablas de origen. Anotarlo donde corresponda para que nadie vuelva a planear esa tabla.
+- **El Bloque G cambió de lugar**: dejar escrito que la Curva S salió del Dashboard Completo a pantalla propia, para que el flujo 11 y este no se contradigan.
 - **`14-accesos-y-restricciones.md`** — registrar el acceso nuevo (pantalla + chip + endpoint) y qué roles la ven.
 - **`design.md`** — si aparece una regla visual nueva y reutilizable (primer gráfico de líneas del proyecto: crosshair, tooltip, leyenda), **proponerla** a Victor; si la aprueba, agregarla con su fila en el historial.
 - **Este archivo** — decisiones y convenciones conforme ocurren.
@@ -209,10 +219,14 @@ Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 
 1. **Antes de implementar — Victor aprueba el checklist** (y la decisión D0 del chip).
 2. **Implementación** de D0 a D10.
-3. **Autoverificación con el MCP de Playwright**: cada ítem verificado **en la app real, con login real**.
-4. **El agente llena el checklist** con resultado y evidencia.
-5. **Loop hasta cerrar**, sin ítems abiertos.
-6. **Fin del trabajo:** 100 % en Completado.
+3. **Autoverificación con el MCP de Playwright**: cada ítem verificado **en la app real, con login real** — no razonando sobre el código, no "debería funcionar".
+4. **El agente llena el checklist** con resultado y evidencia concreta (captura, número exacto, mensaje textual).
+5. **🔁 LOOP HASTA CERRAR — el paso que no se salta.** Mientras quede **un solo** ítem que no esté en **Completado**, el agente **corrige y vuelve a verificar el ítem completo**, las veces que haga falta. No hay límite de vueltas. Reglas del loop:
+   - Un ítem solo pasa a **Completado** con evidencia verificada en la app real, nunca por inspección de código.
+   - **No se entrega con ítems abiertos**, ni "Observado", ni "parcial". Si un ítem no se puede cerrar, se escribe por qué y se consulta a Victor — no se deja abierto en silencio.
+   - Arreglar un ítem puede romper otro: tras cada corrección, **volver a verificar los ítems que toca el cambio**. En esta pantalla vale especialmente para los ítems de **cuadre** (3 y 4): cualquier ajuste a la serie obliga a recomprobar que el último punto sigue coincidiendo con el PR.
+   - Cada vuelta del loop **se anota en este archivo** (qué falló, qué se cambió).
+6. **Fin del trabajo:** 100 % en Completado, no antes.
 7. **Recién entonces Victor hace la revisión final.**
 
 **Verificación de UI, específicamente:**
@@ -243,7 +257,7 @@ Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 - [ ] D8 · Estado sin Plan Maestro: aviso explicado, sin curva inventada
 - [ ] D9 · Flujo nuevo documentado, flujo 14 actualizado, este archivo al día
 - [ ] D10 · tsc, eslint, tests y build limpios; migración aplicada
-- [ ] D11 · Autoverificación Playwright completa, Punch List 100 % Completado
+- [ ] D11 · **Autoverificación Playwright en loop hasta cerrar: Punch List 100 % Completado, sin ítems abiertos ni observados**
 - [ ] D12 · Informe de limpieza entregado
 
 ## Punch List — a aprobar ANTES de implementar
@@ -271,6 +285,9 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Curva S Fase 3 —
 | 17 | Rendimiento | La pantalla carga sin demora perceptible en el proyecto real más grande | Pendiente | |
 | 18 | Cuenta sin permisos | No accede a un servicio que no le corresponde, tampoco llamando al endpoint directo | Pendiente | |
 | 19 | Móvil | El gráfico y la tabla se leen sin desbordes | Pendiente | |
+| 20 | Enlace desde el Dashboard Completo | El acceso que deja el Agente C abre esta pantalla con el servicio en contexto | Pendiente | |
+
+**Cierre de esta Punch List:** se cierra **en loop** (ver protocolo, paso 5). El agente verifica, corrige y vuelve a verificar hasta que los 20 ítems estén en **Completado**, con evidencia real de la app. Los ítems 3 y 4 (cuadre contra el PR) se re-verifican después de **cualquier** cambio en la serie. No se entrega con ítems abiertos ni observados.
 
 ## Coordinación con el Agente C
 

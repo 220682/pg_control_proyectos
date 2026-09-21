@@ -20,6 +20,17 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 **Totales flujo 020 (al 21-sep-2026):** 4 checklists con Punch List · 53 ítems · 53 Conforme · 1 Observado (sin impacto) · 0 Sin verificar · **Todos los sub-lotes/fases abiertos quedaron Cerrados 100%.**
 
+## Flujo 010 — Generación PR
+
+| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2026-09-21 | PR Fase 1 (Agente A) — pipeline RDT → PR | "PR enriquecido — Fase 1: pipeline RDT → PR" | [2026-09-21-pr-fase-1-pipeline-rdt.md](2026-09-21-pr-fase-1-pipeline-rdt.md) | 19 | 19 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #13](https://github.com/220682/py_control_proyectos_web/pull/13) (2026-09-21 16:20) |
+| 2 | 2026-09-21 | PR Fase 2 (Agente B) — línea base, planificado y derivados EVM | "PR Fase 2 — línea base, planificado y derivados EVM" | [2026-09-21-pr-fase-2-pipeline-linea-base.md](2026-09-21-pr-fase-2-pipeline-linea-base.md) | 15 | 15 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #14](https://github.com/220682/py_control_proyectos_web/pull/14) (2026-09-21 18:05), después de A |
+
+**Totales flujo 010 (al 21-sep-2026):** 2 checklists con Punch List · 34 ítems · 34 Conforme · 0 Observado · 0 Sin verificar · **Ambas fases cerradas 100% y mergeadas a main en `py_control_proyectos_web`.** Efecto conjunto: la cadena RDT → PR → Dashboard queda cerrada en código — el Dashboard ya muestra indicadores reales en vez de "Pendiente".
+
+**Pendiente de decisión de Victor** (no bloqueante, anotado en el cierre de PR Fase 1): tarifa retroactiva para los RDT que ya estaban validados antes de esta sesión — quedan con `costo_real_acum = 0` en el motor nuevo porque no se quiso re-resolver la tarifa de hoy sobre RDT validados hace semanas sin una decisión explícita.
+
 ## Cómo se actualiza esta tabla
 
 Al cerrar cada sesión (o al menos al cerrar un checklist), agregar o actualizar la fila correspondiente con el conteo real leído de la Punch List. Un checklist nuevo (nueva fase, nuevo sub-lote, nueva mejora) siempre se agrega como fila nueva, nunca se reemplaza una fila existente salvo para actualizar sus conteos.

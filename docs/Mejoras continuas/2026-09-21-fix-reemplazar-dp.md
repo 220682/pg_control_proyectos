@@ -29,9 +29,20 @@ Mismo comportamiento atómico que ya tenía (todo en una transacción, revierte 
 
 ## Estado
 
-- ✅ Commit local: `56f1abd` (`py_control_proyectos_web`)
-- ✅ Migración aplicada en Supabase por Victor (2026-09-21)
-- ⏳ Pendiente: verificar en vivo que el reemplazo de DP funciona correctamente (sin duplicados, cronograma vinculado se reconstruye bien)
+- ✅ Commit `56f1abd` → pusheado a `origin/main` (`py_control_proyectos_web`), incluido en el deploy
+- ✅ Migración `050_fix_reemplazar_dp.sql` aplicada en Supabase por Victor (2026-09-21)
+- ⏳ Pendiente: verificar en vivo que el reemplazo de DP funciona correctamente (sin duplicados, cronograma vinculado se reconstruye bien) — no confirmado todavía con una prueba directa de reemplazo
+
+## Semilla de catálogo — Presupuesto de prueba 01 (mismo día)
+
+Al revisar el flujo de DP se aprovechó para cargar cargos/equipos del archivo `Informacion para pruebas/PPTO-prueba N°01.xlsx` (hoja APU) que no estaban en el catálogo maestro `recursos_cargos`/`recursos_equipos`.
+
+**SQL**: `db/051_semilla_cargos_equipos_ppto_prueba01.sql` (`py_control_proyectos_web`)
+- Cargos nuevos: OFICIAL MECANICO, OPERARIO ARMADOR, OPERARIO MECANICO, OPERARIO SOLDADOR, OPERARIO TERMOFUSIONISTA HDPE
+- Equipos nuevos: ESMERIL ANGULAR 4 1/2", ESMERIL ANGULAR 7", MAQUINA DE SOLDAR, MAQUINA DE TERMOFUSION HDPE (ALQUILER)
+- (CAPATAZ y CAMION BARANDA ya existían, no se duplicaron)
+
+**Estado**: ✅ Corrido en Supabase por Victor y verificado — el sistema reconoció los cargos/equipos correctamente al importar el DP de prueba (flujo de conciliación de EVM Fase 0). Commit `2dacb22` → pusheado a `origin/main`.
 
 ## Mejoras a flujos
 

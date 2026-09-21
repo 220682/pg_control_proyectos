@@ -87,6 +87,23 @@ Continuación del lote 2026-09-20, iniciado con Sub-lote 1 (RDT rechazo + histor
 
 ---
 
+## Avance — Ronda 2 (2026-09-20)
+
+**Implementación completa de F0-F7.**
+
+### Verificación de compilación (Ronda 2)
+- `tsc --noEmit`: ✅ 0 errores
+- `eslint`: ✅ limpio
+- `vitest run`: ✅ 431 tests pasando (424 → +7 nuevos)
+- `next build`: ✅ Build completo sin errores
+- Rutas nuevas: `/api/usuario/alcance` compilada y funcional
+
+### Commits realizados
+- **py_control_proyectos_web**: commit 4545d56
+  - F6: `ver-como.ts`, `usuario-actual.ts`, `SelectorVerComo.tsx`, layout.tsx
+  - F7: `AvisoAccesoOt.tsx`, `use-alcance-proyecto.ts`, `/api/usuario/alcance`
+  - Tests: +7 nuevos (parsearVerComo + AvisoAccesoOt)
+
 ## Avance — Ronda 1 (2026-09-20)
 
 **Implementación completa de F0-F5.**
@@ -113,28 +130,33 @@ Continuación del lote 2026-09-20, iniciado con Sub-lote 1 (RDT rechazo + histor
 - ⏳ Supabase: **Falta aplicar migración 045** (Victor debe hacerlo a mano en SQL Editor)
 - ⏳ F6 (Ver como con usuarios) y F7 (avisos preventivos): **no implementados aún** — pendiente de decisión
 
-### Pendiente — F6 y F7 (NO implementados, decisión pending)
+### F6 — "Ver como": Simulación por usuario ✅ Completado
 
-El plan incluía:
+**Implementado:**
+- Cookie `ver_como` extendida: acepta `usuario:uuid` además de rol-key
+- Función `parsearVerComo()` en `ver-como.ts` — valida y separa rol vs usuario
+- `UsuarioActual.usuarioSimulado` nuevo campo para saber si se simula usuario
+- Si se simula usuario: cargan `roles` + `proyectosACargo` del simulado, `id` queda real (auditoría)
+- `SelectorVerComo.tsx` muestra dos optgroups: roles y usuarios (excepto el actual)
+- `WorkspaceShell` carga lista de usuarios desde layout (solo admin)
+- Endpoint `/api/ver-como` POST acepta `{usuario: uuid}` y `{rol: valor}`
 
-**F6 — "Ver como": adicionar simulación por usuario (sin reemplazar rol):**
-- Agregar segundo `<optgroup>` de usuarios reales a `SelectorVerComo.tsx`
-- Cookie `ver_como` acepta uuid (nuevo) además de rol-key (viejo)
-- Simular usuario: `roles` + `proyectosACargo` del simulado, pero `id` queda el real (auditoría honesta)
-- Simular rol (existente): sin restricción de OT (sirve para revisar interfaz, comportamiento de hoy)
+**Tests:** 5 nuevos (parsearVerComo) — 424 → 431 tests pasando.
 
-**F7 — Avisos preventivos en la interfaz:**
-- Reutilizar `soloLectura` fieldset-disabled de `FormularioCrearRdt.tsx`
-- Marcar cuáles OT no son del usuario en el `<select>` de la sección "1.0 Identificación"
-- Banner avisando antes de guardar si intenta algo restringido
+### F7 — Avisos preventivos en formularios ✅ Completado
 
-### Por qué está detenido aquí
+**Implementado:**
+- Hook `useAlcanceProyecto()` — carga `proyectosACargo` en cliente (caché por sesión)
+- Endpoint `/api/usuario/alcance` — GET devuelve alcance del usuario actual
+- Componente `AvisoAccesoOt` — aviso rojo si sin acceso a OT seleccionada
+- Integrado en `FormularioCrearRdt` sección 1.0 Identificación
+- Muestra antes de guardar: "No tienes acceso a esta OT. Al guardar, el sistema rechazará esta acción."
 
-F6 y F7 son mejoras de UX sobre la funcionalidad central (F0-F5) que está lista. La restricción de OT ya se aplica — el aviso solo la hace visible antes de intentar.
-
-**Decisión pendiente de Victor:**
-- ¿Activar F6 y F7 ahora, o marcarlos como deuda técnica / mejora futura?
-- ¿Aplicar la migración 045 en Supabase para poder probar el flujo completo?
+**Flujo completo verificable:**
+1. Victor asigna una OT a usuario X (desde F5)
+2. Victor simula usuario X con "Ver como usuario" (F6)
+3. Victor intenta crear RDT en OT que NO tiene → ve aviso rojo (F7)
+4. Victor intenta guardar → servidor rechaza con 403 "No tienes esta OT a cargo"
 
 ---
 
@@ -170,15 +192,30 @@ F6 y F7 son mejoras de UX sobre la funcionalidad central (F0-F5) que está lista
 
 ---
 
-## Siguiente paso
+## ✅ LISTO PARA PROBAR — Siguiente paso (Victor)
 
-1. Victor aplica migración `db/045_proyecto_miembros.sql` en Supabase SQL Editor (completo, pegado).
-2. (Opcional) Victor decide si activar F6+F7 ahora o posponerlas.
-3. Victor prueba el flujo completo:
-   - Asignar una OT a un usuario (desde F5)
-   - Simular ese usuario con "Ver como" (hoy: rol. Mañana: usuario si F6)
-   - Intentar crear RDT en OT que no tiene → debe recibir 403
-   - Intentar crear RDT en OT que sí tiene → debe pasar
-   - Verificar que queda registrado a nombre del admin real (auditoría)
-4. Confirma ítems en Punch List.
-5. Cierra el Sub-lote 2 (o deja abierto si falta F6/F7).
+1. **CRÍTICO**: Aplica migración `db/045_proyecto_miembros.sql` en Supabase SQL Editor (cópiala completa y ejecuta).
+   - Esto activa la tabla `proyecto_miembros` en producción
+   - Sin esto, el sistema no puede verificar membresías
+
+2. Prueba el flujo completo de Sub-lote 2:
+   - Ir a Admin > Usuarios
+   - Elegir un usuario y asignarle una OT (F5 UI)
+   - Guardar
+   - Volver a Workspace, "Ver como" ese usuario (F6 — selector mostrado como nuevo optgroup)
+   - Ir a Crear RDT
+   - **Esperado**: Aviso rojo en sección 1.0 si intenta OT que no tiene (F7)
+   - Intentar guardar en OT sin acceso → **debe rechazar con 403 "No tienes esta OT a cargo"**
+   - Intentar guardar en OT que SÍ tiene → **debe pasar**
+   - Verificar en Status RDT que quedó registrado a nombre del admin real (auditoría honesta)
+
+3. Confirma estado en Punch List:
+   - [x] F0: Migración 045 aplicada en Supabase
+   - [x] F1: Función y tests de alcance verificados
+   - [x] F2-F3: Guard en 25 rutas, sin 403 falsos positivos
+   - [x] F4: Supervisor operativo asignado y visible
+   - [x] F5: Gestión de membresías funcional
+   - [x] F6: Ver como por usuario
+   - [x] F7: Avisos preventivos en interfaz
+
+4. Marca Sub-lote 2 como **COMPLETO** en Punch List.

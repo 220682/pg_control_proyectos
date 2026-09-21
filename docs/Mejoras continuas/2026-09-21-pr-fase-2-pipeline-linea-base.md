@@ -19,6 +19,25 @@
 - Aun así, **cada migración queda documentada en su propio archivo `db/0NN_*.sql`, commiteada, y resumida en el PR** — la autonomía es sobre no pausar a pedir permiso, no sobre dejar de dejar rastro.
 - Al terminar, el agente entrega en el PR: el checklist de implementación (B1–B10) marcado, la Punch List de 15 ítems con el resultado de cada uno verificado con Playwright, y el informe de limpieza.
 
+### Nota técnica — `PR_DB_URL` no es alcanzable desde este sandbox (aprendido en Fase 1)
+
+`PR_DB_URL` es una conexión directa a Postgres (puerto 5432). El sandbox de Claude Code en la nube **no tiene salida de red a ese puerto** — solo tiene salida HTTPS (443) a través de un proxy — así que `psql`/cualquier cliente Postgres directo con esa variable **siempre va a fallar** ahí (no es un error del agente ni de la variable). Es un límite arquitectónico del entorno, no algo que se arregle reintentando.
+
+**Alternativa que sí funciona (usada y verificada en Fase 1):** la API de administración de Supabase, por HTTPS.
+
+```
+POST https://api.supabase.com/v1/projects/{ref}/database/query
+Authorization: Bearer $SUPABASE_ACCESS_TOKEN
+Content-Type: application/json
+
+{"query": "<el SQL completo de la migración>"}
+```
+
+- `{ref}` es el subdominio del proyecto (de `NEXT_PUBLIC_SUPABASE_URL = https://xxxxx.supabase.co`, el ref es `xxxxx`).
+- Requiere **`SUPABASE_ACCESS_TOKEN`** (token personal de la cuenta de Supabase — distinto de `PR_DB_URL` y del service role key). Si no está en el entorno, pedírselo a Victor.
+- Para evitar problemas de escapado de comillas en el SQL, escribir el body JSON a un archivo temporal (con un script, no armando el string a mano) y usar `curl --data @archivo.json`, no `-d '...'` inline.
+- `curl` respeta el proxy HTTPS del entorno automáticamente. Si en algún punto se usa `fetch` nativo de Node para esto, hace falta `NODE_USE_ENV_PROXY=1` porque si no, no respeta `HTTPS_PROXY` y el request se cuelga.
+
 ## Contexto
 
 El PR es la tabla que alimenta a todo el sistema. Hoy es una copia pobre del DP: `reemplazar_dp()` lo genera con las columnas contractuales y los acumulados en 0, y nada más lo vuelve a tocar.

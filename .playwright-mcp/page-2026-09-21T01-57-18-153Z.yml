@@ -1,0 +1,283 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - complementary [ref=f4e3]:
+      - link "Control de Proyectos" [ref=f4e4] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - navigation [ref=f4e12]:
+        - link [ref=f4e13] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - generic [ref=f4e20]:
+          - paragraph [ref=f4e21]: Recursos
+          - link [ref=f4e22] [cursor=pointer]:
+            - /url: /recursos/personal
+          - link [ref=f4e29] [cursor=pointer]:
+            - /url: /recursos/cargos
+          - link [ref=f4e34] [cursor=pointer]:
+            - /url: /recursos/equipos
+          - generic "Los materiales no se catalogan todavía" [ref=f4e41]: Materiales
+      - generic [ref=f4e53]:
+        - generic [ref=f4e54]:
+          - link "Usuarios" [ref=f4e55] [cursor=pointer]:
+            - /url: /admin/usuarios
+          - link "Notificaciones" [ref=f4e61] [cursor=pointer]:
+            - /url: /notificaciones
+          - link "Configuraciones" [ref=f4e65] [cursor=pointer]:
+            - /url: /configuraciones
+          - button "Cerrar sesión" [ref=f4e70]
+        - generic [ref=f4e74]:
+          - generic [ref=f4e75]: Ver como
+          - combobox [ref=f4e79]:
+            - option "Mi rol (Administrador)" [selected]
+            - option "Jefe de Proyectos"
+            - option "Jefe de Oficina Técnica"
+            - option "Supervisor de Oficina Técnica"
+            - option "Planner"
+            - option "Supervisor de Costos"
+            - option "Jefe de Costos"
+            - option "Supervisor Operativo"
+            - option "Supervisor de Logística"
+            - option "Supervisor de Administración"
+            - option "Supervisor SSOMA"
+            - option "Asistente"
+            - option "RRHH"
+            - option "Esteban Garcia Alvarez"
+            - option "Lopez Caceres Loayza"
+        - link "VP Victor Perez Contreras Administrador" [ref=f4e80] [cursor=pointer]:
+          - /url: /mi-entorno
+          - generic [ref=f4e81]: VP
+          - generic [ref=f4e82]:
+            - generic [ref=f4e83]: Victor Perez Contreras
+            - generic [ref=f4e84]: Administrador
+    - main [ref=f4e85]:
+      - generic [ref=f4e88]:
+        - generic [ref=f4e89]:
+          - link "Salir a Mi entorno" [ref=f4e90] [cursor=pointer]:
+            - /url: /mi-entorno
+          - heading "Crear RDT" [level=1] [ref=f4e91]
+          - paragraph [ref=f4e92]: Reporte diario de trabajo · PROM-GP-002
+        - group [ref=f4e93]:
+          - generic [ref=f4e94]:
+            - button "Guardar plantilla" [ref=f4e95]
+            - button "Cargar RDT al sistema" [ref=f4e100]
+          - paragraph [ref=f4e105]: 1.0 Identificación
+          - generic [ref=f4e106]:
+            - generic [ref=f4e107]:
+              - generic [ref=f4e108]: N° OT vigente
+              - combobox "N° OT vigente" [ref=f4e109]:
+                - option "Elige el servicio…" [selected]
+            - generic [ref=f4e110]:
+              - generic [ref=f4e111]: Cliente
+              - paragraph [ref=f4e112]: —
+            - generic [ref=f4e113]:
+              - generic [ref=f4e114]: Fecha
+              - textbox "Fecha" [ref=f4e115]: 2026-09-20
+            - generic [ref=f4e116]:
+              - generic [ref=f4e117]: Turno
+              - combobox "Turno" [ref=f4e118]:
+                - option "Día" [selected]
+                - option "Noche"
+            - generic [ref=f4e119]:
+              - generic [ref=f4e120]: Especialidad
+              - textbox "Especialidad" [ref=f4e121]:
+                - /placeholder: Civil, mecánica…
+            - generic [ref=f4e122]:
+              - generic [ref=f4e123]: Ubicación / área
+              - textbox "Ubicación / área" [ref=f4e124]
+            - generic [ref=f4e125]:
+              - generic [ref=f4e126]: Semana N°
+              - textbox "Semana N°" [ref=f4e127]
+            - generic [ref=f4e128]:
+              - generic [ref=f4e129]: Partidas del DP
+              - paragraph [ref=f4e130]: —
+            - generic [ref=f4e131]:
+              - generic [ref=f4e132]: Jornada laboral (h)
+              - textbox "Jornada laboral (h)" [ref=f4e133]: "8"
+          - generic [ref=f4e134]:
+            - paragraph [ref=f4e135]: 2.0 Reporte de avance
+            - button "Actividad" [ref=f4e136]
+          - table [ref=f4e139]:
+            - rowgroup [ref=f4e140]:
+              - row [ref=f4e141]:
+                - columnheader "Ítem" [ref=f4e142]
+                - columnheader "Partida del DP" [ref=f4e143]
+                - columnheader "Descripción de la actividad" [ref=f4e144]
+                - columnheader "WBS" [ref=f4e145]
+                - columnheader "TA" [ref=f4e146]
+                - columnheader "Unid." [ref=f4e147]
+                - columnheader "Metrado acum." [ref=f4e148]
+                - columnheader "Metrado prog." [ref=f4e149]
+                - columnheader "Metrado ejec." [ref=f4e150]
+                - columnheader "Restricciones" [ref=f4e151]
+                - columnheader "CNC" [ref=f4e152]
+                - columnheader [ref=f4e153]
+            - rowgroup [ref=f4e154]:
+              - row [ref=f4e155]:
+                - cell "T1" [ref=f4e156]
+                - cell "— sin partida —" [ref=f4e157]:
+                  - combobox [ref=f4e158]:
+                    - option "— sin partida —" [selected]
+                    - option "Contributoria"
+                    - option "No contributoria"
+                - cell [ref=f4e159]:
+                  - textbox "Qué se hizo" [ref=f4e160]
+                - cell "—" [ref=f4e161]
+                - cell "D · Directo" [ref=f4e162]
+                - cell "—" [ref=f4e163]
+                - cell "—" [ref=f4e164]
+                - cell [ref=f4e165]:
+                  - textbox [ref=f4e166]
+                - cell [ref=f4e167]:
+                  - textbox [ref=f4e168]
+                - cell [ref=f4e169]:
+                  - textbox [ref=f4e170]
+                - cell "—" [ref=f4e171]:
+                  - combobox [ref=f4e172]:
+                    - option "—" [selected]
+                    - option "Falta de capacitación específica."
+                    - option "Falta de movilidad"
+                    - option "Planificación y programación inadecuadas."
+                    - option "Falta de suministro oportuno de materiales."
+                    - option "Cambios en el diseño o alcance del proyecto."
+                    - option "Condiciones climáticas adversas."
+                    - option "Mano de obra insuficiente."
+                    - option "Mano de obra no calificada"
+                    - option "Uso de materiales inadecuados o de baja calidad."
+                    - option "Mala comunicación y coordinación entre equipos."
+                    - option "Demoras en permisos y aprobaciones legales."
+                    - option "Falta de equipos y herramientas"
+                - cell [ref=f4e173]:
+                  - button "Quitar actividad" [ref=f4e174]
+          - generic [ref=f4e178]:
+            - paragraph [ref=f4e179]: 3.0 Tareo de personal · HH por actividad
+            - button "Persona" [ref=f4e180]
+          - table [ref=f4e183]:
+            - rowgroup [ref=f4e184]:
+              - row [ref=f4e185]:
+                - columnheader "#" [ref=f4e186]
+                - columnheader "Persona" [ref=f4e187]
+                - columnheader "DNI" [ref=f4e188]
+                - columnheader "Apellidos y nombres" [ref=f4e189]
+                - columnheader "Cargo" [ref=f4e190]
+                - columnheader "Especialidad" [ref=f4e191]
+                - columnheader "T1" [ref=f4e192]
+                - columnheader "Total" [ref=f4e193]
+                - columnheader [ref=f4e194]
+            - rowgroup [ref=f4e195]:
+              - row [ref=f4e196]:
+                - cell "1" [ref=f4e197]
+                - cell "Elige la persona…" [ref=f4e198]:
+                  - combobox [ref=f4e199]:
+                    - option "Elige la persona…" [selected]
+                    - option "+ Agregar trabajador no listado"
+                - cell [ref=f4e200]:
+                  - textbox [ref=f4e201]
+                - cell [ref=f4e202]:
+                  - textbox [ref=f4e203]
+                - cell [ref=f4e204]:
+                  - combobox [ref=f4e205]
+                - cell [ref=f4e206]:
+                  - textbox "Civil, SSOMA… (opcional)" [ref=f4e207]
+                - cell [ref=f4e208]:
+                  - textbox [ref=f4e209]
+                - cell "0" [ref=f4e210]
+                - cell [ref=f4e211]:
+                  - button "Quitar persona" [ref=f4e212]
+              - row [ref=f4e216]:
+                - cell "Total HH" [ref=f4e217]
+                - cell "0" [ref=f4e218]
+                - cell "0" [ref=f4e219]
+                - cell [ref=f4e220]
+          - generic [ref=f4e221]:
+            - generic [ref=f4e222]:
+              - generic [ref=f4e223]:
+                - paragraph [ref=f4e224]: Equipos · HM del día
+                - button "Equipo" [ref=f4e225]
+              - table [ref=f4e228]:
+                - rowgroup [ref=f4e229]:
+                  - row [ref=f4e230]:
+                    - columnheader "Equipo" [ref=f4e231]
+                    - columnheader "WBS" [ref=f4e232]
+                    - columnheader "HM" [ref=f4e233]
+                    - columnheader [ref=f4e234]
+                - rowgroup [ref=f4e235]:
+                  - row [ref=f4e236]:
+                    - cell "Elige el equipo…" [ref=f4e237]:
+                      - combobox [ref=f4e238]:
+                        - option "Elige el equipo…" [selected]
+                        - option "+ Agregar equipo no listado (solo este RDT)"
+                    - cell "—" [ref=f4e239]:
+                      - combobox [ref=f4e240]:
+                        - option "—" [selected]
+                    - cell [ref=f4e241]:
+                      - textbox [ref=f4e242]
+                    - cell [ref=f4e243]:
+                      - button "Quitar equipo" [ref=f4e244]
+                  - row [ref=f4e248]:
+                    - cell "Total HM" [ref=f4e249]
+                    - cell "0" [ref=f4e250]
+                    - cell [ref=f4e251]
+            - generic [ref=f4e252]:
+              - generic [ref=f4e253]:
+                - paragraph [ref=f4e254]: Materiales · informativo
+                - button "Material" [ref=f4e255]
+              - paragraph [ref=f4e257]: No se cuantifica ni se suma a ningún acumulado, es solo para tener el dato a mano.
+              - table [ref=f4e259]:
+                - rowgroup [ref=f4e260]:
+                  - row [ref=f4e261]:
+                    - columnheader "Descripción" [ref=f4e262]
+                    - columnheader "WBS" [ref=f4e263]
+                    - columnheader "Und." [ref=f4e264]
+                    - columnheader "Cantidad" [ref=f4e265]
+                    - columnheader [ref=f4e266]
+                - rowgroup [ref=f4e267]:
+                  - row [ref=f4e268]:
+                    - cell [ref=f4e269]:
+                      - textbox "Qué material" [ref=f4e270]
+                    - cell "—" [ref=f4e271]:
+                      - combobox [ref=f4e272]:
+                        - option "—" [selected]
+                    - cell [ref=f4e273]:
+                      - textbox [ref=f4e274]
+                    - cell [ref=f4e275]:
+                      - textbox [ref=f4e276]
+                    - cell [ref=f4e277]:
+                      - button "Quitar material" [ref=f4e278]
+              - paragraph [ref=f4e282]: Observaciones
+              - textbox [ref=f4e283]
+    - complementary [ref=f4e284]:
+      - generic [ref=f4e285]:
+        - paragraph [ref=f4e286]: Accesos rápidos
+        - generic [ref=f4e287]:
+          - generic [ref=f4e288]: Tareo MOI
+          - generic [ref=f4e292]: Pets
+          - generic [ref=f4e296]: Acta de conformidad
+          - generic [ref=f4e301]: Status de servicios
+          - link "Requerimiento" [ref=f4e304] [cursor=pointer]:
+            - /url: /requerimientos
+          - link "Consolidado RQ" [ref=f4e311] [cursor=pointer]:
+            - /url: /logistica/consolidado-rq
+          - link "Subir RDTs" [ref=f4e315] [cursor=pointer]:
+            - /url: /mi-entorno?accion=subir-rdt
+      - paragraph [ref=f4e320]: Grupos del servicio
+      - paragraph [ref=f4e321]: Selecciona un servicio para habilitar las herramientas del panel.
+      - generic [ref=f4e322]:
+        - generic [ref=f4e323]:
+          - button "Planificación" [expanded] [ref=f4e324]
+          - generic [ref=f4e327]:
+            - link [ref=f4e328] [cursor=pointer]:
+              - /url: /notificaciones
+            - generic [ref=f4e335]: Cronograma
+            - link [ref=f4e339] [cursor=pointer]:
+              - /url: /plan-maestro
+            - generic [ref=f4e343]: 3WLA
+            - generic [ref=f4e347]: Programación diaria
+            - generic [ref=f4e351]: PR (Reporte del proyecto)
+            - generic [ref=f4e356]: Status de capacitaciones
+            - generic [ref=f4e361]: Programación de capacitaciones
+        - button "Costos" [ref=f4e367]
+        - button "Supervisión operativa" [ref=f4e371]
+        - button "Logística" [ref=f4e375]
+        - button "Oficina Técnica" [ref=f4e379]
+        - button "Administración" [ref=f4e383]
+        - button "SSOMA" [ref=f4e387]
+  - button "Open Next.js Dev Tools" [ref=f4e395] [cursor=pointer]

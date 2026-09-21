@@ -1,0 +1,282 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - complementary [ref=f1e3]:
+      - link "Control de Proyectos" [ref=f1e4] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - navigation [ref=f1e12]:
+        - link [ref=f1e13] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - generic [ref=f1e20]:
+        - generic [ref=f1e21]:
+          - link "1" [ref=f1e363] [cursor=pointer]:
+            - /url: /notificaciones
+          - link "Configuraciones" [ref=f1e26] [cursor=pointer]:
+            - /url: /configuraciones
+          - button "Cerrar sesión" [ref=f1e31]
+        - link "LC Lopez Caceres Loayza Supervisor Operativo" [ref=f1e35] [cursor=pointer]:
+          - /url: /mi-entorno
+          - generic [ref=f1e36]: LC
+          - generic [ref=f1e37]:
+            - generic [ref=f1e38]: Lopez Caceres Loayza
+            - generic [ref=f1e39]: Supervisor Operativo
+    - main [ref=f1e40]:
+      - generic [ref=f1e43]:
+        - generic [ref=f1e44]:
+          - link "Salir a Mi entorno" [ref=f1e45] [cursor=pointer]:
+            - /url: /mi-entorno
+          - heading "Crear RDT" [level=1] [ref=f1e46]
+          - paragraph [ref=f1e47]: Reporte diario de trabajo · PROM-GP-002
+        - group [ref=f1e48]:
+          - generic [ref=f1e49]:
+            - button "Guardar plantilla" [ref=f1e50]
+            - button "Cargar RDT al sistema" [ref=f1e55]
+          - paragraph [ref=f1e60]: 1.0 Identificación
+          - generic [ref=f1e61]:
+            - generic [ref=f1e62]:
+              - generic [ref=f1e63]: N° OT vigente
+              - combobox "N° OT vigente" [active] [ref=f1e64]:
+                - option "Elige el servicio…"
+                - option "PS-0001 — Limpieza de ductos en molienda" [selected]
+                - option "PS-0002 — Montaje de tuberia"
+                - option "PS-0003 — Fabricacion de balsas"
+                - option "PS-0004 — Movimiento de tierra, e instalacion de bancoductos"
+            - generic [ref=f1e65]:
+              - generic [ref=f1e66]: Cliente
+              - paragraph [ref=f1e67]: Marcobre
+            - generic [ref=f1e68]:
+              - generic [ref=f1e69]: Fecha
+              - textbox "Fecha" [ref=f1e70]: 2026-09-20
+            - generic [ref=f1e71]:
+              - generic [ref=f1e72]: Turno
+              - combobox "Turno" [ref=f1e73]:
+                - option "Día" [selected]
+                - option "Noche"
+            - generic [ref=f1e74]:
+              - generic [ref=f1e75]: Especialidad
+              - textbox "Especialidad" [ref=f1e76]:
+                - /placeholder: Civil, mecánica…
+            - generic [ref=f1e77]:
+              - generic [ref=f1e78]: Ubicación / área
+              - textbox "Ubicación / área" [ref=f1e79]
+            - generic [ref=f1e80]:
+              - generic [ref=f1e81]: Semana N°
+              - textbox "Semana N°" [ref=f1e82]
+            - generic [ref=f1e83]:
+              - generic [ref=f1e84]: Partidas del DP
+              - paragraph [ref=f1e85]: Sin DP importado
+            - generic [ref=f1e86]:
+              - generic [ref=f1e87]: Jornada laboral (h)
+              - textbox "Jornada laboral (h)" [ref=f1e88]: "8"
+          - generic [ref=f1e89]:
+            - paragraph [ref=f1e90]: 2.0 Reporte de avance
+            - button "Actividad" [ref=f1e91]
+          - table [ref=f1e94]:
+            - rowgroup [ref=f1e95]:
+              - row [ref=f1e96]:
+                - columnheader "Ítem" [ref=f1e97]
+                - columnheader "Partida del DP" [ref=f1e98]
+                - columnheader "Descripción de la actividad" [ref=f1e99]
+                - columnheader "WBS" [ref=f1e100]
+                - columnheader "TA" [ref=f1e101]
+                - columnheader "Unid." [ref=f1e102]
+                - columnheader "Metrado acum." [ref=f1e103]
+                - columnheader "Metrado prog." [ref=f1e104]
+                - columnheader "Metrado ejec." [ref=f1e105]
+                - columnheader "Restricciones" [ref=f1e106]
+                - columnheader "CNC" [ref=f1e107]
+                - columnheader [ref=f1e108]
+            - rowgroup [ref=f1e109]:
+              - row [ref=f1e110]:
+                - cell "T1" [ref=f1e111]
+                - cell "— sin partida —" [ref=f1e112]:
+                  - combobox [ref=f1e113]:
+                    - option "— sin partida —" [selected]
+                    - option "Contributoria"
+                    - option "No contributoria"
+                - cell [ref=f1e114]:
+                  - textbox "Qué se hizo" [ref=f1e115]
+                - cell "—" [ref=f1e116]
+                - cell "D · Directo" [ref=f1e117]
+                - cell "—" [ref=f1e118]
+                - cell "—" [ref=f1e119]
+                - cell [ref=f1e120]:
+                  - textbox [ref=f1e121]
+                - cell [ref=f1e122]:
+                  - textbox [ref=f1e123]
+                - cell [ref=f1e124]:
+                  - textbox [ref=f1e125]
+                - cell "—" [ref=f1e126]:
+                  - combobox [ref=f1e127]:
+                    - option "—" [selected]
+                    - option "Falta de capacitación específica."
+                    - option "Falta de movilidad"
+                    - option "Planificación y programación inadecuadas."
+                    - option "Falta de suministro oportuno de materiales."
+                    - option "Cambios en el diseño o alcance del proyecto."
+                    - option "Condiciones climáticas adversas."
+                    - option "Mano de obra insuficiente."
+                    - option "Mano de obra no calificada"
+                    - option "Uso de materiales inadecuados o de baja calidad."
+                    - option "Mala comunicación y coordinación entre equipos."
+                    - option "Demoras en permisos y aprobaciones legales."
+                    - option "Falta de equipos y herramientas"
+                - cell [ref=f1e128]:
+                  - button "Quitar actividad" [ref=f1e129]
+          - generic [ref=f1e133]:
+            - paragraph [ref=f1e134]: 3.0 Tareo de personal · HH por actividad
+            - button "Persona" [ref=f1e135]
+          - table [ref=f1e138]:
+            - rowgroup [ref=f1e139]:
+              - row [ref=f1e140]:
+                - columnheader "#" [ref=f1e141]
+                - columnheader "Persona" [ref=f1e142]
+                - columnheader "DNI" [ref=f1e143]
+                - columnheader "Apellidos y nombres" [ref=f1e144]
+                - columnheader "Cargo" [ref=f1e145]
+                - columnheader "Especialidad" [ref=f1e146]
+                - columnheader "T1" [ref=f1e147]
+                - columnheader "Total" [ref=f1e148]
+                - columnheader [ref=f1e149]
+            - rowgroup [ref=f1e150]:
+              - row [ref=f1e151]:
+                - cell "1" [ref=f1e152]
+                - cell "Elige la persona…" [ref=f1e153]:
+                  - combobox [ref=f1e154]:
+                    - option "Elige la persona…" [selected]
+                    - option "ABRAN CASTRO LEON"
+                    - option "BRAULIO HUAMAN DIAZ"
+                    - option "CAYO GUTIERREZ JUAN WILFREDO"
+                    - option "CIRO ALEXANDER CALACHIHUA HUAYCHAY"
+                    - option "HECTOR GALVEZ RAVINES"
+                    - option "JOSE ALFREDO COTRINA ALTAMIRANO"
+                    - option "JOSHUA MANUEL HUMBERTO FARIAS ULFE"
+                    - option "MOISES JUAN ALVAREZ CRESPO"
+                    - option "PEREZ CONTRERA VICTOR RAUL"
+                    - option "PORFIRIO JOSE ROMUCHO HUAMAN"
+                    - option "RICHARD FELIX GARRIAZO OSCO"
+                    - option "RONALD MARTIN ALVARADO AGREDA"
+                    - option "SANDRO LUIS BARDALES TRUJILLO"
+                    - option "ZOILA JEAN PACAYA"
+                    - option "+ Agregar trabajador no listado"
+                - cell [ref=f1e155]:
+                  - textbox [ref=f1e156]
+                - cell [ref=f1e157]:
+                  - textbox [ref=f1e158]
+                - cell [ref=f1e159]:
+                  - combobox [ref=f1e160]
+                - cell [ref=f1e161]:
+                  - textbox "Civil, SSOMA… (opcional)" [ref=f1e162]
+                - cell [ref=f1e163]:
+                  - textbox [ref=f1e164]
+                - cell "0" [ref=f1e165]
+                - cell [ref=f1e166]:
+                  - button "Quitar persona" [ref=f1e167]
+              - row [ref=f1e171]:
+                - cell "Total HH" [ref=f1e172]
+                - cell "0" [ref=f1e173]
+                - cell "0" [ref=f1e174]
+                - cell [ref=f1e175]
+          - generic [ref=f1e176]:
+            - generic [ref=f1e177]:
+              - generic [ref=f1e178]:
+                - paragraph [ref=f1e179]: Equipos · HM del día
+                - button "Equipo" [ref=f1e180]
+              - table [ref=f1e183]:
+                - rowgroup [ref=f1e184]:
+                  - row [ref=f1e185]:
+                    - columnheader "Equipo" [ref=f1e186]
+                    - columnheader "WBS" [ref=f1e187]
+                    - columnheader "HM" [ref=f1e188]
+                    - columnheader [ref=f1e189]
+                - rowgroup [ref=f1e190]:
+                  - row [ref=f1e191]:
+                    - cell "Elige el equipo…" [ref=f1e192]:
+                      - combobox [ref=f1e193]:
+                        - option "Elige el equipo…" [selected]
+                        - option "CAMION BARANDA"
+                        - option "CAMION VOLQUETE DE 15 M3"
+                        - option "ESCALERA CON PLATAFORMA"
+                        - option "GRUPO ELECTROGENO 11KW"
+                        - option "MEZCLADOR PARA PINTURA"
+                        - option "MINICARGADOR 70 HP 0.5 YD3"
+                        - option "ROTOMARTILLO"
+                        - option "TALADRO INALAMBRICO"
+                        - option "VIBRO APISONADOR"
+                        - option "+ Agregar equipo no listado (solo este RDT)"
+                    - cell "—" [ref=f1e194]:
+                      - combobox [ref=f1e195]:
+                        - option "—" [selected]
+                    - cell [ref=f1e196]:
+                      - textbox [ref=f1e197]
+                    - cell [ref=f1e198]:
+                      - button "Quitar equipo" [ref=f1e199]
+                  - row [ref=f1e203]:
+                    - cell "Total HM" [ref=f1e204]
+                    - cell "0" [ref=f1e205]
+                    - cell [ref=f1e206]
+            - generic [ref=f1e207]:
+              - generic [ref=f1e208]:
+                - paragraph [ref=f1e209]: Materiales · informativo
+                - button "Material" [ref=f1e210]
+              - paragraph [ref=f1e212]: No se cuantifica ni se suma a ningún acumulado, es solo para tener el dato a mano.
+              - table [ref=f1e214]:
+                - rowgroup [ref=f1e215]:
+                  - row [ref=f1e216]:
+                    - columnheader "Descripción" [ref=f1e217]
+                    - columnheader "WBS" [ref=f1e218]
+                    - columnheader "Und." [ref=f1e219]
+                    - columnheader "Cantidad" [ref=f1e220]
+                    - columnheader [ref=f1e221]
+                - rowgroup [ref=f1e222]:
+                  - row [ref=f1e223]:
+                    - cell [ref=f1e224]:
+                      - textbox "Qué material" [ref=f1e225]
+                    - cell "—" [ref=f1e226]:
+                      - combobox [ref=f1e227]:
+                        - option "—" [selected]
+                    - cell [ref=f1e228]:
+                      - textbox [ref=f1e229]
+                    - cell [ref=f1e230]:
+                      - textbox [ref=f1e231]
+                    - cell [ref=f1e232]:
+                      - button "Quitar material" [ref=f1e233]
+              - paragraph [ref=f1e237]: Observaciones
+              - textbox [ref=f1e238]
+    - complementary [ref=f1e239]:
+      - generic [ref=f1e240]:
+        - paragraph [ref=f1e241]: Accesos rápidos
+        - generic [ref=f1e242]:
+          - generic [ref=f1e243]: Tareo MOI
+          - generic [ref=f1e247]: Pets
+          - generic [ref=f1e251]: Acta de conformidad
+          - generic [ref=f1e256]: Status de servicios
+          - link "Requerimiento" [ref=f1e259] [cursor=pointer]:
+            - /url: /requerimientos
+          - link "Consolidado RQ" [ref=f1e266] [cursor=pointer]:
+            - /url: /logistica/consolidado-rq
+          - link "Subir RDTs" [ref=f1e270] [cursor=pointer]:
+            - /url: /mi-entorno?accion=subir-rdt
+      - paragraph [ref=f1e275]: Grupos del servicio
+      - paragraph [ref=f1e276]: Selecciona un servicio para habilitar las herramientas del panel.
+      - generic [ref=f1e277]:
+        - generic [ref=f1e278]:
+          - button "Planificación" [expanded] [ref=f1e279]
+          - generic [ref=f1e282]:
+            - link [ref=f1e283] [cursor=pointer]:
+              - /url: /notificaciones
+            - generic [ref=f1e290]: Cronograma
+            - link [ref=f1e294] [cursor=pointer]:
+              - /url: /plan-maestro
+            - generic [ref=f1e298]: 3WLA
+            - generic [ref=f1e302]: Programación diaria
+            - generic [ref=f1e306]: PR (Reporte del proyecto)
+            - generic [ref=f1e311]: Status de capacitaciones
+            - generic [ref=f1e316]: Programación de capacitaciones
+        - button "Costos" [ref=f1e322]
+        - button "Supervisión operativa" [ref=f1e326]
+        - button "Logística" [ref=f1e330]
+        - button "Oficina Técnica" [ref=f1e334]
+        - button "Administración" [ref=f1e338]
+        - button "SSOMA" [ref=f1e342]
+  - button "Open Next.js Dev Tools" [ref=f1e350] [cursor=pointer]
+  - alert [ref=f1e354]

@@ -29,4 +29,6 @@ Fuente de verdad de cada flujo: pantallas, roles, subflujos, archivos. Al desple
 
 **Borrado administrador** no es un flujo: es una regla transversal (solo admin destruye RQ / RDT / proyecto / programa / portafolio). Está citada en 05, 06 y 08.
 
-Mejoras: ver [../Mejoras continuas/COMO-SE-TRABAJA.md](../Mejoras%20continuas/COMO-SE-TRABAJA.md).
+Mejoras: ver [../README.md](../README.md) (orquestador de `docs/`, ciclo de vida de un archivo de Mejoras continuas).
+
+**Checklists de verificación:** cada mejora o fase implementada tiene su checklist en la Punch List de Mejoras (ver `docs/README.md`), así la implementación se haya seccionado en varias fases o sub-lotes — cada una con su propio checklist. El registro cronológico de todos los checklists (cuántos ítems, cuántos Conforme, Observado o Sin verificar) vive en [../Mejoras continuas/resumen-checklists.md](../Mejoras%20continuas/resumen-checklists.md).

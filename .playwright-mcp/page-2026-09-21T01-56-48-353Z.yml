@@ -1,0 +1,121 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - complementary [ref=f2e3]:
+      - link "Control de Proyectos" [ref=f2e4] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - navigation [ref=f2e12]:
+        - link [ref=f2e13] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - generic [ref=f2e20]:
+          - paragraph [ref=f2e21]: Recursos
+          - link [ref=f2e22] [cursor=pointer]:
+            - /url: /recursos/personal
+          - link [ref=f2e29] [cursor=pointer]:
+            - /url: /recursos/cargos
+          - link [ref=f2e34] [cursor=pointer]:
+            - /url: /recursos/equipos
+          - generic "Los materiales no se catalogan todavía" [ref=f2e41]: Materiales
+      - generic [ref=f2e53]:
+        - generic [ref=f2e54]:
+          - link "Usuarios" [ref=f2e55] [cursor=pointer]:
+            - /url: /admin/usuarios
+          - link "Notificaciones" [ref=f2e61] [cursor=pointer]:
+            - /url: /notificaciones
+          - link "Configuraciones" [ref=f2e65] [cursor=pointer]:
+            - /url: /configuraciones
+          - button "Cerrar sesión" [ref=f2e70]
+        - generic [ref=f2e74]:
+          - generic [ref=f2e75]: Ver como
+          - combobox [ref=f2e79]:
+            - option "Mi rol (Administrador)" [selected]
+            - option "Jefe de Proyectos"
+            - option "Jefe de Oficina Técnica"
+            - option "Supervisor de Oficina Técnica"
+            - option "Planner"
+            - option "Supervisor de Costos"
+            - option "Jefe de Costos"
+            - option "Supervisor Operativo"
+            - option "Supervisor de Logística"
+            - option "Supervisor de Administración"
+            - option "Supervisor SSOMA"
+            - option "Asistente"
+            - option "RRHH"
+            - option "Esteban Garcia Alvarez"
+            - option "Lopez Caceres Loayza"
+        - link "VP Victor Perez Contreras Administrador" [ref=f2e80] [cursor=pointer]:
+          - /url: /mi-entorno
+          - generic [ref=f2e81]: VP
+          - generic [ref=f2e82]:
+            - generic [ref=f2e83]: Victor Perez Contreras
+            - generic [ref=f2e84]: Administrador
+    - main [ref=f2e85]:
+      - generic [ref=f2e88]:
+        - generic [ref=f2e89]:
+          - link "Salir a Mi entorno" [ref=f2e90] [cursor=pointer]:
+            - /url: /mi-entorno
+          - heading "Personal" [level=1] [ref=f2e91]
+          - paragraph [ref=f2e92]: 0 trabajadores en la base
+        - generic [ref=f2e93]:
+          - generic [ref=f2e94]:
+            - generic [ref=f2e95]: DNI
+            - textbox "DNI" [ref=f2e96]
+          - generic [ref=f2e97]:
+            - generic [ref=f2e98]: Nombre
+            - textbox "Nombre" [ref=f2e99]
+          - generic [ref=f2e100]:
+            - generic [ref=f2e101]: Cargo
+            - combobox "Cargo" [ref=f2e102]:
+              - option "Elige un cargo…" [selected]
+          - generic [ref=f2e103]:
+            - generic [ref=f2e104]: Especialidad
+            - textbox "Especialidad" [ref=f2e105]:
+              - /placeholder: Civil, SSOMA… (opcional)
+          - button "Agregar" [ref=f2e106]
+        - table [ref=f2e109]:
+          - rowgroup [ref=f2e110]:
+            - row [ref=f2e111]:
+              - columnheader "DNI" [ref=f2e112]
+              - columnheader "Nombre" [ref=f2e113]
+              - columnheader "Cargo" [ref=f2e114]
+              - columnheader "Especialidad" [ref=f2e115]
+              - columnheader "Estado" [ref=f2e116]
+          - rowgroup [ref=f2e117]:
+            - row [ref=f2e118]:
+              - cell "Cargando…" [ref=f2e119]
+    - complementary [ref=f2e120]:
+      - generic [ref=f2e121]:
+        - paragraph [ref=f2e122]: Accesos rápidos
+        - generic [ref=f2e123]:
+          - generic [ref=f2e124]: Tareo MOI
+          - generic [ref=f2e128]: Pets
+          - generic [ref=f2e132]: Acta de conformidad
+          - generic [ref=f2e137]: Status de servicios
+          - link "Requerimiento" [ref=f2e140] [cursor=pointer]:
+            - /url: /requerimientos
+          - link "Consolidado RQ" [ref=f2e147] [cursor=pointer]:
+            - /url: /logistica/consolidado-rq
+          - link "Subir RDTs" [ref=f2e151] [cursor=pointer]:
+            - /url: /mi-entorno?accion=subir-rdt
+      - paragraph [ref=f2e156]: Grupos del servicio
+      - paragraph [ref=f2e157]: Selecciona un servicio para habilitar las herramientas del panel.
+      - generic [ref=f2e158]:
+        - generic [ref=f2e159]:
+          - button "Planificación" [expanded] [ref=f2e160]
+          - generic [ref=f2e163]:
+            - link [ref=f2e164] [cursor=pointer]:
+              - /url: /notificaciones
+            - generic [ref=f2e171]: Cronograma
+            - link [ref=f2e175] [cursor=pointer]:
+              - /url: /plan-maestro
+            - generic [ref=f2e179]: 3WLA
+            - generic [ref=f2e183]: Programación diaria
+            - generic [ref=f2e187]: PR (Reporte del proyecto)
+            - generic [ref=f2e192]: Status de capacitaciones
+            - generic [ref=f2e197]: Programación de capacitaciones
+        - button "Costos" [ref=f2e203]
+        - button "Supervisión operativa" [ref=f2e207]
+        - button "Logística" [ref=f2e211]
+        - button "Oficina Técnica" [ref=f2e215]
+        - button "Administración" [ref=f2e219]
+        - button "SSOMA" [ref=f2e223]
+  - button "Open Next.js Dev Tools" [ref=f2e231] [cursor=pointer]

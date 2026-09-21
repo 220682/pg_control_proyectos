@@ -212,6 +212,14 @@ No se encontraron pruebas ejecutables en este repositorio. Por tanto:
 - Si el repositorio derivado o app real se modifica, deben ejecutarse sus validaciones específicas.
 - No se afirmará que una tarea está terminada sin evidencia de verificación.
 
+## Frase de inicio de sesión
+
+Si el usuario dice **"inicia sesión en control de proyectos"** (o equivalente claro): no preguntar de cero. Leer [docs/README.md](docs/README.md) — ese archivo es el orquestador de `docs/` y dice exactamente qué leer (los archivos de `Mejoras continuas/` que sigan abiertos para saber en qué quedó el proyecto, y todos los archivos de `Flujos de trabajo/` para el contexto general). Responder con los pendientes de esas sesiones abiertas y el contexto general del sistema.
+
+## Frase de cierre de sesión
+
+Si el usuario dice **"cierra sesión en control de proyectos"**: seguir lo indicado en [docs/README.md](docs/README.md) — actualizar solo el o los archivos de `Mejoras continuas/` tocados en la sesión (avance, checklist, apartado "Mejoras a flujos"); no crear ninguna memoria de sesión aparte. Confirmar qué se guardó y listar los pendientes para la siguiente sesión.
+
 ## Flujo de trabajo del agente
 
 1. Leer este archivo y la especificación del flujo solicitado.
@@ -242,7 +250,7 @@ El agente nunca debe:
 ## Git y entrega
 
 - El repositorio fue inicializado y publicado a GitHub.
-- Los cambios deben hacerse en ramas de trabajo y revisarse antes de fusionarse.
+- Por defecto se trabaja directo en `main` (así se ha trabajado hasta ahora). Se usa una rama de trabajo solo cuando Victor lo pide explícitamente para ese cambio.
 - El diff debe ser limpio y comprensible.
 - No se deben hacer cambios de infraestructura ni de secretos sin aprobación.
 - Los archivos de documentación funcional deben conservarse salvo acuerdo explícito del usuario.
@@ -267,8 +275,7 @@ Antes de cerrar una tarea, revisar:
 
 ### Fuente complementaria
 - [README.md](README.md)
-- [memoria.md](memoria.md)
-- [control_de_proyectos.txt](control_de_proyectos.txt)
+- [docs/README.md](docs/README.md) — orquestador de `docs/`, donde se trabaja
 - [docs/Flujos de trabajo/README.md](docs/Flujos%20de%20trabajo/README.md)
 - [docs/Flujos de trabajo/18-control-avance.md](docs/Flujos%20de%20trabajo/18-control-avance.md)
 - [docs/Flujos de trabajo/20-plan-maestro.md](docs/Flujos%20de%20trabajo/20-plan-maestro.md)

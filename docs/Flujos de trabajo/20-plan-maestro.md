@@ -107,17 +107,7 @@ Si el servicio dura seis semanas, se generan seis grupos semanales; no existe un
 
 ## Pendiente (Fase 2)
 
-- Vista detallada diaria por semana: `Prog.` y `Real` por dia, con HH y observacion cuando existan.
-- Acumulados por partida: metrado real, metrado restante, avance fisico, PV y EV.
-- HH reales, rendimiento, HH ganadas e IP, cuando el modelo de datos permita atribuirlas de forma trazable a la partida.
-- AC, CV, CPI, SPI y Curva S, sin usar valorizacion planificada como costo real.
-- Cierre semanal auditado: incidencias, causa de variacion, accion siguiente y estados abierta/en revision/cerrada/reabierta.
-- Interfaz de revision y rechazo de RDT con motivo visible e historial de correccion.
-- Paquetes de trabajo, area, disciplina y frente como filtros operativos, sin reemplazar partidas DP.
-- 3WLA como plan operativo separado.
-- Integracion de indicadores consolidados hacia PR y Dashboard.
-- Verificacion de pertenencia de usuario por servicio/proyecto, ademas de rol.
-- Vista movil semanal compacta.
+Ver `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` — los pendientes se trackean ahí, no en este archivo.
 
 ## Referencias
 

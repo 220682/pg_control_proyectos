@@ -1,0 +1,1753 @@
+- generic [active] [ref=f4e1]:
+  - main [ref=f4e85]:
+    - generic [ref=f4e426]:
+      - button "Abrir menú" [ref=f4e427]
+      - link "Control de Proyectos" [ref=f4e429] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - button "Abrir herramientas" [ref=f4e430]
+    - generic [ref=f4e522]:
+      - generic [ref=f4e523]:
+        - link "Salir a Mi entorno" [ref=f4e524] [cursor=pointer]:
+          - /url: /mi-entorno
+        - heading "Status de RDTs" [level=1] [ref=f4e525]
+        - paragraph [ref=f4e526]: 70 RDTs cargados con el filtro activo
+      - generic [ref=f4e527]:
+        - button "Personalizar campos (11)" [ref=f4e529]
+        - button "Limpiar filtros" [ref=f4e532]
+      - table [ref=f4e534]:
+        - rowgroup [ref=f4e535]:
+          - row [ref=f4e536]:
+            - columnheader [ref=f4e537]:
+              - button "N° OT" [ref=f4e538]
+            - columnheader [ref=f4e539]:
+              - button "Servicio" [ref=f4e540]
+            - columnheader [ref=f4e541]:
+              - button "Fecha" [ref=f4e542]
+            - columnheader [ref=f4e543]:
+              - button "Turno" [ref=f4e544]
+            - columnheader [ref=f4e545]:
+              - button "Especialidad" [ref=f4e546]
+            - columnheader [ref=f4e547]:
+              - button "Estado" [ref=f4e548]
+            - columnheader [ref=f4e549]:
+              - button "Activ." [ref=f4e550]
+            - columnheader [ref=f4e551]:
+              - button "Personas" [ref=f4e552]
+            - columnheader [ref=f4e553]:
+              - button "HH" [ref=f4e554]
+            - columnheader [ref=f4e555]:
+              - button "HM" [ref=f4e556]
+            - columnheader [ref=f4e557]:
+              - button "Cargado por" [ref=f4e558]
+            - columnheader "Descargar" [ref=f4e559]
+            - columnheader "Validación" [ref=f4e560]
+          - row [ref=f4e561]:
+            - columnheader "Todos" [ref=f4e562]:
+              - combobox [ref=f4e563]:
+                - option "Todos" [selected]
+                - option "PS-0001"
+                - option "PS-0004"
+            - columnheader "Todos" [ref=f4e564]:
+              - combobox [ref=f4e565]:
+                - option "Todos" [selected]
+                - option "Limpieza de ductos en molienda"
+                - option "Movimiento de tierra, e instalacion de bancoductos"
+            - columnheader "Todos" [ref=f4e566]:
+              - combobox [ref=f4e567]:
+                - option "Todos" [selected]
+                - option "2026-07-10"
+                - option "2026-07-11"
+                - option "2026-07-13"
+                - option "2026-07-14"
+                - option "2026-07-15"
+                - option "2026-07-16"
+                - option "2026-07-17"
+                - option "2026-07-18"
+                - option "2026-07-20"
+                - option "2026-07-21"
+                - option "2026-07-22"
+                - option "2026-07-23"
+                - option "2026-07-24"
+                - option "2026-07-25"
+                - option "2026-07-27"
+                - option "2026-07-28"
+                - option "2026-07-29"
+                - option "2026-07-30"
+                - option "2026-07-31"
+                - option "2026-08-01"
+                - option "2026-08-03"
+                - option "2026-08-04"
+                - option "2026-08-05"
+                - option "2026-08-06"
+                - option "2026-08-07"
+                - option "2026-08-08"
+                - option "2026-08-10"
+                - option "2026-08-15"
+                - option "2026-08-17"
+                - option "2026-08-18"
+                - option "2026-08-19"
+                - option "2026-08-20"
+                - option "2026-08-21"
+                - option "2026-08-22"
+                - option "2026-08-24"
+                - option "2026-08-25"
+                - option "2026-08-26"
+                - option "2026-08-27"
+                - option "2026-08-28"
+                - option "2026-08-29"
+                - option "2026-08-31"
+                - option "2026-09-01"
+                - option "2026-09-02"
+                - option "2026-09-03"
+                - option "2026-09-04"
+                - option "2026-09-05"
+                - option "2026-09-07"
+                - option "2026-09-08"
+                - option "2026-09-09"
+                - option "2026-09-10"
+                - option "2026-09-11"
+                - option "2026-09-12"
+                - option "2026-09-14"
+                - option "2026-09-16"
+                - option "2026-09-17"
+                - option "2026-09-18"
+                - option "2026-09-19"
+                - option "2026-09-20"
+                - option "2026-09-21"
+                - option "2026-09-22"
+                - option "2026-09-23"
+                - option "2026-09-24"
+                - option "2026-09-25"
+                - option "2026-09-26"
+                - option "2026-09-28"
+                - option "2026-09-30"
+                - option "2026-10-01"
+                - option "2026-10-03"
+                - option "2026-12-15"
+            - columnheader "Todos" [ref=f4e568]:
+              - combobox [ref=f4e569]:
+                - option "Todos" [selected]
+                - option "Día"
+            - columnheader "Todos" [ref=f4e570]:
+              - combobox [ref=f4e571]:
+                - option "Todos" [selected]
+                - option "Civil"
+            - columnheader [ref=f4e572]
+            - columnheader [ref=f4e573]
+            - columnheader [ref=f4e574]
+            - columnheader [ref=f4e575]
+            - columnheader [ref=f4e576]
+            - columnheader "Todos" [ref=f4e577]:
+              - combobox [ref=f4e578]:
+                - option "Todos" [selected]
+                - option "Lopez Caceres Loayza"
+                - option "Victor Perez Contreras"
+            - columnheader [ref=f4e579]
+            - columnheader [ref=f4e580]
+        - rowgroup [ref=f4e581]:
+          - row [ref=f4e582]:
+            - cell "PS-0004" [ref=f4e583]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e584]
+            - cell "15-12-2026" [ref=f4e585]
+            - cell "Día" [ref=f4e586]
+            - cell "Civil" [ref=f4e587]
+            - cell "REGISTRADO" [ref=f4e588]
+            - cell "1" [ref=f4e589]
+            - cell "1" [ref=f4e590]
+            - cell "8" [ref=f4e591]
+            - cell "0" [ref=f4e592]
+            - cell "Victor Perez Contreras" [ref=f4e593]
+            - cell [ref=f4e594]:
+              - generic [ref=f4e595]:
+                - link "RDT" [ref=f4e596] [cursor=pointer]:
+                  - /url: /api/rdts/partes/c0a7ef9a-d565-492b-8420-4a94f3d0b43f/pdf
+                - button "Ver historial de correcciones" [ref=f4e600]
+            - cell [ref=f4e605]:
+              - generic [ref=f4e606]:
+                - button "Validar RDT" [ref=f4e607]
+                - button "Rechazar RDT" [ref=f4e610]
+                - link "Revisar RDT" [ref=f4e614] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=c0a7ef9a-d565-492b-8420-4a94f3d0b43f
+          - row [ref=f4e618]:
+            - cell "PS-0004" [ref=f4e619]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e620]
+            - cell "03-10-2026" [ref=f4e621]
+            - cell "Día" [ref=f4e622]
+            - cell "Civil" [ref=f4e623]
+            - cell "VALIDADO" [ref=f4e624]
+            - cell "2" [ref=f4e625]
+            - cell "3" [ref=f4e626]
+            - cell [ref=f4e627]:
+              - generic "Alguna persona sumó menos o más horas que la jornada declarada ese día. Informativo, no bloquea Validar/Rechazar." [ref=f4e628]: "32"
+            - cell "20" [ref=f4e631]
+            - cell "Victor Perez Contreras" [ref=f4e632]
+            - cell [ref=f4e633]:
+              - generic [ref=f4e634]:
+                - link "RDT" [ref=f4e635] [cursor=pointer]:
+                  - /url: /api/rdts/partes/3c639de9-b4a4-4510-95d2-dce3a3209c0a/pdf
+                - button "Ver historial de correcciones" [ref=f4e639]
+            - cell "Validado Revisar RDT" [ref=f4e644]:
+              - generic [ref=f4e645]:
+                - generic [ref=f4e646]: Validado
+                - link "Revisar RDT" [ref=f4e647] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=3c639de9-b4a4-4510-95d2-dce3a3209c0a
+          - row [ref=f4e651]:
+            - cell "PS-0004" [ref=f4e652]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e653]
+            - cell "01-10-2026" [ref=f4e654]
+            - cell "Día" [ref=f4e655]
+            - cell "Civil" [ref=f4e656]
+            - cell "VALIDADO" [ref=f4e657]
+            - cell "2" [ref=f4e658]
+            - cell "3" [ref=f4e659]
+            - cell "30" [ref=f4e660]
+            - cell "20" [ref=f4e661]
+            - cell "Victor Perez Contreras" [ref=f4e662]
+            - cell [ref=f4e663]:
+              - generic [ref=f4e664]:
+                - link "RDT" [ref=f4e665] [cursor=pointer]:
+                  - /url: /api/rdts/partes/a23eb7f3-31b6-4027-8f65-15a9589e1e70/pdf
+                - button "Ver historial de correcciones" [ref=f4e669]
+            - cell "Validado Revisar RDT" [ref=f4e674]:
+              - generic [ref=f4e675]:
+                - generic [ref=f4e676]: Validado
+                - link "Revisar RDT" [ref=f4e677] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=a23eb7f3-31b6-4027-8f65-15a9589e1e70
+          - row [ref=f4e681]:
+            - cell "PS-0004" [ref=f4e682]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e683]
+            - cell "30-09-2026" [ref=f4e684]
+            - cell "Día" [ref=f4e685]
+            - cell "Civil" [ref=f4e686]
+            - cell "VALIDADO" [ref=f4e687]
+            - cell "2" [ref=f4e688]
+            - cell "3" [ref=f4e689]
+            - cell [ref=f4e690]:
+              - generic "Alguna persona sumó menos o más horas que la jornada declarada ese día. Informativo, no bloquea Validar/Rechazar." [ref=f4e691]: "34"
+            - cell "20" [ref=f4e694]
+            - cell "Victor Perez Contreras" [ref=f4e695]
+            - cell [ref=f4e696]:
+              - generic [ref=f4e697]:
+                - link "RDT" [ref=f4e698] [cursor=pointer]:
+                  - /url: /api/rdts/partes/f3e544b7-48d0-4be3-8a0d-db79c9c6e1b5/pdf
+                - button "Ver historial de correcciones" [ref=f4e702]
+            - cell "Validado Revisar RDT" [ref=f4e707]:
+              - generic [ref=f4e708]:
+                - generic [ref=f4e709]: Validado
+                - link "Revisar RDT" [ref=f4e710] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=f3e544b7-48d0-4be3-8a0d-db79c9c6e1b5
+          - row [ref=f4e714]:
+            - cell "PS-0004" [ref=f4e715]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e716]
+            - cell "28-09-2026" [ref=f4e717]
+            - cell "Día" [ref=f4e718]
+            - cell "—" [ref=f4e719]
+            - cell "VALIDADO" [ref=f4e720]
+            - cell "2" [ref=f4e721]
+            - cell "3" [ref=f4e722]
+            - cell "30" [ref=f4e723]
+            - cell "20" [ref=f4e724]
+            - cell "Victor Perez Contreras" [ref=f4e725]
+            - cell [ref=f4e726]:
+              - generic [ref=f4e727]:
+                - link "RDT" [ref=f4e728] [cursor=pointer]:
+                  - /url: /api/rdts/partes/dcfc4d2b-c019-4a8e-85df-dfb6789057e6/pdf
+                - button "Ver historial de correcciones" [ref=f4e732]
+            - cell "Validado Revisar RDT" [ref=f4e737]:
+              - generic [ref=f4e738]:
+                - generic [ref=f4e739]: Validado
+                - link "Revisar RDT" [ref=f4e740] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=dcfc4d2b-c019-4a8e-85df-dfb6789057e6
+          - row [ref=f4e744]:
+            - cell "PS-0004" [ref=f4e745]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e746]
+            - cell "26-09-2026" [ref=f4e747]
+            - cell "Día" [ref=f4e748]
+            - cell "Civil" [ref=f4e749]
+            - cell "VALIDADO" [ref=f4e750]
+            - cell "2" [ref=f4e751]
+            - cell "3" [ref=f4e752]
+            - cell "30" [ref=f4e753]
+            - cell "20" [ref=f4e754]
+            - cell "Victor Perez Contreras" [ref=f4e755]
+            - cell [ref=f4e756]:
+              - generic [ref=f4e757]:
+                - link "RDT" [ref=f4e758] [cursor=pointer]:
+                  - /url: /api/rdts/partes/7d4545cc-3754-432c-9620-d6a1ac7976a4/pdf
+                - button "Ver historial de correcciones" [ref=f4e762]
+            - cell "Validado Revisar RDT" [ref=f4e767]:
+              - generic [ref=f4e768]:
+                - generic [ref=f4e769]: Validado
+                - link "Revisar RDT" [ref=f4e770] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=7d4545cc-3754-432c-9620-d6a1ac7976a4
+          - row [ref=f4e774]:
+            - cell "PS-0004" [ref=f4e775]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e776]
+            - cell "25-09-2026" [ref=f4e777]
+            - cell "Día" [ref=f4e778]
+            - cell "Civil" [ref=f4e779]
+            - cell "VALIDADO" [ref=f4e780]
+            - cell "1" [ref=f4e781]
+            - cell "3" [ref=f4e782]
+            - cell "30" [ref=f4e783]
+            - cell "20" [ref=f4e784]
+            - cell "Victor Perez Contreras" [ref=f4e785]
+            - cell [ref=f4e786]:
+              - generic [ref=f4e787]:
+                - link "RDT" [ref=f4e788] [cursor=pointer]:
+                  - /url: /api/rdts/partes/71eaf5e6-7d20-4601-95f7-a14aa54b7dd4/pdf
+                - button "Ver historial de correcciones" [ref=f4e792]
+            - cell "Validado Revisar RDT" [ref=f4e797]:
+              - generic [ref=f4e798]:
+                - generic [ref=f4e799]: Validado
+                - link "Revisar RDT" [ref=f4e800] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=71eaf5e6-7d20-4601-95f7-a14aa54b7dd4
+          - row [ref=f4e804]:
+            - cell "PS-0004" [ref=f4e805]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e806]
+            - cell "24-09-2026" [ref=f4e807]
+            - cell "Día" [ref=f4e808]
+            - cell "Civil" [ref=f4e809]
+            - cell "VALIDADO" [ref=f4e810]
+            - cell "1" [ref=f4e811]
+            - cell "1" [ref=f4e812]
+            - cell "10" [ref=f4e813]
+            - cell "10" [ref=f4e814]
+            - cell "Victor Perez Contreras" [ref=f4e815]
+            - cell [ref=f4e816]:
+              - generic [ref=f4e817]:
+                - link "RDT" [ref=f4e818] [cursor=pointer]:
+                  - /url: /api/rdts/partes/51ebc5d2-5e07-4399-8c59-49d824dadf02/pdf
+                - button "Ver historial de correcciones" [ref=f4e822]
+            - cell "Validado Revisar RDT" [ref=f4e827]:
+              - generic [ref=f4e828]:
+                - generic [ref=f4e829]: Validado
+                - link "Revisar RDT" [ref=f4e830] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=51ebc5d2-5e07-4399-8c59-49d824dadf02
+          - row [ref=f4e834]:
+            - cell "PS-0004" [ref=f4e835]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e836]
+            - cell "23-09-2026" [ref=f4e837]
+            - cell "Día" [ref=f4e838]
+            - cell "Civil" [ref=f4e839]
+            - cell "VALIDADO" [ref=f4e840]
+            - cell "2" [ref=f4e841]
+            - cell "3" [ref=f4e842]
+            - cell "30" [ref=f4e843]
+            - cell "30" [ref=f4e844]
+            - cell "Victor Perez Contreras" [ref=f4e845]
+            - cell [ref=f4e846]:
+              - generic [ref=f4e847]:
+                - link "RDT" [ref=f4e848] [cursor=pointer]:
+                  - /url: /api/rdts/partes/6ce9f71a-179e-429e-b969-d198cad96a3e/pdf
+                - button "Ver historial de correcciones" [ref=f4e852]
+            - cell "Validado Revisar RDT" [ref=f4e857]:
+              - generic [ref=f4e858]:
+                - generic [ref=f4e859]: Validado
+                - link "Revisar RDT" [ref=f4e860] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=6ce9f71a-179e-429e-b969-d198cad96a3e
+          - row [ref=f4e864]:
+            - cell "PS-0004" [ref=f4e865]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e866]
+            - cell "22-09-2026" [ref=f4e867]
+            - cell "Día" [ref=f4e868]
+            - cell "Civil" [ref=f4e869]
+            - cell "VALIDADO" [ref=f4e870]
+            - cell "3" [ref=f4e871]
+            - cell "3" [ref=f4e872]
+            - cell "30" [ref=f4e873]
+            - cell "20" [ref=f4e874]
+            - cell "Victor Perez Contreras" [ref=f4e875]
+            - cell [ref=f4e876]:
+              - generic [ref=f4e877]:
+                - link "RDT" [ref=f4e878] [cursor=pointer]:
+                  - /url: /api/rdts/partes/3df688fb-986c-4336-9271-a77f07f1f6f2/pdf
+                - button "Ver historial de correcciones" [ref=f4e882]
+            - cell "Validado Revisar RDT" [ref=f4e887]:
+              - generic [ref=f4e888]:
+                - generic [ref=f4e889]: Validado
+                - link "Revisar RDT" [ref=f4e890] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=3df688fb-986c-4336-9271-a77f07f1f6f2
+          - row [ref=f4e894]:
+            - cell "PS-0004" [ref=f4e895]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e896]
+            - cell "21-09-2026" [ref=f4e897]
+            - cell "Día" [ref=f4e898]
+            - cell "Civil" [ref=f4e899]
+            - cell "VALIDADO" [ref=f4e900]
+            - cell "2" [ref=f4e901]
+            - cell "3" [ref=f4e902]
+            - cell "30" [ref=f4e903]
+            - cell "20" [ref=f4e904]
+            - cell "Victor Perez Contreras" [ref=f4e905]
+            - cell [ref=f4e906]:
+              - generic [ref=f4e907]:
+                - link "RDT" [ref=f4e908] [cursor=pointer]:
+                  - /url: /api/rdts/partes/7b462079-09e8-4657-a568-a73aa4cd709d/pdf
+                - button "Ver historial de correcciones" [ref=f4e912]
+            - cell "Validado Revisar RDT" [ref=f4e917]:
+              - generic [ref=f4e918]:
+                - generic [ref=f4e919]: Validado
+                - link "Revisar RDT" [ref=f4e920] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=7b462079-09e8-4657-a568-a73aa4cd709d
+          - row [ref=f4e924]:
+            - cell "PS-0001" [ref=f4e925]
+            - cell "Limpieza de ductos en molienda" [ref=f4e926]
+            - cell "20-09-2026" [ref=f4e927]
+            - cell "Día" [ref=f4e928]
+            - cell "Civil" [ref=f4e929]
+            - cell "REGISTRADO" [ref=f4e930]
+            - cell "1" [ref=f4e931]
+            - cell "1" [ref=f4e932]
+            - cell "8" [ref=f4e933]
+            - cell "0" [ref=f4e934]
+            - cell "Lopez Caceres Loayza" [ref=f4e935]
+            - cell [ref=f4e936]:
+              - generic [ref=f4e937]:
+                - link "RDT" [ref=f4e938] [cursor=pointer]:
+                  - /url: /api/rdts/partes/5d4aafdf-2ad5-4f7e-b691-12cd95b5a70c/pdf
+                - button "Ver historial de correcciones" [ref=f4e942]
+            - cell [ref=f4e947]:
+              - generic [ref=f4e948]:
+                - button "Validar RDT" [ref=f4e949]
+                - button "Rechazar RDT" [ref=f4e952]
+                - link "Revisar RDT" [ref=f4e956] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=5d4aafdf-2ad5-4f7e-b691-12cd95b5a70c
+          - row [ref=f4e960]:
+            - cell "PS-0004" [ref=f4e961]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e962]
+            - cell "20-09-2026" [ref=f4e963]
+            - cell "Día" [ref=f4e964]
+            - cell "Civil" [ref=f4e965]
+            - cell "VALIDADO" [ref=f4e966]
+            - cell "3" [ref=f4e967]
+            - cell "4" [ref=f4e968]
+            - cell "40" [ref=f4e969]
+            - cell "20" [ref=f4e970]
+            - cell "Victor Perez Contreras" [ref=f4e971]
+            - cell [ref=f4e972]:
+              - generic [ref=f4e973]:
+                - link "RDT" [ref=f4e974] [cursor=pointer]:
+                  - /url: /api/rdts/partes/c341273e-9c68-4a4a-8c84-fd2843141564/pdf
+                - button "Ver historial de correcciones" [ref=f4e978]
+            - cell "Validado Revisar RDT" [ref=f4e983]:
+              - generic [ref=f4e984]:
+                - generic [ref=f4e985]: Validado
+                - link "Revisar RDT" [ref=f4e986] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=c341273e-9c68-4a4a-8c84-fd2843141564
+          - row [ref=f4e990]:
+            - cell "PS-0004" [ref=f4e991]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e992]
+            - cell "19-09-2026" [ref=f4e993]
+            - cell "Día" [ref=f4e994]
+            - cell "Civil" [ref=f4e995]
+            - cell "VALIDADO" [ref=f4e996]
+            - cell "2" [ref=f4e997]
+            - cell "3" [ref=f4e998]
+            - cell "30" [ref=f4e999]
+            - cell "20" [ref=f4e1000]
+            - cell "Victor Perez Contreras" [ref=f4e1001]
+            - cell [ref=f4e1002]:
+              - generic [ref=f4e1003]:
+                - link "RDT" [ref=f4e1004] [cursor=pointer]:
+                  - /url: /api/rdts/partes/32bc37fb-8182-42cb-8c79-951c0050f193/pdf
+                - button "Ver historial de correcciones" [ref=f4e1008]
+            - cell "Validado Revisar RDT" [ref=f4e1013]:
+              - generic [ref=f4e1014]:
+                - generic [ref=f4e1015]: Validado
+                - link "Revisar RDT" [ref=f4e1016] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=32bc37fb-8182-42cb-8c79-951c0050f193
+          - row [ref=f4e1020]:
+            - cell "PS-0004" [ref=f4e1021]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1022]
+            - cell "18-09-2026" [ref=f4e1023]
+            - cell "Día" [ref=f4e1024]
+            - cell "Civil" [ref=f4e1025]
+            - cell "VALIDADO" [ref=f4e1026]
+            - cell "2" [ref=f4e1027]
+            - cell "3" [ref=f4e1028]
+            - cell "30" [ref=f4e1029]
+            - cell "20" [ref=f4e1030]
+            - cell "Victor Perez Contreras" [ref=f4e1031]
+            - cell [ref=f4e1032]:
+              - generic [ref=f4e1033]:
+                - link "RDT" [ref=f4e1034] [cursor=pointer]:
+                  - /url: /api/rdts/partes/f5905b4c-345e-48bc-a653-e8f9196b1618/pdf
+                - button "Ver historial de correcciones" [ref=f4e1038]
+            - cell "Validado Revisar RDT" [ref=f4e1043]:
+              - generic [ref=f4e1044]:
+                - generic [ref=f4e1045]: Validado
+                - link "Revisar RDT" [ref=f4e1046] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=f5905b4c-345e-48bc-a653-e8f9196b1618
+          - row [ref=f4e1050]:
+            - cell "PS-0004" [ref=f4e1051]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1052]
+            - cell "17-09-2026" [ref=f4e1053]
+            - cell "Día" [ref=f4e1054]
+            - cell "Civil" [ref=f4e1055]
+            - cell "VALIDADO" [ref=f4e1056]
+            - cell "1" [ref=f4e1057]
+            - cell "1" [ref=f4e1058]
+            - cell "10" [ref=f4e1059]
+            - cell "10" [ref=f4e1060]
+            - cell "Victor Perez Contreras" [ref=f4e1061]
+            - cell [ref=f4e1062]:
+              - generic [ref=f4e1063]:
+                - link "RDT" [ref=f4e1064] [cursor=pointer]:
+                  - /url: /api/rdts/partes/f6eb3789-859b-4e6a-8aa0-3acda5db5fdd/pdf
+                - button "Ver historial de correcciones" [ref=f4e1068]
+            - cell "Validado Revisar RDT" [ref=f4e1073]:
+              - generic [ref=f4e1074]:
+                - generic [ref=f4e1075]: Validado
+                - link "Revisar RDT" [ref=f4e1076] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=f6eb3789-859b-4e6a-8aa0-3acda5db5fdd
+          - row [ref=f4e1080]:
+            - cell "PS-0004" [ref=f4e1081]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1082]
+            - cell "16-09-2026" [ref=f4e1083]
+            - cell "Día" [ref=f4e1084]
+            - cell "Civil" [ref=f4e1085]
+            - cell "VALIDADO" [ref=f4e1086]
+            - cell "1" [ref=f4e1087]
+            - cell "1" [ref=f4e1088]
+            - cell "10" [ref=f4e1089]
+            - cell "10" [ref=f4e1090]
+            - cell "Victor Perez Contreras" [ref=f4e1091]
+            - cell [ref=f4e1092]:
+              - generic [ref=f4e1093]:
+                - link "RDT" [ref=f4e1094] [cursor=pointer]:
+                  - /url: /api/rdts/partes/5c2e8684-d984-43e1-8e46-b8a3d022868c/pdf
+                - button "Ver historial de correcciones" [ref=f4e1098]
+            - cell "Validado Revisar RDT" [ref=f4e1103]:
+              - generic [ref=f4e1104]:
+                - generic [ref=f4e1105]: Validado
+                - link "Revisar RDT" [ref=f4e1106] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=5c2e8684-d984-43e1-8e46-b8a3d022868c
+          - row [ref=f4e1110]:
+            - cell "PS-0004" [ref=f4e1111]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1112]
+            - cell "14-09-2026" [ref=f4e1113]
+            - cell "Día" [ref=f4e1114]
+            - cell "Civil" [ref=f4e1115]
+            - cell "VALIDADO" [ref=f4e1116]
+            - cell "1" [ref=f4e1117]
+            - cell "9" [ref=f4e1118]
+            - cell "90" [ref=f4e1119]
+            - cell "10" [ref=f4e1120]
+            - cell "Victor Perez Contreras" [ref=f4e1121]
+            - cell [ref=f4e1122]:
+              - generic [ref=f4e1123]:
+                - link "RDT" [ref=f4e1124] [cursor=pointer]:
+                  - /url: /api/rdts/partes/d95413ab-81f5-49ab-9e03-b1acfaf0b3af/pdf
+                - button "Ver historial de correcciones" [ref=f4e1128]
+            - cell "Validado Revisar RDT" [ref=f4e1133]:
+              - generic [ref=f4e1134]:
+                - generic [ref=f4e1135]: Validado
+                - link "Revisar RDT" [ref=f4e1136] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=d95413ab-81f5-49ab-9e03-b1acfaf0b3af
+          - row [ref=f4e1140]:
+            - cell "PS-0004" [ref=f4e1141]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1142]
+            - cell "12-09-2026" [ref=f4e1143]
+            - cell "Día" [ref=f4e1144]
+            - cell "—" [ref=f4e1145]
+            - cell "RECHAZADO" [ref=f4e1146]
+            - cell "1" [ref=f4e1147]
+            - cell "12" [ref=f4e1148]
+            - cell "120" [ref=f4e1149]
+            - cell "0" [ref=f4e1150]
+            - cell "—" [ref=f4e1151]
+            - cell [ref=f4e1152]:
+              - generic [ref=f4e1153]:
+                - link "RDT" [ref=f4e1154] [cursor=pointer]:
+                  - /url: /api/rdts/partes/49cb2231-a338-4ea0-823e-cd22c53312bf/pdf
+                - button "Ver historial de correcciones" [ref=f4e1158]
+            - cell [ref=f4e1163]:
+              - generic [ref=f4e1164]:
+                - button "Validar RDT" [ref=f4e1165]
+                - button "Rechazar RDT" [ref=f4e1168]
+                - link "Revisar RDT" [ref=f4e1172] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=49cb2231-a338-4ea0-823e-cd22c53312bf
+                - link "Corregir RDT" [ref=f4e1176] [cursor=pointer]:
+                  - /url: /rdts/crear?editarId=49cb2231-a338-4ea0-823e-cd22c53312bf
+          - row [ref=f4e1180]:
+            - cell "PS-0004" [ref=f4e1181]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1182]
+            - cell "11-09-2026" [ref=f4e1183]
+            - cell "Día" [ref=f4e1184]
+            - cell "—" [ref=f4e1185]
+            - cell "REGISTRADO" [ref=f4e1186]
+            - cell "1" [ref=f4e1187]
+            - cell "14" [ref=f4e1188]
+            - cell "140" [ref=f4e1189]
+            - cell "0" [ref=f4e1190]
+            - cell "—" [ref=f4e1191]
+            - cell [ref=f4e1192]:
+              - generic [ref=f4e1193]:
+                - link "RDT" [ref=f4e1194] [cursor=pointer]:
+                  - /url: /api/rdts/partes/ce6a8e2a-55ef-4e44-baae-1ca4d2e1679c/pdf
+                - button "Ver historial de correcciones" [ref=f4e1198]
+            - cell [ref=f4e1203]:
+              - generic [ref=f4e1204]:
+                - button "Validar RDT" [ref=f4e1205]
+                - button "Rechazar RDT" [ref=f4e1208]
+                - link "Revisar RDT" [ref=f4e1212] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=ce6a8e2a-55ef-4e44-baae-1ca4d2e1679c
+          - row [ref=f4e1216]:
+            - cell "PS-0004" [ref=f4e1217]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1218]
+            - cell "10-09-2026" [ref=f4e1219]
+            - cell "Día" [ref=f4e1220]
+            - cell "—" [ref=f4e1221]
+            - cell "REGISTRADO" [ref=f4e1222]
+            - cell "1" [ref=f4e1223]
+            - cell "14" [ref=f4e1224]
+            - cell "140" [ref=f4e1225]
+            - cell "0" [ref=f4e1226]
+            - cell "—" [ref=f4e1227]
+            - cell [ref=f4e1228]:
+              - generic [ref=f4e1229]:
+                - link "RDT" [ref=f4e1230] [cursor=pointer]:
+                  - /url: /api/rdts/partes/56e776da-93d6-4ce5-8237-4179edf0b68e/pdf
+                - button "Ver historial de correcciones" [ref=f4e1234]
+            - cell [ref=f4e1239]:
+              - generic [ref=f4e1240]:
+                - button "Validar RDT" [ref=f4e1241]
+                - button "Rechazar RDT" [ref=f4e1244]
+                - link "Revisar RDT" [ref=f4e1248] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=56e776da-93d6-4ce5-8237-4179edf0b68e
+          - row [ref=f4e1252]:
+            - cell "PS-0004" [ref=f4e1253]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1254]
+            - cell "09-09-2026" [ref=f4e1255]
+            - cell "Día" [ref=f4e1256]
+            - cell "—" [ref=f4e1257]
+            - cell "REGISTRADO" [ref=f4e1258]
+            - cell "1" [ref=f4e1259]
+            - cell "14" [ref=f4e1260]
+            - cell "140" [ref=f4e1261]
+            - cell "0" [ref=f4e1262]
+            - cell "—" [ref=f4e1263]
+            - cell [ref=f4e1264]:
+              - generic [ref=f4e1265]:
+                - link "RDT" [ref=f4e1266] [cursor=pointer]:
+                  - /url: /api/rdts/partes/8f7b55c0-9894-497d-9d6c-c18f8ee8b655/pdf
+                - button "Ver historial de correcciones" [ref=f4e1270]
+            - cell [ref=f4e1275]:
+              - generic [ref=f4e1276]:
+                - button "Validar RDT" [ref=f4e1277]
+                - button "Rechazar RDT" [ref=f4e1280]
+                - link "Revisar RDT" [ref=f4e1284] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=8f7b55c0-9894-497d-9d6c-c18f8ee8b655
+          - row [ref=f4e1288]:
+            - cell "PS-0004" [ref=f4e1289]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1290]
+            - cell "08-09-2026" [ref=f4e1291]
+            - cell "Día" [ref=f4e1292]
+            - cell "—" [ref=f4e1293]
+            - cell "REGISTRADO" [ref=f4e1294]
+            - cell "1" [ref=f4e1295]
+            - cell "14" [ref=f4e1296]
+            - cell "140" [ref=f4e1297]
+            - cell "0" [ref=f4e1298]
+            - cell "—" [ref=f4e1299]
+            - cell [ref=f4e1300]:
+              - generic [ref=f4e1301]:
+                - link "RDT" [ref=f4e1302] [cursor=pointer]:
+                  - /url: /api/rdts/partes/2c3d7d57-7b91-4843-90d0-735958a040d6/pdf
+                - button "Ver historial de correcciones" [ref=f4e1306]
+            - cell [ref=f4e1311]:
+              - generic [ref=f4e1312]:
+                - button "Validar RDT" [ref=f4e1313]
+                - button "Rechazar RDT" [ref=f4e1316]
+                - link "Revisar RDT" [ref=f4e1320] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=2c3d7d57-7b91-4843-90d0-735958a040d6
+          - row [ref=f4e1324]:
+            - cell "PS-0004" [ref=f4e1325]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1326]
+            - cell "07-09-2026" [ref=f4e1327]
+            - cell "Día" [ref=f4e1328]
+            - cell "—" [ref=f4e1329]
+            - cell "REGISTRADO" [ref=f4e1330]
+            - cell "1" [ref=f4e1331]
+            - cell "12" [ref=f4e1332]
+            - cell "120" [ref=f4e1333]
+            - cell "0" [ref=f4e1334]
+            - cell "—" [ref=f4e1335]
+            - cell [ref=f4e1336]:
+              - generic [ref=f4e1337]:
+                - link "RDT" [ref=f4e1338] [cursor=pointer]:
+                  - /url: /api/rdts/partes/410ec798-9b9a-4966-8f57-e8c33b650313/pdf
+                - button "Ver historial de correcciones" [ref=f4e1342]
+            - cell [ref=f4e1347]:
+              - generic [ref=f4e1348]:
+                - button "Validar RDT" [ref=f4e1349]
+                - button "Rechazar RDT" [ref=f4e1352]
+                - link "Revisar RDT" [ref=f4e1356] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=410ec798-9b9a-4966-8f57-e8c33b650313
+          - row [ref=f4e1360]:
+            - cell "PS-0004" [ref=f4e1361]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1362]
+            - cell "05-09-2026" [ref=f4e1363]
+            - cell "Día" [ref=f4e1364]
+            - cell "—" [ref=f4e1365]
+            - cell "REGISTRADO" [ref=f4e1366]
+            - cell "1" [ref=f4e1367]
+            - cell "14" [ref=f4e1368]
+            - cell "140" [ref=f4e1369]
+            - cell "0" [ref=f4e1370]
+            - cell "—" [ref=f4e1371]
+            - cell [ref=f4e1372]:
+              - generic [ref=f4e1373]:
+                - link "RDT" [ref=f4e1374] [cursor=pointer]:
+                  - /url: /api/rdts/partes/f8b3685e-d408-4b20-896d-b290cf8e8dcc/pdf
+                - button "Ver historial de correcciones" [ref=f4e1378]
+            - cell [ref=f4e1383]:
+              - generic [ref=f4e1384]:
+                - button "Validar RDT" [ref=f4e1385]
+                - button "Rechazar RDT" [ref=f4e1388]
+                - link "Revisar RDT" [ref=f4e1392] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=f8b3685e-d408-4b20-896d-b290cf8e8dcc
+          - row [ref=f4e1396]:
+            - cell "PS-0004" [ref=f4e1397]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1398]
+            - cell "04-09-2026" [ref=f4e1399]
+            - cell "Día" [ref=f4e1400]
+            - cell "—" [ref=f4e1401]
+            - cell "REGISTRADO" [ref=f4e1402]
+            - cell "1" [ref=f4e1403]
+            - cell "14" [ref=f4e1404]
+            - cell "140" [ref=f4e1405]
+            - cell "0" [ref=f4e1406]
+            - cell "—" [ref=f4e1407]
+            - cell [ref=f4e1408]:
+              - generic [ref=f4e1409]:
+                - link "RDT" [ref=f4e1410] [cursor=pointer]:
+                  - /url: /api/rdts/partes/b18accd0-886d-420f-b7a7-5f1ff7c28c01/pdf
+                - button "Ver historial de correcciones" [ref=f4e1414]
+            - cell [ref=f4e1419]:
+              - generic [ref=f4e1420]:
+                - button "Validar RDT" [ref=f4e1421]
+                - button "Rechazar RDT" [ref=f4e1424]
+                - link "Revisar RDT" [ref=f4e1428] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=b18accd0-886d-420f-b7a7-5f1ff7c28c01
+          - row [ref=f4e1432]:
+            - cell "PS-0004" [ref=f4e1433]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1434]
+            - cell "03-09-2026" [ref=f4e1435]
+            - cell "Día" [ref=f4e1436]
+            - cell "—" [ref=f4e1437]
+            - cell "REGISTRADO" [ref=f4e1438]
+            - cell "1" [ref=f4e1439]
+            - cell "14" [ref=f4e1440]
+            - cell "140" [ref=f4e1441]
+            - cell "0" [ref=f4e1442]
+            - cell "—" [ref=f4e1443]
+            - cell [ref=f4e1444]:
+              - generic [ref=f4e1445]:
+                - link "RDT" [ref=f4e1446] [cursor=pointer]:
+                  - /url: /api/rdts/partes/d729deb3-3e7c-4197-8eed-90d506fb0471/pdf
+                - button "Ver historial de correcciones" [ref=f4e1450]
+            - cell [ref=f4e1455]:
+              - generic [ref=f4e1456]:
+                - button "Validar RDT" [ref=f4e1457]
+                - button "Rechazar RDT" [ref=f4e1460]
+                - link "Revisar RDT" [ref=f4e1464] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=d729deb3-3e7c-4197-8eed-90d506fb0471
+          - row [ref=f4e1468]:
+            - cell "PS-0004" [ref=f4e1469]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1470]
+            - cell "02-09-2026" [ref=f4e1471]
+            - cell "Día" [ref=f4e1472]
+            - cell "—" [ref=f4e1473]
+            - cell "REGISTRADO" [ref=f4e1474]
+            - cell "1" [ref=f4e1475]
+            - cell "13" [ref=f4e1476]
+            - cell "130" [ref=f4e1477]
+            - cell "0" [ref=f4e1478]
+            - cell "—" [ref=f4e1479]
+            - cell [ref=f4e1480]:
+              - generic [ref=f4e1481]:
+                - link "RDT" [ref=f4e1482] [cursor=pointer]:
+                  - /url: /api/rdts/partes/615b856b-628a-4803-a50d-3c58fd10f3c7/pdf
+                - button "Ver historial de correcciones" [ref=f4e1486]
+            - cell [ref=f4e1491]:
+              - generic [ref=f4e1492]:
+                - button "Validar RDT" [ref=f4e1493]
+                - button "Rechazar RDT" [ref=f4e1496]
+                - link "Revisar RDT" [ref=f4e1500] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=615b856b-628a-4803-a50d-3c58fd10f3c7
+          - row [ref=f4e1504]:
+            - cell "PS-0004" [ref=f4e1505]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1506]
+            - cell "01-09-2026" [ref=f4e1507]
+            - cell "Día" [ref=f4e1508]
+            - cell "—" [ref=f4e1509]
+            - cell "REGISTRADO" [ref=f4e1510]
+            - cell "1" [ref=f4e1511]
+            - cell "14" [ref=f4e1512]
+            - cell "140" [ref=f4e1513]
+            - cell "0" [ref=f4e1514]
+            - cell "—" [ref=f4e1515]
+            - cell [ref=f4e1516]:
+              - generic [ref=f4e1517]:
+                - link "RDT" [ref=f4e1518] [cursor=pointer]:
+                  - /url: /api/rdts/partes/65de9403-6346-44da-a159-c56074647455/pdf
+                - button "Ver historial de correcciones" [ref=f4e1522]
+            - cell [ref=f4e1527]:
+              - generic [ref=f4e1528]:
+                - button "Validar RDT" [ref=f4e1529]
+                - button "Rechazar RDT" [ref=f4e1532]
+                - link "Revisar RDT" [ref=f4e1536] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=65de9403-6346-44da-a159-c56074647455
+          - row [ref=f4e1540]:
+            - cell "PS-0004" [ref=f4e1541]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1542]
+            - cell "31-08-2026" [ref=f4e1543]
+            - cell "Día" [ref=f4e1544]
+            - cell "—" [ref=f4e1545]
+            - cell "REGISTRADO" [ref=f4e1546]
+            - cell "1" [ref=f4e1547]
+            - cell "14" [ref=f4e1548]
+            - cell "140" [ref=f4e1549]
+            - cell "0" [ref=f4e1550]
+            - cell "—" [ref=f4e1551]
+            - cell [ref=f4e1552]:
+              - generic [ref=f4e1553]:
+                - link "RDT" [ref=f4e1554] [cursor=pointer]:
+                  - /url: /api/rdts/partes/07a3ea01-f4a3-4202-8e7b-4134b57970c9/pdf
+                - button "Ver historial de correcciones" [ref=f4e1558]
+            - cell [ref=f4e1563]:
+              - generic [ref=f4e1564]:
+                - button "Validar RDT" [ref=f4e1565]
+                - button "Rechazar RDT" [ref=f4e1568]
+                - link "Revisar RDT" [ref=f4e1572] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=07a3ea01-f4a3-4202-8e7b-4134b57970c9
+          - row [ref=f4e1576]:
+            - cell "PS-0004" [ref=f4e1577]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1578]
+            - cell "29-08-2026" [ref=f4e1579]
+            - cell "Día" [ref=f4e1580]
+            - cell "—" [ref=f4e1581]
+            - cell "REGISTRADO" [ref=f4e1582]
+            - cell "1" [ref=f4e1583]
+            - cell "14" [ref=f4e1584]
+            - cell "140" [ref=f4e1585]
+            - cell "0" [ref=f4e1586]
+            - cell "—" [ref=f4e1587]
+            - cell [ref=f4e1588]:
+              - generic [ref=f4e1589]:
+                - link "RDT" [ref=f4e1590] [cursor=pointer]:
+                  - /url: /api/rdts/partes/24933c63-fe91-44c0-a348-a92b3e7bd632/pdf
+                - button "Ver historial de correcciones" [ref=f4e1594]
+            - cell [ref=f4e1599]:
+              - generic [ref=f4e1600]:
+                - button "Validar RDT" [ref=f4e1601]
+                - button "Rechazar RDT" [ref=f4e1604]
+                - link "Revisar RDT" [ref=f4e1608] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=24933c63-fe91-44c0-a348-a92b3e7bd632
+          - row [ref=f4e1612]:
+            - cell "PS-0004" [ref=f4e1613]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1614]
+            - cell "28-08-2026" [ref=f4e1615]
+            - cell "Día" [ref=f4e1616]
+            - cell "—" [ref=f4e1617]
+            - cell "REGISTRADO" [ref=f4e1618]
+            - cell "1" [ref=f4e1619]
+            - cell "14" [ref=f4e1620]
+            - cell "140" [ref=f4e1621]
+            - cell "0" [ref=f4e1622]
+            - cell "—" [ref=f4e1623]
+            - cell [ref=f4e1624]:
+              - generic [ref=f4e1625]:
+                - link "RDT" [ref=f4e1626] [cursor=pointer]:
+                  - /url: /api/rdts/partes/50116e84-d70b-470d-b5ff-113f1857db38/pdf
+                - button "Ver historial de correcciones" [ref=f4e1630]
+            - cell [ref=f4e1635]:
+              - generic [ref=f4e1636]:
+                - button "Validar RDT" [ref=f4e1637]
+                - button "Rechazar RDT" [ref=f4e1640]
+                - link "Revisar RDT" [ref=f4e1644] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=50116e84-d70b-470d-b5ff-113f1857db38
+          - row [ref=f4e1648]:
+            - cell "PS-0004" [ref=f4e1649]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1650]
+            - cell "27-08-2026" [ref=f4e1651]
+            - cell "Día" [ref=f4e1652]
+            - cell "—" [ref=f4e1653]
+            - cell "REGISTRADO" [ref=f4e1654]
+            - cell "1" [ref=f4e1655]
+            - cell "14" [ref=f4e1656]
+            - cell "140" [ref=f4e1657]
+            - cell "0" [ref=f4e1658]
+            - cell "—" [ref=f4e1659]
+            - cell [ref=f4e1660]:
+              - generic [ref=f4e1661]:
+                - link "RDT" [ref=f4e1662] [cursor=pointer]:
+                  - /url: /api/rdts/partes/a24b82cc-5165-4c09-bd1f-7386db1d1963/pdf
+                - button "Ver historial de correcciones" [ref=f4e1666]
+            - cell [ref=f4e1671]:
+              - generic [ref=f4e1672]:
+                - button "Validar RDT" [ref=f4e1673]
+                - button "Rechazar RDT" [ref=f4e1676]
+                - link "Revisar RDT" [ref=f4e1680] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=a24b82cc-5165-4c09-bd1f-7386db1d1963
+          - row [ref=f4e1684]:
+            - cell "PS-0004" [ref=f4e1685]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1686]
+            - cell "26-08-2026" [ref=f4e1687]
+            - cell "Día" [ref=f4e1688]
+            - cell "—" [ref=f4e1689]
+            - cell "REGISTRADO" [ref=f4e1690]
+            - cell "1" [ref=f4e1691]
+            - cell "14" [ref=f4e1692]
+            - cell "140" [ref=f4e1693]
+            - cell "0" [ref=f4e1694]
+            - cell "—" [ref=f4e1695]
+            - cell [ref=f4e1696]:
+              - generic [ref=f4e1697]:
+                - link "RDT" [ref=f4e1698] [cursor=pointer]:
+                  - /url: /api/rdts/partes/699c36c1-d54f-4f2c-902e-a996e4c8bd27/pdf
+                - button "Ver historial de correcciones" [ref=f4e1702]
+            - cell [ref=f4e1707]:
+              - generic [ref=f4e1708]:
+                - button "Validar RDT" [ref=f4e1709]
+                - button "Rechazar RDT" [ref=f4e1712]
+                - link "Revisar RDT" [ref=f4e1716] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=699c36c1-d54f-4f2c-902e-a996e4c8bd27
+          - row [ref=f4e1720]:
+            - cell "PS-0004" [ref=f4e1721]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1722]
+            - cell "25-08-2026" [ref=f4e1723]
+            - cell "Día" [ref=f4e1724]
+            - cell "—" [ref=f4e1725]
+            - cell "REGISTRADO" [ref=f4e1726]
+            - cell "1" [ref=f4e1727]
+            - cell "14" [ref=f4e1728]
+            - cell "140" [ref=f4e1729]
+            - cell "0" [ref=f4e1730]
+            - cell "—" [ref=f4e1731]
+            - cell [ref=f4e1732]:
+              - generic [ref=f4e1733]:
+                - link "RDT" [ref=f4e1734] [cursor=pointer]:
+                  - /url: /api/rdts/partes/12769e72-ef53-4568-ba1f-8e6fcaa2fbe5/pdf
+                - button "Ver historial de correcciones" [ref=f4e1738]
+            - cell [ref=f4e1743]:
+              - generic [ref=f4e1744]:
+                - button "Validar RDT" [ref=f4e1745]
+                - button "Rechazar RDT" [ref=f4e1748]
+                - link "Revisar RDT" [ref=f4e1752] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=12769e72-ef53-4568-ba1f-8e6fcaa2fbe5
+          - row [ref=f4e1756]:
+            - cell "PS-0004" [ref=f4e1757]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1758]
+            - cell "24-08-2026" [ref=f4e1759]
+            - cell "Día" [ref=f4e1760]
+            - cell "—" [ref=f4e1761]
+            - cell "REGISTRADO" [ref=f4e1762]
+            - cell "1" [ref=f4e1763]
+            - cell "14" [ref=f4e1764]
+            - cell "140" [ref=f4e1765]
+            - cell "0" [ref=f4e1766]
+            - cell "—" [ref=f4e1767]
+            - cell [ref=f4e1768]:
+              - generic [ref=f4e1769]:
+                - link "RDT" [ref=f4e1770] [cursor=pointer]:
+                  - /url: /api/rdts/partes/f783ffa0-d598-40dc-8595-73fc2b1a157f/pdf
+                - button "Ver historial de correcciones" [ref=f4e1774]
+            - cell [ref=f4e1779]:
+              - generic [ref=f4e1780]:
+                - button "Validar RDT" [ref=f4e1781]
+                - button "Rechazar RDT" [ref=f4e1784]
+                - link "Revisar RDT" [ref=f4e1788] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=f783ffa0-d598-40dc-8595-73fc2b1a157f
+          - row [ref=f4e1792]:
+            - cell "PS-0004" [ref=f4e1793]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1794]
+            - cell "22-08-2026" [ref=f4e1795]
+            - cell "Día" [ref=f4e1796]
+            - cell "—" [ref=f4e1797]
+            - cell "REGISTRADO" [ref=f4e1798]
+            - cell "1" [ref=f4e1799]
+            - cell "14" [ref=f4e1800]
+            - cell "140" [ref=f4e1801]
+            - cell "0" [ref=f4e1802]
+            - cell "—" [ref=f4e1803]
+            - cell [ref=f4e1804]:
+              - generic [ref=f4e1805]:
+                - link "RDT" [ref=f4e1806] [cursor=pointer]:
+                  - /url: /api/rdts/partes/5a2c316b-35e7-4a7b-a704-40b8f35eabe9/pdf
+                - button "Ver historial de correcciones" [ref=f4e1810]
+            - cell [ref=f4e1815]:
+              - generic [ref=f4e1816]:
+                - button "Validar RDT" [ref=f4e1817]
+                - button "Rechazar RDT" [ref=f4e1820]
+                - link "Revisar RDT" [ref=f4e1824] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=5a2c316b-35e7-4a7b-a704-40b8f35eabe9
+          - row [ref=f4e1828]:
+            - cell "PS-0004" [ref=f4e1829]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1830]
+            - cell "21-08-2026" [ref=f4e1831]
+            - cell "Día" [ref=f4e1832]
+            - cell "—" [ref=f4e1833]
+            - cell "REGISTRADO" [ref=f4e1834]
+            - cell "1" [ref=f4e1835]
+            - cell "14" [ref=f4e1836]
+            - cell "140" [ref=f4e1837]
+            - cell "0" [ref=f4e1838]
+            - cell "—" [ref=f4e1839]
+            - cell [ref=f4e1840]:
+              - generic [ref=f4e1841]:
+                - link "RDT" [ref=f4e1842] [cursor=pointer]:
+                  - /url: /api/rdts/partes/0d3e078b-3d91-467a-80f4-eadf32a5ead9/pdf
+                - button "Ver historial de correcciones" [ref=f4e1846]
+            - cell [ref=f4e1851]:
+              - generic [ref=f4e1852]:
+                - button "Validar RDT" [ref=f4e1853]
+                - button "Rechazar RDT" [ref=f4e1856]
+                - link "Revisar RDT" [ref=f4e1860] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=0d3e078b-3d91-467a-80f4-eadf32a5ead9
+          - row [ref=f4e1864]:
+            - cell "PS-0004" [ref=f4e1865]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1866]
+            - cell "20-08-2026" [ref=f4e1867]
+            - cell "Día" [ref=f4e1868]
+            - cell "—" [ref=f4e1869]
+            - cell "REGISTRADO" [ref=f4e1870]
+            - cell "1" [ref=f4e1871]
+            - cell "14" [ref=f4e1872]
+            - cell "140" [ref=f4e1873]
+            - cell "0" [ref=f4e1874]
+            - cell "—" [ref=f4e1875]
+            - cell [ref=f4e1876]:
+              - generic [ref=f4e1877]:
+                - link "RDT" [ref=f4e1878] [cursor=pointer]:
+                  - /url: /api/rdts/partes/ade8c561-ab95-414a-8edb-efb379ce09c1/pdf
+                - button "Ver historial de correcciones" [ref=f4e1882]
+            - cell [ref=f4e1887]:
+              - generic [ref=f4e1888]:
+                - button "Validar RDT" [ref=f4e1889]
+                - button "Rechazar RDT" [ref=f4e1892]
+                - link "Revisar RDT" [ref=f4e1896] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=ade8c561-ab95-414a-8edb-efb379ce09c1
+          - row [ref=f4e1900]:
+            - cell "PS-0004" [ref=f4e1901]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1902]
+            - cell "19-08-2026" [ref=f4e1903]
+            - cell "Día" [ref=f4e1904]
+            - cell "—" [ref=f4e1905]
+            - cell "REGISTRADO" [ref=f4e1906]
+            - cell "1" [ref=f4e1907]
+            - cell "14" [ref=f4e1908]
+            - cell "140" [ref=f4e1909]
+            - cell "0" [ref=f4e1910]
+            - cell "—" [ref=f4e1911]
+            - cell [ref=f4e1912]:
+              - generic [ref=f4e1913]:
+                - link "RDT" [ref=f4e1914] [cursor=pointer]:
+                  - /url: /api/rdts/partes/721d0e90-5a69-4e7d-8377-12d5b8dfaa3e/pdf
+                - button "Ver historial de correcciones" [ref=f4e1918]
+            - cell [ref=f4e1923]:
+              - generic [ref=f4e1924]:
+                - button "Validar RDT" [ref=f4e1925]
+                - button "Rechazar RDT" [ref=f4e1928]
+                - link "Revisar RDT" [ref=f4e1932] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=721d0e90-5a69-4e7d-8377-12d5b8dfaa3e
+          - row [ref=f4e1936]:
+            - cell "PS-0004" [ref=f4e1937]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1938]
+            - cell "18-08-2026" [ref=f4e1939]
+            - cell "Día" [ref=f4e1940]
+            - cell "—" [ref=f4e1941]
+            - cell "REGISTRADO" [ref=f4e1942]
+            - cell "1" [ref=f4e1943]
+            - cell "14" [ref=f4e1944]
+            - cell "140" [ref=f4e1945]
+            - cell "0" [ref=f4e1946]
+            - cell "—" [ref=f4e1947]
+            - cell [ref=f4e1948]:
+              - generic [ref=f4e1949]:
+                - link "RDT" [ref=f4e1950] [cursor=pointer]:
+                  - /url: /api/rdts/partes/0be348a0-1f87-4679-b8ad-a8f01f1b0fb7/pdf
+                - button "Ver historial de correcciones" [ref=f4e1954]
+            - cell [ref=f4e1959]:
+              - generic [ref=f4e1960]:
+                - button "Validar RDT" [ref=f4e1961]
+                - button "Rechazar RDT" [ref=f4e1964]
+                - link "Revisar RDT" [ref=f4e1968] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=0be348a0-1f87-4679-b8ad-a8f01f1b0fb7
+          - row [ref=f4e1972]:
+            - cell "PS-0004" [ref=f4e1973]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e1974]
+            - cell "17-08-2026" [ref=f4e1975]
+            - cell "Día" [ref=f4e1976]
+            - cell "—" [ref=f4e1977]
+            - cell "REGISTRADO" [ref=f4e1978]
+            - cell "1" [ref=f4e1979]
+            - cell "14" [ref=f4e1980]
+            - cell "140" [ref=f4e1981]
+            - cell "0" [ref=f4e1982]
+            - cell "—" [ref=f4e1983]
+            - cell [ref=f4e1984]:
+              - generic [ref=f4e1985]:
+                - link "RDT" [ref=f4e1986] [cursor=pointer]:
+                  - /url: /api/rdts/partes/11b382dd-c0fa-4d94-a918-9f42e48e7567/pdf
+                - button "Ver historial de correcciones" [ref=f4e1990]
+            - cell [ref=f4e1995]:
+              - generic [ref=f4e1996]:
+                - button "Validar RDT" [ref=f4e1997]
+                - button "Rechazar RDT" [ref=f4e2000]
+                - link "Revisar RDT" [ref=f4e2004] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=11b382dd-c0fa-4d94-a918-9f42e48e7567
+          - row [ref=f4e2008]:
+            - cell "PS-0004" [ref=f4e2009]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2010]
+            - cell "15-08-2026" [ref=f4e2011]
+            - cell "Día" [ref=f4e2012]
+            - cell "—" [ref=f4e2013]
+            - cell "REGISTRADO" [ref=f4e2014]
+            - cell "1" [ref=f4e2015]
+            - cell "14" [ref=f4e2016]
+            - cell "140" [ref=f4e2017]
+            - cell "0" [ref=f4e2018]
+            - cell "—" [ref=f4e2019]
+            - cell [ref=f4e2020]:
+              - generic [ref=f4e2021]:
+                - link "RDT" [ref=f4e2022] [cursor=pointer]:
+                  - /url: /api/rdts/partes/04ee8d81-0c5f-42fb-90df-0d3a3f778015/pdf
+                - button "Ver historial de correcciones" [ref=f4e2026]
+            - cell [ref=f4e2031]:
+              - generic [ref=f4e2032]:
+                - button "Validar RDT" [ref=f4e2033]
+                - button "Rechazar RDT" [ref=f4e2036]
+                - link "Revisar RDT" [ref=f4e2040] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=04ee8d81-0c5f-42fb-90df-0d3a3f778015
+          - row [ref=f4e2044]:
+            - cell "PS-0004" [ref=f4e2045]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2046]
+            - cell "10-08-2026" [ref=f4e2047]
+            - cell "Día" [ref=f4e2048]
+            - cell "—" [ref=f4e2049]
+            - cell "REGISTRADO" [ref=f4e2050]
+            - cell "1" [ref=f4e2051]
+            - cell "14" [ref=f4e2052]
+            - cell "140" [ref=f4e2053]
+            - cell "0" [ref=f4e2054]
+            - cell "—" [ref=f4e2055]
+            - cell [ref=f4e2056]:
+              - generic [ref=f4e2057]:
+                - link "RDT" [ref=f4e2058] [cursor=pointer]:
+                  - /url: /api/rdts/partes/3bbb59ce-8547-4b8d-a849-07b570197808/pdf
+                - button "Ver historial de correcciones" [ref=f4e2062]
+            - cell [ref=f4e2067]:
+              - generic [ref=f4e2068]:
+                - button "Validar RDT" [ref=f4e2069]
+                - button "Rechazar RDT" [ref=f4e2072]
+                - link "Revisar RDT" [ref=f4e2076] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=3bbb59ce-8547-4b8d-a849-07b570197808
+          - row [ref=f4e2080]:
+            - cell "PS-0004" [ref=f4e2081]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2082]
+            - cell "08-08-2026" [ref=f4e2083]
+            - cell "Día" [ref=f4e2084]
+            - cell "—" [ref=f4e2085]
+            - cell "REGISTRADO" [ref=f4e2086]
+            - cell "1" [ref=f4e2087]
+            - cell "14" [ref=f4e2088]
+            - cell "140" [ref=f4e2089]
+            - cell "0" [ref=f4e2090]
+            - cell "—" [ref=f4e2091]
+            - cell [ref=f4e2092]:
+              - generic [ref=f4e2093]:
+                - link "RDT" [ref=f4e2094] [cursor=pointer]:
+                  - /url: /api/rdts/partes/7fdc0234-1191-4a21-9887-d9cd7b49ce86/pdf
+                - button "Ver historial de correcciones" [ref=f4e2098]
+            - cell [ref=f4e2103]:
+              - generic [ref=f4e2104]:
+                - button "Validar RDT" [ref=f4e2105]
+                - button "Rechazar RDT" [ref=f4e2108]
+                - link "Revisar RDT" [ref=f4e2112] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=7fdc0234-1191-4a21-9887-d9cd7b49ce86
+          - row [ref=f4e2116]:
+            - cell "PS-0004" [ref=f4e2117]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2118]
+            - cell "07-08-2026" [ref=f4e2119]
+            - cell "Día" [ref=f4e2120]
+            - cell "—" [ref=f4e2121]
+            - cell "REGISTRADO" [ref=f4e2122]
+            - cell "1" [ref=f4e2123]
+            - cell "14" [ref=f4e2124]
+            - cell "140" [ref=f4e2125]
+            - cell "0" [ref=f4e2126]
+            - cell "—" [ref=f4e2127]
+            - cell [ref=f4e2128]:
+              - generic [ref=f4e2129]:
+                - link "RDT" [ref=f4e2130] [cursor=pointer]:
+                  - /url: /api/rdts/partes/991aec71-21a6-4b69-abd4-91e1e7efcb33/pdf
+                - button "Ver historial de correcciones" [ref=f4e2134]
+            - cell [ref=f4e2139]:
+              - generic [ref=f4e2140]:
+                - button "Validar RDT" [ref=f4e2141]
+                - button "Rechazar RDT" [ref=f4e2144]
+                - link "Revisar RDT" [ref=f4e2148] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=991aec71-21a6-4b69-abd4-91e1e7efcb33
+          - row [ref=f4e2152]:
+            - cell "PS-0004" [ref=f4e2153]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2154]
+            - cell "06-08-2026" [ref=f4e2155]
+            - cell "Día" [ref=f4e2156]
+            - cell "—" [ref=f4e2157]
+            - cell "REGISTRADO" [ref=f4e2158]
+            - cell "1" [ref=f4e2159]
+            - cell "14" [ref=f4e2160]
+            - cell "140" [ref=f4e2161]
+            - cell "0" [ref=f4e2162]
+            - cell "—" [ref=f4e2163]
+            - cell [ref=f4e2164]:
+              - generic [ref=f4e2165]:
+                - link "RDT" [ref=f4e2166] [cursor=pointer]:
+                  - /url: /api/rdts/partes/c9319ceb-9663-47ff-b0dc-ea1dbda6bfaf/pdf
+                - button "Ver historial de correcciones" [ref=f4e2170]
+            - cell [ref=f4e2175]:
+              - generic [ref=f4e2176]:
+                - button "Validar RDT" [ref=f4e2177]
+                - button "Rechazar RDT" [ref=f4e2180]
+                - link "Revisar RDT" [ref=f4e2184] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=c9319ceb-9663-47ff-b0dc-ea1dbda6bfaf
+          - row [ref=f4e2188]:
+            - cell "PS-0004" [ref=f4e2189]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2190]
+            - cell "05-08-2026" [ref=f4e2191]
+            - cell "Día" [ref=f4e2192]
+            - cell "—" [ref=f4e2193]
+            - cell "REGISTRADO" [ref=f4e2194]
+            - cell "1" [ref=f4e2195]
+            - cell "14" [ref=f4e2196]
+            - cell "140" [ref=f4e2197]
+            - cell "0" [ref=f4e2198]
+            - cell "—" [ref=f4e2199]
+            - cell [ref=f4e2200]:
+              - generic [ref=f4e2201]:
+                - link "RDT" [ref=f4e2202] [cursor=pointer]:
+                  - /url: /api/rdts/partes/a65bec1c-b7ba-4ae4-a6d9-f86b1b4149c8/pdf
+                - button "Ver historial de correcciones" [ref=f4e2206]
+            - cell [ref=f4e2211]:
+              - generic [ref=f4e2212]:
+                - button "Validar RDT" [ref=f4e2213]
+                - button "Rechazar RDT" [ref=f4e2216]
+                - link "Revisar RDT" [ref=f4e2220] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=a65bec1c-b7ba-4ae4-a6d9-f86b1b4149c8
+          - row [ref=f4e2224]:
+            - cell "PS-0004" [ref=f4e2225]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2226]
+            - cell "04-08-2026" [ref=f4e2227]
+            - cell "Día" [ref=f4e2228]
+            - cell "—" [ref=f4e2229]
+            - cell "REGISTRADO" [ref=f4e2230]
+            - cell "1" [ref=f4e2231]
+            - cell "14" [ref=f4e2232]
+            - cell "140" [ref=f4e2233]
+            - cell "0" [ref=f4e2234]
+            - cell "—" [ref=f4e2235]
+            - cell [ref=f4e2236]:
+              - generic [ref=f4e2237]:
+                - link "RDT" [ref=f4e2238] [cursor=pointer]:
+                  - /url: /api/rdts/partes/8e5415bd-6615-47ca-81cc-79e95de8ad1d/pdf
+                - button "Ver historial de correcciones" [ref=f4e2242]
+            - cell [ref=f4e2247]:
+              - generic [ref=f4e2248]:
+                - button "Validar RDT" [ref=f4e2249]
+                - button "Rechazar RDT" [ref=f4e2252]
+                - link "Revisar RDT" [ref=f4e2256] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=8e5415bd-6615-47ca-81cc-79e95de8ad1d
+          - row [ref=f4e2260]:
+            - cell "PS-0004" [ref=f4e2261]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2262]
+            - cell "03-08-2026" [ref=f4e2263]
+            - cell "Día" [ref=f4e2264]
+            - cell "—" [ref=f4e2265]
+            - cell "REGISTRADO" [ref=f4e2266]
+            - cell "1" [ref=f4e2267]
+            - cell "14" [ref=f4e2268]
+            - cell "140" [ref=f4e2269]
+            - cell "0" [ref=f4e2270]
+            - cell "—" [ref=f4e2271]
+            - cell [ref=f4e2272]:
+              - generic [ref=f4e2273]:
+                - link "RDT" [ref=f4e2274] [cursor=pointer]:
+                  - /url: /api/rdts/partes/9eb24259-4429-40ea-86e5-a24813e4ef97/pdf
+                - button "Ver historial de correcciones" [ref=f4e2278]
+            - cell [ref=f4e2283]:
+              - generic [ref=f4e2284]:
+                - button "Validar RDT" [ref=f4e2285]
+                - button "Rechazar RDT" [ref=f4e2288]
+                - link "Revisar RDT" [ref=f4e2292] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=9eb24259-4429-40ea-86e5-a24813e4ef97
+          - row [ref=f4e2296]:
+            - cell "PS-0004" [ref=f4e2297]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2298]
+            - cell "01-08-2026" [ref=f4e2299]
+            - cell "Día" [ref=f4e2300]
+            - cell "—" [ref=f4e2301]
+            - cell "REGISTRADO" [ref=f4e2302]
+            - cell "1" [ref=f4e2303]
+            - cell "14" [ref=f4e2304]
+            - cell "140" [ref=f4e2305]
+            - cell "0" [ref=f4e2306]
+            - cell "—" [ref=f4e2307]
+            - cell [ref=f4e2308]:
+              - generic [ref=f4e2309]:
+                - link "RDT" [ref=f4e2310] [cursor=pointer]:
+                  - /url: /api/rdts/partes/08f7ab6a-bc8d-44f8-9476-f76d59947c15/pdf
+                - button "Ver historial de correcciones" [ref=f4e2314]
+            - cell [ref=f4e2319]:
+              - generic [ref=f4e2320]:
+                - button "Validar RDT" [ref=f4e2321]
+                - button "Rechazar RDT" [ref=f4e2324]
+                - link "Revisar RDT" [ref=f4e2328] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=08f7ab6a-bc8d-44f8-9476-f76d59947c15
+          - row [ref=f4e2332]:
+            - cell "PS-0004" [ref=f4e2333]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2334]
+            - cell "31-07-2026" [ref=f4e2335]
+            - cell "Día" [ref=f4e2336]
+            - cell "—" [ref=f4e2337]
+            - cell "REGISTRADO" [ref=f4e2338]
+            - cell "1" [ref=f4e2339]
+            - cell "14" [ref=f4e2340]
+            - cell "140" [ref=f4e2341]
+            - cell "0" [ref=f4e2342]
+            - cell "—" [ref=f4e2343]
+            - cell [ref=f4e2344]:
+              - generic [ref=f4e2345]:
+                - link "RDT" [ref=f4e2346] [cursor=pointer]:
+                  - /url: /api/rdts/partes/7ea6e0e7-812f-4503-a8c8-0bf085024121/pdf
+                - button "Ver historial de correcciones" [ref=f4e2350]
+            - cell [ref=f4e2355]:
+              - generic [ref=f4e2356]:
+                - button "Validar RDT" [ref=f4e2357]
+                - button "Rechazar RDT" [ref=f4e2360]
+                - link "Revisar RDT" [ref=f4e2364] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=7ea6e0e7-812f-4503-a8c8-0bf085024121
+          - row [ref=f4e2368]:
+            - cell "PS-0004" [ref=f4e2369]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2370]
+            - cell "30-07-2026" [ref=f4e2371]
+            - cell "Día" [ref=f4e2372]
+            - cell "—" [ref=f4e2373]
+            - cell "REGISTRADO" [ref=f4e2374]
+            - cell "1" [ref=f4e2375]
+            - cell "14" [ref=f4e2376]
+            - cell "140" [ref=f4e2377]
+            - cell "0" [ref=f4e2378]
+            - cell "—" [ref=f4e2379]
+            - cell [ref=f4e2380]:
+              - generic [ref=f4e2381]:
+                - link "RDT" [ref=f4e2382] [cursor=pointer]:
+                  - /url: /api/rdts/partes/22f81e3b-6e2c-4a04-8aa1-c16d23c934bf/pdf
+                - button "Ver historial de correcciones" [ref=f4e2386]
+            - cell [ref=f4e2391]:
+              - generic [ref=f4e2392]:
+                - button "Validar RDT" [ref=f4e2393]
+                - button "Rechazar RDT" [ref=f4e2396]
+                - link "Revisar RDT" [ref=f4e2400] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=22f81e3b-6e2c-4a04-8aa1-c16d23c934bf
+          - row [ref=f4e2404]:
+            - cell "PS-0004" [ref=f4e2405]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2406]
+            - cell "29-07-2026" [ref=f4e2407]
+            - cell "Día" [ref=f4e2408]
+            - cell "—" [ref=f4e2409]
+            - cell "REGISTRADO" [ref=f4e2410]
+            - cell "1" [ref=f4e2411]
+            - cell "14" [ref=f4e2412]
+            - cell "140" [ref=f4e2413]
+            - cell "0" [ref=f4e2414]
+            - cell "—" [ref=f4e2415]
+            - cell [ref=f4e2416]:
+              - generic [ref=f4e2417]:
+                - link "RDT" [ref=f4e2418] [cursor=pointer]:
+                  - /url: /api/rdts/partes/25fc9778-56c3-4e45-83ff-fb6c82c0442f/pdf
+                - button "Ver historial de correcciones" [ref=f4e2422]
+            - cell [ref=f4e2427]:
+              - generic [ref=f4e2428]:
+                - button "Validar RDT" [ref=f4e2429]
+                - button "Rechazar RDT" [ref=f4e2432]
+                - link "Revisar RDT" [ref=f4e2436] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=25fc9778-56c3-4e45-83ff-fb6c82c0442f
+          - row [ref=f4e2440]:
+            - cell "PS-0004" [ref=f4e2441]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2442]
+            - cell "28-07-2026" [ref=f4e2443]
+            - cell "Día" [ref=f4e2444]
+            - cell "—" [ref=f4e2445]
+            - cell "REGISTRADO" [ref=f4e2446]
+            - cell "1" [ref=f4e2447]
+            - cell "14" [ref=f4e2448]
+            - cell "140" [ref=f4e2449]
+            - cell "0" [ref=f4e2450]
+            - cell "—" [ref=f4e2451]
+            - cell [ref=f4e2452]:
+              - generic [ref=f4e2453]:
+                - link "RDT" [ref=f4e2454] [cursor=pointer]:
+                  - /url: /api/rdts/partes/13d1aaae-d33b-4513-9385-b24695363028/pdf
+                - button "Ver historial de correcciones" [ref=f4e2458]
+            - cell [ref=f4e2463]:
+              - generic [ref=f4e2464]:
+                - button "Validar RDT" [ref=f4e2465]
+                - button "Rechazar RDT" [ref=f4e2468]
+                - link "Revisar RDT" [ref=f4e2472] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=13d1aaae-d33b-4513-9385-b24695363028
+          - row [ref=f4e2476]:
+            - cell "PS-0004" [ref=f4e2477]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2478]
+            - cell "27-07-2026" [ref=f4e2479]
+            - cell "Día" [ref=f4e2480]
+            - cell "—" [ref=f4e2481]
+            - cell "REGISTRADO" [ref=f4e2482]
+            - cell "1" [ref=f4e2483]
+            - cell "14" [ref=f4e2484]
+            - cell "140" [ref=f4e2485]
+            - cell "0" [ref=f4e2486]
+            - cell "—" [ref=f4e2487]
+            - cell [ref=f4e2488]:
+              - generic [ref=f4e2489]:
+                - link "RDT" [ref=f4e2490] [cursor=pointer]:
+                  - /url: /api/rdts/partes/fb86d345-087f-4c77-a9cb-cd88e279294a/pdf
+                - button "Ver historial de correcciones" [ref=f4e2494]
+            - cell [ref=f4e2499]:
+              - generic [ref=f4e2500]:
+                - button "Validar RDT" [ref=f4e2501]
+                - button "Rechazar RDT" [ref=f4e2504]
+                - link "Revisar RDT" [ref=f4e2508] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=fb86d345-087f-4c77-a9cb-cd88e279294a
+          - row [ref=f4e2512]:
+            - cell "PS-0004" [ref=f4e2513]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2514]
+            - cell "25-07-2026" [ref=f4e2515]
+            - cell "Día" [ref=f4e2516]
+            - cell "—" [ref=f4e2517]
+            - cell "REGISTRADO" [ref=f4e2518]
+            - cell "1" [ref=f4e2519]
+            - cell "14" [ref=f4e2520]
+            - cell "140" [ref=f4e2521]
+            - cell "0" [ref=f4e2522]
+            - cell "—" [ref=f4e2523]
+            - cell [ref=f4e2524]:
+              - generic [ref=f4e2525]:
+                - link "RDT" [ref=f4e2526] [cursor=pointer]:
+                  - /url: /api/rdts/partes/5eaedf98-eb4d-4eba-a535-3b52f32e2113/pdf
+                - button "Ver historial de correcciones" [ref=f4e2530]
+            - cell [ref=f4e2535]:
+              - generic [ref=f4e2536]:
+                - button "Validar RDT" [ref=f4e2537]
+                - button "Rechazar RDT" [ref=f4e2540]
+                - link "Revisar RDT" [ref=f4e2544] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=5eaedf98-eb4d-4eba-a535-3b52f32e2113
+          - row [ref=f4e2548]:
+            - cell "PS-0004" [ref=f4e2549]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2550]
+            - cell "24-07-2026" [ref=f4e2551]
+            - cell "Día" [ref=f4e2552]
+            - cell "—" [ref=f4e2553]
+            - cell "REGISTRADO" [ref=f4e2554]
+            - cell "1" [ref=f4e2555]
+            - cell "14" [ref=f4e2556]
+            - cell "140" [ref=f4e2557]
+            - cell "0" [ref=f4e2558]
+            - cell "—" [ref=f4e2559]
+            - cell [ref=f4e2560]:
+              - generic [ref=f4e2561]:
+                - link "RDT" [ref=f4e2562] [cursor=pointer]:
+                  - /url: /api/rdts/partes/6eb3a9e7-f3dc-48e5-b6f0-b40101e783c3/pdf
+                - button "Ver historial de correcciones" [ref=f4e2566]
+            - cell [ref=f4e2571]:
+              - generic [ref=f4e2572]:
+                - button "Validar RDT" [ref=f4e2573]
+                - button "Rechazar RDT" [ref=f4e2576]
+                - link "Revisar RDT" [ref=f4e2580] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=6eb3a9e7-f3dc-48e5-b6f0-b40101e783c3
+          - row [ref=f4e2584]:
+            - cell "PS-0004" [ref=f4e2585]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2586]
+            - cell "23-07-2026" [ref=f4e2587]
+            - cell "Día" [ref=f4e2588]
+            - cell "—" [ref=f4e2589]
+            - cell "REGISTRADO" [ref=f4e2590]
+            - cell "1" [ref=f4e2591]
+            - cell "14" [ref=f4e2592]
+            - cell "140" [ref=f4e2593]
+            - cell "0" [ref=f4e2594]
+            - cell "—" [ref=f4e2595]
+            - cell [ref=f4e2596]:
+              - generic [ref=f4e2597]:
+                - link "RDT" [ref=f4e2598] [cursor=pointer]:
+                  - /url: /api/rdts/partes/9a678aa5-c78d-45e6-882b-7b8bcc593713/pdf
+                - button "Ver historial de correcciones" [ref=f4e2602]
+            - cell [ref=f4e2607]:
+              - generic [ref=f4e2608]:
+                - button "Validar RDT" [ref=f4e2609]
+                - button "Rechazar RDT" [ref=f4e2612]
+                - link "Revisar RDT" [ref=f4e2616] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=9a678aa5-c78d-45e6-882b-7b8bcc593713
+          - row [ref=f4e2620]:
+            - cell "PS-0004" [ref=f4e2621]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2622]
+            - cell "22-07-2026" [ref=f4e2623]
+            - cell "Día" [ref=f4e2624]
+            - cell "—" [ref=f4e2625]
+            - cell "REGISTRADO" [ref=f4e2626]
+            - cell "1" [ref=f4e2627]
+            - cell "14" [ref=f4e2628]
+            - cell "140" [ref=f4e2629]
+            - cell "0" [ref=f4e2630]
+            - cell "—" [ref=f4e2631]
+            - cell [ref=f4e2632]:
+              - generic [ref=f4e2633]:
+                - link "RDT" [ref=f4e2634] [cursor=pointer]:
+                  - /url: /api/rdts/partes/97230c72-5c68-48b4-b469-12bbcf914e49/pdf
+                - button "Ver historial de correcciones" [ref=f4e2638]
+            - cell [ref=f4e2643]:
+              - generic [ref=f4e2644]:
+                - button "Validar RDT" [ref=f4e2645]
+                - button "Rechazar RDT" [ref=f4e2648]
+                - link "Revisar RDT" [ref=f4e2652] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=97230c72-5c68-48b4-b469-12bbcf914e49
+          - row [ref=f4e2656]:
+            - cell "PS-0004" [ref=f4e2657]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2658]
+            - cell "21-07-2026" [ref=f4e2659]
+            - cell "Día" [ref=f4e2660]
+            - cell "—" [ref=f4e2661]
+            - cell "REGISTRADO" [ref=f4e2662]
+            - cell "1" [ref=f4e2663]
+            - cell "14" [ref=f4e2664]
+            - cell "140" [ref=f4e2665]
+            - cell "0" [ref=f4e2666]
+            - cell "—" [ref=f4e2667]
+            - cell [ref=f4e2668]:
+              - generic [ref=f4e2669]:
+                - link "RDT" [ref=f4e2670] [cursor=pointer]:
+                  - /url: /api/rdts/partes/ba83b4d7-5f87-4714-97b9-900020bdc907/pdf
+                - button "Ver historial de correcciones" [ref=f4e2674]
+            - cell [ref=f4e2679]:
+              - generic [ref=f4e2680]:
+                - button "Validar RDT" [ref=f4e2681]
+                - button "Rechazar RDT" [ref=f4e2684]
+                - link "Revisar RDT" [ref=f4e2688] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=ba83b4d7-5f87-4714-97b9-900020bdc907
+          - row [ref=f4e2692]:
+            - cell "PS-0004" [ref=f4e2693]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2694]
+            - cell "20-07-2026" [ref=f4e2695]
+            - cell "Día" [ref=f4e2696]
+            - cell "—" [ref=f4e2697]
+            - cell "REGISTRADO" [ref=f4e2698]
+            - cell "1" [ref=f4e2699]
+            - cell "14" [ref=f4e2700]
+            - cell "140" [ref=f4e2701]
+            - cell "0" [ref=f4e2702]
+            - cell "—" [ref=f4e2703]
+            - cell [ref=f4e2704]:
+              - generic [ref=f4e2705]:
+                - link "RDT" [ref=f4e2706] [cursor=pointer]:
+                  - /url: /api/rdts/partes/c81b708d-3f52-48f7-823a-967101b769cc/pdf
+                - button "Ver historial de correcciones" [ref=f4e2710]
+            - cell [ref=f4e2715]:
+              - generic [ref=f4e2716]:
+                - button "Validar RDT" [ref=f4e2717]
+                - button "Rechazar RDT" [ref=f4e2720]
+                - link "Revisar RDT" [ref=f4e2724] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=c81b708d-3f52-48f7-823a-967101b769cc
+          - row [ref=f4e2728]:
+            - cell "PS-0004" [ref=f4e2729]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2730]
+            - cell "18-07-2026" [ref=f4e2731]
+            - cell "Día" [ref=f4e2732]
+            - cell "—" [ref=f4e2733]
+            - cell "REGISTRADO" [ref=f4e2734]
+            - cell "1" [ref=f4e2735]
+            - cell "14" [ref=f4e2736]
+            - cell "140" [ref=f4e2737]
+            - cell "0" [ref=f4e2738]
+            - cell "—" [ref=f4e2739]
+            - cell [ref=f4e2740]:
+              - generic [ref=f4e2741]:
+                - link "RDT" [ref=f4e2742] [cursor=pointer]:
+                  - /url: /api/rdts/partes/0a3030c8-281f-493a-a4ed-a81978b9fb9e/pdf
+                - button "Ver historial de correcciones" [ref=f4e2746]
+            - cell [ref=f4e2751]:
+              - generic [ref=f4e2752]:
+                - button "Validar RDT" [ref=f4e2753]
+                - button "Rechazar RDT" [ref=f4e2756]
+                - link "Revisar RDT" [ref=f4e2760] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=0a3030c8-281f-493a-a4ed-a81978b9fb9e
+          - row [ref=f4e2764]:
+            - cell "PS-0004" [ref=f4e2765]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2766]
+            - cell "17-07-2026" [ref=f4e2767]
+            - cell "Día" [ref=f4e2768]
+            - cell "—" [ref=f4e2769]
+            - cell "REGISTRADO" [ref=f4e2770]
+            - cell "1" [ref=f4e2771]
+            - cell "14" [ref=f4e2772]
+            - cell "140" [ref=f4e2773]
+            - cell "0" [ref=f4e2774]
+            - cell "—" [ref=f4e2775]
+            - cell [ref=f4e2776]:
+              - generic [ref=f4e2777]:
+                - link "RDT" [ref=f4e2778] [cursor=pointer]:
+                  - /url: /api/rdts/partes/240daa54-e5c4-4e0d-bd64-63de17c27772/pdf
+                - button "Ver historial de correcciones" [ref=f4e2782]
+            - cell [ref=f4e2787]:
+              - generic [ref=f4e2788]:
+                - button "Validar RDT" [ref=f4e2789]
+                - button "Rechazar RDT" [ref=f4e2792]
+                - link "Revisar RDT" [ref=f4e2796] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=240daa54-e5c4-4e0d-bd64-63de17c27772
+          - row [ref=f4e2800]:
+            - cell "PS-0004" [ref=f4e2801]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2802]
+            - cell "16-07-2026" [ref=f4e2803]
+            - cell "Día" [ref=f4e2804]
+            - cell "—" [ref=f4e2805]
+            - cell "REGISTRADO" [ref=f4e2806]
+            - cell "1" [ref=f4e2807]
+            - cell "14" [ref=f4e2808]
+            - cell "140" [ref=f4e2809]
+            - cell "0" [ref=f4e2810]
+            - cell "—" [ref=f4e2811]
+            - cell [ref=f4e2812]:
+              - generic [ref=f4e2813]:
+                - link "RDT" [ref=f4e2814] [cursor=pointer]:
+                  - /url: /api/rdts/partes/b1126835-393c-4bd4-ba20-e1056334400f/pdf
+                - button "Ver historial de correcciones" [ref=f4e2818]
+            - cell [ref=f4e2823]:
+              - generic [ref=f4e2824]:
+                - button "Validar RDT" [ref=f4e2825]
+                - button "Rechazar RDT" [ref=f4e2828]
+                - link "Revisar RDT" [ref=f4e2832] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=b1126835-393c-4bd4-ba20-e1056334400f
+          - row [ref=f4e2836]:
+            - cell "PS-0004" [ref=f4e2837]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2838]
+            - cell "15-07-2026" [ref=f4e2839]
+            - cell "Día" [ref=f4e2840]
+            - cell "—" [ref=f4e2841]
+            - cell "REGISTRADO" [ref=f4e2842]
+            - cell "1" [ref=f4e2843]
+            - cell "14" [ref=f4e2844]
+            - cell "140" [ref=f4e2845]
+            - cell "0" [ref=f4e2846]
+            - cell "—" [ref=f4e2847]
+            - cell [ref=f4e2848]:
+              - generic [ref=f4e2849]:
+                - link "RDT" [ref=f4e2850] [cursor=pointer]:
+                  - /url: /api/rdts/partes/e0a48562-ad30-4952-8c31-13cc5ea75b31/pdf
+                - button "Ver historial de correcciones" [ref=f4e2854]
+            - cell [ref=f4e2859]:
+              - generic [ref=f4e2860]:
+                - button "Validar RDT" [ref=f4e2861]
+                - button "Rechazar RDT" [ref=f4e2864]
+                - link "Revisar RDT" [ref=f4e2868] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=e0a48562-ad30-4952-8c31-13cc5ea75b31
+          - row [ref=f4e2872]:
+            - cell "PS-0004" [ref=f4e2873]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2874]
+            - cell "14-07-2026" [ref=f4e2875]
+            - cell "Día" [ref=f4e2876]
+            - cell "—" [ref=f4e2877]
+            - cell "REGISTRADO" [ref=f4e2878]
+            - cell "1" [ref=f4e2879]
+            - cell "14" [ref=f4e2880]
+            - cell "140" [ref=f4e2881]
+            - cell "0" [ref=f4e2882]
+            - cell "—" [ref=f4e2883]
+            - cell [ref=f4e2884]:
+              - generic [ref=f4e2885]:
+                - link "RDT" [ref=f4e2886] [cursor=pointer]:
+                  - /url: /api/rdts/partes/819ecf64-cd84-434b-af07-2613a39d7767/pdf
+                - button "Ver historial de correcciones" [ref=f4e2890]
+            - cell [ref=f4e2895]:
+              - generic [ref=f4e2896]:
+                - button "Validar RDT" [ref=f4e2897]
+                - button "Rechazar RDT" [ref=f4e2900]
+                - link "Revisar RDT" [ref=f4e2904] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=819ecf64-cd84-434b-af07-2613a39d7767
+          - row [ref=f4e2908]:
+            - cell "PS-0004" [ref=f4e2909]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2910]
+            - cell "13-07-2026" [ref=f4e2911]
+            - cell "Día" [ref=f4e2912]
+            - cell "—" [ref=f4e2913]
+            - cell "REGISTRADO" [ref=f4e2914]
+            - cell "1" [ref=f4e2915]
+            - cell "14" [ref=f4e2916]
+            - cell "140" [ref=f4e2917]
+            - cell "0" [ref=f4e2918]
+            - cell "—" [ref=f4e2919]
+            - cell [ref=f4e2920]:
+              - generic [ref=f4e2921]:
+                - link "RDT" [ref=f4e2922] [cursor=pointer]:
+                  - /url: /api/rdts/partes/5dc15dbc-677c-448d-8222-aabd6267e20a/pdf
+                - button "Ver historial de correcciones" [ref=f4e2926]
+            - cell [ref=f4e2931]:
+              - generic [ref=f4e2932]:
+                - button "Validar RDT" [ref=f4e2933]
+                - button "Rechazar RDT" [ref=f4e2936]
+                - link "Revisar RDT" [ref=f4e2940] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=5dc15dbc-677c-448d-8222-aabd6267e20a
+          - row [ref=f4e2944]:
+            - cell "PS-0004" [ref=f4e2945]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2946]
+            - cell "11-07-2026" [ref=f4e2947]
+            - cell "Día" [ref=f4e2948]
+            - cell "—" [ref=f4e2949]
+            - cell "REGISTRADO" [ref=f4e2950]
+            - cell "1" [ref=f4e2951]
+            - cell "14" [ref=f4e2952]
+            - cell "140" [ref=f4e2953]
+            - cell "0" [ref=f4e2954]
+            - cell "—" [ref=f4e2955]
+            - cell [ref=f4e2956]:
+              - generic [ref=f4e2957]:
+                - link "RDT" [ref=f4e2958] [cursor=pointer]:
+                  - /url: /api/rdts/partes/73c7aadc-1467-436f-9ca7-fb209b540ea5/pdf
+                - button "Ver historial de correcciones" [ref=f4e2962]
+            - cell [ref=f4e2967]:
+              - generic [ref=f4e2968]:
+                - button "Validar RDT" [ref=f4e2969]
+                - button "Rechazar RDT" [ref=f4e2972]
+                - link "Revisar RDT" [ref=f4e2976] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=73c7aadc-1467-436f-9ca7-fb209b540ea5
+          - row [ref=f4e2980]:
+            - cell "PS-0004" [ref=f4e2981]
+            - cell "Movimiento de tierra, e instalacion de bancoductos" [ref=f4e2982]
+            - cell "10-07-2026" [ref=f4e2983]
+            - cell "Día" [ref=f4e2984]
+            - cell "—" [ref=f4e2985]
+            - cell "REGISTRADO" [ref=f4e2986]
+            - cell "1" [ref=f4e2987]
+            - cell "14" [ref=f4e2988]
+            - cell "140" [ref=f4e2989]
+            - cell "0" [ref=f4e2990]
+            - cell "—" [ref=f4e2991]
+            - cell [ref=f4e2992]:
+              - generic [ref=f4e2993]:
+                - link "RDT" [ref=f4e2994] [cursor=pointer]:
+                  - /url: /api/rdts/partes/4ef17009-5fac-4a21-b685-258063d99750/pdf
+                - button "Ver historial de correcciones" [ref=f4e2998]
+            - cell [ref=f4e3003]:
+              - generic [ref=f4e3004]:
+                - button "Validar RDT" [ref=f4e3005]
+                - button "Rechazar RDT" [ref=f4e3008]
+                - link "Revisar RDT" [ref=f4e3012] [cursor=pointer]:
+                  - /url: /rdts/crear?verId=4ef17009-5fac-4a21-b685-258063d99750
+  - button "Open Next.js Dev Tools" [ref=f4e3016] [cursor=pointer]:
+    - generic [ref=f4e3019]:
+      - text: Rendering
+      - generic [ref=f4e3020]:
+        - generic [ref=f4e3021]: .
+        - generic [ref=f4e3022]: .
+        - generic [ref=f4e3023]: .
+  - alert [ref=f4e409]: Control de Proyectos

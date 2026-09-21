@@ -1,0 +1,11 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: Control de Proyectos
+      - heading "Inicia sesión" [level=1] [ref=e11]
+      - generic [ref=e12]:
+        - textbox "Correo" [ref=e13]
+        - textbox "Contraseña" [ref=e14]
+        - button "Entrar" [ref=e15]
+  - button "Open Next.js Dev Tools" [ref=e21] [cursor=pointer]
+  - alert [ref=e25]

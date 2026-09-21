@@ -1,0 +1,132 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e47] [cursor=pointer]:
+    - generic [ref=e50]:
+      - text: Rendering
+      - generic [ref=e51]:
+        - generic [ref=e52]: .
+        - generic [ref=e53]: .
+        - generic [ref=e54]: .
+  - alert [ref=e46]
+  - generic [ref=e55]:
+    - complementary [ref=e56]:
+      - link "Control de Proyectos" [ref=e57] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - navigation [ref=e65]:
+        - link [ref=e66] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - link "Notificaciones" [ref=e75] [cursor=pointer]:
+            - /url: /notificaciones
+          - link "Configuraciones" [ref=e79] [cursor=pointer]:
+            - /url: /configuraciones
+          - button "Cerrar sesión" [ref=e84]
+        - link "LC Lopez Caceres Loayza Supervisor Operativo" [ref=e88] [cursor=pointer]:
+          - /url: /mi-entorno
+          - generic [ref=e89]: LC
+          - generic [ref=e90]:
+            - generic [ref=e91]: Lopez Caceres Loayza
+            - generic [ref=e92]: Supervisor Operativo
+    - main [ref=e93]:
+      - generic [ref=e95]:
+        - link "Promcoser Servicios Marcobre" [ref=e96] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b
+          - generic [ref=e97]:
+            - generic [ref=e98]: Promcoser
+            - generic [ref=e99]: Servicios Marcobre
+        - generic [ref=e102]:
+          - heading "Servicios Marcobre" [level=1] [ref=e103]
+          - link "Ver Dashboard" [ref=e105] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/dashboard
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: Proyectos — Servicios Marcobre
+          - generic [ref=e108]:
+            - link "Movimiento de tierra, e instalacion de bancoductos HH contractual 5312,077 Duración 52 días Avance físico 0%" [ref=e109] [cursor=pointer]:
+              - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic [ref=e110]:
+                - paragraph [ref=e117]: Movimiento de tierra, e instalacion de bancoductos
+                - generic [ref=e118]:
+                  - generic [ref=e119]: HH contractual
+                  - generic [ref=e120]: 5312,077
+                - generic [ref=e121]:
+                  - generic [ref=e122]: Duración
+                  - generic [ref=e123]: 52 días
+                - generic [ref=e124]:
+                  - generic [ref=e125]: Avance físico
+                  - generic [ref=e126]: 0%
+            - link "Fabricacion de balsas HH contractual 5317,517 Duración Pendiente Avance físico 0%" [ref=e127] [cursor=pointer]:
+              - /url: /proyectos/bf631888-d951-4b9c-b59d-75ff1ddcba06
+              - generic [ref=e128]:
+                - paragraph [ref=e135]: Fabricacion de balsas
+                - generic [ref=e136]:
+                  - generic [ref=e137]: HH contractual
+                  - generic [ref=e138]: 5317,517
+                - generic [ref=e139]:
+                  - generic [ref=e140]: Duración
+                  - generic [ref=e141]: Pendiente
+                - generic [ref=e142]:
+                  - generic [ref=e143]: Avance físico
+                  - generic [ref=e144]: 0%
+            - link "Montaje de tuberia HH contractual 5317,517 Duración Pendiente Avance físico 0%" [ref=e145] [cursor=pointer]:
+              - /url: /proyectos/d7b0f593-a7d6-41b2-a9d2-b56187c2d9ea
+              - generic [ref=e146]:
+                - paragraph [ref=e153]: Montaje de tuberia
+                - generic [ref=e154]:
+                  - generic [ref=e155]: HH contractual
+                  - generic [ref=e156]: 5317,517
+                - generic [ref=e157]:
+                  - generic [ref=e158]: Duración
+                  - generic [ref=e159]: Pendiente
+                - generic [ref=e160]:
+                  - generic [ref=e161]: Avance físico
+                  - generic [ref=e162]: 0%
+            - link "Limpieza de ductos en molienda HH contractual 5317,517 Duración 52 días Avance físico 0%" [ref=e163] [cursor=pointer]:
+              - /url: /proyectos/5fee88de-2fe5-48ae-b8f8-840efd6b2cb3
+              - generic [ref=e164]:
+                - paragraph [ref=e171]: Limpieza de ductos en molienda
+                - generic [ref=e172]:
+                  - generic [ref=e173]: HH contractual
+                  - generic [ref=e174]: 5317,517
+                - generic [ref=e175]:
+                  - generic [ref=e176]: Duración
+                  - generic [ref=e177]: 52 días
+                - generic [ref=e178]:
+                  - generic [ref=e179]: Avance físico
+                  - generic [ref=e180]: 0%
+        - button "Pregúntale algo al asistente…" [ref=e182]
+    - complementary [ref=e189]:
+      - generic [ref=e190]:
+        - paragraph [ref=e191]: Accesos rápidos
+        - generic [ref=e192]:
+          - generic [ref=e193]: Tareo MOI
+          - generic [ref=e197]: Pets
+          - generic [ref=e201]: Acta de conformidad
+          - generic [ref=e206]: Status de servicios
+          - link "Requerimiento" [ref=e209] [cursor=pointer]:
+            - /url: /requerimientos
+          - link "Consolidado RQ" [ref=e216] [cursor=pointer]:
+            - /url: /logistica/consolidado-rq
+          - link "Subir RDTs" [ref=e220] [cursor=pointer]:
+            - /url: /mi-entorno?accion=subir-rdt
+      - paragraph [ref=e225]: Grupos del servicio
+      - paragraph [ref=e226]: Selecciona un servicio para habilitar las herramientas del panel.
+      - generic [ref=e227]:
+        - generic [ref=e228]:
+          - button "Planificación" [expanded] [ref=e229]
+          - generic [ref=e232]:
+            - link [ref=e233] [cursor=pointer]:
+              - /url: /notificaciones
+            - generic [ref=e240]: Cronograma
+            - link [ref=e244] [cursor=pointer]:
+              - /url: /plan-maestro
+            - generic [ref=e248]: 3WLA
+            - generic [ref=e252]: Programación diaria
+            - generic [ref=e256]: PR (Reporte del proyecto)
+            - generic [ref=e261]: Status de capacitaciones
+            - generic [ref=e266]: Programación de capacitaciones
+        - button "Costos" [ref=e272]
+        - button "Supervisión operativa" [ref=e276]
+        - button "Logística" [ref=e280]
+        - button "Oficina Técnica" [ref=e284]
+        - button "Administración" [ref=e288]
+        - button "SSOMA" [ref=e292]

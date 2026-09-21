@@ -1,0 +1,11 @@
+- generic [active] [ref=f1e1]:
+  - button "Open Next.js Dev Tools" [ref=f1e190] [cursor=pointer]
+  - alert [ref=f1e194]: Inicia sesión
+  - main [ref=f1e204]:
+    - generic [ref=f1e206]:
+      - generic [ref=f1e207]: Control de Proyectos
+      - heading "Inicia sesión" [level=1] [ref=f1e212]
+      - generic [ref=f1e213]:
+        - textbox "Correo" [ref=f1e214]: jeyger22@gmail.com
+        - textbox "Contraseña" [ref=f1e215]: "12345678"
+        - button "Entrar" [ref=f1e216]

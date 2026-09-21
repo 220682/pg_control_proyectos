@@ -1,0 +1,235 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - complementary [ref=f3e3]:
+      - link "Control de Proyectos" [ref=f3e4] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - navigation [ref=f3e12]:
+        - link [ref=f3e13] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - generic [ref=f3e20]:
+          - paragraph [ref=f3e21]: Recursos
+          - link [ref=f3e22] [cursor=pointer]:
+            - /url: /recursos/personal
+          - link [ref=f3e29] [cursor=pointer]:
+            - /url: /recursos/cargos
+          - link [ref=f3e34] [cursor=pointer]:
+            - /url: /recursos/equipos
+          - generic "Los materiales no se catalogan todavía" [ref=f3e41]: Materiales
+      - generic [ref=f3e53]:
+        - generic [ref=f3e54]:
+          - link "Usuarios" [ref=f3e55] [cursor=pointer]:
+            - /url: /admin/usuarios
+          - link "24" [ref=f3e247] [cursor=pointer]:
+            - /url: /notificaciones
+          - link "Configuraciones" [ref=f3e65] [cursor=pointer]:
+            - /url: /configuraciones
+          - button "Cerrar sesión" [ref=f3e70]
+        - generic [ref=f3e74]:
+          - generic [ref=f3e75]: Ver como
+          - combobox [ref=f3e79]:
+            - option "Mi rol (Administrador)" [selected]
+            - option "Jefe de Proyectos"
+            - option "Jefe de Oficina Técnica"
+            - option "Supervisor de Oficina Técnica"
+            - option "Planner"
+            - option "Supervisor de Costos"
+            - option "Jefe de Costos"
+            - option "Supervisor Operativo"
+            - option "Supervisor de Logística"
+            - option "Supervisor de Administración"
+            - option "Supervisor SSOMA"
+            - option "Asistente"
+            - option "RRHH"
+            - option "Esteban Garcia Alvarez"
+            - option "Lopez Caceres Loayza"
+        - link "VP Victor Perez Contreras Administrador" [ref=f3e80] [cursor=pointer]:
+          - /url: /mi-entorno
+          - generic [ref=f3e81]: VP
+          - generic [ref=f3e82]:
+            - generic [ref=f3e83]: Victor Perez Contreras
+            - generic [ref=f3e84]: Administrador
+    - main [ref=f3e85]:
+      - generic [ref=f3e88]:
+        - generic [ref=f3e89]:
+          - link "Salir a Mi entorno" [ref=f3e90] [cursor=pointer]:
+            - /url: /mi-entorno
+          - heading "Cargos" [level=1] [ref=f3e91]
+          - paragraph [ref=f3e92]: Mostrando 17 cargos del presupuesto
+        - generic [ref=f3e93]:
+          - button "Personalizar campos (4)" [ref=f3e95]
+          - button "Limpiar filtros" [ref=f3e98]
+        - table [ref=f3e100]:
+          - rowgroup [ref=f3e101]:
+            - row [ref=f3e102]:
+              - columnheader [ref=f3e103]:
+                - button "Cargo" [ref=f3e104]
+              - columnheader [ref=f3e105]:
+                - button "Unidad" [ref=f3e106]
+              - columnheader [ref=f3e107]:
+                - button "Origen" [ref=f3e108]
+              - columnheader [ref=f3e109]:
+                - button "Estado" [ref=f3e110]
+            - row [ref=f3e111]:
+              - columnheader "Todos" [ref=f3e112]:
+                - combobox [ref=f3e113]:
+                  - option "Todos" [selected]
+                  - option "AYUDANTE TOPOGRAFO"
+                  - option "CAPATAZ"
+                  - option "CONDUCTOR"
+                  - option "DOCTOR"
+                  - option "INGENIERO DE CALIDAD"
+                  - option "INGENIERO DE SEGURIDAD"
+                  - option "LOGISTICA"
+                  - option "OFICIAL"
+                  - option "OFICIAL ELECTRICISTA"
+                  - option "OPERADOR DE EQUIPO LIVIANO"
+                  - option "OPERADOR DE LINEA AMARILLA"
+                  - option "OPERARIO"
+                  - option "OPERARIO ELECTRICISTA"
+                  - option "PEON"
+                  - option "RELEVO DE SUPERVISION"
+                  - option "TOPOGRAFO"
+                  - option "VIGIA"
+              - columnheader "Todos" [ref=f3e114]:
+                - combobox [ref=f3e115]:
+                  - option "Todos" [selected]
+                  - option "HH"
+              - columnheader "Todos" [ref=f3e116]:
+                - combobox [ref=f3e117]:
+                  - option "Todos" [selected]
+                  - option "PRESUPUESTO"
+                  - option "RDO"
+              - columnheader "Todos" [ref=f3e118]:
+                - combobox [ref=f3e119]:
+                  - option "Todos" [selected]
+                  - option "Activo"
+          - rowgroup [ref=f3e120]:
+            - row [ref=f3e249]:
+              - cell "AYUDANTE TOPOGRAFO" [ref=f3e250]
+              - cell "HH" [ref=f3e251]
+              - cell "PRESUPUESTO" [ref=f3e252]
+              - cell "Activo" [ref=f3e253]
+            - row [ref=f3e254]:
+              - cell "CAPATAZ" [ref=f3e255]
+              - cell "HH" [ref=f3e256]
+              - cell "PRESUPUESTO" [ref=f3e257]
+              - cell "Activo" [ref=f3e258]
+            - row [ref=f3e259]:
+              - cell "CONDUCTOR" [ref=f3e260]
+              - cell "HH" [ref=f3e261]
+              - cell "PRESUPUESTO" [ref=f3e262]
+              - cell "Activo" [ref=f3e263]
+            - row [ref=f3e264]:
+              - cell "DOCTOR" [ref=f3e265]
+              - cell "HH" [ref=f3e266]
+              - cell "PRESUPUESTO" [ref=f3e267]
+              - cell "Activo" [ref=f3e268]
+            - row [ref=f3e269]:
+              - cell "INGENIERO DE CALIDAD" [ref=f3e270]
+              - cell "HH" [ref=f3e271]
+              - cell "RDO" [ref=f3e272]
+              - cell "Activo" [ref=f3e273]
+            - row [ref=f3e274]:
+              - cell "INGENIERO DE SEGURIDAD" [ref=f3e275]
+              - cell "HH" [ref=f3e276]
+              - cell "RDO" [ref=f3e277]
+              - cell "Activo" [ref=f3e278]
+            - row [ref=f3e279]:
+              - cell "LOGISTICA" [ref=f3e280]
+              - cell "HH" [ref=f3e281]
+              - cell "PRESUPUESTO" [ref=f3e282]
+              - cell "Activo" [ref=f3e283]
+            - row [ref=f3e284]:
+              - cell "OFICIAL" [ref=f3e285]
+              - cell "HH" [ref=f3e286]
+              - cell "PRESUPUESTO" [ref=f3e287]
+              - cell "Activo" [ref=f3e288]
+            - row [ref=f3e289]:
+              - cell "OFICIAL ELECTRICISTA" [ref=f3e290]
+              - cell "HH" [ref=f3e291]
+              - cell "PRESUPUESTO" [ref=f3e292]
+              - cell "Activo" [ref=f3e293]
+            - row [ref=f3e294]:
+              - cell "OPERADOR DE EQUIPO LIVIANO" [ref=f3e295]
+              - cell "HH" [ref=f3e296]
+              - cell "PRESUPUESTO" [ref=f3e297]
+              - cell "Activo" [ref=f3e298]
+            - row [ref=f3e299]:
+              - cell "OPERADOR DE LINEA AMARILLA" [ref=f3e300]
+              - cell "HH" [ref=f3e301]
+              - cell "PRESUPUESTO" [ref=f3e302]
+              - cell "Activo" [ref=f3e303]
+            - row [ref=f3e304]:
+              - cell "OPERARIO" [ref=f3e305]
+              - cell "HH" [ref=f3e306]
+              - cell "PRESUPUESTO" [ref=f3e307]
+              - cell "Activo" [ref=f3e308]
+            - row [ref=f3e309]:
+              - cell "OPERARIO ELECTRICISTA" [ref=f3e310]
+              - cell "HH" [ref=f3e311]
+              - cell "PRESUPUESTO" [ref=f3e312]
+              - cell "Activo" [ref=f3e313]
+            - row [ref=f3e314]:
+              - cell "PEON" [ref=f3e315]
+              - cell "HH" [ref=f3e316]
+              - cell "PRESUPUESTO" [ref=f3e317]
+              - cell "Activo" [ref=f3e318]
+            - row [ref=f3e319]:
+              - cell "RELEVO DE SUPERVISION" [ref=f3e320]
+              - cell "HH" [ref=f3e321]
+              - cell "RDO" [ref=f3e322]
+              - cell "Activo" [ref=f3e323]
+            - row [ref=f3e324]:
+              - cell "TOPOGRAFO" [ref=f3e325]
+              - cell "HH" [ref=f3e326]
+              - cell "PRESUPUESTO" [ref=f3e327]
+              - cell "Activo" [ref=f3e328]
+            - row [ref=f3e329]:
+              - cell "VIGIA" [ref=f3e330]
+              - cell "HH" [ref=f3e331]
+              - cell "PRESUPUESTO" [ref=f3e332]
+              - cell "Activo" [ref=f3e333]
+    - complementary [ref=f3e123]:
+      - generic [ref=f3e124]:
+        - paragraph [ref=f3e125]: Accesos rápidos
+        - generic [ref=f3e126]:
+          - generic [ref=f3e127]: Tareo MOI
+          - generic [ref=f3e131]: Pets
+          - generic [ref=f3e135]: Acta de conformidad
+          - generic [ref=f3e140]: Status de servicios
+          - link "Requerimiento" [ref=f3e143] [cursor=pointer]:
+            - /url: /requerimientos
+          - link "Consolidado RQ" [ref=f3e150] [cursor=pointer]:
+            - /url: /logistica/consolidado-rq
+          - link "Subir RDTs" [ref=f3e154] [cursor=pointer]:
+            - /url: /mi-entorno?accion=subir-rdt
+      - paragraph [ref=f3e159]: Grupos del servicio
+      - paragraph [ref=f3e160]: Selecciona un servicio para habilitar las herramientas del panel.
+      - generic [ref=f3e161]:
+        - generic [ref=f3e162]:
+          - button "Planificación" [expanded] [ref=f3e163]
+          - generic [ref=f3e166]:
+            - link [ref=f3e167] [cursor=pointer]:
+              - /url: /notificaciones
+            - generic [ref=f3e174]: Cronograma
+            - link [ref=f3e178] [cursor=pointer]:
+              - /url: /plan-maestro
+            - generic [ref=f3e182]: 3WLA
+            - generic [ref=f3e186]: Programación diaria
+            - generic [ref=f3e190]: PR (Reporte del proyecto)
+            - generic [ref=f3e195]: Status de capacitaciones
+            - generic [ref=f3e200]: Programación de capacitaciones
+        - button "Costos" [ref=f3e206]
+        - button "Supervisión operativa" [ref=f3e210]
+        - button "Logística" [ref=f3e214]
+        - button "Oficina Técnica" [ref=f3e218]
+        - button "Administración" [ref=f3e222]
+        - button "SSOMA" [ref=f3e226]
+  - button "Open Next.js Dev Tools" [ref=f3e334] [cursor=pointer]:
+    - generic [ref=f3e337]:
+      - text: Rendering
+      - generic [ref=f3e338]:
+        - generic [ref=f3e339]: .
+        - generic [ref=f3e340]: .
+        - generic [ref=f3e341]: .
+  - alert [ref=f3e238]

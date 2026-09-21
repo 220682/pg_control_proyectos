@@ -1,6 +1,8 @@
 # PR enriquecido — Fase 2 (Agente B): línea base, planificado y derivados EVM
 
-**Estado (2026-09-21):** PLAN APROBADO por Victor. Migración `052` corrida en Supabase. **Lista para que el Agente B arranque la implementación.** Trabaja en paralelo con [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) (Agente A).
+**Estado (2026-09-21):** PLAN APROBADO, PUNCH LIST APROBADA. Migración `052` corrida en Supabase. **Agente B EN EJECUCIÓN**, rama `feat/pr-fase-2-linea-base-evm`. Trabaja en paralelo con [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) (Agente A, rama `feat/pr-fase-1-pipeline-rdt`).
+
+**Pendiente para siguiente sesión:** ambos agentes en vivo haciendo loop de verificación → PR cuando al 100% del checklist. Victor revisará ambos PRs.
 
 **Ya resuelto, no volver a preguntar:**
 - Punch List de esta fase (15 ítems, tabla más abajo) — **aprobada por Victor.**

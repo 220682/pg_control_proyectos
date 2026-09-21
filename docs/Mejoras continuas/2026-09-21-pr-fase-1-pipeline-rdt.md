@@ -1,6 +1,8 @@
 # PR enriquecido — Fase 1 (Agente A): pipeline RDT → PR
 
-**Estado (2026-09-21):** PLAN APROBADO por Victor. Migración `052` corrida en Supabase. **Lista para que el Agente A arranque la implementación.** Trabaja en paralelo con [Fase 2](2026-09-21-pr-fase-2-pipeline-linea-base.md) (Agente B).
+**Estado (2026-09-21):** PLAN APROBADO, PUNCH LIST APROBADA. Migración `052` corrida en Supabase. **Agente A EN EJECUCIÓN**, rama `feat/pr-fase-1-pipeline-rdt`. Trabaja en paralelo con [Fase 2](2026-09-21-pr-fase-2-pipeline-linea-base.md) (Agente B, rama `feat/pr-fase-2-linea-base-evm`).
+
+**Pendiente para siguiente sesión:** ambos agentes en vivo haciendo loop de verificación → PR cuando al 100% del checklist. Victor revisará ambos PRs.
 
 **Ya resuelto, no volver a preguntar:**
 - Punch List de esta fase (19 ítems, tabla más abajo) — **aprobada por Victor.**

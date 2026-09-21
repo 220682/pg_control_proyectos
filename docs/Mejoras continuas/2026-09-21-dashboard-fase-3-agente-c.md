@@ -57,6 +57,56 @@ Por eso el Dashboard se ve "suelto": no tiene el shell. **Moverlo no cambia la U
 
 ⚠️ Tiene que ser un **movimiento, no una copia**: si los dos archivos existen a la vez, las dos rutas resuelven a `/proyectos/[id]/dashboard` y Next falla el build por colisión.
 
+## Concepto de construcción — cómo se arman los dos Dashboards
+
+Cinco principios. Todo lo demás del plan se deriva de acá.
+
+### 1. El Dashboard no calcula: lee
+
+La fuente es **el PR**, que ya quedó lleno por las Fases 1 y 2. Nada se recalcula en la pantalla. Si un número está mal, se arregla en el pipeline, no en la vista. Esto es lo que garantiza que Dashboard, PR y Curva S digan lo mismo.
+
+### 2. Un solo esqueleto, dos profundidades
+
+Parcial y Completo **no son dos diseños**: son el mismo esqueleto, y el Completo agrega bloques al final.
+
+```
+        PARCIAL                    COMPLETO
+  ┌────────────────────┐    ┌────────────────────┐
+  │ Filtros            │    │ Filtros            │
+  │ KPI                │    │ KPI                │
+  │ Gráficos           │    │ Gráficos           │
+  │ Matriz de partidas │    │ Matriz de partidas │
+  │ Diagnóstico        │    │ Diagnóstico        │
+  │ Resumen (2 líneas) │    │ ── Bloque E ──     │  ← PPC + Pareto CNC
+  └────────────────────┘    │ Enlace a Curva S   │
+                            │ Resumen (2 líneas) │
+                            └────────────────────┘
+```
+
+Quien conoce el Parcial no tiene que reaprender el Completo. El matiz visual distingue, no desorienta.
+
+### 3. Pirámide de lectura: de lo general al detalle
+
+El orden de la página responde preguntas cada vez más específicas:
+
+| Bloque | Pregunta que responde |
+|---|---|
+| KPI | ¿Cómo va el servicio? |
+| Gráficos | ¿En qué se está yendo el dinero y dónde está la desviación? |
+| Matriz de partidas | ¿Qué partida exactamente? |
+| Diagnóstico | ¿Qué tengo que ir a arreglar? |
+| Resumen (2 líneas) | ¿Qué le digo al que me pregunta? |
+
+Nadie debería tener que bajar para saber si el servicio está bien. Y nadie debería quedarse sin el detalle si baja.
+
+### 4. Cada dato aparece una sola vez, en el nivel que le toca
+
+Si un número ya está en los KPI, no se repite en el resumen ejecutivo. La tabla es el lugar del detalle; el gráfico es el lugar de la forma; la tarjeta es el lugar del titular. Repetir el mismo dato en tres niveles es lo que vuelve un dashboard ruidoso.
+
+### 5. El "llamativo" sale de la jerarquía, no del color
+
+Es la lección de las dos plantillas de referencia: **son sobrias**. Lo que las hace ver profesionales es el contraste de tamaño entre el valor y su etiqueta, el aire entre bloques, la alineación de los números y que cada dato tenga su referencia. **Ningún color fuera del sistema, ningún degradado, ninguna sombra decorativa.** `design.md` §4.1 es explícito: no se agregan colores "porque se ven mejor".
+
 ## Reglas fijas (Victor) — no volver a preguntarlas
 
 1. **El Dashboard no lleva Curva S** (va al Agente D, pantalla y chip aparte).
@@ -92,6 +142,26 @@ Por eso el Dashboard se ve "suelto": no tiene el shell. **Moverlo no cambia la U
 Antes de escribir código: comprobar que todo lo que la pantalla necesita ya está en `pr_partidas` / `proyecto_pr` (Bloques A, A' y B de la migración `052` + las de las Fases 1 y 2) y que el bloque C se calcula al leer.
 
 **Resultado esperado: cero migraciones en esta fase.** Si aparece una columna genuinamente faltante, **se para y se consulta a Victor** — no se inventa una migración `07x` por cuenta propia, porque el contrato del PR está congelado desde el Paso 0 compartido de las Fases 1 y 2.
+
+### C0b. El chip de Dashboard: hoy existe y apunta a la página equivocada
+
+**Hallazgo verificado el 2026-09-21.** En `src/lib/config/nav-proyecto.ts:93-99` ya existe un ítem `'dashboard'` con icono `LayoutDashboard`, pero:
+
+```ts
+ruta: (id) => `/proyectos/${id}`,   // ← el DETALLE del proyecto, no el Dashboard
+```
+
+El Dashboard real vive en `/proyectos/[id]/dashboard` y **no tiene chip que lleve a él**. Quien hace clic en "Dashboard" aterriza en el detalle del proyecto.
+
+**Decisión de Victor (2026-09-21): el Dashboard va en el grupo de Planificación**, junto a Cronograma, Plan Maestro, PR y la Curva S — la cadena de control completa en un mismo grupo. Entonces:
+
+1. **Corregir la ruta** a `(id) => /proyectos/${id}/dashboard`.
+2. **Mover el ítem** del grupo `'Proyecto'` al grupo `'Planificación'`, con el color del grupo destino (`COLOR_PLANIFICACION`), no el de origen.
+3. Verificar que el detalle del proyecto sigue siendo alcanzable por su camino habitual — al corregir la ruta, el chip deja de llevar ahí.
+
+⚠️ **El grupo se llama `'Planificación'`, no "Planeamiento"** (`nav-proyecto.ts:123`, slug `planificacion`). No crear un grupo nuevo ni renombrarlo.
+
+**Una sola fuente alimenta los tres paneles.** `NAV_PROYECTO` se reparte así: el panel derecho toma todos los grupos menos "Proyecto" (`WorkspaceShell.tsx:291`), el izquierdo toma el grupo "Proyecto" cuando hay servicio abierto (`:204`), y Mi entorno usa los mismos ítems vía `clavesConRutaEntorno()` / `CHIPS_ACCESO_RAPIDO`. **Mover el ítem de grupo cambia en qué panel aparece** — comprobar los tres después del cambio, y coordinar con el Agente D, que agrega `'curva-s'` al mismo grupo.
 
 ### C1. Mover el Dashboard dentro de `(workspace)`
 
@@ -308,6 +378,7 @@ Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 ## Checklist de implementación — Agente C
 
 - [ ] C0 · Confirmado que no hace falta ninguna migración (o consultado a Victor si falta una columna)
+- [ ] C0b · Chip de Dashboard corregido (apuntaba al detalle del proyecto) y movido al grupo `'Planificación'`, verificado en los tres paneles
 - [ ] C1 · Dashboard movido a `(workspace)`, URL intacta, sin colisión de rutas, enlaces revisados
 - [ ] C2 · Estructura de página con el orden acordado, sin `max-w-*`, espaciado de una sola medida por bloque
 - [ ] C3 · Fila única de filtros arriba, `<select>` nativos con label, opciones dinámicas, scopean todo lo de abajo
@@ -329,6 +400,7 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Dashboard Fase 3 �
 
 | # | Ítem | Resultado esperado | Estado | Evidencia |
 |---|---|---|---|---|
+| 0 | Chip de Dashboard | Está en el grupo Planificación, lleva a `/proyectos/[id]/dashboard` (no al detalle), y aparece en los tres paneles: derecho, central (Mi entorno) e izquierdo con un servicio abierto | Pendiente | |
 | 1 | Abrir el Dashboard de PS-0004 | Aparece dentro del shell (nav izquierda y panel derecho), misma URL que antes | Pendiente | |
 | 2 | Fila de KPI | BAC, PV, EV, AC, SPI, CPI y % avance físico con valores reales y su línea de contexto | Pendiente | |
 | 3 | SPI y CPI contra cálculo a mano | Coinciden con el valor calculado manualmente para una partida | Pendiente | |

@@ -68,16 +68,31 @@ Una pantalla nueva que muestre la evolución acumulada de **PV, EV y AC** a lo l
 
 ## Tareas — Agente D
 
-### D0. Decidir dónde vive el chip (confirmar con Victor antes de implementar)
+### D0. Dónde vive el chip — RESUELTO por Victor (2026-09-21)
 
-Dos alternativas reales en el código actual:
+**El chip de Curva S va en el grupo de Planificación**, junto a Cronograma, Plan Maestro y PR, y aparece en los tres paneles: derecho (grupos del servicio), central (entorno de usuario) e izquierdo (bajo el apartado del servicio abierto).
 
-- **(a)** Ruta de primer nivel dentro del shell, como ya lo son `(workspace)/plan-maestro` y `(workspace)/cronograma`, con selector de servicio propio.
-- **(b)** Ruta por proyecto, `(workspace)/proyectos/[id]/curva-s`, junto a `dp`, `pr` y `checklist`.
+**Hallazgo que simplifica esto — leer antes de tocar navegación:**
 
-**Recomendación del plan: (b)**, porque la Curva S siempre es de un servicio concreto y así hereda el contexto del proyecto sin un selector extra. El chip se agrega en el mismo lugar donde hoy aparecen los accesos del proyecto.
+`src/lib/config/nav-proyecto.ts` es **una sola fuente de verdad que alimenta los tres paneles**. No hay que registrar el chip en tres lugares:
 
-⚠️ Victor confirma **(a) o (b)** y el **nombre visible del chip** antes de que el agente escriba código de navegación. No asumir.
+- **Panel derecho** → `NAV_PROYECTO.filter(g => g.titulo !== TITULO_GRUPO_PROYECTO)` (`WorkspaceShell.tsx:291`): todos los grupos menos "Proyecto", Planificación incluida.
+- **Panel izquierdo** → el grupo `TITULO_GRUPO_PROYECTO`, visible cuando hay `proyectoId` (`WorkspaceShell.tsx:204`).
+- **Panel central (Mi entorno)** → los mismos ítems, vía `clavesConRutaEntorno()` y `CHIPS_ACCESO_RAPIDO`.
+
+**Agregar un ítem al grupo `'Planificación'` de `NAV_PROYECTO` lo hace aparecer donde corresponde, sin tocar los tres paneles por separado.** Cualquier intento de registrarlo tres veces es un error.
+
+⚠️ **El grupo se llama `'Planificación'`, no "Planeamiento".** Es el título literal en `nav-proyecto.ts:123`, con slug `planificacion`. **No crear un grupo nuevo ni renombrar el existente** — se usa el que ya está.
+
+Definición del ítem, siguiendo el patrón de sus vecinos:
+
+- Grupo: `'Planificación'`, color heredado `COLOR_PLANIFICACION` (`bg-accent-secondary/15 text-accent-secondary`). **No inventar color.**
+- `clave`: `'curva-s'`.
+- `etiqueta`: **"Curva S"** salvo que Victor prefiera otra.
+- `icono`: uno de `lucide-react` coherente con el grupo (`TrendingUp` o `LineChart`); los vecinos usan `ChartGantt` y `CalendarRange`.
+- `ruta`: por proyecto, igual que PR — `(id) => /proyectos/${id}/curva-s`.
+
+**Decidir explícitamente y dejarlo escrito**: si el chip debe funcionar **sin servicio elegido** (como Plan Maestro, que trae su propio selector) o **exigir servicio** (como Cronograma). El caso de Plan Maestro está resuelto en `hrefItemPanel()` (`nav-proyecto.ts:345`) tras un bug que reportó Victor el 21-sep: sin ese caso especial el link nunca se activaba fuera de un servicio. **Recomendación: exigir servicio**, porque la curva siempre es de un servicio concreto — pero entonces el ítem no debe aparecer habilitado sin `proyectoId`.
 
 ### D1. Función de serie temporal (migración `070`)
 
@@ -157,6 +172,37 @@ Validados contra el fondo real del proyecto (`--color-bg-base` `#05070d`): pasan
 | **EV** — valor ganado | `#199e70` | aqua |
 
 Mapeo **canónico y fijo**, el mismo en el Dashboard y aquí. Nunca se reasigna ni se cicla. Los colores de estado (`emerald`/`rose`/`amber`, `design.md` §4.1.1) **no** se usan como color de serie.
+
+#### Anatomía del gráfico — qué lleva, pieza por pieza
+
+```
+  US$ ▲
+      │                                          ╌╌╌╌ PV  ← etiqueta directa
+      │                              ╌╌╌╌╌╌╌╌╌╌╌╱
+      │                    ╌╌╌╌╌╌╌╌╌╱    ┊
+      │          ╌╌╌╌╌╌╌╌╱      ────      ┊ ← línea de corte (hoy)
+      │   ╌╌╌╌╌╱     ────────            ┊
+      │ ╌╌╱  ─────────  ·······          ┊
+      │ ╌─────  ········                 ┊
+      │ ····                             ┊
+      └──────────────────────────────────┴──────────────▶  fechas
+                                      corte
+      ■ PV (plan)   ■ EV (ganado)   ■ AC (real)     ← leyenda
+```
+
+| Pieza | Especificación |
+|---|---|
+| **Leyenda** | **Siempre presente** (son 3 series). Arriba o al pie, alineada a la izquierda. Espejo de la marca: trazo de línea, no cuadro relleno |
+| **Etiqueta directa** | El nombre de cada serie **al final de su línea**, para no tener que ir y volver a la leyenda. Identidad nunca solo por color |
+| **Línea de corte** | **Línea vertical punteada** en la fecha de corte, con etiqueta legible (`corte 21-09-2026`). Es la pieza que da sentido a todo el gráfico: separa lo ejecutado de lo que falta |
+| **Fin de las curvas reales** | EV y AC **terminan en el corte**. PV continúa hasta el fin del plan. El hueco entre ambos *es* el mensaje |
+| **Eje X** | Fechas, con marcas legibles según granularidad (semana por defecto) |
+| **Eje Y** | **Uno solo**, dinero acumulado en USD. Rótulo con la unidad |
+| **Crosshair** | Línea vertical que sigue al puntero y **se ancla a la fecha más cercana** |
+| **Tooltip** | **Uno solo, con las tres series** a esa fecha. Valor en primer plano, nombre de serie secundario |
+| **Marcadores** | En los puntos de dato, ≥ 8px, con área sensible mayor que la marca pintada |
+| **Rejilla y ejes** | Recesivos — están para orientar, no para competir con las curvas |
+| **Líneas** | 2px. Sin sombras, sin degradados, sin relleno decorativo bajo la curva |
 
 #### Reglas no negociables
 
@@ -266,7 +312,8 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Curva S Fase 3 —
 
 | # | Ítem | Resultado esperado | Estado | Evidencia |
 |---|---|---|---|---|
-| 1 | Chip de Curva S | Aparece donde se acordó en D0 y abre la pantalla dentro del shell | Pendiente | |
+| 1 | Chip de Curva S | Está en el grupo Planificación junto a Cronograma/Plan Maestro/PR/Dashboard, y aparece en los tres paneles: derecho, central (Mi entorno) e izquierdo con un servicio abierto | Pendiente | |
+| 1b | Chip sin servicio elegido | Se comporta como se decidió en D0 (habilitado con selector propio, o deshabilitado con tooltip) — nunca un link muerto | Pendiente | |
 | 2 | Curva de PS-0004 | Se dibujan las tres series con datos reales | Pendiente | |
 | 3 | Cuadre del AC | Último punto de AC = `Σ pr_partidas.costo_real_acum` del PR, con los dos números anotados | Pendiente | |
 | 4 | Cuadre del EV | Último punto de EV = EV total de `evm.ts`, con los dos números anotados | Pendiente | |

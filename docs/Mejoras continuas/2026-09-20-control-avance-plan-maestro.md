@@ -208,7 +208,7 @@ Causa: `position: sticky` combinado con un alto forzado en dos `<tr>` apiladas e
 **Estado del sub-lote 1:**
 - ✅ Código: 100% implementado y testeado en local.
 - ✅ Documentación: design.md v1.2.4 lista como sistema oficial.
-- ⏳ Verificación en vivo de Victor: pendiente. Ítems críticos a confirmar:
+- ✅ Verificación en vivo de Victor: completada (2026-09-21). Ítems confirmados:
   - Ancho de página llena el panel central (sin `max-w-*`).
   - Espaciado entre encabezado y tabla es fijo (`mb-2` en cada bloque, sin `gap` sumado).
   - Filtros en fila 2 permanecen visible al desplazar (sticky en `<th>`, no en `<tr>`).
@@ -217,8 +217,11 @@ Causa: `position: sticky` combinado con un alto forzado en dos `<tr>` apiladas e
 
 **Status:**
 - Sub-lote 1 completo en código/docs.
-- Migraciones SQL: falta aplicar 041-044 en Supabase (Victor debe hacerlo o indicar si ya se aplicaron).
-- Siguiente paso: Victor verifica en navegador con ventana en varios tamaños, confirma Punch List, y toca Go/No-Go para pasar a Sub-lote 2 (pertenencia usuario por servicio/proyecto).
+- Migraciones SQL 041-044 aplicadas en Supabase por Victor (2026-09-21).
+
+## Resultados
+
+**CERRADO 100%** (2026-09-21). Código, documentación y verificación visual en vivo completados. Migraciones 041-044 aplicadas en Supabase.
 
 ## Mejoras a flujos
 

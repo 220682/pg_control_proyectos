@@ -31,7 +31,9 @@ Mismo comportamiento atómico que ya tenía (todo en una transacción, revierte 
 
 - ✅ Commit `56f1abd` → pusheado a `origin/main` (`py_control_proyectos_web`), incluido en el deploy
 - ✅ Migración `050_fix_reemplazar_dp.sql` aplicada en Supabase por Victor (2026-09-21)
-- ⏳ Pendiente: verificar en vivo que el reemplazo de DP funciona correctamente (sin duplicados, cronograma vinculado se reconstruye bien) — no confirmado todavía con una prueba directa de reemplazo
+- ✅ Verificado en vivo por Victor (2026-09-21): el reemplazo de DP funciona correctamente
+
+**CERRADO 100%.**
 
 ## Semilla de catálogo — Presupuesto de prueba 01 (mismo día)
 

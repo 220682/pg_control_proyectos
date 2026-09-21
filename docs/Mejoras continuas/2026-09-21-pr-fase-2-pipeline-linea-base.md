@@ -375,7 +375,7 @@ reemplazar_dp(uuid,numeric,numeric,numeric,text,text,uuid,jsonb,jsonb,text[],jso
 
 **Quién más las referencia hoy:** nadie. `pg_get_functiondef('reemplazar_dp'::regproc)` falla con "more than one function named reemplazar_dp" por la ambigüedad — cualquier código nuevo que intente resolver la función por nombre sin firma explícita rompe con este mismo error.
 
-**Acción sugerida (no ejecutada):** un `drop function` explícito de las 4 firmas viejas, en su propia migración revisada por Victor.
+**Acción tomada:** eliminadas con `db/064_eliminar_reemplazar_dp_huerfanas.sql`, autorizado explícitamente por Victor (2026-09-21). Verificado después: `pg_get_functiondef('reemplazar_dp'::regproc)` resuelve sin ambigüedad y solo queda la firma de 13 parámetros.
 
 ### 2. Duplicación entre `src/lib/pr/evm.ts` y `src/lib/dashboard/dashboard.ts`
 

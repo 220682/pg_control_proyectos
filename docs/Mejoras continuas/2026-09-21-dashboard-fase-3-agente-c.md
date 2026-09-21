@@ -161,7 +161,45 @@ El Dashboard real vive en `/proyectos/[id]/dashboard` y **no tiene chip que llev
 
 ⚠️ **El grupo se llama `'Planificación'`, no "Planeamiento"** (`nav-proyecto.ts:123`, slug `planificacion`). No crear un grupo nuevo ni renombrarlo.
 
-**Una sola fuente alimenta los tres paneles.** `NAV_PROYECTO` se reparte así: el panel derecho toma todos los grupos menos "Proyecto" (`WorkspaceShell.tsx:291`), el izquierdo toma el grupo "Proyecto" cuando hay servicio abierto (`:204`), y Mi entorno usa los mismos ítems vía `clavesConRutaEntorno()` / `CHIPS_ACCESO_RAPIDO`. **Mover el ítem de grupo cambia en qué panel aparece** — comprobar los tres después del cambio, y coordinar con el Agente D, que agrega `'curva-s'` al mismo grupo.
+**Una sola fuente alimenta los tres paneles.** `NAV_PROYECTO` se reparte así: el panel derecho toma todos los grupos menos "Proyecto" (`WorkspaceShell.tsx:291`), el izquierdo toma el grupo "Proyecto" cuando hay servicio abierto (`:204`), y Mi entorno usa los mismos ítems vía `clavesConRutaEntorno()` / `CHIPS_ACCESO_RAPIDO`.
+
+#### El chip tiene que estar también en el panel izquierdo — y ya existe el mecanismo
+
+Decisión de Victor (2026-09-21): **el panel izquierdo hoy está casi muerto y se implementará más adelante, pero los dos chips se agregan ahí igual**, desde ahora.
+
+Aparenta un conflicto: el panel izquierdo muestra el grupo "Proyecto", y el chip se está moviendo a "Planificación". **No lo es — ya hay un precedente funcionando en el código**, y hay que copiarlo en vez de inventar algo:
+
+```ts
+// WorkspaceShell.tsx:405 — el ítem 'pr' VIVE en el grupo 'Planificación',
+// pero se inyecta en el panel izquierdo justo después de 'dp'
+const itemPr = encontrarItemNavProyecto('pr');
+const itemsGrupoProyecto = (() => {
+  if (!grupoProyecto) return [];
+  if (!itemPr) return grupoProyecto.items;
+  const indiceDp = grupoProyecto.items.findIndex((item) => item.clave === 'dp');
+  const items = [...grupoProyecto.items];
+  items.splice(indiceDp + 1, 0, itemPr);
+  return items;
+})();
+```
+
+O sea: **el panel izquierdo no está limitado al grupo "Proyecto"**. El PR ya se trae desde Planificación con `encontrarItemNavProyecto()` + `splice`. Dashboard y Curva S siguen exactamente ese camino:
+
+- **Definición única** en el grupo `'Planificación'` → panel derecho y Mi entorno la toman solos.
+- **Inyección en el panel izquierdo** con el mismo patrón, en el orden de la cadena de control: `… → DP → PR → Dashboard → Curva S`.
+- **Nunca duplicar la definición del ítem** para que aparezca en dos paneles. Una definición, dos lugares de consumo.
+
+⚠️ **Detalle que queda obsoleto al corregir la ruta** (`WorkspaceShell.tsx:213`):
+
+```ts
+const activo = item.clave === 'dashboard' ? pathname === href : pathname.startsWith(href);
+```
+
+Esa excepción existe porque hoy la ruta del Dashboard es `/proyectos/[id]` — con `startsWith` se marcaría activo en **todas** las subrutas del proyecto. Al apuntar a `/proyectos/[id]/dashboard`, la excepción deja de hacer falta. **Revisarla y reportarla en el informe de limpieza**, no dejarla arrastrada sin motivo.
+
+**El panel izquierdo no se rediseña en esta fase** — solo se le agregan los dos chips. Si el agente ve algo más que mejorar ahí, lo **reporta**, no lo toca.
+
+Coordinar con el Agente D, que agrega `'curva-s'` al mismo grupo y se inyecta en el mismo lugar: **los dos tocan `WorkspaceShell.tsx` y `nav-proyecto.ts`** — ver "Coordinación".
 
 ### C1. Mover el Dashboard dentro de `(workspace)`
 
@@ -440,6 +478,20 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Dashboard Fase 3 �
 | **Migraciones** | ninguna (ver C0) | `07x` si hace falta |
 
 **Compartido y fijo para los dos:** la paleta PV azul / AC naranja / EV aqua, el rótulo de costo directo en USD, y el patrón "Pendiente" cuando no hay Plan Maestro aprobado. Si uno de los dos necesita cambiarlo, se acuerda con Victor y se escribe en los dos archivos.
+
+### ⚠️ Punto de choque: los dos tocan la navegación
+
+Los dos agentes agregan un chip al grupo `'Planificación'` y lo inyectan en el panel izquierdo. Eso significa que **los dos modifican los mismos dos archivos**:
+
+- `src/lib/config/nav-proyecto.ts` (el ítem nuevo en el array del grupo)
+- `src/components/ui/WorkspaceShell.tsx` (la inyección en `itemsGrupoProyecto`)
+
+**Cómo se maneja, sin que ninguno espere al otro:**
+
+1. **Cada agente agrega solo su propio chip.** El Agente C no agrega el de Curva S ni al revés — si lo hiciera, el chip apuntaría a una ruta que todavía no existe.
+2. **Conflicto de merge esperado y aceptado.** Es trivial: dos ítems agregados al mismo array. **El segundo en mergear lo resuelve conservando los dos chips**, no eligiendo uno.
+3. **Ninguno reformatea, reordena ni "limpia" esos dos archivos.** Cualquier cambio cosmético convierte un conflicto de dos líneas en uno de doscientas. Si un agente ve algo que mejorar ahí, lo **reporta en su informe de limpieza**, no lo toca.
+4. **El orden final en el panel izquierdo es `… → DP → PR → Dashboard → Curva S`.** Quien resuelva el conflicto deja ese orden.
 
 **Prohibido para los dos:** `src/lib/pr/evm.ts`, el motor de RDT del Agente A, y la pantalla del PR.
 

@@ -94,6 +94,31 @@ Definición del ítem, siguiendo el patrón de sus vecinos:
 
 **Decidir explícitamente y dejarlo escrito**: si el chip debe funcionar **sin servicio elegido** (como Plan Maestro, que trae su propio selector) o **exigir servicio** (como Cronograma). El caso de Plan Maestro está resuelto en `hrefItemPanel()` (`nav-proyecto.ts:345`) tras un bug que reportó Victor el 21-sep: sin ese caso especial el link nunca se activaba fuera de un servicio. **Recomendación: exigir servicio**, porque la curva siempre es de un servicio concreto — pero entonces el ítem no debe aparecer habilitado sin `proyectoId`.
 
+#### También va en el panel izquierdo — el mecanismo ya existe
+
+Decisión de Victor (2026-09-21): **el panel izquierdo está casi muerto y se implementará más adelante, pero los dos chips se agregan ahí igual**, desde ahora.
+
+Aparenta un conflicto (el panel izquierdo muestra el grupo "Proyecto" y el chip vive en "Planificación"), pero **ya hay un precedente funcionando**: el ítem `'pr'` vive en Planificación y se inyecta en el panel izquierdo después de `'dp'`.
+
+```ts
+// WorkspaceShell.tsx:405 — copiar este patrón, no inventar otro
+const itemPr = encontrarItemNavProyecto('pr');
+const itemsGrupoProyecto = (() => {
+  if (!grupoProyecto) return [];
+  if (!itemPr) return grupoProyecto.items;
+  const indiceDp = grupoProyecto.items.findIndex((item) => item.clave === 'dp');
+  const items = [...grupoProyecto.items];
+  items.splice(indiceDp + 1, 0, itemPr);
+  return items;
+})();
+```
+
+- **Definición única** en el grupo `'Planificación'` → panel derecho y Mi entorno la toman solos.
+- **Inyección en el panel izquierdo** con el mismo patrón, en el orden de la cadena: `… → DP → PR → Dashboard → Curva S`.
+- **Nunca duplicar la definición** del ítem para que salga en dos paneles.
+
+**El panel izquierdo no se rediseña en esta fase** — solo se le agrega el chip. Si el agente ve algo más que mejorar ahí, lo **reporta**, no lo toca.
+
 ### D1. Función de serie temporal (migración `070`)
 
 `db/070_curva_s_serie.sql` — función que devuelve la serie de un proyecto:
@@ -348,7 +373,21 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Curva S Fase 3 —
 
 **Compartido y fijo para los dos:** la paleta PV azul / AC naranja / EV aqua, el rótulo de costo directo en USD, y el patrón "Pendiente" cuando no hay Plan Maestro aprobado. Si uno necesita cambiarlo, se acuerda con Victor y se escribe en los dos archivos.
 
-**Cómo trabajan en paralelo sin bloquearse:** pantallas distintas, módulos distintos, flujos distintos, rangos de migración distintos. Ninguno espera al otro.
+### ⚠️ Punto de choque: los dos tocan la navegación
+
+Los dos agentes agregan un chip al grupo `'Planificación'` y lo inyectan en el panel izquierdo, así que **los dos modifican los mismos dos archivos**:
+
+- `src/lib/config/nav-proyecto.ts` (el ítem nuevo en el array del grupo)
+- `src/components/ui/WorkspaceShell.tsx` (la inyección en `itemsGrupoProyecto`)
+
+**Cómo se maneja, sin que ninguno espere al otro:**
+
+1. **Cada agente agrega solo su propio chip.** El Agente D no agrega el de Dashboard ni al revés — apuntaría a una pantalla que todavía no existe.
+2. **Conflicto de merge esperado y aceptado.** Es trivial: dos ítems en el mismo array. **El segundo en mergear lo resuelve conservando los dos chips**, no eligiendo uno.
+3. **Ninguno reformatea, reordena ni "limpia" esos dos archivos.** Un cambio cosmético convierte un conflicto de dos líneas en uno de doscientas. Lo que haya que mejorar ahí se **reporta**, no se toca.
+4. **El orden final en el panel izquierdo es `… → DP → PR → Dashboard → Curva S`.** Quien resuelva el conflicto deja ese orden.
+
+**Cómo trabajan en paralelo sin bloquearse:** pantallas distintas, módulos distintos, flujos distintos, rangos de migración distintos. Lo único compartido es la navegación, y está resuelto arriba. Ninguno espera al otro.
 
 **Prohibido para los dos:** `src/lib/pr/evm.ts`, el motor de RDT del Agente A, y la pantalla del PR.
 

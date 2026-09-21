@@ -26,6 +26,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Modificar checklist del proyecto | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Ver apartado "Proyectos" (panel izquierdo) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (lectura) |
 | Ver Recursos (catálogo de empresa: Personal, Equipos) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Gestionar catálogo de causas CNC (Recursos > Causas CNC) — único catálogo de Recursos con alta/baja, los demás son de solo lectura | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Importar DP (Datos del Proyecto) | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Subir documento del proyecto (catálogo AL_INICIO/CIERRE) | ✓ | — | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | Editar perfil extendido (propio) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | No |
@@ -43,7 +44,8 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Crear RDT estructurado ("Crear RDTs", PROM-GP-002) | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Validar / Rechazar RDT | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
-| Eliminar RDT (borrado definitivo) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar RDT (borrado definitivo) — cubre tanto "Subir RDTs" (archivo) como "Crear RDTs" (parte estructurado, desde el plan PR Fase 1: dispara recálculo del PR) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Rechazar un RDT ya VALIDADO (desde el plan PR Fase 1: destraba para corregir, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Ver RDTs (listado / status / consolidado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | ✓ | — | ✓ | ✓ | No (lectura) |
 
 ### Planificación

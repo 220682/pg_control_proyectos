@@ -1,43 +1,46 @@
 # EVM Fase 0 — Catálogo único de cargos/equipos (2026-09-20/21)
 
+**Corrección (2026-09-21):** esta versión reemplaza una anterior con datos incorrectos (tabla `cargo_equipo_tarifa` inventada, sin verificar contra el código real). Contenido corregido contra el commit real `0dcdbd1`.
+
 ## Contexto
 
-Preparación de datos para EVM: consolidar cargos y equipos en un catálogo único por servicio, con tarifa base que se congela al momento de validar cada RDT. Elimina inconsistencias de tarificación entre RDTs del mismo período.
+Prerrequisito para los indicadores EVM del Plan Maestro (AC/CV/CPI/SPI): antes de valorizar HH/HM reales hace falta que exista **una sola base de datos de cargos y equipos**, no un catálogo desincronizado del presupuesto de cada servicio.
 
-## Implementación
+El catálogo maestro ya existía (`recursos_cargos` / `recursos_equipos`, `db/025_recursos_rdt.sql`) — es de EMPRESA, no por proyecto, y **no tiene columna de tarifa** (solo `descripcion`, `unidad`, `categoria`). Lo que faltaba era el mecanismo de conciliación: qué pasa cuando un presupuesto importado trae un cargo/equipo con un nombre que no coincide exactamente con el catálogo.
 
-### Migración `db/046_cargo_equipo_tarifa.sql`
+## Implementación (commit `0dcdbd1`)
+
+### Migración `db/046_recursos_equivalencias.sql`
 ✅ **Aplicada en Supabase**
 
-- Tabla `cargo_equipo_tarifa(id, servicio_id, tipo, nombre, tarifa_base, moneda, vigente_desde, vigente_hasta)`
-- Semilla: exportación de cargos/equipos existentes en RDTs del 2026, agrupados por servicio
-- Índices: `(servicio_id, tipo, vigente_desde)` para búsquedas rápidas por período
+- Dos tablas nuevas (cargos y equipos por separado, no polimórfica): `recursos_cargo_equivalencias` y `recursos_equipo_equivalencias`
+- Cada una: `proyecto_id`, `descripcion_presupuesto`, `cargo_id`/`equipo_id` (FK al catálogo maestro), `creado_por_id`, `creado_en`
+- `unique (proyecto_id, descripcion_presupuesto)` — la equivalencia es válida solo dentro de ese proyecto (ej. "AYUDANTE" del presupuesto = "AYUDANTE TOPOGRAFO" del catálogo, pero solo para ese servicio)
+- RLS: lectura abierta a autenticados; escritura solo desde código con service role (mismo criterio que `025_recursos_rdt.sql`)
 
-### API
-✅ **Completado**
+### Lógica de detección — `src/lib/dp/equivalencias.ts`
+- Detecta cargos/equipos del presupuesto que no calzan contra el catálogo
+- Normaliza mayúsculas, punto final, espacios y guiones (Excel autocorrige "-" a en-dash) para evitar falsos positivos
+- Excluye herramientas con unidad `%MO` (no son equipo asignable, son un porcentaje sobre mano de obra)
 
-- `GET /api/servicios/[id]/cargo-equipo-tarifa` — listar catálogo para un servicio
-- `PATCH /api/servicios/[id]/cargo-equipo-tarifa` — (admin) actualizar tarifa o vigencia
+### Resolución — `src/lib/dp/aplicar-equivalencias.ts` + `ResolverRecursosImportacion.tsx`
+- Al importar un DP, si hay recursos sin conciliar, la API responde `409` con `pendienteConciliacion`
+- Modal `ResolverRecursosImportacion`: por cada cargo/equipo no resuelto, el admin/jefe de proyectos elige:
+  - **Crear nuevo** en el catálogo maestro, o
+  - **Es equivalente** (solo en este proyecto) a uno que ya existe con otro nombre
+- Nunca queda un recurso sin resolver ni duplicado silenciosamente
 
-### UI
-✅ **Completado**
-
-- Panel Admin > Servicios > Catálogo de cargos/equipos — ver/editar tarifa base por tipo
-- Integración en Crear RDT: al cargar personas/equipos, valida contra catálogo vigente
+### Hallazgos aparte (mismo commit, probando con "Ver como")
+- Mi entorno ocultaba completo los chips de acción sin permiso (Crear/Subir RDTs no existían en Logística/SSOMA) — ahora aparecen deshabilitados con tooltip, mismo criterio en los 8 grupos.
+- Chip de Plan Maestro no existía en Mi entorno; en el panel derecho no era clicable sin proyecto elegido pese a tener su propio selector.
 
 ## Verificación
 
-✅ **11/11 ítems Conforme**
-
-- Tabla creada con datos históricos
-- Búsquedas por servicio y vigencia correctas
-- API responde con tarifas vigentes
-- UI carga y permite ajustes
-- No rompe RDTs existentes (tarifa base es referencia, no retroactiva)
+✅ Compilación: tsc/eslint limpios, 437 tests, build limpio.
 
 ## Resultados
 
-**CERRADO 100%**
+**CERRADO 100%** (según checklist "EVM Plan Maestro — Fase 0" en Punch List, 11/11 Conforme).
 
 Catálogo único listo para Fase 1 (congelar tarifa al validar RDT).
 

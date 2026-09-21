@@ -1,52 +1,43 @@
 # EVM Fase 1 — Congelar tarifa al validar RDT (2026-09-21)
 
+**Corrección (2026-09-21):** esta versión reemplaza una anterior con datos incorrectos (tabla `rdt_partes_tarifa_congelada` y archivo `047_rdt_partes_tarifa_congelada.sql` inventados, sin verificar contra el código real). Contenido corregido contra el commit real `523f11a`.
+
 ## Contexto
 
-Extensión de Fase 0: al validar un RDT, el sistema captura la tarifa base vigente (de `cargo_equipo_tarifa`) y la guarda en `rdt_partes_tarifa_congelada`, para que el cálculo de AC (Actual Cost) en el futuro use la tarifa al momento de validación, no la tarifa actual (que puede cambiar).
+Extensión de Fase 0. Mismo precedente que `plan_maestro_partidas` (`037_plan_maestro.sql`), que ya congela `precio_unitario` para no perder la línea base cuando el DP cambia: `reemplazar_dp()` borra y recrea `dp_recursos`, así que sin congelar, reimportar un presupuesto reescribiría hacia atrás el costo real de RDT ya validados.
 
-Esto asegura que EV (Earned Value) y AC (Actual Cost) usen la misma tarifa base en cada RDT.
+Congela la tarifa (S/. o USD por HH / por HM, según moneda del DP) directamente sobre el RDT al momento de Validarlo — para que EV y AC usen la tarifa vigente en ese momento, no la tarifa actual del DP (que puede cambiar después).
 
-## Implementación
+## Implementación (commit `523f11a`)
 
-### Migración `db/047_rdt_partes_tarifa_congelada.sql`
+### Migración `db/047_rdt_tarifas.sql`
 ✅ **Aplicada en Supabase**
 
-- Tabla `rdt_partes_tarifa_congelada(rdt_parte_id, cargo_equipo_tarifa_id, tarifa_congelada, moneda, congelada_en)`
-- Se crea un registro por cada persona/equipo del RDT al validar
-- Índice: `rdt_parte_id` para búsquedas rápidas
+No crea tabla nueva — agrega columnas a tablas ya existentes:
+- `rdt_tareo.tarifa_hh` (numeric) — la tarifa es del cargo de esa persona en ese parte, constante entre sus actividades; el costo por celda sale de `rdt_tareo_horas.horas * rdt_tareo.tarifa_hh`
+- `rdt_equipos_parte.tarifa_hm` (numeric) — `rdt_equipos_parte` ya tenía `horas` directo en la fila, la tarifa va ahí mismo
 
-### Lógica en API
-✅ **Completado**
+**Nota de diseño:** ambas columnas quedan `NULL` para RDT ya validados antes de esta migración (no hay forma de reconstruir la tarifa retroactivamente) y para cargos de mano de obra indirecta (MOI, `dp_moi`), que nunca se valorizan por diseño — `NULL` en `tarifa_hh` no siempre significa dato faltante.
 
-- `PATCH /api/rdts/partes/[id]` con acción VALIDAR:
-  1. Consulta tarifa vigente de `cargo_equipo_tarifa` para cada persona/equipo del RDT
-  2. Verifica que exista tarifa vigente (si no → error, requiere registrar cargo/equipo antes)
-  3. Congela tarifa en `rdt_partes_tarifa_congelada`
-  4. Cambia estado a VALIDADO
-  5. Registra timestamp de congelación
+### Lógica en API (`src/lib/dp/tarifas-servidor.ts`, `src/lib/dp/tarifas.ts`)
+- `src/app/api/proyectos/[id]/dp/route.ts` y `src/app/api/rdts/partes/[id]/route.ts` — al validar RDT, resuelve la tarifa vigente de `dp_recursos` para cada cargo/equipo del parte y la congela en las columnas nuevas
 
 ### Tests
-✅ **Completado**
-
-- 3 tests nuevos: validación con tarifa vigente, error si sin tarifa, congelación correcta
+✅ `src/lib/dp/tarifas.test.ts` — 120 líneas de tests nuevos
 
 ## Verificación
 
-✅ **5/5 ítems**
-- 3/3 Conforme: validación, congelación, captura de timestamp
-- 2/2 Sin verificar (por diseño): cargo sin tarifa, DP con precio distinto al catálogo (casos especiales, requieren setup)
-
-**Nota sobre ítems sin verificar:** requieren un caso específico (cargo registrado sin tarifa en BD, o DP con precio distinto al catálogo vigente). Se pueden probar en futuro si se generan esos casos a propósito.
+✅ Según checklist "EVM Plan Maestro — Fase 1" en Punch List: 5 ítems, 3 Conforme, 2 sin verificar (requieren caso armado a propósito: cargo/equipo sin tarifa en el DP, o DP con precio distinto al que traía antes).
 
 ## Resultados
 
-**CERRADO 100%**
+**CERRADO 100%** (confirmado por Victor, 2026-09-21).
 
-La cadena Fase 0 + Fase 1 asegura que cada RDT validado tenga tarifa congelada y sea rastreable para cálculos de EVM.
+La cadena Fase 0 + Fase 1 asegura que cada RDT validado tenga tarifa congelada y trazable para los cálculos de EVM (Fase 3 pendiente: EV/AC/CV/CPI/SPI/Curva S).
 
 ## Commits
 
-- **py_control_proyectos_web**: migración 047 + lógica de congelación + tests
+- **py_control_proyectos_web**: `523f11a` — `db/047_rdt_tarifas.sql` + lógica de congelación + tests
 
 ## Mejoras a flujos
 

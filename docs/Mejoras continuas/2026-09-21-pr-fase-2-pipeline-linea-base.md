@@ -1,13 +1,20 @@
 # PR enriquecido — Fase 2 (Agente B): línea base, planificado y derivados EVM
 
-**Estado (cierre de sesión, 2026-09-21):** PLAN completo, sin implementar. Trabaja en paralelo con [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) (Agente A).
+**Estado (2026-09-21):** PLAN APROBADO por Victor. Migración `052` corrida en Supabase. **Lista para que el Agente B arranque la implementación.** Trabaja en paralelo con [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) (Agente A).
 
-**Pendiente antes de arrancar:**
-1. Victor aprueba la Punch List de esta fase (15 ítems, tabla más abajo) — "PR Fase 2 — línea base, planificado y derivados EVM".
-2. Victor corre en Supabase la migración `db/052_pr_enriquecido.sql` (ya escrita en `py_control_proyectos_web`, contrato compartido con la Fase 1, idempotente).
-3. Coordinar con el Agente A el orden de migraciones: la `053` de la Fase 1 va antes que la `060` de esta fase (ver B1, "reimportar un DP borra el PR").
+**Ya resuelto, no volver a preguntar:**
+- Punch List de esta fase (15 ítems, tabla más abajo) — **aprobada por Victor.**
+- `db/052_pr_enriquecido.sql` — **corrida en Supabase por Victor.** El contrato del PR ya existe: `pr_partidas` y `proyecto_pr` tienen todas las columnas del Paso 0.
+- Credenciales de verificación en memoria (`cuentas-prueba.md`), reglas de negocio de costo/EVM (`reglas-costo-evm.md`), protocolo de verificación con Playwright (`protocolo-verificacion-agente.md`).
 
-**Ya resuelto esta sesión, no volver a preguntar:** credenciales de verificación guardadas en memoria (`cuentas-prueba.md`), reglas de negocio de costo/EVM confirmadas (memoria `reglas-costo-evm.md`), protocolo de verificación con Playwright definido (memoria `protocolo-verificacion-agente.md`).
+**Único punto que sigue pendiente de coordinar con el Agente A:** el orden de migraciones — la `053` de la Fase 1 va antes que la `060` de esta fase (ver B1, "reimportar un DP borra el PR").
+
+## Ejecución en la nube (decidido 2026-09-21)
+
+- **Cada agente trabaja en su propia rama** (no directo a `main`). Al llegar al 100% de su checklist de implementación, abre un **PR** para que Victor lo revise antes de mergear. Rama sugerida: `feat/pr-fase-2-linea-base-evm`.
+- **Las migraciones se corren solas, sin pausar a confirmar cada una** — excepción puntual autorizada por Victor solo para esta tarea (ver `mejoras-futuras.md`, sección "Acceso directo a Postgres/Supabase"). El agente en la nube tiene la cadena de conexión directa de Postgres configurada en su entorno (Victor la configura del lado de la plataforma; no viaja por chat ni se commitea).
+- Aun así, **cada migración queda documentada en su propio archivo `db/0NN_*.sql`, commiteada, y resumida en el PR** — la autonomía es sobre no pausar a pedir permiso, no sobre dejar de dejar rastro.
+- Al terminar, el agente entrega en el PR: el checklist de implementación (B1–B10) marcado, la Punch List de 15 ítems con el resultado de cada uno verificado con Playwright, y el informe de limpieza.
 
 ## Contexto
 

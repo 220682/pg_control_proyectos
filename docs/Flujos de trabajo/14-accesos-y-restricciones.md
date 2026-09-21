@@ -20,7 +20,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Acceso | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH | Requiere OT a cargo |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|---|
 | Adjudicar proyecto / crear programa / crear portafolio | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | No (crea la OT) |
-| Confirmar transición de estado del proyecto | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
+| Confirmar transición de estado del proyecto | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí ** |
 | Archivar / eliminar proyecto | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar contenedor (programa / portafolio) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Modificar checklist del proyecto | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
@@ -34,6 +34,8 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Simular otro usuario o rol ("Ver como") | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 
 `*` **Subir documento** no es un rol fijo: puede el administrador o **el rol responsable de ese documento específico**, según `catalogo_documentos.rol_responsable_id` (asignable a cualquiera de los 13 roles al dar de alta el tipo de documento). No es una fila de roles fijos como las demás.
+
+`**` **Confirmar transición de estado del proyecto**, desde PR Fase 2 (2026-09-21): el permiso de rol es el mismo de siempre, pero la transición `EN_PLANEACION` → `EJECUCION` específicamente tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)) — el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
 
 ### RDT (Supervisión operativa) — foco directo del Sub-lote 2
 

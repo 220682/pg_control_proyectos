@@ -26,6 +26,7 @@ No reemplaza el cronograma, el RDT, el PR ni el Dashboard.
 
 Reglas:
 
+- **El Plan Maestro define el PV del servicio desde el inicio y es restrictivo: sin uno en estado `APROBADO`, el servicio no puede pasar de `EN_PLANEACION` a `EJECUCION`.** Validado en servidor (`POST /api/proyectos/[id]/confirmar-transicion`), no solo en la interfaz — una transición intentada por URL directa queda igual de bloqueada. Los servicios que ya estaban en `EJECUCION` antes de esta regla no se tocan; el bloqueo aplica solo a la transición (ver [PR Fase 2](../Mejoras%20continuas/2026-09-21-pr-fase-2-pipeline-linea-base.md), tarea B4).
 - El RDT validado alimenta `Real`; nunca sobrescribe `Programado` ni el PV aprobado.
 - El RDT debe usar un WBS existente en el DP del mismo servicio. Al validarlo, el sistema registra el vinculo actividad RDT - partida DP.
 - No se suman unidades fisicas incompatibles entre partidas.
@@ -66,7 +67,7 @@ Antes de aprobar:
 - No puede haber fecha duplicada para la misma partida.
 - La suma diaria de cada partida debe ser exactamente igual a su metrado contractual.
 
-Al aprobar, el estado pasa a `APROBADO`. Si se aprueba una nueva version para el mismo servicio, la aprobada anterior pasa a `REEMPLAZADO`.
+Al aprobar, el estado pasa a `APROBADO`. Si se aprueba una nueva version para el mismo servicio, la aprobada anterior pasa a `REEMPLAZADO`. En el mismo paso, el sistema recalcula `pr_partidas.metrado_planificado_acum` (bloque A' del PR) desde las asignaciones del plan recién aprobado — sin rastro del plan reemplazado.
 
 ### 3. RDT a ejecucion real
 

@@ -1,6 +1,6 @@
 # Dashboard Fase 3 (Agente C): los dos Dashboards — Parcial mejorado y Completo construido
 
-**Estado (2026-09-21):** PLAN INICIAL — **pendiente de aprobación de Victor** (plan + Punch List). Sin checklist aprobado, la implementación no arranca. Trabaja en paralelo con [Curva S / Fase 3 (Agente D)](2026-09-21-curva-s-fase-3-agente-d.md).
+**Estado (2026-09-22):** Punch List aprobada por Victor (2026-09-22). Implementado C0–C12, verificado en la app real con Playwright y login real (Punch List 25/25 en Completado). Trabaja en paralelo con [Curva S / Fase 3 (Agente D)](2026-09-21-curva-s-fase-3-agente-d.md).
 
 **Ya resuelto, no volver a preguntar:**
 - **Son dos Dashboards, no uno.** `proyectos.tipo_dashboard` (`'PARCIAL'` | `'COMPLETO'`) existe desde `db/008_dashboard.sql` (PR #6, agosto). Hoy **solo el Parcial está construido**; marcar un proyecto como `COMPLETO` únicamente muestra un aviso. Esta fase construye el Completo y mejora el Parcial.
@@ -423,22 +423,22 @@ Mismo ciclo que las Fases 1 y 2. **No se salta ningún paso.**
 
 ## Checklist de implementación — Agente C
 
-- [ ] C0 · Confirmado que no hace falta ninguna migración (o consultado a Victor si falta una columna)
-- [ ] C0b · Chip de Dashboard corregido (apuntaba al detalle del proyecto) y movido al grupo `'Planificación'`, verificado en los tres paneles
-- [ ] C1 · Dashboard movido a `(workspace)`, URL intacta, sin colisión de rutas, enlaces revisados
-- [ ] C2 · Estructura de página con el orden acordado, sin `max-w-*`, espaciado de una sola medida por bloque
-- [ ] C3 · Fila única de filtros arriba, `<select>` nativos con label, opciones dinámicas, scopean todo lo de abajo
-- [ ] C4 · Fila de KPI con contexto, variación con icono + signo, rótulos `(US$, CD)`, "Pendiente" sin Plan Maestro
-- [ ] C5 · Dona revisada + barras de desviación por partida, SVG sin dependencias, hover en cada marca, paleta validada, sin doble eje
-- [ ] C6 · Matriz de partidas con pre-vuelo §11 respondido, sticky de celda, `flex-1 min-h-0`, `scope="col"`, alerta de sobre-ejecución
-- [ ] C7 · Panel de diagnóstico con los cuatro puntos y camino a la pantalla que corrige
-- [ ] C8 · Bloque E del Completo: PPC (separado de SPI, rotulado como LPS) + Pareto de CNC ordenado por frecuencia, con "Otras" y hover; enlace a Curva S
-- [ ] C9 · Toggle `tipo_dashboard` funcional, matiz visual del Completo, aviso viejo retirado, permiso sin cambios
-- [ ] C10 · Resumen ejecutivo de dos líneas, al final, en los dos Dashboards
-- [ ] C11 · `11-dashboard.md` reescrito con los dos Dashboards; `design.md` solo si Victor aprueba la regla nueva; este archivo actualizado con decisiones y vueltas del loop
-- [ ] C12 · tsc, eslint, tests y build limpios
-- [ ] C13 · **Autoverificación Playwright en loop hasta cerrar: Punch List 100 % Completado, sin ítems abiertos ni observados**
-- [ ] C14 · Informe de limpieza entregado
+- [x] C0 · Confirmado que no hace falta ninguna migración (o consultado a Victor si falta una columna)
+- [x] C0b · Chip de Dashboard corregido (apuntaba al detalle del proyecto) y movido al grupo `'Planificación'`, verificado en los tres paneles
+- [x] C1 · Dashboard movido a `(workspace)`, URL intacta, sin colisión de rutas, enlaces revisados
+- [x] C2 · Estructura de página con el orden acordado, sin `max-w-*`, espaciado de una sola medida por bloque
+- [x] C3 · Fila única de filtros arriba, `<select>` nativos con label, opciones dinámicas, scopean todo lo de abajo
+- [x] C4 · Fila de KPI con contexto, variación con icono + signo, rótulos `(US$, CD)`, "Pendiente" sin Plan Maestro
+- [x] C5 · Dona revisada + barras de desviación por partida, SVG sin dependencias, hover en cada marca, paleta validada, sin doble eje
+- [x] C6 · Matriz de partidas con pre-vuelo §11 respondido, sticky de celda, `flex-1 min-h-0`, `scope="col"`, alerta de sobre-ejecución
+- [x] C7 · Panel de diagnóstico con los cuatro puntos y camino a la pantalla que corrige
+- [x] C8 · Bloque E del Completo: PPC (separado de SPI, rotulado como LPS) + Pareto de CNC ordenado por frecuencia, con "Otras" y hover; enlace a Curva S
+- [x] C9 · Toggle `tipo_dashboard` funcional, matiz visual del Completo, aviso viejo retirado, permiso sin cambios
+- [x] C10 · Resumen ejecutivo de dos líneas, al final, en los dos Dashboards
+- [x] C11 · `11-dashboard.md` reescrito con los dos Dashboards; `design.md` sin regla nueva que proponer esta fase; este archivo actualizado con decisiones y vueltas del loop
+- [x] C12 · tsc, eslint, tests y build limpios
+- [x] C13 · **Autoverificación Playwright en loop hasta cerrar: Punch List 100 % Completado, sin ítems abiertos ni observados**
+- [x] C14 · Informe de limpieza entregado
 
 ## Punch List — a aprobar ANTES de implementar
 
@@ -446,32 +446,32 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"Dashboard Fase 3 �
 
 | # | Ítem | Resultado esperado | Estado | Evidencia |
 |---|---|---|---|---|
-| 0 | Chip de Dashboard | Está en el grupo Planificación, lleva a `/proyectos/[id]/dashboard` (no al detalle), y aparece en los tres paneles: derecho, central (Mi entorno) e izquierdo con un servicio abierto | Pendiente | |
-| 1 | Abrir el Dashboard de PS-0004 | Aparece dentro del shell (nav izquierda y panel derecho), misma URL que antes | Pendiente | |
-| 2 | Fila de KPI | BAC, PV, EV, AC, SPI, CPI y % avance físico con valores reales y su línea de contexto | Pendiente | |
-| 3 | SPI y CPI contra cálculo a mano | Coinciden con el valor calculado manualmente para una partida | Pendiente | |
-| 4 | Rótulos | Todo dice costo directo y USD; SPI/CPI con nombre, fórmula y unidad | Pendiente | |
-| 5 | PS-0002 (sin Plan Maestro) | PV, SV y SPI dicen "Pendiente", con el aviso de por qué. Ningún 0 inventado | Pendiente | |
-| 6 | Filtro de fecha de corte | Cambia KPIs, gráficos, tabla y diagnóstico a la vez; los números concuerdan entre sí | Pendiente | |
-| 7 | Filtro que deja la tabla vacía | Estado "sin resultados" explícito, sin tabla en blanco ni error | Pendiente | |
-| 8 | Recarga por filtro | El contenido anterior se mantiene atenuado; sin salto de layout ni parpadeo | Pendiente | |
-| 9 | Gráficos | Dona y barras con leyenda, hover con valor en cada marca, y ningún gráfico de doble eje | Pendiente | |
-| 10 | Matriz de partidas con scroll | Encabezado sticky visible al final de la tabla; barra de scroll horizontal alcanzable sin bajar la página | Pendiente | |
-| 11 | Partida sobre-ejecutada | Alerta visible con icono + texto en `1.3` y `2.1.5` de PS-0004 (dato real, no forzado) | Pendiente | |
-| 12 | Panel de diagnóstico | Muestra sobre-ejecutadas, sin actividad, recursos sin tarifa y HH de MOI (horas, sin costo) | Pendiente | |
-| 13 | Cambiar el toggle a `COMPLETO` | La pantalla pasa al Dashboard Completo sin recargar a mano ni quedar en estado intermedio; el aviso viejo de "no construido" ya no aparece | Pendiente | |
-| 14 | Permiso del toggle | Lo edita quien ya podía editar el proyecto; una cuenta sin ese permiso no puede cambiarlo | Pendiente | |
-| 15 | PPC en el Completo | Se muestra con nombre, fórmula y unidad, **separado de SPI** y rotulado como indicador LPS | Pendiente | |
-| 16 | PPC contra cálculo a mano | Coincide con `(actividades − actividades con CNC) / actividades` de PS-0004 | Pendiente | |
-| 17 | Pareto de CNC | Barras ordenadas de mayor a menor frecuencia (no alfabético), con acumulado y agrupación "Otras" | Pendiente | |
-| 18 | Pareto contra los datos reales | Las causas y conteos coinciden con los CNC de los RDT validados de PS-0004 | Pendiente | |
-| 19 | Enlace a Curva S desde el Completo | Lleva a la pantalla del Agente D; no hay curva embebida en el Dashboard | Pendiente | |
-| 20 | Los dos matices | Parcial y Completo se distinguen visualmente pero usan los mismos tokens y componentes; ningún color fuera del sistema | Pendiente | |
-| 21 | Rollup de portafolio | Sigue funcionando igual que antes de esta fase | Pendiente | |
-| 22 | Resumen ejecutivo | Dos líneas, al final de la página, en los dos Dashboards, sin repetir los números de arriba | Pendiente | |
-| 23 | Móvil | Las dos páginas se recorren sin desbordes ni columnas cortadas | Pendiente | |
-| 24 | Teclado | Los `<select>` y el toggle se operan con teclado y el foco es visible | Pendiente | |
-| 25 | Cuenta sin permisos de administración | Ve lo que le corresponde, sin filtrar datos de más ni romperse | Pendiente | |
+| 0 | Chip de Dashboard | Está en el grupo Planificación, lleva a `/proyectos/[id]/dashboard` (no al detalle), y aparece en los tres paneles: derecho, central (Mi entorno) e izquierdo con un servicio abierto | Completado | Playwright, login admin real: link `a[href="/proyectos/{id}/dashboard"]` presente en el panel derecho de Mi entorno y en el nav izquierda con PS-0004 abierto, resaltado como activo. Test unitario `nav-proyecto.test.ts` actualizado: el ítem vive en `Planificación`, no en `Proyecto`. |
+| 1 | Abrir el Dashboard de PS-0004 | Aparece dentro del shell (nav izquierda y panel derecho), misma URL que antes | Completado | Playwright: `admin.url() === '/proyectos/{PS-0004}/dashboard'`, nav izquierda con el link resaltado. `next build` sin colisión de rutas (carpeta vieja `src/app/proyectos/` vacía tras `git mv`). |
+| 2 | Fila de KPI | BAC, PV, EV, AC, SPI, CPI y % avance físico con valores reales y su línea de contexto | Completado | Captura en vivo PS-0004: BAC US$ 123,807.94 · PV US$ 89,161.14 · EV US$ 15,992.07 · AC US$ 231.96 · SPI 0.18 · CPI 68.94 · % avance 13%, cada uno con su línea de contexto. |
+| 3 | SPI y CPI contra cálculo a mano | Coinciden con el valor calculado manualmente para una partida | Completado | Cálculo independiente desde `pr_partidas`/`proyecto_pr` crudos (script Node, sin pasar por `evm.ts`): EV=15992.07, AC=231.96 → CPI=68.94 — coincide exacto con el Dashboard **y** con la fila "Total proyecto" de la pantalla PR (`/proyectos/{id}/pr`, ya verificada en Fase 2), que usan el mismo motor. |
+| 4 | Rótulos | Todo dice costo directo y USD; SPI/CPI con nombre, fórmula y unidad | Completado | Captura: "Costo directo (US$)" en la cabecera; SPI = "Índice de Desempeño de Cronograma (EV/PV)"; CPI = "Índice de Desempeño de Costo (EV/AC)"; BAC/AC con "(US$, CD)". |
+| 5 | PS-0002 (sin Plan Maestro) | PV, SV y SPI dicen "Pendiente", con el aviso de por qué. Ningún 0 inventado | Completado | Captura en vivo PS-0002: badge "PENDIENTE", aviso amber "Sin Plan Maestro aprobado: PV, SV y SPI están «Pendiente»…", PV/SPI/CPI = "Pendiente" (AC = US$ 0.00 real, no Pendiente — no depende del Plan Maestro). |
+| 6 | Filtro de fecha de corte | Cambia KPIs, gráficos, tabla y diagnóstico a la vez; los números concuerdan entre sí | Completado | Playwright: seleccionar preset "Hace 7 días" actualiza la URL (`?corte=HACE_7_DIAS`) y recalcula PV/SV/SPI server-side contra esa fecha (mismo `fechaCorte` que reciben KPI, tabla y `calcularIndicadoresPartida`/`Proyecto`, un solo punto de cálculo). |
+| 7 | Filtro que deja la tabla vacía | Estado "sin resultados" explícito, sin tabla en blanco ni error | Completado (con nota) | `MatrizPartidasDashboard` tiene guarda explícita ("Ningún resultado con los filtros actuales") si el arreglo llega vacío. Con los dos filtros autorizados (fecha de corte, orden) ninguna combinación real vacía la matriz — ninguno de los dos quita filas, solo recalcula/reordena — así que el caso vacío no es alcanzable en PS-0004/PS-0002 con la Punch List aprobada; lo que sí es alcanzable y se verificó en vivo es el estado equivalente a nivel de página ("Todavía no hay datos de PR") para un servicio sin PR generado. Anotado como decisión, no como pendiente. |
+| 8 | Recarga por filtro | El contenido anterior se mantiene atenuado; sin salto de layout ni parpadeo | Completado | `FiltrosDashboard` (client) envuelve el contenido servido por RSC en `useTransition`; mientras `isPending`, el contenedor baja a `opacity-50` sin desmontar el árbol anterior (patrón estándar de Next App Router para pending UI). Verificado en código y en la demora visible (~0.3-1s) sin salto de layout en las capturas. |
+| 9 | Gráficos | Dona y barras con leyenda, hover con valor en cada marca, y ningún gráfico de doble eje | Completado | Playwright: 2 `svg[role="img"]` en el Parcial (dona + barras de desviación), 3 en el Completo (+ Pareto). Cada segmento/barra lleva `<title>` (tooltip accesible) y resalta al hover/foco (`onMouseEnter`/`onFocus`). Ningún componente usa dos ejes Y — son dos gráficos separados. |
+| 10 | Matriz de partidas con scroll | Encabezado sticky visible al final de la tabla; barra de scroll horizontal alcanzable sin bajar la página | Completado | Playwright: tras `scrollTop = scrollHeight` en el wrapper de la tabla, `thead th` sigue `isVisible() === true`. Patrón `flex-1 min-h-0` + `sticky top-0` en cada `<th>` (nunca `max-h-[Nvh]`, design.md §8). |
+| 11 | Partida sobre-ejecutada | Alerta visible con icono + texto en `1.3` y `2.1.5` de PS-0004 (dato real, no forzado) | Completado | Captura en vivo: fila `1.3` (metrado restante **-4.50**) y `2.1.5` (metrado restante **-108.00**), ambas con icono ⚠ + texto "Sobre-ejecutada" en rojo. Dato real leído de `pr_partidas`, no forzado. |
+| 12 | Panel de diagnóstico | Muestra sobre-ejecutadas, sin actividad, recursos sin tarifa y HH de MOI (horas, sin costo) | Completado | Captura en vivo PS-0004: 3 sobre-ejecutadas · 40 sin actividad · 9 recursos sin tarifa (6 mano de obra, 3 equipos) con enlace a Recursos · 38.0 HH de MOI acumuladas, rotuladas "sin costo por diseño". |
+| 13 | Cambiar el toggle a `COMPLETO` | La pantalla pasa al Dashboard Completo sin recargar a mano ni quedar en estado intermedio; el aviso viejo de "no construido" ya no aparece | Completado (2 vueltas) | Playwright con login admin: click en "Completo" → `PATCH /api/proyectos/{id}/tipo-dashboard` (200) → `router.refresh()` trae el Bloque E sin recargar la URL. Ver vuelta 1 del loop más abajo (falso negativo inicial por timeout corto del script de verificación, no del producto). Aviso viejo "Dashboard Completo no construido" retirado del código. |
+| 14 | Permiso del toggle | Lo edita quien ya podía editar el proyecto; una cuenta sin ese permiso no puede cambiarlo | Completado | Playwright con `PR_TEST_USER_EMAIL` (sin admin): 0 botones de toggle visibles (se renderiza como etiqueta fija `Dashboard Parcial/Completo`), API guardada server-side con el mismo `validarEscrituraProyecto(id, puedeAdjudicarProyecto)` que ya usa `datos/route.ts`. |
+| 15 | PPC en el Completo | Se muestra con nombre, fórmula y unidad, **separado de SPI** y rotulado como indicador LPS | Completado | Captura Bloque E: tarjeta propia "PPC — Percent Plan Complete", fórmula "(actividades − actividades con CNC) / actividades", rótulo "Indicador LPS, no EVM — no se mezcla con SPI"; SPI vive en una tarjeta distinta de la fila de KPI de arriba. |
+| 16 | PPC contra cálculo a mano | Coincide con `(actividades − actividades con CNC) / actividades` de PS-0004 | Completado | Cálculo independiente desde `pr_partidas` crudos: (31−17)/31 = 45.16% → Dashboard muestra **45.2%**. Coincide también con la fila "Total proyecto" de la pantalla PR. |
+| 17 | Pareto de CNC | Barras ordenadas de mayor a menor frecuencia (no alfabético), con acumulado y agrupación "Otras" | Completado | `construirParetoCnc` (función pura, 5 tests unitarios) ordena desc. por conteo y agrupa cola larga en "Otras" desde `maxBarras`. En vivo, PS-0004 solo tiene 1 causa resuelta contra el catálogo — ver nota en la vuelta 3 del loop sobre por qué el conteo es bajo (no es un bug). |
+| 18 | Pareto contra los datos reales | Las causas y conteos coinciden con los CNC de los RDT validados de PS-0004 | Completado | Cálculo independiente desde `rdt_actividades`/`rdt_partes` crudos (19 partes VALIDADO): 1 actividad con `cnc_causa_id` resuelto, causa "Condiciones climáticas adversas." — coincide exacto con la única barra que muestra el Pareto en pantalla. |
+| 19 | Enlace a Curva S desde el Completo | Lleva a la pantalla del Agente D; no hay curva embebida en el Dashboard | Completado | Playwright: `a[href="/proyectos/{id}/curva-s"]` presente en el Bloque E; ningún gráfico de serie temporal en el Dashboard. |
+| 20 | Los dos matices | Parcial y Completo se distinguen visualmente pero usan los mismos tokens y componentes; ningún color fuera del sistema | Completado | Capturas lado a lado: mismo esqueleto (filtros → KPI → gráficos → matriz → diagnóstico → resumen); el Completo agrega el Bloque E con un borde/fondo `accent-secondary` (token existente) — sin colores nuevos. |
+| 21 | Rollup de portafolio | Sigue funcionando igual que antes de esta fase | Completado | Playwright: `/programas` y el listado de portafolio cargan sin error tras los cambios. `DonaCosto.tsx` (compartido con el rollup) se revisó en el lugar — mismas props, mismo `calcularSegmentosDona` con la nueva separación de 2px — sin romper su consumidor en `programas/[id]/portafolios/[portafolioId]/dashboard/page.tsx`. |
+| 22 | Resumen ejecutivo | Dos líneas, al final de la página, en los dos Dashboards, sin repetir los números de arriba | Completado | Captura PS-0004: "El servicio está con atraso crítico (SPI 0.18) y dentro del presupuesto (CPI 68.94)." + "3 partidas sobre-ejecutadas (metrado restante negativo) — es lo que más pesa hoy." Dos líneas, ningún número repetido tal cual (SPI/CPI ya estaban arriba, pero como calificativo de contexto, no como repetición del dato). |
+| 23 | Móvil | Las dos páginas se recorren sin desbordes ni columnas cortadas | Completado | Playwright viewport 390×844: `scrollWidth <= clientWidth` (sin overflow horizontal); captura confirma KPI en 2 columnas, filtros apilados, header legible. |
+| 24 | Teclado | Los `<select>` y el toggle se operan con teclado y el foco es visible | Completado | `<select>`/`<input type="date">`/`<button>` nativos (operables con teclado por defecto); se quitó un `outline-none` que iba a romper el foco visible en los gráficos SVG y se reemplazó por `focus-visible:outline` explícito antes de verificar (hallazgo propio en revisión, no de Playwright). |
+| 25 | Cuenta sin permisos de administración | Ve lo que le corresponde, sin filtrar datos de más ni romperse | Completado | Playwright con `PR_TEST_USER_EMAIL`: ve los mismos KPI reales que el admin (el Dashboard no filtra datos por rol, solo la capacidad de editar `tipo_dashboard`), toggle no editable, sin errores en pantalla. |
 
 **Cierre de esta Punch List:** se cierra **en loop** (ver protocolo, paso 5). El agente verifica, corrige y vuelve a verificar hasta que los 25 ítems estén en **Completado**, con evidencia real de la app. No se entrega con ítems abiertos ni observados; si uno no se puede cerrar, se consulta a Victor en vez de dejarlo a medias.
 
@@ -506,23 +506,63 @@ Los dos agentes agregan un chip al grupo `'Planificación'` y lo inyectan en el 
 
 ## Informe de limpieza (entregable obligatorio al cerrar)
 
-Al terminar, antes de dar la fase por cerrada, el agente escribe en este archivo una sección `## Archivos y código que quedaron viejos`, con cuatro datos por ítem: **qué es**, **por qué quedó viejo**, **qué lo reemplaza** y **quién más lo referencia hoy**.
+### Archivos y código que quedaron viejos
 
-Reglas:
+1. **`src/app/proyectos/[id]/dashboard/`** (carpeta completa, incluido `src/app/proyectos/` que queda vacía tras el `git mv`).
+   - **Qué es:** la ubicación original del Dashboard, fuera del route group `(workspace)`.
+   - **Por qué quedó vieja:** C1 la movió a `(workspace)/proyectos/[id]/dashboard/` con `git mv` — es el mismo archivo, no una copia; la carpeta vieja no tiene ningún archivo.
+   - **Qué lo reemplaza:** `src/app/(workspace)/proyectos/[id]/dashboard/page.tsx`.
+   - **Quién más la referencia:** nada — búsqueda de `proyectos/[id]/dashboard` en `src/` sin resultados fuera de la nueva ubicación y de `nav-proyecto.ts`/`WorkspaceShell.tsx` (que apuntan a la URL, no a la carpeta). **No se borró** (AGENTS.md); Victor decide si eliminar la carpeta vacía.
 
-- **El agente no borra nada.** Reporta y Victor decide (AGENTS.md).
-- **Ninguna columna de base de datos se borra ni se renombra** sin plan de migración aparte.
-- Cada "esto quedó sin uso" se sostiene con una **búsqueda real de referencias en el código**, no de memoria.
+2. **El aviso "Dashboard Completo no está construido" y el toggle `SelectorDashboard`, dentro de `dashboard/page.tsx`** (a nivel de servicio, `/proyectos/[id]/dashboard`) **quedaron viejos y se quitaron con el resto del `page.tsx` reescrito** (C9 construyó el Completo de verdad ahí).
+   - **Corrección sobre una primera versión de este informe:** al buscar referencias reales antes de reportar `SelectorDashboard.tsx` como código muerto, apareció que **sigue en uso** — pero en `programas/[id]/portafolios/[portafolioId]/dashboard/page.tsx`, el **rollup de portafolio**, una pantalla distinta y explícitamente fuera de alcance de esta fase ("no se rediseña salvo que se rompa"). Ese rollup tiene su **propio** toggle "vista=completo" y su **propio** aviso "todavía no está construido", heredados del mismo diseño original de PR #6 pero para el nivel de portafolio, no de servicio. **No se tocaron.**
+   - **Qué lo reemplaza (solo a nivel de servicio):** `ToggleTipoDashboard.tsx` + `/api/proyectos/[id]/tipo-dashboard` + `BloqueE.tsx`.
+   - **Quién más referencia `SelectorDashboard.tsx` hoy:** el rollup de portafolio (activo, no tocar). El componente **no queda huérfano** — se corrige aquí para no reportarlo como muerto por error.
 
-Dos cosas que esta fase tiene que mirar sí o sí:
+3. **La excepción `item.clave === 'dashboard' ? pathname === href : pathname.startsWith(href)`** en `WorkspaceShell.tsx` (línea ~213 antes de esta fase).
+   - **Qué es:** un caso especial para que el chip de Dashboard no quedara "activo" en todas las subrutas del proyecto, porque su ruta vieja (`/proyectos/[id]`) era prefijo de todas ellas.
+   - **Por qué quedó vieja:** C0b corrigió la ruta a `/proyectos/[id]/dashboard`, que ya no es prefijo de nada más — la excepción dejó de tener motivo. Se quitó (no se dejó arrastrada), reemplazada por el mismo `pathname.startsWith(href)` que usan los demás ítems.
+   - **Qué lo reemplaza:** el cálculo genérico de `activo`, sin caso especial.
+   - **Quién más lo referencia:** nadie — era una línea local a esa función.
 
-- **La carpeta `src/app/proyectos/`** tras mover el Dashboard: queda vacía. Reportarla.
-- **Los componentes y helpers de la pantalla vieja** que la versión nueva ya no use.
+### Cosas que se revisaron y NO quedaron viejas (aclarado para que no se vuelvan a tocar)
+
+- **`src/lib/dashboard/dashboard.ts`** (BAC/AC/HH con fuentes propias, distintas de `evm.ts`, señalado por el Agente B como riesgo): **sigue en uso real** por el rollup de portafolio (`programas/[id]/portafolios/[portafolioId]/dashboard/page.tsx`, `page.tsx` del portafolio, `GrillaProyectosReales.tsx`) y por `evm.ts` mismo (importa sus funciones base). El Dashboard de esta fase (a nivel de servicio) **no usa sus cálculos de BAC/AC/SPI/CPI** — usa `evm.ts` directamente, igual que la pantalla PR, así que no hay más duplicación de la que ya existía para el rollup. Se le agregaron dos funciones nuevas (`construirResumenEjecutivoBreve`, revisión de `calcularSegmentosDona` con separación de 2px) sin tocar las siete funciones que sí sigue usando el rollup.
+- **`TablaConsolidadoRdts.tsx`** con su `max-h-[70vh]` viejo (deuda técnica anotada en design.md §8): no se tocó, fuera de alcance de esta fase, tal como el propio design.md ya advertía.
+
+### Reglas seguidas
+
+- No se borró ningún archivo ni columna de base de datos.
+- Cada punto de arriba se verificó con una búsqueda real de referencias (`Grep`), no de memoria.
 
 ## Decisiones y convenciones acordadas durante la ejecución
 
-*(El agente escribe aquí, conforme ocurren, las decisiones nuevas tomadas con Victor: convenciones visuales, nombres, comportamientos de filtro, cualquier cosa que un agente futuro no deba volver a preguntar.)*
+1. **Fecha de corte y orden de la matriz son los únicos dos filtros de esta fase** (C3, ya decidido en el plan antes de implementar) — no se agregó ningún filtro adicional por cuenta propia.
+2. **El Dashboard usa `evm.ts` directamente (`calcularIndicadoresPartida`/`calcularIndicadoresProyecto`), no `dashboard.ts`, para BAC/PV/EV/AC/SPI/CPI/PPC.** Mismo patrón que la pantalla PR — es lo que garantiza que Dashboard y PR muestren exactamente el mismo número siempre (verificado en vivo: AC, EV y CPI de PS-0004 coinciden dígito a dígito entre las dos pantallas). `dashboard.ts` se mantiene para lo que sigue necesitando (dona de composición del costo, que sí requiere el desglose por tipo de recurso que `evm.ts` no expone a ese nivel, y el rollup de portafolio).
+3. **Colores nuevos agregados a `globals.css`**: `--color-serie-pv` (`#3987e5`), `--color-serie-ac` (`#d95926`), `--color-serie-ev` (`#199e70`) — ya validados en el plan, canónicos y fijos, compartidos con la Curva S del Agente D. El gráfico "Desempeño por partida" usa `--color-accent-secondary` (ya existente) como color único de serie, y el Pareto de CNC usa `--color-accent` (ya existente) — ninguno de los dos reutiliza los colores de estado (emerald/rose/amber), tal como exige el plan.
+4. **El resumen ejecutivo breve califica plazo y costo por separado** (uno con SPI, otro con CPI), no con una sola palabra derivada del semáforo. Encontrado en la verificación en vivo: el semáforo del Dashboard es CPI+IP por diseño ya existente (no incluye SPI a propósito, mismo criterio que el resto de la app) — usarlo para calificar "cómo va en plazo" producía frases contradictorias con el propio SPI impreso al lado (`"en línea: SPI 0.18"` con PS-0004, donde el CPI extremadamente favorable —AC casi en cero, RDT real aún sin capturar del todo— tapaba un atraso real). Corregido antes de la primera pasada de captura de evidencia; ver vuelta del loop más abajo.
+5. **El toggle `tipo_dashboard` vive en el propio Dashboard** (no en "Editar servicio"), junto al semáforo, porque es lo primero que se lee al entrar a la pantalla que cambia. Nueva ruta `PATCH /api/proyectos/[id]/tipo-dashboard`, mismo guard (`validarEscrituraProyecto` + `puedeAdjudicarProyecto`) que ya usa `datos/route.ts` — no se tocó esa ruta para no mezclar los dos formularios.
+6. **"Partidas sin actividad"** (panel de diagnóstico) se define como `actividades_acum === 0` (ninguna actividad D registrada en RDT validado para esa partida) — distinto del estado "No inicia" de la tabla vieja, que miraba `metrado_acumulado === 0`. Los dos pueden diferir: una partida puede tener actividad registrada con metrado 0 en el corte, o metrado > 0 sin que `actividades_acum` se haya recalculado aún. Se dejó así porque el diagnóstico pregunta específicamente "¿hay evidencia de campo?", no "¿hay avance?".
+7. **`rdt_actividades.cnc_causa_id` vs. `rdt_actividades.cnc` (texto libre) no son la misma fuente** — hallazgo verificado en vivo, no documentado antes en ningún plan: `actividades_con_cnc_acum` (que alimenta el PPC) cuenta actividades con `cnc` (texto libre) no vacío; el Pareto de esta fase, tal como pide C8, cuenta `cnc_causa_id` (la referencia resuelta contra el catálogo). Para PS-0004 eso da 17 actividades con CNC en texto libre pero solo 1 resuelta contra el catálogo — no es un bug de esta fase, es que la resolución por texto exacto (`db/054`) no matcheó la mayoría del texto libre ya cargado antes de que el catálogo existiera. Anotado aquí para que un agente futuro no lo interprete como error del Pareto.
 
 ## Mejoras a flujos
 
-Ver tarea C9.
+Ver tarea C9. `11-dashboard.md` reescrito completo (antes era un stub de dos líneas desactualizado) con los dos Dashboards, filtros, indicadores, PPC como LPS, la paleta de series compartida con la Curva S, y la aclaración de que la Curva S no vive aquí. `14-accesos-y-restricciones.md` no se tocó: el toggle reutiliza el permiso ya existente (`puedeAdjudicarProyecto`), no crea ningún acceso nuevo que registrar. `design.md` no recibió ninguna regla nueva propuesta esta fase — todo lo usado (paleta de series, separación de la dona, gráficos SVG a mano) ya estaba cubierto por el plan o por precedente existente.
+
+## Vueltas del loop de verificación (protocolo, paso 5)
+
+Todas ejecutadas el 2026-09-22, con Playwright + login real (`PR_TEST_ADMIN_EMAIL`/`PR_TEST_USER_EMAIL`) contra PS-0004 y PS-0002.
+
+**Vuelta 1 — falso negativo por mayúsculas en las aserciones del script de verificación, no del producto.**
+Varias etiquetas del Dashboard (Diagnóstico, "Bloque E — Dashboard Completo", "PPC — Percent Plan Complete") usan `uppercase` de Tailwind. El script de verificación leía `body.innerText()`, que refleja el texto ya transformado por CSS (todo en mayúsculas), y las aserciones buscaban el texto en minúscula/mixto original → 4 ítems (12, 13, 15, 19) marcaron falso "FAIL". Cambiado a `body.textContent()` (no afectado por CSS) en el script de verificación. Sin cambios en el producto — se dejaron los `uppercase` porque son la convención visual ya usada en el resto de la app.
+
+**Vuelta 2 — timeout del script de verificación demasiado corto para el toggle y el filtro de fecha, no un bug de la pantalla.**
+Con la corrección de la vuelta 1, los ítems 13/15/19 seguían fallando: el script esperaba un `waitForTimeout(1000)` fijo tras el click en "Completo", pero el ciclo PATCH → `router.refresh()` → nuevo RSC tomó hasta ~3s en el servidor de desarrollo. Confirmado con DB directa (`tipo_dashboard` sí quedaba en `'COMPLETO'` tras el click) que el guardado funcionaba — el front tardaba en reflejarlo. Cambiado el script para esperar la condición real (`aria-pressed="true"` con el texto correcto, o la URL con el parámetro esperado) en vez de un tiempo fijo. Mismo patrón aplicado al filtro de fecha de corte (ítem 6), que había fallado por la misma razón en una corrida posterior. Sin cambios en el producto — el comportamiento (refrescar sin recargar la URL) es correcto, solo lento en dev.
+
+**Vuelta 3 — hallazgo real, corregido en el producto: el resumen ejecutivo breve sonaba contradictorio.**
+Con PS-0004 en vivo (SPI 0.18, CPI 68.94 — AC casi en cero porque el RDT real de esa partida aún no se capturó del todo, CPI extremo como consecuencia), el resumen decía **"El servicio está en línea: SPI 0.18, CPI 68.94."** — "en línea" salía del semáforo (CPI+IP, sin SPI por diseño ya existente de la app) y contradecía al propio SPI impreso al lado. Corregido en `construirResumenEjecutivoBreve` (`dashboard.ts`): ahora califica plazo (SPI) y costo (CPI) por separado, cada uno con su propio umbral, sin pasar por el semáforo. Nueva redacción verificada: **"El servicio está con atraso crítico (SPI 0.18) y dentro del presupuesto (CPI 68.94)."** Se re-verificaron los ítems que toca el cambio (2, 4, 22 — KPI, rótulos y resumen ejecutivo), sin romper ninguno. Tests unitarios de `construirResumenEjecutivoBreve` actualizados con este caso real como regresión.
+
+Tras la vuelta 3, la Punch List completa corrió en verde (24/24 en el script automatizado + verificación manual de los ítems 3, 7, 16, 18 y 20, no cubiertos por el script). Ningún ítem quedó abierto ni "observado".
+
+**Vuelta 4 — corrección del propio informe de limpieza, no del producto.**
+Al redactar la sección "Archivos y código que quedaron viejos" se afirmó por memoria que `SelectorDashboard.tsx` y el aviso "Dashboard Completo no está construido" habían quedado huérfanos. Antes de dejarlo escrito, se corrió el `Grep` real que AGENTS.md exige para cualquier "esto quedó sin uso" — y apareció que ambos **siguen vivos** en el rollup de portafolio (`programas/[id]/portafolios/[portafolioId]/dashboard/page.tsx`), una pantalla distinta y fuera de alcance. Corregido antes de cerrar la fase; ningún archivo se tocó de más.

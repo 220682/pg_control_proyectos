@@ -420,6 +420,13 @@ Esta fase agrega código nuevo más que reemplazar viejo, así que lo esperable 
 
 *(El agente escribe aquí, conforme ocurren, las decisiones nuevas tomadas con Victor.)*
 
+### 2026-09-22 — Aprobación de arranque (Victor)
+
+- **Punch List de 20 ítems: aprobada tal cual**, sin cambios. Arranca la implementación D0–D10.
+- **D0 — ubicación del chip**: Victor aclara que esto **ya estaba resuelto** en el plan (grupo `'Planificación'`, visible en los tres paneles — derecho, central/Mi entorno, izquierdo con servicio abierto — copiando el patrón del ítem `'pr'` en `WorkspaceShell.tsx`). No había nada que confirmar ahí; se ejecuta tal como está escrito.
+- **D0 — nombre visible del chip**: **"Curva S"**, el que ya trae el plan y el mockup. Sin cambios.
+- **D0 — comportamiento sin servicio elegido**: confirmado **exigir servicio** (recomendación del plan). El chip aparece deshabilitado con tooltip explicativo cuando no hay `proyectoId` en contexto — nunca un link muerto, mismo patrón que Cronograma.
+
 ## Mejoras a flujos
 
 Ver tarea D9.

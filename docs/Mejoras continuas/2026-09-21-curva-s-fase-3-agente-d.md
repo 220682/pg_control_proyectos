@@ -1,6 +1,6 @@
 # Curva S Fase 3 (Agente D): serie temporal PV / EV / AC en pantalla propia
 
-**Estado (2026-09-22):** IMPLEMENTADO Y VERIFICADO — checklist D0–D12 completo, Punch List 20/20 en Completado (dos con hallazgo documentado, ninguno abierto). PR abierto en `py_control_proyectos_web` (`feat/curva-s-fase-3-serie-temporal`), pendiente de revisión final de Victor. Trabajó en paralelo con [Dashboard / Fase 3 (Agente C)](2026-09-21-dashboard-fase-3-agente-c.md).
+**Estado (2026-09-22):** CERRADO — checklist D0–D12 completo, Punch List 20/20 en Completado (dos con hallazgo documentado, ninguno abierto). PR [#16](https://github.com/220682/py_control_proyectos_web/pull/16) mergeado a `main` en `py_control_proyectos_web` (aprobado y mergeado por Victor, 2026-09-22). Trabajó en paralelo con [Dashboard / Fase 3 (Agente C)](2026-09-21-dashboard-fase-3-agente-c.md), PR [#15](https://github.com/220682/py_control_proyectos_web/pull/15), también mergeado.
 
 **Ya resuelto, no volver a preguntar:**
 - La Curva S era el **Bloque G del Dashboard Completo** en el diseño original (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo web). **Victor la saca de ahí**: va en **pantalla propia con su propio chip**, porque dentro del Dashboard no hay espacio. El Dashboard Completo (Agente C) **la enlaza**, no la dibuja.

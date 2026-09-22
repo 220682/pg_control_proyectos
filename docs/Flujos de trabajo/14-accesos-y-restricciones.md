@@ -60,6 +60,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Ver Plan Maestro | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | 3WLA | — no implementado (pospuesto, ver `mejoras-futuras.md`) — | | | | | | | | | | | | | — |
 | Ver PR (Reporte del proyecto) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
+| Ver Curva S (serie temporal PV/EV/AC) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | Status / Programación de capacitaciones | — no implementado — | | | | | | | | | | | | | — |
 
 ### Logística / Requerimientos (RQ)

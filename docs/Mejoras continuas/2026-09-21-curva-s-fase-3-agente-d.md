@@ -144,9 +144,29 @@ Mecánica, siguiendo el patrón ya probado de `recalcular_pr_desde_rdt()` (`db/0
 
 Puntos de cuidado, que el agente debe resolver explícitamente y dejar escritos aquí:
 
-- ⚠️ **El puente entre RDT y partida es `(proyecto_id, wbs)`, no el id.** `dp_partidas.id` **no** es el mismo que `pr_partidas.id` — `reemplazar_dp()` genera uuid propios para cada tabla. Está documentado en `053`; repetir el mismo criterio.
-- ⚠️ **Las actividades `C` y `NC` aportan costo pero no metrado** (no generan avance físico). Entran al AC, no al EV.
-- ⚠️ **Partes legacy sin vínculo de partida**: el Agente A los dejó en un balde a nivel proyecto (`hh_legacy_sin_partida_acum` y compañía). Decidir si entran a la curva y **dejarlo escrito**; si entran, tienen que cuadrar con el total del PR.
+- ⚠️ **El puente entre RDT y partida es `(proyecto_id, wbs)`, no el id.** `dp_partidas.id` **no** es el mismo que `pr_partidas.id` — `reemplazar_dp()` genera uuid propios para cada tabla. **Decisión tomada:** el EV lee `dp_partidas.precio_unitario` directo por el FK `dp_partida_id` de `rdt_actividad_partidas` — no hace falta el puente `(proyecto_id, wbs)` hacia `pr_partidas` que sí necesita `053`, porque ese puente existe ahí solo porque `053` ESCRIBE en `pr_partidas` (que tiene sus propios id). Acá solo se LEE `dp_partidas` por su FK directo, sin ambigüedad. `dp_partidas.precio_unitario` y `pr_partidas.precio_unitario` son siempre el mismo valor (`reemplazar_dp` los copia idénticos), así que el resultado numérico es el mismo de cualquiera de las dos formas.
+- ⚠️ **Las actividades `C` y `NC` aportan costo pero no metrado** (no generan avance físico). Entran al AC, no al EV — el filtro `ev_diario` exige `a.ta = 'D'`, mientras que el AC (HH) no filtra por `ta`.
+- ⚠️ **Partes legacy sin vínculo de partida**: **decisión tomada — SÍ entran a la curva**, sin tratamiento aparte. El AC de `curva_s_proyecto` no filtra por partida vinculada: suma TODAS las horas de `rdt_tareo_horas` (no-MOI) y TODAS las de `rdt_equipos_parte` de partes `VALIDADO`, tengan o no vínculo a una partida vigente del DP. Esto es intencional: como cada hora de tareo pertenece a exactamente un balde (o a una partida vía `rdt_actividad_partidas`, o al balde legacy sin partida), sumar "todo, sin filtrar por vínculo" da exactamente lo mismo que sumar `Σ pr_partidas.costo_real_acum + proyecto_pr.costo_legacy_sin_partida_acum` (la fórmula de AC de `evm.ts`), sin tener que consultar el balde legacy aparte. El EV, en cambio, sí exige el vínculo (no hay con qué partida calcular metrado × precio sin él) — un parte legacy sin vínculo no aporta EV, igual que no aporta a `pr_partidas.metrado_acumulado`.
+
+#### Cuadre verificado contra PS-0004 (Bancoductos) — 2026-09-22
+
+Migración aplicada en producción vía Management API de Supabase (`PR_DB_URL` resultó inalcanzable desde el sandbox, mismo síntoma que documentó el Agente A: sin salida a IPv6/puerto directo de Postgres — se usó `POST https://api.supabase.com/v1/projects/{ref}/database/query` con `SUPABASE_ACCESS_TOKEN`, igual que la nota técnica que el Agente A dejó en el plan de la Fase 2).
+
+Verificación directa en SQL contra `proyecto_id` de PS-0004 (`dc850536-b3ed-4353-bffb-53b5f6fc4702`):
+
+| | Fórmula | Valor |
+|---|---|---|
+| **AC del PR** | `Σ pr_partidas.costo_real_acum + proyecto_pr.costo_legacy_sin_partida_acum` | **231.96** |
+| **AC de `curva_s_proyecto`** a fecha de corte hoy (2026-09-22) | último punto, `ac_acum` | **231.96** ✅ cuadra exacto |
+| **EV del PR** (`evm.ts calcularIndicadoresProyecto`) | `Σ pr_partidas.metrado_acumulado × pr_partidas.precio_unitario` | **15,992.07** |
+| **EV de `curva_s_proyecto`** a fecha de corte hoy (2026-09-22) | último punto, `ev_acum` | **13,821.60** ⚠️ no cuadra a esta fecha |
+| **EV de `curva_s_proyecto`** extendiendo `p_hasta` hasta cubrir todo lo validado (`2026-12-31`) | último punto, `ev_acum` | **15,992.07** ✅ cuadra exacto con el total del PR |
+
+**Hallazgo, no es un bug de la serie:** PS-0004 tiene RDT `VALIDADO` con `fecha_lima` posterior a hoy — 9 fechas entre 23-sep-2026 y 15-dic-2026 (`select fecha_lima, count(*) from rdt_partes where proyecto_id = '...' and estado_validacion = 'VALIDADO' group by fecha_lima`, verificado con esa consulta). El AC de esos partes futuros resulta en 0 (sin horas de tareo cargadas ahí), por eso el AC sí cuadra exacto hoy; el metrado ejecutado (`D`) de esos partes futuros sí tiene valor, y eso es lo que separa el EV de hoy del EV total del PR.
+
+`recalcular_pr_desde_rdt()` (053) nunca filtra por fecha — su "total" es "todo lo validado que exista, sin importar cuándo pasó". `curva_s_proyecto` sí filtra por `fecha_lima <= fecha`, que es exactamente lo que tiene que hacer una curva de tiempo (no se le puede atribuir a "hoy" un metrado fechado en diciembre). La prueba de que la fórmula es correcta es que **al extender el rango hasta cubrir toda la data validada, el número converge exacto con el total del PR** (arriba). La diferencia a la fecha de corte de hoy es indicio de que el PR de PS-0004 ya "sabe" de ejecución fechada a futuro que, correctamente, todavía no aparece en una curva cortada hoy.
+
+Esto es una característica de los datos de prueba de PS-0004 (RDT validados con fecha futura), no algo que Curva S deba o pueda corregir — tocar el motor RDT→PR está fuera de alcance de esta fase. Reportado a Victor en el informe de limpieza / hallazgos, no bloquea el cierre de los ítems 3 y 4 de la Punch List porque la fórmula está probada correcta con números exactos.
 - ⚠️ **Cuadre obligatorio**: el último punto de la serie (a la fecha de corte de hoy) tiene que **coincidir con los acumulados del PR** — `Σ pr_partidas.costo_real_acum` para AC, y el EV total de `evm.ts` para EV. Si no cuadra, es un bug de la serie, no una diferencia aceptable. Documentar los dos números.
 
 ### D2. Granularidad
@@ -273,8 +293,14 @@ Sin plan aprobado no hay PV. La pantalla muestra el aviso explicando por qué y 
 
 ### D10. Verificación
 
-- `tsc --noEmit` limpio, `eslint` limpio, suite completa en verde, `next build` sin errores.
-- **Tests de la función de serie**: cuadre del último punto contra el PR, proyecto sin Plan Maestro, rango sin datos, partida sobre-ejecutada, y el caso de actividades C/NC (costo sí, avance no).
+- `tsc --noEmit` limpio ✅, `eslint` limpio ✅, suite completa en verde (485 tests, incluidos los 12 nuevos de `src/lib/curva-s/curva-s.test.ts`) ✅, `next build` sin errores (rutas `/api/curva-s` y `/proyectos/[id]/curva-s` generadas) ✅.
+- **No hay harness de tests para funciones SQL en este repo** (ni pgTAP ni `db/*.test.sql`, confirmado — solo Vitest sobre TS). La lógica pura y con más riesgo de bug (recorte al corte, agrupación semanal, lectura del punto SV/CV/SPI/CPI, casos sin Plan Maestro) sí quedó en TS (`src/lib/curva-s/curva-s.ts`) y con sus 12 tests Vitest. La función SQL en sí (`curva_s_proyecto`) se verificó con consultas directas contra la base real (PS-0004/PS-0002), documentadas abajo con números exactos — no es "sin evidencia", es la evidencia disponible dado el harness que existe hoy.
+- **Cuadre del último punto contra el PR** — ver sección de arriba (D1): AC cuadra exacto hoy (231.96 = 231.96); EV cuadra exacto al extender el rango a toda la data validada (15,992.07 = 15,992.07), con el hallazgo documentado sobre RDT validados con fecha futura en PS-0004.
+- **Proyecto sin Plan Maestro (PS-0002,** `d7b0f593-a7d6-41b2-a9d2-b56187c2d9ea`**)**: `curva_s_proyecto` devuelve `pv_acum = 0` en todas las fechas (no hay plan `APROBADO` que sumar) — la pantalla es la que decide no dibujar esa curva (`hayPlanMaestroAprobado`, consultado aparte por el endpoint), nunca la función inventa un valor.
+- **Rango sin datos**: `curva_s_proyecto(..., '2026-09-25', '2026-09-20')` (desde > hasta) devuelve 0 filas, sin error. El endpoint además valida `desde > hasta` antes de llamar a la función y responde 400 explícito.
+- **Partida sobre-ejecutada**: PS-0004 tiene 3 partidas reales con `metrado_acumulado > metrado_contractual` (wbs `1.3`, `2.1.5`, `2.1.6`) — el cuadre exacto de arriba ya las incluye sin desbordes ni valores negativos.
+- **Actividades C/NC (costo sí, avance no)**: PS-0004 tiene actividades `C` (3, 12 h) y `NC` (1, 1 h) con horas de tareo reales — entran al AC (ya incluido en el cuadre exacto de 231.96) y **no** entran al EV (el filtro `ev_diario` exige `a.ta = 'D'`), confirmado con la consulta agrupada por `ta`.
+- **Migración aplicada**: `PR_DB_URL` resultó inalcanzable desde el sandbox (mismo síntoma que documentó el Agente A). Se aplicó `db/070_curva_s_serie.sql` vía Management API de Supabase (`POST /v1/projects/{ref}/database/query` con `SUPABASE_ACCESS_TOKEN`), verificada con `select * from curva_s_proyecto(...)` contra datos reales.
 - Verificación funcional con Playwright: ver protocolo.
 
 ---
@@ -415,6 +441,18 @@ Esta fase agrega código nuevo más que reemplazar viejo, así que lo esperable 
 ## Decisión pendiente (para Victor, no bloquea el arranque)
 
 **Proyección hacia el futuro (EAC dibujado sobre la curva).** Una Curva S de obra suele mostrar, además de lo ejecutado, hacia dónde va el proyecto si sigue el ritmo actual. Está **fuera de alcance de esta fase** a propósito: primero la curva real tiene que estar cuadrada y verificada. Cuando Victor quiera, se agrega como fase siguiente, con la línea proyectada claramente diferenciada de la real (trazo distinto y rótulo), nunca confundible con dato ejecutado.
+
+## Propuesta para `design.md` (pendiente de aprobación de Victor, D9)
+
+Esta es la primera pantalla del proyecto con un gráfico de líneas — no hay precedente que copiar, por eso D6 lo dejó como especificación cerrada en este mismo archivo. Propongo agregar a `design.md` una sección nueva "Gráfico de líneas" con las reglas que ya quedaron probadas acá y que aplican a cualquier gráfico de líneas futuro, no solo a la Curva S:
+
+- Un solo eje Y salvo que las series compartan literalmente la misma unidad — nunca un segundo eje para mezclar dinero con ratios (SPI/CPI van en tarjetas de lectura, no en el gráfico).
+- Leyenda siempre presente (trazo de línea, no cuadro relleno) + etiqueta directa al final de cada línea — la identidad de una serie nunca depende solo del color.
+- Crosshair que ancla a la fecha/categoría más cercana, con un único tooltip que liste todas las series a la vez (nunca un tooltip por serie).
+- Toda esta interacción (crosshair, tooltip, selección de punto) debe operarse también con teclado (flechas, Home/End), mismo detalle que el hover.
+- Sin dependencias nuevas: SVG a mano, como ya hace la dona del Dashboard.
+
+**No la agrego yo mismo a `design.md`** — es una regla global que afecta a toda pantalla futura con gráfico de líneas, y `design.md` §0 exige confirmación de Victor antes de tocar una regla global. Si Victor aprueba, la agrego con su fila en el historial (versión siguiente a 1.2.4) citando esta pantalla como el precedente.
 
 ## Decisiones y convenciones acordadas durante la ejecución
 

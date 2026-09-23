@@ -10,7 +10,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 
 - **✓** el rol tiene el acceso. **—** no lo tiene.
 - **Admin** siempre tiene bypass total — no se repite el razonamiento fila por fila salvo que sea la única excepción real.
-- **Requiere OT a cargo**: columna que anticipa el Sub-lote 2 (`docs/Mejoras continuas/2026-09-20-...`). "Sí" = la acción escribe sobre una OT concreta y, cuando el sub-lote esté implementado, además del rol hará falta tener esa OT asignada en `proyecto_miembros`. "No (lectura)" = la lectura no se restringe por diseño, todos los roles habilitados ven todas las OT. "No" = la acción no está ligada a ninguna OT (usuarios, catálogos globales, contenedores).
+- **Requiere OT a cargo**: columna que anticipa el Sub-lote 2 (`docs/Tareas de implementacion/2026-09-20-sub-lote-2-alcance-proyecto.md`). "Sí" = la acción escribe sobre una OT concreta y, cuando el sub-lote esté implementado, además del rol hará falta tener esa OT asignada en `proyecto_miembros`. "No (lectura)" = la lectura no se restringe por diseño, todos los roles habilitados ven todas las OT. "No" = la acción no está ligada a ninguna OT (usuarios, catálogos globales, contenedores).
 - Roles, columna por columna: Admin=administrador, JP=jefe_de_proyectos, JOT=jefe_de_oficina_tecnica, SOT=supervisor_oficina_tecnica, Plnr=planner, SCo=supervisor_costos, JCo=jefe_de_costos, SOp=supervisor_operativo, SLog=supervisor_logistica, SAdm=supervisor_administracion, SSO=supervisor_ssoma, Asist=asistente, RRHH=rrhh.
 
 ## Matriz de accesos
@@ -58,7 +58,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Ver cronograma | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | Gestionar Plan Maestro (crear / congelar línea base) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Ver Plan Maestro | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
-| 3WLA | — no implementado (pospuesto, ver `mejoras-futuras.md`) — | | | | | | | | | | | | | — |
+| 3WLA | — no implementado (pospuesto, ver `docs/Tareas de implementacion/tareas-futuras.md`) — | | | | | | | | | | | | | — |
 | Ver PR (Reporte del proyecto) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | Ver Curva S (serie temporal PV/EV/AC) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | Status / Programación de capacitaciones | — no implementado — | | | | | | | | | | | | | — |
@@ -110,7 +110,7 @@ Estas acciones se habilitan según el servicio, el rol y la configuración de co
 ## Pendiente a futuro
 
 ### Gestión visual de accesos
-Interfaz para que administrador y gerente de proyectos gestionen accesos y restricciones por usuario desde una pantalla (en vez de que vivan fijos en código). Pedido de Victor, 2026-09-20 — registrado también en `docs/Mejoras continuas/mejoras-futuras.md`. Se retoma cuando esta matriz esté estable y probada en producción.
+Interfaz para que administrador y gerente de proyectos gestionen accesos y restricciones por usuario desde una pantalla (en vez de que vivan fijos en código). Pedido de Victor, 2026-09-20 — registrado también en `docs/Tareas de implementacion/tareas-futuras.md`. Se retoma cuando esta matriz esté estable y probada en producción.
 
 ### Restricción de datos económicos por rol
 Hoy todos los datos económicos (costos, presupuesto, registro de costos) son visibles por todos los roles que tienen acceso a cada sección. A futuro (pendiente, 2026-09-20): solo gerencia (jefe_de_proyectos, jefe_de_costos, supervisor_costos) y administrador deberían ver datos económicos. Supervisión operativa, logística y otros roles verán la estructura de los datos (partidas, cronograma, RDT) pero no los valores de costo. **Por ahora se deja sin implementar** — la estructura de permisos económicos queda para cuando se revise la confidencialidad de datos con Victor.

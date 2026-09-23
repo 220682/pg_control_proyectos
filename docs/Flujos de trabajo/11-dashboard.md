@@ -106,6 +106,10 @@ Una vez asignado, nunca se reasigna ni se cicla. Los colores de estado
 (`emerald`/`rose`/`amber`, design.md §4.1.1) son para semáforo y
 validación — no se reutilizan como color de serie.
 
+## Resumen ejecutivo breve
+
+Califica **plazo y costo por separado** (SPI y CPI, cada uno con su propio umbral) — nunca con una sola palabra derivada del semáforo (que es CPI+IP por diseño, sin SPI a propósito). Un CPI muy favorable puede convivir con un SPI de atraso real (ej. AC casi en cero porque el RDT real todavía no se capturó del todo); calificar con el semáforo en ese caso produce una frase contradictoria con el propio SPI impreso al lado. Implementado en `construirResumenEjecutivoBreve` (`src/lib/dashboard/dashboard.ts`).
+
 ## Qué no hace el Dashboard
 
 - No recalcula nada: lee el PR.

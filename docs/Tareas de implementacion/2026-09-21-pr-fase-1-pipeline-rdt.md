@@ -12,7 +12,7 @@
 ## Ejecución en la nube (decidido 2026-09-21)
 
 - **Cada agente trabaja en su propia rama** (no directo a `main`). Al llegar al 100% de su checklist de implementación, abre un **PR** para que Victor lo revise antes de mergear. Rama sugerida: `feat/pr-fase-1-pipeline-rdt`.
-- **Las migraciones se corren solas, sin pausar a confirmar cada una** — excepción puntual autorizada por Victor solo para esta tarea (ver `mejoras-futuras.md`, sección "Acceso directo a Postgres/Supabase"). El agente lee la cadena de conexión directa de Postgres de la variable de entorno **`PR_DB_URL`**, configurada por Victor en el entorno de `claude.ai/code` de este repositorio. **No es un secreto cifrado** — la documentación de Claude Code advierte que cualquiera con acceso a ese entorno puede leerla —, así que el riesgo aceptado es acotado a que hoy solo Victor tiene ese acceso. El agente nunca imprime el valor completo en su salida ni lo commitea.
+- **Las migraciones se corren solas, sin pausar a confirmar cada una** — excepción puntual autorizada por Victor solo para esta tarea (ver `tareas-futuras.md`, sección "Acceso directo a Postgres/Supabase"). El agente lee la cadena de conexión directa de Postgres de la variable de entorno **`PR_DB_URL`**, configurada por Victor en el entorno de `claude.ai/code` de este repositorio. **No es un secreto cifrado** — la documentación de Claude Code advierte que cualquiera con acceso a ese entorno puede leerla —, así que el riesgo aceptado es acotado a que hoy solo Victor tiene ese acceso. El agente nunca imprime el valor completo en su salida ni lo commitea.
 - Credenciales de verificación (Playwright) en las variables **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** (cuenta con permisos altos) y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`** (cuenta sin permisos de administración), mismo entorno.
 - Aun así, **cada migración queda documentada en su propio archivo `db/0NN_*.sql`, commiteada, y resumida en el PR** — la autonomía es sobre no pausar a pedir permiso, no sobre dejar de dejar rastro.
 - Al terminar, el agente entrega en el PR: el checklist de implementación (A1–A10) marcado, la Punch List de 19 ítems con el resultado de cada uno verificado con Playwright, y el informe de limpieza.
@@ -71,7 +71,7 @@ Traer al PR todo lo que nace del RDT validado: metrado ejecutado, HH reales con 
 
 - **Dashboard — no se toca.** Ni el de proyecto, ni el rollup de portafolio, ni el Dashboard 2 "Completo".
 - Curva S, serie semanal, Pareto de CNC, cierre semanal auditado.
-- 3WLA (pospuesto en `mejoras-futuras.md`).
+- 3WLA (pospuesto en `tareas-futuras.md`).
 - Ampliar el RDT para capturar materiales o subcontratos con costo (regla 5).
 
 > **Efecto esperado, no es cambio de alcance:** los dashboards que hoy muestran ceros y "Pendiente" empezarán a mostrar números reales sin ser tocados, porque leen las mismas columnas que esta fase empieza a llenar. Si algo se ve raro ahí, es síntoma del pipeline, no del dashboard.
@@ -378,3 +378,14 @@ Migración `052` es compartida: la corre Victor una sola vez antes de arrancar. 
 
 - `06-rdt.md`: que el RDT validado alimenta el PR; que **toda actividad, incluidas C y NC, se carga a una partida** (regla 12); que el metrado programado es informativo; y que el CNC pasa a catálogo mantenible y obligatorio.
 - `18-control-avance.md`: dejar escritas las reglas 1 a 12, en especial la 9 (solo costo directo), la 10 (MOI horas sin costo), la 12 (toda actividad lleva partida) y la aclaración de terminología C/NC vs MOI.
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+- `06-rdt.md`: RDT alimenta el PR, toda actividad carga a partida, CNC obligatorio → **agregado el 2026-09-23** ([docs/Flujos de trabajo/06-rdt.md](../Flujos%20de%20trabajo/06-rdt.md)); no estaba trasladado hasta esta revisión.
+- `18-control-avance.md`: costo directo, MOI sin valorizar, terminología C/NC vs MOI → ya aplicado (reglas renumeradas a 11/12/13 en versiones posteriores del documento, mismo contenido).

@@ -47,3 +47,13 @@ Catálogo único listo para Fase 1 (congelar tarifa al validar RDT).
 ## Mejoras a flujos
 
 (vacío)
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+Ninguna nueva — esta tarea cargó datos de catálogo (cargos/equipos), no introdujo una regla de negocio nueva.

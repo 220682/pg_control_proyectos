@@ -1,6 +1,6 @@
 # Gestión de sesiones y contexto
 
-> Origen: aprobado por Victor en Fase 3 de `docs/Mejoras continuas/2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`.
+> Origen: aprobado por Victor en Fase 3 de `docs/Tareas de implementacion/2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`.
 
 ## Dónde se trabaja
 

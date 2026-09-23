@@ -1,6 +1,6 @@
 # Convenciones de trabajo
 
-> Origen: aprobado por Victor en Fase 1 de `docs/Mejoras continuas/2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`. Estas convenciones se reutilizan en tareas futuras salvo cambio explícito de Victor.
+> Origen: aprobado por Victor en Fase 1 de `docs/Tareas de implementacion/2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`. Estas convenciones se reutilizan en tareas futuras salvo cambio explícito de Victor.
 
 ## Entorno por defecto
 
@@ -28,6 +28,15 @@
 | --- | --- | --- |
 | `work-1` | `.worktrees/work-1` | Libre |
 | `work-2` | `.worktrees/work-2` | Libre |
+
+## Commits durante la implementación
+
+> Corregido el 2026-09-23 (Victor) — la práctica anterior era un commit por cada ítem de la Punch List; eso no va.
+
+- **No** un commit por cada ítem de la Punch List.
+- Commitear aproximadamente **cada 35% de avance acumulado** de la Punch List de la tarea.
+- El commit se hace **solo al terminar completo** el ítem de checklist en curso — nunca a medias de un ítem, aunque eso implique pasar el 35% antes de commitear.
+- Aplica tanto en `pg_control_proyectos` (documentación) como en `py_control_proyectos_web` (código), salvo que Victor indique otra cosa para una tarea puntual.
 
 ## Chats
 

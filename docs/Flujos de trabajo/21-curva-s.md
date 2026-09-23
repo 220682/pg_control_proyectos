@@ -23,7 +23,7 @@ El spec original del Dashboard Completo (`2026-08-16-dashboard-parcial-design.md
 alcance por dos razones que ya cayeron:
 
 1. Dependía del RDT, que en agosto "no capturaba nada" — el RDT ya alimenta
-   el PR desde [PR Fase 1 y 2](../Mejoras%20continuas/2026-09-21-pr-fase-1-pipeline-rdt.md).
+   el PR desde [PR Fase 1 y 2](../Tareas%20de%20implementacion/2026-09-21-pr-fase-1-pipeline-rdt.md).
 2. Se creía que hacía falta una tabla de snapshots semanales, equivalente al
    `HISTORIAL` del Excel. **Ese supuesto quedó obsoleto**: el dato diario ya
    existe en las tablas de origen (Plan Maestro y RDT validado); no hace
@@ -133,6 +133,6 @@ y no se mezcla con SPI.
 | Componentes | `src/components/curva-s/PantallaCurvaS.tsx`, `GraficoCurvaS.tsx` |
 | Ítem de navegación | `src/lib/config/nav-proyecto.ts` (clave `curva-s`, grupo Planificación) |
 
-Ver [2026-09-21-curva-s-fase-3-agente-d.md](../Mejoras%20continuas/2026-09-21-curva-s-fase-3-agente-d.md)
+Ver [2026-09-21-curva-s-fase-3-agente-d.md](../Tareas%20de%20implementacion/2026-09-21-curva-s-fase-3-agente-d.md)
 para el detalle de implementación, la Punch List verificada y el cuadre
 documentado contra el PR.

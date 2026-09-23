@@ -20,9 +20,9 @@ Estos pendientes vivían dentro de `docs/Flujos de trabajo/20-plan-maestro.md` (
 - Verificación de pertenencia de usuario por servicio/proyecto, además de rol.
 - Vista móvil semanal compacta.
 
-Notas de lo pospuesto a `mejoras-futuras.md` (2026-09-20):
+Notas de lo pospuesto a `tareas-futuras.md` (2026-09-20):
 - "Paquetes de trabajo, área, disciplina y frente como filtros operativos".
-- "3WLA como plan operativo separado" — el objetivo actual del flujo 18 es la cadena RDT → PR → Dashboard (EVM); 3WLA queda fuera de ese alcance por ahora (ver mejoras-futuras.md para el detalle).
+- "3WLA como plan operativo separado" — el objetivo actual del flujo 18 es la cadena RDT → PR → Dashboard (EVM); 3WLA queda fuera de ese alcance por ahora (ver tareas-futuras.md para el detalle).
 
 ## Pendiente — flujo 18 (control de avance), general
 
@@ -226,3 +226,15 @@ Causa: `position: sticky` combinado con un alto forzado en dos `<tr>` apiladas e
 ## Mejoras a flujos
 
 (vacío por ahora)
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+- Reglas del Plan Maestro (línea base, PV, versión aprobada/reemplazada) → ya documentadas en [docs/Flujos de trabajo/20-plan-maestro.md](../Flujos%20de%20trabajo/20-plan-maestro.md).
+- Cadena de control completa (Presupuesto → Cronograma → Plan Maestro → 3WLA → RDT → PR → Dashboard) → ya documentada en [docs/Flujos de trabajo/18-control-avance.md](../Flujos%20de%20trabajo/18-control-avance.md).
+- Pendientes de esta tarea (paquetes como filtro, 3WLA) quedaron en `tareas-futuras.md`, no en un flujo — son trabajo pospuesto, no una regla ya vigente.

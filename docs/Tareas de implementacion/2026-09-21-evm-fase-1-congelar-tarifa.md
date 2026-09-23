@@ -42,3 +42,13 @@ La cadena Fase 0 + Fase 1 asegura que cada RDT validado tenga tarifa congelada y
 ## Mejoras a flujos
 
 (vacío)
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+- Tarifa congelada al validar el RDT (no recalculada retroactivamente si el catálogo cambia después) → ya documentada en [docs/Flujos de trabajo/21-curva-s.md](../Flujos%20de%20trabajo/21-curva-s.md) ("tarifa congelada al validar (EVM Fase 1)").

@@ -6,7 +6,7 @@ Fuente de verdad de cada flujo: pantallas, roles, subflujos, archivos. Al desple
 
 | # | Flujo | Archivo |
 |---|--------|---------|
-| 01 | Interfaz / workspace | [01-interfaz.md](01-interfaz.md) |
+| 01 | Configuración (pendiente de definir) | [01-configuracion.md](01-configuracion.md) |
 | 02 | Usuarios | [02-usuarios.md](02-usuarios.md) |
 | 03 | Entorno por rol | [03-entorno.md](03-entorno.md) |
 | 04 | Notificaciones | [04-notificaciones.md](04-notificaciones.md) |
@@ -32,4 +32,4 @@ Fuente de verdad de cada flujo: pantallas, roles, subflujos, archivos. Al desple
 
 Mejoras: ver [../README.md](../README.md) (orquestador de `docs/`, ciclo de vida de un archivo de Mejoras continuas).
 
-**Checklists de verificación:** cada mejora o fase implementada tiene su checklist en la Punch List de Mejoras (ver `docs/README.md`), así la implementación se haya seccionado en varias fases o sub-lotes — cada una con su propio checklist. El registro cronológico de todos los checklists (cuántos ítems, cuántos Conforme, Observado o Sin verificar) vive en [../Mejoras continuas/resumen-checklists.md](../Mejoras%20continuas/resumen-checklists.md).
+**Checklists de verificación:** cada mejora o fase implementada tiene su checklist en la Punch List de Mejoras (ver `docs/README.md`), así la implementación se haya seccionado en varias fases o sub-lotes — cada una con su propio checklist. El registro cronológico de todos los checklists (cuántos ítems, cuántos Conforme, Observado o Sin verificar) vive en [../Tareas de implementacion/resumen-checklists.md](../Tareas%20de%20implementacion/resumen-checklists.md).

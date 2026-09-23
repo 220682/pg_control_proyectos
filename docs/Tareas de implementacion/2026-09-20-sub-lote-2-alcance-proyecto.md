@@ -237,3 +237,15 @@ Durante la prueba del ítem F7 apareció un bug real: **López Cáceres (Supervi
 - `pg_control_proyectos`: cierre de este archivo.
 
 **CERRADO 100%**
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+- Matriz rol × acceso × "Requiere OT a cargo" → trasladada a [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
+- Regla de navegación "toda ruta debe validar autenticación, rol y pertenencia al servicio" → ya documentada en [docs/Flujos de trabajo/16-paneles.md](../Flujos%20de%20trabajo/16-paneles.md) (regla 4).
+- Permisos de dos capas (rol global + OT asignada) → cubierto por la columna "Requiere OT a cargo" del flujo 14; no requirió entrada nueva.

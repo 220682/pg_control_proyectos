@@ -49,3 +49,13 @@ Al revisar el flujo de DP se aprovechó para cargar cargos/equipos del archivo `
 ## Mejoras a flujos
 
 (vacío)
+
+---
+
+## Mejoras (de trabajo)
+
+Ninguna identificada en esta tarea.
+
+## Reglas de negocio acordadas en esta tarea
+
+Ninguna nueva — fue un fix de bug (`reemplazar_dp` no borraba partidas/recursos viejos al reimportar), no introdujo una regla de negocio nueva. El comportamiento correcto (reemplazar_dp reconstruye completo, sin dejar residuos) es el esperado por diseño, ya implícito en [docs/Flujos de trabajo/09-importar-dp.md](../Flujos%20de%20trabajo/09-importar-dp.md).

@@ -12,7 +12,7 @@
 ## Ejecución en la nube (decidido 2026-09-21)
 
 - **Cada agente trabaja en su propia rama** (no directo a `main`). Al llegar al 100% de su checklist de implementación, abre un **PR** para que Victor lo revise antes de mergear. Rama sugerida: `feat/pr-fase-2-linea-base-evm`.
-- **Las migraciones se corren solas, sin pausar a confirmar cada una** — excepción puntual autorizada por Victor solo para esta tarea (ver `mejoras-futuras.md`, sección "Acceso directo a Postgres/Supabase"). El agente lee la cadena de conexión directa de Postgres de la variable de entorno **`PR_DB_URL`**, configurada por Victor en el entorno de `claude.ai/code` de este repositorio. **No es un secreto cifrado** — la documentación de Claude Code advierte que cualquiera con acceso a ese entorno puede leerla —, así que el riesgo aceptado es acotado a que hoy solo Victor tiene ese acceso. El agente nunca imprime el valor completo en su salida ni lo commitea.
+- **Las migraciones se corren solas, sin pausar a confirmar cada una** — excepción puntual autorizada por Victor solo para esta tarea (ver `tareas-futuras.md`, sección "Acceso directo a Postgres/Supabase"). El agente lee la cadena de conexión directa de Postgres de la variable de entorno **`PR_DB_URL`**, configurada por Victor en el entorno de `claude.ai/code` de este repositorio. **No es un secreto cifrado** — la documentación de Claude Code advierte que cualquiera con acceso a ese entorno puede leerla —, así que el riesgo aceptado es acotado a que hoy solo Victor tiene ese acceso. El agente nunca imprime el valor completo en su salida ni lo commitea.
 - Credenciales de verificación (Playwright) en las variables **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** (cuenta con permisos altos) y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`** (cuenta sin permisos de administración), mismo entorno.
 - Aun así, **cada migración queda documentada en su propio archivo `db/0NN_*.sql`, commiteada, y resumida en el PR** — la autonomía es sobre no pausar a pedir permiso, no sobre dejar de dejar rastro.
 - Al terminar, el agente entrega en el PR: el checklist de implementación (B1–B10) marcado, la Punch List de 15 ítems con el resultado de cada uno verificado con Playwright, y el informe de limpieza.
@@ -83,7 +83,7 @@ Traer al PR la línea base contractual (DP), lo planificado (Plan Maestro y Cron
 - **Dashboard — no se toca.** Ni el de proyecto, ni el rollup de portafolio, ni el Dashboard 2 "Completo".
 - Curva S y serie temporal semanal (necesitan el histórico, van después).
 - Pareto de CNC y cierre semanal auditado.
-- 3WLA (pospuesto en `mejoras-futuras.md`).
+- 3WLA (pospuesto en `tareas-futuras.md`).
 
 > **Efecto esperado, no es cambio de alcance:** los dashboards existentes empezarán a mostrar números reales sin ser tocados, porque leen las mismas columnas que estas dos fases empiezan a llenar.
 
@@ -416,3 +416,17 @@ La versión vieja de `proyectos/[id]/pr/page.tsx` (una sola tabla de partidas + 
 
 - **Import de `ENCABEZADOS` desde `@/lib/dp/diccionario`** ya no se usa en `pr/page.tsx` — pero el diccionario sigue vivo y en uso en otros 5 archivos (`exportador-excel.ts`, `exportador-pdf.ts`, `cronograma/parser-excel.ts`, `ModalPartidasServicio.tsx`, `dp/page.tsx`). No es código huérfano, solo un consumidor menos.
 - **La tabla "Recursos" (tipo / descripción / costo contractual de `pr_recursos`)** que tenía la pantalla vieja **no tiene equivalente en la pantalla nueva** — el diseño de tres bloques del plan es enteramente por partida, no por recurso. El dato de `pr_recursos` sigue existiendo y usándose (es la otra mitad de la comprobación de coherencia del ítem 2, y alimenta el desglose de costos del Dashboard vía `dashboard.ts`), pero ya no hay ninguna pantalla que lo liste fila por fila como lo hacía el PR viejo. Señalarlo por si Victor quiere ese detalle de vuelta como una cuarta subvista.
+
+---
+
+## Mejoras (de trabajo)
+
+- Sobrecargas huérfanas de `reemplazar_dp()` por `CREATE OR REPLACE FUNCTION` con firma distinta → trasladado a [docs/Mejoras continuas/2026-09-21-migraciones-sql-sobrecargas-huerfanas.md](../Mejoras%20continuas/2026-09-21-migraciones-sql-sobrecargas-huerfanas.md).
+
+## Reglas de negocio acordadas en esta tarea
+
+- Plan Maestro define el PV y es restrictivo para pasar a Ejecución → aplicado en [docs/Flujos de trabajo/20-plan-maestro.md](../Flujos%20de%20trabajo/20-plan-maestro.md).
+- Transición a `EJECUCION` exige Plan Maestro aprobado → aplicado en [docs/Flujos de trabajo/08-programa-portafolio-proyecto.md](../Flujos%20de%20trabajo/08-programa-portafolio-proyecto.md).
+- Reglas de costo directo, MOI y USD → aplicado en [docs/Flujos de trabajo/18-control-avance.md](../Flujos%20de%20trabajo/18-control-avance.md).
+- PR de tres bloques (línea base, real, derivados EVM) → aplicado en [docs/Flujos de trabajo/10-generacion-pr.md](../Flujos%20de%20trabajo/10-generacion-pr.md).
+- Acceso nuevo (confirmar transición) → aplicado en [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).

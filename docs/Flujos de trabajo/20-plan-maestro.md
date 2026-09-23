@@ -26,7 +26,7 @@ No reemplaza el cronograma, el RDT, el PR ni el Dashboard.
 
 Reglas:
 
-- **El Plan Maestro define el PV del servicio desde el inicio y es restrictivo: sin uno en estado `APROBADO`, el servicio no puede pasar de `EN_PLANEACION` a `EJECUCION`.** Validado en servidor (`POST /api/proyectos/[id]/confirmar-transicion`), no solo en la interfaz — una transición intentada por URL directa queda igual de bloqueada. Los servicios que ya estaban en `EJECUCION` antes de esta regla no se tocan; el bloqueo aplica solo a la transición (ver [PR Fase 2](../Mejoras%20continuas/2026-09-21-pr-fase-2-pipeline-linea-base.md), tarea B4).
+- **El Plan Maestro define el PV del servicio desde el inicio y es restrictivo: sin uno en estado `APROBADO`, el servicio no puede pasar de `EN_PLANEACION` a `EJECUCION`.** Validado en servidor (`POST /api/proyectos/[id]/confirmar-transicion`), no solo en la interfaz — una transición intentada por URL directa queda igual de bloqueada. Los servicios que ya estaban en `EJECUCION` antes de esta regla no se tocan; el bloqueo aplica solo a la transición (ver [PR Fase 2](../Tareas%20de%20implementacion/2026-09-21-pr-fase-2-pipeline-linea-base.md), tarea B4).
 - El RDT validado alimenta `Real`; nunca sobrescribe `Programado` ni el PV aprobado.
 - El RDT debe usar un WBS existente en el DP del mismo servicio. Al validarlo, el sistema registra el vinculo actividad RDT - partida DP.
 - No se suman unidades fisicas incompatibles entre partidas.
@@ -109,7 +109,7 @@ Si el servicio dura seis semanas, se generan seis grupos semanales; no existe un
 
 ## Pendiente (Fase 2)
 
-Ver `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` — los pendientes se trackean ahí, no en este archivo.
+Ver `docs/Tareas de implementacion/2026-09-20-control-avance-plan-maestro.md` — los pendientes se trackean ahí, no en este archivo.
 
 ## Referencias
 

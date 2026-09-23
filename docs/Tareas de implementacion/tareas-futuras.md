@@ -1,24 +1,26 @@
-# Mejoras futuras
+# Tareas futuras
 
-Archivo permanente — siempre el último de `Mejoras continuas/` (sin fecha en el nombre a propósito, para quedar al final en cualquier listado). No es un lote: no lleva checklist ni se cierra nunca. Es un lugar de espera para mejoras que Victor decide posponer indefinidamente, sin fecha de retomar.
+> Renombrado el 2026-09-23 (antes "Mejoras futuras" en `docs/Mejoras continuas/`) — el nombre anterior contradecía la distinción entre Tareas de implementación (trabajo de Workers) y Mejoras continuas (aprendizajes trasladados a fuentes de verdad). Este archivo es un backlog de **tareas de implementación pospuestas**, no de aprendizajes; por eso vive en `Tareas de implementacion/`.
+
+Archivo permanente — no es una tarea con Plan/Punch List/Cierre como las demás de esta carpeta, ni un lote de `Mejoras continuas/`. No lleva checklist ni se cierra nunca. Es un lugar de espera para trabajo de implementación que Victor decide posponer indefinidamente, sin fecha de retomar.
 
 ## Cómo se usa
 
 - Solo se agrega algo aquí cuando **Victor lo indica explícitamente** como pendiente a futuro — no es donde el agente guarda por su cuenta algo que no alcanzó a hacer.
 - Cada ítem anota: de qué archivo/sesión salió, en qué consiste, y por qué se pospuso (si se sabe).
-- Cuando Victor decide retomarlo, se saca de aquí y se convierte en un archivo nuevo de `Mejoras continuas/` con la fecha del día en que se retoma.
+- Cuando Victor decide retomarlo, se saca de aquí y se convierte en un archivo de tarea nuevo en `Tareas de implementacion/` con la fecha del día en que se retoma.
 
 ## Pendientes a futuro
 
 ### Paquetes de trabajo como filtro operativo (Plan Maestro / flujo 20)
 
-- **Origen:** `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` (Pendiente Fase 2 del flujo 20-plan-maestro).
+- **Origen:** `docs/Tareas de implementacion/2026-09-20-control-avance-plan-maestro.md` (Pendiente Fase 2 del flujo 20-plan-maestro).
 - **Qué es:** paquetes de trabajo, área, disciplina y frente como filtros operativos del Plan Maestro, sin reemplazar las partidas DP.
 - **Pospuesto:** 2026-09-20.
 
 ### 3WLA como plan operativo separado
 
-- **Origen:** `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` (Pendiente Fase 2 del flujo 20-plan-maestro).
+- **Origen:** `docs/Tareas de implementacion/2026-09-20-control-avance-plan-maestro.md` (Pendiente Fase 2 del flujo 20-plan-maestro).
 - **Qué es:** construir el 3WLA/Plan semanal como interfaz propia (compromisos, restricciones, condiciones de satisfacción, cumplido/no cumplido, causa, PPC/CNC), según lo describe `18-control-avance.md`.
 - **Por qué se pospone:** el objetivo actual del flujo 18 es la cadena de datos RDT validado → PR → Dashboard (métricas EVM: EV, AC, SPI, CPI). El 3WLA no alimenta esa cadena — mide PPC (LPS), un indicador aparte que `18-control-avance.md` marca explícitamente que no debe mezclarse con SPI. No es indispensable para que el dato de RDT llegue al Dashboard.
 - **Pospuesto:** 2026-09-20.

@@ -1,4 +1,6 @@
-# 01 — Interfaz / workspace
+# 01 — Configuración
+
+> **Pendiente de definir/implementar.** Este flujo se llamaba "Interfaz / workspace"; se renombró a "Configuración" pero su contenido específico como flujo de configuración todavía no se ha escrito. Lo que sigue abajo es el contenido original (interfaz/workspace), conservado como referencia hasta que se defina el alcance real de "Configuración" con Victor.
 
 Shell (`WorkspaceShell`), login, adaptación móvil, tablas con scroll.
 

@@ -22,7 +22,7 @@ Mismo modo de trabajo que los Agentes A y B (Fases 1 y 2 del PR):
   **Nombre fijo, no sugerido** — sigue la convención de los Agentes A y B (`feat/pr-fase-1-pipeline-rdt`, `feat/pr-fase-2-linea-base-evm`): `feat/<módulo>-fase-<n>-<qué hace>`. El agente **no la renombra ni trabaja en otra**.
 
 - Al 100 % del checklist, abre un **PR** con título **"Curva S Fase 3 (Agente D): serie temporal PV/EV/AC en pantalla propia"**, para que Victor lo revise antes de mergear.
-- **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `mejoras-futuras.md`), leyendo **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres; el Agente A aplicó sus migraciones vía Management API de Supabase. Si vuelve a pasar, usar esa vía y dejarlo anotado.*
+- **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `tareas-futuras.md`), leyendo **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres; el Agente A aplicó sus migraciones vía Management API de Supabase. Si vuelve a pasar, usar esa vía y dejarlo anotado.*
 - **Rango de migraciones asignado a esta fase: `070`–`079`.** No usar otro rango — evita choque con cualquier fase futura.
 - Credenciales de verificación: **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`**.
 - Cada decisión o convención nueva acordada con Victor **se escribe en este archivo** conforme ocurre.
@@ -500,3 +500,17 @@ Esta es la primera pantalla del proyecto con un gráfico de líneas — no hay p
 ## Mejoras a flujos
 
 Ver tarea D9.
+
+---
+
+## Mejoras (de trabajo)
+
+- Acceso a Postgres sin salida IPv6 desde el sandbox → resuelto vía Management API de Supabase → trasladado a [docs/Mejoras continuas/2026-09-21-acceso-postgres-sin-ipv6.md](../Mejoras%20continuas/2026-09-21-acceso-postgres-sin-ipv6.md).
+
+## Reglas de negocio acordadas en esta tarea
+
+- Flujo nuevo de la pantalla Curva S → creado en [docs/Flujos de trabajo/21-curva-s.md](../Flujos%20de%20trabajo/21-curva-s.md).
+- El supuesto del spec de agosto (tabla de snapshots semanales) quedó obsoleto → documentado en `20-plan-maestro.md` y `21-curva-s.md`.
+- El Bloque G cambió de lugar (Curva S no vive en el Dashboard) → documentado en `11-dashboard.md` y `21-curva-s.md`, consistente entre ambos.
+- Acceso nuevo (pantalla + chip + endpoint) → fila "Ver Curva S" en [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
+- Regla visual nueva para `design.md` (crosshair, tooltip, leyenda del primer gráfico de líneas) → **pendiente de verificar** si se propuso/agregó; no confirmado en esta pasada.

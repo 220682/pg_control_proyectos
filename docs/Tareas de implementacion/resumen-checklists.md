@@ -10,7 +10,7 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 ## Flujo 020 — Plan Maestro
 
-| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
+| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Tareas de implementación | Ítems | Conforme | Observado | Sin verificar | Estado |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-20/21 | Sub-lote 1 — RDT rechazo + historial | "RDT: rechazo visible con motivo + historial de corrección" | [2026-09-20-control-avance-plan-maestro.md](2026-09-20-control-avance-plan-maestro.md) | 30 | 29 | 1 | 0 | **Cerrado 100%** — verificación visual completa y migraciones 041-044 aplicadas en Supabase (2026-09-21). Ítem 14 sigue Observado en la Punch List pero sin impacto: la regla "cada partida jala su WBS" se cumple automáticamente, la validación de bloqueo quedó sin efecto por diseño |
 | 2 | 2026-09-20 | Sub-lote 2 — Alcance por OT sobre permisos por rol | "Sub-lote 2: Alcance por OT sobre permisos por rol" | [2026-09-20-sub-lote-2-alcance-proyecto.md](2026-09-20-sub-lote-2-alcance-proyecto.md) | 7 | 7 | 0 | 0 | **Cerrado 100%** |
@@ -22,7 +22,7 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 ## Flujo 010 — Generación PR
 
-| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
+| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Tareas de implementación | Ítems | Conforme | Observado | Sin verificar | Estado |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-21 | PR Fase 1 (Agente A) — pipeline RDT → PR | "PR enriquecido — Fase 1: pipeline RDT → PR" | [2026-09-21-pr-fase-1-pipeline-rdt.md](2026-09-21-pr-fase-1-pipeline-rdt.md) | 19 | 19 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #13](https://github.com/220682/py_control_proyectos_web/pull/13) (2026-09-21 16:20) |
 | 2 | 2026-09-21 | PR Fase 2 (Agente B) — línea base, planificado y derivados EVM | "PR Fase 2 — línea base, planificado y derivados EVM" | [2026-09-21-pr-fase-2-pipeline-linea-base.md](2026-09-21-pr-fase-2-pipeline-linea-base.md) | 15 | 15 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #14](https://github.com/220682/py_control_proyectos_web/pull/14) (2026-09-21 18:05), después de A |
@@ -33,7 +33,7 @@ Los datos de ítems/estado se toman de la Punch List de Mejoras (artifact `8yHL1
 
 ## Flujo 011 — Dashboard
 
-| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Mejoras continuas | Ítems | Conforme | Observado | Sin verificar | Estado |
+| # | Fecha | Fase / sub-lote | Checklist (Punch List) | Documentado en Tareas de implementación | Ítems | Conforme | Observado | Sin verificar | Estado |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 2026-09-21 | Dashboard Fase 3 (Agente C) — los dos Dashboards: Parcial mejorado y Completo construido | "Dashboard Fase 3 — los dos Dashboards" | [2026-09-21-dashboard-fase-3-agente-c.md](2026-09-21-dashboard-fase-3-agente-c.md) | 25 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Punch List todavía no cargada; la implementación no arranca sin ella |
 | 2 | 2026-09-21 | Curva S Fase 3 (Agente D) — serie temporal PV/EV/AC en pantalla propia | "Curva S Fase 3 — serie temporal PV/EV/AC" | [2026-09-21-curva-s-fase-3-agente-d.md](2026-09-21-curva-s-fase-3-agente-d.md) | 20 | — | — | — | **Plan inicial — pendiente de aprobación de Victor.** Incluye una decisión previa (D0: ubicación y nombre del chip) que Victor confirma antes de que el agente escriba código de navegación |

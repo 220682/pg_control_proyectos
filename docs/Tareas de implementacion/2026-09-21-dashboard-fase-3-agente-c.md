@@ -24,7 +24,7 @@ Mismo modo de trabajo que los Agentes A y B (Fases 1 y 2 del PR):
   **Nombre fijo, no sugerido** — sigue la convención de los Agentes A y B (`feat/pr-fase-1-pipeline-rdt`, `feat/pr-fase-2-linea-base-evm`): `feat/<módulo>-fase-<n>-<qué hace>`. El agente **no la renombra ni trabaja en otra**.
 
 - Al llegar al 100 % del checklist, abre un **PR** con título **"Dashboard Fase 3 (Agente C): los dos Dashboards — Parcial mejorado y Completo construido"**, para que Victor lo revise antes de mergear.
-- **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `mejoras-futuras.md`). Cadena de conexión en la variable de entorno **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres — el Agente A terminó aplicando sus migraciones vía Management API de Supabase. Si pasa lo mismo, usar esa vía y dejarlo anotado, no quedarse bloqueado.* **Esta fase, de todos modos, no debería necesitar ninguna migración** (ver C0).
+- **Las migraciones se corren solas, sin pausar a confirmar cada una** (excepción ya autorizada, ver `tareas-futuras.md`). Cadena de conexión en la variable de entorno **`PR_DB_URL`**. El agente nunca imprime el valor completo ni lo commitea. *Nota del Agente A (commit `b8b3ac7` en `pg_control_proyectos`): `PR_DB_URL` resultó inalcanzable desde el sandbox por falta de salida IPv6 al puerto directo de Postgres — el Agente A terminó aplicando sus migraciones vía Management API de Supabase. Si pasa lo mismo, usar esa vía y dejarlo anotado, no quedarse bloqueado.* **Esta fase, de todos modos, no debería necesitar ninguna migración** (ver C0).
 - Credenciales de verificación: **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** (permisos altos) y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`** (sin permisos de administración), mismo entorno.
 - Cada decisión, convención nueva o modificación acordada con Victor **se escribe en este archivo** conforme ocurre, no al final de memoria.
 - Al terminar, el agente entrega en el PR: checklist C0–C10 marcado, Punch List con el resultado de cada ítem verificado con Playwright, e informe de limpieza.
@@ -566,3 +566,16 @@ Tras la vuelta 3, la Punch List completa corrió en verde (24/24 en el script au
 
 **Vuelta 4 — corrección del propio informe de limpieza, no del producto.**
 Al redactar la sección "Archivos y código que quedaron viejos" se afirmó por memoria que `SelectorDashboard.tsx` y el aviso "Dashboard Completo no está construido" habían quedado huérfanos. Antes de dejarlo escrito, se corrió el `Grep` real que AGENTS.md exige para cualquier "esto quedó sin uso" — y apareció que ambos **siguen vivos** en el rollup de portafolio (`programas/[id]/portafolios/[portafolioId]/dashboard/page.tsx`), una pantalla distinta y fuera de alcance. Corregido antes de cerrar la fase; ningún archivo se tocó de más.
+
+---
+
+## Mejoras (de trabajo)
+
+- Falsos negativos en verificación con Playwright (texto `uppercase` por CSS, timeout fijo en vez de condición real) → trasladado a [docs/Mejoras continuas/2026-09-21-verificacion-playwright-falsos-negativos.md](../Mejoras%20continuas/2026-09-21-verificacion-playwright-falsos-negativos.md).
+
+## Reglas de negocio acordadas en esta tarea
+
+- `11-dashboard.md` reescrito completo (los dos Dashboards, filtros, indicadores, PPC, paleta de series) → aplicado.
+- Resumen ejecutivo breve califica plazo (SPI) y costo (CPI) por separado, no con el semáforo → agregado a [docs/Flujos de trabajo/11-dashboard.md](../Flujos%20de%20trabajo/11-dashboard.md) el 2026-09-23 (faltaba, detectado en esta revisión).
+- `14-accesos-y-restricciones.md` no se tocó — el toggle reutiliza un permiso ya existente, no crea acceso nuevo.
+- `design.md` no recibió regla nueva — todo lo usado ya estaba cubierto por precedente.

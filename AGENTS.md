@@ -53,9 +53,9 @@ Si un comando no fue confirmado aquí, se considera "por confirmar" y no se debe
 - [conocimiento](conocimiento): fundamentos teóricos y conceptuales de EVM y LPS.
 - [docs](docs): documentación operativa, flujos y mejoras.
 - [docs/Flujos de trabajo](docs/Flujos%20de%20trabajo): conjunto principal de especificaciones por flujo.
-- [docs/Mejoras continuas](docs/Mejoras%20continuas): cambios y mejoras documentadas.
+- [docs/Tareas de implementacion](docs/Tareas%20de%20implementacion): lo que hacen los Workers — código, pantallas, consultas, migraciones —, tareas del flujo de Orquestador y lotes con Punch List.
+- [docs/Mejoras continuas](docs/Mejoras%20continuas): solo aprendizajes sobre cómo se trabaja (método, herramientas, workarounds), extraídos de una tarea. No contiene reglas de negocio del sistema.
 - [docs/00-sistema](docs/00-sistema): políticas operativas del flujo de Orquestador (roles, convenciones de entorno/ramas/worktrees, gestión de sesiones).
-- [docs/Tareas de implementacion](docs/Tareas%20de%20implementacion): tareas de implementación única ejecutadas con el flujo de Orquestador.
 - [Sistema hibrido](Sistema%20hibrido): documentos y archivos del diseño híbrido del sistema.
 - [Informacion para pruebas](Informacion%20para%20pruebas): datos, RDO y archivos de evaluación.
 - [Formatos](Formatos): formatos del proyecto.
@@ -140,7 +140,7 @@ Agrupación operativa opcional.
 
 Los flujos documentados con mayor detalle son:
 
-- [docs/Flujos de trabajo/01-interfaz.md](docs/Flujos%20de%20trabajo/01-interfaz.md)
+- [docs/Flujos de trabajo/01-configuracion.md](docs/Flujos%20de%20trabajo/01-configuracion.md) (pendiente de definir/implementar)
 - [docs/Flujos de trabajo/02-usuarios.md](docs/Flujos%20de%20trabajo/02-usuarios.md)
 - [docs/Flujos de trabajo/03-entorno.md](docs/Flujos%20de%20trabajo/03-entorno.md)
 - [docs/Flujos de trabajo/04-notificaciones.md](docs/Flujos%20de%20trabajo/04-notificaciones.md)
@@ -160,6 +160,7 @@ Los flujos documentados con mayor detalle son:
 - [docs/Flujos de trabajo/18-control-avance.md](docs/Flujos%20de%20trabajo/18-control-avance.md)
 - [docs/Flujos de trabajo/19-paquetes de trabajo y jerarquia de control.md](docs/Flujos%20de%20trabajo/19-paquetes%20de%20trabajo%20y%20jerarquia%20de%20control.md)
 - [docs/Flujos de trabajo/20-plan-maestro.md](docs/Flujos%20de%20trabajo/20-plan-maestro.md)
+- [docs/Flujos de trabajo/21-curva-s.md](docs/Flujos%20de%20trabajo/21-curva-s.md)
 
 ## Reglas de interfaz
 
@@ -216,11 +217,30 @@ No se encontraron pruebas ejecutables en este repositorio. Por tanto:
 
 ## Frase de inicio de sesión
 
-Si el usuario dice **"inicia sesión en control de proyectos"** (o equivalente claro): no preguntar de cero. Leer [docs/README.md](docs/README.md) — ese archivo es el orquestador de `docs/` y dice exactamente qué leer (los archivos de `Mejoras continuas/` que sigan abiertos para saber en qué quedó el proyecto, y todos los archivos de `Flujos de trabajo/` para el contexto general). Responder con los pendientes de esas sesiones abiertas y el contexto general del sistema.
+Hay dos frases de activación distintas — no se mezclan:
+
+- **"inicia sesión en control de proyectos"** (o equivalente claro): flujo normal. No preguntar de cero. Leer [docs/README.md](docs/README.md) — ese archivo es el orquestador de `docs/` y dice exactamente qué leer (los archivos de `Tareas de implementacion/` que sigan abiertos para saber en qué quedó el proyecto, y todos los archivos de `Flujos de trabajo/` para el contexto general). Responder con los pendientes de esas sesiones abiertas y el contexto general del sistema.
+- **"vamos a trabajar en un plan con agente orquestador"** (o equivalente claro): flujo de Orquestador. Ver [Flujo con Orquestador](#flujo-con-orquestador) más abajo.
 
 ## Frase de cierre de sesión
 
-Si el usuario dice **"cierra sesión en control de proyectos"**: seguir lo indicado en [docs/README.md](docs/README.md) — actualizar solo el o los archivos de `Mejoras continuas/` tocados en la sesión (avance, checklist, apartado "Mejoras a flujos"); no crear ninguna memoria de sesión aparte. Confirmar qué se guardó y listar los pendientes para la siguiente sesión.
+Si el usuario dice **"cierra sesión en control de proyectos"**: actualizar el o los archivos de `Tareas de implementacion/` tocados en la sesión (avance, checklist, apartados "Mejoras (de trabajo)", "Reglas de negocio acordadas en esta tarea" y "Carpetas/archivos huérfanos" — llenados en el momento en que ocurrió cada hallazgo, no recién ahora) — tanto si es una tarea del flujo de Orquestador (Registro de decisiones, resultados, cierre) como si es un lote de trabajo tradicional. Mejoras de trabajo con contenido → extraer a un archivo en `Mejoras continuas/`. Reglas de negocio con contenido → integrarlas directo en el Flujo de trabajo correspondiente, nunca como nota aparte. Huérfanos detectados → reportados a Victor, sin borrar nada (ver `docs/README.md`). No crear ninguna memoria de sesión aparte. Confirmar qué se guardó y listar los pendientes para la siguiente sesión.
+
+## Flujo con Orquestador
+
+Cuando el usuario dice una frase equivalente a "vamos a trabajar en un plan con agente orquestador", aplica la política de [docs/00-sistema/roles-y-flujo.md](docs/00-sistema/roles-y-flujo.md): el Orquestador es el punto único de contacto operativo entre Victor y los demás agentes (Planner, Worker, Auditor); coordina objetivo, plan, aprobación, implementación, auditoría y cierre, y no aprueba en nombre de Victor ni hace merge, push, commit, PR, ni crea rama, worktree o infraestructura sin autorización explícita.
+
+Las tareas ejecutadas con este flujo viven en [docs/Tareas de implementacion/](docs/Tareas%20de%20implementacion/), no en `Mejoras continuas/`. Antes de empezar, leer también [docs/00-sistema/convenciones-de-trabajo.md](docs/00-sistema/convenciones-de-trabajo.md) y [docs/00-sistema/gestion-de-sesiones-y-contexto.md](docs/00-sistema/gestion-de-sesiones-y-contexto.md).
+
+### Tareas de implementación, Mejoras continuas y Reglas de negocio
+
+Tres categorías distintas, no dos:
+
+- **Tarea de implementación** = lo que hace un Worker: código, pantallas, consultas, migraciones — trabajo operativo de construcción. Vive en `docs/Tareas de implementacion/`. Registra QUÉ se implementó, no la regla permanente.
+- **Mejora de trabajo / mejora continua** = un aprendizaje sobre **cómo trabajamos** (método, herramientas, workarounds operativos) — no una regla del sistema. Vive en `docs/Mejoras continuas/` como destino final.
+- **Regla de negocio** = una regla del sistema (cómo se calcula, valida o comporta algo). **No se guarda en un archivo aparte** — va directo al `Flujo de trabajo` correspondiente, integrada en su estructura (no pegada al final). Si contradice una regla ya escrita, se modifica lo existente con lo acordado con Victor durante la tarea.
+
+**Cómo trasladar:** toda tarea de implementación tiene tres apartados obligatorios (`## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea`, `## Carpetas/archivos huérfanos` — ver `docs/Tareas de implementacion/plantilla-tarea.md`) que **se llenan en el momento en que ocurre cada hallazgo**, no al cerrar. Si una regla nueva contradice una ya escrita en un flujo, el agente pregunta a Victor ahí mismo, valida la respuesta, la escribe en el apartado y recién entonces continúa (repite el ciclo si no queda resuelto). El agente no edita una fuente de verdad por su cuenta. Al cerrar, cada entrada ya registrada se traslada a su destino: mejoras de trabajo a un archivo nuevo en `docs/Mejoras continuas/`, reglas de negocio directo al Flujo correspondiente, huérfanos reportados a Victor (en `pg_control_proyectos` y `py_control_proyectos_web`, sin borrar nada por su cuenta). El Auditor verifica que esto se haya hecho antes de cerrar la tarea (ver `docs/00-sistema/roles-y-flujo.md` § Auditor). Ver `docs/README.md` para el detalle del ciclo.
 
 ## Flujo de trabajo del agente
 

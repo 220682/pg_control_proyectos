@@ -6,7 +6,7 @@ Idea: tras leer un archivo que el usuario sube (presupuesto, cronograma, y a fut
 
 Encaja con dos informes estáticos (no conversacionales) que ya existen o están pedidos:
 - Informe de extracción del Cronograma (flujo 15, ya construido).
-- Informe completo de errores de importación del DP (pedido 2026-09-13, no implementado — ver `docs/Mejoras continuas/`).
+- Informe completo de errores de importación del DP (pedido 2026-09-13, no implementado — ver `docs/Tareas de implementacion/`).
 
 Ambos serían la base de datos que este agente usaría después para conversar. Por eso Victor pidió, por ahora, solo el informe estático, sin habilitar la parte conversacional.
 

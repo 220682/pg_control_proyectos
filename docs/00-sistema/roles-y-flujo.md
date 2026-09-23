@@ -96,7 +96,7 @@ Debe:
 
 - Implementar solo el subalcance asignado.
 - Leer los documentos indicados por el Orquestador.
-- Hacer commits y push según autorización y política del repositorio.
+- Hacer commits y push **en su propia rama `work-N`, sin pedir autorización caso por caso** — sigue la cadencia ya acordada en `docs/00-sistema/convenciones-de-trabajo.md` (~cada 35% de avance acumulado, nunca a medias de un ítem). Commit y push a `work-N` no tocan `main`: no son el paso de publicación, así que no son un Gate de Victor.
 - Ejecutar las pruebas disponibles.
 - **Autoverificar con Playwright antes de reportar cualquier ítem de la Punch List como listo** (aprobado por Victor el 2026-09-23): para cambios de interfaz o comportamiento en `py_control_proyectos_web`, correr un script de verificación con Playwright que espere la condición real (no `waitForTimeout` fijo) y lea `textContent()` en vez de `innerText()` para evitar falsos negativos por CSS (ej. `uppercase`) — ver lecciones en `docs/Mejoras continuas/2026-09-21-verificacion-playwright-falsos-negativos.md`. Es autoverificación del Worker; no reemplaza la prueba final de Victor en la Punch List interactiva.
 - Reportar rama, commits, archivos modificados, pruebas, Punch List, bloqueos y propuestas documentales.
@@ -107,7 +107,7 @@ Debe:
 
 No debe:
 
-- Hacer merge.
+- Hacer merge (`work-N` → `main`) bajo ninguna circunstancia — eso es el Gate 2 de Victor (ver "Aprobaciones de Victor" arriba), nunca una decisión de Worker, Auditor u Orquestador.
 - Cambiar el alcance.
 - Modificar reglas permanentes o documentación de sistema sin aprobación.
 - Trabajar en la rama o worktree de otro Worker.

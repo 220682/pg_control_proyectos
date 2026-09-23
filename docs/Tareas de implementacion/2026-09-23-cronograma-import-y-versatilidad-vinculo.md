@@ -25,9 +25,9 @@ Implementando.
 | Rol | Rama | Estado |
 | --- | --- | --- |
 | Orquestador (esta sesión) | `main` (docs) | Activo |
-| Worker — fix import + versatilidad partida↔tarea (rehecho, `session_01Q8CsGMqPhjmfBAcRfw9XNW`) | `work-1` (`py_control_proyectos_web`) | Implementando |
+| Worker — versatilidad partida↔tarea (`session_018P1cLbJzie5yT9YvDc56BX`) | `local-worker-1` (`py_control_proyectos_web`) | Implementando |
 
-> Nota 2026-09-23: los `work-1`/`work-2` originales (commits `e303a73`, `2563260`) se perdieron — nunca se pushearon y el contenedor de esa sesión se reciclió (ver `## Mejoras (de trabajo)`). Se relanzó como un único Worker en `work-1` cubriendo ambas sub-tareas, esta vez con push por avance y verificación Playwright real.
+> Nota 2026-09-23: los `work-1`/`work-2` originales (commits `e303a73`, `2563260`) se perdieron — nunca se pushearon y el contenedor de esa sesión se reciclió (ver `## Mejoras (de trabajo)`). Se relanzó un Worker (`session_01Q8CsGMqPhjmfBAcRfw9XNW`, luego `hist_...`) que sí completó y pusheó la Tarea 1 (`ed3feac`) antes de interrumpirse por la corrección de nomenclatura de entorno/rama. Rama renombrada `work-1` → `local-worker-1` (mismo commit). Continuado en un Worker nuevo (`session_018P1cLbJzie5yT9YvDc56BX`) para la Tarea 2.
 
 ## Plan aprobado
 
@@ -62,7 +62,7 @@ Código escrito y verificado con type-check, lint y los 504 tests unitarios del 
 
 **Intento anterior (perdido, ver Mejoras):** commits `e303a73` (fix import) y `2563260` (versatilidad partida↔tarea) — código completo, type-check/lint/tests pasaban, pero nunca se pushearon y se perdieron con el contenedor de esa sesión.
 
-**Rehecho 2026-09-23:** Worker relanzado en `work-1` (`session_01Q8CsGMqPhjmfBAcRfw9XNW`) cubriendo ambas sub-tareas con el mismo diagnóstico y plan ya aprobado. Pendiente de su reporte final.
+**Rehecho 2026-09-23:** Tarea 1 completa y pusheada — `local-worker-1`, commit `ed3feac` (manejo de errores de `/api/cronograma`), type-check/lint/tests OK. Tarea 2 (versatilidad partida↔tarea) en curso en `session_018P1cLbJzie5yT9YvDc56BX`, misma rama. Pendiente de su reporte final con verificación Playwright.
 
 ## Informe de Auditoría
 

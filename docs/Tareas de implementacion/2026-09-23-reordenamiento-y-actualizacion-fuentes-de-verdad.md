@@ -1,6 +1,6 @@
 # Reordenamiento y actualización de fuentes de verdad
 
-> **Estado:** PROPUESTO. No ejecutar hasta que Victor lo apruebe explícitamente.
+> **Estado:** EJECUTADO — Fases 0 a 8 completadas y commiteadas el 2026-09-23 (commit `6c26fde`, pusheado a `origin/main`). Pendiente no bloqueante: confirmar si `design.md` recibió la regla visual del primer gráfico de líneas (Curva S) — ver decisión #12 de la tarea `2026-09-21-curva-s-fase-3-agente-d.md`.
 >
 > **Objetivo:** alinear la estructura física del repositorio con las fuentes de verdad (`AGENTS.md`, `README.md` raíz, `docs/README.md`), integrar la política de Orquestador/sesiones/worktrees, y establecer el ciclo de mejora continua donde cada aprendizaje se traslade a las fuentes de verdad correspondientes.
 >
@@ -66,6 +66,7 @@ Ejemplos:
 | 17 | 2026-09-23 | Corrección de momento de registro: los tres apartados obligatorios (Mejoras de trabajo, Reglas de negocio, Huérfanos) **se escriben en el momento en que ocurre cada hallazgo**, no al cerrar la tarea — igual que el Registro de decisiones. Protocolo de conflicto en vivo: preguntar a Victor en el momento → validar respuesta → escribir la decisión → continuar; repetir el ciclo si no se resuelve. Al cerrar, se traslada cada entrada ya escrita a su destino. El Planner debe anticipar incongruencias con flujos ya documentados al armar el plan — el ciclo en vivo es para lo que de verdad no se pudo prever | Victor | `docs/Tareas de implementacion/plantilla-tarea.md`, `docs/00-sistema/roles-y-flujo.md`, `docs/README.md` | Aplicado y ejecutado |
 | 18 | 2026-09-23 | Corrección de política de commits: no un commit por cada ítem de la Punch List — commitear cada ~35% de avance acumulado, y solo al terminar completo el ítem en curso (nunca a medias) | Victor | `docs/00-sistema/convenciones-de-trabajo.md`, `docs/00-sistema/roles-y-flujo.md` | Aplicado y ejecutado |
 | 19 | 2026-09-23 | Fase 7 (prueba de coherencia) ejecutada: `docs/00-sistema/`, `docs/Tareas de implementacion/` y `docs/Mejoras continuas/` verificados correctos; simulación de tarea nueva con Orquestador exitosa; corregida una desalineación entre `AGENTS.md` y `docs/README.md` sobre el momento de registro (en vivo, no al cierre) y falta de mención a huérfanos en `AGENTS.md`; corregido enlace impreciso en `14-accesos-y-restricciones.md` | Orquestador (Auditor) | `AGENTS.md`, `docs/Flujos de trabajo/14-accesos-y-restricciones.md` | Aprobado |
+| 20 | 2026-09-23 | Fase 8 ejecutada: commit `6c26fde` (31 archivos) pusheado a `origin/main`. Tarea queda **pendiente**, no `CERRADO 100%` — falta el ítem no bloqueante de `design.md` (Curva S) | Victor | `origin/main` | Aprobado y ejecutado |
 
 ---
 
@@ -261,14 +262,14 @@ Verificar que las tres fuentes de verdad estén alineadas.
 
 ## Pasos
 
-- [ ] Auditor revisa consistencia entre `AGENTS.md`, `README.md`, `docs/README.md`, `docs/00-sistema/`, `docs/Tareas de implementacion/`, `docs/Mejoras continuas/`.
-- [ ] Resolver contradicciones, enlaces rotos o duplicaciones.
-- [ ] Presentar a Victor los cambios documentales que pasarán a ser permanentes.
-- [ ] Con aprobación de Victor, actualizar documentos aprobados.
-- [ ] Actualizar esta tarea con resultados y destino de cada decisión.
-- [ ] Solicitar autorización explícita antes de hacer commit/push.
-- [ ] Hacer commit y push solo con los archivos revisados y autorizados.
-- [ ] Renombrar esta tarea a `— CERRADO 100%.md` únicamente cuando no queden pendientes.
+- [x] Auditor revisa consistencia entre `AGENTS.md`, `README.md`, `docs/README.md`, `docs/00-sistema/`, `docs/Tareas de implementacion/`, `docs/Mejoras continuas/`.
+- [x] Resolver contradicciones, enlaces rotos o duplicaciones. (10 enlaces rotos corregidos, ver Fase 7)
+- [x] Presentar a Victor los cambios documentales que pasarán a ser permanentes.
+- [x] Con aprobación de Victor, actualizar documentos aprobados.
+- [x] Actualizar esta tarea con resultados y destino de cada decisión.
+- [x] Solicitar autorización explícita antes de hacer commit/push.
+- [x] Hacer commit y push solo con los archivos revisados y autorizados. (commit `6c26fde`, pusheado a `origin/main`)
+- [ ] Renombrar esta tarea a `— CERRADO 100%.md` únicamente cuando no queden pendientes. (No aplica todavía: queda el pendiente no bloqueante de `design.md`)
 
 ## Cierre esperado
 

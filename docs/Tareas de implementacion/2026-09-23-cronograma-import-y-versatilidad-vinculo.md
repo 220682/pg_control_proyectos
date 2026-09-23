@@ -1,0 +1,89 @@
+# 2026-09-23 — Fix import de cronograma + versatilidad de vínculo partida↔tarea
+
+## Estado
+
+Implementando.
+
+## Objetivo
+
+- Resultado esperado:
+  1. El import de cronograma (`/api/cronograma`, POST) deja de mostrar el mensaje genérico "Ocurrió un error" ante un fallo: cualquier excepción no capturada en la ruta debe volver como JSON con detalle accionable, igual que los demás errores ya manejados de la ruta.
+  2. Se puede repartir el metrado de una partida entre varias tareas del cronograma (descomponer) y/o juntar varias partidas en una tarea (agrupar), indicando el metrado exacto que corresponde a cada par tarea-partida — hoy la tabla puente `cronograma_actividad_partidas` es N:N sin campo de cantidad.
+- Alcance:
+  - Tarea 1: manejo de errores de la ruta `/api/cronograma` (POST y PATCH) para que todo fallo llegue a la UI con mensaje específico.
+  - Tarea 2: campo de metrado/peso en el vínculo tarea-partida, UI de asignación granular, y ajuste de `/api/plan-maestro` para repartir según el metrado indicado por el usuario en vez de repartir el metrado contractual completo entre fechas.
+- No alcance: construir el sistema completo de "paquetes de trabajo" de `19-paquetes de trabajo y jerarquia de control.md` (queda para una tarea futura); no se toca el parser de Excel/PDF (se verificó que funciona correctamente contra los dos archivos de prueba).
+- Validación esperada: Victor reproduce el fallo de import en vivo y confirma que ahora se ve el error real; Victor prueba la asignación granular partida↔tarea en la UI.
+
+## Entorno
+
+- Modo: nube (esta sesión).
+- Repos: `pg_control_proyectos` (esta tarea) y `py_control_proyectos_web` (implementación).
+
+## Asignaciones
+
+| Rol | Rama | Estado |
+| --- | --- | --- |
+| Orquestador (esta sesión, actúa también como Planner/Worker en este flujo de sesión única) | `main` (docs) | Activo |
+| Worker fase 1 — fix import | `work-1` (`py_control_proyectos_web`) | Implementando |
+| Worker fase 2 — versatilidad partida↔tarea | `work-2` (`py_control_proyectos_web`) | Implementando |
+
+## Plan aprobado
+
+- [x] Diagnóstico tarea 1: se corrieron `parsearExcelCronograma` y `parsearTextoPdfCronograma` contra `CRON-PROMCOSER-AESA-001.pdf` (78 actividades, 0 incompletas) y `Cron-prueba N°01.xlsx` (14 actividades, 0 incompletas) — el parser NO es la causa. Hallazgo: el `try/catch` de la ruta POST solo envuelve el paso de parseo (líneas 226-247 de `route.ts`); cualquier excepción después de eso (enlace con DP, storage, inserts) no capturada por Next.js vuelve como HTML/sin body JSON → `resp.json().catch(() => ({}))` da `{}` → `body.error` es `undefined` → la UI cae al fallback `'Ocurrió un error'` de `traducirErrorApi`.
+- [x] Fix: envolver toda la ruta POST (y PATCH) de `/api/cronograma` en manejo de errores que siempre devuelva JSON con `error` descriptivo (`work-1`, commit `e303a73`).
+- [x] Agregar columna de metrado/peso a `cronograma_actividad_partidas` (`work-2`, migración `db/071_cronograma_actividad_partidas_metrado.sql`).
+- [x] UI de asignación granular (reemplaza el selector de checkboxes por metrado por partida con saldo disponible) (`work-2`, commit `2563260`).
+- [x] Ajustar `/api/plan-maestro` para usar el metrado asignado por vínculo en vez de repartir el metrado contractual completo por fechas (`work-2`, commit `2563260`; verificado con script de sanity-check: partida de 100 repartida en 2 tareas con fechas solapadas suma exactamente 100 por día).
+- [x] Regla: no se puede guardar/activar el vínculo si la suma de metrado asignado de una partida no llega al 100% de su metrado contractual (confirmado por Victor, igual patrón que pesos de paquetes en `19-paquetes de trabajo y jerarquia de control.md`) — validado en servidor (`PATCH /api/cronograma`) y con aviso en cliente antes de guardar.
+
+Código escrito y verificado con type-check, lint y los 504 tests unitarios del repo (todos pasan, sin regresión). **Pendiente:** verificación en vivo con Playwright contra la app real — bloqueada hasta que exista una sesión que recoja las credenciales de Supabase que Victor ya agregó a la configuración del entorno.
+
+## Punch List
+
+- [ ] Import de cronograma: error específico visible en vez de "Ocurrió un error" — código listo, pendiente de que Victor reproduzca en vivo y confirme.
+- [ ] Partida↔tarea: se puede descomponer una partida en N tareas con metrado indicado por el usuario — código listo, pendiente de prueba en vivo.
+- [ ] Partida↔tarea: se puede agrupar N partidas en una tarea — código listo, pendiente de prueba en vivo.
+- [ ] Partida↔tarea: combinación libre (parte de una partida + parte de otra en la misma tarea) — código listo, pendiente de prueba en vivo.
+- [ ] Validación: no se guarda/activa un vínculo mientras la suma de metrado asignado por partida no sea 100% de su metrado contractual — código listo, pendiente de prueba en vivo.
+- [ ] Plan Maestro sigue generando la propuesta correctamente con el nuevo modelo de vínculos — verificado por script fuera de la app, pendiente de prueba en vivo end-to-end.
+
+## Registro de decisiones
+
+| # | Fecha | Decisión | Origen | Destino | Estado |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 2026-09-23 | No se amplían los tipos de archivo aceptados en el import de cronograma (siguen siendo solo Excel plantilla y PDF de MS Project) | Victor | Esta tarea | Aplicado |
+| 2 | 2026-09-23 | No se puede activar/guardar el vínculo partida↔tarea si el metrado asignado de una partida no suma 100% de su metrado contractual | Victor | `docs/Flujos de trabajo/15-cronograma.md` (al cerrar) | Aplicado |
+| 3 | 2026-09-23 | Verificación de UI se hace con Playwright contra la app real, no solo revisando código — pendiente credenciales de entorno (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) para correr `py_control_proyectos_web` localmente | Victor | Esta tarea | Pendiente de Victor |
+
+## Resultados de Workers
+
+- Rama `work-1`: commit `e303a73` — envuelve `POST`/`PATCH` de `/api/cronograma` en manejo de errores completo. Pruebas: type-check, lint y tests unitarios de `src/lib/cronograma` (23/23) sin regresión. Bloqueo: sin credenciales de Supabase en esta sesión, no se pudo verificar en vivo con Playwright.
+- Rama `work-2`: commit `2563260` — columna `metrado` en `cronograma_actividad_partidas` (migración `071`), UI de asignación granular, regla del 100% en servidor y cliente, y `/api/plan-maestro` repartiendo por vínculo. Pruebas: type-check, lint y suite completa (504/504) sin regresión; sanity-check manual del reparto por día. Bloqueo: mismo — sin verificación en vivo con Playwright.
+- **Ambas ramas están commiteadas localmente, sin pushear** — pendiente de tu confirmación antes de subirlas a `origin`.
+
+## Informe de Auditoría
+
+### Aplicar ahora
+
+### Proponer a Victor
+
+### No promover
+
+## Mejoras (de trabajo)
+
+- Ninguna identificada aún.
+
+## Reglas de negocio acordadas en esta tarea
+
+- 2026-09-23 — El vínculo partida↔tarea del cronograma no se puede activar/guardar mientras la suma de metrado asignado por partida no sea el 100% de su metrado contractual → pendiente de aplicar en `docs/Flujos de trabajo/15-cronograma.md` al cerrar la tarea.
+
+## Carpetas/archivos huérfanos
+
+- Ninguno encontrado aún.
+
+## Cierre
+
+- Documentación promovida:
+- Pendientes:
+- Autorización de cierre:

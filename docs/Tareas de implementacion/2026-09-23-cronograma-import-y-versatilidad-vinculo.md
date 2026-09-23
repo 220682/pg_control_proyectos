@@ -57,6 +57,7 @@ Código escrito y verificado con type-check, lint y los 504 tests unitarios del 
 | 2 | 2026-09-23 | No se puede activar/guardar el vínculo partida↔tarea si el metrado asignado de una partida no suma 100% de su metrado contractual | Victor | `docs/Flujos de trabajo/15-cronograma.md` (al cerrar) | Aplicado |
 | 3 | 2026-09-23 | Verificación de UI se hace con Playwright contra la app real, no solo revisando código — pendiente credenciales de entorno (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) para correr `py_control_proyectos_web` localmente | Victor | Esta tarea | Pendiente de Victor |
 | 4 | 2026-09-23 | El trabajo ya implementado por el Orquestador (saltándose el flujo de roles) se deja como está, sin rehacer; se deja constancia del error y sus consecuencias en Mejoras continuas, y se agrega una prohibición explícita en `roles-y-flujo.md` para que no vuelva a pasar | Victor | `docs/Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` y `docs/00-sistema/roles-y-flujo.md` | Aplicado |
+| 5 | 2026-09-23 | El merge del código de esta tarea a `main` de `py_control_proyectos_web` queda libre/autorizado en cuanto la implementación termine y pase la verificación en vivo con Playwright — no requiere pedir autorización aparte en ese momento | Victor | Esta tarea (código) | Aplicado |
 
 ## Resultados de Workers
 

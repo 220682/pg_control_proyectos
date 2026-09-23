@@ -38,3 +38,12 @@ Victor pidió revisar si la política tenía otros huecos donde un agente pudier
 4. Se documentó explícitamente el modelo de dos únicos puntos de parada de Victor (aprobación del plan, que autoriza implementación sin pedir permiso de nuevo; y aprobación de cierre/mergeo tras el reporte final que valida el Informe de Auditoría) — corrigiendo el riesgo opuesto: pedir aprobaciones intermedias innecesarias, que Victor señaló explícitamente como fricción que rompe la autonomía del flujo, no como algo prudente.
 
 **Causa raíz de este seguimiento:** la corrección original del punto 1 se escribió acotada al síntoma exacto del incidente, sin revisar si el mismo patrón (juicio unilateral de un agente, o ausencia de un chequeo duro) podía repetirse en otro punto de la cadena Orquestador→Worker→Auditor→Victor.
+
+## Seguimiento 2 — commit/push y chats (2026-09-23, mismo día, preguntas de Victor)
+
+Al explicarle a Victor el manejo de commit/push/merge y de los chats, salieron dos ambigüedades más en `docs/00-sistema/roles-y-flujo.md` y `convenciones-de-trabajo.md`, mismo patrón (zona gris que un agente podría leer como "hay que pedir permiso" y romper la autonomía entre Gates, o al revés, como excusa para saltarse algo):
+
+5. **"Hacer commits y push según autorización y política del repositorio" (Worker) era ambigua** — sonaba a pedir autorización caso por caso, contradiciendo el modelo de 2 Gates recién fijado. Se aclaró: commit/push a `work-N` es autónomo del Worker (sigue la cadencia del ~35%, no toca `main`, no es Gate de Victor); merge sí sigue prohibido siempre para Worker/Auditor/Orquestador, remite al Gate 2.
+6. **No estaba escrito si un chat se puede borrar.** Se aclaró en `convenciones-de-trabajo.md` § Chats: ningún agente borra un chat por su cuenta — se renombra `hist_` y queda como historial indefinidamente, misma lógica que una tarea cerrada no se borra. Borrar un chat, si alguna vez se quisiera, es una acción manual de Victor en la app (no existe herramienta de agente para eso); no es un paso del flujo.
+
+Ambas correcciones ya aplicadas y pusheadas en `docs/00-sistema/roles-y-flujo.md` (commits `9b44725`) y `docs/00-sistema/convenciones-de-trabajo.md` (commit `7683aed`).

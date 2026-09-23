@@ -85,6 +85,7 @@ Debe:
 - Leer los documentos indicados por el Orquestador.
 - Hacer commits y push según autorización y política del repositorio.
 - Ejecutar las pruebas disponibles.
+- **Autoverificar con Playwright antes de reportar cualquier ítem de la Punch List como listo** (aprobado por Victor el 2026-09-23): para cambios de interfaz o comportamiento en `py_control_proyectos_web`, correr un script de verificación con Playwright que espere la condición real (no `waitForTimeout` fijo) y lea `textContent()` en vez de `innerText()` para evitar falsos negativos por CSS (ej. `uppercase`) — ver lecciones en `docs/Mejoras continuas/2026-09-21-verificacion-playwright-falsos-negativos.md`. Es autoverificación del Worker; no reemplaza la prueba final de Victor en la Punch List interactiva.
 - Reportar rama, commits, archivos modificados, pruebas, Punch List, bloqueos y propuestas documentales.
 - **Registrar en el momento en que ocurre** (no al cerrar) cualquier mejora de trabajo, regla de negocio o archivo/carpeta huérfano detectado, en los apartados correspondientes de su archivo de tarea (`## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea`, `## Carpetas/archivos huérfanos`).
 - **Ante un conflicto entre una regla de negocio nueva y una ya escrita en un Flujo de trabajo:** preguntar a Victor en el momento (no seguir implementando con el conflicto sin resolver, no esperar al cierre) → validar la respuesta → escribir la decisión en el apartado → recién ahí continuar. Si la respuesta no resuelve el conflicto, repetir el ciclo hasta que quede resuelto.

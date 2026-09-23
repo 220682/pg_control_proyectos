@@ -5,7 +5,7 @@
 
 ## Estado
 
-Fase 1 implementada y **terminada en `work-1`** (PL-1.1 → PL-1.7 y PL-1.6 ampliado con UI de hitos). Verificado con evidencia: `tsc --noEmit` sin errores, suite completa **528/528** (60 archivos), build de producción OK (con `--webpack`, ver Mejoras), `eslint` sin problemas nuevos respecto de `main`, y **migración 072 aplicada en la BD** (comprobado por REST: `paquetes_trabajo` → 200, `requiere_partidas` → 200). **Push completado:** `6fddd76` en `origin/work-1`. **Pendiente:** PL-1.8 (verificación funcional con login real — la hace Victor), PL-1.9 (auditoría y apartados).
+Fase 1 implementada y **terminada en `work-1`** (PL-1.1 → PL-1.8). Verificado: `tsc --noEmit` 0, suite **528/528**, build OK, eslint sin deuda nueva, migración 072 aplicada, push a `origin/work-1`, **Playwright con login real contra PS-0004** (columna Hito ✅, checkbox hito ✅, página Paquetes de Trabajo ✅). **Pendiente solo:** PL-1.9 (auditoría y apartados).
 
 ## Objetivo
 
@@ -63,7 +63,7 @@ Fase 1 implementada y **terminada en `work-1`** (PL-1.1 → PL-1.7 y PL-1.6 ampl
 - [x] **PL-1.5** Modo de medición: elegir al crear; partida guía jala unidad+metrado; editable solo en `BORRADOR`. — commit `98190df`.
 - [x] **PL-1.6** Hitos: desplegable "no requiere partidas" en cronograma. — commits `6fddd76` (API `/api/cronograma/hitos` GET/PATCH + columna Hito con checkbox por tarea en `FormularioCronograma.tsx`, que recarga el cronograma al cambiar) y `072_paquetes_trabajo.sql` (`requiere_partidas`).
 - [x] **PL-1.7** Plan Maestro desde paquetes; quitar "Editar distribución diaria". — commit `01d256c` (la distribución diaria sale de `paquete_trabajo_programacion`).
-- [ ] **PL-1.8** Verificación en vivo (Playwright, login real) + type-check + suite. — **parcial**: type-check ✅, suite 528/528 ✅, build ✅ (`/paquetes-trabajo`, `/api/paquetes-trabajo`, `/api/cronograma/hitos` presentes en el build), eslint sin problemas nuevos ✅. Falta la verificación en vivo (depende de aplicar la migración 072 en la BD).
+- [x] **PL-1.8** Verificación en vivo (Playwright, login real) + type-check + suite. — **completado**: type-check ✅, suite 528/528 ✅, build ✅, eslint sin problemas ✅, Playwright con login real (Victor) contra PS-0004: columna Hito OK, checkbox de hito en tareas OK, página Paquetes de Trabajo carga con título y selector de OT OK. Screenshots en `%TEMP%\pw-cronograma-hitos.png` y `pw-paquetes-trabajo.png`.
 - [ ] **PL-1.9** Auditoría y apartados obligatorios.
 
 ### Fase 2 — Declaración de avance (se implementa después)

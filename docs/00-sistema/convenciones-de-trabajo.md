@@ -12,9 +12,10 @@
 ## Pool de ramas
 
 - Rama integrada: `main`.
-- Ramas de trabajo persistentes: `work-1`, `work-2`.
-- Las ramas `work-N` no se borran por rutina; se reutilizan después de sincronizarlas con `main` y verificar que no contengan trabajo pendiente.
-- Los Workers trabajan siempre en su rama `work-N` propia. El resto de roles (Orquestador, Planner, Auditor) trabaja directo en `main`, salvo que Victor pida lo contrario para una tarea puntual.
+- **Nomenclatura (corregida 2026-09-23):** `<entorno>-worker-<N>` — el mismo criterio que los nombres de chat: entorno seguido de quién la usa. `entorno` es `local` o `nube` (según qué entorno de Victor esté corriendo la sesión — verificar con `list_environments`, no asumir). Ejemplo: `local-worker-1`, `local-worker-2`, `nube-worker-1`.
+- Ramas de trabajo persistentes: `local-worker-1`, `local-worker-2` (pool de hoy; se agregan `nube-worker-N` si se trabaja desde el entorno `nube`).
+- Las ramas `<entorno>-worker-N` no se borran por rutina; se reutilizan después de sincronizarlas con `main` y verificar que no contengan trabajo pendiente.
+- Los Workers trabajan siempre en su rama `<entorno>-worker-N` propia. El resto de roles (Orquestador, Planner, Auditor) trabaja directo en `main`, salvo que Victor pida lo contrario para una tarea puntual.
 
 ## Worktrees
 

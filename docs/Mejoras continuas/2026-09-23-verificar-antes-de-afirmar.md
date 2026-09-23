@@ -27,3 +27,9 @@ El agente tenía una herramienta que respondía la pregunta de forma directa y n
 3. Una vez que Victor da la respuesta o corrige algo, **esa respuesta no se vuelve a cuestionar con el mismo dato débil que ya se demostró insuficiente** — dudar de Victor con la misma evidencia mala que ya falló es peor que no haber verificado nada.
 
 Esto aplica en general, no solo a "local vs. nube": cualquier hecho técnico verificable (rama actual, si un recurso existe, si algo ya se pusheó, nombre real de un entorno) se comprueba con la herramienta correspondiente antes de escribirlo en un documento o afirmarlo a Victor.
+
+## Seguimiento — las ramas tampoco tenían convención de nombre (mismo día)
+
+Mismo patrón, un nivel más: las ramas de Worker (`work-1`, `work-2`) tampoco seguían un criterio de nombre consistente con el resto del sistema (los chats sí lo tienen: `<entorno>_<jerarquía>.<rol>_<tarea>`). A pedido de Victor, se corrigió: **`<entorno>-worker-<N>`** — mismo criterio, entorno seguido de quién la usa. `work-1` (con el commit real `ed3feac` del fix de import) se renombró a `local-worker-1` en `py_control_proyectos_web`. Aplicado en `docs/00-sistema/convenciones-de-trabajo.md` § Pool de ramas.
+
+Pendiente menor: la rama vieja `work-1` no se pudo borrar del remoto (`git push --delete` devolvió 403 por el proxy de git de esta sesión) — queda como huérfana hasta que alguien con permisos la borre; no bloquea nada, apunta al mismo commit que `local-worker-1`.

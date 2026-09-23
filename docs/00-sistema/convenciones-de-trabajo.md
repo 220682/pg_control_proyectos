@@ -43,4 +43,6 @@
 - Un chat corresponde a una tarea o etapa clara.
 - No se reutiliza un chat de una tarea cerrada para una tarea nueva.
 - Al cerrar una tarea, se antepone el prefijo `hist_` al nombre del chat: señala que la tarea terminó y que el rol/entorno queda libre para la siguiente.
+- **Los chats no se borran, se renombran.** Ningún agente elimina un chat/sesión por su cuenta — un chat cerrado queda como historial (`hist_...`) indefinidamente, igual que una tarea cerrada en `Tareas de implementacion/` no se borra. Eliminar un chat requiere la misma autorización explícita que eliminar una rama o un worktree.
+- Crear un chat nuevo (Worker, Planner, Auditor) sí es autónomo del Orquestador — no es "crear infraestructura" en el sentido que requiere preguntar, es abrir el espacio de trabajo que el plan aprobado ya definió.
 - La nomenclatura completa de chats (distinción local/nube, jerarquía de roles) se define en `docs/00-sistema/gestion-de-sesiones-y-contexto.md`.

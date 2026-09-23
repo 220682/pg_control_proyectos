@@ -47,3 +47,11 @@ Al explicarle a Victor el manejo de commit/push/merge y de los chats, salieron d
 6. **No estaba escrito si un chat se puede borrar.** Se aclaró en `convenciones-de-trabajo.md` § Chats: ningún agente borra un chat por su cuenta — se renombra `hist_` y queda como historial indefinidamente, misma lógica que una tarea cerrada no se borra. Borrar un chat, si alguna vez se quisiera, es una acción manual de Victor en la app (no existe herramienta de agente para eso); no es un paso del flujo.
 
 Ambas correcciones ya aplicadas y pusheadas en `docs/00-sistema/roles-y-flujo.md` (commits `9b44725`) y `docs/00-sistema/convenciones-de-trabajo.md` (commit `7683aed`).
+
+## Seguimiento 3 — quién commitea/pushea el plan aprobado (2026-09-23, mismo día, pregunta de Victor)
+
+Victor preguntó cómo se maneja el commit/push/merge del plan ya aprobado. Salió una contradicción: § Orquestador → Límites prohibía "hacer merge, push, commit, PR... sin autorización explícita" en general — tomado literal, eso bloqueaba hasta guardar el archivo de la tarea (que vive en `pg_control_proyectos`, directo en `main`, sin rama ni merge de por medio), contradiciendo el modelo de 2 Gates recién fijado.
+
+7. **Se separó explícitamente:** la prohibición de commit/push/merge/PR sin autorización aplica solo a **código de implementación** en el repositorio de la app real (ej. `py_control_proyectos_web`) — nunca a la documentación del proceso en este repositorio, que el Orquestador/Planner escriben, commitean y pushean directo a `main` de forma autónoma (es la misma lógica que ya se aplicó en esta sesión al corregir la propia política).
+
+Corregido en `docs/00-sistema/roles-y-flujo.md` § Orquestador → Límites.

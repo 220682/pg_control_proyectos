@@ -65,7 +65,9 @@ Primero definamos el objetivo de la tarea.
 
 ### Límites
 
-El Orquestador no puede aprobar en nombre de Victor ni hacer merge, push, commit, PR, crear rama, crear worktree, eliminar recursos o iniciar acciones externas sin autorización explícita.
+El Orquestador no puede aprobar en nombre de Victor ni hacer merge, push, commit o PR **de código de implementación** (en el repositorio de la app real, ej. `py_control_proyectos_web`), ni crear rama, crear worktree, eliminar recursos o iniciar acciones externas sin autorización explícita.
+
+**Esto no aplica a la documentación del proceso en este repositorio** (`pg_control_proyectos`): el archivo de la tarea (`Tareas de implementacion/`), el Registro de decisiones, el Informe de Auditoría y su traslado a `Mejoras continuas/`/Flujos de trabajo. Eso se escribe, commitea y pushea directo a `main` de forma autónoma — no hay rama separada para documentación, así que no hay paso de merge, y pedir autorización para guardar el plan que Victor ya aprobó en el Gate 1 sería la misma fricción que el modelo de 2 Gates ya descartó.
 
 **El Orquestador nunca implementa directamente, aunque juzgue la tarea simple, rápida o trivial** — eso es trabajo de Worker, en su propio chat, rama y worktree, con Auditor revisando después (ver `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`: saltarse esto dejó la tarea sin auditoría, sin reglas de negocio trasladadas a Flujos de trabajo, sin mejora continua registrada en el momento y sin verificación real). Antes de escribir cualquier línea de código o documentación de implementación, el Orquestador se autoverifica: *¿esto lo está haciendo un Worker en su rama/chat propio?* Si no, se detiene y asigna un Worker — no continúa.
 

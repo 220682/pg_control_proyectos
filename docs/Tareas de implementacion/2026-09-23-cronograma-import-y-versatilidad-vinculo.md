@@ -24,9 +24,10 @@ Implementando.
 
 | Rol | Rama | Estado |
 | --- | --- | --- |
-| Orquestador (esta sesión, actúa también como Planner/Worker en este flujo de sesión única) | `main` (docs) | Activo |
-| Worker fase 1 — fix import | `work-1` (`py_control_proyectos_web`) | Implementando |
-| Worker fase 2 — versatilidad partida↔tarea | `work-2` (`py_control_proyectos_web`) | Implementando |
+| Orquestador (esta sesión) | `main` (docs) | Activo |
+| Worker — fix import + versatilidad partida↔tarea (rehecho, `session_01Q8CsGMqPhjmfBAcRfw9XNW`) | `work-1` (`py_control_proyectos_web`) | Implementando |
+
+> Nota 2026-09-23: los `work-1`/`work-2` originales (commits `e303a73`, `2563260`) se perdieron — nunca se pushearon y el contenedor de esa sesión se reciclió (ver `## Mejoras (de trabajo)`). Se relanzó como un único Worker en `work-1` cubriendo ambas sub-tareas, esta vez con push por avance y verificación Playwright real.
 
 ## Plan aprobado
 
@@ -59,9 +60,9 @@ Código escrito y verificado con type-check, lint y los 504 tests unitarios del 
 
 ## Resultados de Workers
 
-- Rama `work-1`: commit `e303a73` — envuelve `POST`/`PATCH` de `/api/cronograma` en manejo de errores completo. Pruebas: type-check, lint y tests unitarios de `src/lib/cronograma` (23/23) sin regresión. Bloqueo: sin credenciales de Supabase en esta sesión, no se pudo verificar en vivo con Playwright.
-- Rama `work-2`: commit `2563260` — columna `metrado` en `cronograma_actividad_partidas` (migración `071`), UI de asignación granular, regla del 100% en servidor y cliente, y `/api/plan-maestro` repartiendo por vínculo. Pruebas: type-check, lint y suite completa (504/504) sin regresión; sanity-check manual del reparto por día. Bloqueo: mismo — sin verificación en vivo con Playwright.
-- **Ambas ramas están commiteadas localmente, sin pushear** — pendiente de tu confirmación antes de subirlas a `origin`.
+**Intento anterior (perdido, ver Mejoras):** commits `e303a73` (fix import) y `2563260` (versatilidad partida↔tarea) — código completo, type-check/lint/tests pasaban, pero nunca se pushearon y se perdieron con el contenedor de esa sesión.
+
+**Rehecho 2026-09-23:** Worker relanzado en `work-1` (`session_01Q8CsGMqPhjmfBAcRfw9XNW`) cubriendo ambas sub-tareas con el mismo diagnóstico y plan ya aprobado. Pendiente de su reporte final.
 
 ## Informe de Auditoría
 

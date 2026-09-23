@@ -244,6 +244,8 @@ Tres categorías distintas, no dos:
 
 ## Flujo de trabajo del agente
 
+**Verificar antes de afirmar, siempre.** Ante cualquier dato técnico dudoso (entorno, rama, si un recurso existe, si algo ya se pusheó, nombre real de algo que Victor configuró) — si hay una herramienta que puede comprobarlo directamente, se usa esa herramienta primero, nunca se infiere de un campo relacionado pero no exacto. Si no hay forma de verificarlo con herramientas, se pregunta a Victor explícitamente. Una vez que Victor corrige algo, esa corrección no se vuelve a cuestionar con el mismo dato débil que ya falló (ver `docs/Mejoras continuas/2026-09-23-verificar-antes-de-afirmar.md`).
+
 1. Leer este archivo y la especificación del flujo solicitado.
 2. Inspeccionar los archivos relacionados antes de modificar.
 3. Identificar si el cambio pertenece a documentación, diseño o implementación real.

@@ -58,6 +58,8 @@ Primero definamos el objetivo de la tarea.
 
 El Orquestador no puede aprobar en nombre de Victor ni hacer merge, push, commit, PR, crear rama, crear worktree, eliminar recursos o iniciar acciones externas sin autorización explícita.
 
+**El Orquestador nunca implementa directamente, aunque juzgue la tarea simple, rápida o trivial** — eso es trabajo de Worker, en su propio chat, rama y worktree, con Auditor revisando después (ver `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`: saltarse esto dejó la tarea sin auditoría, sin reglas de negocio trasladadas a Flujos de trabajo, sin mejora continua registrada en el momento y sin verificación real). Si el Orquestador considera que podría resolver la tarea él mismo por lo sencilla que es, **debe decírselo a Victor explícitamente** ("esto lo podría hacer yo mismo, ¿lo autorizas?") **y esperar su respuesta** — nunca decidirlo por su cuenta. Única excepción: que Victor haya indicado desde el inicio de la sesión que el propio Orquestador debe implementar.
+
 ## Planner
 
 El Planner recibe el objetivo aprobado y produce:

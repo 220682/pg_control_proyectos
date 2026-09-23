@@ -27,3 +27,14 @@ El Orquestador juzgó unilateralmente que la tarea era "simple" y decidió imple
 ## Corrección aplicada
 
 Se agregó una prohibición explícita en `docs/00-sistema/roles-y-flujo.md` § Orquestador → Límites: el Orquestador nunca implementa directamente así juzgue la tarea trivial; si lo considera, debe decírselo a Victor y esperar su autorización explícita — nunca decidirlo solo. Única excepción: que Victor haya indicado desde el inicio de la sesión que el propio Orquestador debe implementar.
+
+## Seguimiento — auditoría de huecos en la política (2026-09-23, mismo día)
+
+Victor pidió revisar si la política tenía otros huecos donde un agente pudiera desviarse igual que en este incidente. Se encontraron y corrigieron, todos en `docs/00-sistema/roles-y-flujo.md`:
+
+1. **La excepción del punto anterior no tenía ancla verificable** ("que Victor haya indicado desde el inicio de la sesión" no definía qué contaba como indicación). Se cambió a: la excepción solo vale si el plan aprobado del Gate 1 dice por escrito, en el propio archivo de la tarea, que el Orquestador implementa esa tarea puntual — nunca inferido de un comentario suelto — y solo para esa tarea, no para el resto de la sesión.
+2. **El Auditor no verificaba la separación de roles como tal** — su chequeo se limitaba a los tres apartados obligatorios (Mejoras, Reglas de negocio, Huérfanos). Se agregó como primer chequeo de la auditoría: confirmar con `git log`/`git branch --contains` (no de memoria) que los commits de implementación están en la rama `work-N` del Worker asignado, no en `main` ni en la rama del Orquestador/Planner.
+3. **El Orquestador podía pedir cierre a Victor sin que existiera Informe de Auditoría** — no era una condición dura. Se agregó explícitamente: nunca se pide el Gate de cierre sin el Informe de Auditoría ya emitido.
+4. Se documentó explícitamente el modelo de dos únicos puntos de parada de Victor (aprobación del plan, que autoriza implementación sin pedir permiso de nuevo; y aprobación de cierre/mergeo tras el reporte final que valida el Informe de Auditoría) — corrigiendo el riesgo opuesto: pedir aprobaciones intermedias innecesarias, que Victor señaló explícitamente como fricción que rompe la autonomía del flujo, no como algo prudente.
+
+**Causa raíz de este seguimiento:** la corrección original del punto 1 se escribió acotada al síntoma exacto del incidente, sin revisar si el mismo patrón (juicio unilateral de un agente, o ausencia de un chequeo duro) podía repetirse en otro punto de la cadena Orquestador→Worker→Auditor→Victor.

@@ -74,6 +74,7 @@ Código escrito y verificado con type-check, lint y los 504 tests unitarios del 
 ## Mejoras (de trabajo)
 
 - 2026-09-23 — El Orquestador de esta tarea implementó las dos tareas directamente en su propio chat en vez de asignarlas a un Worker real (chat/rama/worktree separados), sin preguntarle antes a Victor. Consecuencia: sin Auditor, sin verificación real con Playwright, sin reglas de negocio trasladadas a `Flujos de trabajo` en el momento. → trasladado a `docs/Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`. Corrección aplicada de inmediato en `docs/00-sistema/roles-y-flujo.md` § Orquestador → Límites.
+- 2026-09-23 — A pedido de Victor, se auditó el resto de `roles-y-flujo.md` buscando huecos equivalentes (mismo patrón: juicio unilateral de un agente o falta de chequeo duro). Se encontraron y corrigieron 4: excepción sin ancla verificable, Auditor sin chequeo de separación real de ramas, cierre pedible sin Informe de Auditoría, y falta de un modelo explícito de 2 únicos Gates de Victor (que también corrige el riesgo de pedir aprobaciones intermedias de más). → detalle en `docs/Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` § Seguimiento.
 
 ## Reglas de negocio acordadas en esta tarea
 

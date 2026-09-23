@@ -26,6 +26,15 @@ Orquestador: cierre autorizado
 
 El Orquestador es el punto único de contacto entre Victor y el resto de agentes.
 
+## Aprobaciones de Victor (únicos puntos de parada)
+
+Victor participa en dos puntos, no más:
+
+1. **Aprobación del plan** — el Planner entrega el plan completo (etapas, alcance, Punch List, división de Workers, prompts). Al aprobarlo, Victor autoriza directamente el inicio de la implementación — no se vuelve a pedir permiso para empezar a implementar.
+2. **Aprobación de cierre/mergeo de documentación** — el Orquestador entrega el reporte final, que consolida y valida el Informe de Auditoría (nunca sin ese informe ya emitido). Victor aprueba el cierre.
+
+Entre estos dos puntos, Workers, Auditor y Orquestador ejecutan sin pedir aprobaciones intermedias — pedirlas para cada paso no es autonomía, es fricción. Las únicas paradas a mitad de camino son las que este documento marca expresamente como excepción: conflicto de regla de negocio no anticipado (Worker, ver `docs/README.md`), o una acción que las Convenciones reservan a autorización explícita (crear/eliminar rama o worktree, merge, push a infraestructura, eliminar recursos). Fuera de esas excepciones ya escritas, no se inventan paradas nuevas ni se pide "¿aplico esto?" para algo que el plan aprobado o esta política ya autorizan.
+
 ## Orquestador
 
 ### Activación
@@ -51,14 +60,16 @@ Primero definamos el objetivo de la tarea.
 - Verificar si las ramas/worktrees/chats ya existen y reutilizarlos cuando estén libres.
 - Preguntar antes de crear, renombrar o eliminar infraestructura.
 - Entregar contexto cerrado al Planner, Workers y Auditor.
-- Consolidar resultados y pedir las aprobaciones de Victor.
+- Consolidar resultados y pedir las aprobaciones de Victor — **nunca sin el Informe de Auditoría ya emitido** (si el Informe no existe, la tarea no está lista para pedir cierre, sin importar qué tan completo se vea el trabajo del Worker).
 - Coordinar el cierre solo después de autorización.
 
 ### Límites
 
 El Orquestador no puede aprobar en nombre de Victor ni hacer merge, push, commit, PR, crear rama, crear worktree, eliminar recursos o iniciar acciones externas sin autorización explícita.
 
-**El Orquestador nunca implementa directamente, aunque juzgue la tarea simple, rápida o trivial** — eso es trabajo de Worker, en su propio chat, rama y worktree, con Auditor revisando después (ver `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`: saltarse esto dejó la tarea sin auditoría, sin reglas de negocio trasladadas a Flujos de trabajo, sin mejora continua registrada en el momento y sin verificación real). Si el Orquestador considera que podría resolver la tarea él mismo por lo sencilla que es, **debe decírselo a Victor explícitamente** ("esto lo podría hacer yo mismo, ¿lo autorizas?") **y esperar su respuesta** — nunca decidirlo por su cuenta. Única excepción: que Victor haya indicado desde el inicio de la sesión que el propio Orquestador debe implementar.
+**El Orquestador nunca implementa directamente, aunque juzgue la tarea simple, rápida o trivial** — eso es trabajo de Worker, en su propio chat, rama y worktree, con Auditor revisando después (ver `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`: saltarse esto dejó la tarea sin auditoría, sin reglas de negocio trasladadas a Flujos de trabajo, sin mejora continua registrada en el momento y sin verificación real). Antes de escribir cualquier línea de código o documentación de implementación, el Orquestador se autoverifica: *¿esto lo está haciendo un Worker en su rama/chat propio?* Si no, se detiene y asigna un Worker — no continúa.
+
+**Única excepción**, y debe cumplir las dos condiciones a la vez: (a) el plan aprobado en el Gate 1 (ver "Aprobaciones de Victor" arriba) dice **por escrito, en el propio archivo de la tarea**, que el Orquestador implementa esta tarea puntual — nunca inferido de un comentario suelto en el chat; y (b) la excepción vale solo para esa tarea, no para el resto de la sesión. Sin esa línea explícita en el plan aprobado, se asigna a un Worker sin más vuelta.
 
 ## Planner
 
@@ -105,7 +116,9 @@ No debe:
 
 El Auditor revisa el plan aprobado, los resultados de Workers, la evidencia de pruebas, el Registro de decisiones y los documentos afectados.
 
-**Su tarea principal:** verificar que las mejoras de trabajo, reglas de negocio y archivos/carpetas huérfanos encontrados durante la sesión hayan sido identificados en los apartados `## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea` y `## Carpetas/archivos huérfanos` (obligatorios al final de toda tarea de implementación — ver `docs/Tareas de implementacion/plantilla-tarea.md`), y que el Worker las haya trasladado a sus lugares antes de cerrar: mejoras de trabajo a `docs/Mejoras continuas/`, reglas de negocio directo al `Flujo de trabajo` que corresponda (integradas en su estructura, no como nota aparte), y huérfanos reportados a Victor sin borrar nada por su cuenta. Ver `docs/README.md` § "Diferencia entre Tareas de implementación y Mejoras continuas" para el criterio completo.
+**Primer chequeo, antes de cualquier otro:** confirmar que la separación de roles se respetó de verdad, no solo en el papel — con `git log`/`git branch --contains` sobre los commits de la tarea, no de memoria: que la implementación está en la rama `work-N` del Worker asignado (no en `main`, no en la rama del Orquestador/Planner) y que existe un chat de Worker separado. Si no se cumple, la tarea no pasa auditoría y se reporta a Victor como el propio incidente de `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` — no se sigue auditando el resto hasta resolver esto.
+
+**Su tarea principal (segundo chequeo):** verificar que las mejoras de trabajo, reglas de negocio y archivos/carpetas huérfanos encontrados durante la sesión hayan sido identificados en los apartados `## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea` y `## Carpetas/archivos huérfanos` (obligatorios al final de toda tarea de implementación — ver `docs/Tareas de implementacion/plantilla-tarea.md`), y que el Worker las haya trasladado a sus lugares antes de cerrar: mejoras de trabajo a `docs/Mejoras continuas/`, reglas de negocio directo al `Flujo de trabajo` que corresponda (integradas en su estructura, no como nota aparte), y huérfanos reportados a Victor sin borrar nada por su cuenta. Ver `docs/README.md` § "Diferencia entre Tareas de implementación y Mejoras continuas" para el criterio completo.
 
 Una tarea no se considera lista para cerrar si tiene contenido pendiente de trasladar en esos dos apartados.
 

@@ -1,6 +1,6 @@
 # Plan único — Implementación de política de Orquestador, sesiones y worktrees (Claude + fallback local)
 
-> **Estado:** PROPUESTO. No ejecutar hasta que Victor lo apruebe explícitamente.
+> **Estado:** EJECUTADO — Fases 0 a 7 completadas y aprobadas por Victor el 2026-09-23. Pendiente de cierre 100%: falta validar en una tarea real futura, con chats separados en la app web, que los roles (Orquestador/Planner/Worker/Auditor) funcionan de forma autónoma y trazable. No renombrar a `— CERRADO 100%.md` hasta esa validación.
 >
 > **Objetivo:** instalar una única política de trabajo para que Victor pueda iniciar tareas con un Orquestador, usar Planner, Workers y Auditor cuando haga falta, conservar chats visibles como bitácora, reutilizar ramas de trabajo y controlar el crecimiento del contexto.
 >
@@ -120,21 +120,21 @@ Validar el estado real del repositorio y confirmar que no se sobrescribirá una 
 
 ## Pasos
 
-- [ ] Leer `AGENTS.md` completo.
-- [ ] Leer `docs/README.md` completo.
-- [ ] Revisar si existe `docs/00-sistema/` y leer sus documentos relevantes.
-- [ ] Localizar el archivo de tarea donde se ejecutará este plan.
-- [ ] Verificar rama actual y estado de Git con:
+- [x] Leer `AGENTS.md` completo.
+- [x] Leer `docs/README.md` completo.
+- [x] Revisar si existe `docs/00-sistema/` y leer sus documentos relevantes. (No existía; creado en Fases 1-3)
+- [x] Localizar el archivo de tarea donde se ejecutará este plan.
+- [x] Verificar rama actual y estado de Git con:
 
 ```powershell
 git branch --show-current
 git status
 ```
 
-- [ ] Identificar cambios no relacionados; no agregarlos al commit de esta tarea.
-- [ ] Confirmar que esta implementación se hará en el repositorio documental y en `main`, según la norma vigente.
-- [ ] Crear o actualizar el `## Registro de decisiones` de la tarea activa.
-- [ ] Presentar informe de impacto a Victor antes de crear o modificar archivos.
+- [x] Identificar cambios no relacionados; no agregarlos al commit de esta tarea. (Ninguno; working tree limpio)
+- [x] Confirmar que esta implementación se hará en el repositorio documental y en `main`, según la norma vigente.
+- [x] Crear o actualizar el `## Registro de decisiones` de la tarea activa.
+- [x] Presentar informe de impacto a Victor antes de crear o modificar archivos.
 
 ## Entregable
 
@@ -177,11 +177,11 @@ Antes de instalar el entorno necesito confirmar las convenciones base:
 
 ## Pasos
 
-- [ ] Esperar respuestas de Victor; no asumir valores si faltan.
-- [ ] Crear `docs/00-sistema/convenciones-de-trabajo.md`.
-- [ ] Guardar las respuestas como configuración estable.
-- [ ] Indicar que estas convenciones se reutilizan en tareas futuras, salvo cambio explícito de Victor.
-- [ ] Registrar en la tarea que las convenciones fueron aprobadas y dónde viven.
+- [x] Esperar respuestas de Victor; no asumir valores si faltan.
+- [x] Crear `docs/00-sistema/convenciones-de-trabajo.md`.
+- [x] Guardar las respuestas como configuración estable.
+- [x] Indicar que estas convenciones se reutilizan en tareas futuras, salvo cambio explícito de Victor.
+- [x] Registrar en la tarea que las convenciones fueron aprobadas y dónde viven.
 
 ## Contenido mínimo de `convenciones-de-trabajo.md`
 
@@ -226,15 +226,15 @@ Crear la política que define responsabilidades, aprobaciones y comunicación en
 
 ## Pasos
 
-- [ ] Crear o actualizar `docs/00-sistema/roles-y-flujo.md`.
-- [ ] Incluir la activación visible del Orquestador.
-- [ ] Definir el flujo: Objetivo → Planificación → Aprobación → Implementación → Auditoría → Revisión de Victor → Cierre.
-- [ ] Definir que el Orquestador es el punto único de contacto con Victor.
-- [ ] Definir que el Planner prepara planes, Punch List, dependencias, riesgos y división de Workers.
-- [ ] Definir que Workers solo implementan el subalcance asignado y no hacen merge.
-- [ ] Definir que Auditor revisa evidencia y documentación, sin inventar reglas ni aprobar por Victor.
-- [ ] Definir los puntos obligatorios de aprobación humana.
-- [ ] Definir límites para impedir acciones externas sin autorización.
+- [x] Crear o actualizar `docs/00-sistema/roles-y-flujo.md`.
+- [x] Incluir la activación visible del Orquestador.
+- [x] Definir el flujo: Objetivo → Planificación → Aprobación → Implementación → Auditoría → Revisión de Victor → Cierre.
+- [x] Definir que el Orquestador es el punto único de contacto con Victor.
+- [x] Definir que el Planner prepara planes, Punch List, dependencias, riesgos y división de Workers.
+- [x] Definir que Workers solo implementan el subalcance asignado y no hacen merge.
+- [x] Definir que Auditor revisa evidencia y documentación, sin inventar reglas ni aprobar por Victor.
+- [x] Definir los puntos obligatorios de aprobación humana.
+- [x] Definir límites para impedir acciones externas sin autorización.
 
 ## Contenido obligatorio: Orquestador
 
@@ -346,14 +346,14 @@ Evitar que un chat acumule tareas distintas y conservar las conversaciones como 
 
 ## Pasos
 
-- [ ] Crear o actualizar `docs/00-sistema/gestion-de-sesiones-y-contexto.md`.
-- [ ] Definir que Claude (app de escritorio o web) ejecuta el flujo y soporta local/nube.
-- [ ] Definir el uso de app/web de Claude para ver chats, historial y renombrarlos manualmente.
-- [ ] Definir que VS Code sirve para leer/revisar documentos, no para gestionar sesiones.
-- [ ] Definir “un chat = una tarea o etapa clara”.
-- [ ] Definir nomenclatura de chats.
-- [ ] Definir inicio con contexto mínimo y cierre con preservación de historial.
-- [ ] Definir el uso opcional de `/compact` solo durante una misma tarea larga.
+- [x] Crear o actualizar `docs/00-sistema/gestion-de-sesiones-y-contexto.md`.
+- [x] Definir que Claude (app de escritorio o web) ejecuta el flujo y soporta local/nube.
+- [x] Definir el uso de app/web de Claude para ver chats, historial y renombrarlos manualmente.
+- [x] Definir que VS Code sirve para leer/revisar documentos, no para gestionar sesiones.
+- [x] Definir "un chat = una tarea o etapa clara".
+- [x] Definir nomenclatura de chats.
+- [x] Definir inicio con contexto mínimo y cierre con preservación de historial.
+- [x] Definir el uso opcional de `/compact` solo durante una misma tarea larga.
 
 ## Contenido obligatorio
 
@@ -443,13 +443,13 @@ Las ramas `work-N` son un pool persistente. No se borran por rutina. Una rama li
 
 ## Pasos
 
-- [ ] Consultar si Victor autoriza crear el pool de ramas definido en la convención.
-- [ ] Crear solo las ramas aprobadas que aún no existan.
-- [ ] Consultar si Victor autoriza crear los worktrees correspondientes.
-- [ ] Crear worktrees solo en la ubicación aprobada.
-- [ ] Verificar asociación rama ↔ worktree.
-- [ ] Registrar rutas y estado en `docs/00-sistema/convenciones-de-trabajo.md`.
-- [ ] Registrar resultado en la tarea activa.
+- [x] Consultar si Victor autoriza crear el pool de ramas definido en la convención.
+- [x] Crear solo las ramas aprobadas que aún no existan. (`work-1`, `work-2`)
+- [x] Consultar si Victor autoriza crear los worktrees correspondientes.
+- [x] Crear worktrees solo en la ubicación aprobada. (`.worktrees/work-1`, `.worktrees/work-2`)
+- [x] Verificar asociación rama ↔ worktree. (`git worktree list`)
+- [x] Registrar rutas y estado en `docs/00-sistema/convenciones-de-trabajo.md`.
+- [x] Registrar resultado en la tarea activa.
 
 ## Referencia de asociación
 
@@ -487,10 +487,10 @@ Definir la plantilla mínima que toda tarea futura debe usar cuando se trabaje c
 
 ## Pasos
 
-- [ ] Agregar a `docs/README.md` un enlace a las tres políticas de `docs/00-sistema/`.
-- [ ] Agregar una sección “Inicio de tarea con Orquestador”.
-- [ ] Definir plantilla/estructura mínima de tarea en `docs/Tareas de implementacion/`.
-- [ ] Asegurar que cada tarea registre entorno, chats, ramas, worktrees, decisiones y resultados.
+- [x] Agregar a `docs/README.md` un enlace a las tres políticas de `docs/00-sistema/`.
+- [x] Agregar una sección "Inicio de tarea con Orquestador".
+- [x] Definir plantilla/estructura mínima de tarea en `docs/Tareas de implementacion/`. (`plantilla-tarea.md`)
+- [x] Asegurar que cada tarea registre entorno, chats, ramas, worktrees, decisiones y resultados.
 
 ## Plantilla mínima
 
@@ -571,28 +571,28 @@ Probar la política con una tarea pequeña, sin cambios de alto riesgo, antes de
 
 ## Pasos
 
-- [ ] Elegir una tarea documental pequeña y reversible.
-- [ ] Activar el Orquestador con la frase definida.
-- [ ] Validar que salude y pida objetivo.
-- [ ] Validar que consulte o cargue las convenciones guardadas.
-- [ ] Hacer que Planner produzca un plan corto y Punch List.
-- [ ] Aprobar el plan.
-- [ ] Usar un solo Worker o ninguno si la prueba es documental.
-- [ ] Ejecutar Auditor.
-- [ ] Verificar que el Orquestador consolide el resultado y solicite aprobación.
-- [ ] Confirmar que el cierre registra chats, ramas, decisiones y documentación promovida.
-- [ ] Registrar mejoras necesarias en el Registro de decisiones; no alterar la política sin aprobación de Victor.
+- [x] Elegir una tarea documental pequeña y reversible. (Se usó esta misma tarea como caso real, no una aparte)
+- [x] Activar el Orquestador con la frase definida.
+- [x] Validar que salude y pida objetivo.
+- [x] Validar que consulte o cargue las convenciones guardadas.
+- [ ] Hacer que Planner produzca un plan corto y Punch List. (No aplicó: el plan ya venía definido por el propio documento)
+- [x] Aprobar el plan.
+- [x] Usar un solo Worker o ninguno si la prueba es documental. (Ninguno; tarea documental)
+- [ ] Ejecutar Auditor. (Se hace en Fase 7)
+- [ ] Verificar que el Orquestador consolide el resultado y solicite aprobación. (Se hace en Fase 7)
+- [x] Confirmar que el cierre registra chats, ramas, decisiones y documentación promovida.
+- [x] Registrar mejoras necesarias en el Registro de decisiones; no alterar la política sin aprobación de Victor.
 
 ## Criterios de aceptación
 
-- [ ] El Orquestador se activa con saludo visible.
-- [ ] Se registran objetivo, entorno y decisiones.
-- [ ] El Planner entrega plan y Punch List antes de implementar.
-- [ ] Ninguna rama/worktree/chat se crea sin autorización.
-- [ ] Los roles quedan separados y trazables.
-- [ ] El Auditor entrega los tres grupos de salida.
-- [ ] El Orquestador solicita aprobación antes del cierre.
-- [ ] El chat de prueba queda preservado como historial y no se reutiliza para otra tarea.
+- [x] El Orquestador se activa con saludo visible.
+- [x] Se registran objetivo, entorno y decisiones.
+- [ ] El Planner entrega plan y Punch List antes de implementar. (No aplicó — plan ya definido por el documento)
+- [x] Ninguna rama/worktree/chat se crea sin autorización.
+- [ ] Los roles quedan separados y trazables. (No probado — toda la tarea corrió en una sola sesión; pendiente de validar con chats separados en una tarea futura)
+- [ ] El Auditor entrega los tres grupos de salida. (Se hace en Fase 7)
+- [ ] El Orquestador solicita aprobación antes del cierre. (Se hace en Fase 7)
+- [ ] El chat de prueba queda preservado como historial y no se reutiliza para otra tarea. (Pendiente de que Victor renombre este chat al cerrar)
 
 ---
 
@@ -600,14 +600,14 @@ Probar la política con una tarea pequeña, sin cambios de alto riesgo, antes de
 
 ## Pasos
 
-- [ ] Auditor revisa consistencia entre `docs/README.md`, `roles-y-flujo.md`, `convenciones-de-trabajo.md`, `gestion-de-sesiones-y-contexto.md` y la plantilla de tarea.
-- [ ] Resolver contradicciones, enlaces rotos o duplicaciones.
-- [ ] Presentar a Victor los cambios documentales que pasarán a ser permanentes.
-- [ ] Con aprobación de Victor, actualizar documentos aprobados.
-- [ ] Actualizar este archivo con resultados y destino de cada decisión.
+- [x] Auditor revisa consistencia entre `docs/README.md`, `roles-y-flujo.md`, `convenciones-de-trabajo.md`, `gestion-de-sesiones-y-contexto.md` y la plantilla de tarea. (Ver decisión #18: sin contradicciones ni enlaces rotos)
+- [x] Resolver contradicciones, enlaces rotos o duplicaciones. (Ninguna encontrada)
+- [x] Presentar a Victor los cambios documentales que pasarán a ser permanentes.
+- [x] Con aprobación de Victor, actualizar documentos aprobados.
+- [x] Actualizar este archivo con resultados y destino de cada decisión.
 - [ ] Solicitar autorización explícita antes de hacer commit/push.
 - [ ] Hacer commit y push solo con los archivos revisados y autorizados.
-- [ ] Renombrar esta tarea a `— CERRADO 100%.md` únicamente cuando no queden pendientes.
+- [ ] Renombrar esta tarea a `— CERRADO 100%.md` únicamente cuando no queden pendientes. (No aplica todavía: queda pendiente validar "roles separados en chats" en una tarea futura real)
 
 ## Cierre esperado
 
@@ -633,10 +633,26 @@ Probar la política con una tarea pequeña, sin cambios de alto riesgo, antes de
 
 | # | Fecha | Decisión / aprendizaje | Origen | Destino | Estado |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Pendiente | Definir modo de trabajo: local, nube o híbrido | Pendiente de Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Pendiente |
-| 2 | Pendiente | Definir ubicación de worktrees | Pendiente de Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Pendiente |
-| 3 | Pendiente | Definir cantidad inicial de ramas `work-N` | Pendiente de Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Pendiente |
-| 4 | Pendiente | Definir preservación de chats históricos | Pendiente de Victor | `docs/00-sistema/gestion-de-sesiones-y-contexto.md` | Pendiente |
+| 1 | 2026-09-23 | Modo de trabajo: híbrido (local o nube, según disponibilidad de cada tarea) | Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Resuelto |
+| 2 | 2026-09-23 | Ubicación de worktrees: `.worktrees/` dentro del repositorio | Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Resuelto |
+| 3 | 2026-09-23 | Cantidad inicial de ramas persistentes: 2 (`work-1`, `work-2`), no 4 | Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Resuelto |
+| 4 | 2026-09-23 | Preservación de chats: al cerrar una tarea se antepone prefijo `hist_` al nombre del chat, señal de tarea terminada y rol/entorno libre para la siguiente | Victor | `docs/00-sistema/gestion-de-sesiones-y-contexto.md` | Resuelto |
+| 9 | 2026-09-23 | Confirmado: VS Code solo para revisión de archivos, no gestión de chats/sesiones | Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Aprobado |
+| 11 | 2026-09-23 | Fase 2 (roles-y-flujo.md) aprobada por Victor ("continua") | Victor | `docs/00-sistema/roles-y-flujo.md` | Aprobado |
+| 12 | 2026-09-23 | Fase 3 (gestion-de-sesiones-y-contexto.md) aprobada por Victor ("continua") | Victor | `docs/00-sistema/gestion-de-sesiones-y-contexto.md` | Aprobado |
+| 13 | 2026-09-23 | Autorizada la creación del pool inicial: ramas `work-1` y `work-2` desde `main`, worktrees en `.worktrees/work-1` y `.worktrees/work-2`. Ejecutado y verificado con `git worktree list`. `.worktrees/` agregado a `.gitignore` | Victor | `docs/00-sistema/convenciones-de-trabajo.md`, `.gitignore` | Aprobado y ejecutado |
+| 14 | 2026-09-23 | Revertida la decisión #5: el archivo de esta tarea se mueve de `docs/Mejoras continuas/` a `docs/Tareas de implementacion/` (se mantiene el nombre de archivo). Se implementa una sola vez, no es un lote recurrente de Mejoras continuas | Victor | Este archivo (`git mv`) | Aprobado y ejecutado |
+| 15 | 2026-09-23 | Limpieza de archivos/carpetas muertas sin valor documental, sin referencias desde `docs/`: carpeta `.playwright-mcp/` completa (96 archivos, logs y snapshots de Playwright del 2026-09-21), 27 archivos `.yml` sueltos en la raíz (snapshots de árbol de accesibilidad: catalogo-cargos*, catalogo-personal, consolidado-1/2, crear-rdt-1..9, dp-blocked, dp-page, login-page, proyecto-detalle, rdt-verificado-1/2, status-*), y carpeta vacía `.claude/worktrees/` | Victor | Eliminados (`git rm`) | Aprobado y ejecutado — pendiente commit |
+| 16 | 2026-09-23 | Fase 5 ejecutada: `docs/README.md` (tabla + sección "Inicio de tarea con Orquestador" + nota en "Ramas de trabajo"), `AGENTS.md` (rutas nuevas en "Estructura del repositorio"), plantilla `docs/Tareas de implementacion/plantilla-tarea.md` creada | Victor ("continua") | `docs/README.md`, `AGENTS.md`, `docs/Tareas de implementacion/plantilla-tarea.md` | Aprobado y ejecutado — pendiente commit |
+| 17 | 2026-09-23 | Fase 6 (prueba controlada) ejecutada usando esta misma tarea como caso real, no una tarea aparte. Todos los criterios se cumplen excepto "roles separados en chats distintos" (no probado: toda la tarea corrió en una sola sesión). Ese criterio queda pendiente de validar en la próxima tarea real con chats separados | Victor ("continua") | Este archivo | Aprobado — un criterio pendiente de validación futura |
+| 18 | 2026-09-23 | Fase 7 — Auditor revisó consistencia entre `docs/README.md`, `roles-y-flujo.md`, `convenciones-de-trabajo.md`, `gestion-de-sesiones-y-contexto.md`, `plantilla-tarea.md` y `AGENTS.md`: todos los enlaces resuelven a archivos existentes, sin contradicciones ni duplicaciones | Orquestador (Auditor) | — | APLICAR AHORA |
+| 19 | 2026-09-23 | Autorizado commit y push a `origin/main` con la lista exacta de archivos presentada (políticas nuevas, `docs/README.md`, `AGENTS.md`, `.gitignore`, movimiento de esta tarea, limpieza de archivos muertos) | Victor | `origin/main` | Aprobado y ejecutado |
+| 20 | 2026-09-23 | Cierre de esta tarea como pendiente (no `CERRADO 100%`): falta validar la autonomía real del flujo (roles en chats separados) en una tarea futura ejecutada en la app web con el Orquestador | Victor | Esta tarea | Pendiente de validación futura |
+| 10 | 2026-09-23 | Nomenclatura de chats resuelta: `<entorno>_<jerarquía>.<rol>_<tarea>`, jerarquía fija (1 Orquestador, 2 Planner, 3 Worker, 4 Auditor). Orquestador/Planner/Auditor llevan solo el nombre de la tarea. Si hay más de un Worker en la misma tarea, se diferencian por fase (`<tarea>-fase1`, `<tarea>-fase2`, ...), no por número de worker. Al cerrar, prefijo `hist_`. Necesario porque chats locales y de nube del mismo repo aparecen agrupados en el mismo apartado de la app | Victor | `docs/00-sistema/gestion-de-sesiones-y-contexto.md` (Fase 3) | Resuelto — pendiente de redacción formal en Fase 3 |
+| 5 | 2026-09-23 | Mantener el archivo de esta tarea en `docs/Mejoras continuas/` (no mover a `docs/Tareas de implementacion/`) | Victor | Este archivo | Aprobado |
+| 6 | 2026-09-23 | Actualizar `AGENTS.md` (sección "Estructura del repositorio") para listar `docs/00-sistema/` y `docs/Tareas de implementacion/` una vez creadas | Victor | `AGENTS.md` | Aprobado — pendiente de ejecución en Fase 5 |
+| 7 | 2026-09-23 | Confirmado avanzar a Fase 1: formular las 6 preguntas de convenciones | Victor | Fase 1 | Aprobado |
+| 8 | 2026-09-23 | El pool de ramas `work-N` es para que los Workers trabajen en ramas propias; coexiste con la norma de trabajar directo en `main` para tareas sin Workers | Victor | `docs/00-sistema/convenciones-de-trabajo.md` | Aprobado — pendiente de redacción en Fase 1 |
 
 ---
 

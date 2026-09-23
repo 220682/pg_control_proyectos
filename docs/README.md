@@ -11,6 +11,17 @@ Aquí es donde se trabaja. Lo demás en la raíz del repositorio (`conocimiento/
 | [Flujos de trabajo/](Flujos%20de%20trabajo/) | Los conceptos/temas permanentes del sistema (uno por archivo numerado). Es la fuente de verdad de cada tema. | Sí — todos |
 | [Mejoras continuas/](Mejoras%20continuas/) | Bitácora real del trabajo, en archivos con fecha. Ver ciclo de vida abajo. | Solo el de fecha más reciente |
 | [visual-companion/](visual-companion/) | `design.md` es el sistema de diseño obligatorio (layout, tokens, componentes, columnas, accesibilidad) para crear o modificar cualquier interfaz. El resto son mockups HTML que fijan cómo se ve y cómo se llama cada pantalla (nomenclatura, campos). Referencia de UI, no de pendientes. | No, salvo tarea de diseño de UI — ahí `design.md` es lectura obligatoria, no opcional |
+| [00-sistema/](00-sistema/) | Políticas operativas del flujo con Orquestador: roles (`roles-y-flujo.md`), convenciones de entorno/ramas/worktrees (`convenciones-de-trabajo.md`) y gestión de sesiones/chats (`gestion-de-sesiones-y-contexto.md`). Define **cómo se trabaja**, no de qué trata el sistema. | Solo si la tarea usa el flujo de Orquestador |
+| [Tareas de implementacion/](Tareas%20de%20implementacion/) | Tareas de implementación única (no recurrentes) ejecutadas con el flujo de Orquestador. Cada archivo sigue la plantilla mínima de esa carpeta (`plantilla-tarea.md`). | Solo la tarea activa relacionada |
+
+## Inicio de tarea con Orquestador
+
+Cuando Victor pide trabajar con el flujo de Orquestador (frase de activación y roles en [00-sistema/roles-y-flujo.md](00-sistema/roles-y-flujo.md)):
+
+1. Leer [00-sistema/roles-y-flujo.md](00-sistema/roles-y-flujo.md), [00-sistema/convenciones-de-trabajo.md](00-sistema/convenciones-de-trabajo.md) y [00-sistema/gestion-de-sesiones-y-contexto.md](00-sistema/gestion-de-sesiones-y-contexto.md).
+2. Crear el archivo de la tarea en [Tareas de implementacion/](Tareas%20de%20implementacion/) con la plantilla mínima de esa carpeta, nombrado `YYYY-MM-DD-<tema>.md`.
+3. Cada tarea registra en su propio archivo: entorno (local/nube), chats usados, ramas y worktrees asignados, su Registro de decisiones y sus resultados/cierre.
+4. Este tipo de tarea es de implementación única: no sigue el ciclo de `Mejoras continuas/` de abajo (sin Punch List interactiva, sin sección `## Resultados` + `CERRADO 100%`); se cierra según su propia sección `## Cierre`.
 
 ## Ciclo de vida de un archivo de Mejoras continuas
 
@@ -53,6 +64,8 @@ Así no solo se implementa: el sistema (los Flujos de trabajo) también se corri
 ## Ramas de trabajo
 
 El repositorio está en GitHub. Por defecto se trabaja directo en `main` (así se ha trabajado hasta ahora). Se usa una rama solo cuando Victor lo pide explícitamente para ese cambio.
+
+Para tareas ejecutadas con el flujo de Orquestador existe además un pool persistente de ramas `work-N` reservado para Workers (ver [00-sistema/convenciones-de-trabajo.md](00-sistema/convenciones-de-trabajo.md)). Fuera de ese flujo, la norma de trabajar directo en `main` no cambia.
 
 ## Qué leer al iniciar sesión
 

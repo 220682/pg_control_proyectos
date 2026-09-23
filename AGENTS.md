@@ -54,6 +54,8 @@ Si un comando no fue confirmado aquí, se considera "por confirmar" y no se debe
 - [docs](docs): documentación operativa, flujos y mejoras.
 - [docs/Flujos de trabajo](docs/Flujos%20de%20trabajo): conjunto principal de especificaciones por flujo.
 - [docs/Mejoras continuas](docs/Mejoras%20continuas): cambios y mejoras documentadas.
+- [docs/00-sistema](docs/00-sistema): políticas operativas del flujo de Orquestador (roles, convenciones de entorno/ramas/worktrees, gestión de sesiones).
+- [docs/Tareas de implementacion](docs/Tareas%20de%20implementacion): tareas de implementación única ejecutadas con el flujo de Orquestador.
 - [Sistema hibrido](Sistema%20hibrido): documentos y archivos del diseño híbrido del sistema.
 - [Informacion para pruebas](Informacion%20para%20pruebas): datos, RDO y archivos de evaluación.
 - [Formatos](Formatos): formatos del proyecto.

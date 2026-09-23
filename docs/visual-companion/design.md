@@ -407,7 +407,22 @@ Si falta una respuesta crítica, especialmente sobre un campo de texto libre sin
 
 ---
 
-## 13. Control de calidad antes de entregar
+## 13. Gráficos de líneas
+
+Precedente: Curva S (Fase 3, 2026-09-22) — primer gráfico de líneas del proyecto, SVG a mano sin dependencias (mismo criterio que la dona del Dashboard, §1). Estas ocho reglas se probaron ahí y aplican a cualquier gráfico de líneas futuro:
+
+1. **Un solo eje Y.** Nunca mezclar dos magnitudes distintas (p. ej. dinero con un ratio como SPI/CPI) en el mismo gráfico con doble eje — el eje doble engaña la lectura visual de la pendiente.
+2. **Leyenda siempre presente**, con el mismo trazo/color que la línea (line-key), no un cuadro de color.
+3. **Etiqueta directa al final de cada línea** con el nombre de la serie, además de la leyenda — no obliga a cruzar la vista entre leyenda y línea.
+4. **Línea de corte vertical y punteada** en la fecha de corte, con su fecha visible como etiqueta — es la pieza que le da sentido al resto del gráfico (qué es real, qué es proyectado).
+5. **Una curva real nunca se extiende más allá de su último dato real.** Rellenar con ceros o una línea plana después del último punto es una lectura falsa — el hueco visual after del corte es el mensaje, no un defecto a corregir.
+6. **Crosshair anclado a la fecha más cercana**, con **un solo tooltip mostrando las tres series** en ese punto — no un tooltip por serie.
+7. **Interacción operable por teclado**, no solo con mouse/touch (§10, accesibilidad mínima).
+8. **Líneas de 2px, sin degradados ni sombras decorativas**; textos y ejes en los tokens de texto ya definidos (§4) — misma sobriedad que el resto del sistema.
+
+---
+
+## 14. Control de calidad antes de entregar
 
 Antes de declarar una interfaz terminada, el agente debe verificar:
 
@@ -424,10 +439,11 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 ---
 
-## 14. Historial de cambios
+## 15. Historial de cambios
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.3.0 | 2026-09-23 | Sección 13 nueva: "Gráficos de líneas" (8 reglas), a partir del precedente Curva S (Fase 3). Antigua sección 13 "Control de calidad" pasa a 14, "Historial de cambios" pasa a 15. |
 | 1.2.4 | 2026-09-20 | Sección 8 corregida otra vez: el fix de 1.2.3 (sticky en el `<tr>` completo) causaba filas superpuestas/tapadas al hacer scroll — peor que el bug original. Movido el `sticky` de la fila a cada celda (`<th>`), que es el patrón ya probado en `TablaConsolidadoRdts.tsx`. Regla añadida: sticky siempre va en la celda, nunca en la fila, con más de un encabezado apilado. |
 | 1.2.3 | 2026-09-20 | Dos correcciones sobre lo publicado hace un momento, tras feedback de Victor en vivo: (1) sección 8 — encabezados de tabla de dos filas necesitan las DOS filas sticky y apiladas (`top-0`/`h-6` + `top-6`), no solo la primera, porque la fila de filtros desaparecía al bajar el scroll; (2) sección 4.3 — el `gap-2` del contenedor se sumaba al `mb-2` propio de `CabeceraPagina`, por eso la reducción de espacio no se notaba; ahora es una sola medida por bloque (`mb-2`), sin `gap` en el contenedor. |
 | 1.2.2 | 2026-09-20 | Sección 4.3: agregada la medida fija (`gap-2`) entre `CabeceraPagina`, la fila de filtros/controles y la tabla en una pantalla de listado — antes era `gap-3`, un espacio más suelto que Victor marcó como excesivo en Status de RDTs. |

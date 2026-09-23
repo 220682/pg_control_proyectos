@@ -32,6 +32,7 @@ Reglas:
 - No se suman unidades fisicas incompatibles entre partidas.
 - El 3WLA es una capa operativa separada y no modifica automaticamente la linea base.
 - Una nueva propuesta aprobada reemplaza la version vigente como linea base, pero conserva la version anterior.
+- **El detalle diario de `plan_maestro_asignaciones` (fecha + metrado planificado) alcanza para alimentar series temporales por agregación en el momento de lectura — no hace falta una tabla de snapshots ni un historial semanal materializado.** El spec original del Dashboard (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo `py_control_proyectos_web`) daba por necesario ese snapshot para la Curva S; quedó obsoleto al construirla en Fase 3 (2026-09-22) — ver [21-curva-s.md](21-curva-s.md).
 
 ## Flujo implementado (Fase 1)
 
@@ -118,4 +119,5 @@ Ver `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` — los p
 - [11-dashboard.md](11-dashboard.md)
 - [15-cronograma.md](15-cronograma.md)
 - [18-control-avance.md](18-control-avance.md)
+- [21-curva-s.md](21-curva-s.md)
 - [19-paquetes de trabajo y jerarquia de control.md](19-paquetes%20de%20trabajo%20y%20jerarquia%20de%20control.md)

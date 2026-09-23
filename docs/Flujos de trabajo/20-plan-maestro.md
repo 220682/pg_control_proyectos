@@ -19,6 +19,7 @@ No reemplaza el cronograma, el RDT, el PR ni el Dashboard.
 | Alcance, metrado contractual, unidad y precio unitario | DP / presupuesto aprobado |
 | Fechas y duracion de actividades | Cronograma |
 | Relacion actividad - partida | Vinculos Cronograma - DP |
+| Distribucion diaria del metrado (fechas libres) | Paquetes de Trabajo (`paquete_trabajo_programacion`) |
 | Metrado programado y PV | Plan Maestro aprobado |
 | Ejecucion real | RDT estructurado validado |
 | Consolidado tecnico | PR |
@@ -39,8 +40,9 @@ Reglas:
 ```text
 DP importado
   -> Cronograma con tareas fechadas
+  -> Paquetes de Trabajo (agrupa partidas, programa metrado por dia con fechas libres)
   -> Vinculos tarea de cronograma - partida DP
-  -> Generar propuesta de Plan Maestro
+  -> Generar propuesta de Plan Maestro (lee la distribucion diaria de los paquetes)
   -> Ajustar distribucion diaria (borrador)
   -> Aprobar linea base
   -> Registrar RDT estructurado con WBS DP
@@ -53,10 +55,13 @@ DP importado
 El usuario con permiso selecciona una OT vigente y genera una propuesta. El sistema exige:
 
 - DP importado.
+- **Al menos un Paquete de Trabajo creado** para el servicio (desde 2026-09-23, Fase 1 de Paquetes de Trabajo). **Sin paquete no se puede generar el Plan Maestro** — la pantalla lo indica explícitamente.
 - Una o mas actividades tipo `TAREA` con fecha de inicio y fin por cada partida DP.
 - Vinculos guardados entre esas actividades y sus partidas DP.
 
-El sistema crea un borrador versionado y reparte el metrado contractual de cada partida en los dias cubiertos por sus actividades vinculadas. El ultimo dia absorbe el redondeo para que la suma coincida exactamente con el metrado contractual.
+**La distribución diaria del metrado ya no sale del rango de fechas del cronograma.** El sistema ahora lee la programación diaria desde `paquete_trabajo_programacion` (fechas libres, definidas por el usuario en la pantalla de Paquetes de Trabajo). Las fechas del cronograma (`cronograma_actividades.fecha_inicio` / `fecha_fin`) **se conservan intactas** — no se modifican ni se usan para el reparto.
+
+El sistema crea un borrador versionado y reparte el metrado contractual de cada partida en los días programados en su paquete. El último día absorbe el redondeo para que la suma coincida exactamente con el metrado contractual.
 
 ### 2. Ajustar y aprobar
 

@@ -106,6 +106,23 @@ text
 Servicio → Paquete → Partida → Actividad → RDT validado → PR → Dashboard
 La partida sigue siendo la unidad base para presupuesto, valorización, avance validado, costo y auditoría. El paquete no se convierte en una nueva partida.
 
+## Modo de medición (Fase 1 — implementado 2026-09-23)
+
+El paquete se crea eligiendo uno de dos modos de medición, definido en la columna `paquetes_trabajo.modo_medicion` (migración `072`):
+
+| Modo | Descripción |
+|---|---|
+| `AVANCE_PAQUETE` | Se declara el avance del paquete como porcentaje de su **partida guía** y ese mismo % se aplica a **todas** las partidas del paquete. La partida guía (`dp_partida_guia_id`) jala su **unidad y metrado** del DP; con eso se calcula `% = metrado_ejecutado / metrado_guía`. Ejemplo: guía cama de arena 10 ml, declaras 5 ml → 50% → excavación 7.5 m³, cama de arena 5 ml, relleno 7.5 m³. |
+| `POR_PARTIDAS` | El paquete no tiene unidad propia; el avance se declara **partida por partida**, cada una con su unidad y metrado originales. |
+
+**El modo de medición solo es editable mientras el paquete esté en `BORRADOR`.** Una vez en `VALIDADO` o `ARCHIVADO`, queda fijo.
+
+La partida guía **no** se elige por peso ni por jerarquía: la selecciona el usuario al crear el paquete, y debe ser una de las partidas asignadas.
+
+## Capa operativa (regla fundacional)
+
+El paquete de trabajo **agrupa y secciona** partidas del DP bajo un nombre propio. Es una **capa operativa** de agrupación; **no reemplaza la partida contractual**. La partida sigue siendo la unidad de trazabilidad, costo, valorización y auditoría.
+
 Selector del presupuesto
 Agregar el selector:
 

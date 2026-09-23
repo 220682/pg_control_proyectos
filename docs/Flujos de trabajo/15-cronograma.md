@@ -23,4 +23,17 @@ Pantalla: `/cronograma` (selector de OT + carga + informe). Chip **Cronograma**,
 - Restringir el reemplazo a Geren solo mientras el servicio siga "En Planeación" (hoy cualquiera con permiso de subir puede reemplazar en cualquier momento).
 - Flujo 17 (Chat agéntico) usaría el informe de extracción como base.
 
-Código: `src/lib/cronograma/` (parsers + informe), `src/app/api/cronograma/route.ts`, `db/036_cronograma.sql`.
+## Hitos del cronograma (PL-1.6, 2026-09-23)
+
+Una actividad de tipo `TAREA` en el cronograma puede marcarse como **hito** (columna `requiere_partidas = false`), indicando que **no requiere estar vinculada a una partida del DP**. Esto evita que esas actividades bloqueen la generación del Plan Maestro por falta de vínculo.
+
+- El marcado se hace desde la pantalla de Cronograma (columna "Hito" con checkbox por tarea, solo visible para quien tiene permiso de carga).
+- Una tarea marcada como hito **no participa** en la regla del 100% de metrado asignado por partida.
+- La API de hitos (`/api/cronograma/hitos`) expone GET (listado de actividades marcadas) y PATCH (marcar/desmarcar).
+- Migración: `db/072_paquetes_trabajo.sql` (columna `cronograma_actividades.requiere_partidas`, default `true`).
+
+## Relación con Paquetes de Trabajo (2026-09-23)
+
+Las fechas de programación diaria de los Paquetes de Trabajo **no modifican ni dependen** de las fechas del cronograma. El cronograma conserva sus fechas intactas (las fechas del archivo original cargado). La reasignación de metrado por día en los paquetes es libre y no altera ninguna columna de `cronograma_actividades`.
+
+Código: `src/lib/cronograma/` (parsers + informe), `src/app/api/cronograma/route.ts`, `src/app/api/cronograma/hitos/route.ts`, `db/036_cronograma.sql`, `db/072_paquetes_trabajo.sql`.

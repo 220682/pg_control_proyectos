@@ -5,7 +5,7 @@
 
 ## Estado
 
-Fase 1 implementada en `work-1` (PL-1.1 → PL-1.7 y PL-1.6 ampliado con UI de hitos). Verificado con evidencia: `tsc --noEmit` sin errores, suite completa **528/528** (60 archivos), build de producción OK (con `--webpack`, ver Mejoras) y `eslint` sin problemas nuevos respecto de `main`. **Pendiente:** PL-1.8 (falta la verificación funcional en vivo: la migración `072` **no está aplicada** en la BD y las credenciales de prueba están fuera del repo por política), PL-1.9 (auditoría y apartados) y el **push de `work-1`**, que quedó **sin ejecutar** porque Victor condicionó el envío a aplicar `072` y verificar en vivo primero. Nota de orden: aplicar `072` **antes** de correr o mezclar esta rama (el `GET /api/cronograma` ahora selecciona `requiere_partidas`).
+Fase 1 implementada y **terminada en `work-1`** (PL-1.1 → PL-1.7 y PL-1.6 ampliado con UI de hitos). Verificado con evidencia: `tsc --noEmit` sin errores, suite completa **528/528** (60 archivos), build de producción OK (con `--webpack`, ver Mejoras), `eslint` sin problemas nuevos respecto de `main`, y **migración 072 aplicada en la BD** (comprobado por REST: `paquetes_trabajo` → 200, `requiere_partidas` → 200). **Push completado:** `6fddd76` en `origin/work-1`. **Pendiente:** PL-1.8 (verificación funcional con login real — la hace Victor), PL-1.9 (auditoría y apartados).
 
 ## Objetivo
 

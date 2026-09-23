@@ -26,11 +26,13 @@ No reemplaza el cronograma, el RDT, el PR ni el Dashboard.
 
 Reglas:
 
+- **El Plan Maestro define el PV del servicio desde el inicio y es restrictivo: sin uno en estado `APROBADO`, el servicio no puede pasar de `EN_PLANEACION` a `EJECUCION`.** Validado en servidor (`POST /api/proyectos/[id]/confirmar-transicion`), no solo en la interfaz — una transición intentada por URL directa queda igual de bloqueada. Los servicios que ya estaban en `EJECUCION` antes de esta regla no se tocan; el bloqueo aplica solo a la transición (ver [PR Fase 2](../Mejoras%20continuas/2026-09-21-pr-fase-2-pipeline-linea-base.md), tarea B4).
 - El RDT validado alimenta `Real`; nunca sobrescribe `Programado` ni el PV aprobado.
 - El RDT debe usar un WBS existente en el DP del mismo servicio. Al validarlo, el sistema registra el vinculo actividad RDT - partida DP.
 - No se suman unidades fisicas incompatibles entre partidas.
 - El 3WLA es una capa operativa separada y no modifica automaticamente la linea base.
 - Una nueva propuesta aprobada reemplaza la version vigente como linea base, pero conserva la version anterior.
+- **El detalle diario de `plan_maestro_asignaciones` (fecha + metrado planificado) alcanza para alimentar series temporales por agregación en el momento de lectura — no hace falta una tabla de snapshots ni un historial semanal materializado.** El spec original del Dashboard (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo `py_control_proyectos_web`) daba por necesario ese snapshot para la Curva S; quedó obsoleto al construirla en Fase 3 (2026-09-22) — ver [21-curva-s.md](21-curva-s.md).
 
 ## Flujo implementado (Fase 1)
 
@@ -66,7 +68,7 @@ Antes de aprobar:
 - No puede haber fecha duplicada para la misma partida.
 - La suma diaria de cada partida debe ser exactamente igual a su metrado contractual.
 
-Al aprobar, el estado pasa a `APROBADO`. Si se aprueba una nueva version para el mismo servicio, la aprobada anterior pasa a `REEMPLAZADO`.
+Al aprobar, el estado pasa a `APROBADO`. Si se aprueba una nueva version para el mismo servicio, la aprobada anterior pasa a `REEMPLAZADO`. En el mismo paso, el sistema recalcula `pr_partidas.metrado_planificado_acum` (bloque A' del PR) desde las asignaciones del plan recién aprobado — sin rastro del plan reemplazado.
 
 ### 3. RDT a ejecucion real
 
@@ -117,4 +119,5 @@ Ver `docs/Mejoras continuas/2026-09-20-control-avance-plan-maestro.md` — los p
 - [11-dashboard.md](11-dashboard.md)
 - [15-cronograma.md](15-cronograma.md)
 - [18-control-avance.md](18-control-avance.md)
+- [21-curva-s.md](21-curva-s.md)
 - [19-paquetes de trabajo y jerarquia de control.md](19-paquetes%20de%20trabajo%20y%20jerarquia%20de%20control.md)

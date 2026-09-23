@@ -1,8 +1,6 @@
 # PR enriquecido — Fase 2 (Agente B): línea base, planificado y derivados EVM
 
-**Estado (2026-09-21):** PLAN APROBADO, PUNCH LIST APROBADA. Migración `052` corrida en Supabase. **Agente B EN EJECUCIÓN**, rama `feat/pr-fase-2-linea-base-evm`. Trabaja en paralelo con [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) (Agente A, rama `feat/pr-fase-1-pipeline-rdt`).
-
-**Pendiente para siguiente sesión:** ambos agentes en vivo haciendo loop de verificación → PR cuando al 100% del checklist. Victor revisará ambos PRs.
+**Estado (2026-09-21):** **Implementación del Agente B completa, verificada y mergeada.** Checklist B0–B10 al 100%, Punch List de 15 ítems verificada con Playwright + login real contra Supabase, migraciones `060`–`064` aplicadas. [PR #14](https://github.com/220682/py_control_proyectos_web/pull/14) mergeado a `main` en `py_control_proyectos_web` (2026-09-21 18:05, después de [Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md) / Agente A). Informe de limpieza entregado (sección `## Archivos y código que quedaron viejos`).
 
 **Ya resuelto, no volver a preguntar:**
 - Punch List de esta fase (15 ítems, tabla más abajo) — **aprobada por Victor.**
@@ -18,6 +16,25 @@
 - Credenciales de verificación (Playwright) en las variables **`PR_TEST_ADMIN_EMAIL`** / **`PR_TEST_ADMIN_PASSWORD`** (cuenta con permisos altos) y **`PR_TEST_USER_EMAIL`** / **`PR_TEST_USER_PASSWORD`** (cuenta sin permisos de administración), mismo entorno.
 - Aun así, **cada migración queda documentada en su propio archivo `db/0NN_*.sql`, commiteada, y resumida en el PR** — la autonomía es sobre no pausar a pedir permiso, no sobre dejar de dejar rastro.
 - Al terminar, el agente entrega en el PR: el checklist de implementación (B1–B10) marcado, la Punch List de 15 ítems con el resultado de cada uno verificado con Playwright, y el informe de limpieza.
+
+### Nota técnica — `PR_DB_URL` no es alcanzable desde este sandbox (aprendido en Fase 1)
+
+`PR_DB_URL` es una conexión directa a Postgres (puerto 5432). El sandbox de Claude Code en la nube **no tiene salida de red a ese puerto** — solo tiene salida HTTPS (443) a través de un proxy — así que `psql`/cualquier cliente Postgres directo con esa variable **siempre va a fallar** ahí (no es un error del agente ni de la variable). Es un límite arquitectónico del entorno, no algo que se arregle reintentando.
+
+**Alternativa que sí funciona (usada y verificada en Fase 1):** la API de administración de Supabase, por HTTPS.
+
+```
+POST https://api.supabase.com/v1/projects/{ref}/database/query
+Authorization: Bearer $SUPABASE_ACCESS_TOKEN
+Content-Type: application/json
+
+{"query": "<el SQL completo de la migración>"}
+```
+
+- `{ref}` es el subdominio del proyecto (de `NEXT_PUBLIC_SUPABASE_URL = https://xxxxx.supabase.co`, el ref es `xxxxx`).
+- Requiere **`SUPABASE_ACCESS_TOKEN`** (token personal de la cuenta de Supabase — distinto de `PR_DB_URL` y del service role key). Si no está en el entorno, pedírselo a Victor.
+- Para evitar problemas de escapado de comillas en el SQL, escribir el body JSON a un archivo temporal (con un script, no armando el string a mano) y usar `curl --data @archivo.json`, no `-d '...'` inline.
+- `curl` respeta el proxy HTTPS del entorno automáticamente. Si en algún punto se usa `fetch` nativo de Node para esto, hace falta `NODE_USE_ENV_PROXY=1` porque si no, no respeta `HTTPS_PROXY` y el request se cuelga.
 
 ## Contexto
 
@@ -305,39 +322,39 @@ Dos cosas que esta fase tiene que mirar sí o sí:
 
 ## Checklist de implementación — Agente B
 
-- [ ] B0 · Migración `052_pr_enriquecido.sql` aplicada (compartida, una sola vez)
-- [ ] B1 · `reemplazar_dp()` extendida en `060` con `hh_contractual` y `bac` + comprobación de coherencia del BAC documentada
-- [ ] B2 · `metrado_planificado_acum` desde el Plan Maestro aprobado
-- [ ] B3 · `fecha_inicio_base` / `fecha_fin_base` desde el cronograma vinculado
-- [ ] B4 · Sin Plan Maestro aprobado no se pasa a Ejecución (validado en servidor)
-- [ ] B5 · `src/lib/pr/evm.ts` con todos los indicadores del bloque C, PPC incluido
-- [ ] B6 · Pantalla PR de tres bloques, siguiendo `design.md`
-- [ ] B7 · Flujos 20, 08, 18, 10 y 14 actualizados
-- [ ] B8 · tsc, eslint, tests y build limpios; migraciones aplicadas
-- [ ] B9 · Autoverificación Playwright completa, checklist 100% Completado
-- [ ] B10 · Informe de limpieza entregado: qué quedó viejo, con referencias comprobadas
+- [x] B0 · Migración `052_pr_enriquecido.sql` aplicada (compartida, una sola vez)
+- [x] B1 · `reemplazar_dp()` extendida en `060` con `hh_contractual` y `bac` + comprobación de coherencia del BAC documentada (más `063`, backfill para proyectos ya importados antes de `060`)
+- [x] B2 · `metrado_planificado_acum` desde el Plan Maestro aprobado (`061`)
+- [x] B3 · `fecha_inicio_base` / `fecha_fin_base` desde el cronograma vinculado (`062`)
+- [x] B4 · Sin Plan Maestro aprobado no se pasa a Ejecución (validado en servidor)
+- [x] B5 · `src/lib/pr/evm.ts` con todos los indicadores del bloque C, PPC incluido (17 tests nuevos)
+- [x] B6 · Pantalla PR de tres bloques, siguiendo `design.md`
+- [x] B7 · Flujos 20, 08, 18, 10 y 14 actualizados
+- [x] B8 · tsc, eslint, tests y build limpios; migraciones aplicadas (467/467 tests, build limpio)
+- [x] B9 · Autoverificación Playwright completa, checklist 100% Completado (ver tabla abajo)
+- [x] B10 · Informe de limpieza entregado: qué quedó viejo, con referencias comprobadas (sección al final)
 
 ## Punch List — checklist a aprobar ANTES de implementar
 
 Se carga en la Punch List de Mejoras como checklist nuevo: **"PR Fase 2 — línea base, planificado y derivados EVM"**. **Victor lo aprueba antes de que arranque la implementación.** El agente lo llena con Playwright al terminar y hace loop hasta cerrarlo completo.
 
-| # | Ítem | Resultado esperado |
-|---|---|---|
-| 1 | Importar un DP | El PR queda con HH contractual y BAC por partida |
-| 2 | BAC total del PR | Cuadra con el costo directo del presupuesto PS-065; ambos números documentados |
-| 3 | Servicio sin Plan Maestro aprobado | **No** puede pasar a Ejecución, y el mensaje dice por qué |
-| 4 | Intentar la transición por URL directa, sin pasar por el botón | También se bloquea (validación en servidor) |
-| 5 | Aprobar el Plan Maestro | Se llena el metrado planificado del PR |
-| 6 | Aprobar una versión nueva del Plan Maestro | Actualiza el planificado, sin rastros de la anterior |
-| 7 | Fechas base de cada partida | Coinciden con el cronograma vinculado |
-| 8 | Pantalla PR | Muestra los tres bloques y se recorre en horizontal sin perder la partida de vista |
-| 9 | Sin Plan Maestro | Los indicadores que dependen de PV dicen "Pendiente", no 0 |
-| 10 | SPI y CPI | Coinciden con un caso calculado a mano |
-| 11 | % de avance físico | Coincide con metrado ejecutado sobre contractual |
-| 12 | Partida sobre-ejecutada | Levanta la alerta de metrado restante negativo |
-| 13 | PPC y SPI | Se muestran separados, cada uno con su nombre y fórmula |
-| 14 | Rótulos | Todo dice costo directo y USD; el AC indica su cobertura (HH y HM) |
-| 15 | Fecha de corte | Visible, y los acumulados corresponden a ella |
+| # | Ítem | Resultado esperado | Estado | Evidencia (verificado con Playwright + login real, admin de prueba) |
+|---|---|---|---|---|
+| 1 | Importar un DP | El PR queda con HH contractual y BAC por partida | **Completado** | Reimportado el DP real de PS-0002 (`PPTO-prueba N°01.xlsx`). Partida `02.01`: HH contract. 35.00, BAC US$ 802.59 (= 1.00 × 802.59) |
+| 2 | BAC total del PR | Cuadra con el costo directo del presupuesto PS-065; ambos números documentados | **Completado** | PS-0004 (PS-065 Bancoductos): Σ metrado_contractual×PU = **US$ 123,807.94**; Σ pr_recursos.costo_contractual = **US$ 123,809.29**. Difieren US$ 1.35 (0.001%) — redondeo en cascada (cada recurso ya viene redondeado a 2 decimales antes de sumar), no un bug de alcance del parser |
+| 3 | Servicio sin Plan Maestro aprobado | **No** puede pasar a Ejecución, y el mensaje dice por qué | **Completado** | PS-0002, botón "Confirmar paso a Ejecución": *"No se puede pasar a Ejecución: el servicio todavía no tiene un Plan Maestro aprobado. El Plan Maestro define el PV desde el inicio y es requisito para ejecutar (regla 8)."* |
+| 4 | Intentar la transición por URL directa, sin pasar por el botón | También se bloquea (validación en servidor) | **Completado** | `POST /api/proyectos/{PS-0002}/confirmar-transicion` directo (sin pasar por el botón): 400, mismo mensaje exacto que el ítem 3 |
+| 5 | Aprobar el Plan Maestro | Se llena el metrado planificado del PR | **Completado** | PS-0004: al aprobar la v3, `metrado_planificado_acum` de cada partida pasó a coincidir con su `metrado_contractual` |
+| 6 | Aprobar una versión nueva del Plan Maestro | Actualiza el planificado, sin rastros de la anterior | **Completado** | PS-0004: v2 pasó a `REEMPLAZADO`, v3 a `APROBADO`; el planificado del PR sale solo de v3 (filtro `estado='APROBADO'`) |
+| 7 | Fechas base de cada partida | Coinciden con el cronograma vinculado | **Completado** | 48/48 partidas de PS-0004 con `fecha_inicio_base`/`fecha_fin_base` pobladas, coincidiendo con sus actividades de cronograma vinculadas |
+| 8 | Pantalla PR | Muestra los tres bloques y se recorre en horizontal sin perder la partida de vista | **Completado** | Captura con scroll horizontal a 1400px: WBS/Descripción/Unidad quedan fijas (sticky) mientras el resto de columnas se desplaza |
+| 9 | Sin Plan Maestro | Los indicadores que dependen de PV dicen "Pendiente", no 0 | **Completado** | PS-0002 (sin plan): aviso *"Sin Plan Maestro aprobado: PV, SV y SPI están «Pendiente» (regla 8)"*, y esas 3 columnas en "Pendiente" en todas las filas |
+| 10 | SPI y CPI | Coinciden con un caso calculado a mano | **Completado** | PS-0004, partida `2.1.1`: EV=10×18.26=182.60, SV=182.60−210.36=**-27.76** ✓, CV=182.60−231.96=**-49.36** ✓, SPI=182.60/210.36=**0.87** ✓, CPI=182.60/231.96=**0.79** ✓, HH ganadas=**5.60** ✓, IP=5.60/9.00=**0.62** ✓ |
+| 11 | % de avance físico | Coincide con metrado ejecutado sobre contractual | **Completado** | Misma partida `2.1.1`: 10.00/11.52 = **86.8%**, igual a lo mostrado |
+| 12 | Partida sobre-ejecutada | Levanta la alerta de metrado restante negativo | **Completado** | PS-0004, partidas `1.3` y `2.1.5`: metrado restante -4.50 ⚠ y -108.00 ⚠ con dato real (no forzado) |
+| 13 | PPC y SPI | Se muestran separados, cada uno con su nombre y fórmula | **Completado** | Fila de total (PPC) y columna C (SPI) separadas, con fórmula y nota *"no se mezcla con SPI (miden cosas diferentes, flujo 18)"* |
+| 14 | Rótulos | Todo dice costo directo y USD; el AC indica su cobertura (HH y HM) | **Completado** | Cabecera *"Costo directo (regla 9) · USD (regla 11)"*; columnas BAC/AC/EAC rotuladas `(US$, CD)`; nota agregada: *"AC (costo real) cubre solo HH y HM con tarifa congelada al validar el RDT (regla 1) -- materiales y subcontratos se miden por % de avance económico (regla 5)"* |
+| 15 | Fecha de corte | Visible, y los acumulados corresponden a ella | **Completado** | *"fecha de corte 21-09-2026"* visible en cabecera; PV al corte de cada partida filtra correctamente por esa fecha (ej. actividades de PS-0004 posteriores al corte muestran PV=US$0.00) |
 
 ## Coordinación con el Agente A
 
@@ -355,3 +372,47 @@ Se carga en la Punch List de Mejoras como checklist nuevo: **"PR Fase 2 — lín
 ## Mejoras a flujos
 
 Ver tarea B7 — las actualizaciones de flujo son parte del trabajo de esta fase, ya autorizadas por Victor.
+
+## Archivos y código que quedaron viejos
+
+Entregable B10. El agente no borró nada — Victor decide.
+
+### 1. Sobrecargas huérfanas de `reemplazar_dp()` en la base real
+
+**Qué es:** además de la versión vigente de 13 parámetros (la que usa `guardarDp()`), Postgres tiene **4 sobrecargas viejas** de la misma función, con menos parámetros:
+
+```
+reemplazar_dp(uuid,numeric,numeric,numeric,text,text,uuid,jsonb,jsonb)                              -- 9 params (004/007)
+reemplazar_dp(uuid,numeric,numeric,numeric,text,text,uuid,jsonb,jsonb,text[])                        -- 10 params
+reemplazar_dp(uuid,numeric,numeric,numeric,text,text,uuid,jsonb,jsonb,text[],jsonb)                  -- 11 params
+reemplazar_dp(uuid,numeric,numeric,numeric,text,text,uuid,jsonb,jsonb,text[],jsonb,jsonb)            -- 12 params
+```
+
+**Por qué quedaron viejas:** `create or replace function` solo reemplaza cuando la firma (tipos y orden de parámetros) coincide exacto. Cada vez que una migración (029, 049, 050…) agregó un parámetro opcional nuevo al final, Postgres creó una función **nueva** en vez de reemplazar la anterior, porque la firma ya no coincidía. Nadie corrió el `drop function` de la vieja.
+
+**Qué las reemplaza:** la de 13 parámetros (`p_paquetes jsonb default '[]'` al final), confirmada como la que usa `guardarDp()` — es la única invocada por la app hoy.
+
+**Quién más las referencia hoy:** nadie. `pg_get_functiondef('reemplazar_dp'::regproc)` falla con "more than one function named reemplazar_dp" por la ambigüedad — cualquier código nuevo que intente resolver la función por nombre sin firma explícita rompe con este mismo error.
+
+**Acción tomada:** eliminadas con `db/064_eliminar_reemplazar_dp_huerfanas.sql`, autorizado explícitamente por Victor (2026-09-21). Verificado después: `pg_get_functiondef('reemplazar_dp'::regproc)` resuelve sin ambigüedad y solo queda la firma de 13 parámetros.
+
+### 2. Duplicación entre `src/lib/pr/evm.ts` y `src/lib/dashboard/dashboard.ts`
+
+El módulo nuevo **reutiliza directamente** (mismo código, sin copiar) estas funciones de `dashboard.ts`: `calcularPvAlCorte`, `calcularSv`, `calcularSpi`, `calcularCpi`, `calcularEac`, `calcularHhGanadas`, `calcularAvanceFisico`, `calcularEv`, `calcularIpMo`. `PartidaEvm` se diseñó como superset de `DashboardPartida` justamente para que esa reutilización fuera directa, no cosmética.
+
+Lo que **no** se reutilizó, y quedó calculado en dos lados con fuentes distintas:
+
+| Indicador | `dashboard.ts` (Dashboard) | `evm.ts` (PR) | Por qué son distintos |
+|---|---|---|---|
+| BAC | `calcularBac(recursos)` — suma `pr_recursos.costo_contractual` | suma `pr_partidas.bac` (columna nueva, Bloque A) | El PR necesita el BAC **por partida** (bloque A), que no existía antes de esta fase; el Dashboard sigue con su fuente de siempre. Ambos deberían cuadrar (ítem 2 de la Punch List, coinciden con 0.001% de diferencia por redondeo) pero son dos cálculos independientes, no una fuente única |
+| AC | `calcularAc(recursos)` — suma `pr_recursos.costo_contractual` acumulado | suma `pr_partidas.costo_real_acum` (Bloque B) + balde legacy | Mismo caso: el PR usa la columna nueva por partida, el Dashboard la de recursos |
+| HH contractual | `calcularHhContractual(partidas)` — calculado en vivo (`hh_und_partida × metrado_contractual`) | suma `pr_partidas.hh_contractual` (columna ya materializada) | El PR lee la columna congelada en la importación (Bloque A); el Dashboard todavía la recalcula en vivo desde `dp_partidas`/`pr_partidas` sin usar la columna nueva |
+
+Es información para que Victor decida si más adelante conviene unificar (ej. que `dashboard.ts` empiece a leer `pr_partidas.bac`/`hh_contractual` en vez de recalcular) — no se tocó `dashboard.ts`, está fuera de alcance de esta fase.
+
+### 3. La pantalla PR anterior
+
+La versión vieja de `proyectos/[id]/pr/page.tsx` (una sola tabla de partidas + una tabla aparte de "Recursos") se reemplazó completa por los tres bloques. Lo que quedó sin uso **en esa pantalla específica**:
+
+- **Import de `ENCABEZADOS` desde `@/lib/dp/diccionario`** ya no se usa en `pr/page.tsx` — pero el diccionario sigue vivo y en uso en otros 5 archivos (`exportador-excel.ts`, `exportador-pdf.ts`, `cronograma/parser-excel.ts`, `ModalPartidasServicio.tsx`, `dp/page.tsx`). No es código huérfano, solo un consumidor menos.
+- **La tabla "Recursos" (tipo / descripción / costo contractual de `pr_recursos`)** que tenía la pantalla vieja **no tiene equivalente en la pantalla nueva** — el diseño de tres bloques del plan es enteramente por partida, no por recurso. El dato de `pr_recursos` sigue existiendo y usándose (es la otra mitad de la comprobación de coherencia del ítem 2, y alimenta el desglose de costos del Dashboard vía `dashboard.ts`), pero ya no hay ninguna pantalla que lo liste fila por fila como lo hacía el PR viejo. Señalarlo por si Victor quiere ese detalle de vuelta como una cuarta subvista.

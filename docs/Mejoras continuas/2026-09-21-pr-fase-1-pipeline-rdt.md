@@ -1,8 +1,6 @@
 # PR enriquecido — Fase 1 (Agente A): pipeline RDT → PR
 
-**Estado (2026-09-21):** PLAN APROBADO, PUNCH LIST APROBADA. Migración `052` corrida en Supabase. **Agente A EN EJECUCIÓN**, rama `feat/pr-fase-1-pipeline-rdt`. Trabaja en paralelo con [Fase 2](2026-09-21-pr-fase-2-pipeline-linea-base.md) (Agente B, rama `feat/pr-fase-2-linea-base-evm`).
-
-**Pendiente para siguiente sesión:** ambos agentes en vivo haciendo loop de verificación → PR cuando al 100% del checklist. Victor revisará ambos PRs.
+**Estado (2026-09-21):** **Implementación del Agente A completa, verificada y mergeada.** Checklist A1–A10 al 100%, Punch List de 19 ítems verificada con Playwright + login real contra Supabase (admin y usuario sin permisos), migraciones `052`–`055` aplicadas. Dos hallazgos fuera del alcance original quedaron documentados en `## Hallazgos fuera del alcance original de esta fase` — uno de ellos (re-resolver tarifa histórica) resuelto por Victor: no se hace backfill, los RDT de prueba quedan en $0. [PR #13](https://github.com/220682/py_control_proyectos_web/pull/13) mergeado a `main` en `py_control_proyectos_web`. Trabaja en paralelo con [Fase 2](2026-09-21-pr-fase-2-pipeline-linea-base.md) (Agente B).
 
 **Ya resuelto, no volver a preguntar:**
 - Punch List de esta fase (19 ítems, tabla más abajo) — **aprobada por Victor.**
@@ -304,49 +302,64 @@ Reglas:
 - **Ninguna columna de base de datos se borra ni se renombra** sin un plan de migración aparte, aunque quede sin uso (AGENTS.md).
 - Cada "esto quedó sin uso" se sostiene con una **búsqueda real de referencias en el código**, no de memoria. Sin esa comprobación, el ítem no se reporta.
 
-Candidato ya identificado para esta fase, para que sirva de ejemplo del formato esperado:
+Candidato ya identificado para esta fase, para que sirva de ejemplo del formato esperado — resultado final confirmado en `## Archivos y código que quedaron viejos`, más abajo:
 
-- **`CAUSAS_CNC`** (`src/lib/rdts/parte.ts:32`) — array fijo con las 12 causas. Queda reemplazado por la tabla `catalogo_cnc` de la migración `054`. Lo referencian hoy `FormularioCrearRdt.tsx` y el bloque `describe('CAUSAS_CNC')` de `src/lib/rdts/parte.test.ts`, que espera exactamente 12 elementos. Confirmar si queda del todo sin uso o si sigue haciendo falta como semilla.
+- **`CAUSAS_CNC`** (`src/lib/rdts/parte.ts:32`) — array fijo con las 12 causas. Queda reemplazado por la tabla `catalogo_cnc` de la migración `054`.
 
 ## Checklist de implementación — Agente A
 
-- [ ] A0 · Migración `052_pr_enriquecido.sql` aplicada (compartida, una sola vez)
-- [ ] A1 · Toda actividad lleva partida: desplegable para C/NC, validación y tratamiento del legacy
-- [ ] A2 · `recalcular_pr_desde_rdt()` en `053`, recálculo completo e idempotente
-- [ ] A3 · `pr_recursos` mantenido y reconciliación cuadrando
-- [ ] A4 · Enganche en validar / rechazar / corregir / borrar
-- [ ] A5 · Resolución de tarifa + aviso no restrictivo a admin y JP
-- [ ] A6 · Catálogo CNC en `054` + pantalla + obligatoriedad
-- [ ] A7 · Chips nuevos registrados en el flujo 14
-- [ ] A8 · tsc, eslint, tests y build limpios; migraciones aplicadas
-- [ ] A9 · Autoverificación Playwright completa, checklist 100% Completado
-- [ ] A10 · Informe de limpieza entregado: qué quedó viejo, con referencias comprobadas
+- [x] A0 · Migración `052_pr_enriquecido.sql` aplicada (compartida, una sola vez) — documentada y re-aplicada (idempotente) en esta sesión
+- [x] A1 · Toda actividad lleva partida: desplegable para C/NC, validación y tratamiento del legacy
+- [x] A2 · `recalcular_pr_desde_rdt()` en `053`, recálculo completo e idempotente
+- [x] A3 · `pr_recursos` mantenido y reconciliación cuadrando (verificado con datos reales: 231.96 = 231.96)
+- [x] A4 · Enganche en validar / rechazar / corregir / borrar
+- [x] A5 · Resolución de tarifa + aviso no restrictivo a admin y JP
+- [x] A6 · Catálogo CNC en `054` + pantalla + obligatoriedad
+- [x] A7 · Chips nuevos registrados en el flujo 14
+- [x] A8 · tsc, eslint, tests (455/455) y build limpios; migraciones `052`–`055` aplicadas en Supabase
+- [x] A9 · Autoverificación Playwright completa contra Supabase real (login admin y usuario sin permisos), checklist 100% Completado
+- [x] A10 · Informe de limpieza entregado más abajo, con referencias comprobadas
 
 ## Punch List — checklist a aprobar ANTES de implementar
 
 Se carga en la Punch List de Mejoras como checklist nuevo: **"PR Fase 1 — pipeline RDT → PR"**. **Victor lo aprueba antes de que arranque la implementación.** El agente lo llena con Playwright al terminar y hace loop hasta cerrarlo completo.
 
-| # | Ítem | Resultado esperado |
-|---|---|---|
-| 1 | Crear RDT, elegir TA = C o NC | Aparece el desplegable de partida con las partidas de las actividades D del día |
-| 2 | Intentar cargar una C o NC sin haber declarado antes una actividad D | El desplegable sale vacío y explica que primero hace falta una actividad directa |
-| 3 | Guardar un parte con una C o NC sin partida asignada | No deja guardar |
-| 4 | PR sin RDT validados | Muestra 0 en ejecutado, no rompe |
-| 5 | Validar un RDT | El metrado ejecutado de esa partida se mueve en el PR |
-| 6 | Pantalla PR | El % de avance deja de estar clavado en 0 |
-| 7 | HH reales de la partida | Coinciden con la suma de las columnas del tareo de esa partida, sumando D, C y NC |
-| 8 | Desglose por tipo | `hh_d`, `hh_c` y `hh_nc` de la partida suman exactamente las HH reales de esa partida |
-| 9 | Actividades C y NC | Aportan horas y costo a su partida, pero **no** mueven el metrado ejecutado |
-| 10 | Costo real de la partida | Coincide con HH × tarifa + HM × tarifa, en USD |
-| 11 | Horas de personal MOI | Se acumulan como horas, sin costo asociado |
-| 12 | Equipo declarado fuera del presupuesto | Suma su HM al costo real de su partida |
-| 13 | Recurso sin costo en ninguna tabla | Genera aviso a admin/JP y **no** impide guardar ni validar |
-| 14 | Rechazar un RDT ya validado | El PR vuelve al valor anterior |
-| 15 | Corregir y revalidar | Queda el valor correcto, sin duplicar |
-| 16 | Catálogo CNC | Se mantiene desde Recursos, solo admin y jefe de proyectos |
-| 17 | RDT con metrado incompleto sin causa | No deja guardar |
-| 18 | RDT viejos, cargados antes de la regla | Sus C/NC quedan en el balde legacy, rotulado como tal, sin romper ningún cálculo |
-| 19 | Reconciliación de costo | Partidas + legacy cuadra con el total de `pr_recursos` |
+| # | Ítem | Resultado esperado | Estado | Evidencia |
+|---|---|---|---|---|
+| 1 | Crear RDT, elegir TA = C o NC | Aparece el desplegable de partida con las partidas de las actividades D del día | Completado | Probado en vivo, proyecto PS-0004: al declarar T1 (D, partida 2.1.1) y luego T2=Contributoria, el desplegable de WBS de T2 lista "2.1.1". |
+| 2 | Intentar cargar una C o NC sin haber declarado antes una actividad D | El desplegable sale vacío y explica que primero hace falta una actividad directa | Completado | Probado en vivo: sin D declarada, el select muestra "primero declara una D con partida". |
+| 3 | Guardar un parte con una C o NC sin partida asignada | No deja guardar | Completado | Probado en vivo: mensaje "1 actividad(es) contributoria(s)/no contributoria(s) sin partida asignada." bloqueó el guardado. |
+| 4 | PR sin RDT validados | Muestra 0 en ejecutado, no rompe | Completado | Verificado en Supabase real antes de validar: `pr_partidas` en 0 para partidas sin RDT validado. |
+| 5 | Validar un RDT | El metrado ejecutado de esa partida se mueve en el PR | Completado | `metrado_acumulado` pasó de 0 a 6 (y a 10 tras corregir) en datos reales. |
+| 6 | Pantalla PR | El % de avance deja de estar clavado en 0 | Completado | Efecto colateral confirmado: el Dashboard del servicio (no tocado por esta fase) ya muestra "Avance físico 13 %" en vez de 0 %. La pantalla PR en sí la rehace el Agente B. |
+| 7 | HH reales de la partida | Coinciden con la suma de las columnas del tareo de esa partida, sumando D, C y NC | Completado | `hh_reales_acum = 9` = 6 (D) + 2 (C) + 1 (NC), excluyendo las 8h de MOI, en datos reales. |
+| 8 | Desglose por tipo | `hh_d`, `hh_c` y `hh_nc` de la partida suman exactamente las HH reales de esa partida | Completado | `hh_d=6, hh_c=2, hh_nc=1` → suma 9 = `hh_reales_acum`. |
+| 9 | Actividades C y NC | Aportan horas y costo a su partida, pero **no** mueven el metrado ejecutado | Completado | `metrado_acumulado` solo reflejó la actividad D (6, luego 10); las horas de C/NC sí entraron a `hh_c_acum`/`hh_nc_acum` y al costo. |
+| 10 | Costo real de la partida | Coincide con HH × tarifa + HM × tarifa, en USD | Completado | `costo_real_acum = 231.96` = 8h×13.37 (OFICIAL) + 5h×25 (MINICARGADOR), exacto. |
+| 11 | Horas de personal MOI | Se acumulan como horas, sin costo asociado | Completado | `proyecto_pr.hh_mo_indirecta_acum` sumó las 8h de la persona MOI (RELEVO DE SUPERVISIÓN); no entraron a `hh_d/c/nc_acum` de ninguna partida ni a su costo. |
+| 12 | Equipo declarado fuera del presupuesto | Suma su HM al costo real de su partida | Completado (vía código, no con un equipo literalmente fuera de presupuesto) | El motor no distingue "dentro/fuera de presupuesto": todo equipo con wbs válido suma por igual (verificado con MINICARGADOR). El caso "sin match de wbs" (equivalente en riesgo) se verificó por el ítem 18: va al balde legacy sin romper nada. |
+| 13 | Recurso sin costo en ninguna tabla | Genera aviso a admin/JP y **no** impide guardar ni validar | Completado | Persona con cargo inventado sin tarifa: la validación devolvió `200` con `sinResolver`, se creó notificación a administrador/JP, y quedó en `proyecto_pr.recursos_sin_tarifa`. |
+| 14 | Rechazar un RDT ya validado | El PR vuelve al valor anterior | Completado | Tras Rechazar, `pr_partidas` de la partida volvió a 0. Encontrado y corregido en el camino: la UI (`TablaStatusRdts.tsx`) no mostraba el botón Rechazar para un RDT ya VALIDADO — se corrigió. |
+| 15 | Corregir y revalidar | Queda el valor correcto, sin duplicar | Completado | Se corrigió el metrado ejecutado (6→10) y se revalidó: `metrado_acumulado=10`, HH/costo sin cambios ni duplicación. |
+| 16 | Catálogo CNC | Se mantiene desde Recursos, solo admin y jefe de proyectos | Completado | Pantalla `/recursos/causas-cnc` con las 12 causas semilla, alta funcionando; usuario sin permisos: redirige a `/mi-entorno` y la API devuelve 403. |
+| 17 | RDT con metrado incompleto sin causa | No deja guardar | Completado | Mensaje "1 actividad(es) no completó su metrado programado y no tiene(n) causa (CNC) indicada." bloqueó el guardado. |
+| 18 | RDT viejos, cargados antes de la regla | Sus C/NC quedan en el balde legacy, rotulado como tal, sin romper ningún cálculo | Completado | Confirmado con un RDT real del proyecto (validado antes de esta fase): su actividad NC sin partida quedó en `hh_legacy_sin_partida_acum`, sin romper el recálculo. |
+| 19 | Reconciliación de costo | Partidas + legacy cuadra con el total de `pr_recursos` | Completado | En datos reales (proyecto PS-0004): `Σ pr_partidas.costo_real_acum + costo_legacy_sin_partida_acum = Σ pr_recursos.costo_acumulado` → 231.96 = 231.96, exacto. |
+
+**Cómo se verificó:** Playwright con login real (MCP no disponible en este entorno; se usó Playwright vía script Node con el Chromium preinstalado) contra la app corriendo localmente con las credenciales reales de Supabase, para las dos cuentas (`PR_TEST_ADMIN_*`, rol Administrador; `PR_TEST_USER_*`, rol Supervisor Operativo), sobre el proyecto real PS-0004 "Movimiento de tierra, e instalación de bancoductos". El RDT de prueba quedó cargado en Supabase (22-09-2026, turno Noche) como evidencia — Victor decide si lo borra.
+
+## Archivos y código que quedaron viejos
+
+- **`CAUSAS_CNC`** (`src/lib/rdts/parte.ts:32`) — array fijo con las 12 causas. Reemplazado por la tabla `catalogo_cnc` (migración `054`) y el fetch dinámico en `GET /api/rdts/catalogos`. **Confirmado sin uso real**: se dejó adrede como semilla de la migración (los mismos 12 textos, sin inventar ni reordenar) y su único otro referente hoy es su propio test (`describe('CAUSAS_CNC')` en `parte.test.ts`, que sigue verificando que existan y tengan 12 elementos — sirve como candado de que la semilla no cambió). `FormularioCrearRdt.tsx` ya NO lo importa: el desplegable de CNC ahora usa `catalogos.causasCnc` (dinámico). Búsqueda hecha con `grep -rn "CAUSAS_CNC" src` el 21-09-2026: 7 archivos, todos comentarios o el propio origen/test. Se puede borrar cuando Victor lo apruebe.
+
+## Hallazgos fuera del alcance original de esta fase
+
+Dos cosas que aparecieron verificando con datos reales, no inventadas ni anticipadas por el plan:
+
+1. **`047_rdt_tarifas.sql` nunca se había aplicado en Supabase.** Las columnas `rdt_tareo.tarifa_hh` / `rdt_equipos_parte.tarifa_hm` no existían, así que `resolverYCongelarTarifas()` llevaba corriendo desde que se escribió sin poder congelar ninguna tarifa (el error de Supabase se silenciaba porque el código no revisaba el resultado de esos `update()`). Se aplicó ahora (aditiva, idempotente, sin dato destructivo).
+2. **Consecuencia del punto anterior: todos los RDT validados ANTES de esta sesión quedaron con `costo_real_acum = 0`** en el motor nuevo, porque nunca tuvieron una tarifa congelada de verdad. Las horas y el metrado sí son reales y correctos — solo el costo de ese período histórico está en cero. **No se re-resolvió la tarifa retroactivamente**: usar el `dp_recursos` de HOY para RDT validados hace semanas podría no reflejar el precio vigente en ese momento (si el presupuesto se reimportó entre medio) — es el mismo riesgo que `047` documentó para justificar por qué se congela en primer lugar. Queda pendiente de una decisión explícita de Victor: dejarlo así (documentado) o autorizar un backfill de tarifa histórica con un criterio que él defina.
+
+Adicionalmente se hizo un backfill (`055_backfill_tareo_legacy.sql`) para `rdt_tareo.es_moi` y `recurso_dp_descripcion` (columnas nuevas de `053`) en RDT ya validados, para que el motor los clasifique bien desde ya — ver el propio archivo para el detalle y el criterio de "no adivinar" cuando hay ambigüedad de precio.
 
 ## Coordinación con el Agente B
 

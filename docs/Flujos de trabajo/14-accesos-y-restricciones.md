@@ -20,12 +20,13 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Acceso | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH | Requiere OT a cargo |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|---|
 | Adjudicar proyecto / crear programa / crear portafolio | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | No (crea la OT) |
-| Confirmar transición de estado del proyecto | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
+| Confirmar transición de estado del proyecto | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí ** |
 | Archivar / eliminar proyecto | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar contenedor (programa / portafolio) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Modificar checklist del proyecto | ✓ | — | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Ver apartado "Proyectos" (panel izquierdo) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (lectura) |
 | Ver Recursos (catálogo de empresa: Personal, Equipos) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Gestionar catálogo de causas CNC (Recursos > Causas CNC) — único catálogo de Recursos con alta/baja, los demás son de solo lectura | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Importar DP (Datos del Proyecto) | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Subir documento del proyecto (catálogo AL_INICIO/CIERRE) | ✓ | — | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | Editar perfil extendido (propio) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | No |
@@ -35,6 +36,8 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 
 `*` **Subir documento** no es un rol fijo: puede el administrador o **el rol responsable de ese documento específico**, según `catalogo_documentos.rol_responsable_id` (asignable a cualquiera de los 13 roles al dar de alta el tipo de documento). No es una fila de roles fijos como las demás.
 
+`**` **Confirmar transición de estado del proyecto**, desde PR Fase 2 (2026-09-21): el permiso de rol es el mismo de siempre, pero la transición `EN_PLANEACION` → `EJECUCION` específicamente tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)) — el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
+
 ### RDT (Supervisión operativa) — foco directo del Sub-lote 2
 
 | Acceso | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH | Requiere OT a cargo |
@@ -43,7 +46,8 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Crear RDT estructurado ("Crear RDTs", PROM-GP-002) | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Validar / Rechazar RDT | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
-| Eliminar RDT (borrado definitivo) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar RDT (borrado definitivo) — cubre tanto "Subir RDTs" (archivo) como "Crear RDTs" (parte estructurado, desde el plan PR Fase 1: dispara recálculo del PR) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Rechazar un RDT ya VALIDADO (desde el plan PR Fase 1: destraba para corregir, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Ver RDTs (listado / status / consolidado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | ✓ | — | ✓ | ✓ | No (lectura) |
 
 ### Planificación
@@ -56,6 +60,7 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 | Ver Plan Maestro | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | 3WLA | — no implementado (pospuesto, ver `mejoras-futuras.md`) — | | | | | | | | | | | | | — |
 | Ver PR (Reporte del proyecto) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
+| Ver Curva S (serie temporal PV/EV/AC) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | No (lectura; todos menos asistente) |
 | Status / Programación de capacitaciones | — no implementado — | | | | | | | | | | | | | — |
 
 ### Logística / Requerimientos (RQ)

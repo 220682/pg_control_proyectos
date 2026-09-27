@@ -4,7 +4,7 @@
 
 ## Estado general y fase actual
 
-En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 9** (Fases 2 a 8 cerradas).
+**Entregado al Orquestador.** Worker asignado tras el Gate 1 (2026-09-27), Fases 2–9 completas. Pendiente: Auditoría y Gate 2 (fuera del alcance de este Worker).
 
 ## Roles y estado
 
@@ -30,13 +30,15 @@ En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 
 
 - Fase 8: `docs/README.md` reescrito según §3.1 (mapa de las 7 áreas, lectura mínima, diferencia plan/progreso/evidencia/aprendizaje, sin la sección "Migración en curso"). `AGENTS.md` y `README.md` (raíz): rutas mecánicas corregidas — `docs/Flujos de trabajo/`, `docs/Tareas de implementacion/`, `docs/Mejoras continuas/`, `docs/00-sistema/`, `visual-companion/`, `conocimiento/`, `Formatos/`, `Dashboard ejemplo/`, `Informacion para pruebas/` actualizadas a su ubicación nueva; quitadas las rutas ya inexistentes antes de este plan (`memoria.md`, `control_de_proyectos.txt` raíz, `Sistema hibrido/`, `plantillas/`, `RDTs movimiento...`, `.cursor/rules/*.mdc` — verificado con `ls`/`find` que ninguno existe). Los dos artifacts derivados (*Flujo SDD a Cierre*, *Recorrido del Plan*) se corrigieron y republicaron (accesibles desde esta sesión): evidencia en su propio archivo, `<entorno>-worker-N`/worktree correcto, D6/D10 aplicados, y Fases 0–9 con conteos reales. Comando de verificación de §4.7 ejecutado: 23 resultados, todos clasificados como referencias históricas intencionales o un título de sección (detalle completo en la evidencia) — ninguno es un enlace roto real.
 
+- Fase 9: Punch List completa en la evidencia (24 ítems, 23 Conforme sin reservas + 1 Conforme con limitación anotada). Hallazgos consolidados en el plan: §12 (3 mejoras de trabajo, ninguna promovida a archivo individual — quedan anotadas para el Auditor), §13 (ninguna regla de negocio), §14 (7 huérfanos/hallazgos, 2 ya resueltos en el camino), §14.1 (7 propuestas normativas nuevas para el Auditor). Encabezado del plan actualizado a "entregado al Orquestador".
+
 ## Trabajo actual
 
-Fase 9: completar la Punch List con evidencia por ítem y consolidar hallazgos.
+Ninguno — entrega completa. Próximo actor: Auditor.
 
 ## Pendientes
 
-Fase 9 (ver Punch List del plan, §9).
+Fuera del alcance de este Worker: Auditoría (verificación de rama, cumplimiento de SDD/plan/Punch List/evidencia, informe `APLICAR AHORA`/`PROPONER A RESPONSABLE`/`NO PROMOVER`/`PROPONER SKILL`), consolidación del Orquestador, Gate 2, y las tres acciones de cierre (merge — no aplica, este plan no tiene código —, fuentes de verdad aprobadas, Skill si corresponde) y el mensaje de cierre.
 
 ## Commits, ramas y worktrees usados
 
@@ -55,7 +57,7 @@ _(se agregan aquí, con fecha, a medida que ocurren — ver también §12–§14
 
 ## Próximo paso verificable
 
-Fase 9: completar Punch List, consolidar hallazgos en §12–§14 del plan y entregar al Orquestador.
+Para el Auditor: leer el plan completo (especialmente §9 Punch List, §12–§14.1, y este progreso), verificar con `git log`/`git branch --contains` que los commits están en la rama de este Worker, y emitir el Informe de Auditoría (plantilla `06-informe-auditoria.md`) en §15 del plan.
 
 ## Revisión de fuentes de verdad por fase
 
@@ -65,6 +67,7 @@ Fase 9: completar Punch List, consolidar hallazgos en §12–§14 del plan y ent
 - **Fase 5:** las reglas de negocio no se tocaron (ninguna de las 11 mejoras era una regla de negocio). Los flujos de negocio (`docs/Flujos de trabajo/`, todavía no migrados) no se modificaron. Fuentes de verdad revisadas: sin cambios normativos requeridos.
 - **Fase 6:** los 21 flujos de negocio son ahora la fuente de verdad en su ubicación definitiva (`04-flujos-de-negocio/`); no se cambió ninguna regla funcional, solo ubicación, nombre de archivo (el 19) y los enlaces que la migración rompía. El único contenido normativo tocado fue la regla de lectura de `04-flujos-de-negocio/README.md`, alineada a D10 (ya aprobada en el Gate 1, no es una decisión nueva del Worker). `design.md` queda como fuente de verdad visual en su ubicación definitiva. Fuentes de verdad revisadas: sin cambios normativos nuevos más allá de aplicar D10 (ya aprobado).
 - **Fase 8:** único punto de este plan donde el Worker toca `AGENTS.md`/`README.md` por diseño (excepción de §10.1, solo rutas). Verificado con `grep` que no se cambió ningún contenido normativo, solo rutas y la sección de navegación de `docs/README.md` que el propio plan autoriza reescribir. Fuentes de verdad revisadas: los tres documentos centrales (`AGENTS.md`, `README.md`, `docs/README.md`) quedan consistentes entre sí; sin cambios normativos nuevos pendientes de Gate 2 más allá de los ya anotados en la Fase 3 (D10 en `AGENTS.md`) y el título de sección menor anotado en la evidencia.
+- **Fase 9:** no se creó ni modificó ninguna fuente de verdad central en esta fase — es consolidación de lo ya hecho (Punch List, hallazgos, propuestas). Fuentes de verdad revisadas: sin cambios nuevos; todas las propuestas normativas quedan explícitamente para el Auditor en §14.1 del plan, ninguna se aplicó por cuenta propia del Worker.
 - **Fase 7:** ninguna regla de negocio se tocó. `docs/00-sistema/` (fuente de las reglas universales de roles/sesiones/convenciones) se eliminó porque su contenido ya vive íntegro en `00-estandar-agentes/` y `01-contexto-repositorio/` desde las Fases 3–4 — verificado antes de eliminar, no solo asumido. **Pendiente para la Fase 8 (ya identificado, no es un hallazgo nuevo):** `AGENTS.md` todavía enlaza a rutas de `docs/00-sistema/` que ya no existen — es exactamente el tipo de ruta que la Fase 8 corrige. Fuentes de verdad revisadas: el cambio normativo relevante (eliminar `00-sistema/`) ya estaba autorizado por §10.3-A del propio plan, no es una propuesta nueva para el Auditor.
 
 ## Handoffs

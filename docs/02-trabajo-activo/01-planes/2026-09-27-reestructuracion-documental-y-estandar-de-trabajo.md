@@ -823,6 +823,7 @@ Se reportan a Victor. No se borra nada por cuenta propia.
 
 - Artifacts de evidencia sin enlace desde el repo: Sub-lote 2 Checklist, Dashboards y Curva S Fase 3, Matriz de Accesos (§4.6).
 - `2026-09-23-paquetes-de-trabajo.md` tiene texto con codificación dañada (UTF-8 doblemente codificado). Se reporta; no se corrige en este plan.
+- `.vscode/extensions.json` en la raíz: carpeta no contemplada en ninguna tabla de §4 ni en el criterio de aceptación de §6 ("la raíz contiene solo AGENTS.md, README.md, .gitignore y docs/"). No se mueve ni se borra por no estar autorizada explícitamente; se reporta a Victor para que decida si se conserva, se ignora vía `.gitignore` o se mueve a `06-material-de-apoyo/`.
 - Rutas citadas en `AGENTS.md`/`README.md` que ya no existen: `Sistema hibrido/`, `plantillas/`, `RDTs movimiento de tierra.../`, `memoria.md`, `control_de_proyectos.txt`, `.cursor/rules/*`.
 - `.worktrees/` figura en `convenciones-de-trabajo.md` como pool creado el 2026-09-23, pero no existe en este repo.
 - Entradas de `resumen-checklists.md` sin plan dueño: las completa el Worker en la Fase 7.

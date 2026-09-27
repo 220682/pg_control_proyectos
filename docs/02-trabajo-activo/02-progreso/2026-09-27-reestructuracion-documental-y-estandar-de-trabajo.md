@@ -4,7 +4,7 @@
 
 ## Estado general y fase actual
 
-En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 6** (Fases 2 a 5 cerradas).
+En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 7** (Fases 2 a 6 cerradas).
 
 ## Roles y estado
 
@@ -24,13 +24,15 @@ En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 
 
 - Fase 5: `git mv` de `tareas-futuras.md` → `01-planes/planes-futuros.md`, adaptado al formato de §2.5 (estado y "requiere Spec/SDD" por ítem). `git mv` de las 11 mejoras a `03-aprendizaje-continuo/`. Clasificación aplicada según §4.5: 6 promovidas ya integradas (Fases 3 y 4), creados `historico.md` (9 entradas) y `pendientes-de-promocion.md` (1 entrada: red bloqueada). Índice de `03-aprendizaje-continuo/README.md` rehecho, una fila por archivo con etiqueta y estado final. Enlaces corregidos en el mismo commit: `AGENTS.md` (verificar-antes-de-afirmar), dos enlaces internos en `preguntas-frecuentes-flujo-orquestador.md`, uno en `acceso-postgres-sin-ipv6.md`, y los dos enlaces de "Fase 1/Fase 2" en `planes-futuros.md` (apuntan a `Tareas de implementacion/` hasta que la Fase 7 los migre; nota dejada en el propio archivo).
 
+- Fase 6: `git mv` de los 21 flujos a `04-flujos-de-negocio/` (renombrado el 19 sin espacios); `git mv` de `design.md` y los 6 mockups a `05-diseno-y-referencias/`; `git mv` de las 5 carpetas de apoyo a `06-material-de-apoyo/`. Integrado el contenido útil de `docs/Flujos de trabajo/README.md` (índice de los 21 flujos, regla "Borrado administrador") y de `docs/visual-companion/README.md` (nomenclatura oficial, índice de mockups, campos del formulario RQ) en los README nuevos; ambos originales eliminados con `git rm` (§10.3-A, contenido ya integrado). Corregidos en el mismo commit: la regla de lectura de `04-flujos-de-negocio/README.md` (ahora refleja D10, antes decía "nunca los 21 completos" sin la excepción por rol — contradecía el Gate 1); dos menciones a `tareas-futuras.md`/`visual-companion` en `14-accesos-y-restricciones.md`, `10-generacion-pr.md`, `design.md` y `mockups/index.html`. `docs/06-material-de-apoyo/README.md` actualizado con las 5 carpetas ya presentes (ya no "comienza vacía").
+
 ## Trabajo actual
 
-Fase 6: mover los 21 flujos de negocio, `design.md`, los mockups y las 5 carpetas de apoyo.
+Fase 7: mover las 12 tareas históricas a `01-planes/`, eliminar la tarea de cronograma, descomponer `resumen-checklists.md`.
 
 ## Pendientes
 
-Fases 6 a 9 completas (ver Punch List del plan, §9).
+Fases 7 a 9 completas (ver Punch List del plan, §9).
 
 ## Commits, ramas y worktrees usados
 
@@ -46,7 +48,7 @@ _(se agregan aquí, con fecha, a medida que ocurren — ver también §12–§14
 
 ## Próximo paso verificable
 
-Fase 6: `git mv` de los 21 flujos de `docs/Flujos de trabajo/` a `docs/04-flujos-de-negocio/`, con el renombre del 19 y sus enlaces en el mismo commit.
+Fase 7: `git mv` de las 12 tareas históricas restantes a `01-planes/` y `git rm` de la tarea de cronograma (§4.5).
 
 ## Revisión de fuentes de verdad por fase
 
@@ -54,6 +56,7 @@ Fase 6: `git mv` de los 21 flujos de `docs/Flujos de trabajo/` a `docs/04-flujos
 - **Fase 3:** el estándar de agentes (`00-estandar-agentes/`) nace como fuente normativa reusable, autorizado explícitamente por la excepción de §10.1 del plan (el objeto de este plan es construir esa estructura). No se tocó `AGENTS.md`, `README.md` ni `docs/README.md` en esta fase. Contenido integrado desde `docs/00-sistema/roles-y-flujo.md`, `gestion-de-sesiones-y-contexto.md` y `convenciones-de-trabajo.md` (universal → estándar; lo específico de este repo queda pendiente para `01-contexto-repositorio/` en la Fase 4) y desde dos mejoras continuas promovidas (`2026-09-23-verificar-antes-de-afirmar.md` → `01-principios-y-seguridad.md`; `2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md` → `03-sesiones-contexto-y-handoff.md`) — los archivos originales de `Mejoras continuas/` no se tocan todavía, se mueven y clasifican formalmente en la Fase 5 según §4.5. **Propuesta normativa para el Auditor:** D10 (lectura por rol) reemplaza la instrucción vigente de `AGENTS.md`/`docs/README.md` de "leer todos los Flujos de trabajo para contexto general" — el cambio de contenido en `AGENTS.md` lo aplica el Orquestador tras el Gate 2, según §2.3 del plan; queda anotado también en §14 de este plan.
 - **Fase 4:** `01-contexto-repositorio/` nace con lo específico de este repositorio, autorizado por §10.1. Integra `convenciones-de-trabajo.md` (aún no se elimina el original: eso ocurre en la Fase 7 según §10.3-A) y cuatro mejoras continuas promovidas. No se tocó ninguna fuente de verdad central. Fuentes de verdad revisadas: sin cambios normativos requeridos más allá de lo ya anotado para el Auditor en la Fase 3.
 - **Fase 5:** las reglas de negocio no se tocaron (ninguna de las 11 mejoras era una regla de negocio). Los flujos de negocio (`docs/Flujos de trabajo/`, todavía no migrados) no se modificaron. Fuentes de verdad revisadas: sin cambios normativos requeridos.
+- **Fase 6:** los 21 flujos de negocio son ahora la fuente de verdad en su ubicación definitiva (`04-flujos-de-negocio/`); no se cambió ninguna regla funcional, solo ubicación, nombre de archivo (el 19) y los enlaces que la migración rompía. El único contenido normativo tocado fue la regla de lectura de `04-flujos-de-negocio/README.md`, alineada a D10 (ya aprobada en el Gate 1, no es una decisión nueva del Worker). `design.md` queda como fuente de verdad visual en su ubicación definitiva. Fuentes de verdad revisadas: sin cambios normativos nuevos más allá de aplicar D10 (ya aprobado).
 
 ## Handoffs
 

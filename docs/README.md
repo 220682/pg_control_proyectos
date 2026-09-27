@@ -2,6 +2,24 @@
 
 Este archivo ordena **solo `docs/`**. La fuente normativa de todo el repositorio sigue siendo [AGENTS.md](../AGENTS.md) — este archivo existe porque AGENTS.md deriva aquí para saber cómo moverse dentro de `docs/`.
 
+## ⚠️ Migración en curso — nueva arquitectura
+
+Este repositorio está migrando a una nueva estructura, definida en `2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` (raíz del repo). Las siete áreas numeradas ya existen como carpetas con su README:
+
+| Carpeta | Qué vive ahí |
+|---|---|
+| [00-estandar-agentes/](00-estandar-agentes/README.md) | Estándar reusable de agentes: roles, flujo Spec/SDD→Cierre, plantillas |
+| [01-contexto-repositorio/](01-contexto-repositorio/README.md) | Configuración específica de este repositorio |
+| [02-trabajo-activo/](02-trabajo-activo/README.md) | Plan / progreso / evidencia de cada tarea real |
+| [03-aprendizaje-continuo/](03-aprendizaje-continuo/README.md) | Mejoras, histórico, pendientes de promoción |
+| [04-flujos-de-negocio/](04-flujos-de-negocio/README.md) | Reglas de negocio permanentes (pendiente de recibir el contenido migrado de `Flujos de trabajo/`) |
+| [05-diseno-y-referencias/](05-diseno-y-referencias/README.md) | Sistema de diseño y mockups (pendiente de recibir `visual-companion/`) |
+| [06-material-de-apoyo/](06-material-de-apoyo/README.md) | Material de referencia no normativo |
+
+**Hasta que la Fase 5 del plan mueva el contenido físico, todo lo que sigue abajo en este archivo (y las carpetas `00-sistema/`, `Flujos de trabajo/`, `Tareas de implementacion/`, `Mejoras continuas/`, `visual-companion/`) sigue siendo la fuente vigente.** No se ha borrado ni movido nada todavía — esta sección es solo el mapa de a dónde va cada cosa.
+
+---
+
 Aquí es donde se trabaja. Lo demás en la raíz del repositorio (`conocimiento/`, `Sistema hibrido/`, `Informacion para pruebas/`, `Formatos/`, etc.) es material de apoyo/referencia, no el flujo activo de trabajo.
 
 ## Qué hay y para qué sirve cada cosa

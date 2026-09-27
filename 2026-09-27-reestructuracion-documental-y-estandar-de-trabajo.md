@@ -1,6 +1,10 @@
-# Plan de implementación — Reestructuración documental y estándar de trabajo
+# Plan — Reestructuración documental y estándar de trabajo
 
-> **Estado:** Propuesto. No ejecutar hasta que Victor apruebe el plan completo.
+> **Estado:** CORREGIDO (v2, 2026-09-27) — **pendiente de GATE 1** (aprobación de Victor del plan + Punch List). Nadie implementa nada de las Fases 2 a 9 antes del Gate 1.
+>
+> **Ejecución previa sin aprobación:** las Fases 0 y 1 fueron ejecutadas y pusheadas por un agente anterior el 2026-09-27 (commits `404ddb3` y `be53526`) cuando el plan todavía decía "Propuesto. No ejecutar hasta que Victor apruebe". Queda registrado en §11 (Registro de decisiones) y §12 (Mejoras de trabajo). La Fase 2 revisa lo creado en la Fase 1 contra este plan corregido.
+>
+> **Quién implementa:** un **Worker** asignado por el Orquestador tras el Gate 1 (§10). La sesión que corrigió este plan no lo implementa.
 >
 > **Propósito:** reorganizar la documentación del repositorio para separar de forma explícita:
 >
@@ -10,22 +14,33 @@
 > 4. El aprendizaje continuo que nace de los planes.
 > 5. Los flujos de negocio, diseño y material de apoyo.
 >
-> **Regla central:** no se elimina ningún archivo sin autorización explícita de Victor. Todo movimiento o renombre se realiza con `git mv`, después de un inventario, una propuesta origen → destino y aprobación.
+> **Regla central:** no se elimina ningún archivo sin autorización explícita de Victor (§10.3). Todo movimiento o renombre se hace con `git mv`, según las tablas origen → destino de §4, que forman parte de lo que Victor aprueba en el Gate 1.
+
+---
+
+# 0. Fuente normativa y material de referencia
+
+**Este archivo es la fuente normativa del flujo y de la reestructuración.** El diagrama y los artifacts son **vistas derivadas**: si difieren de este plan, se corrigen ellos, no el plan. La Fase 8 los alinea.
+
+| Recurso | Ubicación | Rol | Estado frente a este plan |
+|---|---|---|---|
+| Diagrama commit/push/merge/gates | `diagrama-commit-push-merge-gates.md` (raíz) → destino `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md` (§4.3) | Vista derivada: tabla por rol + Mermaid | Base de §3.2 (`04-flujo-sdd-y-planes.md`) y de la tabla de lectura mínima. **Inconsistencia interna a corregir:** la tabla dice `<entorno>-worker-N` y el Mermaid dice `work-N`. |
+| Artifact **Flujo SDD a Cierre** | https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd | Vista derivada interactiva del flujo | Base de la secuencia unificada de §3.2. **A corregir:** dice que la evidencia va "en el propio archivo del plan" (contradice §2.4) y mezcla la rama `<entorno>-worker-N` con el worktree `.worktrees/work-N/`. |
+| Artifact **Recorrido del Plan** | https://claude.ai/artifact/YcT7akcjY5L2DXn1wPEeyx | Vista derivada: simulación fase por fase | Sus ítems adicionales se incorporaron a §5. **A corregir:** numeración de fases (ahora 0–9), conteo "7 de 11" (son 13 tareas), estado local que no refleja lo ya ejecutado. |
+| Artifact **Punch List de Mejoras** | https://claude.ai/artifact/8yHL1cn8auxbYghuRoiNhd | Evidencia externa (checklist visual) | Enlazado hoy solo desde `docs/README.md:81`. Se conserva el enlace al reescribir `docs/README.md`. |
+| Artifacts de evidencia de tareas cerradas: **Sub-lote 2 — Checklist F0-F7** (https://claude.ai/artifact/Xv6wSxUA2fbXaFX8ACe1rh), **Dashboards y Curva S — Fase 3** (https://claude.ai/artifact/CdUMm5cdoxGjYPUsMHM85q), **Matriz de Accesos y Restricciones** (https://claude.ai/artifact/Lq9LEPv8FE7QpSvke5f9Yz) | claude.ai | Evidencia externa | **Huérfanos:** ningún archivo del repo los enlaza. Se registran en §4.6 para enlazarlos (decisión 2 de §6.1). |
 
 ---
 
 # 1. Resultado esperado
 
-Al terminar, la estructura activa de documentación será:
+Al terminar, la estructura activa del repositorio será:
 
 ```text
 pg_control_proyectos/
 ├── AGENTS.md
 ├── README.md
-├── .gitignore
-├── .worktrees/
-│   ├── work-1/
-│   └── work-2/
+├── .gitignore          (conserva la exclusión de .worktrees/ por compatibilidad)
 └── docs/
     ├── README.md
     ├── 00-estandar-agentes/
@@ -37,7 +52,9 @@ pg_control_proyectos/
     └── 06-material-de-apoyo/
 ```
 
-La estructura no crea carpetas por cada plan, progreso ni evidencia. Cada plan, progreso o evidencia es un único archivo Markdown con el mismo nombre base.
+- No quedan carpetas ni archivos sueltos en la raíz (regla de Victor: "no quiero carpetas sueltas, todas deben estar en su lugar").
+- `.worktrees/` **no forma parte de este repositorio**: los Workers implementan código en `py_control_proyectos_web` (diagrama, fila IMPLEMENTACIÓN). Los worktrees se documentan en `01-contexto-repositorio/03-entorno-git-y-worktrees.md` como recurso de ese repo.
+- No se crean carpetas por plan. Cada plan, progreso o evidencia es un único archivo Markdown con el mismo nombre base.
 
 ---
 
@@ -45,7 +62,7 @@ La estructura no crea carpetas por cada plan, progreso ni evidencia. Cada plan, 
 
 ## 2.1. Numeración de carpetas y archivos
 
-Los prefijos numéricos tienen un propósito de orden y lectura, no representan prioridad absoluta ni fecha.
+Los prefijos numéricos definen orden de lectura, no prioridad ni fecha.
 
 ```text
 00 = estándar y punto de partida.
@@ -57,53 +74,36 @@ Los prefijos numéricos tienen un propósito de orden y lectura, no representan 
 06 = material de apoyo no normativo.
 ```
 
-Dentro de una carpeta, la numeración define el orden recomendado de lectura. Ejemplo:
+Dentro de una carpeta, la numeración define el orden recomendado de lectura (`00-indice.md`, `01-...`, `02-...`).
 
-```text
-00-indice.md
-01-principios-y-seguridad.md
-02-roles-y-delegacion.md
-```
-
-Los documentos de trabajo real usan fecha ISO:
-
-```text
-YYYY-MM-DD-<slug-descriptivo>.md
-```
-
-Ejemplo:
-
-```text
-2026-09-27-reestructuracion-documental.md
-```
+Los documentos de trabajo real usan fecha ISO y slug sin espacios: `YYYY-MM-DD-<slug-descriptivo>.md`.
 
 ## 2.2. Convención de README
 
-Cada carpeta operativa debe tener un `README.md` corto. Un README responde únicamente:
+Cada carpeta operativa tiene un `README.md` corto que responde únicamente:
 
 1. Qué vive en la carpeta.
 2. Qué no vive en la carpeta.
 3. Qué documento se debe leer después.
 4. Qué regla de nombre o ciclo de vida aplica.
 
-El README no duplica el contenido completo de todos sus archivos hijos.
+El README no duplica el contenido de sus archivos hijos.
 
-## 2.3. Convención de lectura progresiva
+## 2.3. Convención de lectura mínima
 
-Un agente no lee toda la documentación por defecto.
+Regla tomada del diagrama ("Regla general de lectura mínima"): **ningún rol lee todo `docs/` de entrada.** Cada rol lee:
 
-```text
-1. Lee AGENTS.md.
-2. Lee README.md de la raíz si necesita visión general.
-3. Lee docs/README.md para ubicarse dentro de docs/.
-4. Lee el README de la carpeta aplicable.
-5. Lee solo el MD indicado para el tipo de solicitud.
-6. Lee únicamente los flujos de negocio y diseño afectados.
-```
+1. `AGENTS.md` y `docs/README.md` para ubicarse.
+2. El estándar que corresponde a su rol (según `00-estandar-agentes/00-indice.md`).
+3. El plan/progreso/evidencia del tema activo.
+4. **Solo** los flujos de negocio y el `design.md` que el plan indica como afectados.
+5. El **índice** (no el contenido completo) de `03-aprendizaje-continuo/`, abriendo una mejora completa solo cuando su etiqueta coincide con lo que se está por hacer.
 
-Esto evita saturar contexto, reduce tokens y evita que reglas irrelevantes oculten las importantes.
+Victor no tiene lectura obligatoria: decide el objetivo y aprueba en los Gates con lo que el rol correspondiente le presenta.
 
-## 2.4. Convención de documentos únicos por plan
+> Esta regla **reemplaza** la instrucción vigente de AGENTS.md y `docs/README.md` de "leer todos los Flujos de trabajo para contexto general". El cambio en AGENTS.md es normativo → lo propone el Auditor y lo aplica el Orquestador tras el Gate 2 (§5, cierre).
+
+## 2.4. Convención de documentos por plan
 
 Un plan de trabajo real usa el mismo nombre base en tres ubicaciones:
 
@@ -113,71 +113,60 @@ Un plan de trabajo real usa el mismo nombre base en tres ubicaciones:
 02-trabajo-activo/03-evidencia/YYYY-MM-DD-<tema>.md
 ```
 
-Significado:
-
-```text
-Plan      = intención aprobada: qué se hará y cómo se aceptará.
-Progreso  = estado vivo: qué se ha hecho, qué falta y qué bloquea.
-Evidencia = demostración: qué se verificó y con qué resultado.
-```
-
-No se crean carpetas por plan. No se duplican capturas, logs o resultados sin una referencia explícita.
-
-## 2.5. Convención de planes futuros
-
-`planes-futuros.md` es el último archivo fijo de `01-planes/`.
-
-Solo se registra allí un pendiente cuando Victor decide explícitamente:
-
-```text
-“Esto no se hará dentro del plan actual; lo dejamos para después.”
-```
-
-Un elemento de `planes-futuros.md`:
-
-- No es un plan aprobado.
-- No tiene progreso.
-- No tiene evidencia.
-- No tiene Worker asignado.
-- Debe pasar por Spec/SDD antes de convertirse en plan real.
-
-Cuando Victor decida retomarlo:
-
-```text
-planes-futuros.md
-→ Spec/SDD
-→ plan aprobado
-→ progreso y evidencia
-```
-
-El ítem se conserva como promovido con enlace al nuevo plan; no se borra sin trazabilidad.
-
-## 2.6. Convención de `.worktrees/`
-
-`.worktrees/` es una carpeta física dentro de la raíz del repositorio:
-
-```text
-pg_control_proyectos/.worktrees/work-1/
-pg_control_proyectos/.worktrees/work-2/
-```
-
-Cada carpeta corresponde a un worktree Git y a una rama de trabajo persistente:
-
-```text
-.worktrees/work-1/ → rama work-1
-.worktrees/work-2/ → rama work-2
-```
+| Archivo | Contiene | Quién lo escribe |
+|---|---|---|
+| **Plan** | Spec/SDD, plan, **Punch List embebida**, roles, registro de decisiones, Mejoras (de trabajo), Reglas de negocio acordadas, Carpetas/archivos huérfanos, **Informe de Auditoría** y **mensaje de cierre**. Las plantillas de `06-plantillas/` son el molde de cada sección que se copia adentro, no archivos separados. | Orquestador (Spec), Planner (plan + Punch List), Auditor (informe), Orquestador (cierre) |
+| **Progreso** | Estado vivo: fase actual, avances, pendientes, commits/ramas, bloqueos, **hallazgos registrados en el momento** y **handoffs** (secciones fechadas al final). | Worker (y cualquier rol que retome la tarea) |
+| **Evidencia** | Punch List ejecutada con resultado por ítem, Playwright/pruebas/consultas y **enlace al artifact de checklist visual** si existe. | Worker |
 
 Reglas:
 
-- `.worktrees/` se excluye de Git mediante `.gitignore`.
-- Solo se usa cuando haya Workers en paralelo.
-- No se crea, borra, renombra o reasigna worktree sin autorización explícita de Victor.
-- Los roles de coordinación trabajan en `main`, salvo autorización distinta.
+- Evidencia vive en **dos lugares que coexisten** (decisión 2 de §6.1): el artifact externo de claude.ai (checklist visual) y el archivo local de `03-evidencia/` (registro estructurado en texto, con enlace al artifact). No se duplican capturas o logs sin referencia explícita.
+- `progreso` y `evidencia` se crean al iniciar la ejecución aprobada (tras el Gate 1), nunca para planes futuros.
+- Las tareas históricas ya existentes se migran como **un único archivo** a `01-planes/`, sin descomponerlas (decisión 4 de §6.1 y §4.5).
 
-## 2.7. Convención de fuentes de verdad
+## 2.5. Convención de planes futuros
 
-Las tres fuentes de verdad de operación son:
+`planes-futuros.md` es el último archivo fijo de `01-planes/`. Solo se registra allí un pendiente cuando Victor decide explícitamente: "Esto no se hará dentro del plan actual; lo dejamos para después."
+
+Un elemento de `planes-futuros.md` no es un plan aprobado, no tiene progreso, evidencia ni Worker, y debe pasar por Spec/SDD antes de convertirse en plan real:
+
+```text
+planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidencia
+```
+
+El ítem se conserva como "promovido" con enlace al nuevo plan; no se borra sin trazabilidad.
+
+## 2.6. Convención de ramas y worktrees
+
+Fuentes: diagrama (tabla), artifact *Flujo SDD a Cierre* y `convenciones-de-trabajo.md` (corrección de Victor del 2026-09-23).
+
+| Tipo de trabajo | Repositorio | Rama | Worktree |
+|---|---|---|---|
+| Documentación de proceso (Spec, plan, progreso, evidencia, hallazgos, informe de auditoría, fuentes de verdad, mensaje de cierre) | `pg_control_proyectos` | `main`, directo, sin rama ni merge | No se usa |
+| Código de la app | `py_control_proyectos_web` | `<entorno>-worker-N` (ej. `local-worker-1`, `nube-worker-1`); nunca `main` hasta el merge tras el Gate 2 | `.worktrees/` de ese repo, subcarpeta con el mismo nombre de la rama (**confirmar en Gate 1**, §10.2) |
+
+- `entorno` es `local` o `nube`; se verifica con la herramienta disponible, no se asume.
+- La nomenclatura `work-1`/`work-2` queda **obsoleta** (tabla de pool de `convenciones-de-trabajo.md` y Mermaid del diagrama). Solo se conserva como dato histórico en las tareas que la usaron (ej. `2026-09-23-paquetes-de-trabajo.md`).
+- No se crea, borra, renombra o reasigna rama ni worktree sin autorización de Victor.
+- Los roles de coordinación (Orquestador, Planner, Auditor) trabajan en `main` de `pg_control_proyectos`.
+
+## 2.7. Convención de autorizaciones (Gates)
+
+Fuente: artifact *Flujo SDD a Cierre* y diagrama.
+
+| Gate | Qué aprueba Victor | Efecto |
+|---|---|---|
+| **Gate Spec** | El Spec/SDD | Autoriza delegar al Planner |
+| **Gate 1** | Plan + Punch List + tablas origen → destino + autorizaciones de §10.3 | **Autoriza toda la implementación de una vez: cero aprobaciones intermedias hasta el cierre.** Incluye commit + push del Worker dentro del alcance aprobado (cada ~35% de la Punch List, nunca a medias de un ítem). |
+| **Gate 2** | Cierre, incluidas las propuestas del Auditor | Autoriza merge de código, cambios normativos a fuentes de verdad centrales y creación de Skills |
+
+- Nunca se pide el Gate 2 sin Informe de Auditoría ya emitido.
+- Si Victor dice **No** en un Gate, se vuelve al paso anterior (Spec, Planner o Worker), nunca se avanza.
+
+## 2.8. Convención de fuentes de verdad
+
+Fuentes de verdad de operación:
 
 ```text
 AGENTS.md      → norma raíz para agentes.
@@ -185,205 +174,138 @@ README.md      → visión, arquitectura y cambios de alto nivel del sistema.
 docs/README.md → navegación y operación documental dentro de docs/.
 ```
 
-Los flujos de negocio son la fuente de verdad de las reglas funcionales de cada tema:
+Los flujos de negocio (`docs/04-flujos-de-negocio/NN-*.md`) son la fuente de verdad de las reglas funcionales de cada tema.
 
-```text
-docs/04-flujos-de-negocio/NN-*.md
-```
+| Tipo de hallazgo | Destino | Quién escribe y cuándo |
+|---|---|---|
+| Regla funcional/de negocio **validada por Victor en el momento** | Flujo de negocio dueño de la regla | Worker, al consolidar hallazgos (antes de entregar) |
+| Mejora de trabajo / aprendizaje | `03-aprendizaje-continuo/` | Worker, al consolidar hallazgos |
+| Evidencia de una implementación | Archivo de evidencia del plan | Worker |
+| Cambio de arquitectura/visión | `README.md` raíz | Auditor propone → Victor aprueba en Gate 2 → Orquestador aplica |
+| Cambio de comportamiento de agentes | `AGENTS.md` o `00-estandar-agentes/` | Auditor propone → Gate 2 → Orquestador aplica |
+| Cambio de navegación de `docs/` | `docs/README.md` | Auditor propone → Gate 2 → Orquestador aplica |
+| Cambio específico de este repositorio | `01-contexto-repositorio/` | Auditor propone → Gate 2 → Orquestador aplica |
+| Diseño/UI | `05-diseno-y-referencias/design.md` | Auditor propone → Gate 2 → Orquestador aplica |
+| Procedimiento reusable que ya se repitió | Skill agnóstico en `.claude/skills/<nombre>/SKILL.md` | Auditor propone (`PROPONER SKILL`) → Gate 2 → Orquestador crea |
+| Pendiente fuera de alcance | `planes-futuros.md` | Solo con decisión explícita de Victor |
 
-Cuando un plan descubre una regla o cambio nuevo:
-
-| Tipo de hallazgo | Destino aprobado |
-| --- | --- |
-| Regla funcional/de negocio | Flujo de negocio dueño de la regla |
-| Cambio de arquitectura/visión | `README.md` raíz |
-| Cambio de comportamiento de agentes | `AGENTS.md` o `00-estandar-agentes/` |
-| Cambio específico de este repositorio | `01-contexto-repositorio/` |
-| Diseño/UI | `05-diseno-y-referencias/design.md` |
-| Procedimiento reusable | Propuesta en aprendizaje continuo; promoción posterior según política |
-| Evidencia de una implementación | Archivo de evidencia del plan |
-| Pendiente fuera de alcance | `planes-futuros.md`, solo con autorización explícita de Victor |
-
-Ninguna actualización de fuente de verdad ocurre sin la autorización requerida por la política de seguridad.
+**El Worker nunca edita** `AGENTS.md`, README raíz, `docs/README.md` ni el estándar de agentes por hallazgos propios: los deja anotados en el progreso para que el Auditor los evalúe. (Excepción escrita y acotada para **este** plan en §10.1, porque su objeto es precisamente construir esa estructura.)
 
 ### Revisión obligatoria de fuentes de verdad
 
-Después de **cada sesión relevante, cada fase de plan, cada implementación y cada corrección aprobada**, el agente ejecuta esta revisión. No es opcional ni queda a criterio del agente:
+Después de **cada sesión relevante, cada fase de plan, cada implementación y cada corrección aprobada**, el rol que trabajó ejecuta esta revisión:
 
 1. Revisar si lo realizado creó, corrigió, aclaró o contradijo una regla documentada.
 2. Clasificar el destino según la tabla de arriba.
-3. Pedir autorización de Victor antes de modificar una fuente de verdad, cuando corresponda.
-4. Registrar qué fuente se actualizó, qué sección, por qué y con qué evidencia.
-5. Si nada aplica, registrar explícitamente: **"Fuentes de verdad revisadas: sin cambios requeridos."** — el silencio no cuenta como revisión hecha.
+3. Escribir lo que le corresponde a su rol; anotar en el progreso lo que corresponde a otro rol.
+4. Registrar qué fuente se actualizó (o se propone), qué sección, por qué y con qué evidencia.
+5. Si nada aplica, registrar explícitamente: **"Fuentes de verdad revisadas: sin cambios requeridos."** El silencio no cuenta como revisión hecha.
 
 ---
 
 # 3. Estructura objetivo y contenido de cada carpeta
 
-```text
-docs/
-├── README.md
-├── 00-estandar-agentes/
-├── 01-contexto-repositorio/
-├── 02-trabajo-activo/
-├── 03-aprendizaje-continuo/
-├── 04-flujos-de-negocio/
-├── 05-diseno-y-referencias/
-└── 06-material-de-apoyo/
-```
-
 ## 3.1. `docs/README.md`
 
-### Propósito
+**Propósito:** mapa de navegación de `docs/`.
 
-Es el mapa de navegación de `docs/`. Indica qué carpeta usar según el tipo de información o solicitud.
+**Debe contener:** mapa de las siete áreas; ruta de lectura mínima (§2.3); diferencia entre conversación simple y trabajo mediante plan; diferencia entre plan, progreso, evidencia y aprendizaje; enlaces a los README de cada área; enlace al artifact **Punch List de Mejoras** (hoy en la línea 81).
 
-### Debe contener
-
-- Mapa breve de las siete áreas numeradas.
-- Ruta de lectura progresiva.
-- Diferencia entre conversación simple y trabajo mediante plan.
-- Diferencia entre plan, progreso, evidencia y aprendizaje.
-- Enlaces a los README de cada área.
-
-### No debe contener
-
-- Reglas detalladas de seguridad.
-- Procedimientos completos de Git, Playwright o diseño.
-- Reglas de negocio duplicadas.
-- Estado de planes particulares.
-
----
+**No debe contener:** reglas detalladas de seguridad; procedimientos completos de Git, Playwright o diseño; reglas de negocio duplicadas; estado de planes particulares; la sección "Migración en curso" (se elimina al terminar la Fase 6).
 
 ## 3.2. `00-estandar-agentes/`
 
-### Propósito
-
-Contiene el estándar reusable de trabajo para agentes. Sus reglas deben poder aplicarse a otro repositorio sin depender de nombres, URLs, datos, cuentas o flujos específicos de este proyecto.
-
-### Contenido esperado
+**Propósito:** estándar reusable de trabajo para agentes. Sus reglas se aplican a otro repositorio sin depender de nombres, URLs, datos, cuentas ni flujos de este proyecto. **No nombra personas:** usa "Responsable humano" (en este repo es Victor, lo que se declara en `01-contexto-repositorio/`).
 
 ```text
 00-estandar-agentes/
-├── README.md
+├── README.md                          (ya existe — Fase 1)
 ├── 00-indice.md
 ├── 01-principios-y-seguridad.md
 ├── 02-roles-y-delegacion.md
 ├── 03-sesiones-contexto-y-handoff.md
-├── 04-flujo-sdd-y-planes.md
+├── 04-flujo-sdd-y-planes.md           (nace del diagrama por git mv, §4.3)
 ├── 05-aprendizaje-continuo.md
 └── 06-plantillas/
 ```
 
-### `README.md`
-
-- Indica que aquí vive el estándar reusable.
-- Indica que las reglas específicas del repositorio van en `01-contexto-repositorio/`.
-- Enlaza a `00-indice.md`.
-
 ### `00-indice.md`
 
-- Define qué leer según el rol y tipo de solicitud:
-  - chat normal;
-  - análisis;
-  - creación de Spec/SDD;
-  - planificación;
-  - Worker;
-  - Auditoría;
-  - cierre/handoff.
+- Qué leer según rol y tipo de solicitud: chat normal; análisis; Spec/SDD; planificación; Worker; Auditoría; cierre/handoff.
+- **Tabla de lectura mínima por rol y paso**, tomada de la columna "Qué debe leer antes" del diagrama, redactada sin rutas propias del repo (usa los nombres de área: "índice de aprendizaje continuo", "flujos de negocio afectados", "sistema de diseño").
 - No replica el contenido de las políticas; solo direcciona.
-- Contiene la **tabla de lectura mínima por rol y paso**: qué archivo(s) debe abrir cada rol antes de cada paso del flujo SDD→Cierre, para que ningún agente lea documentación de más. Regla de fondo: índice barato primero (títulos/resúmenes de `04-flujos-de-negocio/` y de `03-aprendizaje-continuo/`), contenido completo solo de lo que el plan/tema activo indica que aplica.
 
 ### `01-principios-y-seguridad.md`
 
-- Principio de no inventar hechos, reglas o herramientas.
+- No inventar hechos, reglas, rutas ni herramientas; **verificar antes de afirmar, o preguntar** (promovido de `2026-09-23-verificar-antes-de-afirmar.md`).
 - Protección de secretos.
-- Acciones que requieren aprobación: borrar, renombrar, commit, push, merge, PR, ramas, worktrees, migraciones, despliegues, envío de comunicaciones y cambios externos.
-- Regla de revisar contexto, alcance y diff.
-- Regla de no declarar éxito sin evidencia.
+- Acciones que requieren autorización: borrar, renombrar, commit, push, merge, PR, ramas, worktrees, migraciones, despliegues, comunicaciones y cambios externos — indicando qué Gate las cubre (§2.7).
+- Revisar contexto, alcance y diff antes de entregar.
+- No declarar éxito sin evidencia.
 
 ### `02-roles-y-delegacion.md`
 
-- Roles: Victor, Orquestador, Planner, Worker y Auditor.
-- Responsabilidad, entradas, salidas y límites de cada rol.
-- Cuándo dividir trabajo y cuándo usar un solo Worker.
-- Regla de independencia: no paralelizar si se modifican los mismos archivos, migraciones, componentes base o recursos no aislados.
-- Reglas de aprobación antes de delegar, crear infraestructura o cerrar.
+- Roles: Responsable humano, Orquestador, Planner, Worker y Auditor. Entradas, salidas y límites de cada uno.
+- El Orquestador es el punto de contacto de coordinación con el Responsable humano. **Excepción documentada** (artifact *Flujo SDD*): ante un conflicto de regla de negocio no anticipado durante la implementación, el Worker consulta al Responsable humano en el momento y registra pregunta y respuesta en el progreso (**confirmar en Gate 1**, §10.2).
+- El Orquestador nunca planifica ni implementa: delega al Planner tras el Gate Spec, salvo excepción escrita en el plan y autorizada.
+- Cuándo dividir trabajo y cuándo usar un solo Worker. No paralelizar si se tocan los mismos archivos, migraciones, componentes base o recursos no aislados.
+- Referencia cruzada visible a `03-aprendizaje-continuo/historico.md` (incidente "Orquestador salta el flujo de roles" y FAQ del flujo).
 
 ### `03-sesiones-contexto-y-handoff.md`
 
-- Un chat por tarea o etapa clara.
-- Qué contexto mínimo inicia un chat.
-- Cuándo usar compactación.
-- Cómo cerrar un chat activo.
-- Estructura obligatoria de handoff ante cambio de sesión, chat, LLM o entorno.
-- Regla: una conversación histórica no se reutiliza como contexto activo de una tarea nueva.
+- Un chat por tarea o etapa clara; contexto mínimo de inicio; cuándo compactar; cómo cerrar un chat.
+- Handoff obligatorio ante cambio de sesión, chat, LLM o entorno: se escribe como **sección fechada al final del progreso** del plan, con la plantilla `07-handoff.md`.
+- Una conversación histórica no se reutiliza como contexto activo de una tarea nueva.
+- Promovido de `2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md` (limitación de comunicación entre sesiones), redactado de forma agnóstica.
 
 ### `04-flujo-sdd-y-planes.md`
 
-- Diferencia entre chat normal y plan de implementación.
-- Frases o condiciones de activación del Orquestador.
-- Secuencia:
+- Diferencia entre chat normal y plan de implementación; condiciones de activación del Orquestador.
+- **Secuencia unificada** (artifact *Flujo SDD a Cierre* + diagrama):
 
 ```text
-Objetivo con Victor
-→ Orquestador define entorno (local por defecto, o nube) y nomenclatura de ramas/worktrees
-→ Spec/SDD (Orquestador + Victor)
-→ GATE Spec — aprobación de Victor
-→ Orquestador delega la tarea al Planner
-→ Planner arma el plan y Punch List (un solo archivo; anticipa conflictos de negocio antes de implementar)
-→ GATE 1 — aprobación de Victor (autoriza toda la implementación, sin pausas intermedias)
-→ Workers implementan (rama <entorno>-worker-N; registran hallazgos en el plan/progreso en el momento)
-→ pruebas/evidencia
-→ Worker consolida y envía hallazgos (escribe directo lo operativo; deja anotado lo que toque una fuente de verdad central)
-→ Auditor (confirma rama correcta con git log/git branch --contains; propone APLICAR AHORA / PROPONER A VICTOR / NO PROMOVER / PROPONER SKILL)
-→ GATE 2 — aprobación de cierre de Victor
-→ Merge <entorno>-worker-N → main + aplicación de cambios aprobados a fuentes de verdad centrales
-→ mensaje de cierre del Orquestador, registrado en el propio archivo del plan
-→ cierre autorizado (plan = 100% recién cuando todo está pusheado/mergeado)
+ 1. Objetivo — Responsable humano
+ 2. Entorno — Orquestador define local (por defecto) o nube, y la nomenclatura de ramas/worktrees; revisa recursos libres antes de pedir crear nuevos
+ 3. Spec/SDD — Orquestador + Responsable humano (plantilla 01-spec-sdd) → commit + push a main
+ 4. GATE SPEC — ¿aprueba el Spec?   No → vuelve a 3
+ 5. Delegación al Planner — Orquestador (el Spec aprobado es la entrada)
+ 6. Plan + Punch List — Planner, en el único archivo de plan; anticipa conflictos de negocio revisando los flujos afectados → commit + push a main
+ 7. GATE 1 — ¿aprueba plan + Punch List?   No → vuelve a 6.   Sí → autoriza toda la implementación, sin aprobaciones intermedias
+ 8. Implementación — Worker, en su rama <entorno>-worker-N (código) → commit + push a su rama cada ~35%, nunca a medias de un ítem, nunca a main
+ 9. ¿Conflicto de regla de negocio no anticipado? Sí → consulta en el momento y registra pregunta/respuesta en el progreso; vuelve a 8
+10. Verificación y evidencia — Worker: Playwright cuando aplica (nunca solo por código), Punch List completada, archivo de evidencia + enlace al artifact
+11. Consolidar hallazgos — Worker: escribe reglas de negocio validadas, aprendizajes y evidencia (commit + push a main de la documentación); deja anotado lo que toque fuentes de verdad centrales
+12. Auditoría — Auditor: primero confirma con git log / git branch --contains que los commits están en la rama del Worker asignado; luego revisa SDD, plan, Punch List y evidencia. Informe: APLICAR AHORA / PROPONER A RESPONSABLE / NO PROMOVER / PROPONER SKILL
+13. ¿Informe listo para cierre?   No → vuelve a 8
+14. Orquestador consolida y presenta — informe + resultados + propuestas de cambio a fuentes de verdad centrales
+15. GATE 2 — ¿aprueba el cierre?   No → vuelve a 8
+16. Tres acciones independientes (cualquier orden, cada una solo si aplica):
+    a. Merge <entorno>-worker-N → main del repositorio de código
+    b. Cambios aprobados a fuentes de verdad centrales → commit + push a main
+    c. Skill aprobado → .claude/skills/<nombre>/SKILL.md, redactado de forma agnóstica
+17. Mensaje de cierre — Orquestador, dentro del propio archivo del plan: confirma qué ocurrió de 16a–16c y que todo quedó pusheado → commit + push a main
+18. Cierre — el plan es 100% recién cuando todo está pusheado/mergeado; el archivo del plan nunca se borra ni se resume
 ```
 
-- Regla: no hay implementación antes de aprobar SDD, plan y Punch List.
-- Regla: el Orquestador nunca planifica ni implementa él mismo — siempre delega al Planner tras el Gate del Spec, salvo excepción escrita en el propio plan y autorizada por Victor.
-- Regla de los dos repos: documentación de proceso (Spec, plan, progreso, evidencia, hallazgos, informe de auditoría, actualización de fuentes de verdad) se commitea y pushea siempre directo a `main` de este repo, sin rama ni merge. Código real de la app va siempre a la rama `<entorno>-worker-N`, nunca a `main`, hasta el merge autorizado en el Gate 2.
+- Incluye el diagrama Mermaid y la tabla por rol del archivo original, ya corregidos (rama `<entorno>-worker-N` en ambos; los mismos 18 pasos) y sin nombres propios de repositorio (se reemplazan por "repositorio de documentación" / "repositorio de código"; los nombres reales van en `01-contexto-repositorio/`).
+- Referencia cruzada visible a la FAQ del flujo del Orquestador (en `historico.md`).
 
 ### `05-aprendizaje-continuo.md`
 
 - Diferencia entre hallazgo, mejora de trabajo, regla de negocio, decisión pendiente, evidencia y procedimiento reusable.
-- Remite explícitamente a la regla de **revisión obligatoria de fuentes de verdad** (§2.7): se ejecuta después de cada sesión relevante, fase de plan, implementación o corrección aprobada — no solo al cierre de un plan.
-- Proceso de promoción:
-
-```text
-Hallazgo
-→ registro de aprendizaje
-→ clasificación
-→ evidencia
-→ revisión/auditoría
-→ aprobación
-→ actualización del destino correcto
-```
-
-- Regla: no todo aprendizaje se transforma en regla o procedimiento reusable.
-- Regla: una experiencia aislada no se promueve sin evidencia y aprobación.
-- Regla de escalación a Skill: cuando un procedimiento reusable **se repite** (no es la primera vez que aparece el mismo tipo de hallazgo), el Auditor puede proponer en su informe convertirlo en un Skill real de Claude Code (`.claude/skills/<nombre>/SKILL.md`), redactado de forma agnóstica (sin nombres, rutas ni datos de este repositorio en particular) para que sea copiable a otros repositorios. Requiere aprobación de Victor, igual que cualquier otra promoción.
-
-### Índice de `03-aprendizaje-continuo/README.md`
-
-No es solo una lista de archivos: cada mejora se lista con una **etiqueta corta** de categoría (ej. `playwright`, `migraciones-sql`, `git/ramas`, `sesiones/chat`, `worktrees/turbopack`, `lint`), para que cualquier rol escanee el índice barato y abra solo la mejora puntual que aplica a lo que está por hacer — nunca la carpeta completa por defecto.
-
----
+- Remite a la revisión obligatoria de fuentes de verdad (§2.8).
+- Proceso de promoción: hallazgo → registro → clasificación → evidencia → auditoría → aprobación → actualización del destino correcto.
+- No todo aprendizaje se promueve; una experiencia aislada no se promueve sin evidencia y aprobación.
+- Escalación a Skill: cuando un procedimiento reusable **se repite**, el Auditor puede proponer (`PROPONER SKILL`) convertirlo en un Skill agnóstico. Requiere aprobación en Gate 2.
+- Formato del índice de `03-aprendizaje-continuo/README.md`: cada mejora con una **etiqueta corta de categoría** para lectura rápida.
 
 ## 3.3. `00-estandar-agentes/06-plantillas/`
 
-### Propósito
-
-Es la única ubicación de plantillas. No debe existir un archivo “plantillas.md” paralelo ni copias de plantillas en otras carpetas.
-
-### Contenido esperado
+**Única ubicación de plantillas vigentes.** No existe un "plantillas.md" paralelo ni copias en otras carpetas.
 
 ```text
 06-plantillas/
-├── README.md
+├── README.md                (ya existe — Fase 1)
 ├── 01-spec-sdd.md
 ├── 02-plan.md
 ├── 03-progreso.md
@@ -395,184 +317,25 @@ Es la única ubicación de plantillas. No debe existir un archivo “plantillas.
 └── 09-cierre.md
 ```
 
-### `README.md`
-
-- Índice de las plantillas.
-- Qué documento real usa cada plantilla.
-- Regla: copiar la plantilla aplicable y conservar sus secciones; proponer cambios al estándar si falta un apartado recurrente.
-
-### `01-spec-sdd.md`
-
-Plantilla para definir, junto con Victor, el problema antes de planificar.
-
-Debe incluir:
-
-- Estado.
-- Problema y contexto.
-- Resultado esperado.
-- Alcance y no alcance.
-- Usuarios/roles afectados.
-- Reglas de negocio y documentos afectados.
-- Datos, API, migraciones o dependencias afectadas.
-- Diseño/UI aplicable.
-- Riesgos y decisiones pendientes.
-- Criterios de aceptación.
-- Estrategia de prueba/evidencia.
-- Aprobación de Victor.
-
-### `02-plan.md`
-
-Plantilla del único archivo Markdown de cada plan.
-
-Debe incluir:
-
-- Identificación y estado.
-- Referencia al Spec/SDD aprobado.
-- Objetivo, alcance y no alcance aprobados.
-- Fases y dependencias.
-- Asignación de roles, Workers, ramas y worktrees.
-- Archivos/componentes potencialmente afectados.
-- Punch List aprobada o referencia explícita a su sección.
-- Riesgos y bloqueos.
-- Registro de decisiones.
-- Enlaces al archivo de progreso y evidencia homónimos.
-- Sección de auditoría y cierre.
-- Apartado de elementos postergados que serán propuestos para `planes-futuros.md` solo con decisión de Victor.
-
-### `03-progreso.md`
-
-Plantilla del archivo operativo vivo asociado a un plan.
-
-Debe incluir:
-
-- Referencia al plan homónimo.
-- Estado general y fase actual.
-- Tabla de roles/Workers y estado.
-- Avances terminados.
-- Trabajo actual.
-- Pendientes.
-- Commits, ramas y worktrees usados.
-- Bloqueos, riesgos y decisiones requeridas.
-- Próximo paso verificable.
-- Última actualización, responsable y enlace a handoff si corresponde.
-
-No contiene capturas o resultados extensos de pruebas: eso va en evidencia.
-
-### `04-evidencia.md`
-
-Plantilla del archivo de demostración verificable asociado a un plan.
-
-Debe incluir:
-
-- Referencia al plan homónimo.
-- Entorno y fecha de prueba.
-- Rol/usuario y datos autorizados de prueba, sin secretos.
-- Tabla de Punch List ejecutada:
-  - ítem;
-  - esperado;
-  - método;
-  - observado;
-  - estado;
-  - evidencia/ruta/enlace;
-  - responsable.
-- Resultados de Playwright, pruebas técnicas, logs, consultas o cálculos.
-- Regresiones verificadas.
-- Limitaciones o casos no verificables.
-
-No redefine alcance ni registra el avance narrativo: eso va en plan/progreso.
-
-### `05-punch-list.md`
-
-Plantilla del checklist que se incorpora o referencia desde un plan antes de implementar.
-
-Debe incluir:
-
-- Estado de aprobación de Victor.
-- Ítems funcionales.
-- Datos y cálculos.
-- Permisos.
-- UI/responsive/accesibilidad, si aplica.
-- Estados vacío, carga y error, si aplica.
-- Validación en servidor/API, si aplica.
-- Regresión.
-- Convención de estados: `Sin verificar`, `Conforme`, `Observado`, `No aplica`.
-- Evidencia mínima requerida por ítem.
-
-### `06-informe-auditoria.md`
-
-Plantilla del informe del Auditor.
-
-Debe incluir:
-
-- Alcance auditado.
-- Material revisado.
-- Cumplimiento de SDD, plan, Punch List y evidencia.
-- `APLICAR AHORA`.
-- `PROPONER A VICTOR`.
-- `NO PROMOVER`.
-- `PROPONER SKILL` (procedimiento reusable que ya se repitió y amerita convertirse en un Skill de Claude Code agnóstico, copiable a otros repositorios).
-- Pendientes técnicos y documentales.
-- Recomendación: listo, bloqueado o requiere corrección.
-
-### `07-handoff.md`
-
-Plantilla de traspaso entre sesiones, chats, LLMs o personas.
-
-Debe incluir:
-
-- Objetivo y estado actual.
-- Plan, progreso y evidencia relacionados.
-- Rama, worktree y último commit.
-- Trabajo terminado y no terminado.
-- Pruebas ya ejecutadas.
-- Bloqueos y riesgos.
-- Archivos/documentos que debe leer el siguiente agente.
-- Próximo paso concreto.
-
-### `08-aprendizaje.md`
-
-Plantilla de aprendizaje continuo.
-
-Debe incluir:
-
-- Origen: plan/sesión/evidencia.
-- Observación o problema.
-- Evidencia.
-- Clasificación: mejora de trabajo, regla de negocio, decisión pendiente, contexto de repositorio o procedimiento reusable.
-- Destino propuesto.
-- Cambio propuesto.
-- Estado: borrador, pendiente de aprobación, promovido, rechazado o reemplazado.
-- Referencia a aprobación de Victor.
-
-### `09-cierre.md`
-
-Plantilla de cierre de plan.
-
-Debe incluir:
-
-- Alcance completado y no completado.
-- Estado final de Punch List.
-- Evidencia disponible.
-- Auditoría y decisiones de Victor.
-- Documentos promovidos.
-- Aprendizajes registrados.
-- Pendientes enviados a `planes-futuros.md`.
-- Commit/push/merge realizados o pendientes.
-- Autorización de cierre.
-
----
+| Plantilla | Dónde se usa | Debe incluir |
+|---|---|---|
+| `01-spec-sdd.md` | Sección Spec del archivo de plan | Estado; problema y contexto; resultado esperado; alcance y no alcance; usuarios/roles afectados; reglas de negocio y documentos afectados; datos, API, migraciones o dependencias; diseño/UI aplicable; riesgos y decisiones pendientes; criterios de aceptación; estrategia de prueba/evidencia; aprobación (Gate Spec). |
+| `02-plan.md` | Archivo de plan | Identificación y estado; referencia al Spec aprobado; objetivo, alcance y no alcance; entorno, repos, ramas y worktrees; fases y dependencias; asignación de roles; archivos/componentes afectados; Punch List embebida (formato `05-punch-list`); riesgos y bloqueos; registro de decisiones; enlaces a progreso y evidencia homónimos; **las tres secciones obligatorias heredadas de `plantilla-tarea.md`: `Mejoras (de trabajo)`, `Reglas de negocio acordadas en esta tarea`, `Carpetas/archivos huérfanos`** (se llenan en el momento del hallazgo, no al cierre); Informe de Auditoría (formato `06`); mensaje de cierre (formato `09`); elementos postergados propuestos para `planes-futuros.md`. |
+| `03-progreso.md` | Archivo de progreso | Referencia al plan; estado general y fase actual; tabla de roles/Workers y estado; avances terminados; trabajo actual; pendientes; commits, ramas y worktrees usados; **hallazgos registrados en el momento** (incluidas preguntas de negocio y la respuesta de Victor); bloqueos, riesgos y decisiones requeridas; próximo paso verificable; última actualización y responsable; **sección de handoffs fechados**. No contiene resultados extensos de pruebas. |
+| `04-evidencia.md` | Archivo de evidencia | Referencia al plan; entorno y fecha; rol/usuario y datos autorizados, sin secretos; tabla de Punch List ejecutada (ítem, esperado, método, observado, estado, evidencia/ruta/enlace, responsable); **enlace al artifact de checklist visual** si existe; resultados de Playwright, pruebas, logs, consultas o cálculos; regresiones verificadas; limitaciones o casos no verificables. |
+| `05-punch-list.md` | Sección Punch List del plan | Estado de aprobación (Gate 1); ítems funcionales; datos y cálculos; permisos; UI/responsive/accesibilidad; estados vacío/carga/error; validación en servidor/API; regresión; estados `Sin verificar` / `Conforme` / `Observado` / `No aplica`; evidencia mínima por ítem. |
+| `06-informe-auditoria.md` | Sección Informe de Auditoría del plan | Alcance auditado; material revisado; **verificación de rama** (commits en la rama del Worker asignado, con `git log`/`git branch --contains`); cumplimiento de SDD, plan, Punch List y evidencia; verificación de la revisión de fuentes de verdad por fase; `APLICAR AHORA`; `PROPONER A RESPONSABLE`; `NO PROMOVER`; `PROPONER SKILL`; pendientes técnicos y documentales; recomendación: listo, bloqueado o requiere corrección. |
+| `07-handoff.md` | Sección de handoffs del progreso | Objetivo y estado; plan/progreso/evidencia relacionados; rama, worktree y último commit; terminado y no terminado; pruebas ejecutadas; bloqueos y riesgos; qué debe leer el siguiente agente; próximo paso concreto. |
+| `08-aprendizaje.md` | Archivo individual en `03-aprendizaje-continuo/` | Origen (plan/sesión/evidencia); observación; evidencia; clasificación; etiqueta de categoría; destino propuesto; cambio propuesto; estado (borrador, pendiente, promovido, rechazado, reemplazado); referencia a la aprobación. |
+| `09-cierre.md` | Sección de cierre del plan | Alcance completado y no completado; estado final de la Punch List; evidencia; auditoría y decisiones del Gate 2; documentos promovidos; aprendizajes registrados; pendientes enviados a `planes-futuros.md`; merge / fuentes de verdad / Skill realizados o no; confirmación de 100% pusheado; autorización de cierre. |
 
 ## 3.4. `01-contexto-repositorio/`
 
-### Propósito
-
-Contiene exclusivamente información aplicable a `pg_control_proyectos`. No contiene el estándar universal de agentes ni reglas de negocio duplicadas.
-
-### Contenido esperado
+**Propósito:** solo información aplicable a `pg_control_proyectos`. No contiene el estándar universal ni reglas de negocio.
 
 ```text
 01-contexto-repositorio/
-├── README.md
+├── README.md                              (ya existe — Fase 1)
 ├── 00-indice.md
 ├── 01-proposito-y-alcance.md
 ├── 02-arquitectura-y-fuentes-de-verdad.md
@@ -582,456 +345,518 @@ Contiene exclusivamente información aplicable a `pg_control_proyectos`. No cont
 └── 06-mapa-documental.md
 ```
 
-### `README.md`
-
-- Indica que la carpeta contiene instrucciones específicas de este repositorio.
-- Deriva a `00-indice.md`.
-
-### `00-indice.md`
-
-- Define qué documentos se leen según la tarea:
-  - documentación;
-  - Git/worktree;
-  - pruebas;
-  - UI;
-  - flujos de negocio.
-- No replica el contenido de cada documento.
-
-### `01-proposito-y-alcance.md`
-
-- Propósito del repositorio documental.
-- Qué pertenece aquí y qué pertenece al repositorio de aplicación.
-- Relación entre ambos repositorios.
-- Límites de cambios y de validación disponibles.
-
-### `02-arquitectura-y-fuentes-de-verdad.md`
-
-- Tres fuentes de verdad: `AGENTS.md`, `README.md`, `docs/README.md`.
-- Fuente dueña de cada regla de negocio: flujos numerados.
-- Cómo se promueve un cambio desde un plan hacia una fuente de verdad.
-- Regla de actualización de README raíz si cambia la visión/arquitectura.
-- Regla de actualización de AGENTS si cambia el comportamiento requerido de agentes.
-
-### `03-entorno-git-y-worktrees.md`
-
-- Rama `main`.
-- Pool real: `work-1`, `work-2`.
-- Rutas reales de `.worktrees/`.
-- Roles que pueden usar ramas de Worker.
-- Política de commits aproximadamente cada 35% de Punch List acumulada, solo después de completar íntegramente el ítem en curso.
-- Reglas de `git add` explícito, push, merge y autorización.
-
-### `04-pruebas-y-evidencia.md`
-
-- Uso del artefacto Punch List interactivo aprobado para el proyecto.
-- Cuándo es obligatorio Playwright.
-- Requisitos para capturas, pruebas con login y datos reales/autorizados.
-- Cómo registrar evidencia en el MD homónimo del plan.
-- Qué hacer si un caso no puede verificarse.
-
-### `05-diseno-y-ui.md`
-
-- Referencia obligatoria a `docs/05-diseno-y-referencias/design.md` cuando se modifica UI.
-- Uso de mockups y nombres de pantallas.
-- Reglas para no inventar componentes, comportamientos o diseño no documentado.
-
-### `06-mapa-documental.md`
-
-- Índice de los flujos de negocio existentes.
-- Referencia a material de apoyo relevante.
-- Mapa origen → destino de documentación migrada.
-- Enlaces verificados a archivos clave.
-
----
+| Documento | Contenido |
+|---|---|
+| `00-indice.md` | Qué documento leer según la tarea: documentación, Git/worktree, pruebas, UI, flujos de negocio. |
+| `01-proposito-y-alcance.md` | Repositorio documental frente al repositorio de la app (`py_control_proyectos_web`); qué pertenece a cada uno; **el Responsable humano de este repo es Victor**; límites de cambios y de validación disponibles. |
+| `02-arquitectura-y-fuentes-de-verdad.md` | Las tres fuentes de verdad; flujo dueño de cada regla; cómo se promueve un cambio (§2.8); cuándo se actualiza README raíz y AGENTS.md. |
+| `03-entorno-git-y-worktrees.md` | **Regla de los dos repos** (§2.6): documentación de proceso a `main` de este repo; código en `<entorno>-worker-N` del repo de la app. Pool real verificado de ramas y worktrees del repo de la app (verificar con `git branch -a` / `git worktree list` en ese repo antes de escribirlo; no copiar la tabla obsoleta `work-1`/`work-2`). Commits cada ~35% de la Punch List, solo al terminar el ítem en curso. `git add` explícito. Promovido de `2026-09-23-turbopack-worktree-junction.md`. |
+| `04-pruebas-y-evidencia.md` | Uso del artifact de Punch List interactivo; cuándo es obligatorio Playwright; capturas, login y datos reales/autorizados; cómo registrar evidencia en el MD homónimo; qué hacer si un caso no puede verificarse. Promovido de `verificacion-playwright-falsos-negativos`, `eslint-baseline-vs-cero` y `tests-contadores-congelados`. |
+| `05-diseno-y-ui.md` | `docs/05-diseno-y-referencias/design.md` es lectura obligatoria cuando se modifica UI; uso de mockups y nombres de pantallas; no inventar componentes. |
+| `06-mapa-documental.md` | Índice de los flujos existentes; material de apoyo relevante; **mapa origen → destino de la migración** (copia final de §4); enlaces verificados a archivos clave. |
 
 ## 3.5. `02-trabajo-activo/`
 
-### Propósito
-
-Contiene exclusivamente trabajo que está planificado, en ejecución o cerrado recientemente con su trazabilidad. No contiene reglas permanentes ni aprendizaje independiente.
-
-### Contenido esperado
+**Propósito:** trabajo planificado, en ejecución o cerrado, con su trazabilidad. No contiene reglas permanentes ni aprendizaje independiente.
 
 ```text
 02-trabajo-activo/
-├── README.md
+├── README.md                     (ya existe — Fase 1)
 ├── 01-planes/
-│   ├── README.md
-│   ├── YYYY-MM-DD-<tema>.md
-│   └── planes-futuros.md
+│   ├── README.md                 (ya existe — Fase 1)
+│   ├── YYYY-MM-DD-<tema>.md      (planes nuevos y tareas históricas migradas)
+│   └── planes-futuros.md         (git mv desde tareas-futuras.md)
 ├── 02-progreso/
-│   ├── README.md
+│   ├── README.md                 (ya existe — Fase 1)
 │   └── YYYY-MM-DD-<tema>.md
 └── 03-evidencia/
-    ├── README.md
+    ├── README.md                 (ya existe — Fase 1)
     └── YYYY-MM-DD-<tema>.md
 ```
 
-### `README.md`
-
-- Define plan, progreso y evidencia.
-- Define relación uno-a-uno por nombre base.
-- Aclara que no se crean carpetas por plan.
-
-### `01-planes/README.md`
-
-- Índice de planes activos, cerrados y en preparación.
-- Convención de nombre por fecha.
-- Regla: un plan es un único MD basado en `02-plan.md`.
-
-### `01-planes/YYYY-MM-DD-<tema>.md`
-
-- Es el plan completo de una implementación.
-- Contiene SDD, plan, Punch List, roles, decisiones, auditoría y cierre según las plantillas aplicables.
-- No se crea hasta que Victor decida que se realizará trabajo mediante plan, no solo conversación.
-
-### `01-planes/planes-futuros.md`
-
-- Último archivo fijo de la carpeta.
-- Cola de pendientes que Victor decidió postergar explícitamente.
-- Cada ítem registra origen, descripción, motivo, estado y si requiere Spec/SDD.
-- No contiene plan aprobado, progreso, evidencia ni Worker.
-- Un ítem se promueve a plan solo después de Spec/SDD y aprobación.
-
-### `02-progreso/README.md`
-
-- Explica que esta carpeta tiene un MD vivo por plan iniciado.
-- Un archivo se crea al iniciar ejecución aprobada, no al registrar un futuro plan.
-
-### `02-progreso/YYYY-MM-DD-<tema>.md`
-
-- Estado operativo del plan homónimo.
-- Se basa en `03-progreso.md`.
-- Registra cambios reales durante la implementación.
-
-### `03-evidencia/README.md`
-
-- Explica que evidencia es prueba objetiva y no bitácora de avance.
-- Un archivo se crea al iniciar ejecución aprobada, no para planes futuros.
-
-### `03-evidencia/YYYY-MM-DD-<tema>.md`
-
-- Demostración verificable del plan homónimo.
-- Se basa en `04-evidencia.md`.
-- Contiene estado final de Punch List, Playwright, pruebas y evidencias.
-
----
+- `01-planes/README.md` incluye el índice de planes activos, cerrados (históricos) y en preparación.
+- `planes-futuros.md`: cada ítem registra origen, descripción, motivo, estado y si requiere Spec/SDD.
 
 ## 3.6. `03-aprendizaje-continuo/`
 
-### Propósito
-
-Contiene aprendizajes que nacen de la ejecución de planes y que requieren evaluación antes de alterar reglas, contexto, procedimientos o fuentes de verdad.
-
-### Contenido esperado
+**Propósito:** aprendizajes que nacen de la ejecución de planes y que requieren evaluación antes de alterar reglas, contexto, procedimientos o fuentes de verdad.
 
 ```text
 03-aprendizaje-continuo/
-├── README.md
-├── YYYY-MM-DD-<aprendizaje>.md
+├── README.md                     (ya existe — Fase 1; índice a corregir en Fase 5)
+├── YYYY-MM-DD-<aprendizaje>.md   (las 11 mejoras migradas, §4.5)
 ├── pendientes-de-promocion.md
 └── historico.md
 ```
 
-### `README.md`
-
-- Define qué es aprendizaje continuo.
-- Aclara que no contiene planes futuros ni tareas operativas completas.
-- Indica que cada aprendizaje debe tener origen, evidencia y destino propuesto.
-
-### `YYYY-MM-DD-<aprendizaje>.md`
-
-- Un aprendizaje concreto basado en `08-aprendizaje.md`.
-- Nace de una tarea, una sesión o evidencia real.
-- No se crea para ideas hipotéticas sin origen.
-
-### `pendientes-de-promocion.md`
-
-- Lista consolidada de aprendizajes y decisiones pendientes de aprobación.
-- No reemplaza los archivos individuales de aprendizaje; solo facilita revisión.
-
-### `historico.md`
-
-- Registro de aprendizajes promovidos, rechazados, reemplazados o cerrados.
-- Incluye destino final y fecha de decisión.
-
----
+- `pendientes-de-promocion.md`: lista consolidada de lo que espera aprobación; no reemplaza los archivos individuales.
+- `historico.md`: aprendizajes promovidos, rechazados, reemplazados o cerrados, con destino final y fecha.
+- Un archivo migrado y promovido **no se borra**: queda en la carpeta y su estado pasa a "promovido" en `historico.md` con enlace al destino.
 
 ## 3.7. `04-flujos-de-negocio/`
 
-### Propósito
-
-Contiene las reglas funcionales y operativas permanentes del sistema, una vez por tema dueño.
-
-### Contenido esperado
+**Propósito:** reglas funcionales y operativas permanentes, una vez por tema dueño.
 
 ```text
 04-flujos-de-negocio/
-├── README.md
-├── 01-interfaz.md
+├── README.md                                         (ya existe — Fase 1)
+├── 01-configuracion.md
 ├── 02-usuarios.md
 ├── ...
-└── 20-plan-maestro.md
+├── 19-paquetes-de-trabajo-y-jerarquia-de-control.md  (renombrado: el original tiene espacios)
+├── 20-plan-maestro.md
+└── 21-curva-s.md
 ```
 
-### `README.md`
-
-- Índice de los flujos.
-- Regla de lectura: leer solo los flujos afectados más los obligatorios definidos por el repositorio.
-- Regla de actualización: una regla se escribe una vez en su flujo dueño; otros documentos enlazan, no copian.
-
-### `NN-<tema>.md`
-
-- Define funcionamiento de negocio, datos, reglas, estados, roles y restricciones de ese flujo.
-- Se actualiza solo cuando una decisión de negocio fue validada y aprobada.
-- No contiene bitácoras de sesión, estados de plan o procedimientos de agentes.
-
----
+- `README.md`: índice de los 21 flujos; regla de lectura mínima (§2.3: solo los flujos que el plan indica afectados); regla de actualización (una regla se escribe una vez en su flujo dueño; los demás enlazan).
+- `NN-<tema>.md`: funcionamiento, datos, reglas, estados, roles y restricciones del flujo. Se actualiza solo con reglas validadas por Victor. No contiene bitácoras, estados de plan ni procedimientos de agentes.
 
 ## 3.8. `05-diseno-y-referencias/`
 
-### Propósito
-
-Contiene el sistema visual y referencias de interfaz, separado de reglas de negocio y del estándar de agentes.
-
-### Contenido esperado
-
 ```text
 05-diseno-y-referencias/
-├── README.md
-├── design.md
+├── README.md       (ya existe — Fase 1)
+├── design.md       (git mv desde docs/visual-companion/design.md)
 └── mockups/
+    ├── README.md   (ya existe — Fase 1)
+    └── *.html      (los 6 mockups de docs/visual-companion/)
 ```
 
-### `README.md`
-
-- Indica cuándo `design.md` es lectura obligatoria.
-- Aclara qué tipos de referencias pueden vivir en `mockups/`.
-
-### `design.md`
-
-- Sistema de diseño: layout, espaciado, tokens, componentes, tablas, responsive y accesibilidad.
-- Fuente de verdad visual para cambios de interfaz.
-
-### `mockups/`
-
-- Contiene mockups HTML, capturas de referencia o archivos visuales.
-- No contiene evidencia de pruebas de un plan; esa evidencia queda en `02-trabajo-activo/03-evidencia/`.
-
----
+- `design.md` es la fuente de verdad visual y lectura obligatoria para cambios de UI.
+- `mockups/` no contiene evidencia de pruebas de un plan (eso va en `03-evidencia/`).
 
 ## 3.9. `06-material-de-apoyo/`
 
-### Propósito
+**Propósito:** material de referencia que se conserva pero no es fuente de verdad ni parte del flujo activo.
 
-Centraliza material de referencia que se conserva pero no es fuente de verdad ni parte del flujo activo.
-
-### Contenido inicial
+**Contenido tras la Fase 6** (decisión 3 de §6.1):
 
 ```text
 06-material-de-apoyo/
-└── README.md
+├── README.md                    (ya existe — Fase 1; se actualiza con cada carpeta que entra)
+├── conocimiento/
+├── Dashboard ejemplo/
+├── Formatos/
+├── Imagenes para fronted/
+└── Informacion para pruebas/
 ```
 
-### `README.md`
-
-Debe indicar que la carpeta comienza vacía y que aquí se guardará material de apoyo del repositorio que no sea:
-
-- fuente de verdad;
-- estándar de agentes;
-- contexto de repositorio;
-- plan, progreso o evidencia;
-- aprendizaje continuo;
-- flujo de negocio;
-- sistema de diseño.
-
-Debe indicar que el contenido y el README se actualizarán cada vez que se agregue, mueva, reclasifique o retire material de apoyo.
+- Las carpetas se mueven con su nombre actual (renombrarlas no está aprobado; si Victor lo quiere, va a `planes-futuros.md`).
+- El README describe cada subcarpeta en una línea y se actualiza cada vez que se agrega, mueve, reclasifica o retira material.
 
 ---
 
-# 4. Migración de la estructura actual
+# 4. Migración de la estructura actual (tablas origen → destino)
 
-## 4.1. Archivos actuales de `docs/00-sistema/`
+Estas tablas se aprueban en el Gate 1. El Worker las ejecuta **sin pedir aprobaciones intermedias**. Lo que no esté en ellas no se mueve: se anota en el progreso como hallazgo.
 
-| Archivo actual | Destino propuesto | Acción |
-| --- | --- | --- |
-| `roles-y-flujo.md` | `00-estandar-agentes/02-roles-y-delegacion.md` y `04-flujo-sdd-y-planes.md` | Revisar y dividir solo si el contenido mezcla roles y ciclo de planes |
-| `gestion-de-sesiones-y-contexto.md` | `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` | Eliminar primero la duplicación literal; luego migrar | 
-| `convenciones-de-trabajo.md` | `01-contexto-repositorio/03-entorno-git-y-worktrees.md` | Mover reglas reales de este repositorio; dejar reglas universales en estándar |
+## 4.1. `docs/00-sistema/`
 
-## 4.2. Carpetas actuales
+| Archivo | Destino del contenido | Qué pasa con el archivo original |
+|---|---|---|
+| `roles-y-flujo.md` | Reglas universales → `00-estandar-agentes/02-roles-y-delegacion.md` y `04-flujo-sdd-y-planes.md` | Se elimina tras integrar su contenido **solo si §10.3-A está autorizado**; si no, `git mv` a `06-material-de-apoyo/obsoleto/` |
+| `gestion-de-sesiones-y-contexto.md` | `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` (sin la duplicación literal que tiene hoy) | Igual que arriba |
+| `convenciones-de-trabajo.md` | Reglas propias de este repo → `01-contexto-repositorio/03-entorno-git-y-worktrees.md`; reglas universales → estándar | Igual que arriba |
 
-| Carpeta actual | Destino propuesto | Regla |
-| --- | --- | --- |
-| `docs/Flujos de trabajo/` | `docs/04-flujos-de-negocio/` | Mover con `git mv`, no cambiar contenido en la misma fase salvo enlaces necesarios |
-| `docs/visual-companion/` | `docs/05-diseno-y-referencias/` | Mover con `git mv`; conservar `design.md` y mockups |
-| `docs/Tareas de implementacion/` | Clasificar: planes reales a `02-trabajo-activo/01-planes/`; archivos de estado/evidencia según corresponda | No mover sin tabla de clasificación aprobada |
-| `docs/Mejoras continuas/` | `docs/03-aprendizaje-continuo/` | Clasificar archivos: aprendizaje real, histórico o plan mal ubicado |
-| Carpetas de apoyo en raíz | `docs/06-material-de-apoyo/` | Inventariar, clasificar y mover con aprobación; no borrar |
+## 4.2. Carpetas de `docs/`
+
+| Origen | Destino | Regla |
+|---|---|---|
+| `docs/Flujos de trabajo/NN-*.md` (21) | `docs/04-flujos-de-negocio/` | `git mv` sin cambiar contenido, salvo enlaces. Renombrar `19-paquetes de trabajo y jerarquia de control.md` → `19-paquetes-de-trabajo-y-jerarquia-de-control.md`. |
+| `docs/Flujos de trabajo/README.md` | Contenido útil → `04-flujos-de-negocio/README.md` | Original: §10.3-A |
+| `docs/visual-companion/design.md` | `docs/05-diseno-y-referencias/design.md` | `git mv` |
+| `docs/visual-companion/*.html` (6: `crear-rdts`, `entorno-trabajo-herramientas`, `index`, `requerimiento-de-servicios-crear`, `requerimiento-de-servicios-listado`, `requerimiento-de-servicios-partidas`) | `docs/05-diseno-y-referencias/mockups/` | `git mv` |
+| `docs/visual-companion/README.md` | Contenido útil → `05-diseno-y-referencias/README.md` | Original: §10.3-A |
+| `docs/Tareas de implementacion/` | §4.5 | — |
+| `docs/Mejoras continuas/` | §4.5 | — |
+
+## 4.3. Archivos sueltos en la raíz
+
+| Origen | Destino | Regla |
+|---|---|---|
+| `2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` (este plan) | `docs/02-trabajo-activo/01-planes/` | `git mv` en la Fase 2, antes de cualquier otra cosa |
+| `diagrama-commit-push-merge-gates.md` | `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md` | `git mv` (conserva historial) y luego se completa y se hace agnóstico según §3.2 |
+
+## 4.4. Carpetas de apoyo en la raíz
+
+| Origen | Destino |
+|---|---|
+| `conocimiento/` | `docs/06-material-de-apoyo/conocimiento/` |
+| `Dashboard ejemplo/` | `docs/06-material-de-apoyo/Dashboard ejemplo/` |
+| `Formatos/` | `docs/06-material-de-apoyo/Formatos/` |
+| `Imagenes para fronted/` | `docs/06-material-de-apoyo/Imagenes para fronted/` |
+| `Informacion para pruebas/` | `docs/06-material-de-apoyo/Informacion para pruebas/` |
+
+## 4.5. Trabajo histórico
+
+### Tareas de implementación (13 fechadas + 3 auxiliares — verificado 2026-09-27)
+
+| Archivo | Estado verificado | Destino |
+|---|---|---|
+| `2026-09-20-control-avance-plan-maestro.md` | Cerrada (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-20-evm-fase-0-catalogo-unico.md` | Cerrada (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-20-sub-lote-2-alcance-proyecto.md` | Cerrada (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-21-curva-s-fase-3-agente-d.md` | CERRADO (Punch List 20/20, PR #16 mergeado) | `01-planes/`, tal cual |
+| `2026-09-21-dashboard-fase-3-agente-c.md` | Implementada y verificada (Punch List 25/25) | `01-planes/`, tal cual |
+| `2026-09-21-evm-fase-1-congelar-tarifa.md` | Cerrada (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-21-fix-reemplazar-dp.md` | Cerrada (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-21-pr-fase-1-pipeline-rdt.md` | Completa, verificada y mergeada | `01-planes/`, tal cual |
+| `2026-09-21-pr-fase-2-pipeline-linea-base.md` | Completa, verificada y mergeada | `01-planes/`, tal cual |
+| `2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md` | Ejecutado; pendiente de cierre 100% (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md` | Ejecutado (decisión 4) | `01-planes/`, tal cual |
+| `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` | **Abierta** ("Implementando") | `01-planes/`, tal cual; sus archivos de progreso y evidencia se crean cuando se retome esa tarea (**confirmar en Gate 1**, §10.2) |
+| `2026-09-23-paquetes-de-trabajo.md` | **Abierta** (Fase 1 terminada en `work-1`). **Tiene texto con codificación dañada** (ej. `â†’`, `Ã³`) | Igual que la anterior. **No se corrige la codificación en este plan**: se reporta a Victor (§14) |
+| `plantilla-tarea.md` | Reemplazada por las 9 plantillas (decisión 1) | Tras verificar que `02-plan.md` cubre sus 13 secciones: §10.3-A |
+| `tareas-futuras.md` | — | `git mv` → `01-planes/planes-futuros.md` (decisión 5) y se adapta al formato de §2.5 |
+| `resumen-checklists.md` | — | Cada entrada cronológica se agrega como sección "Resumen de checklist (migrado)" al archivo de plan de su tema en `01-planes/`. Las entradas sin plan dueño se listan en §14. Original: §10.3-A (decisión 6: no se conserva como archivo agregado) |
+
+- **"Tal cual"** significa sin editar el contenido. Sus rutas internas antiguas no se corrigen: se listan en la evidencia como enlaces históricos.
+
+### Mejoras continuas (11 — clasificación de §6.1)
+
+Las 11 se mueven con `git mv` a `docs/03-aprendizaje-continuo/` **conservando su nombre**. Después se aplica su clasificación:
+
+| Archivo | Clasificación | Acción |
+|---|---|---|
+| `2026-09-21-acceso-postgres-sin-ipv6.md` | Histórico (excepción cerrada) | Entrada en `historico.md` |
+| `2026-09-21-migraciones-sql-sobrecargas-huerfanas.md` | Se queda como aprendizaje, no promociona | Solo en el índice, etiqueta `migraciones-sql` |
+| `2026-09-21-verificacion-playwright-falsos-negativos.md` | Promover | → `01-contexto-repositorio/04-pruebas-y-evidencia.md`; entrada "promovido" en `historico.md` |
+| `2026-09-23-eslint-baseline-vs-cero.md` | Promover | → `04-pruebas-y-evidencia.md`; `historico.md` |
+| `2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` | Histórico (ya promovido a roles) | `historico.md` + referencia cruzada desde `02-roles-y-delegacion.md` |
+| `2026-09-23-preguntas-frecuentes-flujo-orquestador.md` | Histórico con rastro visible | `historico.md` + referencias cruzadas desde `04-flujo-sdd-y-planes.md` y `02-roles-y-delegacion.md` |
+| `2026-09-23-red-bloqueada-impide-autonomia-real.md` | Pendiente (acción de Victor) | `pendientes-de-promocion.md` |
+| `2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md` | Promover | → `00-estandar-agentes/03-sesiones-contexto-y-handoff.md`; `historico.md` |
+| `2026-09-23-tests-contadores-congelados.md` | Promover | → `04-pruebas-y-evidencia.md`; `historico.md` |
+| `2026-09-23-turbopack-worktree-junction.md` | Promover | → `01-contexto-repositorio/03-entorno-git-y-worktrees.md`; `historico.md` |
+| `2026-09-23-verificar-antes-de-afirmar.md` | Promover (principio universal) | → `00-estandar-agentes/01-principios-y-seguridad.md`; `historico.md` |
+
+- El índice de `03-aprendizaje-continuo/README.md` creado en la Fase 1 **tiene errores de etiqueta** (ej. "acceso a Postgres sin IPv6" y "red bloqueada" bajo `git/ramas`). Se rehace en la Fase 5 con una fila por archivo, su etiqueta correcta y su estado.
+
+## 4.6. Evidencia externa huérfana
+
+| Artifact | Tarea dueña (a verificar leyendo la tarea) | Acción |
+|---|---|---|
+| Sub-lote 2 — Checklist F0-F7 | `2026-09-20-sub-lote-2-alcance-proyecto.md` | Enlazarlo desde el índice de `01-planes/README.md` (la tarea histórica no se edita) |
+| Dashboards y Curva S — Fase 3 | `2026-09-21-dashboard-fase-3-agente-c.md` y `2026-09-21-curva-s-fase-3-agente-d.md` | Igual |
+| Matriz de Accesos y Restricciones | Flujo `14-accesos-y-restricciones.md` o tarea `sub-lote-2` | Igual; si no hay dueño claro, se lista en §14 |
+
+## 4.7. Inventario de enlaces a rutas antiguas (base de la verificación)
+
+Archivos que hoy referencian `Flujos de trabajo`, `Tareas de implementacion`, `Mejoras continuas`, `00-sistema`, `visual-companion`, `plantilla-tarea`, `tareas-futuras` o `resumen-checklists` (verificado 2026-09-27):
+
+- **Fuentes centrales:** `AGENTS.md`, `README.md`, `docs/README.md`.
+- **A migrar/integrar:** los 3 de `docs/00-sistema/`; `docs/Flujos de trabajo/README.md` y los flujos `10`, `14`, `17`, `20` y `21`; 10 de las 11 mejoras continuas; `docs/visual-companion/README.md`, `design.md` e `index.html`.
+- **READMEs de la Fase 1:** `02-trabajo-activo/01-planes/README.md`, `04-flujos-de-negocio/README.md` y `05-diseno-y-referencias/mockups/README.md`.
+- **Históricos (no se editan):** 12 tareas de `Tareas de implementacion/`, `plantilla-tarea.md` y `tareas-futuras.md`.
+
+Rutas **ya inexistentes** citadas en fuentes centrales: `Sistema hibrido/`, `plantillas/`, `RDTs movimiento de tierra.../`, `memoria.md`, `control_de_proyectos.txt` y `.cursor/rules/*` (en `AGENTS.md` y `README.md`).
+
+Comando de verificación (debe devolver solo archivos históricos de `01-planes/`, `03-aprendizaje-continuo/historico.md` o menciones textuales intencionales en `06-mapa-documental.md`):
+
+```bash
+grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tareas%20de%20implementacion|Mejoras continuas|Mejoras%20continuas|docs/00-sistema|visual-companion" --include=*.md --include=*.html .
+```
 
 ---
 
 # 5. Fases de implementación
 
-## Fase 0 — Diagnóstico y propuesta de migración
+**Reglas para el Worker durante todas las fases:**
 
-- [ ] Leer `AGENTS.md`, `README.md`, `docs/README.md` y los tres MD actuales de `docs/00-sistema/`.
-- [ ] Ejecutar inventario de carpetas/archivos actuales.
-- [ ] Identificar enlaces internos y referencias a rutas antiguas.
-- [ ] Crear una tabla origen → destino para cada archivo/carpeta que se moverá.
-- [ ] Clasificar los archivos actuales de Tareas/Mejoras.
-- [ ] Presentar informe de impacto a Victor.
+- Gate 1 autoriza toda la implementación: **no hay "presentar a Victor" entre fases.** Cualquier caso no cubierto por §4 se anota en el progreso como hallazgo y **no se ejecuta**.
+- Commit + push directo a `main` de `pg_control_proyectos` cada ~35% de la Punch List (§9), solo al terminar completo el ítem en curso, con `git add` explícito. **Cada `git mv` va en el mismo commit que la actualización de los enlaces que rompe** (así ninguna fuente queda rota entre commits).
+- Al terminar cada fase: revisión de fuentes de verdad (§2.8) registrada en el progreso.
 
-**No crear, mover, renombrar, borrar, commitear ni pushear antes de aprobación explícita.**
+## Fase 0 — Diagnóstico ✅ (cerrada)
 
-## Fase 1 — Crear estructura vacía y navegación
+- [x] Inventario de la estructura actual.
+- [x] Clasificación de tareas y mejoras (§6.1, completada en la corrección v2 con las 6 tareas que faltaban, §4.5).
+- [x] Inventario de enlaces a rutas antiguas (§4.7, agregado en la corrección v2).
+- [x] Tablas origen → destino completas (§4, completadas en la corrección v2).
 
-- [ ] Crear las siete carpetas numeradas dentro de `docs/`.
-- [ ] Crear únicamente los README de cada carpeta y subcarpeta definida.
-- [ ] Crear `docs/README.md` o reescribirlo para que enlace a la nueva estructura.
-- [ ] Presentar estructura y READMEs a Victor.
+## Fase 1 — Estructura vacía y navegación ✅ (ejecutada antes del Gate 1)
 
-## Fase 2 — Crear estándar y plantillas
+- [x] Siete carpetas numeradas y sus READMEs (commit `be53526`).
+- [x] Sección "Migración en curso" en `docs/README.md`.
+- [ ] Revisión de lo creado contra este plan corregido → se hace en la Fase 2.
 
-- [ ] Crear los cinco MD de `00-estandar-agentes/`.
-- [ ] Crear las nueve plantillas dentro de `06-plantillas/`.
-- [ ] Verificar que no haya plantillas duplicadas fuera de esa carpeta.
-- [ ] Presentar estándar y plantillas a Victor.
+## Fase 2 — Arranque del plan y ajuste de la Fase 1
 
-## Fase 3 — Crear contexto del repositorio
+- [ ] `git mv` de este plan a `docs/02-trabajo-activo/01-planes/` (§4.3) y actualizar su referencia en `docs/README.md`.
+- [ ] Crear `02-progreso/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` y `03-evidencia/` homónimo con las secciones definidas en §3.3 (`03-progreso` y `04-evidencia`).
+- [ ] Revisar los READMEs de la Fase 1 contra §2 y §3; corregir lo que contradiga el plan. Mínimo: el índice de `03-aprendizaje-continuo/README.md` (§4.5) y las menciones a `work-N`.
+- [ ] Revisión de fuentes de verdad de la Fase 2.
 
-- [ ] Crear los seis documentos de `01-contexto-repositorio/`.
-- [ ] Incluir la configuración confirmada: `main`, `work-1`, `work-2`, `.worktrees/`, commits al 35%, Punch List, Playwright y `design.md`.
-- [ ] Presentar contexto específico a Victor.
+## Fase 3 — Estándar y plantillas
 
-## Fase 4 — Preparar trabajo activo y aprendizaje
+- [ ] `git mv` del diagrama a `00-estandar-agentes/04-flujo-sdd-y-planes.md` y completarlo según §3.2: secuencia unificada de 18 pasos, Mermaid y tabla con `<entorno>-worker-N`, redacción agnóstica.
+- [ ] Crear `00-indice.md` con la tabla de lectura mínima por rol y paso.
+- [ ] Crear `01-principios-y-seguridad.md`, `02-roles-y-delegacion.md`, `03-sesiones-contexto-y-handoff.md` y `05-aprendizaje-continuo.md`, integrando el contenido universal de `docs/00-sistema/` (§4.1).
+- [ ] Crear las 9 plantillas de §3.3. `02-plan.md` incluye las 3 secciones obligatorias; `06-informe-auditoria.md` incluye la verificación de rama y `PROPONER SKILL`.
+- [ ] Verificar que ningún MD del estándar nombre a Victor, `pg_control_proyectos`, `py_control_proyectos_web` ni rutas propias del repo.
+- [ ] Revisión de fuentes de verdad de la Fase 3.
 
-- [ ] Crear READMEs de `02-trabajo-activo/` y sus subcarpetas.
-- [ ] Crear `planes-futuros.md` usando la convención definida.
-- [ ] Crear README, `pendientes-de-promocion.md` e `historico.md` de aprendizaje continuo.
+## Fase 4 — Contexto del repositorio
+
+- [ ] Crear los 7 documentos de `01-contexto-repositorio/` (§3.4), integrando las reglas propias del repo de `convenciones-de-trabajo.md`.
+- [ ] En `03-entorno-git-y-worktrees.md`: regla de los dos repos, `<entorno>-worker-N`, worktrees en el repo de la app, commits cada ~35%. El pool real se verifica en el repo de la app; si no hay acceso, se escribe "por verificar" y se anota como hallazgo.
+- [ ] Revisión de fuentes de verdad de la Fase 4.
+
+## Fase 5 — Trabajo activo y aprendizaje
+
+- [ ] `git mv` de `tareas-futuras.md` → `01-planes/planes-futuros.md` y adaptarlo al formato de §2.5.
+- [ ] `git mv` de las 11 mejoras a `03-aprendizaje-continuo/` y actualizar sus enlaces internos.
+- [ ] Aplicar la clasificación de §4.5: integrar las 6 promovidas en su destino y crear `historico.md` y `pendientes-de-promocion.md`.
+- [ ] Rehacer el índice etiquetado de `03-aprendizaje-continuo/README.md`.
 - [ ] No crear planes, progreso, evidencia ni aprendizajes ficticios.
-- [ ] Presentar archivos a Victor.
+- [ ] Revisión de fuentes de verdad de la Fase 5.
 
-## Fase 5 — Migrar flujos, diseño y material de apoyo
+## Fase 6 — Migrar flujos, diseño y material de apoyo
 
-- [ ] Ejecutar los `git mv` aprobados para flujos de negocio y diseño/referencias.
-- [ ] Actualizar enlaces estrictamente necesarios tras cada movimiento.
-- [ ] Inventariar material de apoyo; mover solo lo aprobado a `06-material-de-apoyo/`.
-- [ ] Verificar que no haya rutas rotas.
-- [ ] Presentar resultado de migración a Victor.
+- [ ] `git mv` de los 21 flujos (con el renombre del 19) y actualización de sus enlaces, en el mismo commit.
+- [ ] `git mv` de `design.md` y los 6 mockups; integrar `visual-companion/README.md` en `05-diseno-y-referencias/README.md`.
+- [ ] `git mv` de las 5 carpetas de apoyo (§4.4) y actualización de `06-material-de-apoyo/README.md`.
+- [ ] Actualización **mecánica** de rutas en `AGENTS.md`, `README.md` y `docs/README.md` en el mismo commit que cada movimiento (excepción de §10.1).
+- [ ] Revisión de fuentes de verdad de la Fase 6.
 
-## Fase 6 — Clasificar trabajo histórico
+## Fase 7 — Trabajo histórico
 
-- [ ] Clasificar archivos de las carpetas antiguas de tareas y mejoras.
-- [ ] Proponer destino de cada archivo en una tabla.
-- [ ] Esperar aprobación de Victor.
-- [ ] Mover con `git mv` los archivos aprobados.
-- [ ] Registrar cualquier archivo que deba permanecer como histórico.
+- [ ] `git mv` de las 13 tareas a `01-planes/` tal cual (§4.5).
+- [ ] Descomponer `resumen-checklists.md` según §4.5.
+- [ ] Índice de `01-planes/README.md`: activos, cerrados, en preparación y enlaces a los artifacts de evidencia huérfanos (§4.6).
+- [ ] Aplicar §10.3 a los originales integrados: eliminar si está autorizado; si no, `git mv` a `06-material-de-apoyo/obsoleto/`.
+- [ ] Revisión de fuentes de verdad de la Fase 7.
 
-## Fase 7 — Actualizar fuentes de verdad
+## Fase 8 — Navegación final y vistas derivadas
 
-- [ ] Actualizar `docs/README.md` como mapa de la estructura final.
-- [ ] Actualizar README raíz si cambia la visión/arquitectura de alto nivel.
-- [ ] Actualizar `AGENTS.md` para que derive a las rutas nuevas y diferencie chat normal de plan con Orquestador.
-- [ ] Revisar que los tres no se contradigan.
+- [ ] Reescribir `docs/README.md` según §3.1 y quitar la sección "Migración en curso".
+- [ ] Quitar de `AGENTS.md` y `README.md` las referencias a rutas inexistentes (§4.7). Solo es mecánico: los cambios de contenido van al Auditor.
+- [ ] Alinear el artifact **Flujo SDD a Cierre** con §2.4, §2.6 y §3.2 (evidencia en su archivo propio, `<entorno>-worker-N`, los 18 pasos). Si no hay acceso al artifact, dejar el texto corregido en la evidencia y anotarlo como pendiente.
+- [ ] Alinear el artifact **Recorrido del Plan** con las fases 0–9 de este plan y las 13 tareas.
+- [ ] Ejecutar el comando de verificación de §4.7 y registrar el resultado en la evidencia.
+- [ ] Revisión de fuentes de verdad de la Fase 8.
 
-## Fase 8 — Auditoría y cierre
+## Fase 9 — Consolidación y entrega del Worker
 
-- [ ] Revisar estructura real versus esta especificación.
-- [ ] Verificar enlaces Markdown y rutas.
-- [ ] Verificar que no se hayan eliminado archivos sin autorización.
-- [ ] Verificar que cada sesión/fase/implementación/corrección relevante de este plan tenga registrada su revisión de fuentes de verdad (actualización hecha, o "sin cambios requeridos" explícito).
-- [ ] Verificar que `planes-futuros.md` esté solo en `01-planes/`.
-- [ ] Verificar que no existan archivos de progreso/evidencia para planes futuros no iniciados.
-- [ ] Verificar que las plantillas existan solo en `00-estandar-agentes/06-plantillas/`.
-- [ ] Verificar que los MD de estándares no contengan configuraciones específicas de repositorio.
-- [ ] Presentar informe final, diff y propuesta de commit/push a Victor.
-- [ ] Solicitar autorización explícita antes de commit/push.
+- [ ] Completar la evidencia: Punch List ejecutada con resultado por ítem.
+- [ ] Consolidar hallazgos del progreso en §12, §13 y §14 de este plan.
+- [ ] Anotar las propuestas normativas para el Auditor. Mínimo:
+  - `AGENTS.md`: lectura mínima (§2.3), frases de inicio/cierre de sesión con rutas nuevas, excepción de consulta del Worker (§3.2) y plantillas nuevas en lugar de `plantilla-tarea.md`.
+  - `docs/00-sistema` → estándar ya no existe como ruta.
+- [ ] Último commit + push y entrega al Orquestador.
+
+## Cierre del flujo (fuera del alcance del Worker)
+
+1. **Auditor:** verificación de rama; SDD, plan, Punch List, evidencia y revisiones de fuentes de verdad por fase; criterios de §6. Informe en §15.
+2. **Orquestador:** consolida y presenta a Victor.
+3. **Gate 2.**
+4. **Orquestador:** aplica los cambios normativos aprobados a `AGENTS.md`, `README.md` y `docs/README.md` y crea el Skill si se aprobó. No hay merge de código en este plan.
+5. **Orquestador:** mensaje de cierre en §16 → commit + push a `main`.
 
 ---
 
 # 6. Criterios de aceptación
 
-- [ ] La estructura final tiene solo las siete áreas numeradas dentro de `docs/`.
-- [ ] Cada sesión relevante, fase de plan, implementación o corrección aprobada de este plan registró su revisión de fuentes de verdad, con destino clasificado o "sin cambios requeridos".
-- [ ] Cada carpeta operativa tiene un README breve y correcto.
-- [ ] `00-estandar-agentes/` no contiene detalles de negocio ni rutas específicas del repositorio.
-- [ ] `01-contexto-repositorio/` contiene configuración particular sin duplicar reglas universales.
-- [ ] Todas las plantillas viven exclusivamente en `00-estandar-agentes/06-plantillas/`.
-- [ ] Cada plan activo tiene, como máximo, un plan, un progreso y una evidencia con el mismo nombre base.
-- [ ] Los planes futuros se registran solo en `01-planes/planes-futuros.md`.
-- [ ] `03-aprendizaje-continuo/` no contiene planes futuros ni tareas operativas completas.
-- [ ] Las reglas de negocio viven una sola vez en `04-flujos-de-negocio/`.
-- [ ] `design.md` vive en `05-diseno-y-referencias/` y se referencia desde contexto/UI.
-- [ ] `06-material-de-apoyo/` inicia solo con su README y se mantiene actualizado al cambiar su contenido.
-- [ ] No quedan enlaces internos rotos por la migración.
-- [ ] `AGENTS.md`, README raíz y `docs/README.md` están alineados.
+- [ ] La raíz contiene solo `AGENTS.md`, `README.md`, `.gitignore` y `docs/`.
+- [ ] `docs/` contiene solo `README.md` y las siete áreas numeradas.
+- [ ] Cada fase registró su revisión de fuentes de verdad (actualización o "sin cambios requeridos").
+- [ ] Cada carpeta operativa tiene un README breve y correcto, sin contradicciones con este plan.
+- [ ] `00-estandar-agentes/` no nombra personas, repositorios, rutas ni datos de este proyecto.
+- [ ] `01-contexto-repositorio/` contiene la configuración particular sin duplicar reglas universales.
+- [ ] Las plantillas **vigentes** viven solo en `00-estandar-agentes/06-plantillas/`, y `02-plan.md` incluye las 3 secciones obligatorias.
+- [ ] Ninguna fuente usa `work-1`/`work-2` como convención vigente.
+- [ ] El diagrama (tabla y Mermaid) y el texto de `04-flujo-sdd-y-planes.md` describen los mismos 18 pasos con la misma nomenclatura de ramas.
+- [ ] Cada plan activo nuevo tiene como máximo un plan, un progreso y una evidencia con el mismo nombre base; las tareas históricas son un único archivo.
+- [ ] `planes-futuros.md` existe solo en `01-planes/`, y no hay progreso ni evidencia para planes futuros.
+- [ ] `03-aprendizaje-continuo/` contiene las 11 mejoras, `historico.md` y `pendientes-de-promocion.md`, y su índice tiene una etiqueta correcta por archivo.
+- [ ] Las reglas de negocio viven una sola vez en `04-flujos-de-negocio/`, sin nombres con espacios.
+- [ ] `design.md` vive en `05-diseno-y-referencias/` y se referencia desde `01-contexto-repositorio/05-diseno-y-ui.md`.
+- [ ] `06-material-de-apoyo/` contiene las 5 carpetas de §4.4 y su README las describe.
+- [ ] El comando de §4.7 no devuelve rutas antiguas en documentos vigentes.
+- [ ] Ningún archivo se eliminó sin autorización (§10.3).
+- [ ] Los artifacts de evidencia huérfanos (§4.6) quedan enlazados.
+- [ ] Los artifacts *Flujo SDD a Cierre* y *Recorrido del Plan* coinciden con este plan, o su corrección quedó registrada como pendiente con el texto listo.
 
 ---
 
-# 6.1. Anexo — Informe de diagnóstico y clasificación (Fase 0 ya completada en conversación)
+# 6.1. Anexo — Decisiones de Victor ya resueltas (Fase 0)
 
-Este anexo deja escrito en el repo lo que hasta ahora solo existía en la conversación. Cierra formalmente la Fase 0.
-
-## Estado actual verificado del repositorio
-
-- `docs/00-sistema/` (roles-y-flujo.md, convenciones-de-trabajo.md, gestion-de-sesiones-y-contexto.md) → candidato directo a `00-estandar-agentes/`.
-- `docs/Flujos de trabajo/` (21 archivos + README) → candidato directo a `04-flujos-de-negocio/`.
-- `docs/Mejoras continuas/` (11 archivos, leídos completos) → ver clasificación abajo.
-- `docs/Tareas de implementacion/` (11 tareas fechadas, 7 cerradas + 4 abiertas, más `plantilla-tarea.md`, `resumen-checklists.md`, `tareas-futuras.md`) → ver decisiones abajo.
-- La evidencia real (Punch List, capturas) vive hoy en un artifact externo de claude.ai, no en el repo.
-- `docs/visual-companion/` mezcla `design.md` (estándar) con mockups `.html` → se separan en `05-diseno-y-referencias/`.
-- Carpetas de apoyo (`conocimiento/`, `Formatos/`, `Dashboard ejemplo/`, `Imagenes para fronted/`, `Informacion para pruebas/`) viven en la raíz del repo, no dentro de `docs/`.
-- `AGENTS.md`/`README.md` raíz tienen referencias rotas a carpetas que ya no existen (`Sistema hibrido/`, `plantillas/`, `RDTs.../`, `memoria.md`, `.cursor/rules/*`).
-- `.worktrees/` existe pero está vacía (sin `work-1`/`work-2` reales); la tabla de "pool de ramas" de `convenciones-de-trabajo.md` está desactualizada.
-
-## Decisiones ya resueltas por Victor (aplican en Fase 5 y Fase 6)
-
-1. **Plantillas**: las 9 plantillas separadas (§3.3) reemplazan a `plantilla-tarea.md` única.
-2. **Evidencia**: dos lugares coexisten, no uno reemplaza al otro — (a) el artifact externo de claude.ai con el checklist interactivo/visual ya implementado, y (b) el archivo local en `02-trabajo-activo/03-evidencia/<tema>.md` con el registro estructurado (tabla de Punch List, resultados, referencia/enlace al artifact).
-3. **Carpetas de apoyo de la raíz**: se mueven **todas** dentro de `docs/06-material-de-apoyo/` — regla explícita de Victor: "no quiero carpetas sueltas, todas deben estar en su lugar."
-4. **Tareas ya cerradas** (`2026-09-20-control-avance-plan-maestro.md`, `2026-09-20-evm-fase-0-catalogo-unico.md`, `2026-09-20-sub-lote-2-alcance-proyecto.md`, `2026-09-21-evm-fase-1-congelar-tarifa.md`, `2026-09-21-fix-reemplazar-dp.md`, `2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`, `2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md`): se mueven tal cual a `01-planes/`, un solo archivo histórico — **no se re-descomponen** en plan/progreso/evidencia. El formato de 3 archivos separados aplica solo a planes nuevos/abiertos en adelante.
+1. **Plantillas:** las 9 plantillas separadas (§3.3) reemplazan a `plantilla-tarea.md`.
+2. **Evidencia:** dos lugares coexisten — el artifact externo de claude.ai (checklist visual) y el archivo local en `02-trabajo-activo/03-evidencia/<tema>.md` (registro estructurado con enlace al artifact).
+3. **Carpetas de apoyo de la raíz:** se mueven todas a `docs/06-material-de-apoyo/` ("no quiero carpetas sueltas, todas deben estar en su lugar").
+4. **Tareas cerradas:** se mueven tal cual a `01-planes/` como un solo archivo histórico, sin re-descomponerlas. El formato de 3 archivos aplica a planes nuevos (para las abiertas, ver §4.5 y §10.2).
 5. **`tareas-futuras.md` → `planes-futuros.md`**: mapeo directo.
-6. **`resumen-checklists.md`**: no se conserva como archivo agregado — se descompone, cada entrada cronológica se distribuye al MD que corresponda (plan/progreso/histórico del tema al que pertenece).
-
-## Clasificación de las 11 mejoras de `docs/Mejoras continuas/`
-
-| Archivo | Destino |
-|---|---|
-| `acceso-postgres-sin-ipv6.md` | `historico.md` (excepción ya cerrada) |
-| `migraciones-sql-sobrecargas-huerfanas.md` | Se queda en aprendizaje continuo, no promociona (nota técnica puntual) |
-| `verificacion-playwright-falsos-negativos.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
-| `eslint-baseline-vs-cero.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
-| `orquestador-salta-flujo-de-roles-sin-auditoria.md` | `historico.md` (ya promovido a `roles-y-flujo.md`) |
-| `preguntas-frecuentes-flujo-orquestador.md` | `historico.md`, con referencia cruzada explícita desde `04-flujo-sdd-y-planes.md` y `02-roles-y-delegacion.md` — no se archiva sin dejar rastro visible desde el propio estándar |
-| `red-bloqueada-impide-autonomia-real.md` | `pendientes-de-promocion.md` (sigue abierto, acción de Victor, no de agente) |
-| `sendmessage-no-alcanza-sesiones-create-session.md` | Promover → `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` |
-| `tests-contadores-congelados.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
-| `turbopack-worktree-junction.md` | Promover → `01-contexto-repositorio/03-entorno-git-y-worktrees.md` |
-| `verificar-antes-de-afirmar.md` | Promover → `00-estandar-agentes/01-principios-y-seguridad.md` (principio universal) |
-
-Con esto, la **Fase 0 queda formalmente cerrada** — el resto de las fases (1 a 8) ya pueden ejecutarse con esta clasificación como referencia obligatoria, sin volver a re-decidir nada de lo de arriba.
+6. **`resumen-checklists.md`**: no se conserva como archivo agregado; se descompone según §4.5.
 
 ---
 
-# 7. Prompt de inicio para ejecutar este plan
+# 7. Entorno de ejecución de este plan
+
+| Campo | Valor |
+|---|---|
+| Repositorio | `pg_control_proyectos` (documentación; no hay código de app en este plan) |
+| Rama | `main`, directo (§2.6 y AGENTS.md § Git y entrega). Sin worktree. |
+| Requisito previo | Esta versión corregida (v2) debe estar en `main` antes de asignar al Worker (§10.4). |
+| Commits | Cada ~35% de la Punch List, solo con ítems completos; `git mv` y sus enlaces en el mismo commit. |
+| Herramientas de verificación | `git status`, `git log`, `git mv`, `grep` (comando de §4.7). No hay lint, tests ni build verificados en este repo (AGENTS.md). |
+
+---
+
+# 8. Roles de este plan
+
+| Rol | Quién | Estado |
+|---|---|---|
+| Orquestador | Sesión de coordinación de Victor | Asigna al Worker tras el Gate 1 |
+| Planner | Sesión que corrigió este plan (v2, 2026-09-27) | Entregado para el Gate 1 |
+| Worker | Por asignar (chat propio) | Pendiente del Gate 1 |
+| Auditor | Por asignar (chat propio, distinto del Worker) | Pendiente de la entrega del Worker |
+
+---
+
+# 9. Punch List
+
+Estados: `Sin verificar` / `Conforme` / `Observado` / `No aplica`. La evidencia de cada ítem va en el archivo de evidencia homónimo.
+
+| ID | Fase | Ítem | Evidencia mínima | Estado |
+|---|---|---|---|---|
+| PL-01 | 2 | Plan movido a `01-planes/`; progreso y evidencia homónimos creados | `git log --follow` del plan; los 3 archivos existen | Sin verificar |
+| PL-02 | 2 | READMEs de la Fase 1 sin contradicciones con el plan | Diff de los READMEs corregidos | Sin verificar |
+| PL-03 | 3 | Diagrama movido a `04-flujo-sdd-y-planes.md` con los 18 pasos y nomenclatura única | `git log --follow`; `grep -n "work-N"` sin resultados | Sin verificar |
+| PL-04 | 3 | `00-indice.md` con la tabla de lectura mínima por rol y paso | Archivo | Sin verificar |
+| PL-05 | 3 | 4 MD restantes del estándar, agnósticos | `grep -nE "Victor\|pg_control\|py_control"` sin resultados en el estándar | Sin verificar |
+| PL-06 | 3 | 9 plantillas; `02-plan` con las 3 secciones obligatorias; `06` con verificación de rama y `PROPONER SKILL` | Archivos | Sin verificar |
+| PL-07 | 4 | 7 documentos de contexto; regla de los dos repos; pool real verificado o "por verificar" | Archivos + comando usado | Sin verificar |
+| PL-08 | 5 | `planes-futuros.md` por `git mv` y en el formato de §2.5 | `git log --follow` | Sin verificar |
+| PL-09 | 5 | 11 mejoras movidas; 6 promovidas integradas; `historico.md` y `pendientes-de-promocion.md` | Tabla de §4.5 con el resultado por archivo | Sin verificar |
+| PL-10 | 5 | Índice etiquetado de aprendizaje corregido | Diff | Sin verificar |
+| PL-11 | 6 | 21 flujos movidos, el 19 renombrado, enlaces actualizados en el mismo commit | `git show --stat` del commit | Sin verificar |
+| PL-12 | 6 | `design.md` y 6 mockups movidos; README de diseño integrado | `git show --stat` | Sin verificar |
+| PL-13 | 6 | 5 carpetas de apoyo movidas; README actualizado | `ls` de la raíz y de `06-material-de-apoyo/` | Sin verificar |
+| PL-14 | 7 | 13 tareas movidas tal cual | `git show --stat` sin cambios de contenido | Sin verificar |
+| PL-15 | 7 | `resumen-checklists.md` descompuesto; entradas sin dueño listadas | Lista por entrada → destino | Sin verificar |
+| PL-16 | 7 | Índice de `01-planes/` con los artifacts huérfanos enlazados | Archivo | Sin verificar |
+| PL-17 | 7 | Originales integrados tratados según §10.3 | Lista de archivos: eliminado / movido a `obsoleto/` | Sin verificar |
+| PL-18 | 8 | `docs/README.md` reescrito según §3.1 | Archivo | Sin verificar |
+| PL-19 | 8 | Rutas inexistentes quitadas de `AGENTS.md` y `README.md` (solo mecánico) | Diff | Sin verificar |
+| PL-20 | 8 | Artifacts *Flujo SDD* y *Recorrido* alineados o pendiente registrado | URL/versión o texto listo | Sin verificar |
+| PL-21 | 8 | Comando de §4.7 sin rutas antiguas en documentos vigentes | Salida del comando | Sin verificar |
+| PL-22 | 2–9 | Revisión de fuentes de verdad registrada en cada fase | Entradas en el progreso | Sin verificar |
+| PL-23 | 9 | Hallazgos consolidados en §12–§14 y propuestas normativas anotadas para el Auditor | Secciones llenas | Sin verificar |
+| PL-24 | 2–9 | Ningún archivo eliminado sin autorización | `git log --diff-filter=D` contra §10.3 | Sin verificar |
+
+Puntos de commit sugeridos (~35%): tras PL-06, tras PL-13 y tras PL-24.
+
+---
+
+# 10. Gate 1 — qué aprueba Victor
+
+## 10.1. Excepción escrita para este plan
+
+El objeto de este plan es construir el estándar y la navegación. Por eso, **con el Gate 1**, el Worker queda autorizado a:
+
+- crear los archivos de `00-estandar-agentes/` y `01-contexto-repositorio/` definidos en §3;
+- reescribir `docs/README.md` según §3.1;
+- actualizar **solo rutas y enlaces** en `AGENTS.md` y `README.md`.
+
+**Cualquier cambio de contenido normativo** en `AGENTS.md`, `README.md` o `docs/README.md` que no esté descrito en §3 lo propone el Auditor y lo aplica el Orquestador tras el Gate 2.
+
+## 10.2. Decisiones resueltas con el diagrama y los artifacts (confirmar)
+
+| # | Decisión | Fuente | ¿Confirma Victor? |
+|---|---|---|---|
+| D1 | El plan es la fuente normativa; el diagrama y los artifacts son vistas derivadas | Instrucción de Victor (2026-09-27) | [ ] |
+| D2 | Rama de Worker: `<entorno>-worker-N`; `work-N` queda obsoleto | Tabla del diagrama, *Flujo SDD*, corrección del 2026-09-23 | [ ] |
+| D3 | Los worktrees viven en el repo de la app, en una subcarpeta con el nombre de la rama | Diagrama (Worker implementa en `py_control_proyectos_web`) | [ ] |
+| D4 | El plan embebe Spec, Punch List, auditoría y cierre; progreso y evidencia van aparte | Diagrama (el Auditor lee plan + progreso + evidencia), decisión 2, READMEs de la Fase 1 | [ ] |
+| D5 | El Gate 1 autoriza toda la implementación, incluidos los commits del Worker; sin aprobaciones intermedias | *Flujo SDD* | [ ] |
+| D6 | El Worker consulta a Victor en el momento ante un conflicto de negocio no anticipado | *Flujo SDD* (contradice el "punto único de contacto" de AGENTS.md → propuesta de ajuste al Auditor) | [ ] |
+| D7 | Después del Gate 2: merge, fuentes de verdad y Skill son independientes; el mensaje de cierre va al final | Diagrama + *Flujo SDD* | [ ] |
+| D8 | El handoff se escribe como sección fechada al final del progreso | Propuesta del Planner (no había destino) | [ ] |
+| D9 | Las tareas abiertas (`cronograma-import`, `paquetes-de-trabajo`) se mueven tal cual; progreso y evidencia se crean al retomarlas | Propuesta del Planner (decisión 4 no lo cubría) | [ ] |
+| D10 | Los flujos se leen con la regla de lectura mínima, no "todos" | Regla general de lectura mínima del diagrama | [ ] |
+
+## 10.3. Autorizaciones de eliminación solicitadas
+
+Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-apoyo/obsoleto/`: no se pierde nada, pero queda un duplicado.
+
+- [ ] **A — Eliminar (`git rm`) los originales cuyo contenido ya se integró en otro archivo:** los 3 de `docs/00-sistema/`, `docs/Flujos de trabajo/README.md`, `docs/visual-companion/README.md`, `plantilla-tarea.md` y `resumen-checklists.md`.
+
+## 10.4. Checklist del Gate 1
+
+- [ ] Victor aprueba el plan corregido (v2), la Punch List (§9) y las tablas de §4.
+- [ ] Victor confirma D1–D10 o indica cambios.
+- [ ] Victor decide la autorización A (§10.3).
+- [ ] La v2 está en `main`: merge de la rama `claude/opus-token-consumption-9mkqsf`, donde se corrigió, o copia autorizada.
+- [ ] El Orquestador asigna el Worker con el prompt de §17.
+
+---
+
+# 11. Registro de decisiones
+
+| Fecha | Decisión / suceso | Quién |
+|---|---|---|
+| 2026-09-27 | Plan v1 creado (commit `c4102ff`) | Agente anterior |
+| 2026-09-27 | Fases 0 y 1 ejecutadas y pusheadas (`404ddb3`, `be53526`) **sin Gate 1**, con el plan en estado "Propuesto" | Agente anterior |
+| 2026-09-27 | Revisión del plan: contradicciones entre el plan, el diagrama y los artifacts (ramas, evidencia, secciones obligatorias, 6 tareas sin clasificar, enlaces sin inventariar, estándar no agnóstico, worktrees en el repo equivocado) | Sesión de revisión |
+| 2026-09-27 | Victor ordena corregir el plan de punta a punta según los artifacts y el diagrama, y que lo implemente un Worker, no la sesión que corrige | Victor |
+| 2026-09-27 | Plan v2: decisiones D1–D10 (§10.2) pendientes de confirmar en el Gate 1 | Planner (sesión de corrección) |
+
+---
+
+# 12. Mejoras (de trabajo)
+
+- **Un plan "Propuesto" no se ejecuta.** El agente anterior ejecutó las Fases 0 y 1 sin Gate 1. Aprendizaje: antes de ejecutar cualquier fase, el agente verifica en el encabezado que el estado diga "Aprobado (Gate 1)". Si no lo dice, se detiene. Candidato a `03-aprendizaje-continuo/` (etiqueta `roles/orquestador`); lo registra el Worker en la Fase 5.
+- **Las vistas derivadas divergen si no hay una fuente normativa declarada.** El diagrama y los artifacts se editaron en paralelo al plan y terminaron contradiciéndose. Aprendizaje: todo artifact o diagrama declara de qué documento deriva, y ese documento manda.
+
+# 13. Reglas de negocio acordadas en esta tarea
+
+- Ninguna. Este plan no toca reglas de negocio del sistema, solo organización documental y método de trabajo.
+
+# 14. Carpetas/archivos huérfanos
+
+Se reportan a Victor. No se borra nada por cuenta propia.
+
+- Artifacts de evidencia sin enlace desde el repo: Sub-lote 2 Checklist, Dashboards y Curva S Fase 3, Matriz de Accesos (§4.6).
+- `2026-09-23-paquetes-de-trabajo.md` tiene texto con codificación dañada (UTF-8 doblemente codificado). Se reporta; no se corrige en este plan.
+- Rutas citadas en `AGENTS.md`/`README.md` que ya no existen: `Sistema hibrido/`, `plantillas/`, `RDTs movimiento de tierra.../`, `memoria.md`, `control_de_proyectos.txt`, `.cursor/rules/*`.
+- `.worktrees/` figura en `convenciones-de-trabajo.md` como pool creado el 2026-09-23, pero no existe en este repo.
+- Entradas de `resumen-checklists.md` sin plan dueño: las completa el Worker en la Fase 7.
+
+---
+
+# 15. Informe de Auditoría
+
+_Pendiente. Lo escribe el Auditor con la plantilla `06-informe-auditoria.md` tras la entrega del Worker._
+
+# 16. Mensaje de cierre
+
+_Pendiente. Lo escribe el Orquestador tras el Gate 2 con la plantilla `09-cierre.md`._
+
+---
+
+# 17. Prompt de asignación al Worker (lo usa el Orquestador tras el Gate 1)
 
 ```text
-Vamos a implementar el plan de reestructuración documental.
+Eres el Worker del plan de reestructuración documental de pg_control_proyectos.
 
-Archivo de plan:
-docs/02-trabajo-activo/01-planes/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md
+Plan (fuente normativa):
+2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md
+(en la raíz; tu primera tarea, Fase 2, es moverlo a docs/02-trabajo-activo/01-planes/)
 
-Empieza por Fase 0 — Diagnóstico y propuesta de migración.
+Antes de empezar:
+1. Lee AGENTS.md y el plan completo. Verifica en el encabezado y en §10.4 que el Gate 1 esté aprobado. Si no lo está, detente y avisa.
+2. Lee §10.2 y §10.3 para saber qué confirmó Victor y qué autorizó eliminar.
+3. Trabaja en main de pg_control_proyectos. No crees ramas ni worktrees.
 
-Lee primero AGENTS.md, README.md, docs/README.md y los documentos actuales de docs/00-sistema/.
+Ejecuta las Fases 2 a 9 en orden, siguiendo solo las tablas de §4:
+- Sin aprobaciones intermedias: el Gate 1 ya autorizó todo lo que describe el plan.
+- Lo que no esté en §4 no lo muevas: anótalo como hallazgo en el progreso.
+- Cada git mv va en el mismo commit que la actualización de los enlaces que rompe.
+- Commit + push a main cada ~35% de la Punch List (§9), solo con ítems completos y git add explícito.
+- En AGENTS.md y README.md solo cambias rutas (§10.1). Todo cambio normativo lo anotas para el Auditor.
+- No elimines nada que §10.3 no autorice.
+- Al final de cada fase, registra en el progreso la revisión de fuentes de verdad (§2.8).
+- Si surge un conflicto no previsto, consulta a Victor y registra pregunta y respuesta en el progreso.
 
-No crees, muevas, renombres, borres, commitees, pushees, hagas merge, abras PR, crees ramas ni worktrees antes de entregar:
-
-1. Inventario de la estructura actual.
-2. Tabla origen → destino propuesta.
-3. Lista de enlaces/rutas que podrían romperse.
-4. Lista de decisiones pendientes.
-
-Espera mi aprobación explícita antes de continuar a la Fase 1.
+Entrega (Fase 9): Punch List con evidencia, hallazgos consolidados en §12–§14 y propuestas normativas para el Auditor. No te autoauditas ni cierras el plan.
 ```

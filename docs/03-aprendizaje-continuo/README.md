@@ -18,7 +18,7 @@ Ni planes futuros ni tareas operativas completas — eso vive en `../02-trabajo-
 |---|---|
 | `roles/orquestador` | incidente del Orquestador saltando el flujo de roles + FAQ del flujo — ver `historico.md` |
 | `sesiones/chat` | `SendMessage` no alcanza sesiones de `create_session` |
-| `git/ramas` | acceso directo a Postgres sin IPv6; red bloqueada impide autonomía real (pendiente) |
+| `entorno/infra` | acceso directo a Postgres sin IPv6 (histórico); red bloqueada impide autonomía real (pendiente de promoción) |
 | `migraciones-sql` | `CREATE OR REPLACE FUNCTION` deja sobrecargas huérfanas |
 | `playwright` | falsos negativos en verificación (uppercase, timeout fijo) |
 | `lint` | verificar contra `main` y por archivo tocado, no contra cero |

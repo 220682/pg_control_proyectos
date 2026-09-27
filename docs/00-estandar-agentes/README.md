@@ -2,7 +2,7 @@
 
 ## Qué vive acá
 
-El estándar reusable de trabajo para agentes: roles, flujo Spec/SDD → Cierre, sesiones/handoff, principios de seguridad y las 9 plantillas oficiales. Escrito para que sea aplicable a cualquier repositorio, sin depender de nombres, rutas ni datos propios de `pg_control_proyectos`.
+El estándar reusable de trabajo para agentes: roles, flujo Spec/SDD → Cierre, sesiones/handoff, principios de seguridad y las 9 plantillas oficiales. Escrito para que sea aplicable a cualquier repositorio, sin depender de nombres, rutas ni datos propios de este proyecto.
 
 ## Qué no vive acá
 

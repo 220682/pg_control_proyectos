@@ -10,4 +10,4 @@ Ninguna plantilla vive fuera de esta carpeta. No hay copias ni versiones paralel
 
 ## Regla de uso
 
-Cada documento real de trabajo copia la plantilla aplicable y conserva sus secciones. Si falta un apartado recurrente, se propone el cambio al estándar (con autorización de Victor) en vez de improvisarlo por fuera.
+Cada documento real de trabajo copia la plantilla aplicable y conserva sus secciones. Si falta un apartado recurrente, se propone el cambio al estándar (con autorización del Responsable humano) en vez de improvisarlo por fuera.

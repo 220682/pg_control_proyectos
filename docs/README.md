@@ -4,7 +4,7 @@ Este archivo ordena **solo `docs/`**. La fuente normativa de todo el repositorio
 
 ## ⚠️ Migración en curso — nueva arquitectura
 
-Este repositorio está migrando a una nueva estructura, definida en `2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` (raíz del repo). Las siete áreas numeradas ya existen como carpetas con su README:
+Este repositorio está migrando a una nueva estructura, definida en [`02-trabajo-activo/01-planes/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md`](02-trabajo-activo/01-planes/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md). Las siete áreas numeradas ya existen como carpetas con su README:
 
 | Carpeta | Qué vive ahí |
 |---|---|

@@ -804,6 +804,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 | 2026-09-27 | **Gate 1 parcial**: plan v2, Punch List, tablas de §4, D3, D8, D9 y autorización A. Excepción: `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` se elimina en lugar de migrarse. D1, D2, D4–D7 y D10 quedan pendientes de su confirmación | Victor |
 | 2026-09-27 | Corrección: el Planner había registrado D1–D10 como confirmadas cuando Victor solo vio D3, D8 y D9. Se corrigió el registro | Planner (sesión de corrección) |
 | 2026-09-27 | **Gate 1 completo.** Victor responde las 7 pendientes: D2, D4, D5 y D7 como se propusieron; **D1: manda el diagrama** (no el plan); **D6: el Worker consulta en su propio chat**; **D10: Orquestador, Planner y Auditor leen todos los flujos, el Worker solo los suyos** | Victor |
+| 2026-09-27 | Worker asignado ejecuta Fases 2–3. Hallazgo de entorno (verificado con `git branch --show-current` y `git log` de `origin/main`, no asumido): el harness de esta sesión exige commitear en una rama designada (`claude/reestructuracion-documental-pg-control-jvj5mf`) y prohíbe pushear a otra sin permiso; `origin/main` tiene historia propia de otras sesiones concurrentes, no relacionada con este plan. Se pushea a la rama designada en vez de a `main` directo (contradice §2.6/§7 del plan, que asumían push directo a `main`). Detalle completo en el progreso. Queda para el Auditor/Orquestador decidir cómo se lleva el resultado a `main` real | Worker |
 
 ---
 

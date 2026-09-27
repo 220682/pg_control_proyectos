@@ -14,14 +14,18 @@ Ni planes futuros ni tareas operativas completas — eso vive en `../02-trabajo-
 
 ## Índice por categoría
 
-| Etiqueta | Mejoras |
-|---|---|
-| `roles/orquestador` | incidente del Orquestador saltando el flujo de roles + FAQ del flujo — ver `historico.md` |
-| `sesiones/chat` | `SendMessage` no alcanza sesiones de `create_session` |
-| `entorno/infra` | acceso directo a Postgres sin IPv6 (histórico); red bloqueada impide autonomía real (pendiente de promoción) |
-| `migraciones-sql` | `CREATE OR REPLACE FUNCTION` deja sobrecargas huérfanas |
-| `playwright` | falsos negativos en verificación (uppercase, timeout fijo) |
-| `lint` | verificar contra `main` y por archivo tocado, no contra cero |
-| `tests` | contadores congelados y atribución errónea de fallos en vitest |
-| `worktrees/turbopack` | Turbopack no corre en worktrees con `node_modules` en Junction |
-| `principios` | verificar antes de afirmar, o preguntar; nunca asumir |
+Rehecho en la Fase 5 de la reestructuración documental (2026-09-27), una fila por archivo, con su etiqueta y su estado final (ver clasificación completa en `historico.md` y `pendientes-de-promocion.md`).
+
+| Etiqueta | Archivo | Estado |
+|---|---|---|
+| `roles/orquestador` | [`2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md`](2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md) | Histórico — ya promovido a `00-estandar-agentes/02-roles-y-delegacion.md` |
+| `roles/orquestador` | [`2026-09-23-preguntas-frecuentes-flujo-orquestador.md`](2026-09-23-preguntas-frecuentes-flujo-orquestador.md) | Histórico con rastro visible en el estándar |
+| `sesiones/chat` | [`2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md`](2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md) | Promovido a `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` |
+| `entorno/infra` | [`2026-09-21-acceso-postgres-sin-ipv6.md`](2026-09-21-acceso-postgres-sin-ipv6.md) | Histórico (excepción cerrada) |
+| `entorno/infra` | [`2026-09-23-red-bloqueada-impide-autonomia-real.md`](2026-09-23-red-bloqueada-impide-autonomia-real.md) | Pendiente de promoción — ver `pendientes-de-promocion.md` |
+| `migraciones-sql` | [`2026-09-21-migraciones-sql-sobrecargas-huerfanas.md`](2026-09-21-migraciones-sql-sobrecargas-huerfanas.md) | No promovido — se queda como aprendizaje |
+| `playwright` | [`2026-09-21-verificacion-playwright-falsos-negativos.md`](2026-09-21-verificacion-playwright-falsos-negativos.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `lint` | [`2026-09-23-eslint-baseline-vs-cero.md`](2026-09-23-eslint-baseline-vs-cero.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `tests` | [`2026-09-23-tests-contadores-congelados.md`](2026-09-23-tests-contadores-congelados.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `worktrees/turbopack` | [`2026-09-23-turbopack-worktree-junction.md`](2026-09-23-turbopack-worktree-junction.md) | Promovido a `01-contexto-repositorio/03-entorno-git-y-worktrees.md` |
+| `principios` | [`2026-09-23-verificar-antes-de-afirmar.md`](2026-09-23-verificar-antes-de-afirmar.md) | Promovido (principio universal) a `00-estandar-agentes/01-principios-y-seguridad.md` |

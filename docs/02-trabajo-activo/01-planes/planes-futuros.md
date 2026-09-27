@@ -1,14 +1,18 @@
-# Tareas futuras
+# Planes futuros
 
-> Renombrado el 2026-09-23 (antes "Mejoras futuras" en `docs/Mejoras continuas/`) — el nombre anterior contradecía la distinción entre Tareas de implementación (trabajo de Workers) y Mejoras continuas (aprendizajes trasladados a fuentes de verdad). Este archivo es un backlog de **tareas de implementación pospuestas**, no de aprendizajes; por eso vive en `Tareas de implementacion/`.
+> Renombrado desde `tareas-futuras.md` (antes en `docs/Tareas de implementacion/`) durante la reestructuración documental de 2026-09-27, adaptado al formato de `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md` § Convención de planes futuros (§2.5 del plan de reestructuración). Es el último archivo fijo de `01-planes/`.
 
-Archivo permanente — no es una tarea con Plan/Punch List/Cierre como las demás de esta carpeta, ni un lote de `Mejoras continuas/`. No lleva checklist ni se cierra nunca. Es un lugar de espera para trabajo de implementación que Victor decide posponer indefinidamente, sin fecha de retomar.
+Archivo permanente — no es un plan aprobado: no tiene progreso, evidencia ni Worker asignado, y debe pasar por Spec/SDD antes de convertirse en plan real:
+
+```text
+planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidencia
+```
 
 ## Cómo se usa
 
 - Solo se agrega algo aquí cuando **Victor lo indica explícitamente** como pendiente a futuro — no es donde el agente guarda por su cuenta algo que no alcanzó a hacer.
-- Cada ítem anota: de qué archivo/sesión salió, en qué consiste, y por qué se pospuso (si se sabe).
-- Cuando Victor decide retomarlo, se saca de aquí y se convierte en un archivo de tarea nuevo en `Tareas de implementacion/` con la fecha del día en que se retoma.
+- Cada ítem anota: origen, descripción, motivo de la postergación, estado y si requiere Spec/SDD antes de retomarse.
+- Cuando Victor decide retomarlo, se saca de aquí y se convierte en un plan nuevo en `01-planes/` con la fecha del día en que se retoma. El ítem se conserva acá como "promovido", con enlace al plan nuevo — no se borra sin trazabilidad.
 
 ## Pendientes a futuro
 
@@ -17,6 +21,8 @@ Archivo permanente — no es una tarea con Plan/Punch List/Cierre como las demá
 - **Origen:** `docs/Tareas de implementacion/2026-09-20-control-avance-plan-maestro.md` (Pendiente Fase 2 del flujo 20-plan-maestro).
 - **Qué es:** paquetes de trabajo, área, disciplina y frente como filtros operativos del Plan Maestro, sin reemplazar las partidas DP.
 - **Pospuesto:** 2026-09-20.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí, antes de convertirse en plan.
 
 ### 3WLA como plan operativo separado
 
@@ -24,6 +30,8 @@ Archivo permanente — no es una tarea con Plan/Punch List/Cierre como las demá
 - **Qué es:** construir el 3WLA/Plan semanal como interfaz propia (compromisos, restricciones, condiciones de satisfacción, cumplido/no cumplido, causa, PPC/CNC), según lo describe `18-control-avance.md`.
 - **Por qué se pospone:** el objetivo actual del flujo 18 es la cadena de datos RDT validado → PR → Dashboard (métricas EVM: EV, AC, SPI, CPI). El 3WLA no alimenta esa cadena — mide PPC (LPS), un indicador aparte que `18-control-avance.md` marca explícitamente que no debe mezclarse con SPI. No es indispensable para que el dato de RDT llegue al Dashboard.
 - **Pospuesto:** 2026-09-20.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí.
 
 ### Apartado "Inasistencias" al final del RDT
 
@@ -31,13 +39,19 @@ Archivo permanente — no es una tarea con Plan/Punch List/Cierre como las demá
 - **Qué es:** un apartado nuevo al final del RDT (Crear RDTs), listado tipo desplegable con: personal (elegido del catálogo `recursos_personal`, igual que el Tareo), motivo de inasistencia, y lo que haga falta — diseño y campos exactos quedan a criterio de quien lo retome (Victor lo dejó abierto explícitamente).
 - **Ojo — confirmar antes de construir:** Victor escribió "RDO", pero toda la sesión fue sobre **RDT** (Crear RDTs, PROM-GP-002) — "RDO" en este repo históricamente se refiere a otro formato distinto (reporte con fotos/personal de cantera, `Informacion para pruebas/RDO`). Antes de implementar, confirmar si es el RDT (más probable, por contexto) o si de verdad es el flujo RDO aparte.
 - **Pospuesto:** 2026-09-20.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí — incluye una ambigüedad a resolver con Victor antes de planificar.
 
 ### Acceso directo a Postgres/Supabase para correr SQL
 
 - **Origen:** decisión pendiente registrada el 2026-09-17 (antes en `docs/memoria-sesion.md`, ya retirado).
 - **Qué es:** hoy Claude solo tiene las llaves REST de Supabase (leer/escribir filas de tablas existentes), no la cadena de conexión directa de Postgres — por eso Victor sigue pegando y corriendo el SQL él mismo en el SQL Editor de Supabase. Si se agrega la cadena de conexión directa (Project Settings → Database → Connection string), Claude podría correr migraciones (`CREATE TABLE`, etc.) directamente. **La regla general sigue siendo: aun con esa llave, se confirma con Victor antes de correr cada migración — es un cambio difícil de deshacer.**
 - **Pospuesto:** 2026-09-20.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí, dado que implica manejo de credenciales e infraestructura.
 
-**Excepción puntual (2026-09-21):** para el plan de PR enriquecido en dos fases ([Fase 1](2026-09-21-pr-fase-1-pipeline-rdt.md), [Fase 2](2026-09-21-pr-fase-2-pipeline-linea-base.md)), Victor autorizó explícitamente dar la cadena de conexión directa a los dos agentes que trabajan en la nube, para que corran sus propias migraciones (`053`+ y `060`+) sin pausar a pedir confirmación una por una. **Es una excepción acotada a esos dos agentes y a esa tarea, no un cambio de la regla general** — cualquier otra sesión (incluida esta) sigue sin esa cadena de conexión y sigue confirmando cada migración con Victor.
+**Excepción puntual (2026-09-21):** para el plan de PR enriquecido en dos fases ([Fase 1](../../Tareas%20de%20implementacion/2026-09-21-pr-fase-1-pipeline-rdt.md), [Fase 2](../../Tareas%20de%20implementacion/2026-09-21-pr-fase-2-pipeline-linea-base.md)), Victor autorizó explícitamente dar la cadena de conexión directa a los dos agentes que trabajan en la nube, para que corran sus propias migraciones (`053`+ y `060`+) sin pausar a pedir confirmación una por una. **Es una excepción acotada a esos dos agentes y a esa tarea, no un cambio de la regla general** — cualquier otra sesión (incluida esta) sigue sin esa cadena de conexión y sigue confirmando cada migración con Victor.
 
 Herramientas de Claude Code no tienen forma de inyectar esa credencial en el sandbox de un agente en la nube (el tool de lanzar agentes no acepta variables de entorno ni secretos) — Victor tiene que configurarla él mismo del lado de la plataforma, en la sección de entornos/secretos del sandbox para ese repositorio. Nunca se pega en un chat.
+
+> **Nota de la reestructuración (2026-09-27):** los dos enlaces de "Fase 1"/"Fase 2" de arriba apuntan todavía a `docs/Tareas de implementacion/` porque esas tareas se migran recién en la Fase 7 de `2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md`. Cuando esa fase las mueva a `01-planes/`, estos enlaces se corrigen en el mismo commit (pasan a ser archivos hermanos, sin prefijo de carpeta).

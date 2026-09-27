@@ -12,4 +12,4 @@ El agente aplicó sus migraciones vía la **Management API de Supabase** en luga
 
 ## Alcance de la excepción (no cambia la regla general)
 
-Dar la cadena de conexión directa fue una excepción puntual, acotada a esos dos agentes y esa tarea — ver `docs/Tareas de implementacion/tareas-futuras.md`. La regla general sigue siendo: sin esa cadena de conexión, cada migración se confirma con Victor antes de correrla.
+Dar la cadena de conexión directa fue una excepción puntual, acotada a esos dos agentes y esa tarea — ver `docs/02-trabajo-activo/01-planes/planes-futuros.md`. La regla general sigue siendo: sin esa cadena de conexión, cada migración se confirma con Victor antes de correrla.

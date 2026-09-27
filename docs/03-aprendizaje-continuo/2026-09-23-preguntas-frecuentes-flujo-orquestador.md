@@ -2,7 +2,7 @@
 
 > Origen: sesión del 2026-09-23 donde Victor pidió auditar `docs/00-sistema/roles-y-flujo.md` en busca de huecos (ver también [2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md](2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md), que es el incidente que originó la auditoría). Durante la conversación salieron dudas operativas que no estaban claras ni siquiera después de corregir los huecos — se guardan aquí como referencia rápida, en formato pregunta/respuesta, para no tener que rederivarlas de la política cada vez.
 >
-> **No es una fuente normativa nueva.** La fuente normativa sigue siendo `docs/00-sistema/roles-y-flujo.md` y `docs/00-sistema/convenciones-de-trabajo.md` — este archivo es una explicación en lenguaje llano de lo que ya dicen esos documentos (algunas de estas preguntas, de hecho, hicieron que se corrigiera texto ambiguo en esos documentos; ver `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` § Seguimiento y § Seguimiento 2).
+> **No es una fuente normativa nueva.** La fuente normativa sigue siendo `docs/00-sistema/roles-y-flujo.md` y `docs/00-sistema/convenciones-de-trabajo.md` — este archivo es una explicación en lenguaje llano de lo que ya dicen esos documentos (algunas de estas preguntas, de hecho, hicieron que se corrigiera texto ambiguo en esos documentos; ver `2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` § Seguimiento y § Seguimiento 2).
 
 ## ¿En qué momento se para la implementación?
 
@@ -53,7 +53,7 @@ Lo que nunca hace, así se vea simple: implementar él mismo. Se autoverifica an
 
 ## Corrección de fondo detrás de estas preguntas
 
-Varias de estas respuestas expusieron redacciones ambiguas en la política (ver detalle completo en `Mejoras continuas/2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` § Seguimiento y § Seguimiento 2):
+Varias de estas respuestas expusieron redacciones ambiguas en la política (ver detalle completo en `2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` § Seguimiento y § Seguimiento 2):
 
 - La excepción de "Orquestador implementa" ahora exige quedar por escrito en el plan aprobado, acotada a esa tarea.
 - El Auditor verifica primero, con `git log`/`git branch --contains`, la rama real de los commits.

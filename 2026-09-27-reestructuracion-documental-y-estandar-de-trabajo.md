@@ -786,7 +786,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 - [ ] Victor aprueba el plan corregido (v2), la Punch List (§9) y las tablas de §4.
 - [ ] Victor confirma D1–D10 o indica cambios.
 - [ ] Victor decide la autorización A (§10.3).
-- [ ] La v2 está en `main`: merge de la rama `claude/opus-token-consumption-9mkqsf`, donde se corrigió, o copia autorizada.
+- [x] La v2 está en `main` (commit `421c6bc`).
 - [ ] El Orquestador asigna el Worker con el prompt de §17.
 
 ---

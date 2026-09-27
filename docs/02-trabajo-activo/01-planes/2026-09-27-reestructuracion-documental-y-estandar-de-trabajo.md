@@ -148,6 +148,7 @@ Fuentes: diagrama (tabla), artifact *Flujo SDD a Cierre* y `convenciones-de-trab
 
 - `entorno` es `local` o `nube`; se verifica con la herramienta disponible, no se asume.
 - La nomenclatura `work-1`/`work-2` queda **obsoleta** (tabla de pool de `convenciones-de-trabajo.md` y Mermaid del diagrama). Solo se conserva como dato histórico en las tareas que la usaron (ej. `2026-09-23-paquetes-de-trabajo.md`).
+- Las ramas `<entorno>-worker-N` no se borran por rutina: se reutilizan después de sincronizarlas con `main` y verificar que no contengan trabajo pendiente (`convenciones-de-trabajo.md` § Pool de ramas).
 - No se crea, borra, renombra o reasigna rama ni worktree sin autorización de Victor.
 - Los roles de coordinación (Orquestador, Planner, Auditor) trabajan en `main` de `pg_control_proyectos`.
 
@@ -201,6 +202,32 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 4. Registrar qué fuente se actualizó (o se propone), qué sección, por qué y con qué evidencia.
 5. Si nada aplica, registrar explícitamente: **"Fuentes de verdad revisadas: sin cambios requeridos."** El silencio no cuenta como revisión hecha.
 
+## 2.9. Convención de nombres de chat
+
+Convención vigente de Victor (hoy en `docs/00-sistema/gestion-de-sesiones-y-contexto.md` § Nombres de chats y § Cierre de cada chat, y en `convenciones-de-trabajo.md` § Chats). **Se conserva íntegra en la migración**, no se reinventa:
+
+```text
+<entorno>_<jerarquía>.<rol>_<tarea>
+```
+
+- `entorno`: `local` o `nube`.
+- `jerarquía`: `1` Orquestador, `2` Planner, `3` Worker, `4` Auditor (ordena el listado de chats).
+- `tarea`: slug corto de la tarea. Si hay más de un Worker en la misma tarea, se diferencian por fase (`<tarea>-fase1`, `<tarea>-fase2`), no por número de Worker.
+- **Todo chat se renombra según esta convención al empezar a trabajar en su rol y tarea.** Si el agente no puede renombrarlo con sus herramientas, le pide a Victor que lo haga desde la interfaz.
+- **Al cerrar la tarea**, se antepone `hist_` al nombre de cada chat de esa tarea (ej. `hist_local_1.orquestador_dashboard-fase4`): señala que la tarea terminó y que el rol/entorno queda libre.
+- **Los chats no se borran, se renombran.** Eliminar un chat requiere la misma autorización explícita que eliminar una rama o un worktree.
+- No se reutiliza un chat histórico (`hist_...`) para una tarea nueva.
+- Crear un chat nuevo (Planner, Worker, Auditor) es autónomo del Orquestador: no es "crear infraestructura", es abrir el espacio de trabajo que el plan aprobado ya definió.
+
+Chats de este plan:
+
+| Rol | Nombre del chat |
+|---|---|
+| Orquestador | `<entorno>_1.orquestador_reestructuracion-documental` |
+| Planner (sesión de corrección, en la nube) | `nube_2.planner_reestructuracion-documental` |
+| Worker | `<entorno>_3.worker_reestructuracion-documental` |
+| Auditor | `<entorno>_4.auditor_reestructuracion-documental` |
+
 ---
 
 # 3. Estructura objetivo y contenido de cada carpeta
@@ -209,7 +236,7 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 
 **Propósito:** mapa de navegación de `docs/`.
 
-**Debe contener:** mapa de las siete áreas; ruta de lectura mínima (§2.3); diferencia entre conversación simple y trabajo mediante plan; diferencia entre plan, progreso, evidencia y aprendizaje; enlaces a los README de cada área; enlace al artifact **Punch List de Mejoras** (hoy en la línea 81).
+**Debe contener:** mapa de las siete áreas; ruta de lectura mínima (§2.3); diferencia entre conversación simple y trabajo mediante plan; diferencia entre plan, progreso, evidencia y aprendizaje; enlaces a los README de cada área; enlace al artifact **Punch List de Mejoras** (hoy en la línea 81); **"Qué leer al iniciar sesión" y "Qué hacer al cerrar sesión"** reescritos para la estructura nueva (§4.8, filas F1–F2); **ciclo de vida del lote con Punch List** sin Orquestador (§4.8, fila F3); regla **"no existe memoria de sesión aparte"**.
 
 **No debe contener:** reglas detalladas de seguridad; procedimientos completos de Git, Playwright o diseño; reglas de negocio duplicadas; estado de planes particulares; la sección "Migración en curso" (se elimina al terminar la Fase 6).
 
@@ -249,11 +276,19 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 - El Orquestador es el punto de contacto de coordinación con el Responsable humano. **Excepción documentada** (artifact *Flujo SDD*): ante un conflicto de regla de negocio no anticipado durante la implementación, el Worker consulta al Responsable humano en el momento y registra pregunta y respuesta en el progreso (**confirmar en Gate 1**, §10.2).
 - El Orquestador nunca planifica ni implementa: delega al Planner tras el Gate Spec, salvo excepción escrita en el plan y autorizada.
 - Cuándo dividir trabajo y cuándo usar un solo Worker. No paralelizar si se tocan los mismos archivos, migraciones, componentes base o recursos no aislados.
+- **Orquestador:** define objetivo y entorno (roles, número de Workers, ramas, worktrees y chats); verifica si ya existen y los reutiliza si están libres; entrega contexto cerrado a cada rol; consolida y pide aprobaciones **nunca sin Informe de Auditoría emitido**. **Autoverificación antes de escribir cualquier línea de implementación:** "¿esto lo está haciendo un Worker en su rama y chat propio?" — si no, se detiene y asigna un Worker. Única excepción: el plan aprobado lo dice por escrito para esa tarea puntual (dos condiciones a la vez, solo para esa tarea).
+- **Planner:** entrega plan por etapas; alcance y no alcance; dependencias y riesgos; Punch List verificable; archivos/componentes afectados; pruebas y criterios de aceptación; división de Workers solo con independencia real; **prompt breve y cerrado para cada Worker**; **alcance y prompt del Auditor**; anticipa incongruencias con reglas de negocio documentadas. No implementa ni aprueba.
+- **Worker:** implementa solo su subalcance; lee lo indicado; commit + push en su rama sin pedir autorización caso por caso; ejecuta las pruebas disponibles; autoverifica con Playwright antes de reportar un ítem como listo (espera la condición real, lee `textContent()`); reporta rama, commits, archivos, pruebas, Punch List, bloqueos y propuestas documentales; registra hallazgos en el momento; ante conflicto de negocio repite el ciclo pregunta → validación → registro hasta resolverlo. **No debe:** hacer merge, cambiar el alcance, modificar reglas permanentes sin aprobación, trabajar en la rama o worktree de otro Worker.
+- **Auditor — primer chequeo, antes de cualquier otro:** con `git log`/`git branch --contains`, que la implementación está en la rama del Worker asignado (no en `main` ni en la del Orquestador/Planner) **y que existe un chat de Worker separado**. Si falla, **no sigue auditando**: lo reporta como incidente de separación de roles. **Segundo chequeo:** que Mejoras (de trabajo), Reglas de negocio acordadas y Carpetas/archivos huérfanos estén registrados y trasladados a su destino; una tarea con contenido pendiente de trasladar no está lista para cerrar. El Auditor no implementa, no hace merge y no aprueba decisiones del Responsable humano.
+- **Regla anti-fricción:** entre el Gate 1 y el Gate 2 nadie pide aprobaciones que el plan o esta política ya otorgan; las únicas paradas son las excepciones escritas (conflicto de negocio no anticipado; acciones reservadas: crear/eliminar rama o worktree, merge, eliminar recursos).
 - Referencia cruzada visible a `03-aprendizaje-continuo/historico.md` (incidente "Orquestador salta el flujo de roles" y FAQ del flujo).
 
 ### `03-sesiones-contexto-y-handoff.md`
 
 - Un chat por tarea o etapa clara; contexto mínimo de inicio; cuándo compactar; cómo cerrar un chat.
+- **Regla universal de nombres de chat:** cada chat se nombra con entorno, jerarquía del rol, rol y tarea al empezar; al cerrar la tarea se le antepone un prefijo de histórico; los chats no se borran, se renombran. El patrón concreto de este repo va en `01-contexto-repositorio/03-entorno-git-y-worktrees.md` (§2.9).
+- **Primer mensaje de cada chat** contiene solo: rol; objetivo/subalcance; rama y worktree si aplica; documentos que debe leer; criterios de salida; restricciones.
+- `/compact` solo si una tarea larga llena el contexto; no convierte un chat viejo en contexto válido para una tarea nueva.
 - Handoff obligatorio ante cambio de sesión, chat, LLM o entorno: se escribe como **sección fechada al final del progreso** del plan, con la plantilla `07-handoff.md`.
 - Una conversación histórica no se reutiliza como contexto activo de una tarea nueva.
 - Promovido de `2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md` (limitación de comunicación entre sesiones), redactado de forma agnóstica.
@@ -320,14 +355,14 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 | Plantilla | Dónde se usa | Debe incluir |
 |---|---|---|
 | `01-spec-sdd.md` | Sección Spec del archivo de plan | Estado; problema y contexto; resultado esperado; alcance y no alcance; usuarios/roles afectados; reglas de negocio y documentos afectados; datos, API, migraciones o dependencias; diseño/UI aplicable; riesgos y decisiones pendientes; criterios de aceptación; estrategia de prueba/evidencia; aprobación (Gate Spec). |
-| `02-plan.md` | Archivo de plan | Identificación y estado; referencia al Spec aprobado; objetivo, alcance y no alcance; entorno, repos, ramas y worktrees; fases y dependencias; asignación de roles; archivos/componentes afectados; Punch List embebida (formato `05-punch-list`); riesgos y bloqueos; registro de decisiones; enlaces a progreso y evidencia homónimos; **las tres secciones obligatorias heredadas de `plantilla-tarea.md`: `Mejoras (de trabajo)`, `Reglas de negocio acordadas en esta tarea`, `Carpetas/archivos huérfanos`** (se llenan en el momento del hallazgo, no al cierre); Informe de Auditoría (formato `06`); mensaje de cierre (formato `09`); elementos postergados propuestos para `planes-futuros.md`. |
-| `03-progreso.md` | Archivo de progreso | Referencia al plan; estado general y fase actual; tabla de roles/Workers y estado; avances terminados; trabajo actual; pendientes; commits, ramas y worktrees usados; **hallazgos registrados en el momento** (incluidas preguntas de negocio y la respuesta de Victor); bloqueos, riesgos y decisiones requeridas; próximo paso verificable; última actualización y responsable; **sección de handoffs fechados**. No contiene resultados extensos de pruebas. |
+| `02-plan.md` | Archivo de plan | Identificación y estado (valores heredados de `plantilla-tarea.md`: Propuesta / Planificando / Implementando / En auditoría / Pendiente de Victor / Cerrada); referencia al Spec aprobado; objetivo, alcance y no alcance; entorno, repos, ramas y worktrees; fases y dependencias; asignación de roles con **tabla Rol / Chat / Rama / Worktree / Estado** (heredada de `plantilla-tarea.md`); **prompt de cada Worker y del Auditor**; archivos/componentes afectados; Punch List embebida (formato `05-punch-list`); riesgos y bloqueos; registro de decisiones; enlaces a progreso y evidencia homónimos; **las tres secciones obligatorias heredadas de `plantilla-tarea.md`: `Mejoras (de trabajo)`, `Reglas de negocio acordadas en esta tarea`, `Carpetas/archivos huérfanos`** (se llenan en el momento del hallazgo, no al cierre; huérfanos buscados con grep real **en ambos repositorios**, sin borrar nada; reglas de negocio con el ciclo de conflicto de 5 pasos de `plantilla-tarea.md`); Informe de Auditoría (formato `06`); mensaje de cierre (formato `09`); elementos postergados propuestos para `planes-futuros.md`. |
+| `03-progreso.md` | Archivo de progreso | Referencia al plan; estado general y fase actual; tabla de roles/Workers con **nombre de chat** (§2.9) y estado; avances terminados; trabajo actual; pendientes; commits, ramas y worktrees usados; **hallazgos registrados en el momento** (incluidas preguntas de negocio y la respuesta de Victor); bloqueos, riesgos y decisiones requeridas; próximo paso verificable; última actualización y responsable; **sección de handoffs fechados**. No contiene resultados extensos de pruebas. |
 | `04-evidencia.md` | Archivo de evidencia | Referencia al plan; entorno y fecha; rol/usuario y datos autorizados, sin secretos; tabla de Punch List ejecutada (ítem, esperado, método, observado, estado, evidencia/ruta/enlace, responsable); **enlace al artifact de checklist visual** si existe; resultados de Playwright, pruebas, logs, consultas o cálculos; regresiones verificadas; limitaciones o casos no verificables. |
 | `05-punch-list.md` | Sección Punch List del plan | Estado de aprobación (Gate 1); ítems funcionales; datos y cálculos; permisos; UI/responsive/accesibilidad; estados vacío/carga/error; validación en servidor/API; regresión; estados `Sin verificar` / `Conforme` / `Observado` / `No aplica`; evidencia mínima por ítem. |
-| `06-informe-auditoria.md` | Sección Informe de Auditoría del plan | Alcance auditado; material revisado; **verificación de rama** (commits en la rama del Worker asignado, con `git log`/`git branch --contains`); cumplimiento de SDD, plan, Punch List y evidencia; verificación de la revisión de fuentes de verdad por fase; `APLICAR AHORA`; `PROPONER A RESPONSABLE`; `NO PROMOVER`; `PROPONER SKILL`; pendientes técnicos y documentales; recomendación: listo, bloqueado o requiere corrección. |
+| `06-informe-auditoria.md` | Sección Informe de Auditoría del plan | Alcance auditado; material revisado; **verificación de rama y de chat de Worker separado** (con `git log`/`git branch --contains`; si falla, se detiene la auditoría); **verificación de que las 3 secciones obligatorias estén trasladadas a su destino**; cumplimiento de SDD, plan, Punch List y evidencia; verificación de la revisión de fuentes de verdad por fase; `APLICAR AHORA`; `PROPONER A RESPONSABLE`; `NO PROMOVER`; `PROPONER SKILL`; pendientes técnicos y documentales; recomendación: listo, bloqueado o requiere corrección. |
 | `07-handoff.md` | Sección de handoffs del progreso | Objetivo y estado; plan/progreso/evidencia relacionados; rama, worktree y último commit; terminado y no terminado; pruebas ejecutadas; bloqueos y riesgos; qué debe leer el siguiente agente; próximo paso concreto. |
 | `08-aprendizaje.md` | Archivo individual en `03-aprendizaje-continuo/` | Origen (plan/sesión/evidencia); observación; evidencia; clasificación; etiqueta de categoría; destino propuesto; cambio propuesto; estado (borrador, pendiente, promovido, rechazado, reemplazado); referencia a la aprobación. |
-| `09-cierre.md` | Sección de cierre del plan | Alcance completado y no completado; estado final de la Punch List; evidencia; auditoría y decisiones del Gate 2; documentos promovidos; aprendizajes registrados; pendientes enviados a `planes-futuros.md`; merge / fuentes de verdad / Skill realizados o no; confirmación de 100% pusheado; autorización de cierre. |
+| `09-cierre.md` | Sección de cierre del plan | Alcance completado y no completado; estado final de la Punch List; evidencia; auditoría y decisiones del Gate 2; documentos promovidos; aprendizajes registrados; pendientes enviados a `planes-futuros.md`; merge / fuentes de verdad / Skill realizados o no; confirmación de 100% pusheado; **chats de la tarea renombrados con `hist_`** (§2.9); autorización de cierre. |
 
 ## 3.4. `01-contexto-repositorio/`
 
@@ -350,8 +385,8 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 | `00-indice.md` | Qué documento leer según la tarea: documentación, Git/worktree, pruebas, UI, flujos de negocio. |
 | `01-proposito-y-alcance.md` | Repositorio documental frente al repositorio de la app (`py_control_proyectos_web`); qué pertenece a cada uno; **el Responsable humano de este repo es Victor**; límites de cambios y de validación disponibles. |
 | `02-arquitectura-y-fuentes-de-verdad.md` | Las tres fuentes de verdad; flujo dueño de cada regla; cómo se promueve un cambio (§2.8); cuándo se actualiza README raíz y AGENTS.md. |
-| `03-entorno-git-y-worktrees.md` | **Regla de los dos repos** (§2.6): documentación de proceso a `main` de este repo; código en `<entorno>-worker-N` del repo de la app. Pool real verificado de ramas y worktrees del repo de la app (verificar con `git branch -a` / `git worktree list` en ese repo antes de escribirlo; no copiar la tabla obsoleta `work-1`/`work-2`). Commits cada ~35% de la Punch List, solo al terminar el ítem en curso. `git add` explícito. Promovido de `2026-09-23-turbopack-worktree-junction.md`. |
-| `04-pruebas-y-evidencia.md` | Uso del artifact de Punch List interactivo; cuándo es obligatorio Playwright; capturas, login y datos reales/autorizados; cómo registrar evidencia en el MD homónimo; qué hacer si un caso no puede verificarse. Promovido de `verificacion-playwright-falsos-negativos`, `eslint-baseline-vs-cero` y `tests-contadores-congelados`. |
+| `03-entorno-git-y-worktrees.md` | **Dónde se trabaja:** Claude (app de escritorio o web) ejecuta el flujo; VS Code solo para revisar archivos; la app/web de Claude para ver chats, historial y renombrarlos. **Entorno:** local por defecto (diagrama, D1), nube cuando Victor lo indique. **Regla de los dos repos** (§2.6): documentación de proceso a `main` de este repo; código en `<entorno>-worker-N` del repo de la app. Pool real verificado de ramas y worktrees del repo de la app (verificar con `git branch -a` / `git worktree list` en ese repo antes de escribirlo; no copiar la tabla obsoleta `work-1`/`work-2`). Commits cada ~35% de la Punch List, solo al terminar el ítem en curso. `git add` explícito. **Nombres de chat (§2.9):** patrón `<entorno>_<jerarquía>.<rol>_<tarea>`, jerarquía 1–4, prefijo `hist_` al cerrar, los chats no se borran; migrado íntegro desde `gestion-de-sesiones-y-contexto.md` y `convenciones-de-trabajo.md`. Promovido de `2026-09-23-turbopack-worktree-junction.md`. |
+| `04-pruebas-y-evidencia.md` | Uso del artifact **Punch List de Mejoras** (https://claude.ai/artifact/8yHL1cn8auxbYghuRoiNhd): una pestaña por lote, estados Conforme / Observado / Sin verificar, comentarios y capturas; Victor lo usa mientras prueba; un lote nuevo se agrega con "+ Nueva mejora"; el MD solo registra el resultado final. **Ciclo de vida del lote con Punch List** (§4.8, fila F3); cuándo es obligatorio Playwright; capturas, login y datos reales/autorizados; cómo registrar evidencia en el MD homónimo; qué hacer si un caso no puede verificarse. Promovido de `verificacion-playwright-falsos-negativos`, `eslint-baseline-vs-cero` y `tests-contadores-congelados`. |
 | `05-diseno-y-ui.md` | `docs/05-diseno-y-referencias/design.md` es lectura obligatoria cuando se modifica UI; uso de mockups y nombres de pantallas; no inventar componentes. |
 | `06-mapa-documental.md` | Índice de los flujos existentes; material de apoyo relevante; **mapa origen → destino de la migración** (copia final de §4); enlaces verificados a archivos clave. |
 
@@ -557,6 +592,44 @@ Comando de verificación (debe devolver solo archivos históricos de `01-planes/
 grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tareas%20de%20implementacion|Mejoras continuas|Mejoras%20continuas|docs/00-sistema|visual-companion" --include=*.md --include=*.html .
 ```
 
+## 4.8. Cruce de reglas vigentes → destino (ninguna se pierde)
+
+Resultado del cruce completo de las 7 fuentes de reglas actuales (`AGENTS.md`, `README.md`, `docs/README.md`, `00-sistema/roles-y-flujo.md`, `gestion-de-sesiones-y-contexto.md`, `convenciones-de-trabajo.md`, `plantilla-tarea.md`). **El Worker traslada cada regla a su destino; el Auditor verifica fila por fila que ninguna se perdió (PL-26).** Una regla que cambia por decisión del Gate 1 se marca "cambia".
+
+| # | Regla vigente | Fuente actual | Destino | Estado |
+|---|---|---|---|---|
+| F1 | "Inicia sesión en control de proyectos": leer lo abierto y dar pendientes + contexto; no preguntar de cero | AGENTS.md, docs/README | `docs/README.md` (Worker, §3.1): leer planes abiertos en `01-planes/` + su progreso; flujos según D10 | Se conserva, rutas nuevas |
+| F2 | "Cierra sesión": actualizar tarea (avance, checklist, 3 secciones), trasladar mejoras/reglas, reportar huérfanos, **sin memoria de sesión aparte**, confirmar y listar pendientes | AGENTS.md, docs/README | `docs/README.md` (Worker): actualizar plan/progreso; mejoras → `03-aprendizaje-continuo/`; reglas → flujo; huérfanos → reporte | Se conserva, rutas nuevas |
+| F3 | Lote con Punch List sin Orquestador: 1 archivo por objetivo (no por día); abierto mientras haya ítems no Conforme; cierre con `## Resultados` + `CERRADO 100%`; archivo nuevo solo cuando Victor pide otro objetivo | docs/README § Ciclo de vida | Un solo archivo en `01-planes/`; ciclo en `01-contexto-repositorio/04-pruebas-y-evidencia.md` y enlazado desde `docs/README.md` | Se conserva |
+| F4 | Dos frases de activación distintas que no se mezclan (sesión normal / Orquestador) | AGENTS.md | `00-estandar-agentes/04-flujo-sdd-y-planes.md` (condiciones de activación) + `docs/README.md` | Se conserva |
+| F5 | Respuesta textual del Orquestador al activarse ("✅ Orquestador activo…" + pregunta de objetivo) | roles-y-flujo | `04-flujo-sdd-y-planes.md`, **texto íntegro** | Se conserva |
+| F6 | Victor participa en **dos** puntos (plan y cierre) | roles-y-flujo | `04-flujo-sdd-y-planes.md` | **Cambia (D1):** el diagrama agrega el Gate Spec → tres puntos |
+| F7 | Anti-fricción: sin aprobaciones intermedias; solo las excepciones escritas | roles-y-flujo | `02-roles-y-delegacion.md` | Se conserva |
+| F8 | Orquestador: responsabilidades, autoverificación, única excepción de implementar | roles-y-flujo | `02-roles-y-delegacion.md` (§3.2) | Se conserva |
+| F9 | Orquestador escribe/commitea/pushea documentación de proceso a `main` sin pedir permiso; código nunca | roles-y-flujo | §2.6 → `01-contexto-repositorio/03-entorno-git-y-worktrees.md` | Se conserva |
+| F10 | Planner: 10 entregables, incluidos los prompts de Workers y del Auditor | roles-y-flujo | `02-roles-y-delegacion.md` + plantilla `02-plan.md` | Se conserva |
+| F11 | Worker: debe / no debe (incluye Playwright con `textContent`, no trabajar en rama ajena) | roles-y-flujo | `02-roles-y-delegacion.md`; Playwright en `04-pruebas-y-evidencia.md` | Se conserva |
+| F12 | Auditor: primer chequeo (rama + chat separado, si falla se detiene), segundo chequeo (3 secciones trasladadas), 3 categorías de salida | roles-y-flujo | `02-roles-y-delegacion.md` + plantilla `06` | Se conserva; **se agrega** `PROPONER SKILL` (diagrama) |
+| F13 | Dónde se trabaja (Claude app, VS Code, app/web) | gestion-de-sesiones, convenciones | `03-entorno-git-y-worktrees.md` | Se conserva |
+| F14 | Entorno por defecto "híbrido, según disponibilidad" | convenciones | `03-entorno-git-y-worktrees.md` | **Cambia (D1):** el diagrama dice local por defecto |
+| F15 | Regla de contexto: 1 chat = 1 tarea; no mezclar; nueva tarea → chat nuevo | gestion-de-sesiones, convenciones | `03-sesiones-contexto-y-handoff.md` | Se conserva |
+| F16 | Nombres de chat, jerarquía 1–4, varios Workers por fase, `hist_`, no reutilizar `hist_`, no se borran, crear chat es autónomo | gestion-de-sesiones, convenciones | §2.9 → `03-entorno-git-y-worktrees.md` (patrón) + `03-sesiones-contexto-y-handoff.md` (regla universal) | Se conserva íntegra |
+| F17 | Primer mensaje de cada chat: 6 elementos | gestion-de-sesiones | `03-sesiones-contexto-y-handoff.md` | Se conserva |
+| F18 | `/compact` solo en tareas largas | gestion-de-sesiones | `03-sesiones-contexto-y-handoff.md` | Se conserva |
+| F19 | Ramas: nomenclatura, verificar entorno sin asumir, no se borran por rutina, se reutilizan tras sincronizar | convenciones | §2.6 → `03-entorno-git-y-worktrees.md` | Se conserva (`work-N` obsoleto, D2) |
+| F20 | Worktrees: no crear/eliminar sin autorización | convenciones | §2.6 → `03-entorno-git-y-worktrees.md` | Se conserva; **cambia ubicación** (repo de la app, D3) |
+| F21 | Commits cada ~35%, solo con ítem completo, en ambos repos | convenciones | `03-entorno-git-y-worktrees.md` | Se conserva |
+| F22 | Tres categorías: tarea / mejora de trabajo / regla de negocio, con ejemplos | AGENTS.md, docs/README | `00-estandar-agentes/05-aprendizaje-continuo.md` (genérico) + ejemplos en `02-arquitectura-y-fuentes-de-verdad.md` | Se conserva |
+| F23 | 3 secciones obligatorias llenadas en el momento | AGENTS.md, docs/README, plantilla-tarea | Plantilla `02-plan.md` | Se conserva |
+| F24 | Regla de negocio: el agente no edita el flujo sin consultar; se integra en la estructura del flujo, sin dejar dos versiones; se anota dónde se aplicó | docs/README, README | `02-arquitectura-y-fuentes-de-verdad.md` | Se conserva (la consulta va por el chat del Worker, D6) |
+| F25 | Mejora de trabajo: se traslada "solo con autorización explícita de Victor" | README § Ciclo de mejora continua | `05-aprendizaje-continuo.md` | **Cambia (D1):** el Worker la escribe al consolidar; la promoción a norma sí requiere Gate 2 |
+| F26 | Tareas/planes futuros: solo cuando Victor lo pide; el agente no decide mover algo ahí | docs/README | §2.5 | Se conserva |
+| F27 | Por defecto se trabaja en `main`; rama solo si Victor la pide | AGENTS.md, docs/README | §2.6 | Se conserva |
+| F28 | Fuentes de verdad y cuándo se actualiza cada una | README, AGENTS.md | `02-arquitectura-y-fuentes-de-verdad.md` | Se conserva |
+| F29 | "Ante una contradicción entre fuentes, se consulta a Victor; no se asume cuál prevalece" | README | `02-arquitectura-y-fuentes-de-verdad.md` | Se conserva, **con la excepción D1** (en el flujo de trabajo manda el diagrama) |
+| F30 | Verificar antes de afirmar; flujo del agente en 10 pasos; checklist de finalización; límites (no borrar sin aprobación, no secretos, no convertir estimación en costo real) | AGENTS.md | `01-principios-y-seguridad.md` (lo universal); lo demás queda en AGENTS.md | Se conserva |
+| F31 | Secciones de `plantilla-tarea.md` (Estado con sus 6 valores, Objetivo con validación esperada, Entorno/Asignaciones con chat, Registro de decisiones con columnas #/Fecha/Decisión/Origen/Destino/Estado, Resultados de Workers, Informe, 3 secciones, Cierre) | plantilla-tarea | Plantillas `02-plan.md` y `03-progreso.md` | Se conserva todo antes de eliminar el original (§10.3-A) |
+
 ---
 
 # 5. Fases de implementación
@@ -582,6 +655,7 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 
 ## Fase 2 — Arranque del plan y ajuste de la Fase 1
 
+- [x] Renombrar el chat del Worker a `<entorno>_3.worker_reestructuracion-documental` (§2.9), o pedirle a Victor que lo haga, y registrarlo en el progreso. **Agregado en la actualización del plan del 2026-09-27**, después de que las Fases 2–9 originales ya estaban ejecutadas; se resuelve en esta misma actualización.
 - [x] `git mv` de este plan a `docs/02-trabajo-activo/01-planes/` (§4.3) y actualizar su referencia en `docs/README.md`.
 - [x] Crear `02-progreso/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` y `03-evidencia/` homónimo con las secciones definidas en §3.3 (`03-progreso` y `04-evidencia`).
 - [x] Revisar los READMEs de la Fase 1 contra §2 y §3; corregir lo que contradiga el plan. Mínimo: el índice de `03-aprendizaje-continuo/README.md` (§4.5) y las menciones a `work-N`.
@@ -600,6 +674,7 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 
 - [x] Crear los 7 documentos de `01-contexto-repositorio/` (§3.4), integrando las reglas propias del repo de `convenciones-de-trabajo.md`.
 - [x] En `03-entorno-git-y-worktrees.md`: regla de los dos repos, `<entorno>-worker-N`, worktrees en el repo de la app, commits cada ~35%. El pool real se verifica en el repo de la app; si no hay acceso, se escribe "por verificar" y se anota como hallazgo.
+- [x] **Agregado en la actualización del plan (2026-09-27):** completar en `03-entorno-git-y-worktrees.md` la convención de nombres de chat (§2.9).
 - [x] Revisión de fuentes de verdad de la Fase 4.
 
 ## Fase 5 — Trabajo activo y aprendizaje
@@ -627,6 +702,17 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 - [x] Aplicar §10.3 a los originales integrados: eliminar si está autorizado; si no, `git mv` a `06-material-de-apoyo/obsoleto/`.
 - [x] Revisión de fuentes de verdad de la Fase 7.
 
+## Fase 7B — Adecuación del contenido de los flujos de negocio
+
+Objetivo: que cada flujo de `04-flujos-de-negocio/` contenga solo lo que §3.7 permite (reglas funcionales, datos, estados, roles y restricciones del tema), sin perder nada.
+
+- [ ] Revisar los 21 flujos uno por uno contra §3.7. Los indicios detectados en el cruce están en `14-accesos-y-restricciones`, `10-generacion-pr`, `16-paneles`, `09-importar-dp`, `20-plan-maestro`, `18-control-avance`, `15-cronograma`, `12-checklist`, `21-curva-s`, `11-dashboard`, `04-notificaciones` y el README (menciones de sesión, pendientes, tareas, Worker/Orquestador). Son indicios: pueden ser uso legítimo.
+- [ ] Lo que no sea regla de negocio (bitácora de sesión, estado de un plan, procedimiento de agentes) **se retira del flujo sin borrarse**: si es un aprendizaje de trabajo → archivo nuevo en `03-aprendizaje-continuo/` (plantilla `08`); si es bitácora o estado → se copia íntegro en la evidencia de este plan, sección "Contenido retirado de flujos", con el flujo y la sección de origen.
+- [ ] Referencias a tareas o mejoras dentro de un flujo → se actualizan a la ruta nueva.
+- [ ] **No se inventan ni se reescriben reglas.** Si una regla está incompleta, es ambigua o contradice otro flujo, se pregunta a Victor en el chat del Worker (D6) y se registra en el progreso.
+- [ ] Registrar en la evidencia el antes/después de cada flujo modificado (o "sin cambios") para el Auditor.
+- [ ] Revisión de fuentes de verdad de la Fase 7B.
+
 ## Fase 8 — Navegación final y vistas derivadas
 
 - [x] Reescribir `docs/README.md` según §3.1 y quitar la sección "Migración en curso".
@@ -640,7 +726,7 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 
 - [x] Completar la evidencia: Punch List ejecutada con resultado por ítem.
 - [x] Consolidar hallazgos del progreso en §12, §13 y §14 de este plan.
-- [x] Anotar las propuestas normativas para el Auditor (§14.1) — incluidas las mínimas: `AGENTS.md` lectura mínima (D10), excepción de consulta del Worker (D6), plantillas nuevas en lugar de `plantilla-tarea.md`, y `docs/00-sistema` ya no existe como ruta.
+- [x] Anotar las propuestas normativas para el Auditor (§14.1) — incluidas las mínimas: `AGENTS.md` lectura mínima (D10), excepción de consulta del Worker (D6), plantillas nuevas en lugar de `plantilla-tarea.md`, `docs/00-sistema` ya no existe como ruta, `README.md` F25/F29, y `AGENTS.md` F6/F14 (agregadas en la actualización del plan del 2026-09-27; ver §14.1, puntos 8–9).
 - [x] Último commit + push y entrega al Orquestador.
 
 ## Cierre del flujo (fuera del alcance del Worker)
@@ -649,7 +735,8 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 2. **Orquestador:** consolida y presenta a Victor.
 3. **Gate 2.**
 4. **Orquestador:** aplica los cambios normativos aprobados a `AGENTS.md`, `README.md` y `docs/README.md` y crea el Skill si se aprobó. No hay merge de código en este plan.
-5. **Orquestador:** mensaje de cierre en §16 → commit + push a `main`.
+5. **Orquestador:** antepone `hist_` a los chats de este plan (§2.9) o se lo pide a Victor.
+6. **Orquestador:** mensaje de cierre en §16 → commit + push a `main`.
 
 ---
 
@@ -674,6 +761,9 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 - [x] Ningún archivo se eliminó sin autorización (§10.3).
 - [ ] Los artifacts de evidencia huérfanos (§4.6) quedan enlazados. **Parcial:** Sub-lote 2 y Dashboard/Curva S sí; Matriz de Accesos queda sin enlazar a propósito, por no tener dueño único claro (§14) — decisión pendiente de Victor.
 - [x] Los artifacts *Flujo SDD a Cierre* y *Recorrido del Plan* coinciden con este plan, con una limitación menor de estructura anotada como pendiente (§14.1, punto 6).
+- [ ] **Agregado en la actualización del plan (2026-09-27):** la convención de nombres de chat (§2.9) se conserva íntegra tras la migración y los chats de este plan la cumplen.
+- [ ] **Agregado en la actualización del plan (2026-09-27):** ninguna de las 31 reglas vigentes de §4.8 se perdió; las que cambian lo hacen solo por decisiones del Gate 1.
+- [ ] **Agregado en la actualización del plan (2026-09-27):** los flujos de negocio contienen solo reglas funcionales; lo retirado quedó preservado (Fase 7B).
 
 ---
 
@@ -741,6 +831,9 @@ Estados: `Sin verificar` / `Conforme` / `Observado` / `No aplica`. La evidencia 
 | PL-22 | 2–9 | Revisión de fuentes de verdad registrada en cada fase | Entradas en el progreso, una por fase (2 a 9) | Conforme |
 | PL-23 | 9 | Hallazgos consolidados en §12–§14 y propuestas normativas anotadas para el Auditor | Secciones llenas (ver abajo) | Conforme |
 | PL-24 | 2–9 | Ningún archivo eliminado sin autorización | `git log --diff-filter=D --name-only ab4bd63..HEAD`: 9 archivos, los 9 autorizados (§10.3-A o excepción de Gate 1) | Conforme |
+| PL-25 | 2 y 4 | Chat del Worker renombrado según §2.9; convención de nombres de chat (patrón, jerarquía 1–4, `hist_`, no se borran) completa en `03-entorno-git-y-worktrees.md` y regla universal en `03-sesiones-contexto-y-handoff.md` | Nombre del chat en el progreso; archivos | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
+| PL-26 | 2–9 | Las 31 reglas de §4.8 están en su destino (una por una) | Tabla de §4.8 con columna "verificado en" (archivo y sección) en la evidencia | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
+| PL-27 | 7B | 21 flujos revisados contra §3.7; contenido retirado preservado; sin reglas inventadas | Antes/después por flujo en la evidencia | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
 
 Puntos de commit sugeridos (~35%): tras PL-06, tras PL-13 y tras PL-24.
 
@@ -801,6 +894,8 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 | 2026-09-27 | Plan v2: decisiones D1–D10 (§10.2) pendientes de confirmar en el Gate 1 | Planner (sesión de corrección) |
 | 2026-09-27 | **Gate 1 parcial**: plan v2, Punch List, tablas de §4, D3, D8, D9 y autorización A. Excepción: `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` se elimina en lugar de migrarse. D1, D2, D4–D7 y D10 quedan pendientes de su confirmación | Victor |
 | 2026-09-27 | Corrección: el Planner había registrado D1–D10 como confirmadas cuando Victor solo vio D3, D8 y D9. Se corrigió el registro | Planner (sesión de corrección) |
+| 2026-09-27 | Victor señala que el plan omitía la convención de renombrar los chats. Se agrega §2.9 (convención existente, sin cambios), su destino en la migración, PL-25 y el paso en el prompt del Worker. Se actualiza §17 con la versión vigente del prompt | Victor / Planner |
+| 2026-09-27 | Victor señala que el cruce de reglas debió hacerse desde el inicio. Se hace el cruce completo de las 7 fuentes: se agrega §4.8 (31 reglas → destino), se completan roles, sesiones, plantillas y contexto con lo omitido, y se agrega la Fase 7B (adecuación de flujos) respondiendo a su pregunta sobre la finalidad del plan. Cambios que resultan de D1 (F6, F14, F25, F29) quedan marcados como propuestas para el Auditor | Victor / Planner |
 | 2026-09-27 | **Gate 1 completo.** Victor responde las 7 pendientes: D2, D4, D5 y D7 como se propusieron; **D1: manda el diagrama** (no el plan); **D6: el Worker consulta en su propio chat**; **D10: Orquestador, Planner y Auditor leen todos los flujos, el Worker solo los suyos** | Victor |
 | 2026-09-27 | Worker asignado ejecuta Fases 2–3. Hallazgo de entorno (verificado con `git branch --show-current` y `git log` de `origin/main`, no asumido): el harness de esta sesión exige commitear en una rama designada (`claude/reestructuracion-documental-pg-control-jvj5mf`) y prohíbe pushear a otra sin permiso; `origin/main` tiene historia propia de otras sesiones concurrentes, no relacionada con este plan. Se pushea a la rama designada en vez de a `main` directo (contradice §2.6/§7 del plan, que asumían push directo a `main`). Detalle completo en el progreso. Queda para el Auditor/Orquestador decidir cómo se lleva el resultado a `main` real | Worker |
 
@@ -809,6 +904,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 # 12. Mejoras (de trabajo)
 
 - **Un plan "Propuesto" no se ejecuta.** El agente anterior ejecutó las Fases 0 y 1 sin Gate 1. Aprendizaje: antes de ejecutar cualquier fase, el agente verifica en el encabezado que el estado diga "Aprobado (Gate 1)". Si no lo dice, se detiene. Candidato a `03-aprendizaje-continuo/` (etiqueta `roles/orquestador`); no se creó el archivo individual en esta tarea — queda anotado acá para que el Auditor decida si lo promueve como archivo propio.
+- **Corregir un plan sin cruzarlo contra todas las reglas vigentes deja omisiones.** La corrección v2 se hizo contra el diagrama y los artifacts, pero no contra `00-sistema/`, `docs/README.md`, `README.md` ni `plantilla-tarea.md`; se perdieron reglas (nombres de chat, entregables del Planner, chequeos del Auditor, ciclo de lotes, frases de sesión). Aprendizaje: todo plan que migra o reescribe documentación normativa incluye, antes del Gate 1, una tabla regla vigente → destino (como §4.8). Candidato a `03-aprendizaje-continuo/` (etiqueta `roles/planner`); no se creó el archivo individual en esta tarea.
 - **Las vistas derivadas divergen si no hay una fuente normativa declarada.** El diagrama y los artifacts se editaron en paralelo al plan y terminaron contradiciéndose. Aprendizaje: todo artifact o diagrama declara de qué documento deriva, y ese documento manda.
 - **El harness de sesiones en la nube puede no coincidir con la convención de "`main` directo" documentada.** Esta sesión de Worker debió commitear y pushear a una rama designada por el entorno (`claude/reestructuracion-documental-pg-control-jvj5mf`) en vez de a `main` de `pg_control_proyectos`, porque el harness lo exige y `origin/main` tenía historia no relacionada de otra sesión concurrente. Verificado con `git branch --show-current` y `git log` antes de actuar, no asumido. Aprendizaje: antes de asumir que "trabajar en `main` directo" es viable en una sesión de Worker, verificar la política de rama del entorno con `git branch --show-current`/intentar el push y leer el resultado, en vez de forzarlo. Candidato a `03-aprendizaje-continuo/` (etiqueta `entorno/infra` o `git/ramas`) — no se creó el archivo individual en esta tarea; queda anotado para el Auditor y el Orquestador, que son quienes deciden cómo reconciliar el resultado con `main` real (ver `01-contexto-repositorio/03-entorno-git-y-worktrees.md` § Hallazgo verificado).
 
@@ -858,14 +954,16 @@ _Pendiente. Lo escribe el Orquestador tras el Gate 2 con la plantilla `09-cierre
 ```text
 Eres el Worker del plan de reestructuración documental de pg_control_proyectos.
 
-Plan (fuente normativa):
+Plan de la tarea, en main:
 2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md
-(en la raíz; tu primera tarea, Fase 2, es moverlo a docs/02-trabajo-activo/01-planes/)
+(está en la raíz; tu primera tarea, Fase 2, es moverlo a docs/02-trabajo-activo/01-planes/)
+El flujo de trabajo lo manda el diagrama (D1): diagrama-commit-push-merge-gates.md
 
 Antes de empezar:
-1. Lee AGENTS.md y el plan completo. Verifica en el encabezado y en §10.4 que el Gate 1 esté aprobado. Si no lo está, detente y avisa.
-2. Lee §10.2 y §10.3 para saber qué confirmó Victor y qué autorizó eliminar.
-3. Trabaja en main de pg_control_proyectos. No crees ramas ni worktrees.
+1. Lee AGENTS.md, el plan completo y el diagrama. Verifica en el encabezado y en §10.4 que el Gate 1 esté aprobado. Si no lo está, detente y avisa.
+2. Lee §10.2 y §10.3: qué decidió Victor y qué autorizó eliminar. Excepción del Gate 1: la tarea 2026-09-23-cronograma-import-y-versatilidad-vinculo.md se elimina con git rm; no se migra (§4.5).
+3. Trabaja directo en main de pg_control_proyectos. No crees ramas ni worktrees.
+4. Renombra este chat a <entorno>_3.worker_reestructuracion-documental (§2.9). Si no puedes, pídele a Victor que lo haga.
 
 Ejecuta las Fases 2 a 9 en orden, siguiendo solo las tablas de §4:
 - Sin aprobaciones intermedias: el Gate 1 ya autorizó todo lo que describe el plan.
@@ -873,9 +971,12 @@ Ejecuta las Fases 2 a 9 en orden, siguiendo solo las tablas de §4:
 - Cada git mv va en el mismo commit que la actualización de los enlaces que rompe.
 - Commit + push a main cada ~35% de la Punch List (§9), solo con ítems completos y git add explícito.
 - En AGENTS.md y README.md solo cambias rutas (§10.1). Todo cambio normativo lo anotas para el Auditor.
-- No elimines nada que §10.3 no autorice.
+- Solo eliminas lo que autoriza §10.3 y la tarea de cronograma.
+- En la Fase 3, aplica al diagrama las decisiones D2, D6 y D10.
+- Ninguna regla de la tabla §4.8 se pierde: al terminar, marca en la evidencia dónde quedó cada una (PL-26).
+- La Fase 7B va entre la 7 y la 8: adecúa el contenido de los 21 flujos sin borrar ni inventar reglas.
 - Al final de cada fase, registra en el progreso la revisión de fuentes de verdad (§2.8).
-- Si surge un conflicto no previsto, consulta a Victor y registra pregunta y respuesta en el progreso.
+- Si surge un conflicto de regla de negocio no previsto, pregúntale a Victor en este mismo chat y registra pregunta y respuesta en el progreso (D6).
 
 Entrega (Fase 9): Punch List con evidencia, hallazgos consolidados en §12–§14 y propuestas normativas para el Auditor. No te autoauditas ni cierras el plan.
 ```

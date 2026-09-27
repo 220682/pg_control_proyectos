@@ -4,7 +4,7 @@
 
 ## Estado general y fase actual
 
-**Reabierto (2026-09-27, actualización de Victor).** Fases 2–9 originales completas y entregadas; Victor pidió, sobre esa entrega, mergear los 2 commits nuevos de `main` (§2.9, §4.8, Fase 7B), completar 6 huecos detectados por `grep`, ejecutar la Fase 7B (nueva) y renombrar el chat. En ejecución.
+**Actualización completa y entregada de nuevo (2026-09-27).** Fases 2–9 originales completas; sobre esa entrega, Victor pidió mergear los 2 commits nuevos de `main` (§2.9, §4.8, Fase 7B), completar 6 huecos detectados por `grep`, ejecutar la Fase 7B (nueva) y renombrar el chat — todo hecho y pusheado directo a `main` (commit `87ff2e8`, sobre el merge `cbfdc39`). Pendiente: Auditoría y Gate 2 (fuera del alcance de este Worker).
 
 ## Roles y estado
 

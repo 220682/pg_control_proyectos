@@ -969,6 +969,51 @@ Debe indicar que el contenido y el README se actualizarán cada vez que se agreg
 
 ---
 
+# 6.1. Anexo — Informe de diagnóstico y clasificación (Fase 0 ya completada en conversación)
+
+Este anexo deja escrito en el repo lo que hasta ahora solo existía en la conversación. Cierra formalmente la Fase 0.
+
+## Estado actual verificado del repositorio
+
+- `docs/00-sistema/` (roles-y-flujo.md, convenciones-de-trabajo.md, gestion-de-sesiones-y-contexto.md) → candidato directo a `00-estandar-agentes/`.
+- `docs/Flujos de trabajo/` (21 archivos + README) → candidato directo a `04-flujos-de-negocio/`.
+- `docs/Mejoras continuas/` (11 archivos, leídos completos) → ver clasificación abajo.
+- `docs/Tareas de implementacion/` (11 tareas fechadas, 7 cerradas + 4 abiertas, más `plantilla-tarea.md`, `resumen-checklists.md`, `tareas-futuras.md`) → ver decisiones abajo.
+- La evidencia real (Punch List, capturas) vive hoy en un artifact externo de claude.ai, no en el repo.
+- `docs/visual-companion/` mezcla `design.md` (estándar) con mockups `.html` → se separan en `05-diseno-y-referencias/`.
+- Carpetas de apoyo (`conocimiento/`, `Formatos/`, `Dashboard ejemplo/`, `Imagenes para fronted/`, `Informacion para pruebas/`) viven en la raíz del repo, no dentro de `docs/`.
+- `AGENTS.md`/`README.md` raíz tienen referencias rotas a carpetas que ya no existen (`Sistema hibrido/`, `plantillas/`, `RDTs.../`, `memoria.md`, `.cursor/rules/*`).
+- `.worktrees/` existe pero está vacía (sin `work-1`/`work-2` reales); la tabla de "pool de ramas" de `convenciones-de-trabajo.md` está desactualizada.
+
+## Decisiones ya resueltas por Victor (aplican en Fase 5 y Fase 6)
+
+1. **Plantillas**: las 9 plantillas separadas (§3.3) reemplazan a `plantilla-tarea.md` única.
+2. **Evidencia**: dos lugares coexisten, no uno reemplaza al otro — (a) el artifact externo de claude.ai con el checklist interactivo/visual ya implementado, y (b) el archivo local en `02-trabajo-activo/03-evidencia/<tema>.md` con el registro estructurado (tabla de Punch List, resultados, referencia/enlace al artifact).
+3. **Carpetas de apoyo de la raíz**: se mueven **todas** dentro de `docs/06-material-de-apoyo/` — regla explícita de Victor: "no quiero carpetas sueltas, todas deben estar en su lugar."
+4. **Tareas ya cerradas** (`2026-09-20-control-avance-plan-maestro.md`, `2026-09-20-evm-fase-0-catalogo-unico.md`, `2026-09-20-sub-lote-2-alcance-proyecto.md`, `2026-09-21-evm-fase-1-congelar-tarifa.md`, `2026-09-21-fix-reemplazar-dp.md`, `2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`, `2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md`): se mueven tal cual a `01-planes/`, un solo archivo histórico — **no se re-descomponen** en plan/progreso/evidencia. El formato de 3 archivos separados aplica solo a planes nuevos/abiertos en adelante.
+5. **`tareas-futuras.md` → `planes-futuros.md`**: mapeo directo.
+6. **`resumen-checklists.md`**: no se conserva como archivo agregado — se descompone, cada entrada cronológica se distribuye al MD que corresponda (plan/progreso/histórico del tema al que pertenece).
+
+## Clasificación de las 11 mejoras de `docs/Mejoras continuas/`
+
+| Archivo | Destino |
+|---|---|
+| `acceso-postgres-sin-ipv6.md` | `historico.md` (excepción ya cerrada) |
+| `migraciones-sql-sobrecargas-huerfanas.md` | Se queda en aprendizaje continuo, no promociona (nota técnica puntual) |
+| `verificacion-playwright-falsos-negativos.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `eslint-baseline-vs-cero.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `orquestador-salta-flujo-de-roles-sin-auditoria.md` | `historico.md` (ya promovido a `roles-y-flujo.md`) |
+| `preguntas-frecuentes-flujo-orquestador.md` | `historico.md`, con referencia cruzada explícita desde `04-flujo-sdd-y-planes.md` y `02-roles-y-delegacion.md` — no se archiva sin dejar rastro visible desde el propio estándar |
+| `red-bloqueada-impide-autonomia-real.md` | `pendientes-de-promocion.md` (sigue abierto, acción de Victor, no de agente) |
+| `sendmessage-no-alcanza-sesiones-create-session.md` | Promover → `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` |
+| `tests-contadores-congelados.md` | Promover → `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
+| `turbopack-worktree-junction.md` | Promover → `01-contexto-repositorio/03-entorno-git-y-worktrees.md` |
+| `verificar-antes-de-afirmar.md` | Promover → `00-estandar-agentes/01-principios-y-seguridad.md` (principio universal) |
+
+Con esto, la **Fase 0 queda formalmente cerrada** — el resto de las fases (1 a 8) ya pueden ejecutarse con esta clasificación como referencia obligatoria, sin volver a re-decidir nada de lo de arriba.
+
+---
+
 # 7. Prompt de inicio para ejecutar este plan
 
 ```text

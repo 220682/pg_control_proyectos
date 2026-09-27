@@ -579,3 +579,13 @@ Al redactar la sección "Archivos y código que quedaron viejos" se afirmó por 
 - Resumen ejecutivo breve califica plazo (SPI) y costo (CPI) por separado, no con el semáforo → agregado a [docs/Flujos de trabajo/11-dashboard.md](../Flujos%20de%20trabajo/11-dashboard.md) el 2026-09-23 (faltaba, detectado en esta revisión).
 - `14-accesos-y-restricciones.md` no se tocó — el toggle reutiliza un permiso ya existente, no crea acceso nuevo.
 - `design.md` no recibió regla nueva — todo lo usado ya estaba cubierto por precedente.
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 011, Dashboard, #1. **Ojo:** la fila original reflejaba el estado en el momento de escribirla (plan inicial, Punch List sin cargar); el estado real final de esta tarea es el que documenta el propio archivo (verificado, Punch List 25/25) — este resumen es un registro histórico de esa fila, no el estado vigente:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems (según la fila original) | Estado en la fila original |
+|---|---|---|---|---|
+| 2026-09-21 | Dashboard Fase 3 (Agente C) — los dos Dashboards: Parcial mejorado y Completo construido | "Dashboard Fase 3 — los dos Dashboards" | 25 | Plan inicial — pendiente de aprobación de Victor. Punch List todavía no cargada |
+
+Evidencia externa asociada: artifact **Dashboards y Curva S — Fase 3** (https://claude.ai/artifact/CdUMm5cdoxGjYPUsMHM85q), enlazado también desde `docs/02-trabajo-activo/01-planes/README.md`.

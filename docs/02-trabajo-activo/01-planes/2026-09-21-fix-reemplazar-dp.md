@@ -59,3 +59,11 @@ Ninguna identificada en esta tarea.
 ## Reglas de negocio acordadas en esta tarea
 
 Ninguna nueva — fue un fix de bug (`reemplazar_dp` no borraba partidas/recursos viejos al reimportar), no introdujo una regla de negocio nueva. El comportamiento correcto (reemplazar_dp reconstruye completo, sin dejar residuos) es el esperado por diseño, ya implícito en [docs/Flujos de trabajo/09-importar-dp.md](../Flujos%20de%20trabajo/09-importar-dp.md).
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 020, Plan Maestro, #5:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-21 | Fix — reemplazar_dp no borraba partidas/recursos viejos | *(sin checklist propio en Punch List — fix puntual)* | — | — | — | — | **Cerrado 100%** — verificado en vivo por Victor |

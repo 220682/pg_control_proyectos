@@ -57,3 +57,11 @@ Ninguna identificada en esta tarea.
 ## Reglas de negocio acordadas en esta tarea
 
 Ninguna nueva — esta tarea cargó datos de catálogo (cargos/equipos), no introdujo una regla de negocio nueva.
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 020, Plan Maestro, #3:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-20/21 | EVM Fase 0 — Catálogo único de cargos/equipos | "EVM Plan Maestro — Fase 0: catálogo único de cargos/equipos" | 11 | 11 | 0 | 0 | **Cerrado 100%** |

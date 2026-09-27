@@ -1,6 +1,6 @@
 # Mejora de trabajo — falsos negativos en verificación con Playwright
 
-> Origen: tarea [2026-09-21-dashboard-fase-3-agente-c.md](../Tareas%20de%20implementacion/2026-09-21-dashboard-fase-3-agente-c.md) (vueltas 1 y 2 del loop de verificación). Extraído el 2026-09-23.
+> Origen: tarea [2026-09-21-dashboard-fase-3-agente-c.md](../02-trabajo-activo/01-planes/2026-09-21-dashboard-fase-3-agente-c.md) (vueltas 1 y 2 del loop de verificación). Extraído el 2026-09-23.
 
 ## Lección 1 — texto en mayúsculas por CSS (`uppercase`) da falso negativo
 

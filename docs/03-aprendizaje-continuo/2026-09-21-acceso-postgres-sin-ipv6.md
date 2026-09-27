@@ -1,6 +1,6 @@
 # Mejora de trabajo — acceso directo a Postgres sin salida IPv6
 
-> Origen: tarea [2026-09-21-curva-s-fase-3-agente-d.md](../Tareas%20de%20implementacion/2026-09-21-curva-s-fase-3-agente-d.md) (Agente A, commit `b8b3ac7` en `pg_control_proyectos`). Extraído el 2026-09-23.
+> Origen: tarea [2026-09-21-curva-s-fase-3-agente-d.md](../02-trabajo-activo/01-planes/2026-09-21-curva-s-fase-3-agente-d.md) (Agente A, commit `b8b3ac7` en `pg_control_proyectos`). Extraído el 2026-09-23.
 
 ## Qué pasó
 

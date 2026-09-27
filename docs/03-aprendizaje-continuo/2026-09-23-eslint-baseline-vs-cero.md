@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-09-23  
 **Origen:** Worker Fase 1 de Paquetes de Trabajo (chat `local_3`)  
-**Tarea relacionada:** `docs/Tareas de implementacion/2026-09-23-paquetes-de-trabajo.md`
+**Tarea relacionada:** `docs/02-trabajo-activo/01-planes/2026-09-23-paquetes-de-trabajo.md`
 
 ## Hallazgo
 

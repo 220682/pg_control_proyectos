@@ -52,3 +52,11 @@ Ninguna identificada en esta tarea.
 ## Reglas de negocio acordadas en esta tarea
 
 - Tarifa congelada al validar el RDT (no recalculada retroactivamente si el catálogo cambia después) → ya documentada en [docs/Flujos de trabajo/21-curva-s.md](../Flujos%20de%20trabajo/21-curva-s.md) ("tarifa congelada al validar (EVM Fase 1)").
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 020, Plan Maestro, #4:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-21 | EVM Fase 1 — Congelar tarifa al validar RDT | "EVM Plan Maestro — Fase 1: congelar tarifa al Validar RDT" | 5 | 5 | 0 | 0 | **Cerrado 100%** |

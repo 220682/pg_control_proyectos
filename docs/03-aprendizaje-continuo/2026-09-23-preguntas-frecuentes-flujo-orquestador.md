@@ -48,7 +48,7 @@ Lo que nunca hace, así se vea simple: implementar él mismo. Se autoverifica an
 ## ¿El Orquestador puede borrar y abrir chats?
 
 - **Abrir chat nuevo:** sí, es autónomo — así se crea el chat propio de cada Worker/Planner/Auditor (existe la herramienta `create_session` para sesiones en la nube; en local se abre manualmente en la app).
-- **Borrar chat:** no, nunca — ni siquiera el Orquestador. No existe una herramienta de agente para eso, y la política tampoco lo pide. Un chat cerrado se **renombra** con el prefijo `hist_` y queda como historial indefinidamente — misma lógica que una tarea cerrada en `Tareas de implementacion/` no se borra.
+- **Borrar chat:** no, nunca — ni siquiera el Orquestador. No existe una herramienta de agente para eso, y la política tampoco lo pide. Un chat cerrado se **renombra** con el prefijo `hist_` y queda como historial indefinidamente — misma lógica que una tarea cerrada en `02-trabajo-activo/01-planes/` no se borra.
 - Si alguna vez Victor quiere borrar un chat de verdad, es una acción manual suya desde la app de Claude — no es un paso del flujo ni algo que un agente ejecute, ni con autorización.
 
 ## Corrección de fondo detrás de estas preguntas

@@ -238,3 +238,11 @@ Ninguna identificada en esta tarea.
 - Reglas del Plan Maestro (línea base, PV, versión aprobada/reemplazada) → ya documentadas en [docs/Flujos de trabajo/20-plan-maestro.md](../Flujos%20de%20trabajo/20-plan-maestro.md).
 - Cadena de control completa (Presupuesto → Cronograma → Plan Maestro → 3WLA → RDT → PR → Dashboard) → ya documentada en [docs/Flujos de trabajo/18-control-avance.md](../Flujos%20de%20trabajo/18-control-avance.md).
 - Pendientes de esta tarea (paquetes como filtro, 3WLA) quedaron en `tareas-futuras.md`, no en un flujo — son trabajo pospuesto, no una regla ya vigente.
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 020, Plan Maestro, #1:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-20/21 | Sub-lote 1 — RDT rechazo + historial | "RDT: rechazo visible con motivo + historial de corrección" | 30 | 29 | 1 | 0 | **Cerrado 100%** — verificación visual completa y migraciones 041-044 aplicadas en Supabase (2026-09-21). Ítem 14 sigue Observado en la Punch List pero sin impacto: la regla "cada partida jala su WBS" se cumple automáticamente, la validación de bloqueo quedó sin efecto por diseño |

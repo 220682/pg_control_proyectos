@@ -4,7 +4,7 @@
 
 ## Estado general y fase actual
 
-En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 7** (Fases 2 a 6 cerradas).
+En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 9** (Fases 2 a 8 cerradas).
 
 ## Roles y estado
 
@@ -26,13 +26,17 @@ En ejecución. Worker asignado tras el Gate 1 (2026-09-27). Fase actual: **Fase 
 
 - Fase 6: `git mv` de los 21 flujos a `04-flujos-de-negocio/` (renombrado el 19 sin espacios); `git mv` de `design.md` y los 6 mockups a `05-diseno-y-referencias/`; `git mv` de las 5 carpetas de apoyo a `06-material-de-apoyo/`. Integrado el contenido útil de `docs/Flujos de trabajo/README.md` (índice de los 21 flujos, regla "Borrado administrador") y de `docs/visual-companion/README.md` (nomenclatura oficial, índice de mockups, campos del formulario RQ) en los README nuevos; ambos originales eliminados con `git rm` (§10.3-A, contenido ya integrado). Corregidos en el mismo commit: la regla de lectura de `04-flujos-de-negocio/README.md` (ahora refleja D10, antes decía "nunca los 21 completos" sin la excepción por rol — contradecía el Gate 1); dos menciones a `tareas-futuras.md`/`visual-companion` en `14-accesos-y-restricciones.md`, `10-generacion-pr.md`, `design.md` y `mockups/index.html`. `docs/06-material-de-apoyo/README.md` actualizado con las 5 carpetas ya presentes (ya no "comienza vacía").
 
+- Fase 7: `git mv` de las 12 tareas históricas restantes a `01-planes/` (tal cual); `git rm` de `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` y reemplazo de su única referencia entrante (en la mejora del incidente del Orquestador) por texto sin enlace. `resumen-checklists.md` descompuesto: sus 9 filas se anexaron como sección "Resumen de checklist (migrado)" a cada plan dueño; la metodología general y los totales sin dueño único se registraron en §14 del plan; original eliminado (`git rm`, decisión 6 de §6.1). Aplicado §10.3-A: eliminados `plantilla-tarea.md` (verificado que `02-plan.md` cubre sus 13 secciones) y los 3 de `docs/00-sistema/` (contenido ya integrado en la Fase 3/4). `docs/Tareas de implementacion/` y `docs/00-sistema/` ya no existen. Corregidos los enlaces que las migraciones de la Fase 6 y 7 rompían en `04-flujos-de-negocio/*.md`, `03-aprendizaje-continuo/*.md` y `planes-futuros.md` (todos los que apuntaban a `Tareas de implementacion/`). Creado el índice de `01-planes/README.md` (activos, cerrados, en preparación, eliminado, evidencia externa sin dueño único).
+
+- Fase 8: `docs/README.md` reescrito según §3.1 (mapa de las 7 áreas, lectura mínima, diferencia plan/progreso/evidencia/aprendizaje, sin la sección "Migración en curso"). `AGENTS.md` y `README.md` (raíz): rutas mecánicas corregidas — `docs/Flujos de trabajo/`, `docs/Tareas de implementacion/`, `docs/Mejoras continuas/`, `docs/00-sistema/`, `visual-companion/`, `conocimiento/`, `Formatos/`, `Dashboard ejemplo/`, `Informacion para pruebas/` actualizadas a su ubicación nueva; quitadas las rutas ya inexistentes antes de este plan (`memoria.md`, `control_de_proyectos.txt` raíz, `Sistema hibrido/`, `plantillas/`, `RDTs movimiento...`, `.cursor/rules/*.mdc` — verificado con `ls`/`find` que ninguno existe). Los dos artifacts derivados (*Flujo SDD a Cierre*, *Recorrido del Plan*) se corrigieron y republicaron (accesibles desde esta sesión): evidencia en su propio archivo, `<entorno>-worker-N`/worktree correcto, D6/D10 aplicados, y Fases 0–9 con conteos reales. Comando de verificación de §4.7 ejecutado: 23 resultados, todos clasificados como referencias históricas intencionales o un título de sección (detalle completo en la evidencia) — ninguno es un enlace roto real.
+
 ## Trabajo actual
 
-Fase 7: mover las 12 tareas históricas a `01-planes/`, eliminar la tarea de cronograma, descomponer `resumen-checklists.md`.
+Fase 9: completar la Punch List con evidencia por ítem y consolidar hallazgos.
 
 ## Pendientes
 
-Fases 7 a 9 completas (ver Punch List del plan, §9).
+Fase 9 (ver Punch List del plan, §9).
 
 ## Commits, ramas y worktrees usados
 
@@ -44,11 +48,14 @@ _(se agregan aquí, con fecha, a medida que ocurren — ver también §12–§14
 
 ## Bloqueos, riesgos y decisiones requeridas
 
+- **Autocorrección de proceso (Fase 6→7):** al armar el commit de la Fase 6 se listaron explícitamente los archivos a agregar y se omitieron por error 4 ediciones ya hechas (`10-generacion-pr.md`, `14-accesos-y-restricciones.md`, `design.md`, `mockups/index.html` — las correcciones de enlaces a `visual-companion`/`tareas-futuras`). Quedaron sin commitear un ciclo: el commit `d8c1833` (Fase 6) se pusheó con esos 4 archivos todavía con la referencia rota a `docs/visual-companion/...`. Detectado con `git status`/`git diff` al iniciar la Fase 7, antes de seguir. Se corrige incluyendo esos 4 archivos en el commit de la Fase 7. No afecta contenido normativo, solo retrasa un commit el fix de un enlace.
+
+
 - **Hallazgo de entorno (no es conflicto de regla de negocio, verificado con herramientas — `git branch --show-current`, `git log` de `origin/main`):** esta sesión de Worker corre en un contenedor cuyo harness exige commitear en la rama designada `claude/reestructuracion-documental-pg-control-jvj5mf` y prohíbe explícitamente pushear a otra rama sin permiso. `origin/main` tiene historia propia, no relacionada, de otras sesiones concurrentes en la nube (ej. commits "cierre de sesion — ambos agentes en ejecucion en la nube"). El primer intento de `git push -u origin main` fue rechazado (`non-fast-forward`) porque intentaba subir la rama de esta sesión a un `main` remoto con historia divergente. Se corrigió pusheando a `origin/claude/reestructuracion-documental-pg-control-jvj5mf` (rama nueva creada en GitHub, sin PR abierto). **No se resuelve por cuenta propia:** el plan (§2.6, §7) exige trabajar "directo en main, sin rama"; esta ejecución quedó en la rama designada por el entorno. Se anota para el Auditor y el Orquestador — llevar esto a `main` real requiere una decisión fuera del alcance del Worker (abrir PR / merge, o que el Orquestador reconcilie ambas ramas). Ver también §14 del plan.
 
 ## Próximo paso verificable
 
-Fase 7: `git mv` de las 12 tareas históricas restantes a `01-planes/` y `git rm` de la tarea de cronograma (§4.5).
+Fase 9: completar Punch List, consolidar hallazgos en §12–§14 del plan y entregar al Orquestador.
 
 ## Revisión de fuentes de verdad por fase
 
@@ -57,6 +64,8 @@ Fase 7: `git mv` de las 12 tareas históricas restantes a `01-planes/` y `git rm
 - **Fase 4:** `01-contexto-repositorio/` nace con lo específico de este repositorio, autorizado por §10.1. Integra `convenciones-de-trabajo.md` (aún no se elimina el original: eso ocurre en la Fase 7 según §10.3-A) y cuatro mejoras continuas promovidas. No se tocó ninguna fuente de verdad central. Fuentes de verdad revisadas: sin cambios normativos requeridos más allá de lo ya anotado para el Auditor en la Fase 3.
 - **Fase 5:** las reglas de negocio no se tocaron (ninguna de las 11 mejoras era una regla de negocio). Los flujos de negocio (`docs/Flujos de trabajo/`, todavía no migrados) no se modificaron. Fuentes de verdad revisadas: sin cambios normativos requeridos.
 - **Fase 6:** los 21 flujos de negocio son ahora la fuente de verdad en su ubicación definitiva (`04-flujos-de-negocio/`); no se cambió ninguna regla funcional, solo ubicación, nombre de archivo (el 19) y los enlaces que la migración rompía. El único contenido normativo tocado fue la regla de lectura de `04-flujos-de-negocio/README.md`, alineada a D10 (ya aprobada en el Gate 1, no es una decisión nueva del Worker). `design.md` queda como fuente de verdad visual en su ubicación definitiva. Fuentes de verdad revisadas: sin cambios normativos nuevos más allá de aplicar D10 (ya aprobado).
+- **Fase 8:** único punto de este plan donde el Worker toca `AGENTS.md`/`README.md` por diseño (excepción de §10.1, solo rutas). Verificado con `grep` que no se cambió ningún contenido normativo, solo rutas y la sección de navegación de `docs/README.md` que el propio plan autoriza reescribir. Fuentes de verdad revisadas: los tres documentos centrales (`AGENTS.md`, `README.md`, `docs/README.md`) quedan consistentes entre sí; sin cambios normativos nuevos pendientes de Gate 2 más allá de los ya anotados en la Fase 3 (D10 en `AGENTS.md`) y el título de sección menor anotado en la evidencia.
+- **Fase 7:** ninguna regla de negocio se tocó. `docs/00-sistema/` (fuente de las reglas universales de roles/sesiones/convenciones) se eliminó porque su contenido ya vive íntegro en `00-estandar-agentes/` y `01-contexto-repositorio/` desde las Fases 3–4 — verificado antes de eliminar, no solo asumido. **Pendiente para la Fase 8 (ya identificado, no es un hallazgo nuevo):** `AGENTS.md` todavía enlaza a rutas de `docs/00-sistema/` que ya no existen — es exactamente el tipo de ruta que la Fase 8 corrige. Fuentes de verdad revisadas: el cambio normativo relevante (eliminar `00-sistema/`) ya estaba autorizado por §10.3-A del propio plan, no es una propuesta nueva para el Auditor.
 
 ## Handoffs
 

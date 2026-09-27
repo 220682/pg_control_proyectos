@@ -249,3 +249,13 @@ Ninguna identificada en esta tarea.
 - Matriz rol × acceso × "Requiere OT a cargo" → trasladada a [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
 - Regla de navegación "toda ruta debe validar autenticación, rol y pertenencia al servicio" → ya documentada en [docs/Flujos de trabajo/16-paneles.md](../Flujos%20de%20trabajo/16-paneles.md) (regla 4).
 - Permisos de dos capas (rol global + OT asignada) → cubierto por la columna "Requiere OT a cargo" del flujo 14; no requirió entrada nueva.
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 020, Plan Maestro, #2:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-20 | Sub-lote 2 — Alcance por OT sobre permisos por rol | "Sub-lote 2: Alcance por OT sobre permisos por rol" | 7 | 7 | 0 | 0 | **Cerrado 100%** |
+
+Evidencia externa asociada: artifact **Sub-lote 2 — Checklist F0-F7** (https://claude.ai/artifact/Xv6wSxUA2fbXaFX8ACe1rh), enlazado también desde `docs/02-trabajo-activo/01-planes/README.md`.

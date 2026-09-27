@@ -1,6 +1,6 @@
 # Mejora de trabajo — `CREATE OR REPLACE FUNCTION` deja sobrecargas huérfanas si cambia la firma
 
-> Origen: tarea [2026-09-21-pr-fase-2-pipeline-linea-base.md](../Tareas%20de%20implementacion/2026-09-21-pr-fase-2-pipeline-linea-base.md), sección "Archivos y código que quedaron viejos". Extraído el 2026-09-23.
+> Origen: tarea [2026-09-21-pr-fase-2-pipeline-linea-base.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-2-pipeline-linea-base.md), sección "Archivos y código que quedaron viejos". Extraído el 2026-09-23.
 
 ## Qué pasó
 

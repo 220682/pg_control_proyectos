@@ -67,7 +67,7 @@ Antes de inventar o duplicar algo, el agente debe localizar la fuente existente 
 | Estados y etiquetas | Mapas/constantes existentes del dominio | No inventar estados ni etiquetas |
 | Catálogos relacionales | Fuente de datos, API, DB o módulo de catálogo existente | Cargar opciones dinámicamente; no hardcodear opciones |
 | Tipos de datos | Tipos junto al dominio (ej. `src/lib/rdts/`) | Leer tipo/cardinalidad antes de elegir componente |
-| Diseño ya aprobado | Pantallas existentes aprobadas / `visual-companion/` | Copiar patrón, no reinterpretarlo |
+| Diseño ya aprobado | Pantallas existentes aprobadas / `mockups/` | Copiar patrón, no reinterpretarlo |
 
 Si la ruta exacta no existe o no está clara, el agente debe buscarla en el proyecto y reportar qué archivo tomará como fuente. Si no hay fuente, debe preguntar antes de crear una.
 

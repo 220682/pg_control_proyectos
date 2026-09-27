@@ -430,3 +430,13 @@ La versión vieja de `proyectos/[id]/pr/page.tsx` (una sola tabla de partidas + 
 - Reglas de costo directo, MOI y USD → aplicado en [docs/Flujos de trabajo/18-control-avance.md](../Flujos%20de%20trabajo/18-control-avance.md).
 - PR de tres bloques (línea base, real, derivados EVM) → aplicado en [docs/Flujos de trabajo/10-generacion-pr.md](../Flujos%20de%20trabajo/10-generacion-pr.md).
 - Acceso nuevo (confirmar transición) → aplicado en [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 010, Generación PR, #2:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-21 | PR Fase 2 (Agente B) — línea base, planificado y derivados EVM | "PR Fase 2 — línea base, planificado y derivados EVM" | 15 | 15 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #14](https://github.com/220682/py_control_proyectos_web/pull/14) (2026-09-21 18:05), después de A |
+
+Ver totales conjuntos del flujo 010 y la decisión pendiente sobre tarifa retroactiva en el resumen migrado de [2026-09-21-pr-fase-1-pipeline-rdt.md](2026-09-21-pr-fase-1-pipeline-rdt.md).

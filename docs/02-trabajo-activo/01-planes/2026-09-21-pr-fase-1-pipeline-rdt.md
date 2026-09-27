@@ -389,3 +389,15 @@ Ninguna identificada en esta tarea.
 
 - `06-rdt.md`: RDT alimenta el PR, toda actividad carga a partida, CNC obligatorio → **agregado el 2026-09-23** ([docs/Flujos de trabajo/06-rdt.md](../Flujos%20de%20trabajo/06-rdt.md)); no estaba trasladado hasta esta revisión.
 - `18-control-avance.md`: costo directo, MOI sin valorizar, terminología C/NC vs MOI → ya aplicado (reglas renumeradas a 11/12/13 en versiones posteriores del documento, mismo contenido).
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 010, Generación PR, #1:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems | Conforme | Observado | Sin verificar | Estado |
+|---|---|---|---|---|---|---|---|
+| 2026-09-21 | PR Fase 1 (Agente A) — pipeline RDT → PR | "PR enriquecido — Fase 1: pipeline RDT → PR" | 19 | 19 | 0 | 0 | **Cerrado 100%** — verificado con Playwright + login real contra Supabase real. Mergeado en `py_control_proyectos_web` [PR #13](https://github.com/220682/py_control_proyectos_web/pull/13) (2026-09-21 16:20) |
+
+**Totales flujo 010 (al 21-sep-2026, ambas fases):** 2 checklists con Punch List · 34 ítems · 34 Conforme · 0 Observado · 0 Sin verificar · ambas fases cerradas 100% y mergeadas a `main` en `py_control_proyectos_web`. Efecto conjunto: la cadena RDT → PR → Dashboard queda cerrada en código.
+
+**Pendiente de decisión de Victor** (no bloqueante, anotado en el cierre de PR Fase 1): tarifa retroactiva para los RDT que ya estaban validados antes de esta sesión — quedan con `costo_real_acum = 0` en el motor nuevo porque no se quiso re-resolver la tarifa de hoy sobre RDT validados hace semanas sin una decisión explícita.

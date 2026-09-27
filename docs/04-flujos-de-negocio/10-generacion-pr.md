@@ -1,6 +1,6 @@
 # 10 — Generación PR
 
-Independiente de importar DP (usa datos del DP, pero es otro flujo). Spec `2026-08-16-pr`, ampliado en PR Fase 1 ([2026-09-21-pr-fase-1-pipeline-rdt.md](../Tareas%20de%20implementacion/2026-09-21-pr-fase-1-pipeline-rdt.md)) y PR Fase 2 ([2026-09-21-pr-fase-2-pipeline-linea-base.md](../Tareas%20de%20implementacion/2026-09-21-pr-fase-2-pipeline-linea-base.md)).
+Independiente de importar DP (usa datos del DP, pero es otro flujo). Spec `2026-08-16-pr`, ampliado en PR Fase 1 ([2026-09-21-pr-fase-1-pipeline-rdt.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-1-pipeline-rdt.md)) y PR Fase 2 ([2026-09-21-pr-fase-2-pipeline-linea-base.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-2-pipeline-linea-base.md)).
 
 ## Qué es el PR
 
@@ -74,7 +74,7 @@ Reimportar un DP borra y reconstruye el PR contractual (`delete from proyecto_pr
 
 ## Pantalla
 
-`src/app/(workspace)/proyectos/[id]/pr/page.tsx`. Tabla larga con scroll horizontal, columnas de identificación de partida (WBS, descripción, unidad) fijas a la izquierda, encabezado de dos filas (grupo de bloque + columna) sticky en la celda. Fila de total del proyecto al pie — el total físico va como N/A (no se suman unidades físicas incompatibles entre partidas) y la variación global se expresa en valor económico. Fecha de corte siempre visible. Diseño según `docs/visual-companion/design.md`.
+`src/app/(workspace)/proyectos/[id]/pr/page.tsx`. Tabla larga con scroll horizontal, columnas de identificación de partida (WBS, descripción, unidad) fijas a la izquierda, encabezado de dos filas (grupo de bloque + columna) sticky en la celda. Fila de total del proyecto al pie — el total físico va como N/A (no se suman unidades físicas incompatibles entre partidas) y la variación global se expresa en valor económico. Fecha de corte siempre visible. Diseño según `docs/05-diseno-y-referencias/design.md`.
 
 ## Relación con Dashboard
 

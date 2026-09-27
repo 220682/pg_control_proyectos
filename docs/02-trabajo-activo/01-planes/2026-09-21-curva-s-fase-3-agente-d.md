@@ -514,3 +514,13 @@ Ver tarea D9.
 - El Bloque G cambió de lugar (Curva S no vive en el Dashboard) → documentado en `11-dashboard.md` y `21-curva-s.md`, consistente entre ambos.
 - Acceso nuevo (pantalla + chip + endpoint) → fila "Ver Curva S" en [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
 - Regla visual nueva para `design.md` (crosshair, tooltip, leyenda del primer gráfico de líneas) → **pendiente de verificar** si se propuso/agregó; no confirmado en esta pasada.
+
+## Resumen de checklist (migrado)
+
+> Migrado desde `docs/Tareas de implementacion/resumen-checklists.md` (eliminado, decisión 6 de §6.1 del plan de reestructuración documental, 2026-09-27). Fila original — Flujo 011, Dashboard, #2. **Ojo:** la fila original reflejaba el estado en el momento de escribirla (plan inicial, Punch List sin cargar); el estado real final de esta tarea es el que documenta el propio archivo (CERRADO, Punch List 20/20, PR #16 mergeado) — este resumen es un registro histórico de esa fila, no el estado vigente:
+
+| Fecha | Fase / sub-lote | Checklist (Punch List) | Ítems (según la fila original) | Estado en la fila original |
+|---|---|---|---|---|
+| 2026-09-21 | Curva S Fase 3 (Agente D) — serie temporal PV/EV/AC en pantalla propia | "Curva S Fase 3 — serie temporal PV/EV/AC" | 20 | Plan inicial — pendiente de aprobación de Victor. Incluye una decisión previa (D0: ubicación y nombre del chip) que Victor confirma antes de que el agente escriba código de navegación |
+
+Evidencia externa asociada: artifact **Dashboards y Curva S — Fase 3** (https://claude.ai/artifact/CdUMm5cdoxGjYPUsMHM85q), enlazado también desde `docs/02-trabajo-activo/01-planes/README.md`.

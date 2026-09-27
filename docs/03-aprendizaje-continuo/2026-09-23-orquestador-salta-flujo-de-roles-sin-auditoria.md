@@ -1,6 +1,6 @@
 # Mejora de trabajo — el Orquestador se saltó el flujo de roles y eso costó documentación completa
 
-> Origen: [2026-09-23-cronograma-import-y-versatilidad-vinculo.md](../Tareas%20de%20implementacion/2026-09-23-cronograma-import-y-versatilidad-vinculo.md). Registrado el 2026-09-23.
+> Origen: tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` (eliminada por decisión de Victor, 2026-09-27). Registrado el 2026-09-23.
 >
 > **Registrado por:** Claude (agente que actuó como Orquestador en esa sesión).
 

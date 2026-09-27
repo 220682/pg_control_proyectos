@@ -1,6 +1,6 @@
 # Plan — Reestructuración documental y estándar de trabajo
 
-> **Estado:** CORREGIDO (v2, 2026-09-27) — **pendiente de GATE 1** (aprobación de Victor del plan + Punch List). Nadie implementa nada de las Fases 2 a 9 antes del Gate 1.
+> **Estado:** **APROBADO — GATE 1 (Victor, 2026-09-27).** Plan v2 aprobado completo, con una excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se elimina** (no se migra). Listo para asignar al Worker (§17).
 >
 > **Ejecución previa sin aprobación:** las Fases 0 y 1 fueron ejecutadas y pusheadas por un agente anterior el 2026-09-27 (commits `404ddb3` y `be53526`) cuando el plan todavía decía "Propuesto. No ejecutar hasta que Victor apruebe". Queda registrado en §11 (Registro de decisiones) y §12 (Mejoras de trabajo). La Fase 2 revisa lo creado en la Fase 1 contra este plan corregido.
 >
@@ -504,8 +504,8 @@ Estas tablas se aprueban en el Gate 1. El Worker las ejecuta **sin pedir aprobac
 | `2026-09-21-pr-fase-2-pipeline-linea-base.md` | Completa, verificada y mergeada | `01-planes/`, tal cual |
 | `2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md` | Ejecutado; pendiente de cierre 100% (decisión 4) | `01-planes/`, tal cual |
 | `2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md` | Ejecutado (decisión 4) | `01-planes/`, tal cual |
-| `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` | **Abierta** ("Implementando") | `01-planes/`, tal cual; sus archivos de progreso y evidencia se crean cuando se retome esa tarea (**confirmar en Gate 1**, §10.2) |
-| `2026-09-23-paquetes-de-trabajo.md` | **Abierta** (Fase 1 terminada en `work-1`). **Tiene texto con codificación dañada** (ej. `â†’`, `Ã³`) | Igual que la anterior. **No se corrige la codificación en este plan**: se reporta a Victor (§14) |
+| `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` | Abierta ("Implementando") | **Se elimina con `git rm`** (decisión de Victor en el Gate 1, 2026-09-27). No se migra. La única referencia a ella, en `2026-09-23-orquestador-salta-flujo-de-roles-sin-auditoria.md` (línea 3), se reemplaza por texto sin enlace: "Origen: tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` (eliminada por decisión de Victor, 2026-09-27)". |
+| `2026-09-23-paquetes-de-trabajo.md` | **Abierta** (Fase 1 terminada en `work-1`). **Tiene texto con codificación dañada** (ej. `â†’`, `Ã³`) | `01-planes/`, tal cual; sus archivos de progreso y evidencia se crean cuando se retome esa tarea (D9). **No se corrige la codificación en este plan**: se reporta a Victor (§14) |
 | `plantilla-tarea.md` | Reemplazada por las 9 plantillas (decisión 1) | Tras verificar que `02-plan.md` cubre sus 13 secciones: §10.3-A |
 | `tareas-futuras.md` | — | `git mv` → `01-planes/planes-futuros.md` (decisión 5) y se adapta al formato de §2.5 |
 | `resumen-checklists.md` | — | Cada entrada cronológica se agrega como sección "Resumen de checklist (migrado)" al archivo de plan de su tema en `01-planes/`. Las entradas sin plan dueño se listan en §14. Original: §10.3-A (decisión 6: no se conserva como archivo agregado) |
@@ -621,7 +621,7 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 
 ## Fase 7 — Trabajo histórico
 
-- [ ] `git mv` de las 13 tareas a `01-planes/` tal cual (§4.5).
+- [ ] `git mv` de las 12 tareas a `01-planes/` tal cual y `git rm` de `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` (§4.5).
 - [ ] Descomponer `resumen-checklists.md` según §4.5.
 - [ ] Índice de `01-planes/README.md`: activos, cerrados, en preparación y enlaces a los artifacts de evidencia huérfanos (§4.6).
 - [ ] Aplicar §10.3 a los originales integrados: eliminar si está autorizado; si no, `git mv` a `06-material-de-apoyo/obsoleto/`.
@@ -632,7 +632,7 @@ grep -rlE "Flujos de trabajo|Flujos%20de%20trabajo|Tareas de implementacion|Tare
 - [ ] Reescribir `docs/README.md` según §3.1 y quitar la sección "Migración en curso".
 - [ ] Quitar de `AGENTS.md` y `README.md` las referencias a rutas inexistentes (§4.7). Solo es mecánico: los cambios de contenido van al Auditor.
 - [ ] Alinear el artifact **Flujo SDD a Cierre** con §2.4, §2.6 y §3.2 (evidencia en su archivo propio, `<entorno>-worker-N`, los 18 pasos). Si no hay acceso al artifact, dejar el texto corregido en la evidencia y anotarlo como pendiente.
-- [ ] Alinear el artifact **Recorrido del Plan** con las fases 0–9 de este plan y las 13 tareas.
+- [ ] Alinear el artifact **Recorrido del Plan** con las fases 0–9 de este plan y las 12 tareas migradas (más la eliminada).
 - [ ] Ejecutar el comando de verificación de §4.7 y registrar el resultado en la evidencia.
 - [ ] Revisión de fuentes de verdad de la Fase 8.
 
@@ -732,7 +732,7 @@ Estados: `Sin verificar` / `Conforme` / `Observado` / `No aplica`. La evidencia 
 | PL-11 | 6 | 21 flujos movidos, el 19 renombrado, enlaces actualizados en el mismo commit | `git show --stat` del commit | Sin verificar |
 | PL-12 | 6 | `design.md` y 6 mockups movidos; README de diseño integrado | `git show --stat` | Sin verificar |
 | PL-13 | 6 | 5 carpetas de apoyo movidas; README actualizado | `ls` de la raíz y de `06-material-de-apoyo/` | Sin verificar |
-| PL-14 | 7 | 13 tareas movidas tal cual | `git show --stat` sin cambios de contenido | Sin verificar |
+| PL-14 | 7 | 12 tareas movidas tal cual; tarea de cronograma eliminada y su referencia en la mejora reemplazada por texto | `git show --stat` (12 renombres sin cambios + 1 borrado) | Sin verificar |
 | PL-15 | 7 | `resumen-checklists.md` descompuesto; entradas sin dueño listadas | Lista por entrada → destino | Sin verificar |
 | PL-16 | 7 | Índice de `01-planes/` con los artifacts huérfanos enlazados | Archivo | Sin verificar |
 | PL-17 | 7 | Originales integrados tratados según §10.3 | Lista de archivos: eliminado / movido a `obsoleto/` | Sin verificar |
@@ -764,28 +764,28 @@ El objeto de este plan es construir el estándar y la navegación. Por eso, **co
 
 | # | Decisión | Fuente | ¿Confirma Victor? |
 |---|---|---|---|
-| D1 | El plan es la fuente normativa; el diagrama y los artifacts son vistas derivadas | Instrucción de Victor (2026-09-27) | [ ] |
-| D2 | Rama de Worker: `<entorno>-worker-N`; `work-N` queda obsoleto | Tabla del diagrama, *Flujo SDD*, corrección del 2026-09-23 | [ ] |
-| D3 | Los worktrees viven en el repo de la app, en una subcarpeta con el nombre de la rama | Diagrama (Worker implementa en `py_control_proyectos_web`) | [ ] |
-| D4 | El plan embebe Spec, Punch List, auditoría y cierre; progreso y evidencia van aparte | Diagrama (el Auditor lee plan + progreso + evidencia), decisión 2, READMEs de la Fase 1 | [ ] |
-| D5 | El Gate 1 autoriza toda la implementación, incluidos los commits del Worker; sin aprobaciones intermedias | *Flujo SDD* | [ ] |
-| D6 | El Worker consulta a Victor en el momento ante un conflicto de negocio no anticipado | *Flujo SDD* (contradice el "punto único de contacto" de AGENTS.md → propuesta de ajuste al Auditor) | [ ] |
-| D7 | Después del Gate 2: merge, fuentes de verdad y Skill son independientes; el mensaje de cierre va al final | Diagrama + *Flujo SDD* | [ ] |
-| D8 | El handoff se escribe como sección fechada al final del progreso | Propuesta del Planner (no había destino) | [ ] |
-| D9 | Las tareas abiertas (`cronograma-import`, `paquetes-de-trabajo`) se mueven tal cual; progreso y evidencia se crean al retomarlas | Propuesta del Planner (decisión 4 no lo cubría) | [ ] |
-| D10 | Los flujos se leen con la regla de lectura mínima, no "todos" | Regla general de lectura mínima del diagrama | [ ] |
+| D1 | El plan es la fuente normativa; el diagrama y los artifacts son vistas derivadas | Instrucción de Victor (2026-09-27) | [x] |
+| D2 | Rama de Worker: `<entorno>-worker-N`; `work-N` queda obsoleto | Tabla del diagrama, *Flujo SDD*, corrección del 2026-09-23 | [x] |
+| D3 | Los worktrees viven en el repo de la app, en una subcarpeta con el nombre de la rama | Diagrama (Worker implementa en `py_control_proyectos_web`) | [x] |
+| D4 | El plan embebe Spec, Punch List, auditoría y cierre; progreso y evidencia van aparte | Diagrama (el Auditor lee plan + progreso + evidencia), decisión 2, READMEs de la Fase 1 | [x] |
+| D5 | El Gate 1 autoriza toda la implementación, incluidos los commits del Worker; sin aprobaciones intermedias | *Flujo SDD* | [x] |
+| D6 | El Worker consulta a Victor en el momento ante un conflicto de negocio no anticipado | *Flujo SDD* (contradice el "punto único de contacto" de AGENTS.md → propuesta de ajuste al Auditor) | [x] |
+| D7 | Después del Gate 2: merge, fuentes de verdad y Skill son independientes; el mensaje de cierre va al final | Diagrama + *Flujo SDD* | [x] |
+| D8 | El handoff se escribe como sección fechada al final del progreso | Propuesta del Planner (no había destino) | [x] |
+| D9 | La tarea abierta `paquetes-de-trabajo` se mueve tal cual; progreso y evidencia se crean al retomarla. `cronograma-import` **se elimina** (Victor, Gate 1) | Propuesta del Planner (decisión 4 no lo cubría) | [x] |
+| D10 | Los flujos se leen con la regla de lectura mínima, no "todos" | Regla general de lectura mínima del diagrama | [x] |
 
 ## 10.3. Autorizaciones de eliminación solicitadas
 
 Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-apoyo/obsoleto/`: no se pierde nada, pero queda un duplicado.
 
-- [ ] **A — Eliminar (`git rm`) los originales cuyo contenido ya se integró en otro archivo:** los 3 de `docs/00-sistema/`, `docs/Flujos de trabajo/README.md`, `docs/visual-companion/README.md`, `plantilla-tarea.md` y `resumen-checklists.md`.
+- [x] **A — Eliminar (`git rm`) los originales cuyo contenido ya se integró en otro archivo:** los 3 de `docs/00-sistema/`, `docs/Flujos de trabajo/README.md`, `docs/visual-companion/README.md`, `plantilla-tarea.md` y `resumen-checklists.md`.
 
 ## 10.4. Checklist del Gate 1
 
-- [ ] Victor aprueba el plan corregido (v2), la Punch List (§9) y las tablas de §4.
-- [ ] Victor confirma D1–D10 o indica cambios.
-- [ ] Victor decide la autorización A (§10.3).
+- [x] Victor aprueba el plan corregido (v2), la Punch List (§9) y las tablas de §4 (2026-09-27), con la excepción de la tarea de cronograma, que se elimina.
+- [x] Victor confirma D1–D10 (D9 ajustada: cronograma se elimina).
+- [x] Victor autoriza A (§10.3).
 - [x] La v2 está en `main` (commit `421c6bc`).
 - [ ] El Orquestador asigna el Worker con el prompt de §17.
 
@@ -800,6 +800,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 | 2026-09-27 | Revisión del plan: contradicciones entre el plan, el diagrama y los artifacts (ramas, evidencia, secciones obligatorias, 6 tareas sin clasificar, enlaces sin inventariar, estándar no agnóstico, worktrees en el repo equivocado) | Sesión de revisión |
 | 2026-09-27 | Victor ordena corregir el plan de punta a punta según los artifacts y el diagrama, y que lo implemente un Worker, no la sesión que corrige | Victor |
 | 2026-09-27 | Plan v2: decisiones D1–D10 (§10.2) pendientes de confirmar en el Gate 1 | Planner (sesión de corrección) |
+| 2026-09-27 | **Gate 1 aprobado**: plan v2, Punch List, tablas de §4, D1–D10 y autorización A. Excepción: `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` se elimina en lugar de migrarse | Victor |
 
 ---
 

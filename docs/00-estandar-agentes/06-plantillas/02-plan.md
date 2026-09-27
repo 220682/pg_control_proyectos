@@ -4,17 +4,37 @@
 
 ## Identificación y estado
 
-Nombre del tema, fecha, estado (`Propuesto` / `Aprobado — Gate 1` / `En ejecución` / `Cerrado`).
+Nombre del tema, fecha, estado — uno de estos 6 valores: `Propuesta` / `Planificando` / `Implementando` / `En auditoría` / `Pendiente de Victor` / `Cerrada`.
 
 ## Referencia al Spec aprobado
 
 ## Objetivo, alcance y no alcance
+
+- Resultado esperado:
+- Alcance:
+- No alcance:
+- Validación esperada:
 
 ## Entorno, repositorios, ramas y worktrees
 
 ## Fases y dependencias
 
 ## Asignación de roles
+
+| Rol | Chat | Rama | Worktree | Estado |
+|---|---|---|---|---|
+| Orquestador | | `main` | N/A | |
+| Planner | | `main` | N/A | |
+| Worker (fase 1) | | | | |
+| Auditor | | `main` | N/A | |
+
+### Prompt de cada Worker
+
+<!-- Un bloque de texto por Worker, cerrado y breve: rol, subalcance, rama/worktree, documentos a leer, criterios de salida, restricciones. -->
+
+### Prompt del Auditor
+
+<!-- Alcance a auditar, documentos a revisar, criterios de §6, formato del informe. -->
 
 ## Archivos / componentes afectados
 

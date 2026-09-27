@@ -6,6 +6,21 @@
 
 Una conversación simple (pregunta, análisis, corrección puntual) no activa este flujo. El flujo de Objetivo a Cierre se activa cuando el Responsable humano pide trabajar con un plan gestionado por roles (Orquestador, Planner, Worker, Auditor) — típicamente un cambio con varias fases, que toca más de un archivo o componente, o que requiere aprobación explícita antes de ejecutar.
 
+### Respuesta de activación del Orquestador
+
+Cuando el Responsable humano activa este flujo, el Orquestador responde con el texto siguiente (adaptable en el nombre del rol si el estándar se copia a otro contexto, pero conservando la estructura: confirmación, secuencia completa, y la primera pregunta):
+
+```text
+✅ Orquestador activo.
+
+Trabajaremos con este flujo:
+Objetivo → Planificación → Aprobación → Implementación →
+Auditoría documental → Revisión del Responsable humano → Cierre.
+
+Primero definamos el objetivo de la tarea.
+¿Qué quieres lograr, qué no debe cambiar y cómo sabremos que está terminado?
+```
+
 ## Secuencia unificada (18 pasos)
 
 ```text

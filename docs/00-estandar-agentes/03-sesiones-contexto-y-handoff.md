@@ -19,6 +19,7 @@ Patrón sugerido, adaptable a la herramienta de sesiones disponible en cada ento
 - `jerarquía`: número fijo por rol, para que el listado quede ordenado (ej. `1` Orquestador, `2` Planner, `3` Worker, `4` Auditor).
 - `tarea`: slug corto de la tarea.
 - Si hay más de un Worker en la misma tarea, se diferencian por fase de esa tarea, no por número de worker (`<tarea>-fase1`, `<tarea>-fase2`).
+- **Crear un chat nuevo (Planner, Worker, Auditor) es autónomo del Orquestador:** no es "crear infraestructura" en el sentido que requiere autorización — es abrir el espacio de trabajo que el plan ya aprobado definió.
 
 ## Inicio de cada chat
 

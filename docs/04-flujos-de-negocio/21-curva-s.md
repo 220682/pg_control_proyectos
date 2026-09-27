@@ -31,7 +31,7 @@ alcance por dos razones que ya cayeron:
 
 Por decisión de Victor (2026-09-21), la Curva S **salió del Dashboard
 Completo a pantalla propia con chip propio**, porque dentro del Dashboard no
-le alcanza el espacio. El Dashboard Completo (flujo 11, Agente C) la
+le alcanza el espacio. El Dashboard Completo (flujo 11) la
 **enlaza**, no la dibuja.
 
 ## Fuentes de verdad
@@ -132,7 +132,3 @@ y no se mezcla con SPI.
 | Pantalla | `src/app/(workspace)/proyectos/[id]/curva-s/page.tsx` |
 | Componentes | `src/components/curva-s/PantallaCurvaS.tsx`, `GraficoCurvaS.tsx` |
 | Ítem de navegación | `src/lib/config/nav-proyecto.ts` (clave `curva-s`, grupo Planificación) |
-
-Ver [2026-09-21-curva-s-fase-3-agente-d.md](../02-trabajo-activo/01-planes/2026-09-21-curva-s-fase-3-agente-d.md)
-para el detalle de implementación, la Punch List verificada y el cuadre
-documentado contra el PR.

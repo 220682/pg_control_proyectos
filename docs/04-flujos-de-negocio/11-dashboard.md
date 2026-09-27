@@ -4,15 +4,6 @@ Vista ejecutiva derivada del PR. No calcula: lee. Si un número está mal, se
 arregla en el pipeline (PR / motor RDT → PR), nunca en la pantalla. Esto es
 lo que garantiza que Dashboard, PR y Curva S digan siempre lo mismo.
 
-Construido en dos fases:
-
-- **PR #6** (2026-08-17, spec `2026-08-16-dashboard-parcial-design.md`):
-  Dashboard Parcial, sobre un diseño aprobado en Excel.
-- **Dashboard Fase 3** (Agente C, plan
-  `2026-09-21-dashboard-fase-3-agente-c.md`): interfaz rehecha dentro del
-  shell de la app, y construcción del Dashboard Completo (antes solo
-  mostraba un aviso).
-
 ## Los dos Dashboards
 
 `proyectos.tipo_dashboard` (`'PARCIAL'` | `'COMPLETO'`, `db/008_dashboard.sql`)
@@ -30,21 +21,20 @@ al final — quien conoce el Parcial no tiene que reaprender el Completo.
 | **Enlace a la Curva S** | — | ✓ |
 | Resumen ejecutivo (2 líneas, al final) | ✓ | ✓ |
 
-**El toggle es funcional** (Fase 3): se edita con el mismo permiso que ya
+**El toggle Parcial/Completo es funcional**: se edita con el mismo permiso que ya
 edita el proyecto (`puedeAdjudicarProyecto`), cambia sin recargar a mano ni
 dejar la pantalla en un estado intermedio (`router.refresh()`), y no crea
 un permiso nuevo.
 
 **La Curva S no vive en ningún Dashboard.** Tiene pantalla propia
-(`(workspace)/proyectos/[id]/curva-s`, Agente D) y chip propio en el grupo
+(`(workspace)/proyectos/[id]/curva-s`) y chip propio en el grupo
 Planificación. El Completo solo la **enlaza**, nunca la embebe.
 
 ## Ubicación en la app
 
 `(workspace)/proyectos/[id]/dashboard` — dentro del shell (`WorkspaceShell`),
 mismo nav izquierda / panel derecho que el resto de pantallas de un
-servicio. Antes de la Fase 3 vivía fuera del route group `(workspace)` y se
-veía "suelto"; moverlo no cambió la URL.
+servicio.
 
 El chip **Dashboard** vive en el grupo **Planificación** (`nav-proyecto.ts`),
 en la cadena de control: `… → DP → PR → Dashboard → Curva S`. Aparece en

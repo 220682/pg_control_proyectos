@@ -8,6 +8,17 @@ El checklist de cada lote **no es una tabla estática en el .md** — es un arti
 
 Cada lote (tab) tiene sus ítems con estado **Conforme / Observado / Sin verificar**, comentario y capturas de pantalla pegadas (Ctrl+V). Victor lo usa mientras prueba en la app real. Al crear un nuevo lote de implementación, se agrega ahí como checklist nuevo. El archivo de evidencia local (`02-trabajo-activo/03-evidencia/<tema>.md`) enlaza a este artifact y registra el resultado en texto — los dos lugares coexisten, uno no reemplaza al otro (ver `02-trabajo-activo/03-evidencia/README.md`).
 
+## Ciclo de vida de un lote con Punch List
+
+Un archivo de plan = un objetivo declarado por Victor, no un día del calendario:
+
+1. Victor pide algo concreto (pantallas, comportamiento).
+2. Se abre el archivo de plan vigente con ese objetivo (o se crea uno nuevo si no hay ninguno abierto), nombrado `YYYY-MM-DD-<tema>.md` en `02-trabajo-activo/01-planes/`.
+3. Se implementa según el plan, con su Punch List embebida.
+4. Mientras algún ítem de la Punch List no esté Conforme, el archivo sigue abierto y se le sigue agregando avance (nuevas fechas de sesión dentro del progreso homónimo).
+5. Cuando todos los ítems quedan Conforme en la Punch List, el plan se cierra: se agrega la sección `## Resultados` con el resumen final y se marca `CERRADO 100%`. No se vuelve a tocar después, salvo una excepción escrita y autorizada.
+6. Solo cuando Victor pide explícitamente un objetivo nuevo se crea el siguiente archivo de plan, con la fecha de ese momento — el agente no decide por su cuenta abrir uno nuevo.
+
 ## Cuándo es obligatorio Playwright
 
 Para cualquier cambio de interfaz o comportamiento en `py_control_proyectos_web`, el Worker corre un script de verificación con Playwright **antes** de reportar un ítem de la Punch List como listo. Es autoverificación del Worker; no reemplaza la prueba final de Victor en la Punch List interactiva.

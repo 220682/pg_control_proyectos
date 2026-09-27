@@ -1,6 +1,6 @@
 # Plan — Reestructuración documental y estándar de trabajo
 
-> **Estado:** **Fases 2–9 ejecutadas por el Worker (2026-09-27). Entregado al Orquestador — pendiente de Auditoría y Gate 2.** Gate 1 aprobado por Victor: Plan v2, Punch List, tablas de §4, decisiones D1–D10 (§10.2, con D1 y D10 cambiadas por Victor) y autorización A. Excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se eliminó** (no se migró). Punch List completa en §9 (24/24 Conforme, 1 con limitación anotada); hallazgos en §12–§14; propuestas normativas para el Auditor en §14.1. El Worker no se autoaudita ni cierra el plan (§17).
+> **Estado:** **Fases 2–9 ejecutadas por el Worker (2026-09-27), incluida la actualización posterior de Victor (merge de §2.9/§4.8/Fase 7B, chat renombrado, 6 huecos completados, Fase 7B ejecutada). Entregado al Orquestador — pendiente de Auditoría y Gate 2.** Gate 1 aprobado por Victor: Plan v2, Punch List, tablas de §4, decisiones D1–D10 (§10.2, con D1 y D10 cambiadas por Victor) y autorización A. Excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se eliminó** (no se migró). Punch List completa en §9 (27/27 Conforme, 1 con limitación anotada); hallazgos en §12–§14; propuestas normativas para el Auditor en §14.1 (9 puntos). El Worker no se autoaudita ni cierra el plan (§17). Este archivo de plan vive en `main` (commit `cbfdc39` en adelante), no en la rama designada por el harness donde corrieron las Fases 2–9 originales — ver §11 y §14.1.7.
 >
 > **Ejecución previa sin aprobación:** las Fases 0 y 1 fueron ejecutadas y pusheadas por un agente anterior el 2026-09-27 (commits `404ddb3` y `be53526`) cuando el plan todavía decía "Propuesto. No ejecutar hasta que Victor apruebe". Queda registrado en §11 (Registro de decisiones) y §12 (Mejoras de trabajo). La Fase 2 revisa lo creado en la Fase 1 contra este plan corregido.
 >
@@ -655,7 +655,7 @@ Resultado del cruce completo de las 7 fuentes de reglas actuales (`AGENTS.md`, `
 
 ## Fase 2 — Arranque del plan y ajuste de la Fase 1
 
-- [x] Renombrar el chat del Worker a `<entorno>_3.worker_reestructuracion-documental` (§2.9), o pedirle a Victor que lo haga, y registrarlo en el progreso. **Agregado en la actualización del plan del 2026-09-27**, después de que las Fases 2–9 originales ya estaban ejecutadas; se resuelve en esta misma actualización.
+- [x] Renombrar el chat del Worker a `<entorno>_3.worker_reestructuracion-documental` (§2.9), o pedirle a Victor que lo haga, y registrarlo en el progreso. **Agregado en la actualización del plan del 2026-09-27**, después de que las Fases 2–9 originales ya estaban ejecutadas. Hecho con `set_session_title` → `nube_3.worker_reestructuracion-documental` (Victor indicó el entorno `nube` directamente; no se infirió de `environment_kind`, dato que un aprendizaje anterior de este mismo plan marca como no confiable para esa distinción).
 - [x] `git mv` de este plan a `docs/02-trabajo-activo/01-planes/` (§4.3) y actualizar su referencia en `docs/README.md`.
 - [x] Crear `02-progreso/2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md` y `03-evidencia/` homónimo con las secciones definidas en §3.3 (`03-progreso` y `04-evidencia`).
 - [x] Revisar los READMEs de la Fase 1 contra §2 y §3; corregir lo que contradiga el plan. Mínimo: el índice de `03-aprendizaje-continuo/README.md` (§4.5) y las menciones a `work-N`.
@@ -706,12 +706,12 @@ Resultado del cruce completo de las 7 fuentes de reglas actuales (`AGENTS.md`, `
 
 Objetivo: que cada flujo de `04-flujos-de-negocio/` contenga solo lo que §3.7 permite (reglas funcionales, datos, estados, roles y restricciones del tema), sin perder nada.
 
-- [ ] Revisar los 21 flujos uno por uno contra §3.7. Los indicios detectados en el cruce están en `14-accesos-y-restricciones`, `10-generacion-pr`, `16-paneles`, `09-importar-dp`, `20-plan-maestro`, `18-control-avance`, `15-cronograma`, `12-checklist`, `21-curva-s`, `11-dashboard`, `04-notificaciones` y el README (menciones de sesión, pendientes, tareas, Worker/Orquestador). Son indicios: pueden ser uso legítimo.
-- [ ] Lo que no sea regla de negocio (bitácora de sesión, estado de un plan, procedimiento de agentes) **se retira del flujo sin borrarse**: si es un aprendizaje de trabajo → archivo nuevo en `03-aprendizaje-continuo/` (plantilla `08`); si es bitácora o estado → se copia íntegro en la evidencia de este plan, sección "Contenido retirado de flujos", con el flujo y la sección de origen.
-- [ ] Referencias a tareas o mejoras dentro de un flujo → se actualizan a la ruta nueva.
-- [ ] **No se inventan ni se reescriben reglas.** Si una regla está incompleta, es ambigua o contradice otro flujo, se pregunta a Victor en el chat del Worker (D6) y se registra en el progreso.
-- [ ] Registrar en la evidencia el antes/después de cada flujo modificado (o "sin cambios") para el Auditor.
-- [ ] Revisión de fuentes de verdad de la Fase 7B.
+- [x] Revisar los 21 flujos uno por uno contra §3.7. Los indicios detectados en el cruce están en `14-accesos-y-restricciones`, `10-generacion-pr`, `16-paneles`, `09-importar-dp`, `20-plan-maestro`, `18-control-avance`, `15-cronograma`, `12-checklist`, `21-curva-s`, `11-dashboard`, `04-notificaciones` y el README (menciones de sesión, pendientes, tareas, Worker/Orquestador). Son indicios: pueden ser uso legítimo. Resultado: 19 sin cambios (indicios eran uso legítimo o términos técnicos), 2 modificados (`11-dashboard.md`, `21-curva-s.md`).
+- [x] Lo que no sea regla de negocio (bitácora de sesión, estado de un plan, procedimiento de agentes) **se retira del flujo sin borrarse**: si es un aprendizaje de trabajo → archivo nuevo en `03-aprendizaje-continuo/` (plantilla `08`); si es bitácora o estado → se copia íntegro en la evidencia de este plan, sección "Contenido retirado de flujos", con el flujo y la sección de origen. Lo retirado en esta tarea fue bitácora de implementación (no aprendizaje de trabajo reusable): se preservó en la evidencia, no en un archivo de `03-aprendizaje-continuo/`.
+- [x] Referencias a tareas o mejoras dentro de un flujo → se actualizan a la ruta nueva. (Ya corregidas en la Fase 6 para los 21 flujos; verificado de nuevo en esta fase, sin pendientes.)
+- [x] **No se inventan ni se reescriben reglas.** Si una regla está incompleta, es ambigua o contradice otro flujo, se pregunta a Victor en el chat del Worker (D6) y se registra en el progreso. No surgió ningún caso así en esta revisión.
+- [x] Registrar en la evidencia el antes/después de cada flujo modificado (o "sin cambios") para el Auditor.
+- [x] Revisión de fuentes de verdad de la Fase 7B.
 
 ## Fase 8 — Navegación final y vistas derivadas
 
@@ -761,9 +761,9 @@ Objetivo: que cada flujo de `04-flujos-de-negocio/` contenga solo lo que §3.7 p
 - [x] Ningún archivo se eliminó sin autorización (§10.3).
 - [ ] Los artifacts de evidencia huérfanos (§4.6) quedan enlazados. **Parcial:** Sub-lote 2 y Dashboard/Curva S sí; Matriz de Accesos queda sin enlazar a propósito, por no tener dueño único claro (§14) — decisión pendiente de Victor.
 - [x] Los artifacts *Flujo SDD a Cierre* y *Recorrido del Plan* coinciden con este plan, con una limitación menor de estructura anotada como pendiente (§14.1, punto 6).
-- [ ] **Agregado en la actualización del plan (2026-09-27):** la convención de nombres de chat (§2.9) se conserva íntegra tras la migración y los chats de este plan la cumplen.
-- [ ] **Agregado en la actualización del plan (2026-09-27):** ninguna de las 31 reglas vigentes de §4.8 se perdió; las que cambian lo hacen solo por decisiones del Gate 1.
-- [ ] **Agregado en la actualización del plan (2026-09-27):** los flujos de negocio contienen solo reglas funcionales; lo retirado quedó preservado (Fase 7B).
+- [x] **Agregado en la actualización del plan (2026-09-27):** la convención de nombres de chat (§2.9) se conserva íntegra tras la migración y los chats de este plan la cumplen.
+- [x] **Agregado en la actualización del plan (2026-09-27):** ninguna de las 31 reglas vigentes de §4.8 se perdió; las que cambian lo hacen solo por decisiones del Gate 1.
+- [x] **Agregado en la actualización del plan (2026-09-27):** los flujos de negocio contienen solo reglas funcionales; lo retirado quedó preservado (Fase 7B).
 
 ---
 
@@ -831,9 +831,9 @@ Estados: `Sin verificar` / `Conforme` / `Observado` / `No aplica`. La evidencia 
 | PL-22 | 2–9 | Revisión de fuentes de verdad registrada en cada fase | Entradas en el progreso, una por fase (2 a 9) | Conforme |
 | PL-23 | 9 | Hallazgos consolidados en §12–§14 y propuestas normativas anotadas para el Auditor | Secciones llenas (ver abajo) | Conforme |
 | PL-24 | 2–9 | Ningún archivo eliminado sin autorización | `git log --diff-filter=D --name-only ab4bd63..HEAD`: 9 archivos, los 9 autorizados (§10.3-A o excepción de Gate 1) | Conforme |
-| PL-25 | 2 y 4 | Chat del Worker renombrado según §2.9; convención de nombres de chat (patrón, jerarquía 1–4, `hist_`, no se borran) completa en `03-entorno-git-y-worktrees.md` y regla universal en `03-sesiones-contexto-y-handoff.md` | Nombre del chat en el progreso; archivos | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
-| PL-26 | 2–9 | Las 31 reglas de §4.8 están en su destino (una por una) | Tabla de §4.8 con columna "verificado en" (archivo y sección) en la evidencia | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
-| PL-27 | 7B | 21 flujos revisados contra §3.7; contenido retirado preservado; sin reglas inventadas | Antes/después por flujo en la evidencia | Sin verificar — agregado en la actualización del plan del 2026-09-27, se completa en esta misma actualización |
+| PL-25 | 2 y 4 | Chat del Worker renombrado según §2.9; convención de nombres de chat (patrón, jerarquía 1–4, `hist_`, no se borran) completa en `03-entorno-git-y-worktrees.md` y regla universal en `03-sesiones-contexto-y-handoff.md` | Nombre del chat en el progreso; archivos | Conforme |
+| PL-26 | 2–9 | Las 31 reglas de §4.8 están en su destino (una por una) | Tabla de §4.8 con columna "verificado en" (archivo y sección) en la evidencia | Conforme (4 de 31 cambian por D1, generando 3 propuestas nuevas para el Auditor en §14.1) |
+| PL-27 | 7B | 21 flujos revisados contra §3.7; contenido retirado preservado; sin reglas inventadas | Antes/después por flujo en la evidencia | Conforme |
 
 Puntos de commit sugeridos (~35%): tras PL-06, tras PL-13 y tras PL-24.
 
@@ -922,6 +922,7 @@ Se reportan a Victor. No se borra nada por cuenta propia.
 - **Entradas de `resumen-checklists.md` sin un único plan dueño** (Fase 7): la introducción del archivo (metodología de la tabla, regla de "toda implementación debe tener su checklist"), la nota "Cómo se actualiza esta tabla", y los totales generales por flujo (020, 010) no pertenecen a un solo archivo de plan — se decompusieron por fila hacia el plan de cada tema (ver §4.5), y los totales/decisión pendiente de tarifa retroactiva del flujo 010 se anexaron al resumen de `2026-09-21-pr-fase-1-pipeline-rdt.md` por ser el primero cronológicamente. La metodología general de la tabla no se conserva como documento aparte (decisión 6 de §6.1): quien retome el patrón de "resumen de checklists" en el futuro parte de esta nota, no de un archivo vigente.
 - ~~Rutas citadas en `AGENTS.md`/`README.md` que ya no existen: `Sistema hibrido/`, `plantillas/`, `RDTs movimiento de tierra.../`, `memoria.md`, `control_de_proyectos.txt`, `.cursor/rules/*`.~~ **Resuelto en la Fase 8:** quitadas de ambos archivos (verificado con `find`/`ls` que ninguna existe).
 - `.worktrees/` está excluido en `.gitignore` (por compatibilidad, como indica §1 del plan) pero **verificado que no existe como carpeta en este repositorio** (`ls .worktrees` → no existe). Consistente con que los worktrees viven en `py_control_proyectos_web`, no acá.
+- **`docs/04-flujos-de-negocio/16-paneles.md` tiene HTML de copia/pega sin limpiar** (bloques `<pre><figure>...` de una herramienta externa, en vez de bloques de código Markdown) y estructura algo repetitiva (una sección de "Estado de implementación" narrada dos veces, con formato distinto). Detectado en la Fase 7B. No es una regla de negocio perdida ni bitácora de agentes — es deuda de formato. No se reescribe sin autorización explícita (Fase 7B: "no se inventan ni se reescriben reglas"); se reporta para que Victor decida si vale la pena limpiarlo en una tarea aparte.
 
 ---
 
@@ -935,7 +936,9 @@ El Worker no aplica ninguna de estas por su cuenta — quedan para que el Audito
 4. **`AGENTS.md` § Flujo con Orquestador — encabezado "Tareas de implementación, Mejoras continuas y Reglas de negocio".** Título de sección con la terminología anterior a la reestructuración; el Worker no lo tocó por ser contenido (título), no ruta. Queda a criterio del Auditor renombrarlo o dejarlo (ver evidencia del comando de §4.7).
 5. **`docs/00-sistema` ya no existe como ruta.** Los tres documentos que vivían ahí (`roles-y-flujo.md`, `gestion-de-sesiones-y-contexto.md`, `convenciones-de-trabajo.md`) fueron eliminados en la Fase 7 (§10.3-A) tras verificar que su contenido está íntegro en `00-estandar-agentes/` y `01-contexto-repositorio/`. Si algún documento fuera del repositorio (fuera del alcance de este Worker) todavía referencia `docs/00-sistema/`, quedará roto; el Auditor puede querer verificar repositorios o comunicaciones externas que no están al alcance de este plan.
 6. **Artifact *Flujo SDD a Cierre*: estructura de 14 nodos vs. los 18 pasos numerados.** Se corrigieron los datos incorrectos (evidencia, worktree, ruta del diagrama) pero la simulación interactiva sigue usando su propio conteo de nodos (combina algunos pasos). Alinear 1:1 con la numeración de 18 pasos de `04-flujo-sdd-y-planes.md` es un rediseño de estructura, no una corrección de dato — el Auditor puede proponerlo como mejora de la vista derivada.
-7. **Decisión pendiente: cómo se lleva a `main` real el trabajo de esta rama.** Ver el hallazgo de entorno en el progreso y en `01-contexto-repositorio/03-entorno-git-y-worktrees.md`. No es una propuesta de cambio de fuente de verdad, pero es una decisión que excede el alcance del Worker y que el Auditor/Orquestador deben resolver antes o durante el Gate 2.
+7. **Resuelto durante la actualización del plan (2026-09-27):** el trabajo de la rama designada por el harness ya se mergeó y pusheó a `main` (commit `cbfdc39`), por instrucción explícita de Victor, verificado como fast-forward limpio antes de pushear. Se deja el registro para el Auditor porque el plan (§2.6, §7) seguía asumiendo "main directo" sin contemplar este escenario de entorno — el Auditor puede evaluar si conviene anotar esta excepción de forma más visible en el propio plan o en el estándar.
+8. **`AGENTS.md` — F6 (tres Gates en lugar de "dos puntos de Victor") y F14 (entorno local por defecto).** El cruce de reglas de §4.8 detectó que `AGENTS.md` § Flujo con Orquestador describe el modelo antiguo de "Victor participa en dos puntos" (plan y cierre); D1 (el diagrama manda) agrega el Gate Spec como tercer punto, y fija "local" como entorno por defecto en vez de "híbrido, según disponibilidad". Ambos son cambios de contenido normativo, no de ruta — quedan para que el Auditor los proponga y el Orquestador los aplique tras el Gate 2.
+9. **`README.md` (raíz) — F25 (el Worker escribe mejoras de trabajo al consolidar, sin pedir autorización previa para esa escritura puntual) y F29 (la excepción D1 a "ante contradicción se consulta a Victor": en el flujo de trabajo con roles, manda el diagrama, no el plan).** `README.md` § Ciclo de mejora continua todavía dice que una mejora "se traslada solo con autorización explícita de Victor", lo que D1/D25 ajustan (el Worker la escribe directamente al consolidar; la promoción a norma central sí sigue necesitando Gate 2). Contenido normativo, no ruta — mismo camino: Auditor propone, Gate 2 aprueba, Orquestador aplica.
 
 ---
 

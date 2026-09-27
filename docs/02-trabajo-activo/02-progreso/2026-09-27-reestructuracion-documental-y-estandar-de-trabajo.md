@@ -4,7 +4,7 @@
 
 ## Estado general y fase actual
 
-**Entregado al Orquestador.** Worker asignado tras el Gate 1 (2026-09-27), Fases 2–9 completas. Pendiente: Auditoría y Gate 2 (fuera del alcance de este Worker).
+**Reabierto (2026-09-27, actualización de Victor).** Fases 2–9 originales completas y entregadas; Victor pidió, sobre esa entrega, mergear los 2 commits nuevos de `main` (§2.9, §4.8, Fase 7B), completar 6 huecos detectados por `grep`, ejecutar la Fase 7B (nueva) y renombrar el chat. En ejecución.
 
 ## Roles y estado
 
@@ -32,17 +32,21 @@
 
 - Fase 9: Punch List completa en la evidencia (24 ítems, 23 Conforme sin reservas + 1 Conforme con limitación anotada). Hallazgos consolidados en el plan: §12 (3 mejoras de trabajo, ninguna promovida a archivo individual — quedan anotadas para el Auditor), §13 (ninguna regla de negocio), §14 (7 huérfanos/hallazgos, 2 ya resueltos en el camino), §14.1 (7 propuestas normativas nuevas para el Auditor). Encabezado del plan actualizado a "entregado al Orquestador".
 
+- **Actualización del plan (2026-09-27), completa:** los 6 huecos de §4.8 completados (F3 → `04-pruebas-y-evidencia.md`; F5 → `04-flujo-sdd-y-planes.md`; F13 → `03-entorno-git-y-worktrees.md`; F16 → `03-entorno-git-y-worktrees.md` + `03-sesiones-contexto-y-handoff.md`; F29 → `02-arquitectura-y-fuentes-de-verdad.md`; F31 → plantilla `02-plan.md`); de paso, F22 y F24 (que ya tenían destino pero les faltaban los ejemplos/detalle exactos que pedía §4.8) también se completaron. Chat renombrado a `nube_3.worker_reestructuracion-documental`. Fase 7B ejecutada: 21 flujos revisados contra §3.7, 2 modificados (`11-dashboard.md`, `21-curva-s.md` — se retiró bitácora de implementación, sin tocar ninguna regla de negocio), 19 sin cambios, contenido retirado preservado íntegro en la evidencia. Tabla completa de §4.8 (31 filas, "verificado en") en la evidencia (PL-26). Punch List actualizada: PL-25/26/27 Conforme. §14.1 ampliado a 9 propuestas normativas (agregadas F6/F14 en `AGENTS.md` y F25/F29 en `README.md`, y resuelto el punto 7 — ya no es "pendiente", el merge a `main` ya se hizo). §6 completo: 3 criterios nuevos marcados `[x]`. Un hallazgo de formato nuevo (HTML sin limpiar en `16-paneles.md`) anotado en §14, sin reescribir sin autorización.
+
 ## Trabajo actual
 
-Ninguno — entrega completa. Próximo actor: Auditor.
+Ninguno — actualización completa. Próximo actor: Auditor (sobre el estado en `main`, no en la rama antigua).
 
 ## Pendientes
 
-Fuera del alcance de este Worker: Auditoría (verificación de rama, cumplimiento de SDD/plan/Punch List/evidencia, informe `APLICAR AHORA`/`PROPONER A RESPONSABLE`/`NO PROMOVER`/`PROPONER SKILL`), consolidación del Orquestador, Gate 2, y las tres acciones de cierre (merge — no aplica, este plan no tiene código —, fuentes de verdad aprobadas, Skill si corresponde) y el mensaje de cierre.
+Auditoría, Gate 2 y cierre siguen fuera del alcance del Worker.
 
 ## Commits, ramas y worktrees usados
 
-Rama `main` de `pg_control_proyectos`, directo, sin worktree (§2.6 y §7 del plan). Commits registrados abajo a medida que se pushean.
+Fases 2–9 originales: rama designada por el harness (`claude/reestructuracion-documental-pg-control-jvj5mf`), no `main` directo (ver hallazgo de entorno abajo — esta línea decía "main" por error, corregido el 2026-09-27 en la actualización). Commits `5fe891b`, `b412276`, `d8c1833`, `73455c0`, `d571f21`, todos en esa rama.
+
+**Actualización del plan (2026-09-27):** por instrucción explícita de Victor, se hizo `git merge origin/main` (2 commits nuevos: `0a69870`, `350933a`) en esa misma rama, resolviendo el conflicto en el archivo del plan a mano (commit `cbfdc39`), y se pusheó el resultado directo a `main` con `git push origin HEAD:main` (fast-forward limpio, verificado con `git merge-base --is-ancestor origin/main HEAD` antes de pushear). Desde ese punto, checkout a `main` local (`git checkout main` + `git merge --ff-only origin/main`) y todo el trabajo que sigue de esta actualización es commit + push directo a `main`, como pide el plan.
 
 ## Hallazgos registrados en el momento
 
@@ -68,8 +72,22 @@ Para el Auditor: leer el plan completo (especialmente §9 Punch List, §12–§1
 - **Fase 6:** los 21 flujos de negocio son ahora la fuente de verdad en su ubicación definitiva (`04-flujos-de-negocio/`); no se cambió ninguna regla funcional, solo ubicación, nombre de archivo (el 19) y los enlaces que la migración rompía. El único contenido normativo tocado fue la regla de lectura de `04-flujos-de-negocio/README.md`, alineada a D10 (ya aprobada en el Gate 1, no es una decisión nueva del Worker). `design.md` queda como fuente de verdad visual en su ubicación definitiva. Fuentes de verdad revisadas: sin cambios normativos nuevos más allá de aplicar D10 (ya aprobado).
 - **Fase 8:** único punto de este plan donde el Worker toca `AGENTS.md`/`README.md` por diseño (excepción de §10.1, solo rutas). Verificado con `grep` que no se cambió ningún contenido normativo, solo rutas y la sección de navegación de `docs/README.md` que el propio plan autoriza reescribir. Fuentes de verdad revisadas: los tres documentos centrales (`AGENTS.md`, `README.md`, `docs/README.md`) quedan consistentes entre sí; sin cambios normativos nuevos pendientes de Gate 2 más allá de los ya anotados en la Fase 3 (D10 en `AGENTS.md`) y el título de sección menor anotado en la evidencia.
 - **Fase 9:** no se creó ni modificó ninguna fuente de verdad central en esta fase — es consolidación de lo ya hecho (Punch List, hallazgos, propuestas). Fuentes de verdad revisadas: sin cambios nuevos; todas las propuestas normativas quedan explícitamente para el Auditor en §14.1 del plan, ninguna se aplicó por cuenta propia del Worker.
+- **Fase 7B (ejecutada en la actualización del 2026-09-27):** los 21 flujos de negocio son la fuente de verdad de sus reglas; se verificó que las 2 modificaciones (`11-dashboard.md`, `21-curva-s.md`) no cambiaron ninguna regla funcional, solo retiraron bitácora de implementación ya preservada en la evidencia. No se generó ninguna regla de negocio nueva ni se contradijo ninguna existente — no hizo falta consultar a Victor (D6). Fuentes de verdad revisadas: sin cambios normativos nuevos.
 - **Fase 7:** ninguna regla de negocio se tocó. `docs/00-sistema/` (fuente de las reglas universales de roles/sesiones/convenciones) se eliminó porque su contenido ya vive íntegro en `00-estandar-agentes/` y `01-contexto-repositorio/` desde las Fases 3–4 — verificado antes de eliminar, no solo asumido. **Pendiente para la Fase 8 (ya identificado, no es un hallazgo nuevo):** `AGENTS.md` todavía enlaza a rutas de `docs/00-sistema/` que ya no existen — es exactamente el tipo de ruta que la Fase 8 corrige. Fuentes de verdad revisadas: el cambio normativo relevante (eliminar `00-sistema/`) ya estaba autorizado por §10.3-A del propio plan, no es una propuesta nueva para el Auditor.
 
 ## Handoffs
 
 _(secciones fechadas, si la tarea cambia de sesión)_
+
+### 2026-09-27 — Actualización de Victor tras la entrega de las Fases 2–9
+
+**Mensaje recibido (resumen fiel; no se ejecutó nada de él sin verificar primero):** Victor pidió, sin rehacer las Fases 2–5: (1) terminar el ítem de Fase 6 en curso sin dejarlo a medias; (2) verificar la rama con `git branch --show-current`, y si no es `main`, hacer `git fetch origin main && git merge origin/main` — señaló que en `main` hay dos commits al plan que el progreso no vio (`0a69870` y `350933a`), con §2.9 (convención de nombres de chat), §4.8 (cruce de 31 reglas vigentes → destino) y una Fase 7B nueva (adecuación de contenido de los flujos); pidió resolver el conflicto del plan conservando la ubicación nueva pero incorporando esas dos secciones, luego `git push origin HEAD:main` y trabajar desde ahí solo en `main`; también pidió corregir la línea del progreso que decía "main" sin serlo; (3) renombrar este chat a `nube_3.worker_reestructuracion-documental` (§2.9), o decirlo en el progreso si no se puede; (4) completar 6 huecos puntuales de §4.8 (F5, F13, F16, F29, F31, F3) en sus destinos; (5) seguir Fase 6 → 7 → 7B (nueva) → 8 → 9, dejando en la evidencia la tabla de §4.8 con dónde quedó cada una de las 31 reglas (PL-26); (6) registrar este mensaje y lo hecho con él, con fecha, en el progreso. Cerró preguntando en qué paso estaba esta sesión o si estaba en un bucle de error.
+
+**Verificado antes de actuar (no se asumió nada):**
+- `git branch --show-current` → confirmó que esta sesión estaba en `claude/reestructuracion-documental-pg-control-jvj5mf`, no en `main`.
+- `git fetch origin main` + `git log --oneline origin/main` → confirmó que los commits `0a69870` y `350933a` existen, con exactamente los mensajes y el contenido que Victor describió (§2.9, §4.8 con 31 filas, Fase 7B). `git show --stat` de ambos confirmó que solo tocan el archivo del plan (en la raíz, porque esa sesión nunca ejecutó la Fase 2).
+- Estado real de esta sesión al recibir el mensaje: **las Fases 2–9 originales ya estaban completas y pusheadas** (commit `d571f21`, entrega al Orquestador) — no había ningún ítem de Fase 6 a medias. Se registra así en vez de fingir que se interrumpió algo que no estaba en curso.
+
+**Qué se hizo:** `git merge origin/main` sobre la rama del Worker → 6 conflictos en el archivo del plan (Fase 2, Fase 4, Fase 9, §6, Punch List, §12 — todos por checklists `[x]` vs `[ ]` y filas nuevas), resueltos a mano conservando el trabajo ya hecho (`[x]`) y sumando las filas/ítems nuevos de `main` como pendientes de esta actualización → commit `cbfdc39`. Verificado con `git merge-base --is-ancestor origin/main HEAD` que el push sería fast-forward antes de pushear → `git push origin HEAD:main` (fast-forward limpio, sin forzar nada). Después, `git checkout main` + `git merge --ff-only origin/main` en el checkout local (el `checkout` inicial saltó a un `main` local desactualizado de antes de esta sesión — 76 commits detrás —, corregido de inmediato con el fast-forward; no se perdió nada, se verificó con `git rev-parse main origin/main` que quedaron idénticos).
+
+**Continúa en esta misma sesión, en `main`:** renombrar el chat, completar F5/F13/F16/F29/F31/F3, ejecutar la Fase 7B, y completar PL-25/26/27 con la tabla de §4.8 en la evidencia — ver el resto de este progreso a medida que se actualiza.

@@ -1,5 +1,11 @@
 # Entorno, Git y worktrees
 
+## Dónde se trabaja
+
+- **Claude (app de escritorio o web):** ejecuta el flujo completo, tanto local como en la nube — es donde corren Orquestador, Planner, Worker y Auditor.
+- **VS Code:** solo para revisar archivos y diffs, no para administrar chats/sesiones.
+- **App/web de Claude:** para visualizar chats, ver el historial y renombrarlos manualmente (cuando el agente no tiene herramienta para renombrar su propio chat).
+
 ## Regla de los dos repos (según el plan y las convenciones aprobadas)
 
 | Tipo de trabajo | Repositorio | Rama | Worktree |
@@ -45,7 +51,16 @@ En un worktree de `py_control_proyectos_web` donde `node_modules` se crea como J
 
 ## Chats
 
+Patrón de nombre (§2.9 del plan de reestructuración; convención vigente de Victor, conservada íntegra):
+
+```text
+<entorno>_<jerarquía>.<rol>_<tarea>
+```
+
+`entorno` es `local` o `nube` (verificado, no asumido); `jerarquía` es `1` Orquestador, `2` Planner, `3` Worker, `4` Auditor; `tarea` es el slug del plan. Si hay más de un Worker en la misma tarea, se diferencian por fase (`<tarea>-fase1`, `<tarea>-fase2`), no por número de Worker.
+
+- Todo chat se renombra según este patrón al empezar a trabajar en su rol y tarea. Si el agente no tiene herramienta para renombrar su propio chat, le pide a Victor que lo haga desde la app/web de Claude.
 - Un chat corresponde a una tarea o etapa clara; no se reutiliza un chat de una tarea cerrada para una tarea nueva.
 - Al cerrar una tarea, se antepone el prefijo `hist_` al nombre del chat.
 - Los chats no se borran, se renombran. Eliminar un chat requiere la misma autorización explícita que eliminar una rama o un worktree.
-- La nomenclatura completa de chats (distinción local/nube, jerarquía de roles) está en `../00-estandar-agentes/03-sesiones-contexto-y-handoff.md`.
+- La regla universal de sesiones (contexto, handoff, autonomía para crear un chat nuevo) está en `../00-estandar-agentes/03-sesiones-contexto-y-handoff.md`.

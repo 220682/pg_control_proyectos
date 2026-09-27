@@ -1,6 +1,6 @@
 # Plan — Reestructuración documental y estándar de trabajo
 
-> **Estado:** **GATE 1 PARCIAL (Victor, 2026-09-27).** Victor aprobó el plan v2, D3, D8, D9 y la autorización A, con una excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se elimina** (no se migra). **Faltan por confirmar D1, D2, D4, D5, D6, D7 y D10** (§10.2), que se tomaron del diagrama y los artifacts pero no se le presentaron. **No se asigna al Worker hasta que Victor las confirme.**
+> **Estado:** **APROBADO — GATE 1 (Victor, 2026-09-27).** Plan v2, Punch List, tablas de §4, decisiones D1–D10 (§10.2, con D1 y D10 cambiadas por Victor) y autorización A. Excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se elimina** (no se migra). Listo para asignar al Worker (§17).
 >
 > **Ejecución previa sin aprobación:** las Fases 0 y 1 fueron ejecutadas y pusheadas por un agente anterior el 2026-09-27 (commits `404ddb3` y `be53526`) cuando el plan todavía decía "Propuesto. No ejecutar hasta que Victor apruebe". Queda registrado en §11 (Registro de decisiones) y §12 (Mejoras de trabajo). La Fase 2 revisa lo creado en la Fase 1 contra este plan corregido.
 >
@@ -20,11 +20,11 @@
 
 # 0. Fuente normativa y material de referencia
 
-**Este archivo es la fuente normativa del flujo y de la reestructuración.** El diagrama y los artifacts son **vistas derivadas**: si difieren de este plan, se corrigen ellos, no el plan. La Fase 8 los alinea.
+**El diagrama es la fuente normativa del flujo de trabajo (D1, Victor 2026-09-27).** Este plan y los artifacts se ajustan a él: si difieren, se corrige el plan o el artifact, no el diagrama. Si el diagrama no cubre un punto, aplica el plan. Las decisiones explícitas de Victor en el Gate 1 que cambian el diagrama (D2 nombre de rama en el Mermaid, D6 consulta del Worker, D10 lectura por rol) se aplican al diagrama en la Fase 3.
 
 | Recurso | Ubicación | Rol | Estado frente a este plan |
 |---|---|---|---|
-| Diagrama commit/push/merge/gates | `diagrama-commit-push-merge-gates.md` (raíz) → destino `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md` (§4.3) | Vista derivada: tabla por rol + Mermaid | Base de §3.2 (`04-flujo-sdd-y-planes.md`) y de la tabla de lectura mínima. **Inconsistencia interna a corregir:** la tabla dice `<entorno>-worker-N` y el Mermaid dice `work-N`. |
+| Diagrama commit/push/merge/gates | `diagrama-commit-push-merge-gates.md` (raíz) → destino `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md` (§4.3) | **Fuente normativa del flujo** (D1): tabla por rol + Mermaid | Base de §3.2 (`04-flujo-sdd-y-planes.md`) y de la tabla de lectura mínima. **Inconsistencia interna a corregir:** la tabla dice `<entorno>-worker-N` y el Mermaid dice `work-N`. |
 | Artifact **Flujo SDD a Cierre** | https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd | Vista derivada interactiva del flujo | Base de la secuencia unificada de §3.2. **A corregir:** dice que la evidencia va "en el propio archivo del plan" (contradice §2.4) y mezcla la rama `<entorno>-worker-N` con el worktree `.worktrees/work-N/`. |
 | Artifact **Recorrido del Plan** | https://claude.ai/artifact/YcT7akcjY5L2DXn1wPEeyx | Vista derivada: simulación fase por fase | Sus ítems adicionales se incorporaron a §5. **A corregir:** numeración de fases (ahora 0–9), conteo "7 de 11" (son 13 tareas), estado local que no refleja lo ya ejecutado. |
 | Artifact **Punch List de Mejoras** | https://claude.ai/artifact/8yHL1cn8auxbYghuRoiNhd | Evidencia externa (checklist visual) | Enlazado hoy solo desde `docs/README.md:81`. Se conserva el enlace al reescribir `docs/README.md`. |
@@ -91,17 +91,17 @@ El README no duplica el contenido de sus archivos hijos.
 
 ## 2.3. Convención de lectura mínima
 
-Regla tomada del diagrama ("Regla general de lectura mínima"): **ningún rol lee todo `docs/` de entrada.** Cada rol lee:
+Regla tomada del diagrama ("Regla general de lectura mínima"), **ajustada por Victor en el Gate 1 (D10)**: **el Orquestador, el Planner y el Auditor leen todos los flujos de negocio; el Worker lee solo los que toca su parte.** Ningún rol lee todo `docs/` de entrada. Cada rol lee:
 
 1. `AGENTS.md` y `docs/README.md` para ubicarse.
 2. El estándar que corresponde a su rol (según `00-estandar-agentes/00-indice.md`).
 3. El plan/progreso/evidencia del tema activo.
-4. **Solo** los flujos de negocio y el `design.md` que el plan indica como afectados.
+4. Flujos de negocio: **Orquestador, Planner y Auditor, todos**; **Worker, solo los que el plan indica afectados por su parte**. `design.md` solo si el plan toca UI.
 5. El **índice** (no el contenido completo) de `03-aprendizaje-continuo/`, abriendo una mejora completa solo cuando su etiqueta coincide con lo que se está por hacer.
 
 Victor no tiene lectura obligatoria: decide el objetivo y aprueba en los Gates con lo que el rol correspondiente le presenta.
 
-> Esta regla **reemplaza** la instrucción vigente de AGENTS.md y `docs/README.md` de "leer todos los Flujos de trabajo para contexto general". El cambio en AGENTS.md es normativo → lo propone el Auditor y lo aplica el Orquestador tras el Gate 2 (§5, cierre).
+> Esta regla **reemplaza** la instrucción vigente de AGENTS.md y `docs/README.md` de "leer todos los Flujos de trabajo para contexto general" (que hoy aplica a todos los roles). En la Fase 3 se ajusta también la columna de lectura y la "Regla general de lectura mínima" del diagrama. El cambio en AGENTS.md es normativo → lo propone el Auditor y lo aplica el Orquestador tras el Gate 2 (§5, cierre).
 
 ## 2.4. Convención de documentos por plan
 
@@ -287,7 +287,7 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 18. Cierre — el plan es 100% recién cuando todo está pusheado/mergeado; el archivo del plan nunca se borra ni se resume
 ```
 
-- Incluye el diagrama Mermaid y la tabla por rol del archivo original, ya corregidos (rama `<entorno>-worker-N` en ambos; los mismos 18 pasos) y sin nombres propios de repositorio (se reemplazan por "repositorio de documentación" / "repositorio de código"; los nombres reales van en `01-contexto-repositorio/`).
+- Incluye el diagrama Mermaid y la tabla por rol del archivo original (fuente normativa, D1), ya corregidos según las decisiones del Gate 1: rama `<entorno>-worker-N` en ambos (D2), consulta del Worker a Victor en su propio chat (D6), lectura de flujos por rol (D10) y los mismos 18 pasos y sin nombres propios de repositorio (se reemplazan por "repositorio de documentación" / "repositorio de código"; los nombres reales van en `01-contexto-repositorio/`).
 - Referencia cruzada visible a la FAQ del flujo del Orquestador (en `historico.md`).
 
 ### `05-aprendizaje-continuo.md`
@@ -408,7 +408,7 @@ Después de **cada sesión relevante, cada fase de plan, cada implementación y 
 └── 21-curva-s.md
 ```
 
-- `README.md`: índice de los 21 flujos; regla de lectura mínima (§2.3: solo los flujos que el plan indica afectados); regla de actualización (una regla se escribe una vez en su flujo dueño; los demás enlazan).
+- `README.md`: índice de los 21 flujos; regla de lectura por rol (§2.3: Orquestador, Planner y Auditor leen todos; el Worker solo los afectados por su parte); regla de actualización (una regla se escribe una vez en su flujo dueño; los demás enlazan).
 - `NN-<tema>.md`: funcionamiento, datos, reglas, estados, roles y restricciones del flujo. Se actualiza solo con reglas validadas por Victor. No contiene bitácoras, estados de plan ni procedimientos de agentes.
 
 ## 3.8. `05-diseno-y-referencias/`
@@ -764,16 +764,16 @@ El objeto de este plan es construir el estándar y la navegación. Por eso, **co
 
 | # | Decisión | Fuente | ¿Confirma Victor? |
 |---|---|---|---|
-| D1 | El plan es la fuente normativa; el diagrama y los artifacts son vistas derivadas | Instrucción de Victor (2026-09-27) | [ ] pendiente |
-| D2 | Rama de Worker: `<entorno>-worker-N`; `work-N` queda obsoleto | Tabla del diagrama, *Flujo SDD*, corrección del 2026-09-23 | [ ] pendiente |
+| D1 | **El diagrama es la fuente normativa del flujo**; el plan y los artifacts se ajustan a él (si no cubre un punto, aplica el plan) | Victor, Gate 1 (cambió la propuesta original: "manda el plan") | [x] |
+| D2 | Rama de Worker: `<entorno>-worker-N`; `work-N` queda obsoleto | Tabla del diagrama, *Flujo SDD*, corrección del 2026-09-23 | [x] |
 | D3 | Los worktrees viven en el repo de la app, en una subcarpeta con el nombre de la rama | Diagrama (Worker implementa en `py_control_proyectos_web`) | [x] |
-| D4 | El plan embebe Spec, Punch List, auditoría y cierre; progreso y evidencia van aparte | Diagrama (el Auditor lee plan + progreso + evidencia), decisión 2, READMEs de la Fase 1 | [ ] pendiente |
-| D5 | El Gate 1 autoriza toda la implementación, incluidos los commits del Worker; sin aprobaciones intermedias | *Flujo SDD* | [ ] pendiente |
-| D6 | El Worker consulta a Victor en el momento ante un conflicto de negocio no anticipado | *Flujo SDD* (contradice el "punto único de contacto" de AGENTS.md → propuesta de ajuste al Auditor) | [ ] pendiente |
-| D7 | Después del Gate 2: merge, fuentes de verdad y Skill son independientes; el mensaje de cierre va al final | Diagrama + *Flujo SDD* | [ ] pendiente |
+| D4 | El plan embebe Spec, Punch List, auditoría y cierre; progreso y evidencia van aparte | Diagrama (el Auditor lee plan + progreso + evidencia), decisión 2, READMEs de la Fase 1 | [x] |
+| D5 | El Gate 1 autoriza toda la implementación, incluidos los commits del Worker; sin aprobaciones intermedias | *Flujo SDD* | [x] |
+| D6 | El Worker consulta a Victor **en el propio chat del Worker** ante un conflicto de negocio no anticipado, y registra pregunta y respuesta en el progreso | *Flujo SDD* (contradice el "punto único de contacto" de AGENTS.md → propuesta de ajuste al Auditor) | [x] |
+| D7 | Después del Gate 2: merge, fuentes de verdad y Skill son independientes; el mensaje de cierre va al final | Diagrama + *Flujo SDD* | [x] |
 | D8 | El handoff se escribe como sección fechada al final del progreso | Propuesta del Planner (no había destino) | [x] |
 | D9 | La tarea abierta `paquetes-de-trabajo` se mueve tal cual; progreso y evidencia se crean al retomarla. `cronograma-import` **se elimina** (Victor, Gate 1) | Propuesta del Planner (decisión 4 no lo cubría) | [x] |
-| D10 | Los flujos se leen con la regla de lectura mínima, no "todos" | Regla general de lectura mínima del diagrama | [ ] pendiente |
+| D10 | **Orquestador, Planner y Auditor leen todos los flujos de negocio; el Worker solo los que toca su parte** | Victor, Gate 1 (cambió la propuesta original: lectura mínima para todos) | [x] |
 
 ## 10.3. Autorizaciones de eliminación solicitadas
 
@@ -785,7 +785,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 
 - [x] Victor aprueba el plan corregido (v2), la Punch List (§9) y las tablas de §4 (2026-09-27), con la excepción de la tarea de cronograma, que se elimina.
 - [x] Victor confirma D3, D8 y D9 (D9 ajustada: cronograma se elimina).
-- [ ] Victor confirma D1, D2, D4, D5, D6, D7 y D10 (no presentadas individualmente todavía).
+- [x] Victor confirma D1, D2, D4, D5, D6, D7 y D10, presentadas una por una (D1 y D10 con cambios).
 - [x] Victor autoriza A (§10.3).
 - [x] La v2 está en `main` (commit `421c6bc`).
 - [ ] El Orquestador asigna el Worker con el prompt de §17.
@@ -803,6 +803,7 @@ Sin autorización, cada original se mueve con `git mv` a `docs/06-material-de-ap
 | 2026-09-27 | Plan v2: decisiones D1–D10 (§10.2) pendientes de confirmar en el Gate 1 | Planner (sesión de corrección) |
 | 2026-09-27 | **Gate 1 parcial**: plan v2, Punch List, tablas de §4, D3, D8, D9 y autorización A. Excepción: `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` se elimina en lugar de migrarse. D1, D2, D4–D7 y D10 quedan pendientes de su confirmación | Victor |
 | 2026-09-27 | Corrección: el Planner había registrado D1–D10 como confirmadas cuando Victor solo vio D3, D8 y D9. Se corrigió el registro | Planner (sesión de corrección) |
+| 2026-09-27 | **Gate 1 completo.** Victor responde las 7 pendientes: D2, D4, D5 y D7 como se propusieron; **D1: manda el diagrama** (no el plan); **D6: el Worker consulta en su propio chat**; **D10: Orquestador, Planner y Auditor leen todos los flujos, el Worker solo los suyos** | Victor |
 
 ---
 

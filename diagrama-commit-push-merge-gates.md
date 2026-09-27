@@ -13,8 +13,9 @@
 | **HALLAZGOS** (negocio, mejoras, evidencia) | Worker | pg_control_proyectos | `main` | commit + push directo a `main` | antes de entregar el resultado |
 | **AUDITORÍA** (informe) | Auditor | pg_control_proyectos | `main` | commit + push directo a `main` | al terminar de revisar |
 | *(GATE 2 — Victor aprueba el cierre)* | Victor | — | — | — | antes de publicar |
-| **MERGE** (código) | Orquestador | py_control_proyectos_web | `<entorno>-worker-N` → `main` | **merge** | solo tras Gate 2 |
-| **MENSAJE DE CIERRE** | Orquestador | pg_control_proyectos | `main` | commit + push del mensaje de cierre (confirma merge hecho + 100% pusheado) **registrado dentro del propio archivo del plan** | inmediatamente después del merge |
+| **MERGE** (código) | Orquestador | py_control_proyectos_web | `<entorno>-worker-N` → `main` | **merge** | solo tras Gate 2 — ocurre en paralelo con la fila de abajo |
+| **ACTUALIZAR FUENTES DE VERDAD** (solo si el Auditor propuso cambios y Victor los aprobó) | Orquestador | pg_control_proyectos | `main` | commit + push directo a `main` (AGENTS.md / README raíz / docs/README.md / estándar) | junto con el merge, tras Gate 2 |
+| **MENSAJE DE CIERRE** | Orquestador | pg_control_proyectos | `main` | commit + push del mensaje de cierre (confirma merge hecho + 100% pusheado) **registrado dentro del propio archivo del plan** | inmediatamente después de las dos filas de arriba |
 
 ## Mismo flujo, en diagrama (una sola línea, sin cruces)
 
@@ -27,7 +28,8 @@ flowchart TD
     N4["HALLAZGOS (negocio, mejoras, evidencia)<br/>Worker<br/>rama: main — commit + push a main"]
     N5["AUDITORÍA<br/>Auditor<br/>rama: main — commit + push a main"]
     G2{"GATE 2<br/>¿Victor aprueba el cierre?"}
-    N6["MERGE (código)<br/>Orquestador<br/>work-N → main"]
+    N6a["MERGE (código)<br/>Orquestador<br/>work-N → main"]
+    N6b["ACTUALIZAR FUENTES DE VERDAD<br/>(solo si el Auditor propuso y<br/>Victor aprobó)<br/>Orquestador — rama: main<br/>commit + push a main"]
     N7["MENSAJE DE CIERRE<br/>Orquestador<br/>rama: main — commit + push del mensaje<br/>('merge hecho, 100% pusheado') dentro del plan"]
     N8(["CIERRE<br/>plan = 100%"])
 
@@ -35,12 +37,14 @@ flowchart TD
     G1 -- No, ajustar --> N2
     G1 -- Sí --> N3 --> N4 --> N5 --> G2
     G2 -- No, vuelve al Worker --> N3
-    G2 -- Sí --> N6 --> N7 --> N8
+    G2 -- Sí --> N6a --> N7
+    G2 -- Sí --> N6b --> N7
+    N7 --> N8
 
     classDef gate fill:#fbe7e4,stroke:#c0392b,color:#15233a,stroke-width:2px;
     classDef paso fill:#e3ebfa,stroke:#2b5fb0,color:#15233a;
     class G1,G2 gate;
-    class N1,N2,N3,N4,N5,N6,N7,N8 paso;
+    class N1,N2,N3,N4,N5,N6a,N6b,N7,N8 paso;
 ```
 
-**Léelo así, de arriba a abajo:** Spec → Plan → (¿Victor dice sí?) → Worker programa en su propia rama → Worker anota hallazgos en este repo → Auditor revisa → (¿Victor dice sí?) → se mergea el código → el Orquestador escribe el mensaje de cierre (merge hecho + 100% pusheado) dentro del propio archivo del plan → cierre. Las dos únicas flechas que "suben" son cuando Victor dice **No** en un Gate — ahí se vuelve al paso de antes, nada más.
+**Léelo así, de arriba a abajo:** Spec → Plan → (¿Victor dice sí?) → Worker programa en su propia rama → Worker anota hallazgos en este repo → Auditor revisa → (¿Victor dice sí?) → **dos cosas ocurren a la vez**: se mergea el código a `main`, y si el Auditor propuso cambios a una fuente de verdad y Victor los aprobó, también se pushean a `main` → recién con ambas listas, el Orquestador escribe el mensaje de cierre (merge hecho + 100% pusheado) dentro del propio archivo del plan → cierre. Las dos únicas flechas que "suben" son cuando Victor dice **No** en un Gate — ahí se vuelve al paso de antes, nada más.

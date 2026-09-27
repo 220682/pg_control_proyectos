@@ -36,11 +36,13 @@
 
 ## Trabajo actual
 
-Ninguno — actualización completa. Próximo actor: Auditor (sobre el estado en `main`, no en la rama antigua).
+Ninguno. Auditoría completada (2026-09-27) — Informe en §15 del plan, recomendación "Requiere corrección" (menor). Próximo actor: un Worker, para corregir la única línea señalada, y luego Victor para el Gate 2.
 
 ## Pendientes
 
-Auditoría, Gate 2 y cierre siguen fuera del alcance del Worker.
+- **Corrección puntual señalada por el Auditor:** `docs/00-estandar-agentes/06-plantillas/02-plan.md:7` dice `Pendiente de Victor`; debe decir `Pendiente del Responsable humano` (agnosticismo de `00-estandar-agentes/`, §3.2). Verificar con `grep -rniE "victor|pg_control_proyectos|py_control_proyectos_web" docs/00-estandar-agentes/` que quede sin resultados tras el cambio.
+- Gate 2 (Victor), incluidas las 9 propuestas normativas de §14.1 (clasificadas en §15) y los 4 huérfanos de §14.
+- Cierre del plan (Orquestador), fuera del alcance del Worker.
 
 ## Commits, ramas y worktrees usados
 

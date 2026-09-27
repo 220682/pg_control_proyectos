@@ -1,6 +1,6 @@
 # Plan — Reestructuración documental y estándar de trabajo
 
-> **Estado:** **Fases 2–9 ejecutadas por el Worker (2026-09-27), incluida la actualización posterior de Victor (merge de §2.9/§4.8/Fase 7B, chat renombrado, 6 huecos completados, Fase 7B ejecutada). Entregado al Orquestador — pendiente de Auditoría y Gate 2.** Gate 1 aprobado por Victor: Plan v2, Punch List, tablas de §4, decisiones D1–D10 (§10.2, con D1 y D10 cambiadas por Victor) y autorización A. Excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se eliminó** (no se migró). Punch List completa en §9 (27/27 Conforme, 1 con limitación anotada); hallazgos en §12–§14; propuestas normativas para el Auditor en §14.1 (9 puntos). El Worker no se autoaudita ni cierra el plan (§17). Este archivo de plan vive en `main` (commit `cbfdc39` en adelante), no en la rama designada por el harness donde corrieron las Fases 2–9 originales — ver §11 y §14.1.7.
+> **Estado:** **Auditado (2026-09-27). Recomendación: Requiere corrección (menor) antes del Gate 2 — ver §15.** El Auditor verificó con `git log`/`git show --stat` que las Fases 2–9 (incluida la 7B) están en `main`, confirmó el Punch List y encontró un solo defecto real: `docs/00-estandar-agentes/06-plantillas/02-plan.md:7` nombra a "Victor" (`Pendiente de Victor`), violando el agnosticismo exigido a `00-estandar-agentes/` en §3.2. El resto del Punch List (27 ítems) y las revisiones de fuentes de verdad por fase se confirmaron correctas. Las 9 propuestas normativas de §14.1 quedaron clasificadas en §15 (4 `APLICAR AHORA` tras Gate 2, 2 `PROPONER A RESPONSABLE`, 3 `NO PROMOVER`); los 4 huérfanos de §14 quedan `PROPONER A RESPONSABLE` para el Gate 2. Pendiente: que un Worker corrija esa línea (vuelve al paso 8 del flujo) y luego el Gate 2 de Victor. Gate 1 aprobado por Victor: Plan v2, Punch List, tablas de §4, decisiones D1–D10 (§10.2, con D1 y D10 cambiadas por Victor) y autorización A. Excepción: la tarea `2026-09-23-cronograma-import-y-versatilidad-vinculo.md` **se eliminó** (no se migró). El Worker no se autoauditó ni cerró el plan (§17), conforme a lo esperado. Este archivo de plan vive en `main` (commit `cbfdc39` en adelante), no en la rama designada por el harness donde corrieron las Fases 2–9 originales — ver §11 y §14.1.7.
 >
 > **Ejecución previa sin aprobación:** las Fases 0 y 1 fueron ejecutadas y pusheadas por un agente anterior el 2026-09-27 (commits `404ddb3` y `be53526`) cuando el plan todavía decía "Propuesto. No ejecutar hasta que Victor apruebe". Queda registrado en §11 (Registro de decisiones) y §12 (Mejoras de trabajo). La Fase 2 revisa lo creado en la Fase 1 contra este plan corregido.
 >
@@ -946,7 +946,71 @@ El Worker no aplica ninguna de estas por su cuenta — quedan para que el Audito
 
 # 15. Informe de Auditoría
 
-_Pendiente. Lo escribe el Auditor con la plantilla `06-informe-auditoria.md` tras la entrega del Worker._
+## Alcance auditado
+
+Fases 2–9 del plan (incluida la Fase 7B), el Punch List de §9 (27 ítems), los hallazgos de §12–§14 y las 9 propuestas normativas de §14.1. No se audita código: este plan no toca `py_control_proyectos_web`.
+
+## Material revisado
+
+- El plan completo (este archivo), el progreso y la evidencia homónimos.
+- `git log --oneline main`, `git show --stat` de los commits `5fe891b`, `b412276`, `d8c1833`, `73455c0`, `d571f21`, `cbfdc39`, `87ff2e8`, `b9dfc1b`, `6335f4e`, y `git diff`/`git log --diff-filter=D` sobre el rango `ab4bd63..HEAD`.
+- Inspección directa del árbol de trabajo: estructura de las siete áreas de `docs/`, raíz del repositorio, contenido de `.vscode/extensions.json`, codificación de `2026-09-23-paquetes-de-trabajo.md`, HTML de `16-paneles.md`, agnosticismo de `docs/00-estandar-agentes/` (`grep`), y el diff exacto de `11-dashboard.md`/`21-curva-s.md` entre la Fase 6 y la Fase 7B.
+
+## Verificación de rama
+
+**Conforme.** `git log --oneline main` muestra los ocho commits de las Fases 2–9 (`5fe891b` → `b9dfc1b`) ya integrados en la historia lineal de `main`, con `cbfdc39` como el merge fast-forward que trajo el trabajo de la rama designada por el harness (`claude/reestructuracion-documental-pg-control-jvj5mf`). No hace falta `git branch --contains` porque no queda una rama de Worker separada pendiente de mergear: el propio `git log` de `main` ya contiene toda la secuencia. Verificado también que `origin/main` y el `HEAD` local coinciden tras un `fetch` + `merge --ff-only` (encontré un commit adicional, `6335f4e`, que solo registra la asignación de este Auditor — sin contenido de las Fases 2–9 — y lo incorporé antes de auditar). El hallazgo de entorno (push a rama designada en vez de `main` directo) está verificado con herramientas en el progreso, no asumido, y su reconciliación con `main` (instrucción explícita de Victor, merge fast-forward limpio) queda registrada en el Registro de decisiones (§11) y en §14.1.7.
+
+## Cumplimiento de SDD, plan, Punch List y evidencia
+
+**Cumple, con un defecto menor confirmado (ver Pendientes).** Verificación independiente, ítem por ítem relevante:
+
+- **Estructura objetivo (§1):** confirmada 1:1 contra el árbol real — raíz con `AGENTS.md`, `README.md`, `.gitignore`, `docs/` y (correctamente reportado como no conforme) `.vscode/`; las siete áreas numeradas existen completas; `00-estandar-agentes/06-plantillas/` con las 9 plantillas + README; `04-flujos-de-negocio/` con los 21 flujos (19 renombrado) + README; `05-diseno-y-referencias/` con `design.md` y los 6 mockups; `06-material-de-apoyo/` con las 5 carpetas de §4.4; `03-aprendizaje-continuo/` con las 11 mejoras + `historico.md` + `pendientes-de-promocion.md`; `02-trabajo-activo/01-planes/` con las 12 tareas históricas (13 fechadas − 1 eliminada) + este plan + `planes-futuros.md`.
+- **Eliminaciones (PL-17/PL-24, §10.3):** `git log --diff-filter=D --name-only ab4bd63..HEAD` devuelve exactamente los 8 archivos autorizados por §10.3-A (3 de `docs/00-sistema/`, `Flujos de trabajo/README.md`, `visual-companion/README.md`, `plantilla-tarea.md`, `resumen-checklists.md`) más la tarea de cronograma eliminada por la excepción del Gate 1 (D9). El noveno "borrado" que aparece en el rango (`diagrama-commit-push-merge-gates.md`) es un artefacto del `git log` sin detección de rename (`-M`): el contenido vive íntegro en `00-estandar-agentes/04-flujo-sdd-y-planes.md` desde el commit `5fe891b`. Ningún archivo se eliminó sin autorización.
+- **Fase 7B (PL-27):** el diff real de `11-dashboard.md` y `21-curva-s.md` entre `d8c1833` y `HEAD` confirma exactamente lo declarado en la evidencia — se retiraron fechas, número de PR, etiquetas "Agente C"/"Agente D" y un enlace a un archivo de plan; ninguna fila de tabla, regla de permiso o dato funcional cambió. Coincide con "sin reglas de negocio inventadas ni reescritas".
+- **Agnosticismo de `00-estandar-agentes/` (PL-05):** repetí el `grep -rniE "victor|pg_control_proyectos|py_control_proyectos_web"` sobre `docs/00-estandar-agentes/` y encontré **una aparición no reportada**: `06-plantillas/02-plan.md:7` incluye el valor de estado `Pendiente de Victor` (uno de los 6 valores heredados de `plantilla-tarea.md` para F31). Se introdujo en el commit `87ff2e8` (Fase 9 / actualización de Victor), **después** de que el `grep` de la Fase 3 (commit `5fe891b`) ya había cerrado PL-05 como Conforme — nunca se volvió a correr el `grep` tras esa edición posterior. Contradice directamente §3.2 ("`00-estandar-agentes/` ... no nombra personas: usa 'Responsable humano'"). Ver Pendientes.
+- **Disciplina de commits (§5, "cada `git mv` va en el mismo commit que sus enlaces"):** verificado un desvío real y ya autodetectado por el propio Worker: en el commit `d8c1833` (Fase 6), 4 archivos (`10-generacion-pr.md`, `14-accesos-y-restricciones.md`, `design.md`, `mockups/index.html`) quedaron con la referencia rota a `visual-companion/`/`tareas-futuras.md` un ciclo de commit, corregidos recién en `73455c0` (Fase 7) — confirmado con `git show --stat` de ambos commits. El propio progreso lo registra en "Bloqueos, riesgos y decisiones requeridas" con causa raíz (`git add` explícito que omitió 4 ediciones ya hechas) antes de que este Auditor lo buscara. No queda ningún enlace roto en el estado final (verificado independientemente).
+- **Codificación dañada, HTML sin limpiar, `.vscode/extensions.json`, Matriz de Accesos sin dueño único (§14):** los cuatro hallazgos son reales y verificados directamente (74 secuencias de UTF-8 mal codificado en `2026-09-23-paquetes-de-trabajo.md`; bloques `<pre><figure>...<svg>` de una herramienta externa en `16-paneles.md`; `.vscode/extensions.json` presente en la raíz, fuera de §4 y del criterio de aceptación; el enlace del artifact de Matriz de Accesos efectivamente no aparece en `14-accesos-y-restricciones.md` ni en `2026-09-20-sub-lote-2-alcance-proyecto.md`). En los cuatro casos el Worker se abstuvo de reescribir o mover sin autorización, tal como exige §10.3 y Fase 7B — correcto.
+- **Punch List (§9):** de los 27 ítems, confirmé por muestreo directo (no solo por lectura del plan) PL-01, PL-05 (con el matiz de arriba), PL-11, PL-13, PL-14, PL-17, PL-21, PL-24, PL-26, PL-27, y por conteo estructural el resto. Ningún ítem marcado "Conforme" resultó falso; PL-06 (plantillas) sigue siendo sustancialmente correcto pero arrastra el defecto de agnosticismo no detectado en su momento (ver arriba).
+
+## Verificación de la revisión de fuentes de verdad por fase
+
+**Conforme.** El progreso trae una entrada explícita de "Fuentes de verdad revisadas" para cada una de las 9 fases (2, 3, 4, 5, 6, 7, 7B, 8, 9), ninguna en blanco ni genérica: cada una dice qué se tocó o declara explícitamente "sin cambios normativos requeridos", cumpliendo la regla de §2.8 de que el silencio no cuenta como revisión hecha. Las propuestas normativas que surgen de esas revisiones (D10 en la Fase 3, F6/F14 heredadas de D1) están correctamente escaladas a §14.1 en vez de aplicadas directamente.
+
+## Clasificación de hallazgos
+
+**§14.1 — Propuestas normativas (9), evaluadas una por una:**
+
+1. **AGENTS.md — reemplazar "leer todos los Flujos de trabajo" por la lectura mínima por rol (D10).** `APLICAR AHORA` (tras Gate 2). D10 ya fue decidida y confirmada por Victor en el Gate 1; esto es ejecutar una decisión ya tomada, no pedirle una nueva.
+2. **AGENTS.md — reflejar la excepción de consulta directa del Worker (D6).** `APLICAR AHORA` (tras Gate 2). Mismo argumento: D6 ya está confirmada en §10.4.
+3. **AGENTS.md — mencionar explícitamente "9 plantillas" en vez de una sola.** `NO PROMOVER`. La ruta ya apunta al archivo correcto (`06-plantillas/02-plan.md`); es una precisión cosmética sin efecto funcional.
+4. **AGENTS.md — renombrar el título "Tareas de implementación, Mejoras continuas y Reglas de negocio".** `NO PROMOVER`. Verifiqué el cuerpo de esa sección en `AGENTS.md`: usa exactamente esos tres términos ("Tarea de implementación", "Mejora de trabajo / mejora continua", "Regla de negocio"). El título es consistente con el contenido, no está desactualizado.
+5. **Verificar si algo fuera de este repositorio referencia `docs/00-sistema/` (ya no existe).** `PROPONER A RESPONSABLE`. Está fuera del alcance de este plan y de este Auditor (no hay acceso a `py_control_proyectos_web` ni a comunicaciones externas desde esta sesión); Victor decide si amerita revisión aparte.
+6. **Artifact *Flujo SDD a Cierre*: alinear 14 nodos a los 18 pasos numerados.** `PROPONER A RESPONSABLE`. Es un rediseño de una vista derivada externa, no una corrección de dato ni una regla; queda a criterio y prioridad de Victor.
+7. **Registro de que el merge a `main` ya se resolvió (commit `cbfdc39`).** `NO PROMOVER` como propuesta normativa — ya está resuelto, no requiere ninguna acción adicional. El aprendizaje de fondo (verificar la política de rama del entorno antes de asumir "`main` directo") ya está correctamente registrado como candidato en §12, separado de esto.
+8. **AGENTS.md — F6 (Gate Spec como tercer punto) y F14 (entorno local por defecto).** `APLICAR AHORA` (tras Gate 2). Ambas son consecuencia directa de D1, ya confirmada por Victor en el Gate 1 (§10.4); no piden una decisión nueva, solo reflejar en `AGENTS.md` lo que el diagrama normativo ya dice.
+9. **README.md — F25 (el Worker escribe la mejora al consolidar) y F29 (excepción D1 a "ante contradicción, se consulta a Victor").** `APLICAR AHORA` (tras Gate 2). Mismo argumento que el punto 8: consecuencia directa de D1.
+
+**§14 — Huérfanos y hallazgos de formato:**
+
+- `.vscode/extensions.json` sin autorización en §4: `PROPONER A RESPONSABLE` (Victor decide: conservar, `.gitignore` o mover a `06-material-de-apoyo/`).
+- Matriz de Accesos y Restricciones sin dueño único: `PROPONER A RESPONSABLE` (Victor asigna dueño entre `14-accesos-y-restricciones.md` y `2026-09-20-sub-lote-2-alcance-proyecto.md`, o autoriza dejarla sin enlazar).
+- Codificación dañada de `2026-09-23-paquetes-de-trabajo.md`: `PROPONER A RESPONSABLE` (tarea de corrección aparte; no se toca contenido histórico sin autorización).
+- HTML sin limpiar en `16-paneles.md`: `PROPONER A RESPONSABLE` (tarea de limpieza de formato aparte; no es pérdida de regla de negocio).
+
+**`PROPONER SKILL`:** Ninguno de los 9 puntos de §14.1 califica. Sí veo un candidato fuera de §14.1: el patrón "verificar la política de rama de un harness antes de asumir push directo a `main`" (§12, tercer aprendizaje) ya se repitió en esta misma tarea (Gate 1 lo asumía, la ejecución real lo contradijo, se corrigió con verificación). Si vuelve a repetirse en otra tarea, será candidato sólido a Skill agnóstico; por ahora, con una sola repetición, queda como aprendizaje en `03-aprendizaje-continuo/`, no como Skill todavía.
+
+## Pendientes técnicos y documentales
+
+1. **Defecto confirmado, corrección mecánica de una palabra:** `docs/00-estandar-agentes/06-plantillas/02-plan.md:7` dice `Pendiente de Victor`; debe decir `Pendiente del Responsable humano` (o equivalente agnóstico), igual que el resto de `00-estandar-agentes/`. Es un desliz de copia desde `plantilla-tarea.md` (F31) que no se re-verificó con `grep` después de escribirse. No bloquea el contenido del plan ni ninguna regla de negocio, pero sí contradice una regla explícita del propio estándar que este plan construye — corresponde volver al paso 8 (Worker) para esa única línea antes de dar por cerrado PL-05/PL-06 sin reservas.
+2. Las 9 propuestas normativas de §14.1 y los 4 huérfanos de §14 quedan pendientes de la decisión de Victor en el Gate 2 (es su función, no defectos del Worker).
+3. El pool real de ramas/worktrees de `py_control_proyectos_web` sigue "por verificar" (PL-07) — no es corregible desde este repositorio ni por este Auditor.
+4. La alineación 1:1 de nodos del artifact *Flujo SDD a Cierre* sigue pendiente (PL-20, limitación ya anotada, no bloqueante).
+
+## Recomendación
+
+`Requiere corrección`.
+
+El plan está sustancialmente listo para el Gate 2: la estructura documental está completa y verificada de forma independiente, el trabajo está confirmado en `main`, las revisiones de fuentes de verdad están registradas fase por fase, ningún archivo se eliminó sin autorización, y los hallazgos/propuestas están correctamente escalados sin que el Worker se autoaprobara nada. La única corrección pendiente es mecánica y acotada a una línea (punto 1 de "Pendientes técnicos"): quitar el nombre "Victor" de `00-estandar-agentes/06-plantillas/02-plan.md` para que el estándar reusable cumpla su propia regla de agnosticismo. Hecha esa corrección puntual (y con evidencia de que el `grep` de PL-05 se volvió a correr sin resultados), el plan queda listo para el Gate 2 sin necesidad de una segunda auditoría completa.
 
 # 16. Mensaje de cierre
 

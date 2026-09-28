@@ -8,8 +8,10 @@ Este flujo es de interfaz y navegación. No reemplaza la jerarquía funcional de
 
 ## Principio central
 
-<pre class="not-prose w-full rounded font-mono text-sm font-light"><figure class="relative flex w-full flex-col overflow-hidden rounded-lg bg-subtle font-mono font-medium text-primary selection:bg-super-soft selection:text-super-primary [&_.token.deleted]:!text-negative-primary [&_.token.inserted]:!text-positive-primary text-sm"><figcaption class="flex min-h-8 items-center justify-between gap-2 border-b border-subtlest bg-soft px-2 py-1 text-xs text-secondary"><span>text</span><div class="ml-auto flex items-center gap-2"><button aria-label="Copiar código" data-state="closed" type="button" class="reset interactable select-none [-webkit-user-drag:none] outline-hidden font-medium transition-[background-color,border-color,color,opacity] duration-300 ease-out font-sans text-center items-center justify-center leading-loose whitespace-nowrap disabled:cursor-default disabled:opacity-50 data-[state=open]:text-primary data-[state=open]:bg-soft h-6 text-xs cursor-pointer inline-flex rounded-full aspect-square p-0 aspect-[9/8] text-secondary hover:text-primary hover:bg-soft"><div class="relative flex items-center justify-center"><div class="inline-flex"><svg role="img" class="inline-flex fill-current shrink-0" width="14" height="14" stroke-width="1.75" aria-hidden="true"><use xlink:href="#pplx-icon-copy"></use></svg></div><div class="absolute inset-0 flex items-center justify-center"></div></div></button></div></figcaption><span><code><span><span>Paneles = navegación y acceso
-</span></span><span>Modelo de negocio = servicio, presupuesto, partidas, paquetes y ejecución</span></code></span></figure></pre>
+```
+Paneles = navegación y acceso
+Modelo de negocio = servicio, presupuesto, partidas, paquetes y ejecución
+```
 
 El panel izquierdo no debe crear una jerarquía adicional como “servicio → panel → área → disciplina”. Solo presenta accesos del contexto actual.
 
@@ -40,7 +42,9 @@ El usuario no debe poder cambiar de servicio durante una acción iniciada desde 
 
 Ruta:
 
-<pre class="not-prose w-full rounded font-mono text-sm font-light"><figure class="relative flex w-full flex-col overflow-hidden rounded-lg bg-subtle font-mono font-medium text-primary selection:bg-super-soft selection:text-super-primary [&_.token.deleted]:!text-negative-primary [&_.token.inserted]:!text-positive-primary text-sm"><figcaption class="flex min-h-8 items-center justify-between gap-2 border-b border-subtlest bg-soft px-2 py-1 text-xs text-secondary"><span>text</span><div class="ml-auto flex items-center gap-2"><button aria-label="Copiar código" data-state="closed" type="button" class="reset interactable select-none [-webkit-user-drag:none] outline-hidden font-medium transition-[background-color,border-color,color,opacity] duration-300 ease-out font-sans text-center items-center justify-center leading-loose whitespace-nowrap disabled:cursor-default disabled:opacity-50 data-[state=open]:text-primary data-[state=open]:bg-soft h-6 text-xs cursor-pointer inline-flex rounded-full aspect-square p-0 aspect-[9/8] text-secondary hover:text-primary hover:bg-soft"><div class="relative flex items-center justify-center"><div class="inline-flex"><svg role="img" class="inline-flex fill-current shrink-0" width="14" height="14" stroke-width="1.75" aria-hidden="true"><use xlink:href="#pplx-icon-copy"></use></svg></div><div class="absolute inset-0 flex items-center justify-center"></div></div></button></div></figcaption><span><code><span><span>/mi-entorno</span></span></code></span></figure></pre>
+```
+/mi-entorno
+```
 
 Muestra las herramientas disponibles para el usuario según sus roles y permisos, aunque no pertenezcan únicamente a un solo rol.
 
@@ -102,26 +106,28 @@ La separación debe ser visual y funcional. Un chip informativo no debe activar 
 
 Con servicio seleccionado, se recomienda organizarlo así:
 
-<pre class="not-prose w-full rounded font-mono text-sm font-light"><figure class="relative flex w-full flex-col overflow-hidden rounded-lg bg-subtle font-mono font-medium text-primary selection:bg-super-soft selection:text-super-primary [&_.token.deleted]:!text-negative-primary [&_.token.inserted]:!text-positive-primary text-sm"><figcaption class="flex min-h-8 items-center justify-between gap-2 border-b border-subtlest bg-soft px-2 py-1 text-xs text-secondary"><span>text</span><div class="ml-auto flex items-center gap-2"><button aria-label="Copiar código" data-state="closed" type="button" class="reset interactable select-none [-webkit-user-drag:none] outline-hidden font-medium transition-[background-color,border-color,color,opacity] duration-300 ease-out font-sans text-center items-center justify-center leading-loose whitespace-nowrap disabled:cursor-default disabled:opacity-50 data-[state=open]:text-primary data-[state=open]:bg-soft h-6 text-xs cursor-pointer inline-flex rounded-full aspect-square p-0 aspect-[9/8] text-secondary hover:text-primary hover:bg-soft"><div class="relative flex items-center justify-center"><div class="inline-flex"><svg role="img" class="inline-flex fill-current shrink-0" width="14" height="14" stroke-width="1.75" aria-hidden="true"><use xlink:href="#pplx-icon-copy"></use></svg></div><div class="absolute inset-0 flex items-center justify-center"></div></div></button></div></figcaption><span><code><span><span>Servicio seleccionado
-</span></span><span>├── Alcance y presupuesto
-</span><span>│   ├── Alcance
-</span><span>│   ├── Presupuesto
-</span><span>│   └── Paquetes de trabajo
-</span><span>├── Planificación
-</span><span>│   └── Cronograma
-</span><span>├── Recursos
-</span><span>│   ├── Cargos (HH)
-</span><span>│   └── Equipos (HM)
-</span><span>├── Documentación
-</span><span>│   ├── Planos
-</span><span>│   └── PETS
-</span><span>├── Reportes
-</span><span>│   ├── Consolidado RDTs
-</span><span>│   └── RQ
-</span><span>└── Acciones
-</span><span>    ├── Generar RQ
-</span><span>    ├── Crear RDT
-</span><span>    └── Crear paquete de trabajo</span></code></span></figure></pre>
+```
+Servicio seleccionado
+├── Alcance y presupuesto
+│   ├── Alcance
+│   ├── Presupuesto
+│   └── Paquetes de trabajo
+├── Planificación
+│   └── Cronograma
+├── Recursos
+│   ├── Cargos (HH)
+│   └── Equipos (HM)
+├── Documentación
+│   ├── Planos
+│   └── PETS
+├── Reportes
+│   ├── Consolidado RDTs
+│   └── RQ
+└── Acciones
+    ├── Generar RQ
+    ├── Crear RDT
+    └── Crear paquete de trabajo
+```
 
 La ubicación de un chip puede ajustarse a la arquitectura visual, pero no debe duplicarse sin una razón clara.
 
@@ -143,7 +149,9 @@ No es necesario crear un chip separado para cada operación si la pantalla ya co
 
 Todas las rutas y acciones específicas de servicio deben cumplir:
 
-<pre class="not-prose w-full rounded font-mono text-sm font-light"><figure class="relative flex w-full flex-col overflow-hidden rounded-lg bg-subtle font-mono font-medium text-primary selection:bg-super-soft selection:text-super-primary [&_.token.deleted]:!text-negative-primary [&_.token.inserted]:!text-positive-primary text-sm"><figcaption class="flex min-h-8 items-center justify-between gap-2 border-b border-subtlest bg-soft px-2 py-1 text-xs text-secondary"><span>text</span><div class="ml-auto flex items-center gap-2"><button aria-label="Copiar código" data-state="closed" type="button" class="reset interactable select-none [-webkit-user-drag:none] outline-hidden font-medium transition-[background-color,border-color,color,opacity] duration-300 ease-out font-sans text-center items-center justify-center leading-loose whitespace-nowrap disabled:cursor-default disabled:opacity-50 data-[state=open]:text-primary data-[state=open]:bg-soft h-6 text-xs cursor-pointer inline-flex rounded-full aspect-square p-0 aspect-[9/8] text-secondary hover:text-primary hover:bg-soft"><div class="relative flex items-center justify-center"><div class="inline-flex"><svg role="img" class="inline-flex fill-current shrink-0" width="14" height="14" stroke-width="1.75" aria-hidden="true"><use xlink:href="#pplx-icon-copy"></use></svg></div><div class="absolute inset-0 flex items-center justify-center"></div></div></button></div></figcaption><span><code><span><span>servicio seleccionado → autorización → operación → retorno al mismo servicio</span></span></code></span></figure></pre>
+```
+servicio seleccionado → autorización → operación → retorno al mismo servicio
+```
 
 El contexto debe conservarse mediante:
 

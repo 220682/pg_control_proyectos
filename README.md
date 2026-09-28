@@ -95,14 +95,14 @@ Cada documento tiene un rol distinto; no se duplican reglas entre ellos:
 - **[docs/README.md](docs/README.md)** — manual de trabajo dentro de `docs/`: qué leer, cómo se organiza cada carpeta, ciclos de vida.
 - **[docs/04-flujos-de-negocio/NN-*.md](docs/04-flujos-de-negocio)** — reglas de negocio detalladas, una por flujo.
 
-Ante una contradicción entre estos documentos, se resuelve consultando a Victor — no se asume cuál prevalece.
+Ante una contradicción entre estos documentos, se resuelve consultando a Victor — no se asume cuál prevalece. Excepción: en el flujo de trabajo con agente Orquestador, manda el diagrama normativo del flujo (`docs/00-estandar-agentes/04-flujo-sdd-y-planes.md`), no se consulta a Victor para esa contradicción puntual.
 
 ## Ciclo de mejora continua
 
-Cuando un plan de `docs/02-trabajo-activo/01-planes/` genera un hallazgo, se traslada solo con autorización explícita de Victor — el agente no edita una fuente de verdad por su cuenta:
+Cuando un plan de `docs/02-trabajo-activo/01-planes/` genera un hallazgo, en el flujo con Worker (ver `docs/00-estandar-agentes/02-roles-y-delegacion.md`) el propio Worker lo escribe directo al consolidar su tarea, sin pedir autorización previa para esa escritura puntual en el plan/progreso. Lo que sí sigue necesitando autorización explícita de Victor es la promoción final a una fuente de verdad central — el agente no edita una fuente de verdad por su cuenta sin ese paso:
 
-- Un aprendizaje sobre **cómo se trabaja** (método, herramientas) va a `docs/03-aprendizaje-continuo/`.
-- Una **regla de negocio** (cómo se calcula/valida/comporta algo del sistema) va directo e integrada al `Flujo de trabajo` que corresponda (`docs/04-flujos-de-negocio/`) — nunca a un archivo aparte.
+- Un aprendizaje sobre **cómo se trabaja** (método, herramientas) se promueve a `docs/03-aprendizaje-continuo/`.
+- Una **regla de negocio** (cómo se calcula/valida/comporta algo del sistema) se promueve directo e integrada al `Flujo de trabajo` que corresponda (`docs/04-flujos-de-negocio/`) — nunca a un archivo aparte.
 
 Ver `docs/README.md` para el detalle y ejemplos.
 

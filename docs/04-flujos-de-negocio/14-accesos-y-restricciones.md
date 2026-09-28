@@ -61,12 +61,24 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Editar servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Editar checklist del proyecto | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Importar DP (Datos del Proyecto) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
-| Gestionar catálogo de causas CNC (alta y baja) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Gestionar usuarios (crear / editar / eliminar) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Editar perfil extendido (propio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Asignar rol administrador | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Simular otro usuario o rol («Ver como») | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Subir documento del proyecto (catálogo AL_INICIO/CIERRE) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
+| **Recursos (Personal, Cargos, Equipos, Causas CNC)** ⁶ | | | | | | | | | | | | | | |
+| Crear personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar personal existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar personal **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Crear cargo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar cargo existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar cargo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Crear equipo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar equipo existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar equipo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Crear causa CNC | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Activar / desactivar causa CNC | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar la descripción de una causa CNC **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
@@ -94,6 +106,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ⁵ Todos los roles ven el consolidado RQ (tabla 1); la descarga se dejó como estaba: administrador, jefe de proyectos, jefe de oficina técnica y logística. Ampliarla está **por decidir**.
 
+⁶ **Aprobado por Victor en el artefacto (2026-09-28), tras su propio recorrido de las interfaces del sistema.** Estado real, verificado en el código (no supuesto) antes de la propuesta: **Personal** solo permitía crear (sin editar ni eliminar); **Cargos** y **Equipos** eran de solo lectura (nadie podía crear, editar ni eliminar); **Causas CNC** permitía crear y activar/desactivar (sin editar el texto, sin borrado real). Las filas marcadas **"(por construir)"** son trabajo nuevo: no existe hoy ninguna pantalla ni API para ellas. Las que no llevan esa marca (crear personal, crear causa CNC, activar/desactivar causa CNC) ya existen y solo se confirma el rol.
+
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
@@ -105,6 +119,7 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 - **Supervisor de logística:** solo sube el registro de costos; no lo ve ni lo descarga.
 - **Planner:** ve y gestiona el Plan Maestro.
 - **Jefe de costos:** ve las interfaces con economía, igual que el supervisor de costos.
+- **Recursos (Personal, Cargos, Equipos, Causas CNC):** administrador y jefe de proyectos pueden crear, editar y eliminar (o desactivar) en los cuatro por igual, y editar el texto de una causa CNC. Construir lo que falta (editar/eliminar Personal; crear/editar/eliminar Cargos y Equipos; editar texto de Causas CNC) es trabajo nuevo para el Worker, no solo una guardia de permisos.
 
 ### Puntos por decidir
 
@@ -113,7 +128,6 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 3. Otros flujos que asignan al jefe de oficina técnica el ciclo de vida del proyecto o reservan los borrados al administrador (por ejemplo 02, 05, 06, 08, 12 y 13) contradicen esta matriz en los puntos de arriba. Se ajustan al cierre del plan, con consulta a Victor por cada contradicción (política de coherencia y trazabilidad).
 4. Si el jefe de proyectos también debe poder actualizar estado de RQ y subir registro de costos, hoy exclusivos de logística.
 5. Quién alterna el Dashboard entre Parcial y Completo (ver nota ¹).
-6. **Gestión de Recursos (hallazgo de Victor, 2026-09-28): faltaban en la matriz y son más limitadas de lo esperado.** Estado real, verificado en el código (no supuesto): **Personal** solo permite **crear** (sin editar ni eliminar); **Cargos** y **Equipos** son de **solo lectura** (nadie puede crear, editar ni eliminar); **Causas CNC** permite **crear** y **activar/desactivar** (no es editar el texto, y no hay borrado real). Las cuatro tienen el mismo permiso, `puedeVerRecursos`/`puedeGestionarCatalogoCnc` (administrador y jefe de proyectos), pero solo donde la acción existe. **Propuesta a revisar en el artefacto** (sección «Recursos»), pendiente de aprobación de Victor: administrador y jefe de proyectos deberían poder crear, editar y eliminar (o desactivar) en los **cuatro** recursos por igual, y editar el texto de una causa CNC (hoy solo se activa o desactiva). Construir editar/eliminar en Personal y Causas CNC, y crear/editar/eliminar en Cargos y Equipos, es trabajo nuevo, fuera de lo que ya existe.
 
 ### Otros grupos del nav (Costos, Oficina Técnica, Administración, SSOMA)
 

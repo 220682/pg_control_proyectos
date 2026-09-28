@@ -37,7 +37,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (87 ítems, 8 fases) redactados por el Planner, esperando el Gate 1 |
+| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (101 ítems, 9 fases; versión 2 con los cambios de Victor: guardias de rol E2 y Recursos de empresa para todos los roles) redactados por el Planner, esperando el Gate 1. Rama `local-worker-1` creada; worktree pendiente de autorización |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

@@ -13,7 +13,63 @@ Pedido por Victor el 2026-09-16. Construida el 2026-09-20 como paso previo al Su
 - **Requiere OT a cargo**: columna que anticipa el Sub-lote 2 (`docs/02-trabajo-activo/01-planes/2026-09-20-sub-lote-2-alcance-proyecto.md`). "Sí" = la acción escribe sobre una OT concreta y, cuando el sub-lote esté implementado, además del rol hará falta tener esa OT asignada en `proyecto_miembros`. "No (lectura)" = la lectura no se restringe por diseño, todos los roles habilitados ven todas las OT. "No" = la acción no está ligada a ninguna OT (usuarios, catálogos globales, contenedores).
 - Roles, columna por columna: Admin=administrador, JP=jefe_de_proyectos, JOT=jefe_de_oficina_tecnica, SOT=supervisor_oficina_tecnica, Plnr=planner, SCo=supervisor_costos, JCo=jefe_de_costos, SOp=supervisor_operativo, SLog=supervisor_logistica, SAdm=supervisor_administracion, SSO=supervisor_ssoma, Asist=asistente, RRHH=rrhh.
 
+## Matriz base de visibilidad por interfaz (decidida por Victor, 2026-09-28)
+
+**Esta es la base de restricciones y accesos por rol.** Donde una fila de las matrices posteriores (sección "Matriz de accesos") sobre **ver** una interfaz contradiga esta sección, manda esta. Las filas posteriores siguen vigentes para las **acciones** (crear, editar, subir, validar, eliminar) salvo lo que se indica en "Acciones que cambian".
+
+**Reglas decididas:**
+
+1. **Interfaces sin datos económicos: las ven los 13 roles.** Incluye Cronograma, Paquetes de trabajo, RDTs (status, archivo, consolidado), RQ (status y consolidado), Recursos de empresa (Personal, Cargos, Equipos, Causas CNC en modo consulta), ficha del servicio, grilla del portafolio, Notificaciones y Mi entorno.
+2. **Interfaces con datos económicos: solo 4 roles** — administrador, jefe de proyectos, jefe de oficina técnica y supervisor de costos.
+3. **Administrador y jefe de proyectos tienen acceso a todo.**
+4. **El jefe de oficina técnica puede crear RDT** (además de subir).
+5. **Los recursos de la empresa (catálogos) los ven todos los roles**; gestionar (alta/baja) Causas CNC sigue siendo de administrador y jefe de proyectos.
+
+Un dato es **económico** si muestra dinero (USD/S/): costos, presupuesto, valor planificado, valor ganado, costo real, índices de costo. Los RQ, los RDT y los recursos de empresa **no** muestran costos (solo descripción, cantidad, HH y metrados).
+
+`✓` puede ver · `—` no puede. Columnas: Admin=administrador, JP=jefe_de_proyectos, JOT=jefe_de_oficina_tecnica, SOT=supervisor_oficina_tecnica, Plnr=planner, SCo=supervisor_costos, JCo=jefe_de_costos, SOp=supervisor_operativo, SLog=supervisor_logistica, SAdm=supervisor_administracion, SSO=supervisor_ssoma, Asist=asistente, RRHH=rrhh.
+
+| Interfaz | ¿Datos económicos? | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Dashboard del servicio (Parcial y Completo) ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| Curva S | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| Registro de costos por servicio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — |
+| Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RQ: status | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RQ: consolidado (ver) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Ficha del servicio y grilla del portafolio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+¹ Hoy los dos modos del Dashboard muestran datos económicos (flujo 11), por eso están restringidos. Cuando exista el Dashboard **Parcial sin datos económicos** (Spec futuro, ver `planes-futuros.md`), el Parcial pasará a la sección "sin datos económicos" y solo el Completo quedará restringido.
+
+Las pantallas por servicio, además, siguen sujetas al **alcance por OT** (`proyecto_miembros`) cuando aplica; esa restricción no aparece en esta tabla.
+
+### Acciones que cambian con esta decisión
+
+| Acción | Antes | Ahora |
+|---|---|---|
+| Crear RDT estructurado ("Crear RDTs") | Admin, JP, SOp | Admin, JP, **JOT**, SOp |
+| Todas las acciones operativas (crear, editar, subir, validar, gestionar) | Según la matriz de abajo | **Administrador y jefe de proyectos pueden ejecutarlas todas** |
+
+### Conflictos operativos por resolver (no decididos; la regla de arriba se aplica al pie de la letra hasta que Victor los resuelva)
+
+1. **Planner y Plan Maestro.** El Plan Maestro es económico (muestra valor planificado en USD), pero el planner es quien lo gestiona (crear y congelar línea base). Con la regla de 4 roles el planner pierde su herramienta.
+2. **Supervisor de oficina técnica y DP.** El DP es económico y el supervisor de oficina técnica es quien lo importa. Con la regla de 4 roles pierde la pantalla donde importa.
+3. **Supervisor de logística y Registro de costos.** Es quien lo sube, pero la pantalla es económica. Con la regla de 4 roles no puede subirlo.
+4. **Jefe de costos.** No está entre los 4 roles con economía (Victor nombró "sup costos", no "jefe de costos"). Confirmar si es intencional: un jefe de costos sin acceso a costos, con su supervisor sí.
+5. **Acciones destructivas y de sistema.** "Administrador y jefe de proyectos tienen acceso a todo": falta confirmar si el jefe de proyectos también puede lo que hoy es exclusivo del administrador (asignar rol administrador, "Ver como", borrado definitivo de RDT, RQ, programas y portafolios, y crear RQ, que hoy el administrador no puede).
+6. **El propio flujo 14 tiene la regla de restricción económica marcada como pendiente** (al final del archivo, con otra lista de roles: jefe de proyectos, jefe de costos, supervisor de costos y administrador). Esta sección la reemplaza; al confirmar los conflictos anteriores se retira el texto pendiente.
+
 ## Matriz de accesos
+
+> Las filas de **ver** una interfaz de esta matriz quedan reemplazadas por la "Matriz base de visibilidad por interfaz" de arriba. Se conservan como referencia de las **acciones** por rol.
 
 ### Proyecto / contenedores
 

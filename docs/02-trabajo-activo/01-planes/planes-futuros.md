@@ -42,6 +42,15 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 - **Estado:** pendiente, sin promover.
 - **Requiere Spec/SDD:** sí — incluye una ambigüedad a resolver con Victor antes de planificar.
 
+### Dashboard Parcial sin datos económicos y restricción económica definitiva
+
+- **Origen:** pedido directo de Victor, 2026-09-28 (durante el plan `2026-09-27-paneles-servicio-persistente`). La tabla base de visibilidad por rol ya está en el flujo 14.
+- **Qué es:** (1) el Dashboard **Parcial sin datos económicos** y el **Completo con ellos** (hoy los dos muestran BAC, PV, EV, AC, CPI y EAC en USD; solo difieren en PPC/Pareto CNC y el enlace a Curva S, flujo 11); (2) cuando exista el Parcial sin economía, moverlo a la sección "sin datos económicos" de la matriz del flujo 14; (3) resolver los conflictos operativos que la regla de "4 roles con economía" deja abiertos (planner y Plan Maestro; supervisor de oficina técnica y DP; supervisor de logística y Registro de costos; jefe de costos; acciones destructivas del jefe de proyectos), listados al final de la sección nueva del flujo 14.
+- **Por qué se pospone:** es una configuración distinta de los paneles; Victor pidió que sea otro Spec.
+- **Pospuesto:** 2026-09-28.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí.
+
 ### Acceso directo a Postgres/Supabase para correr SQL
 
 - **Origen:** decisión pendiente registrada el 2026-09-17 (antes en `docs/memoria-sesion.md`, ya retirado).

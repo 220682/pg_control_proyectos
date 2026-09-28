@@ -37,7 +37,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Spec/SDD redactado — pendiente del Gate Spec |
+| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Spec/SDD aprobado (Gate Spec, 2026-09-27) — falta delegar al Planner |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

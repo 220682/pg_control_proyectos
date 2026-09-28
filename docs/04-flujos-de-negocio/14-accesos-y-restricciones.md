@@ -33,7 +33,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
 | Curva S | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
-| Registro de costos por servicio, ver y descargar ² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Registro de costos por servicio, ver ² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -45,7 +45,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 ¹ Hoy los dos modos del Dashboard muestran datos económicos (flujo 11), por eso están restringidos. Cuando exista el Dashboard **Parcial sin datos económicos** (Spec futuro, ver `planes-futuros.md`), el Parcial pasará a las interfaces sin economía y solo el Completo quedará restringido.
 
-² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Hoy solo lo descarga el jefe de proyectos; descargarlo para los cinco roles con economía está **por decidir**.
+² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
 
 ## Tabla 2 — Acciones: quién puede ejecutarlas
 
@@ -86,6 +86,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Eliminar requerimiento (borrado definitivo) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Descargar consolidado RQ (PROM-GP-004) ⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | No (descarga) |
 | Subir registro de costos por servicio (solo subir; no ve ni descarga el contenido) | — | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
+| Descargar registro de costos por servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (descarga) |
 
 ³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
 
@@ -107,7 +108,7 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 
 ### Puntos por decidir
 
-1. Descarga del registro de costos (nota 2) y del consolidado RQ (nota 5).
+1. **Descargas.** Las descargas son acciones y se están completando en el artefacto (sección «Descargas»). Ya decidido: registro de costos (administrador y jefe de proyectos) y consolidado RQ (como estaba, nota 5). Siguen como **propuesta a revisar** en el artefacto, y aún no están en este flujo: descargar RDTs y listado de RDTs (ZIP y PDF PROM-GP-0006), descargar listado RQ (PDF PROM-GP-008) y exportar DP. Al aprobarlas se agregan aquí.
 2. **Diferencias con el código actual.** La implementación debe alinear `permisos.ts` a esta matriz; el informe «antes/después por rol» lo produce la fase F0 del plan `docs/02-trabajo-activo/01-planes/2026-09-27-paneles-servicio-persistente.md`.
 3. Otros flujos que asignan al jefe de oficina técnica el ciclo de vida del proyecto o reservan los borrados al administrador (por ejemplo 02, 05, 06, 08, 12 y 13) contradicen esta matriz en los puntos de arriba. Se ajustan al cierre del plan, con consulta a Victor por cada contradicción (política de coherencia y trazabilidad).
 

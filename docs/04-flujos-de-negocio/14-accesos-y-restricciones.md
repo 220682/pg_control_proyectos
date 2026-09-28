@@ -13,7 +13,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 - **✓** el rol tiene el acceso. **—** no lo tiene.
 - Roles, columna por columna: Admin=administrador, JP=jefe_de_proyectos, JOT=jefe_de_oficina_tecnica, SOT=supervisor_oficina_tecnica, Plnr=planner, SCo=supervisor_costos, JCo=jefe_de_costos, SOp=supervisor_operativo, SLog=supervisor_logistica, SAdm=supervisor_administracion, SSO=supervisor_ssoma, Asist=asistente, RRHH=rrhh.
 - Un dato es **económico** si muestra dinero (USD/S/): costos, presupuesto, valor planificado, valor ganado, costo real, índices de costo. Los RQ, los RDT y los recursos de empresa **no** muestran costos (solo descripción, cantidad, HH y metrados).
-- **Requiere OT a cargo** (tabla de acciones): "Sí" = la acción escribe sobre una OT concreta y, además del rol, hace falta tener esa OT asignada en `proyecto_miembros` (Sub-lote 2, `docs/02-trabajo-activo/01-planes/2026-09-20-sub-lote-2-alcance-proyecto.md`). "No" = la acción no está ligada a ninguna OT (usuarios, catálogos globales, contenedores). Las pantallas por servicio siguen sujetas al alcance por OT cuando aplica; esa restricción no aparece en la tabla de interfaces.
+- **Requiere OT a cargo** (tabla de acciones): "Sí" = la acción escribe sobre una OT concreta y, además del rol, hace falta tener esa OT asignada en `proyecto_miembros` (Sub-lote 2, `docs/02-trabajo-activo/01-planes/2026-09-20-sub-lote-2-alcance-proyecto.md`). "No" = la acción no está ligada a ninguna OT (usuarios, catálogos globales, contenedores). **El alcance por OT es además el requisito de partida para ver cualquier interfaz orientada a un servicio** (confirmado por Victor, 2026-09-28); esa condición no se repite fila por fila en la tabla de interfaces.
 
 ## Tabla 1 — Interfaces: quién puede verlas
 
@@ -43,7 +43,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Panel izquierdo del servicio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
-¹ Hoy los dos modos del Dashboard muestran datos económicos (flujo 11), por eso están restringidos. Cuando exista el Dashboard **Parcial sin datos económicos** (Spec futuro, ver `planes-futuros.md`), el Parcial pasará a las interfaces sin economía y solo el Completo quedará restringido.
+¹ **Confirmado por Victor (2026-09-28): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven los roles que corresponde** (los 5 de esta tabla, más las dos excepciones). Hoy el código todavía muestra economía en los dos modos (flujo 11); hasta que el Spec futuro de economía separe realmente los datos de cada modo (`planes-futuros.md`), esta fila es el estado **objetivo**, no el actual — el informe "antes/después por rol" de la fase F0 del plan debe señalar esta brecha. Quién alterna entre Parcial y Completo queda por confirmar; propuesta: administrador y jefe de proyectos, igual que Editar servicio.
 
 ² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
 
@@ -66,7 +66,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Editar perfil extendido (propio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Asignar rol administrador | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Simular otro usuario o rol («Ver como») | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
-| Subir documento del proyecto (catálogo AL_INICIO/CIERRE) ⁴ | ✓ | — | — | * | * | * | * | * | * | * | * | * | * | Sí |
+| Subir documento del proyecto (catálogo AL_INICIO/CIERRE) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
@@ -98,7 +98,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 
-- **Administrador y jefe de proyectos:** acceso a todas las interfaces, y a todas las acciones excepto las dos exclusivas del administrador (asignar rol administrador y «Ver como»). El jefe de proyectos pasa a poder, entre otras, adjudicar y crear programas y portafolios, archivar proyectos, eliminar contenedores, editar servicio, editar checklist, importar DP, editar su perfil y ejecutar los borrados definitivos de RDT y RQ.
+- **Administrador y jefe de proyectos:** acceso a todas las interfaces. En acciones, no hay una regla general de "todo menos N" — cada acción se decidió una por una en el artefacto. El jefe de proyectos pasa a poder, entre otras, adjudicar y crear programas y portafolios, archivar proyectos, eliminar contenedores, editar servicio, editar checklist, importar DP, subir documento del proyecto, editar su perfil y ejecutar los borrados definitivos de RDT y RQ. **No** puede: asignar rol administrador ni "Ver como" (exclusivas de administrador, por diseño de sistema), ni actualizar estado de RQ ni subir el registro de costos (tareas operativas de logística) — **por confirmar con Victor si deben agregarse**.
 - **Jefe de oficina técnica:** conserva adjudicar, confirmar transición, subir RDT, derivar RQ y descargar el consolidado RQ; **gana** crear RDT y validar o rechazar RDT; **deja de** archivar o eliminar proyectos, editar servicio, editar checklist y editar su perfil.
 - **Supervisor de oficina técnica:** ve el DP pero **ya no lo importa** (importar DP queda para administrador y jefe de proyectos).
 - **Administrador:** ahora puede crear RQ y actualizar el estado de RQ, además de lo que ya hacía.
@@ -111,6 +111,8 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 1. **Descargas.** Las descargas son acciones y se están completando en el artefacto (sección «Descargas»). Ya decidido: registro de costos (administrador y jefe de proyectos) y consolidado RQ (como estaba, nota 5). Siguen como **propuesta a revisar** en el artefacto, y aún no están en este flujo: descargar RDTs y listado de RDTs (ZIP y PDF PROM-GP-0006), descargar listado RQ (PDF PROM-GP-008) y exportar DP. Al aprobarlas se agregan aquí.
 2. **Diferencias con el código actual.** La implementación debe alinear `permisos.ts` a esta matriz; el informe «antes/después por rol» lo produce la fase F0 del plan `docs/02-trabajo-activo/01-planes/2026-09-27-paneles-servicio-persistente.md`.
 3. Otros flujos que asignan al jefe de oficina técnica el ciclo de vida del proyecto o reservan los borrados al administrador (por ejemplo 02, 05, 06, 08, 12 y 13) contradicen esta matriz en los puntos de arriba. Se ajustan al cierre del plan, con consulta a Victor por cada contradicción (política de coherencia y trazabilidad).
+4. Si el jefe de proyectos también debe poder actualizar estado de RQ y subir registro de costos, hoy exclusivos de logística.
+5. Quién alterna el Dashboard entre Parcial y Completo (ver nota ¹).
 
 ### Otros grupos del nav (Costos, Oficina Técnica, Administración, SSOMA)
 

@@ -37,7 +37,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Spec/SDD aprobado (Gate Spec, 2026-09-27) — falta delegar al Planner |
+| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (87 ítems, 8 fases) redactados por el Planner, esperando el Gate 1 |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

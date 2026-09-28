@@ -37,7 +37,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (118 ítems, 10 fases; versión 3 con el asistente como icono) redactados por el Planner, esperando el Gate 1. Rama y worktree `local-worker-1` creados. Pendiente: el Planner debe adaptar E2 y la tabla de permisos a la matriz base de visibilidad del flujo 14 (2026-09-28) |
+| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (127 ítems, 12 fases; versión 4 adaptada a la matriz base de visibilidad del flujo 14, con el asistente como icono) redactados por el Planner, esperando el Gate 1. Rama y worktree `local-worker-1` creados. Las fases F5B y F5C esperan que Victor resuelva los cinco conflictos operativos CO1 a CO5 |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

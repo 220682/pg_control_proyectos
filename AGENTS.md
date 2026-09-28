@@ -156,6 +156,13 @@ Los flujos documentados con mayor detalle son:
 - [docs/04-flujos-de-negocio/20-plan-maestro.md](docs/04-flujos-de-negocio/20-plan-maestro.md)
 - [docs/04-flujos-de-negocio/21-curva-s.md](docs/04-flujos-de-negocio/21-curva-s.md)
 
+## Políticas de coherencia y trazabilidad
+
+Políticas de este repositorio (Victor, 2026-09-28). El texto completo está en [docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md](docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md) § Políticas de coherencia y trazabilidad.
+
+- **La matriz de permisos es la base de los accesos.** El artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT) es la base del flujo 14, ligado al flujo 16 (Paneles). Toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y el flujo 14 en la misma tarea.
+- **Un Spec o plan que entra en conflicto con lo escrito se implementa en todos los afectados.** Se listan y actualizan todos los flujos y documentos afectados, se consulta a Victor cada contradicción antes de editar un flujo, y no se deja nada suelto: el Auditor verifica la trazabilidad antes del Gate 2.
+
 ## Reglas de interfaz
 
 Como este repositorio no contiene la implementación visual en ejecución, estas reglas se toman como directrices documentadas y no como inventario de componentes reales en código.

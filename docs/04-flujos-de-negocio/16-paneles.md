@@ -172,7 +172,7 @@ Nunca se debe confiar únicamente en un `servicio_id` enviado desde el navegador
 7. Las pantallas a pantalla completa deben ofrecer “Salir a Mi entorno” cuando corresponda.
 8. Las notificaciones deben dirigir a `/notificaciones`, no duplicarse en otros paneles.
 9. Los estados y colores deben reutilizar las fuentes únicas existentes.
-10. Cada chip nuevo debe registrarse también en el flujo 14 de accesos y restricciones.
+10. Cada chip nuevo debe registrarse también en el flujo 14 de accesos y restricciones y en el artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT), que es la base de ese flujo (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`).
 
 ## Tabla de accesos
 

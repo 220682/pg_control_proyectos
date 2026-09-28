@@ -36,6 +36,14 @@ Ver el índice de `docs/04-flujos-de-negocio/README.md` para la lista completa d
 - **Regla de negocio** (va directo al flujo dueño): "el AC se calcula de la suma de HH+HM más los porcentajes de avance de materiales y subcontratos" → va a `04-flujos-de-negocio/18-control-avance.md`, integrada en su estructura, nunca como nota aparte.
 - **Mejora de trabajo** (va a `03-aprendizaje-continuo/`): "intentamos correr SQL por la conexión directa de Postgres, falló por falta de salida IPv6 en el sandbox, se resolvió usando la Management API de Supabase" → es un aprendizaje sobre cómo se trabaja, no una regla del sistema.
 
+## Políticas de coherencia y trazabilidad (Victor, 2026-09-28)
+
+Políticas de este repositorio, no reglas de negocio del sistema. Aplican a todo rol (Orquestador, Planner, Worker, Auditor) y a todo Spec o plan.
+
+**1. La matriz de permisos es la base de los accesos.** El artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT) es el instrumento editable de la matriz de interfaces (con y sin datos económicos) y de acciones por rol. Es la base del flujo 14 (Accesos y restricciones), que a su vez está ligado al flujo 16 (Paneles). Toda tarea que cree, cambie o elimine una **interfaz, acción, permiso o acceso** (una pantalla, un chip, una ruta, un rol) actualiza **en la misma tarea** el artefacto, el flujo 14 (que conserva la última versión aprobada) y el flujo 16 o el registro único de accesos cuando exista. Una interfaz o acción nueva que no figura en el artefacto no está terminada. Los flujos 14 y 16 citan el artefacto. El plan futuro de gestionar permisos desde la app web (`docs/02-trabajo-activo/01-planes/planes-futuros.md`) también se somete a este artefacto.
+
+**2. Un Spec o plan que entra en conflicto con lo escrito se implementa en todos los afectados.** Si un Spec, un plan o un flujo entra en conflicto con otro flujo, con el artefacto o con una regla ya escrita, la implementación **abarca todos los flujos, planes y documentos afectados**, no solo el de origen. Se listan los afectados en el plan (sección de contradicciones), se consulta a Victor cada contradicción antes de editar un flujo (regla de "Integrar una regla de negocio nueva en un flujo"), se actualizan todos, y se anota dónde quedó aplicado cada cambio (enlace al flujo y a la sección). **No se deja nada suelto:** el Auditor verifica, antes del Gate 2, que no queda ningún flujo o documento afectado sin actualizar ni ninguna referencia que apunte a la versión anterior. El objetivo es la trazabilidad completa del proyecto.
+
 ## Ante una contradicción entre fuentes
 
 Ante una contradicción entre `AGENTS.md`, `README.md`, `docs/README.md` o un flujo de negocio, se consulta a Victor — no se asume cuál prevalece.

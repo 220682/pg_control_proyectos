@@ -42,6 +42,17 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 - **Estado:** pendiente, sin promover.
 - **Requiere Spec/SDD:** sí — incluye una ambigüedad a resolver con Victor antes de planificar.
 
+### Gestión de permisos y accesos desde la app (matriz editable)
+
+- **Origen:** pedido directo de Victor, 2026-09-28. Relacionado con "Gestión visual de accesos" del flujo 14 (pedido del 2026-09-20).
+- **Qué es:** llevar a la app web la misma interfaz del artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT): las dos tablas (interfaces con y sin datos económicos; acciones), una casilla por rol, comentarios y aprobación. Solo para administrador y jefe de proyectos, con su chip y demás accesos en el apartado OT y dentro del sistema de paneles (registro único de accesos). Permite cambiar accesos y permisos con la app en producción, sin desplegar.
+- **Sujeción obligatoria:** este plan se somete al artefacto y al flujo 14. Su Spec cita el artefacto como base. Mientras la pantalla no exista, toda interfaz, acción, permiso o acceso nuevo actualiza el artefacto y el flujo 14 (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Al implementarse, el Spec define si la pantalla reemplaza al artefacto como instrumento de edición y qué documento queda como referencia.
+- **Lo que debe definir su Spec:** dónde se guardan los permisos (hoy están fijos en `permisos.ts`), la validación en servidor de cada cambio, el registro de quién cambió qué y cuándo, y cómo convive con el alcance por OT.
+- **Depende de:** el plan `2026-09-27-paneles-servicio-persistente` (registro único de accesos) y del Spec de economía (siguiente punto).
+- **Pospuesto:** 2026-09-28.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí.
+
 ### Dashboard Parcial sin datos económicos y restricción económica definitiva
 
 - **Origen:** pedido directo de Victor, 2026-09-28 (durante el plan `2026-09-27-paneles-servicio-persistente`). La tabla base de visibilidad por rol ya está en el flujo 14.

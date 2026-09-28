@@ -4,7 +4,7 @@
 
 ## Identificación y estado
 
-Nombre del tema, fecha, estado — uno de estos 6 valores: `Propuesta` / `Planificando` / `Implementando` / `En auditoría` / `Pendiente de Victor` / `Cerrada`.
+Nombre del tema, fecha, estado — uno de estos 6 valores: `Propuesta` / `Planificando` / `Implementando` / `En auditoría` / `Pendiente del Responsable humano` / `Cerrada`.
 
 ## Referencia al Spec aprobado
 

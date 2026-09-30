@@ -51,7 +51,7 @@ Si un comando no fue confirmado aquí, se considera "por confirmar" y no se debe
 - [docs](docs): documentación operativa, flujos y mejoras — ver [docs/README.md](docs/README.md) para el mapa completo de las siete áreas.
 - [docs/00-estandar-agentes](docs/00-estandar-agentes): estándar reusable de agentes (roles, flujo Spec/SDD → Cierre, plantillas).
 - [docs/01-contexto-repositorio](docs/01-contexto-repositorio): configuración específica de este repositorio (propósito, fuentes de verdad, entorno Git/worktrees, pruebas, diseño).
-- [docs/02-trabajo-activo](docs/02-trabajo-activo): planes, progreso y evidencia de cada tarea real — incluye lo que hacen los Workers (código, pantallas, consultas, migraciones) y las tareas del flujo de Orquestador con Punch List.
+- [docs/02-trabajo-activo](docs/02-trabajo-activo): planes, progreso, evidencia y auditoría de cada tarea real — incluye lo que hacen los Workers (código, pantallas, consultas, migraciones) y las tareas del flujo de Orquestador con Punch List.
 - [docs/03-aprendizaje-continuo](docs/03-aprendizaje-continuo): solo aprendizajes sobre cómo se trabaja (método, herramientas, workarounds), extraídos de un plan. No contiene reglas de negocio del sistema.
 - [docs/04-flujos-de-negocio](docs/04-flujos-de-negocio): conjunto principal de especificaciones por flujo, fuente de verdad de las reglas funcionales.
 - [docs/05-diseno-y-referencias](docs/05-diseno-y-referencias): sistema de diseño (`design.md`) y mockups de referencia.

@@ -111,7 +111,7 @@ Revisa el plan aprobado, los resultados del Worker, la evidencia de pruebas, el 
 
 **Segundo chequeo:** verificar que las mejoras de trabajo, reglas de negocio y archivos/carpetas huérfanos encontrados durante la sesión estén en los apartados obligatorios del plan, y que el Worker los haya trasladado a sus destinos finales antes de cerrar (ver `05-aprendizaje-continuo.md`). Una tarea no está lista para cerrar si tiene contenido pendiente de trasladar en esos apartados.
 
-Debe devolver al Orquestador un informe con:
+Debe devolver al Orquestador un informe, que guarda como archivo propio en `02-trabajo-activo/04-auditoria/YYYY-MM-DD-<tema>.md` (mismo nombre base que el plan; el plan solo enlaza a él), con:
 
 - `APLICAR AHORA`: cambios confirmados que deben pasar a documentación permanente.
 - `PROPONER A RESPONSABLE`: cambios que requieren decisión humana.

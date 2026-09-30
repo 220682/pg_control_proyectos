@@ -64,7 +64,7 @@ Se llena en el momento en que ocurre cada hallazgo. "Ninguno" si no aplica.
 
 ## Informe de Auditoría
 
-Formato de `06-informe-auditoria.md`.
+Enlace al archivo homónimo en `02-trabajo-activo/04-auditoria/` (formato de `06-informe-auditoria.md`). El informe no se escribe dentro del plan.
 
 ## Mensaje de cierre
 

@@ -1,6 +1,6 @@
 # Plantilla — Informe de Auditoría
 
-> Sección embebida en el archivo de plan. La escribe el Auditor.
+> Archivo propio: vive en `02-trabajo-activo/04-auditoria/YYYY-MM-DD-<tema>.md`, con el mismo nombre base que el plan. Lo escribe el Auditor; el plan solo enlaza a él.
 
 ## Alcance auditado
 

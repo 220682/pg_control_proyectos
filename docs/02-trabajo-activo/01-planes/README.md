@@ -2,7 +2,7 @@
 
 ## Qué vive acá
 
-Un plan real por archivo (`YYYY-MM-DD-<tema>.md`), basado en la plantilla `02-plan.md`: contiene SDD, plan, Punch List, roles, decisiones, auditoría y cierre — todo en un único archivo, no separado.
+Un plan real por archivo (`YYYY-MM-DD-<tema>.md`), basado en la plantilla `02-plan.md`: contiene SDD, plan, Punch List, roles, decisiones y cierre — todo en un único archivo. El informe de auditoría de los planes nuevos (desde 2026-09-30) vive aparte en `../04-auditoria/`; los planes anteriores conservan el suyo dentro del archivo.
 
 Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestructuración documental, 2026-09-27) viven acá tal cual, como archivo histórico único (no se re-descomponen en plan/progreso/evidencia). Sus rutas internas antiguas no se corrigen — quedan como enlaces históricos.
 
@@ -58,4 +58,4 @@ Nada se borra. Un plan cerrado permanece íntegro, indefinidamente.
 
 ## Qué leer después
 
-El propio archivo de plan del tema activo, más su `02-progreso/` y `03-evidencia/` homónimos si existen.
+El propio archivo de plan del tema activo, más su `02-progreso/`, `03-evidencia/` y `04-auditoria/` homónimos si existen.

@@ -6,6 +6,8 @@ Tabla visual con **columnas = roles** y **filas = accesos**. Pedido por Victor e
 
 El instrumento editable es el artefacto **«Matriz de permisos»** (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT). Este archivo conserva la última versión aprobada (aprobación del 2026-09-28, 16:02 UTC, versión 17 de las marcas del artefacto). Es la base de los accesos y está ligado al flujo 16 (Paneles).
 
+**Sincronización del artefacto (2026-09-30):** se comprobó el estado guardado del artefacto (versión 41 de la base de datos) contra estas tablas y solo diferían dos filas de descargas, que se corrigieron (versión 42): «Exportar DP» suma al supervisor de oficina técnica y «Descargar plantilla de cronograma» pasa a los 13 roles. La marca «Aprobada» del artefacto se quitó; queda pendiente que Victor la vuelva a dar. Desde entonces artefacto, flujo 14 y `permisos.ts` coinciden fila por fila.
+
 **Actualización 2026-09-30 (tarea paneles-servicio-persistente, F7-B):** solo se añadieron las filas de descargas decididas (tabla 2, nota 7), la nota del asistente del shell y se retiró la marca «por construir» de Recursos (ya construido); ninguna decisión aprobada cambió.
 
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.

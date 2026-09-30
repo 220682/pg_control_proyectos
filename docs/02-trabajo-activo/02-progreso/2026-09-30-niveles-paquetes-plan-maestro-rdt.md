@@ -77,6 +77,8 @@ Con contexto limpio: leer este archivo y el índice de tandas, lanzar la ola 1 y
 | F0-A (1.ª sesión) | `agent-a8d82746485b2169` | 17 | 32 | 140k | 1,5M | Sí | Cortada por límite de uso |
 | F1-A (1.ª sesión) | `agent-a46c4b15b573649e` | 12 | 22 | 114k | 0,9M | Sí | Cortada por límite de uso |
 | F2-A (1.ª sesión) | `agent-a02847794eaaf438` | 23 | 25 | 117k | 2,0M | Sí | Cortada por límite de uso |
+| F0-A (cierre) | `agent-a9251d5b33bb0a5e0` | 8 | 8 | — | — | Sí | sesión de cierre |
+| F1-A (cierre) | `agent-ae31f694a87b97cf3` | 10 | 10 | — | — | Sí | sesión de cierre |
 
 ## Ola 1, relanzamiento (2026-09-30, tarde)
 
@@ -85,6 +87,7 @@ Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1
 ### Resultados consolidados de la ola 1
 
 - **F0-A (maquetas de Niveles y Paquetes): cerrada, 7 de 7 ítems conformes** (`resultados/F0-A.md`). El Worker revisó el WIP `d0b700e` contra el brief y no hizo falta corregir nada. Verificación solo estructural (sin navegador, según el brief); el Orquestador comprobó además que en el ejemplo de 5 niveles el nivel 2 propone «Área». **Nadie ha abierto las maquetas a simple vista: Victor las revisa.** Seis preguntas de diseño para Victor en el resultado. Al aprobar: quitar «pendiente de aprobación» en `design.md` y `mockups/README.md`. Sin hallazgos nuevos. Sesión de cierre: 8 llamadas (medición del script pendiente de anotar).
+- **F1-A (Niveles, lógica pura): cerrada, 6 de 6 ítems conformes** (`resultados/F1-A.md`, commit `57984ff` en `local-worker-1`, sin push ni merge). El WIP estaba completo; solo corrigió un error de tipo en una prueba. Verificado por el Orquestador: árbol limpio, `tsc` en 0, 23 pruebas del módulo verdes; el Worker reporta 72 archivos y 698 pruebas verdes en la suite y lint de 27 problemas, igual a los 27 que midió F3-A en una rama idéntica a `main` (ninguno en `src/lib/niveles`). `npm run lint` en el repositorio principal da 24585 porque recorre `.worktrees`: no sirve de base. Archivos reales de prueba: solo de 2 y 3 niveles; el caso de 5 niveles usa datos sintéticos rotulados. **Hallazgo para F1-B y F1-C:** Bancoductos tiene partidas directas de un subpresupuesto (p. ej. `1.3`) junto a paquetes de partidas; las pantallas no deben marcarlas como error. Sin reglas de negocio nuevas ni huérfanos.
 
 ## Última actualización y responsable
 

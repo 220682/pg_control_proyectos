@@ -6,8 +6,8 @@
 
 - Tema: rediseño de la cadena Cronograma → Paquetes de Trabajo → Plan Maestro → RDT, con niveles de presupuesto y cronograma confirmados al importar.
 - Fecha: 2026-09-30.
-- Estado: **Planificando** (a la espera del Gate 1 de Victor).
-- Gate 1: **pendiente**.
+- Estado: **Planificando** — **Gate 1 aprobado por Victor** (2026-09-30). Pasa a «Implementando» cuando el Orquestador lance la ola 1.
+- Gate 1: **aprobado por Victor** (respuestas en «Gate 1 — respuestas de Victor» y en el Registro de decisiones). Queda pendiente de reescribir en este plan todo lo que dependa de quién aplica las migraciones (ver nota del Planner).
 
 ## Referencia al Spec aprobado
 
@@ -32,7 +32,7 @@
 
 - Modo: local. Documentación en `pg_control_proyectos` (`main`, directo). Código en `py_control_proyectos_web`.
 - **Verificado (2026-09-30):** `main` = `origin/main` = `45c9e0a` en la app; existe `.worktrees/local-worker-1` (rama `local-worker-1`, limpia, en `45c9e0a`); `.env.local` ya copiado ahí (autorización permanente de Victor para copiarlo a cada worktree). `node_modules` es un enlace: dev y build con `--webpack`. Comandos de `package.json`: `npm test` (`vitest run`, entorno `node`, `src/**/*.test.ts`, **sin pruebas de componentes**), `npm run lint`, `npm run build`. La última migración es la `072`.
-- **Carriles propuestos** (la creación de ramas y worktrees requiere autorización explícita de Victor en este Gate 1):
+- **Carriles** (creación de ramas y worktrees **autorizada por Victor en el Gate 1**, 2026-09-30):
 
 | Carril | Rama | Worktree | Puerto | Tandas |
 |---|---|---|---|---|
@@ -69,11 +69,11 @@ Detalle completo, grafo y olas en `…-briefs/00-indice-de-tandas.md`.
 | F2 | Paquetes (vínculos y API, pantalla, orden y estados) | F2-A, F2-B, F2-C | F2-B espera maquetas de F0-A |
 | F3 | Plan Maestro (lógica, datos y API, lienzo, Prog./Real) | F3-A, F3-B, F3-C, F3-D | F3-C y F3-D esperan maquetas de F0-B |
 | F4 | RDT (datos y catálogo, API, pantalla) | F4-A, F4-B, F4-C | F4-C espera la maqueta del selector (F0-B) |
-| F5 | Integración, verificación en vivo, documentación | F5-A, F5-B, F5-C, F5-D | todas las anteriores; F5-B espera las migraciones aplicadas |
+| F5 | Integración, verificación en vivo, documentación | F5-A, F5-B, F5-C, F5-D | todas las anteriores; F5-B espera que las migraciones estén aplicadas (quién y cómo: pendiente de reescribir tras el Gate 1) |
 
 **Olas (≤ 4 Workers a la vez):** 1) F0-A · F1-A · F2-A · F3-A; 2) F0-B · F1-B · F3-B · F4-A; 3) F1-C · F2-B · F3-C · F4-B; 4) F2-C · F3-D · F4-C; 5) F5-A; 6) F5-B y luego F5-C y F5-D en paralelo. **Las tandas de datos y de lógica no esperan las maquetas**; solo las de interfaz.
 
-**Puntos de control de Victor:** (1) este Gate 1; (2) revisión de las maquetas de F0-A y de F0-B antes de la ola 3; (3) aplicar las migraciones 073–084, una por una, antes de F5-B; (4) Gate 2.
+**Puntos de control de Victor:** (1) este Gate 1; (2) revisión de las maquetas de F0-A y de F0-B antes de la ola 3; (3) Gate 2. (Gate 1, aprobado, ya no figura como punto pendiente.)
 
 ### Matriz de propiedad de archivos (resumen; la completa está en el índice)
 
@@ -95,7 +95,7 @@ Detalle completo, grafo y olas en `…-briefs/00-indice-de-tandas.md`.
 | 4 | 082–084 | `paquete_trabajo_id` en RDT; campos de derivadas |
 | F5 | 085–086 | reserva |
 
-Ninguna depende de otra (las claves foráneas apuntan a tablas que ya existen). Nadie las aplica desde el código: Victor las pega en el SQL Editor, **una por una y con su confirmación**.
+Ninguna depende de otra (las claves foráneas apuntan a tablas que ya existen). **Pendiente de reescribir (Gate 1):** Victor respondió que las aplican los Workers; el protocolo (quién aplica cada una, orden, verificaciones y manejo de credenciales) todavía no está escrito en este plan.
 
 ## Asignación de roles
 
@@ -103,11 +103,11 @@ Ninguna depende de otra (las claves foráneas apuntan a tablas que ya existen). 
 |---|---|---|---|---|
 | Orquestador | por nombrar (`local_1.orquestador_niveles-paquetes-plan-maestro-rdt`) | `main` | N/A | Activo |
 | Planner | este plan | `main` | N/A | Plan entregado |
-| Worker · diseño (F0) | por asignar | `main` (docs) | N/A | Pendiente del Gate 1 |
+| Worker · diseño (F0) | por asignar | `main` (docs) | N/A | Autorizado (Gate 1); arranca con la ola 1 |
 | Worker · carril 1 | por asignar por tanda | `local-worker-1` | `.worktrees/local-worker-1` | Pendiente |
-| Worker · carril 2 | por asignar por tanda | `local-worker-2` | `.worktrees/local-worker-2` | Pendiente de autorización |
-| Worker · carril 3 | por asignar por tanda | `local-worker-3` | `.worktrees/local-worker-3` | Pendiente de autorización |
-| Worker · carril 4 | por asignar por tanda | `local-worker-4` | `.worktrees/local-worker-4` | Pendiente de autorización |
+| Worker · carril 2 | por asignar por tanda | `local-worker-2` | `.worktrees/local-worker-2` | Autorizado (Gate 1) |
+| Worker · carril 3 | por asignar por tanda | `local-worker-3` | `.worktrees/local-worker-3` | Autorizado (Gate 1) |
+| Worker · carril 4 | por asignar por tanda | `local-worker-4` | `.worktrees/local-worker-4` | Autorizado (Gate 1) |
 | Worker · documentación (F5-D) | por asignar | `main` (docs) | N/A | Pendiente |
 | Auditor | por asignar | `main` | N/A | Pendiente |
 
@@ -376,7 +376,7 @@ Brief: [`f5-tanda-d.md`](2026-09-30-niveles-paquetes-plan-maestro-rdt-briefs/f5-
 
 | # | Riesgo | Mitigación |
 |---|---|---|
-| 1 | Doce migraciones sobre tablas en uso (PR, Curva S, RDT) | Son aditivas y sin dependencias entre sí; se aplican una por una con confirmación de Victor; F5-A y F5-B las verifican antes de cualquier prueba en vivo |
+| 1 | Doce migraciones sobre tablas en uso (PR, Curva S, RDT) | Son aditivas y sin dependencias entre sí; F5-A y F5-B las verifican antes de cualquier prueba en vivo; quién las aplica y cómo: pendiente de reescribir tras el Gate 1 |
 | 2 | Relajar `unique (plan_maestro_id, wbs)` cambia una restricción | Requiere autorización expresa de Victor (Gate 1); prueba de que PR, Dashboard y Curva S suman las líneas repetidas (F3B-5, F5A-3) |
 | 3 | Cuatro carriles editando a la vez | Matriz de propiedad, contratos definidos de antemano, archivos congelados hasta F5-A, rangos de migraciones reservados y cierre por `resultados/<tanda>.md` (nadie edita el mismo archivo compartido) |
 | 4 | La maqueta no se aprueba a tiempo | Los carriles de datos y lógica no esperan; solo F1-C, F2-B, F3-C, F3-D y F4-C |
@@ -390,34 +390,34 @@ Brief: [`f5-tanda-d.md`](2026-09-30-niveles-paquetes-plan-maestro-rdt-briefs/f5-
 
 ## Tabla en bloque de cambios a flujos (Gate 1)
 
-Una sola aprobación de Victor cubre a todos los Workers de F5-D (mismo método que el plan de paneles). Política: un cambio que choca con lo escrito se implementa en **todos** los flujos afectados. Cada fila se marca «aplicado» en F5-D solo tras comprobarla contra el código.
+**Aprobada en bloque por Victor** (Gate 1, pregunta 9, 2026-09-30), con sus respuestas a las preguntas 3 a 7: el Worker de documentación (F5-D) la aplica sin volver a preguntar (mismo método que el plan de paneles). Política: un cambio que choca con lo escrito se implementa en **todos** los flujos afectados. Cada fila se marca «aplicado» en F5-D solo tras comprobarla contra el código.
 
 | Flujo | Dice hoy | Pasaría a decir | Aplicado |
 |---|---|---|---|
-| **06 RDT** | El supervisor elige partidas del DP agrupadas por subpresupuesto; «toda actividad registrada (D, C y NC) se carga a una partida» | Elige **paquetes y partidas del Plan Maestro aprobado** (o partida directa); sin Plan Maestro aprobado no se puede crear RDT; C/NC y materiales cargan a un paquete × partida; modo «por avance del paquete» (se declara la unidad de la guía, las demás se calculan en solo lectura); un RDT se reasigna de paquete mientras no esté `VALIDADO`. Roles sin cambio | ☐ |
+| **06 RDT** | El supervisor elige partidas del DP agrupadas por subpresupuesto; «toda actividad registrada (D, C y NC) se carga a una partida» | Elige **paquetes y partidas del Plan Maestro aprobado** (o partida directa); sin Plan Maestro aprobado no se puede crear RDT; C/NC y materiales cargan a un paquete × partida; modo «por avance del paquete» (se declara la unidad de la guía; el servidor guarda **una fila derivada de solo lectura por cada partida** del paquete, con el mismo %); un RDT se reasigna de paquete mientras no esté `VALIDADO`. Roles sin cambio | ☐ |
 | **09 Importar DP** | Tres fases (forma, fondo, observación); subpresupuesto y paquete de partidas por patrón de código de 1 y 2 segmentos | Se suma el **paso de confirmación de niveles** (cuenta de niveles, roles por desplegable, fila de muestra por grupo, filas «para revisar»); las tres fases se conservan; **recarga bloqueada** con Plan Maestro aprobado y, sin él, aviso de lo que se perdería y confirmación | ☐ |
 | **10 PR** | `metrado_planificado_acum` = suma de asignaciones del Plan Maestro aprobado por partida; fechas base desde el vínculo cronograma ↔ partida | Sin cambio de fórmulas. Se aclara que la suma es **por partida** aunque esté repartida en varios paquetes, y que el vínculo con metrado se declara en Paquetes | ☐ |
 | **14 Accesos** (tabla 2) | «Subir / reemplazar cronograma»; «Gestionar Plan Maestro (crear / congelar línea base)»; «Gestionar paquetes de trabajo» (administrador, jefe de proyectos, planner) | Mismo conjunto de roles. Se ajusta el texto: paquetes incluye declarar vínculos con metrado y hitos; Plan Maestro = programar y crear (aprobar); **fila nueva: «Crear una versión nueva del Plan Maestro» solo administrador y jefe de proyectos**; nota de recarga bloqueada. Sección «Accesos requeridos para paquetes (pendiente)» reescrita a lo implementado | ☐ |
 | **14 Accesos** (tabla 1) | Plan Maestro ver: roles con economía + planner; Cronograma y Paquetes: 13 roles | Sin cambio | ☐ |
 | **15 Cronograma** | Vínculo con metrado exacto y 100 % por partida editados en su pantalla; columna Hito; «Relación con Paquetes» (fechas de paquetes); Gantt como «fase 2, no construida» | El cronograma **solo carga y muestra**, con su mapa de niveles; el vínculo simple tarea ↔ partida y el enlace automático por EDT se conservan; el metrado y los hitos se declaran en Paquetes; recarga bloqueada; Gantt remitido a `planes-futuros.md` | ☐ |
 | **16 Paneles** | «Paquetes de trabajo» como chip informativo; «Crear paquete» como acceso rápido; panel izquierdo con Recursos de empresa mostrar/ocultar | Se suma **ocultar y mostrar los paneles laterales** (escritorio, recordado por usuario); «Crear paquete» abre Paquetes en modo crear; el asistente flotante no tapa columnas del lienzo. Sin chip nuevo | ☐ |
-| **18 Control de avance** | Columnas fijas del Plan Maestro: WBS, Área, Disciplina, Frente, Paquete, código, descripción, unidad, metrado, precio, BAC, HH contractuales, duración, inicio base, fin base, método; «paquete opcional» en el RDT | Columnas fijas del lienzo: **WBS, descripción, Und., metrado, costo unitario y HH por unidad** (las demás y las de Tiempo: ver pregunta 3 del Gate 1); seis columnas por semana (físico, económico y HH, semanal y acumulado, rotuladas para no mezclarlas); subfilas Prog./Real; el real se declara contra paquete × partida | ☐ |
-| **19 Paquetes** | Datos del paquete con Área, Disciplina, Frente, unidad, meta, responsable, fechas opcionales y tipos estándar/flexible; avance ponderado por pesos; «no se duplican partidas activas, salvo distribución parcial autorizada» | Paquete = **nombre, nivel, modo de medición, partida guía y orden**; agrupa vínculos actividad × partida; **sin fechas**; una partida repartida entre paquetes es la regla general y suma 100 %; el avance se declara por partida o por la guía (los pesos quedan superados). Ver pregunta 4 del Gate 1 | ☐ |
-| **20 Plan Maestro** | Distribución diaria desde los paquetes (`paquete_trabajo_programacion`); «Generar propuesta» copia; sin paquete no hay Plan Maestro; «el RDT debe usar un WBS existente en el DP» | **Lienzo** que se llena en `BORRADOR` (guardado parcial), se crea (aprueba) al repartir el 100 %; sin paquete permitido (partidas directas); versión nueva con motivo; el RDT usa paquetes y partidas del Plan Maestro; real por clave; recarga bloqueada con plan aprobado | ☐ |
+| **18 Control de avance** | Columnas fijas del Plan Maestro: WBS, Área, Disciplina, Frente, Paquete, código, descripción, unidad, metrado, precio, BAC, HH contractuales, duración, inicio base, fin base, método; «paquete opcional» en el RDT | Columnas fijas del lienzo: **WBS, descripción, Und., metrado, costo unitario y HH por unidad** (Tiempo no va; las demás —área, disciplina, frente, costo total, HH totales, método de medición y otras— se ofrecen con el botón «Personalizar campos» que ya usan otras pantallas); seis columnas por semana (físico, económico y HH, semanal y acumulado, rotuladas para no mezclarlas); subfilas Prog./Real; el real se declara contra paquete × partida | ☐ |
+| **19 Paquetes** | Datos del paquete con Área, Disciplina, Frente, unidad, meta, responsable, fechas opcionales y tipos estándar/flexible; avance ponderado por pesos; «no se duplican partidas activas, salvo distribución parcial autorizada» | Paquete = **nombre, nivel, modo de medición, partida guía y orden**; agrupa vínculos actividad × partida; **sin fechas**; una partida repartida entre paquetes es la regla general y suma 100 %; el avance se declara por partida o por la guía (los pesos quedan superados). Área, disciplina, frente, unidad, meta, responsable y tipos estándar/flexible se retiran del paquete (decisión por defecto de Victor en el Gate 1) | ☐ |
+| **20 Plan Maestro** | Distribución diaria desde los paquetes (`paquete_trabajo_programacion`); «Generar propuesta» copia; sin paquete no hay Plan Maestro; «el RDT debe usar un WBS existente en el DP» | **Lienzo** que se llena en `BORRADOR` (guardado parcial), se crea (aprueba) al repartir el 100 %; sin paquete permitido (partidas directas); **una partida se puede repetir en el Plan Maestro** (restricción de WBS único relajada, autorizado); columnas adicionales con «Personalizar campos»; versión nueva con motivo, solo administrador y jefe de proyectos; el RDT usa paquetes y partidas del Plan Maestro; real por clave; recarga bloqueada con plan aprobado | ☐ |
 | **21 Curva S** | PV desde `plan_maestro_asignaciones × plan_maestro_partidas.precio_unitario`; EV por `rdt_actividad_partidas × dp_partidas.precio_unitario` | Sin cambio de fórmulas; se aclara que las líneas repetidas por partida se suman y que el vínculo del RDT lleva el paquete sin afectar el EV | ☐ |
 | **Artefacto «Matriz de permisos»** | Sin la fila de versión nueva ni la redacción de paquetes | Actualizado con el flujo 14 (misma tarea) | ☐ |
 
-## Preguntas para el Gate 1 (una decisión por pregunta; lenguaje simple)
+## Gate 1 — respuestas de Victor (2026-09-30)
 
-1. **Ramas y worktrees.** ¿Autorizas usar `local-worker-1` (ya existe) y crear `local-worker-2`, `local-worker-3` y `local-worker-4` desde `main`, cada una con su carpeta en `.worktrees/`? Sin esto no hay cuatro Workers en paralelo.
-2. **Revisión de maquetas.** ¿Confirmas que revisarás las maquetas (Niveles, Paquetes, lienzo, paneles ocultables y selector del RDT) antes de que se construya la interfaz? Mientras tanto avanzan solo los carriles de datos y lógica.
-3. **Columnas fijas del lienzo.** El flujo 18 hoy lista más columnas (Área, Disciplina, Frente, BAC, HH contractuales y método de medición). Recomiendo solo las del Spec (WBS, descripción, Und., metrado, costo unitario, HH por unidad), con BAC y HH contractuales en la fila de total. ¿Conforme?
-4. **Datos del paquete (flujo 19).** Recomiendo que el paquete tenga solo nombre, nivel, modo de medición, partida guía y orden, y retirar Área/Disciplina/Frente (el Área la da el mapa de niveles), unidad y meta, responsable, tipos estándar/flexible y los pesos por partida. ¿Conforme, o quieres conservar alguno?
-5. **Real del paquete.** Contradicción que aparece al unir los Specs: la línea del Plan Maestro es actividad × partida, pero el RDT declara contra paquete × partida. Recomiendo que lo **programado** se edite por línea (actividad × partida) y lo **real** se vea por paquete × partida. ¿Conforme?
-6. **Modo «por avance del paquete» en el RDT.** Recomiendo que el servidor guarde una fila derivada de solo lectura por cada partida del paquete (mismo %), agrupadas por una declaración. La alternativa es una sola fila de declaración. ¿Cuál prefieres?
-7. **Permiso nuevo.** Crear una **versión nueva** del Plan Maestro, cuando ya hay una aprobada, solo administrador y jefe de proyectos (hoy «gestionar» incluye al planner). ¿Confirmas esa restricción para que entre en la matriz y el flujo 14?
-8. **Migraciones.** Son 12 (073–084). ¿Las aplicarás tú una por una en el SQL Editor, y autorizas expresamente relajar la restricción de WBS único del Plan Maestro (076–078)?
-9. **Tabla de cambios a flujos.** ¿Apruebas en bloque la tabla de arriba (con lo que respondas a las preguntas 3 a 7) para que el Worker de documentación la aplique sin volver a preguntar?
+1. **Ramas y worktrees:** autorizado. Se usa `local-worker-1` y se crean `local-worker-2`, `local-worker-3` y `local-worker-4` desde `main`, cada una con su carpeta en `.worktrees/` (decisión por defecto de Victor).
+2. **Maquetas:** Victor las revisa antes de que se construya la interfaz; mientras tanto avanzan solo los carriles de datos y lógica (por defecto).
+3. **Columnas fijas del lienzo:** las del Spec (WBS, descripción, Und., metrado, costo unitario, HH por unidad). Las demás (área, disciplina, frente, costo total, HH totales, método de medición y otras) se ofrecen con el botón **«Personalizar campos»** (`src/components/ui/PersonalizarCampos.tsx` y `src/lib/ui/campos-visibles`, el mismo que usan Status de Requerimiento y otras pantallas); no se crea otro selector de columnas.
+4. **Datos del paquete:** nombre, nivel, modo de medición, partida guía y orden; se retiran los demás (por defecto).
+5. **Real del paquete:** sí. Lo **programado** se edita por línea (actividad × partida) y lo **real** se ve por paquete × partida.
+6. **Modo «por avance del paquete» en el RDT:** una **fila derivada de solo lectura por cada partida**, con el mismo %.
+7. **Permiso nuevo:** sí. Crear una versión nueva del Plan Maestro, cuando ya hay una aprobada, solo administrador y jefe de proyectos.
+8. **Migraciones:** Victor autoriza relajar la restricción de WBS único: **una partida se puede repetir en el Plan Maestro**. Respondió además que **las migraciones las aplican los Workers** y que ya dejó las credenciales; ese protocolo **no está escrito todavía en este plan** (ver nota del Planner en el registro).
+9. **Tabla de cambios a flujos:** aprobada en bloque, con estas respuestas.
 
 ## Registro de decisiones
 
@@ -432,7 +432,8 @@ Una sola aprobación de Victor cubre a todos los Workers de F5-D (mismo método 
 | 2026-09-30 | Columnas adicionales del lienzo (área, disciplina, frente, costo total, HH totales, método de medición y otras): se ofrecen con el botón «Personalizar campos», el mismo que ya usan Status de Requerimiento y otras pantallas (`src/components/ui/PersonalizarCampos.tsx` y `src/lib/ui/campos-visibles`); no se crea otro selector de columnas | Victor |
 | 2026-09-30 | **Gate 1, respuestas de Victor a las seis preguntas restantes:** (1) sí: lo programado se edita por línea (actividad × partida) y lo real se ve por paquete × partida, para mejorar la reportabilidad; (2) sí: en el RDT, modo «por avance del paquete», una fila derivada de solo lectura por partida; (3) sí: crear una versión nueva del Plan Maestro, cuando ya hay una aprobada, solo administrador y jefe de proyectos; (4) **las migraciones las aplican los Workers** (Victor ya dejó las credenciales; si no pueden, avisan), y se autoriza relajar la restricción de WBS único: **una partida se puede repetir en el Plan Maestro**; (5) sí: se aprueba en bloque la tabla de cambios a flujos; (6) sí: cada Worker entrega su resumen de cierre al Orquestador antes de declarar terminada su tanda, en un archivo propio por tanda; el Orquestador lo consolida en el progreso y, al terminar la última fase, se traslada a su destino (mejora de política, ya en el estándar) | Victor |
 | 2026-09-30 | Credenciales de base de datos: están en la carpeta `C:\Users\BRANDY\Downloads\DIARIO` (nombres de variable `PR_DB_URL` y `SUPABASE_ACCESS_TOKEN`; el `.env.local` de la app solo tiene la URL y las dos llaves de acceso REST, que no permiten crear tablas). Regla: ningún valor se copia a archivos del repositorio, briefs, logs ni capturas; se leen en el momento por el script de migración. Antecedente: `PR_DB_URL` fue inalcanzable desde un sandbox sin salida IPv6 y la vía alterna fue la Management API de Supabase | Orquestador, por indicación de Victor |
-| 2026-09-30 | Decisiones de método del Planner (a confirmar en el Gate 1): integración en la rama del carril 1; cierre de tanda por `resultados/<tanda>.md`; navegador solo en F5; `permisos.ts` congelado salvo una función | Planner |
+| 2026-09-30 | Cierre de tanda: cada Worker entrega su resumen al Orquestador, en su archivo propio `resultados/<tanda>.md`, antes de declarar terminada su tanda (**confirmado por Victor en el Gate 1**; ya en el estándar). Decisiones de método del Planner que siguen vigentes: integración en la rama del carril 1; navegador solo en F5; `permisos.ts` congelado salvo una función | Victor / Planner |
+| 2026-09-30 | **Nota del Planner:** la escritura del protocolo de migraciones y credenciales (quién aplica cada una, orden entre carriles, verificaciones, vía directa y vía alterna, candado y detenerse si falla) fue **denegada por el clasificador de permisos** al intentar crearla; queda **pendiente de decisión del usuario**. Hasta entonces, ninguna tanda de datos debe aplicar migraciones | Planner |
 
 ## Enlaces a progreso, evidencia y auditoría homónimos
 

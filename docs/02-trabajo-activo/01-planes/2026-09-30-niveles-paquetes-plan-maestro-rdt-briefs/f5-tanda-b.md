@@ -1,7 +1,7 @@
 # F5-B · Servicio de prueba dedicado y verificación en vivo (niveles, paquetes, Plan Maestro)
 
 Lee primero `00-reglas-de-contexto.md`. **Carril de integración** · rama `local-worker-1` (con los cuatro carriles integrados), puerto 3111. **Solo este carril usa el navegador** en este momento.
-Fase F5 · **Depende de:** F5-A cerrada **y del checkpoint de migraciones: Victor ya aplicó la 073 a la 084 una por una** (el Orquestador te lo confirma en el prompt de lanzamiento; sin eso, no empieces).
+Fase F5 · **Depende de:** F5-A cerrada **y de que las migraciones 073 a 084 estén aplicadas y verificadas por sus carriles** (constan en sus `resultados/`; el Orquestador te lo confirma en el prompt de lanzamiento; sin eso, no empieces).
 **Punto de commit:** solo el `resultados/F5-B.md`, que lo commitea el Orquestador; si hay ajustes de código menores, en `local-worker-1`.
 
 ## Ítems (estado inicial `Sin verificar`)

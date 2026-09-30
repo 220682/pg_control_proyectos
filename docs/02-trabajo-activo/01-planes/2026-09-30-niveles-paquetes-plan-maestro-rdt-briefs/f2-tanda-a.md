@@ -2,7 +2,7 @@
 
 Lee primero `00-reglas-de-contexto.md`. Carril **3 · Paquetes** · rama `local-worker-3` (worktree `.worktrees/local-worker-3`, puerto 3113).
 Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos que lees: `contrato-c2-paquetes.md` (y `contrato-c1-niveles.md` solo para `NodoEstructura`).
-**Migraciones reservadas: `db/079`–`081`** (se escriben, **no se aplican**).
+**Migraciones reservadas: `db/079`–`081`** (se escriben y **las aplicas tú**, según `00-protocolo-migraciones.md`; primer lugar en el orden).
 **Punto de commit:** al cerrar la tanda, en `local-worker-3`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -26,7 +26,7 @@ Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos que lees:
 
 ## Qué NO hacer
 
-- No apliques migraciones; no edites `db/README.md`. No edites `src/lib/cronograma/**` ni `api/cronograma/**` (carril 1) ni `plan-maestro/**` (carril 2). No toques `permisos.ts` ni `registro-accesos.ts`.
+- Aplica solo tus migraciones (079–081), según el protocolo; no edites `db/README.md`. No edites `src/lib/cronograma/**` ni `api/cronograma/**` (carril 1) ni `plan-maestro/**` (carril 2). No toques `permisos.ts` ni `registro-accesos.ts`.
 - No borres `paquete_trabajo_partidas` ni `paquete_trabajo_programacion`.
 - No cambies permisos. Sin push. Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
@@ -34,4 +34,4 @@ Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos que lees:
 
 **Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F2-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F2-A.md`, no en el plan ni en el progreso compartidos).
 
-`resultados/F2-A.md` (estado de F2A-1 a F2A-6, handoff con migraciones escritas, llamadas). Commit en `local-worker-3`, `git add` explícito.
+`resultados/F2-A.md` (estado de F2A-1 a F2A-6, handoff con migraciones aplicadas y verificadas, llamadas). Commit en `local-worker-3`, `git add` explícito.

@@ -2,7 +2,7 @@
 
 Lee primero `00-reglas-de-contexto.md`. Carril **1 · Niveles** · rama `local-worker-1`, puerto 3111.
 Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla). Contrato que lees: `contrato-c1-niveles.md`.
-**Migraciones reservadas: `db/073`–`075`** (se escriben, **no se aplican**).
+**Migraciones reservadas: `db/073`–`075`** (se escriben y **las aplicas tú**, según `00-protocolo-migraciones.md`; tercer lugar en el orden).
 **Punto de commit:** al cerrar la tanda, en `local-worker-1`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -27,7 +27,7 @@ Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla)
 
 ## Qué NO hacer
 
-- No apliques migraciones. No edites el plan ni `db/README.md`. No toques `src/lib/plan-maestro/**`, `paquetes-trabajo/**`, `rdts/**` (otros carriles).
+- Aplica solo tus migraciones (073–075), según el protocolo; no las de otros carriles. No edites el plan ni `db/README.md`. No toques `src/lib/plan-maestro/**`, `paquetes-trabajo/**`, `rdts/**` (otros carriles).
 - No borres tablas ni columnas; cualquier cambio de datos existentes va al handoff como «requiere autorización expresa».
 - No cambies permisos. No migres los consumidores de pantallas (F1-C). Sin push.
 - Ante contradicción con un flujo escrito, acción destructiva o duda de negocio: detente y devuelve la pregunta.
@@ -36,4 +36,4 @@ Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla)
 
 **Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F1-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F1-B.md`, no en el plan ni en el progreso compartidos).
 
-`resultados/F1-B.md` (estado de F1B-1 a F1B-6, handoff con las migraciones escritas y su orden, llamadas). Commit en `local-worker-1`, `git add` explícito.
+`resultados/F1-B.md` (estado de F1B-1 a F1B-6, handoff con las migraciones aplicadas y verificadas (vía usada, conteos antes y después), llamadas). Commit en `local-worker-1`, `git add` explícito.

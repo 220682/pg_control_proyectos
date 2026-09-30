@@ -27,7 +27,7 @@ Basadas en las del plan de paneles (`2026-09-27-paneles-servicio-persistente-bri
 
 ## Migraciones
 
-- Solo escribes `db/NNN_*.sql` **dentro del rango de tu carril** (índice). **Nunca aplicas** una migración: Victor las pega en el SQL Editor y confirma cada una. Idempotentes, aditivas; nada se borra ni renombra. Un cambio de restricción o de datos existentes va en el handoff como «requiere autorización expresa». No edites `db/README.md` (lo hace F5-A).
+- Solo escribes `db/NNN_*.sql` **dentro del rango de tu carril** (índice). Si tu tanda tiene migraciones, **las aplicas tú** siguiendo `00-protocolo-migraciones.md` (autorizado por Victor, que ya dejó las credenciales); si no las tiene, no aplicas ninguna. Idempotentes, aditivas; nada se borra ni renombra. Un cambio de restricción o de datos existentes va en el handoff como «requiere autorización expresa». No edites `db/README.md` (lo hace F5-A).
 
 ## Navegador y cuentas de prueba
 

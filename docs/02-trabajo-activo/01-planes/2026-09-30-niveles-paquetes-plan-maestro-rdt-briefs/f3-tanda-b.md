@@ -2,7 +2,7 @@
 
 Lee primero `00-reglas-de-contexto.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
 Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos que lees: `contrato-c3-plan-maestro.md` y `contrato-c4-real-por-clave.md`.
-**Migraciones reservadas: `db/076`–`078`** (se escriben, **no se aplican**).
+**Migraciones reservadas: `db/076`–`078`** (se escriben y **las aplicas tú**, según `00-protocolo-migraciones.md`; cuarto lugar en el orden).
 **Punto de commit:** al cerrar la tanda, en `local-worker-2`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -26,7 +26,7 @@ Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos que
 
 ## Qué NO hacer
 
-- No apliques migraciones; no edites `db/README.md`. No edites `pr/page.tsx`, `dashboard/page.tsx`, `curva-s/**`, `src/lib/pr/**`, `src/lib/dashboard/**`. No edites `paquetes-trabajo/**` ni `rdts/**`.
+- Aplica solo tus migraciones (076–078), según el protocolo; no edites `db/README.md`. No edites `pr/page.tsx`, `dashboard/page.tsx`, `curva-s/**`, `src/lib/pr/**`, `src/lib/dashboard/**`. No edites `paquetes-trabajo/**` ni `rdts/**`.
 - No cambies otros permisos que el indicado. No quites el bloqueo de transición a ejecución. Sin push.
 - Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
@@ -34,4 +34,4 @@ Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos que
 
 **Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F3-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F3-B.md`, no en el plan ni en el progreso compartidos). **Usa también `verificar-permisos-por-rol`**: añades `puedeCrearVersionPlanMaestro` a `permisos.ts`; verifica los 13 roles contra las tablas 1 y 2 del flujo 14 (función y API, llamadas sin efecto).
 
-`resultados/F3-B.md` (estado de F3B-1 a F3B-6, handoff con migraciones y la autorización pendiente, llamadas). Commit en `local-worker-2`, `git add` explícito.
+`resultados/F3-B.md` (estado de F3B-1 a F3B-6, handoff con migraciones aplicadas y verificadas (la relajación de WBS único ya la autorizó Victor), llamadas). Commit en `local-worker-2`, `git add` explícito.

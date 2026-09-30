@@ -2,7 +2,7 @@
 
 Lee primero `00-reglas-de-contexto.md`. Carril **4 · RDT** · rama `local-worker-4` (worktree `.worktrees/local-worker-4`, puerto 3114).
 Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos que lees: `contrato-c3-plan-maestro.md` (líneas), `contrato-c4-real-por-clave.md` y `contrato-c5-rdt.md`.
-**Migraciones reservadas: `db/082`–`084`** (se escriben, **no se aplican**).
+**Migraciones reservadas: `db/082`–`084`** (se escriben y **las aplicas tú**, según `00-protocolo-migraciones.md`; segundo lugar en el orden).
 **Punto de commit:** al cerrar la tanda, en `local-worker-4`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -25,7 +25,7 @@ Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos que lees:
 
 ## Qué NO hacer
 
-- No apliques migraciones; no edites `db/README.md`. No edites `src/lib/paquetes-trabajo/**`, `plan-maestro/**` ni `niveles/**`. No toques `permisos.ts`.
+- Aplica solo tus migraciones (082–084), según el protocolo; no edites `db/README.md`. No edites `src/lib/paquetes-trabajo/**`, `plan-maestro/**` ni `niveles/**`. No toques `permisos.ts`.
 - No cambies quién crea o valida RDT. Sin push.
 - Ante contradicción con un flujo, cambio de contrato o duda de negocio: detente y devuelve la pregunta.
 
@@ -33,4 +33,4 @@ Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos que lees:
 
 **Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F4-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F4-A.md`, no en el plan ni en el progreso compartidos).
 
-`resultados/F4-A.md` (estado de F4A-1 a F4A-5, handoff con migraciones, llamadas). Commit en `local-worker-4`, `git add` explícito.
+`resultados/F4-A.md` (estado de F4A-1 a F4A-5, handoff con migraciones aplicadas y verificadas, llamadas). Commit en `local-worker-4`, `git add` explícito.

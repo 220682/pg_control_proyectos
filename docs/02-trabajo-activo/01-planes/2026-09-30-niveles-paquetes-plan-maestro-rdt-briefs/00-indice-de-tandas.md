@@ -22,7 +22,7 @@ F1-A ─► F1-B ─► F1-C
 F2-A ─► F2-B ─► F2-C
 F3-A ─► F3-B ─► F3-C ─► F3-D
 F4-A ─► F4-B ─► F4-C
-Todas las tandas de F1..F4 ─► [merge ordenado por el Orquestador] ─► F5-A ─► [Victor aplica migraciones 073..084] ─► F5-B ─► F5-C
+Todas las tandas de F1..F4 (cada carril aplica y verifica sus migraciones) ─► [merge ordenado por el Orquestador] ─► F5-A ─► F5-B ─► F5-C
 F5-D (documentación) corre en paralelo con F5-B y F5-C y necesita la tabla en bloque aprobada en el Gate 1
 F5-* ─► Auditoría ─► Gate 2
 ```
@@ -59,13 +59,13 @@ Choques evitados: el carril 1 retira del cronograma el vínculo con metrado y el
 
 ## Migraciones reservadas (hoy la última es la `072`)
 
-Carril 1: **073–075** · carril 2: **076–078** · carril 3: **079–081** · carril 4: **082–084** · F5: 085–086 (reserva). Su contenido previsto está en el plan («Migraciones reservadas») y en el contrato de cada carril. Ninguna depende de otra (las claves foráneas solo apuntan a tablas que ya existen). Se aplican **en orden numérico**, a mano por Victor, una por una con su confirmación. Nadie las aplica desde el código.
+Carril 1: **073–075** · carril 2: **076–078** · carril 3: **079–081** · carril 4: **082–084** · F5: 085–086 (reserva). Su contenido previsto está en el plan («Migraciones reservadas») y en el contrato de cada carril. Ninguna depende de otra (las claves foráneas solo apuntan a tablas que ya existen). Las **aplica el Worker de cada carril** al terminar su tanda, una a la vez, en este orden: Paquetes (079–081), RDT (082–084), Niveles (073–075) y Plan Maestro (076–078), con las credenciales y el candado que describe `00-protocolo-migraciones.md` (autorizado por Victor el 2026-09-30).
 
 ## Orden de integración (lo hace el Orquestador, nunca un Worker)
 
 1. Al cerrar F1–F4, los merges se hacen **en la rama del carril 1** (`local-worker-1`; no se crea otra rama): primero 3 (Paquetes), luego 2 (Plan Maestro), luego 4 (RDT). No se esperan conflictos; si aparece uno, se resuelve en F5-A.
 2. F5-A corre sobre esa rama: suite, `tsc`, lint contra `main`, build, pruebas cruzadas y `db/README.md`.
-3. Victor aplica las migraciones 073–084 (checkpoint). Luego F5-B y F5-C.
+3. Las migraciones 073–084 ya están aplicadas y verificadas por sus carriles (constan en los `resultados/`); F5-A lo comprueba. Luego F5-B y F5-C.
 4. El merge de esa rama a `main` ocurre **solo tras el Gate 2**, con el push de la app autorizado por Victor en ese momento.
 
 ## Plantilla del prompt de lanzamiento (el Orquestador la completa por tanda)

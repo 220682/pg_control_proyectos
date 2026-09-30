@@ -96,7 +96,7 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 ### Diseño / UI aplicable
 
 - La pantalla replica el artefacto (dos tablas con scroll horizontal, columnas de roles, columna «Fila» y «Comentario», contorno de cambio, aprobación), según `docs/05-diseno-y-referencias/design.md`; no se crea un estilo nuevo.
-- Se ubica como un chip del grupo nuevo «Configuraciones» (D7), registrado en el registro único, no como una pantalla suelta.
+- Se ubica como un chip dentro de la página «Configuraciones» (D7), registrado en el registro único, no como una pantalla suelta.
 - Estados vacío, carga y error; accesible con teclado; responsive con la regla del repositorio.
 
 ### Decisiones de Victor (2026-09-30)

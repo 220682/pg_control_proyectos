@@ -95,6 +95,7 @@ Debe:
 - Reportar rama, commits, archivos modificados, pruebas, Punch List, bloqueos y propuestas documentales.
 - **Registrar en el momento en que ocurre** (no al cerrar) cualquier mejora de trabajo, regla de negocio acordada o archivo/carpeta huérfano detectado, en los apartados correspondientes del plan.
 - **Excepción de consulta directa (D6):** ante un conflicto entre una regla de negocio nueva y una ya escrita en un flujo de negocio, el Worker consulta al Responsable humano **directamente, en su propio chat**, sin pasar por el Orquestador — no sigue implementando con el conflicto sin resolver, no espera al cierre. Valida la respuesta, la escribe en el apartado correspondiente del progreso y recién ahí continúa. Si la respuesta no resuelve el conflicto, repite el ciclo.
+- En un plan por tandas con varios Workers a la vez, antes de declarar terminada su tanda entrega su resumen de cierre al Orquestador en un archivo propio por tanda y no edita los archivos compartidos del plan (ver `03-sesiones-contexto-y-handoff.md`, «Planes grandes en tandas»).
 - Al cerrar, trasladar cada entrada ya registrada a su destino final (ver `05-aprendizaje-continuo.md`): mejoras de trabajo, reglas de negocio y huérfanos reportados, sin borrar nada por su cuenta.
 
 No debe:

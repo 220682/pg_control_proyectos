@@ -55,6 +55,7 @@ Un plan de más de unos 15 ítems, o de una fase completa, se reparte en tandas 
 - El Worker lee solo lo que el brief nombra (busca por ID en vez de leer el plan completo).
 - Cada tanda se marca en el índice de tandas como **paralelizable** (documentación o código puro, sin navegador) o **usa el navegador** (se ejecutan una a una: dos tandas con navegador nunca corren a la vez).
 - Se mide cada sesión (llamadas, contexto máximo, caché leída) y se guarda en un archivo de medición.
+- Antes de declarar terminada su tanda, cada Worker entrega al Orquestador su resumen de cierre en un archivo propio por tanda (estado de sus ítems, evidencia, hallazgos, mejoras de trabajo y reglas de negocio detectadas) y no edita los archivos compartidos del plan. El Orquestador lo consolida en el archivo de progreso a medida que llegan; al terminar la última fase, el Worker de documentación traslada cada entrada a su destino final (flujos de negocio, aprendizaje continuo, evidencia).
 
 ## Límite conocido: mensajería entre sesiones
 

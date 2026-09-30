@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Crear RDT — Selector de actividad</title>
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover:not([disabled]){border-color:var(--accent);color:var(--accent)}
+button[disabled],button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover{color:var(--bg-base);filter:brightness(1.1)}
+button.icon{padding:1px 6px;min-width:24px}
+input[type=text],input[type=number],input[type=search]{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:11px;max-width:100%}
+input[type=number]{width:84px;text-align:right}
+input[readonly]{opacity:.7;border-style:dashed}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.demo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{padding:10px 12px;max-width:1000px}
+.pantalla:not([data-estado=datos]) .e-datos,.pantalla:not([data-estado=vacio]) .e-vacio,.pantalla:not([data-estado=carga]) .e-carga,.pantalla:not([data-estado=error]) .e-error{display:none}
+.miga{font-size:10px;color:var(--text-2);margin-bottom:4px}
+h1{font-size:16px;font-weight:600;margin-bottom:2px}
+h2{font-size:12px;font-weight:600;margin-bottom:4px}
+.muted{color:var(--text-2)}.ok{color:var(--ok)}.err{color:var(--err)}.warn{color:var(--warn)}
+.card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}
+.fila{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2);white-space:nowrap}
+.tag.acc{border-color:var(--accent);color:var(--accent)}.tag.acc2{border-color:var(--accent-2);color:#9db7ff}.tag.warn{border-color:var(--warn);color:var(--warn)}.tag.ok{border-color:var(--ok);color:var(--ok)}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{color:var(--text-2);font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0;font-size:11px}
+.msg.err{border-color:var(--err)}.msg.err strong{color:var(--err)}.msg.warn{border-color:var(--warn)}.msg.warn strong{color:var(--warn)}.msg.info{border-color:var(--accent-2)}
+.vacio{border:1px dashed var(--line);border-radius:10px;padding:24px 12px;text-align:center;color:var(--text-2)}
+.vacio strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
+.sk{height:10px;border-radius:4px;background:linear-gradient(90deg,#141b2b,#1f2a40,#141b2b);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.calc{font-style:italic;color:var(--text-2)}
+/* selector (modal) */
+.velo{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px}
+.modal{background:var(--bg-elevated);border:1px solid var(--line);border-radius:12px;width:640px;max-width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.7)}
+.modal header{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}
+.modal header h2{flex:1;margin:0;font-size:13px}
+.modal .cuerpo{padding:8px 12px;overflow:auto}
+.pq{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.pq.c2{border-left-color:var(--accent-2)}
+.pq.dir{border-left-color:transparent}
+.pq-h{display:flex;gap:8px;align-items:center;padding:5px 8px;background:#111a2c;font-weight:600;flex-wrap:wrap}
+.pq-h .gr{flex:1}
+.it{display:flex;gap:8px;align-items:center;padding:4px 8px 4px 26px;border-top:1px solid var(--line);flex-wrap:wrap}
+.it .nm{flex:1;min-width:140px}
+.it .wbs{font-variant-numeric:tabular-nums;color:var(--text-2);min-width:62px}
+.sel{background:rgba(34,211,238,.08)}
+.uni{font-size:11px;color:var(--text-2)}
+.prog-mini{width:60px;height:6px;accent-color:var(--accent)}
+@media (max-width:640px){.it{padding-left:10px}.modal{max-height:96vh}}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Crear RDT · selector de actividad del Plan Maestro · datos simulados (anexo del Spec)</span>
+<div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
+<button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
+<button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
+<button type="button" data-set-estado="carga" aria-pressed="false">Cargando</button>
+<button type="button" data-set-estado="error" aria-pressed="false">Error</button></div>
+<div class="grp" role="group" aria-label="Plan Maestro del servicio"><span>Plan Maestro:</span>
+<button type="button" data-pm="si" aria-pressed="true">Aprobado</button>
+<button type="button" data-pm="no" aria-pressed="false">Sin aprobar</button></div>
+</div>
+<main class="pantalla" data-estado="datos" id="pant">
+<nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Crear RDT</nav>
+<h1>Crear RDT</h1>
+<p class="muted">Extracto: solo los bloques que eligen actividad. El resto del RDT no cambia.</p>
+<div class="e-datos">
+<div class="msg info" id="aviso-pm" role="status" hidden><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>Este servicio aún no tiene un Plan Maestro aprobado, y el RDT solo registra avance sobre lo que está en él. Cuando se apruebe, aquí aparecerán sus paquetes y partidas.</div></div>
+<section class="card" aria-labelledby="t-act"><div class="fila"><h2 id="t-act" style="margin:0">Actividades ejecutadas</h2><span class="grow" style="flex:1"></span><button type="button" class="primary" data-elegir="act">+ Actividad</button></div>
+<div class="tw"><table><caption class="sr">Actividades ejecutadas en el día</caption><thead><tr><th scope="col">Paquete</th><th scope="col">WBS</th><th scope="col">Partida</th><th scope="col">Und.</th><th scope="col" class="num">Metrado hoy</th><th scope="col">Cómo se obtiene</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="act-body"><tr id="act-vacia"><td colspan="7" class="muted">Sin actividades. Pulsa «+ Actividad» para elegir del Plan Maestro.</td></tr></tbody></table></div></section>
+<section class="card" aria-labelledby="t-hh"><div class="fila"><h2 id="t-hh" style="margin:0">Horas por persona (C / NC)</h2></div>
+<div class="tw"><table><caption class="sr">Horas por persona</caption><thead><tr><th scope="col">Persona</th><th scope="col">Actividad</th><th scope="col" class="num">Horas C</th><th scope="col" class="num">Horas NC</th></tr></thead><tbody>
+<tr><td>Operario 1</td><td><button type="button" data-elegir="hh1" id="hh1">Elegir actividad</button></td><td class="num"><input type="number" min="0" step="0.5" value="8" aria-label="Horas C de Operario 1"></td><td class="num"><input type="number" min="0" step="0.5" value="0" aria-label="Horas NC de Operario 1"></td></tr>
+<tr><td>Oficial 1</td><td><button type="button" data-elegir="hh2" id="hh2">Elegir actividad</button></td><td class="num"><input type="number" min="0" step="0.5" value="6" aria-label="Horas C de Oficial 1"></td><td class="num"><input type="number" min="0" step="0.5" value="2" aria-label="Horas NC de Oficial 1"></td></tr></tbody></table></div></section>
+<section class="card" aria-labelledby="t-mat"><div class="fila"><h2 id="t-mat" style="margin:0">Materiales</h2></div>
+<div class="tw"><table><caption class="sr">Materiales usados</caption><thead><tr><th scope="col">Material</th><th scope="col">Actividad</th><th scope="col" class="num">Cantidad</th></tr></thead><tbody>
+<tr><td>Arena fina</td><td><button type="button" data-elegir="mat1" id="mat1">Elegir actividad</button></td><td class="num"><input type="number" min="0" value="12" aria-label="Cantidad de Arena fina"></td></tr></tbody></table></div></section>
+</div>
+<div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el Plan Maestro del servicio…</p><div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:70%"></div></div></div>
+<div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el Plan Maestro</strong><br>No fue posible traer los paquetes y partidas del servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
+<div class="e-vacio"><div class="vacio"><strong>El Plan Maestro no tiene filas para elegir</strong><p>El Plan Maestro aprobado de este servicio no contiene partidas. Revisa Paquetes de trabajo y el Plan Maestro.</p></div></div>
+<details class="card" style="font-size:11px;color:var(--text-2)"><summary style="cursor:pointer;color:var(--text)">Notas de esta maqueta: modo por avance del paquete, estados, móvil y accesibilidad</summary><ul style="margin:6px 0 2px 16px;line-height:1.5">
+<li>El selector lista lo que está en el Plan Maestro aprobado: paquetes plegables con sus partidas, y aparte las partidas directas (sin paquete). Ya no lista el DP.</li>
+<li>Paquete <strong>por partidas</strong> (Banco ducto): se elige cada partida y se escribe su metrado. Paquete <strong>por avance del paquete</strong> (Relleno): se elige el paquete, se escribe solo el metrado de la guía (Relleno) y las demás partidas aparecen calculadas con el mismo % y en solo lectura. Prueba: elige «Relleno» y escribe un metrado.</li>
+<li>Horas C/NC y materiales usan el mismo selector (botón «Elegir actividad»).</li>
+<li>Selector: diálogo modal (<code>role="dialog"</code>, <code>aria-modal</code>), foco a la búsqueda al abrir, Escape lo cierra y devuelve el foco al botón; paquetes con <code>aria-expanded</code>; botones con el nombre de la partida en <code>aria-label</code>. En 390 px ocupa casi toda la pantalla y las filas pasan a dos líneas.</li>
+<li>Con «Sin aprobar» se ve el mensaje en la pantalla y el selector no ofrece filas.</li></ul></details>
+</main>
+<div class="velo" id="velo" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-tit" id="modal">
+<header><h2 id="m-tit">Elegir actividad del Plan Maestro</h2><button type="button" class="icon" id="m-x" aria-label="Cerrar el selector" title="Cerrar">&times;</button></header>
+<div class="cuerpo"><div class="fila"><label class="sr" for="m-q">Buscar partida o paquete</label><input type="search" id="m-q" placeholder="Buscar por nombre o WBS" style="flex:1;min-width:160px"><button type="button" id="m-pl">Plegar todo</button><button type="button" id="m-ex">Expandir todo</button></div>
+<div id="m-lista"></div></div></div></div>
+<script>
+(function(){
+ var PM_OK=true,ctx=null,ultimoBoton=null;
+ var PK=[{id:'p1',nom:'Banco ducto',modo:'por partidas',cls:'',its:[
+  {id:'exc',wbs:'06.03.01',nom:'Excavación',und:'m³',met:100,av:90},{id:'cam',wbs:'06.03.02',nom:'Cama de arena',und:'ml',met:50,av:20},{id:'ace',wbs:'06.03.03',nom:'Acero',und:'kg',met:1000,av:40}]},
+  {id:'p2',nom:'Relleno',modo:'por avance del paquete',cls:'c2',its:[
+  {id:'rel',wbs:'06.04.01',nom:'Relleno',und:'m³',met:80,av:25,guia:true},{id:'afi',wbs:'06.04.02',nom:'Suministro de afirmado',und:'m³',met:40,av:25}]}];
+ var DIR=[{id:'eli',wbs:'06.05.01',nom:'Eliminación de material',und:'m³',met:200,av:0}];
+ var plegado={};
+ function f(n){return String(Math.round(n*100)/100).replace('.',',');}
+ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+ var pant=document.getElementById('pant');
+ document.querySelectorAll('[data-set-estado]').forEach(function(b){b.addEventListener('click',function(){pant.setAttribute('data-estado',b.getAttribute('data-set-estado'));
+  document.querySelectorAll('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});});});
+ document.querySelectorAll('[data-pm]').forEach(function(b){b.addEventListener('click',function(){PM_OK=b.getAttribute('data-pm')==='si';
+  document.querySelectorAll('[data-pm]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});document.getElementById('aviso-pm').hidden=PM_OK;});});
+ function linea(p,it){return '<div class="it" data-row="'+it.id+'"><span class="wbs">'+it.wbs+'</span><span class="nm">'+esc(it.nom)+(it.guia?' <span class="tag acc2">Guía</span>':'')+'</span><span class="uni">'+it.und+' · '+f(it.met)+'</span><progress class="prog-mini" max="100" value="'+it.av+'" aria-label="Avance real acumulado de '+esc(it.nom)+': '+it.av+' %"></progress><span class="uni">'+it.av+' %</span>';}
+ function dibuja(){
+  var q=(document.getElementById('m-q').value||'').toLowerCase(),h='';
+  if(!PM_OK){document.getElementById('m-lista').innerHTML='<div class="msg info" role="status"><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>No hay paquetes ni partidas para elegir. El RDT solo registra avance sobre un Plan Maestro aprobado.</div></div>';return;}
+  PK.forEach(function(p){
+   var its=p.its.filter(function(i){return !q||(i.nom+' '+i.wbs+' '+p.nom).toLowerCase().indexOf(q)>-1;});if(!its.length)return;
+   var pl=!!plegado[p.id],porAv=p.modo!=='por partidas';
+   h+='<div class="pq '+p.cls+'"><div class="pq-h"><button type="button" class="icon" data-pl="'+p.id+'" aria-expanded="'+(!pl)+'" aria-label="'+(pl?'Expandir':'Plegar')+' el paquete '+esc(p.nom)+'">'+(pl?'&#9656;':'&#9662;')+'</button><span class="tag '+(p.cls?'acc2':'acc')+'">Paquete</span><span class="gr">'+esc(p.nom)+' <span class="tag">'+p.modo+'</span></span>'+
+    (porAv?'<button type="button" class="primary" data-pick="pq|'+p.id+'" aria-label="Elegir el paquete '+esc(p.nom)+' (se escribe el metrado de la guía)">Elegir paquete</button>':'')+'</div>';
+   if(!pl){its.forEach(function(i){h+=linea(p,i);
+    if(porAv){h+=i.guia?'<span class="uni">(se escribe aquí)</span>':'<span class="uni calc">se calcula con la guía</span>';}
+    else{h+='<button type="button" data-pick="pa|'+p.id+'|'+i.id+'" aria-label="Elegir la partida '+esc(i.nom)+' del paquete '+esc(p.nom)+'">Elegir</button>';}
+    h+='</div>';});}
+   h+='</div>';});
+  var dd=DIR.filter(function(i){return !q||(i.nom+' '+i.wbs).toLowerCase().indexOf(q)>-1;});
+  if(dd.length){h+='<div class="pq dir"><div class="pq-h"><span class="gr">Partidas directas <span class="tag">sin paquete</span></span></div>';dd.forEach(function(i){h+=linea(null,i)+'<button type="button" data-pick="di|'+i.id+'" aria-label="Elegir la partida directa '+esc(i.nom)+'">Elegir</button></div>';});h+='</div>';}
+  if(!h){h='<div class="vacio"><strong>Sin resultados</strong>Ninguna partida ni paquete coincide con la búsqueda.</div>';}
+  document.getElementById('m-lista').innerHTML=h;}
+ function abre(c,btn){ctx=c;ultimoBoton=btn;document.getElementById('velo').hidden=false;document.getElementById('m-q').value='';dibuja();document.getElementById('m-q').focus();}
+ function cierra(){document.getElementById('velo').hidden=true;if(ultimoBoton){ultimoBoton.focus();}}
+ document.querySelectorAll('[data-elegir]').forEach(function(b){b.addEventListener('click',function(){abre(b.getAttribute('data-elegir'),b);});});
+ document.getElementById('m-x').addEventListener('click',cierra);
+ document.getElementById('velo').addEventListener('mousedown',function(e){if(e.target.id==='velo')cierra();});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!document.getElementById('velo').hidden){cierra();}});
+ document.getElementById('m-q').addEventListener('input',dibuja);
+ document.getElementById('m-pl').addEventListener('click',function(){PK.forEach(function(p){plegado[p.id]=true;});dibuja();});
+ document.getElementById('m-ex').addEventListener('click',function(){plegado={};dibuja();});
+ function buscaP(id){var r=null;PK.forEach(function(p){p.its.forEach(function(i){if(i.id===id)r={p:p,i:i};});});DIR.forEach(function(i){if(i.id===id)r={p:null,i:i};});return r;}
+ function recalcAfi(){var g=document.getElementById('in-rel');if(!g)return;var v=parseFloat(g.value)||0,pct=v/80;
+  var pc=document.getElementById('pct-rel');if(pc)pc.textContent=f(pct*100)+' % del paquete hoy';
+  var a=document.getElementById('in-afi');if(a)a.value=f(pct*40);}
+ function addFila(html,id){var b=document.getElementById('act-body');document.getElementById('act-vacia').hidden=true;b.insertAdjacentHTML('beforeend',html.replace('%ID%',id));}
+ document.addEventListener('click',function(e){
+  var pl=e.target.closest('[data-pl]');if(pl){var id=pl.getAttribute('data-pl');plegado[id]=!plegado[id];dibuja();return;}
+  var pk=e.target.closest('[data-pick]');if(pk){var a=pk.getAttribute('data-pick').split('|');var txt='';
+   if(ctx==='act'){
+    if(a[0]==='pq'){var p=PK.filter(function(x){return x.id===a[1];})[0];
+     addFila('<tr data-fa><td><span class="tag acc2">Paquete</span> '+esc(p.nom)+'</td><td>06.04.01</td><td>Relleno <span class="tag acc2">Guía</span></td><td>m³</td><td class="num"><input type="number" min="0" step="any" id="in-rel" aria-label="Metrado de hoy de Relleno (guía del paquete)" value=""></td><td><span class="tag">Por avance del paquete</span> <span id="pct-rel" class="muted">0 % del paquete hoy</span></td><td><button type="button" class="icon" data-quitar aria-label="Quitar el paquete Relleno" title="Quitar">&times;</button></td></tr>'+
+      '<tr data-fa><td><span class="tag acc2">Paquete</span> '+esc(p.nom)+'</td><td>06.04.02</td><td>Suministro de afirmado <span class="tag">Calculada</span></td><td>m³</td><td class="num"><input type="text" id="in-afi" readonly aria-label="Metrado calculado de Suministro de afirmado (solo lectura)" value="0" style="width:84px"></td><td class="calc">= mismo % que la guía × 40 m³</td><td></td></tr>','');
+     var g=document.getElementById('in-rel');g.addEventListener('input',recalcAfi);}
+    else{var r=buscaP(a[a.length-1]);addFila('<tr data-fa><td>'+(r.p?'<span class="tag acc">Paquete</span> '+esc(r.p.nom):'<span class="tag">Directa</span>')+'</td><td>'+r.i.wbs+'</td><td>'+esc(r.i.nom)+'</td><td>'+r.i.und+'</td><td class="num"><input type="number" min="0" step="any" aria-label="Metrado de hoy de '+esc(r.i.nom)+'"></td><td><span class="tag">Por partida</span></td><td><button type="button" class="icon" data-quitar aria-label="Quitar '+esc(r.i.nom)+'" title="Quitar">&times;</button></td></tr>','');}
+   }else{
+    if(a[0]==='pq'){txt='Relleno (paquete)';}else{var r2=buscaP(a[a.length-1]);txt=(r2.p?r2.p.nom+' › ':'Directa › ')+r2.i.nom;}
+    ultimoBoton.textContent=txt;ultimoBoton.className='tag acc';}
+   cierra();return;}
+  var q=e.target.closest('[data-quitar]');if(q){var tr=q.closest('tr');var n=tr.nextElementSibling;if(tr.querySelector('#in-rel')&&n){n.remove();}tr.remove();
+   if(!document.querySelector('#act-body tr[data-fa]')){document.getElementById('act-vacia').hidden=false;}}
+ });
+})();
+</script>
+</body>
+</html>

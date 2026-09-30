@@ -94,6 +94,14 @@ Aprobado por Victor el 2026-09-30 como excepción a «estructura fija»: el asis
 - **Capas:** `z-40`, **por debajo** de los cajones móviles y los modales (`z-50`). Una sola instancia en toda pantalla del workspace; no aparece en login, activar ni en el dashboard del portafolio.
 - No se usa como precedente para otros botones flotantes: cualquier otro elemento fuera de los tres paneles requiere aprobación.
 
+### Paneles laterales ocultables (propuesta F0-B)
+
+Propuesta de la Fase F0-B (2026-09-30); **vigente cuando Victor apruebe** `mockups/paneles-ocultables.html`. Solo escritorio (`lg`, 1024 px en adelante); en móvil los paneles ya son un cajón y el control no aparece.
+
+- **Control:** en la barra de la pantalla (no dentro de los paneles), botones `Button.tsx` de texto con `aria-pressed` y `aria-controls`: «Ocultar panel izquierdo», «Ocultar panel derecho» y «Ocultar ambos» (el texto pasa a «Mostrar …»). Sin chip ni acceso nuevo.
+- **Efecto:** el panel oculto libera su ancho (`w-60` el izquierdo, `w-64` el derecho) y el centro lo toma; el estado se recuerda por usuario y, si no puede guardarse, los paneles quedan visibles.
+- **Asistente:** no cambia (icono de 48 px, `z-40`). En pantallas con tabla ancha (Plan Maestro, Paquetes) el contenedor reserva una **franja inferior de 4 rem** para que el icono no tape columnas ni la barra de desplazamiento horizontal.
+
 ### Contenido de página
 
 El contenido de cada página vive dentro de:
@@ -241,6 +249,25 @@ Propuesta de la Fase F0 del plan niveles-paquetes-plan-maestro-rdt (2026-09-30);
 
 Estados obligatorios (§9): vacío, cargando, error y datos, en cada una de las cuatro maquetas de F0-A.
 
+### Lienzo del Plan Maestro (propuesta F0-B)
+
+Propuesta de la Fase F0-B; **vigente cuando Victor apruebe** `mockups/plan-maestro-lienzo.html`. Composición de lo existente, sin componente ni token nuevo; los nombres reales los fija el Planner.
+
+| Pieza | Regla | Se apoya en |
+|---|---|---|
+| Zonas | Columnas **fijas** a la izquierda (WBS, descripción, Und., metrado, costo unitario, HH por unidad y «Falta repartir»), línea divisoria de 3 px en `amber` (4.1.1) y a la derecha una columna por día, agrupadas por semana (sábado a viernes). Sin columnas de Tiempo | §8 |
+| Seis columnas por semana | Físico, económico y HH, cada uno semanal y acumulado, con rótulo de dos líneas (nombre y unidad entre paréntesis). Un interruptor oculta las tres acumuladas; nunca se mezclan en una columna | §7, §10 |
+| Semanas | Botón de solo icono con `aria-expanded` en el encabezado de cada semana; plegada deja solo sus columnas de totales; «Plegar semanas» y «Expandir semanas» para todas | §9, §10 |
+| Filas | Nivel y paquete plegables con subtotal, partidas repetidas por paquete, partidas directas (marca de paquete de §5 «Jerarquía en árbol»). Cada partida tiene subfila «Prog.» (campos numéricos) y «Real» (texto, solo lectura, interruptor para ocultarla) | §5 |
+| Restante | «Falta repartir» por fila y un indicador global con `<progress>`; texto e icono con los colores de 4.1.1 (`emerald` completa, `amber` falta, `rose` excede) | §4.1.1 |
+| Encabezado | Cuatro filas `sticky` de celda (etiquetas de semana, rótulos, total del servicio «Prog.» y «Real»); los `top` se calculan sumando alturas, no se adivinan | §8 |
+| Personalizar campos | El mismo `PersonalizarCampos.tsx` de los listados (mismo aspecto), para columnas fijas opcionales | componente existente |
+| Estados | `BORRADOR` (editable) y `APROBADO` (todo en solo lectura); semana extendida marcada con etiqueta «real fuera del rango»; «Crear Plan Maestro» con `aria-disabled` hasta el 100 % y mensaje `role="alert"` que dice qué partidas faltan | §9 |
+
+### Selector de actividad del RDT (propuesta F0-B)
+
+Vigente cuando Victor apruebe `mockups/crear-rdt-selector-paquetes.html`. Diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5) y las partidas directas aparte. En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para actividades, horas C/NC y materiales. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
+
 ### Crear componentes nuevos
 
 Solo proponer un componente nuevo si:
@@ -361,6 +388,7 @@ Reglas:
 - Verificar que el panel central no se desborde por una tabla ancha.
 - No reemplazar tabla nativa por divs sin necesidad técnica y sin aprobación.
 - No usar `max-h-[Nvh]` en la caja de una tabla de página completa — usar `flex-1 min-h-0` dentro de una columna flex de alto real (`h-full`). `max-h` en vh sí es aceptable dentro de modales centrados (`PanelVerRq.tsx`, `ModalPartidasServicio.tsx`, `ModalHistorialRdt.tsx`), donde no compite con un encabezado de página.
+- **Lienzo con columnas fijas y días (Plan Maestro):** las columnas fijas de la izquierda usan `sticky left-N` **por celda**, con `left` acumulado según las columnas visibles; las filas de encabezado y de total usan `sticky top-N` por celda con `top` acumulado por las alturas reales. Fondos opacos en toda celda `sticky`. En móvil solo quedan fijas WBS y descripción.
 
 ---
 
@@ -482,6 +510,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.6.0 | 2026-09-30 | Propuesta de F0-B (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §3 «Paneles laterales ocultables»; §5 «Lienzo del Plan Maestro» y «Selector de actividad del RDT»; §8 regla del lienzo con columnas fijas y días. Sin tokens ni componentes nuevos. |
 | 1.5.0 | 2026-09-30 | Propuesta de F0-A (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §5 nueva subsección «Jerarquía en árbol con casillas, marca de paquete y plegado». Sin tokens ni componentes nuevos. |
 | 1.4.0 | 2026-09-30 | Con confirmación de Victor (regla de evolución): §3 documenta el asistente flotante (posición, capas, patrón) como excepción a «estructura fija»; §5 documenta el chip deshabilitado, el registro único de accesos y la política de interfaz nueva. |
 | 1.3.0 | 2026-09-23 | Sección 13 nueva: "Gráficos de líneas" (8 reglas), a partir del precedente Curva S (Fase 3). Antigua sección 13 "Control de calidad" pasa a 14, "Historial de cambios" pasa a 15. |

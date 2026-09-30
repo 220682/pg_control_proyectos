@@ -20,6 +20,9 @@ Abre `index.html` en el navegador, o cualquier `.html` de esta carpeta directame
 | `cronograma-niveles.html` | Cronograma: confirmación de niveles con roles propios. Propuesta F0-A, pendiente de aprobación |
 | `paquetes-declarar.html` | Paquetes de trabajo, paso Declarar (cronograma con Metrado + DP solo partidas). Propuesta F0-A, pendiente de aprobación |
 | `paquetes-agrupar.html` | Paquetes de trabajo, paso Agrupar (crear paquete, marca, orden, plegado). Propuesta F0-A, pendiente de aprobación |
+| `plan-maestro-lienzo.html` | Plan Maestro: lienzo con columnas fijas, días por semana, seis columnas por semana, filas Prog./Real, anexo de 4 semanas. Propuesta F0-B, pendiente de aprobación |
+| `paneles-ocultables.html` | Ocultar y mostrar los paneles laterales (escritorio) y cajón móvil. Propuesta F0-B, pendiente de aprobación |
+| `crear-rdt-selector-paquetes.html` | Crear RDT: selector de actividad desde el Plan Maestro (paquetes, partidas, por avance del paquete). Propuesta F0-B, pendiente de aprobación |
 
 ## Campos del formulario de Requerimiento de servicios (spec, 2026-08-19)
 

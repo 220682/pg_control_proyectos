@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paneles laterales ocultables</title>
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;padding:0 0 16px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.icon{padding:1px 6px;min-width:24px}
+button.pill{border-radius:999px;padding:2px 8px;font-size:10px;color:var(--text-2)}
+button[aria-pressed=true]{border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.15);color:var(--accent)}
+[hidden]{display:none!important}
+.demo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.wrap{padding:10px 12px}
+h1{font-size:16px;font-weight:600;margin-bottom:4px}
+p.lead{color:var(--text-2);margin-bottom:8px;line-height:1.5}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2)}
+/* shell de escritorio (simulado: izquierdo w-60 = 240 px, derecho w-64 = 256 px) */
+.shell{display:flex;height:360px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-base)}
+.aside{flex:0 0 auto;background:var(--bg-elevated);padding:8px;font-size:11px;color:var(--text-2);overflow:auto}
+.aside.izq{width:240px;border-right:1px solid var(--line)}
+.aside.der{width:256px;border-left:1px solid var(--line)}
+.aside strong{display:block;color:var(--text);margin-bottom:6px}
+.aside ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.aside li span{display:block;border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.shell.sin-izq .aside.izq{display:none}
+.shell.sin-der .aside.der{display:none}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;padding:6px 8px 58px}
+.barra{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.lienzo-demo{flex:1;min-height:0;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated)}
+table{border-collapse:separate;border-spacing:0;font-size:11px}
+th,td{padding:3px 6px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--bg-elevated);text-align:right}
+th{position:sticky;top:0;z-index:3;color:var(--text-2);font-weight:600}
+.f{position:sticky;z-index:2;text-align:left}
+.f1{left:0;width:150px;min-width:150px}
+.f2{left:150px;width:60px;min-width:60px;border-right:3px solid var(--warn)}
+th.f{z-index:5}
+.asistente{position:absolute;right:10px;bottom:8px;width:44px;height:44px;border-radius:50%;padding:0;background:var(--accent-2);border-color:var(--accent-2);color:#fff;font-weight:700;z-index:40}
+.reserva{position:absolute;left:8px;right:64px;bottom:8px;height:44px;border:1px dashed var(--line);border-radius:8px;display:flex;align-items:center;padding:0 10px;color:var(--text-2);font-size:10px}
+.ancho{font-variant-numeric:tabular-nums;color:var(--accent)}
+/* móvil */
+.movil-cols{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;margin-top:14px}
+.tel{width:390px;max-width:100%;height:440px;border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative;background:var(--bg-base)}
+.tel .top{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--line);background:var(--bg-elevated)}
+.tel .cont{padding:8px;position:absolute;top:36px;bottom:0;left:0;right:0;padding-bottom:58px}
+.cajon{position:absolute;top:0;bottom:0;left:0;width:78%;background:var(--bg-elevated);border-right:1px solid var(--line);z-index:50;padding:8px;color:var(--text-2);font-size:11px;box-shadow:10px 0 30px rgba(0,0,0,.6)}
+.velo{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:45}
+.tel .asistente{right:8px;bottom:8px}
+.nota{border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text-2);margin-top:12px}
+.nota ul{margin:6px 0 2px 16px;line-height:1.5}
+.nota summary{cursor:pointer;color:var(--text)}
+@media (max-width:1023px){.vista-esc{display:none}.aviso-esc{display:block!important}}
+.aviso-esc{display:none;border:1px dashed var(--line);border-radius:8px;padding:8px;color:var(--text-2)}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Ocultar y mostrar los paneles laterales · datos simulados</span>
+</div>
+<div class="wrap">
+<h1>Paneles laterales ocultables</h1>
+<p class="lead">Solo escritorio (desde 1024 px). El control vive en la barra de la pantalla: un botón para cada panel y uno que oculta ambos. El estado se recuerda por usuario (aquí se simula con el almacenamiento del navegador; si no está disponible, la pantalla funciona igual). En móvil los paneles ya son un cajón y este control no aparece.</p>
+<p class="aviso-esc">Esta ventana es menor de 1024 px: el control de escritorio no se muestra. Mira la vista móvil más abajo.</p>
+<div class="vista-esc">
+<div class="shell" id="shell">
+<aside class="aside izq" aria-label="Panel izquierdo (simulado)"><strong>Panel izquierdo · w-60</strong><ul><li><span>Plan Maestro</span></li><li><span>Paquetes de trabajo</span></li><li><span>Cronograma</span></li><li><span>Status de RDTs</span></li></ul></aside>
+<div class="main">
+<div class="barra" role="toolbar" aria-label="Controles de la pantalla">
+<strong>Plan Maestro</strong>
+<button type="button" class="pill" id="b-izq" aria-pressed="false" aria-controls="shell" title="Ocultar el panel izquierdo">Ocultar panel izquierdo</button>
+<button type="button" class="pill" id="b-der" aria-pressed="false" aria-controls="shell" title="Ocultar el panel derecho">Ocultar panel derecho</button>
+<button type="button" class="pill" id="b-ambos" aria-pressed="false" aria-controls="shell" title="Ocultar los dos paneles laterales">Ocultar ambos</button>
+<span class="muted" style="color:var(--text-2)">Ancho del lienzo: <span class="ancho" id="ancho"></span></span>
+<span class="tag" id="recuerdo">Recordado por usuario</span>
+</div>
+<div class="lienzo-demo" tabindex="0" role="region" aria-label="Vista reducida del lienzo para ver el ancho ganado"><table id="t"></table></div>
+<div class="reserva" aria-hidden="true">Franja inferior reservada (4 rem): aquí vive el icono del asistente; ninguna columna queda debajo de él.</div>
+<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente">IA</button>
+</div>
+<aside class="aside der" aria-label="Panel derecho (simulado)"><strong>Panel derecho · w-64</strong><ul><li><span>Crear paquete</span></li><li><span>Crear RDT</span></li><li><span>Generar RQ</span></li></ul></aside>
+</div>
+</div>
+<div class="movil-cols">
+<div>
+<p class="lead" style="margin-bottom:4px">Vista móvil (390 px): los paneles ya son un cajón. No hay control nuevo; el icono del asistente queda en la franja inferior reservada.</p>
+<div class="tel" id="tel"><div class="top"><button type="button" class="icon" id="m-abrir" aria-label="Abrir el panel izquierdo" aria-expanded="false" title="Abrir el panel izquierdo">&#9776;</button><strong>Plan Maestro</strong><span style="flex:1"></span><button type="button" class="icon" id="m-abrir-d" aria-label="Abrir el panel derecho" title="Abrir el panel derecho">&#9881;</button></div>
+<div class="cont"><div class="lienzo-demo" style="height:100%" tabindex="0" role="region" aria-label="Lienzo (desplazar a la derecha)"><table id="t2"></table></div></div>
+<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente">IA</button>
+<div class="velo" id="velo" hidden></div><div class="cajon" id="cajon" role="dialog" aria-modal="true" aria-label="Panel izquierdo" hidden><button type="button" class="icon" id="m-cerrar" aria-label="Cerrar el panel" style="float:right">&times;</button><strong style="color:var(--text)">Panel</strong><p style="margin-top:8px">Plan Maestro<br>Paquetes de trabajo<br>Cronograma</p></div></div>
+</div>
+</div>
+<details class="nota"><summary>Notas de esta maqueta: estados, móvil y accesibilidad</summary><ul>
+<li>Botones con <code>aria-pressed</code> y texto que cambia entre «Ocultar» y «Mostrar»; <code>aria-controls</code> apunta al shell. Se operan con teclado (Tab, Enter o Espacio).</li>
+<li>Al ocultar un panel, el centro toma su ancho (240 px el izquierdo, 256 px el derecho): mira el contador de ancho del lienzo. Las columnas fijas del lienzo siguen pegadas a la izquierda.</li>
+<li>El icono del asistente (48 px en el diseño real, dentro del centro, abajo a la derecha, capa z-40) no tapa columnas porque la pantalla reserva una franja inferior de 4 rem. Es una propuesta: no cambia el icono, solo reserva espacio en las pantallas anchas (Plan Maestro y Paquetes).</li>
+<li>Estados: no carga datos propios; hereda los de la pantalla. Si el almacenamiento falla, los paneles quedan visibles (valor por defecto).</li>
+<li>Móvil: el cajón cierra con la X, el fondo o Escape y devuelve el foco al botón que lo abrió.</li></ul></details>
+</div>
+<script>
+(function(){
+ function tabla(id,n){var h='<thead><tr><th class="f f1" scope="col">Descripción</th><th class="f f2" scope="col">Und.</th>',b='',i,j;
+  for(i=1;i<=n;i++){h+='<th scope="col">Día '+i+'</th>';}h+='</tr></thead><tbody>';
+  ['Excavación','Cama de arena','Acero','Relleno','Afirmado','Eliminación'].forEach(function(nm,k){b+='<tr><td class="f f1">'+nm+'</td><td class="f f2">m³</td>';for(j=0;j<n;j++){b+='<td>'+((j+k)%3?'':'10')+'</td>';}b+='</tr>';});
+  document.getElementById(id).innerHTML=h+b+'</tbody>';}
+ tabla('t',28);tabla('t2',28);
+ var sh=document.getElementById('shell'),bi=document.getElementById('b-izq'),bd=document.getElementById('b-der'),ba=document.getElementById('b-ambos'),an=document.getElementById('ancho');
+ var st={izq:false,der:false};
+ try{var g=localStorage.getItem('paneles-ocultos');if(g){st=JSON.parse(g);}}catch(e){}
+ function ver(){sh.classList.toggle('sin-izq',st.izq);sh.classList.toggle('sin-der',st.der);
+  bi.setAttribute('aria-pressed',st.izq?'true':'false');bi.textContent=st.izq?'Mostrar panel izquierdo':'Ocultar panel izquierdo';
+  bd.setAttribute('aria-pressed',st.der?'true':'false');bd.textContent=st.der?'Mostrar panel derecho':'Ocultar panel derecho';
+  var both=st.izq&&st.der;ba.setAttribute('aria-pressed',both?'true':'false');ba.textContent=both?'Mostrar ambos':'Ocultar ambos';
+  try{localStorage.setItem('paneles-ocultos',JSON.stringify(st));}catch(e){}
+  var w=sh.querySelector('.lienzo-demo');an.textContent=Math.round(w.getBoundingClientRect().width)+' px';}
+ bi.addEventListener('click',function(){st.izq=!st.izq;ver();});
+ bd.addEventListener('click',function(){st.der=!st.der;ver();});
+ ba.addEventListener('click',function(){var both=st.izq&&st.der;st.izq=st.der=!both;ver();});
+ window.addEventListener('resize',ver);ver();
+ var c=document.getElementById('cajon'),v=document.getElementById('velo'),ab=document.getElementById('m-abrir');
+ function abre(o){c.hidden=!o;v.hidden=!o;ab.setAttribute('aria-expanded',o?'true':'false');if(o){document.getElementById('m-cerrar').focus();}else{ab.focus();}}
+ ab.addEventListener('click',function(){abre(true);});document.getElementById('m-abrir-d').addEventListener('click',function(){abre(true);});
+ document.getElementById('m-cerrar').addEventListener('click',function(){abre(false);});v.addEventListener('click',function(){abre(false);});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!c.hidden){abre(false);}});
+})();
+</script>
+</body>
+</html>

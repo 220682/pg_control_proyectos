@@ -20,9 +20,9 @@ Abre `index.html` en el navegador, o cualquier `.html` de esta carpeta directame
 | `cronograma-niveles.html` | Cronograma: confirmación de niveles con roles propios. Aprobada por Victor (F0-A); ajustada en F0-R |
 | `paquetes-declarar.html` | Paquetes de trabajo, paso Declarar (cronograma con Metrado + DP solo partidas). Aprobada por Victor (F0-A); ajustada en F0-R |
 | `paquetes-agrupar.html` | Paquetes de trabajo, paso Agrupar (crear paquete, marca, orden, plegado). Aprobada por Victor (F0-A); ajustada en F0-R |
-| `plan-maestro-lienzo.html` | Plan Maestro: lienzo con columnas fijas (Disciplina y BAC opcionales), días por semana, seis columnas por semana, filas Prog./Real, anexo de 4 semanas, asistente flotante. Aprobado por Victor (F0-B); ajustado en F0-R |
-| `paneles-ocultables.html` | Ocultar y mostrar los paneles laterales: un icono por panel en su borde interior (escritorio) y cajón móvil; asistente flotante. Rehecha en F0-R, pendiente de revisión de Victor |
-| `crear-rdt-selector-paquetes.html` | Crear RDT: la pantalla existente completa (secciones 1.0, 2.0, 3.0, equipos, materiales, plantilla) con el selector de actividad del Plan Maestro. Rehecha en F0-R, pendiente de revisión de Victor |
+| `plan-maestro-lienzo.html` | Plan Maestro: lienzo con columnas fijas (Disciplina y BAC opcionales), días por semana, seis columnas por semana, filas Prog./Real, anexo de 4 semanas, asistente flotante. Aprobado por Victor (F0-B); ajustado en F0-R. F0-S: color del Físico acum. real (0 % blanco, en curso amarillo, 100 % verde; ejemplo 4) e icono de los paneles en la esquina de su encabezado |
+| `paneles-ocultables.html` | Ocultar y mostrar los paneles laterales: un icono por panel en la esquina superior interior de su encabezado (escritorio) y cajón móvil; asistente flotante. Rehecha en F0-R, icono reubicado en F0-S; pendiente de revisión de Victor |
+| `crear-rdt-selector-paquetes.html` | Crear RDT: la pantalla existente completa (secciones 1.0, 2.0, 3.0, equipos, materiales, plantilla) con el selector de actividad del Plan Maestro. Rehecha en F0-R; F0-S: avance de partidas y paquetes con color (0 % blanco, en curso amarillo, 100 % verde); pendiente de revisión de Victor |
 
 ## Campos del formulario de Requerimiento de servicios (spec, 2026-08-19)
 

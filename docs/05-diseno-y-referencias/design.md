@@ -1,5 +1,5 @@
 ---
-version: 1.7.0
+version: 1.8.0
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
 actualizado: 2026-09-30
@@ -99,7 +99,7 @@ Aprobado por Victor el 2026-09-30 como excepción a «estructura fija»: el asis
 
 Maqueta `mockups/paneles-ocultables.html`; **vigente cuando Victor apruebe** la versión de F0-R. Solo escritorio (`lg`, 1024 px en adelante); en móvil los paneles ya son un cajón y el control no aparece.
 
-- **Control:** **sin botones de texto en la barra.** Un **solo icono por panel** (botón de solo icono, `aria-expanded`, `aria-controls` al panel, `aria-label` y `title` «Ocultar/Mostrar panel izquierdo/derecho»), **dentro del propio panel y en su borde interior** (el lado que da al contenido), en posición absoluta para no deformar el panel. Con el panel oculto, el icono sigue visible en una tira de 24 px. Se eliminó «Ocultar ambos»: sin barra donde ponerlo no cabe sin distorsionar; se ocultan con dos clics. Sin chip ni acceso nuevo.
+- **Control:** **sin botones de texto en la barra.** Un **solo icono por panel** (botón de solo icono, `aria-expanded`, `aria-controls` al panel, `aria-label` y `title` «Ocultar/Mostrar panel izquierdo/derecho»), **dentro del propio panel, en la esquina superior de su borde interior y en la franja del encabezado** (F0-S, captura de Victor): en el **panel izquierdo**, en la esquina superior **derecha**, a la altura del título «Control de Proyectos»; en el **panel derecho**, en la esquina superior **izquierda**, a la altura de «ACCESOS RÁPIDOS». No va a media altura. Posición absoluta para no deformar el panel; mismo icono, tamaño (20 × 26 px) y estilo en todas las pantallas. Con el panel oculto, el icono sigue visible en esa misma esquina, en una tira de 24 px. Se eliminó «Ocultar ambos»: sin barra donde ponerlo no cabe sin distorsionar; se ocultan con dos clics. Sin chip ni acceso nuevo.
 - **Efecto:** el panel oculto libera su ancho (`w-60` el izquierdo, `w-64` el derecho) y el centro lo toma; el estado se recuerda por usuario y, si no puede guardarse, los paneles quedan visibles.
 - **Asistente:** ver «Asistente flotante»: no reserva espacio.
 
@@ -154,6 +154,21 @@ Los tokens `--color-estado-*` son solo para el **estado de proyecto/servicio** (
 | Advertencia informativa (no bloquea) | `text-amber-400` | Icono de jornada inconsistente (informativo, no impide validar/rechazar) |
 
 Si se necesita un cuarto significado semántico, proponerlo aquí antes de usar un color nuevo.
+
+#### 4.1.2. Color de los porcentajes de avance en ejecución (F0-S, pendiente de revisión de Victor)
+
+Regla para el **número** de un **porcentaje de avance real** (partida o paquete), solo mientras el servicio está en ejecución; reutiliza los colores de §4.1.1, sin colores nuevos:
+
+| Avance real | Número | Clase |
+|---|---|---|
+| Sin ejecutar (0 %) | Blanco (color de texto normal) | sin clase de color |
+| En ejecución (mayor que 0 y menor que 100 %) | Amarillo (advertencia) | `text-amber-400` |
+| Completado (100 %) | Verde (éxito) | `text-emerald-400` |
+
+- **Aplica solo a porcentajes de avance** (no a montos, metrados ni HH) y **solo a valores reales**: en el lienzo del Plan Maestro, el «Físico acum. (%)» de las filas «Real» (no el de «Prog.»); en Crear RDT, el avance acumulado de cada partida y de cada paquete en «Elegir actividad del Plan Maestro». La comparación usa el valor redondeado al decimal que se muestra.
+- **El color nunca es la única señal:** el número va siempre escrito, el 100 % lleva además la marca ✓ donde hay espacio, y cada pantalla con esta regla incluye una leyenda breve.
+- **Alcance de este plan:** las pantallas ya existentes de la app (PR, Dashboard, etc.) **no se modifican en este plan**; se unificarán con esta regla en un plan aparte.
+- Maquetas: `mockups/plan-maestro-lienzo.html` (ejemplo 4) y `mockups/crear-rdt-selector-paquetes.html`.
 
 ### 4.2. Tipografía
 
@@ -517,6 +532,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.8.0 | 2026-09-30 | F0-S, con dos indicaciones de Victor, pendientes de su revisión: §3 «Paneles laterales ocultables» fija la posición del icono (esquina superior interior del encabezado de cada panel, a la altura del título; visible también con el panel oculto); §4.1.2 nueva, color de los porcentajes de avance real en ejecución (0 % blanco, en curso amarillo, 100 % verde; solo porcentajes de avance; pantallas existentes fuera de este plan). Sin tokens ni componentes nuevos. |
 | 1.7.0 | 2026-09-30 | F0-R, con las decisiones de Victor sobre las maquetas: F0-A y el lienzo quedan aprobados (marca de paquete alterna dos colores, plegado que se reinicia, restante en ambas listas, pestañas en pantallas angostas, filas «para revisar» que bloquean aprobar; lienzo con Disciplina opcional, «Met.» y amarillo de advertencia); §3 paneles ocultables rehecha (un icono por panel en su borde interior) y asistente que no ocupa espacio (se quita la franja de 4 rem); Crear RDT rehecha sobre la pantalla existente; regla de abreviaturas (§5, §7); disciplina (catálogo simulado). Sin tokens ni componentes nuevos. |
 | 1.6.0 | 2026-09-30 | Propuesta de F0-B (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §3 «Paneles laterales ocultables»; §5 «Lienzo del Plan Maestro» y «Selector de actividad del RDT»; §8 regla del lienzo con columnas fijas y días. Sin tokens ni componentes nuevos. |
 | 1.5.0 | 2026-09-30 | Propuesta de F0-A (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §5 nueva subsección «Jerarquía en árbol con casillas, marca de paquete y plegado». Sin tokens ni componentes nuevos. |

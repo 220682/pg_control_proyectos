@@ -25,11 +25,12 @@ p.lead{color:var(--text-2);margin-bottom:8px;line-height:1.5}
 /* shell de escritorio (simulado: izquierdo w-60 = 240 px, derecho w-64 = 256 px) */
 .shell{display:flex;height:360px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-base)}
 .pnl{position:relative;flex:0 0 auto;display:flex;background:var(--bg-elevated)}
-.aside{flex:1;background:var(--bg-elevated);padding:8px 26px 8px 8px;font-size:11px;color:var(--text-2);overflow:auto}
+.aside{flex:1;background:var(--bg-elevated);padding:0 8px 8px;font-size:11px;color:var(--text-2);overflow:auto}
 .pnl.izq{width:240px;border-right:1px solid var(--line)}
 .pnl.der{width:256px;border-left:1px solid var(--line)}
-.pnl.der .aside{padding:8px 8px 8px 26px}
-/* un solo icono por panel, en su borde interior (el lado que da al contenido); absoluto: no deforma el panel */
+.ph{display:flex;align-items:center;height:38px;margin:0 -8px 8px;padding:0 30px 0 8px;border-bottom:1px solid var(--line);color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden}
+.pnl.der .ph{padding:0 8px 0 30px;text-transform:uppercase;letter-spacing:.04em;font-size:10px}
+/* un solo icono por panel, en la esquina superior del borde interior, a la altura del título del encabezado; absoluto: no deforma el panel */
 .pnl .tg{position:absolute;top:6px;width:20px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;background:var(--bg-base);z-index:6}
 .pnl.izq .tg{right:3px}.pnl.der .tg{left:3px}
 /* oculto: el panel desaparece y queda solo una tira de 24 px con el icono */
@@ -73,11 +74,11 @@ th.f{z-index:5}
 </div>
 <div class="wrap">
 <h1>Paneles laterales ocultables</h1>
-<p class="lead">Solo escritorio (desde 1024 px). Sin botones de texto en la barra: <strong>un solo icono por panel, dentro del propio panel y en su borde interior</strong> (el lado que da al contenido). Con el panel oculto, el icono sigue visible en una tira de 24 px para volver a mostrarlo. Se quitó «Ocultar ambos»: no cabe sin distorsionar (no hay barra donde ponerlo); se ocultan con dos clics. El estado se recuerda por usuario (aquí se simula con el almacenamiento del navegador; si no está disponible, la pantalla funciona igual). En móvil los paneles ya son un cajón y este control no aparece.</p>
+<p class="lead">Solo escritorio (desde 1024 px). Sin botones de texto en la barra: <strong>un solo icono por panel, en la esquina superior del borde interior de su encabezado</strong>: en el panel izquierdo, a la derecha, a la altura de «Control de Proyectos»; en el derecho, a la izquierda, a la altura de «Accesos rápidos» (no a media altura). Con el panel oculto, el icono sigue visible en una tira de 24 px para volver a mostrarlo. Se quitó «Ocultar ambos»: no cabe sin distorsionar (no hay barra donde ponerlo); se ocultan con dos clics. El estado se recuerda por usuario (aquí se simula con el almacenamiento del navegador; si no está disponible, la pantalla funciona igual). En móvil los paneles ya son un cajón y este control no aparece.</p>
 <p class="aviso-esc">Esta ventana es menor de 1024 px: el control de escritorio no se muestra. Mira la vista móvil más abajo.</p>
 <div class="vista-esc">
 <div class="shell" id="shell">
-<div class="pnl izq" id="p-izq"><button type="button" class="icon tg" id="b-izq" aria-expanded="true" aria-controls="a-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><aside class="aside" id="a-izq" aria-label="Panel izquierdo (simulado)"><strong>Panel izquierdo · w-60</strong><ul><li><span>Plan Maestro</span></li><li><span>Paquetes de trabajo</span></li><li><span>Cronograma</span></li><li><span>Status de RDTs</span></li></ul></aside></div>
+<div class="pnl izq" id="p-izq"><button type="button" class="icon tg" id="b-izq" aria-expanded="true" aria-controls="a-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><aside class="aside" id="a-izq" aria-label="Panel izquierdo (simulado)"><div class="ph">Control de Proyectos</div><strong>Panel izquierdo · w-60</strong><ul><li><span>Plan Maestro</span></li><li><span>Paquetes de trabajo</span></li><li><span>Cronograma</span></li><li><span>Status de RDTs</span></li></ul></aside></div>
 <div class="main">
 <div class="barra" role="toolbar" aria-label="Controles de la pantalla">
 <strong>Plan Maestro</strong>
@@ -87,7 +88,7 @@ th.f{z-index:5}
 <div class="lienzo-demo" tabindex="0" role="region" aria-label="Vista reducida del lienzo para ver el ancho ganado"><table id="t"></table></div>
 <button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente">IA</button>
 </div>
-<div class="pnl der" id="p-der"><button type="button" class="icon tg" id="b-der" aria-expanded="true" aria-controls="a-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><aside class="aside" id="a-der" aria-label="Panel derecho (simulado)"><strong>Panel derecho · w-64</strong><ul><li><span>Crear paquete</span></li><li><span>Crear RDT</span></li><li><span>Generar RQ</span></li></ul></aside></div>
+<div class="pnl der" id="p-der"><button type="button" class="icon tg" id="b-der" aria-expanded="true" aria-controls="a-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><aside class="aside" id="a-der" aria-label="Panel derecho (simulado)"><div class="ph">Accesos rápidos</div><strong>Panel derecho · w-64</strong><ul><li><span>Crear paquete</span></li><li><span>Crear RDT</span></li><li><span>Generar RQ</span></li></ul></aside></div>
 </div>
 </div>
 <div class="movil-cols">

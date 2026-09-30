@@ -57,8 +57,10 @@ input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent)}
 /* shell simulado: paneles laterales ocultables (solo escritorio) */
 .cuerpo{flex:1;min-height:0;display:flex;gap:8px}
 .pnl{position:relative;flex:0 0 120px;display:flex}
-.lateral{flex:1;border:1px dashed var(--line);border-radius:8px;padding:8px 24px 8px 8px;font-size:10px;color:var(--text-2)}
-.pnl.der .lateral{padding:8px 8px 8px 24px}
+.lateral{flex:1;border:1px dashed var(--line);border-radius:8px;padding:0 8px 8px;font-size:10px;color:var(--text-2)}
+/* encabezado del panel (34 px): el icono vive en su esquina superior interior, a la altura del título */
+.ph{display:flex;align-items:center;height:34px;margin:0 -8px 6px;padding:0 28px 0 8px;border-bottom:1px solid var(--line);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden}
+.pnl.der .ph{padding:0 8px 0 28px;text-transform:uppercase;letter-spacing:.04em;font-size:9px}
 /* un solo icono por panel, en su borde interior; oculto: queda una tira de 24 px con el icono */
 .pnl .tg{position:absolute;top:4px;width:20px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;background:var(--bg-base);z-index:6}
 .pnl.izq .tg{right:3px}.pnl.der .tg{left:3px}
@@ -105,6 +107,7 @@ tr.pq2 td.fx-wbs{border-left:4px solid var(--accent-2)}
 tr.dir td.fx-wbs{border-left:4px solid transparent}
 .sin-real tr.real{display:none}
 .sangria{display:inline-block}
+.pct-ej{color:var(--warn)}.pct-100{color:var(--ok)}
 .falta-ok{color:var(--ok)}.falta-mal{color:var(--warn)}.falta-exc{color:var(--err)}
 .ext{background:rgba(251,191,36,.12)!important}
 .calc{color:var(--text-2);font-style:italic}
@@ -144,7 +147,8 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="grp" role="group" aria-label="Ejemplo mostrado"><span>Ejemplo:</span>
 <button type="button" data-esc="anexo" aria-pressed="true">1 · Anexo completo (100 %)</button>
 <button type="button" data-esc="incompleto" aria-pressed="false">2 · Borrador incompleto</button>
-<button type="button" data-esc="extendido" aria-pressed="false">3 · Real fuera del rango</button></div>
+<button type="button" data-esc="extendido" aria-pressed="false">3 · Real fuera del rango</button>
+<button type="button" data-esc="avance" aria-pressed="false">4 · Avance real: 0 %, en curso y 100 %</button></div>
 <div class="grp" role="group" aria-label="Estado del Plan Maestro"><span>Plan:</span>
 <button type="button" data-plan="borrador" aria-pressed="true">BORRADOR</button>
 <button type="button" data-plan="aprobado" aria-pressed="false">APROBADO</button></div>
@@ -169,16 +173,17 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <span class="muted">Semana de sábado a viernes · línea amarilla (la de advertencia) = divisoria de columnas fijas</span></div>
 </div>
 <div class="global" id="estado-global" role="status" aria-live="polite"><strong>Repartido</strong><progress id="prog-g" max="100" value="0" aria-label="Porcentaje del metrado del servicio ya repartido"></progress><span id="pct-g"></span><span id="txt-g"></span></div>
+<p class="leyenda-pct muted" style="font-size:10px;margin:2px 0 4px">Leyenda del <strong>Físico acum. (%)</strong> de las filas «Real» (solo avance en ejecución): <span>0 % = sin ejecutar (texto normal)</span> · <span class="pct-ej">&#9679; en curso (mayor que 0 y menor que 100 %)</span> · <span class="pct-100">&#10003; 100 % (completada)</span>. El número siempre va escrito; el color solo lo refuerza. Las filas «Prog.» no llevan color. Ver el ejemplo 4.</p>
 <div class="msg err" id="msg-crear" role="alert" hidden><span aria-hidden="true">&#9888;</span><div><strong>No se puede crear el Plan Maestro todavía</strong><br><span id="msg-crear-txt"></span></div></div>
 <div class="msg info" id="msg-ok" role="status" hidden><span aria-hidden="true">&#10003;</span><div>Plan Maestro creado (simulado): la versión pasa a APROBADO y queda en solo lectura.</div></div>
 <div class="msg warn" id="msg-ext" role="status" hidden><span aria-hidden="true">&#9888;</span><div><strong>Real fuera del rango programado</strong><br>La ejecución real de «Eliminación de material» llegó a la semana S5, posterior al último día programado (S4). Se agregó la semana S5 (extendida) para mostrarla; lo programado no cambia.</div></div>
 <div class="cuerpo" id="cuerpo">
-<div class="pnl izq" id="pl-izq"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><aside class="lateral" aria-label="Panel izquierdo del servicio (simulado)">Panel izquierdo (navegación)</aside></div>
+<div class="pnl izq" id="pl-izq"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><aside class="lateral" aria-label="Panel izquierdo del servicio (simulado)"><div class="ph">Control de Proyectos</div>Panel izquierdo (navegación)</aside></div>
 <div class="centro">
 <div class="lienzo" id="lienzo" tabindex="0" role="region" aria-label="Lienzo del Plan Maestro: desplazar a la derecha para ver todos los días"><table id="tabla"><caption class="sr">Plan Maestro: filas de partidas a la izquierda y una columna por día agrupada por semana a la derecha</caption><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
 <button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
 </div>
-<div class="pnl der" id="pl-der"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><aside class="lateral" aria-label="Panel derecho del servicio (simulado)">Panel derecho (herramientas)</aside></div>
+<div class="pnl der" id="pl-der"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><aside class="lateral" aria-label="Panel derecho del servicio (simulado)"><div class="ph">Accesos rápidos</div>Panel derecho (herramientas)</aside></div>
 </div>
 </div>
 <div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el Plan Maestro del servicio…</p>
@@ -190,6 +195,8 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <li><strong>Por semana, seis columnas</strong> rotuladas con nombre y unidad: Físico semanal (%), Físico acum. (%), Económico semanal ($), Económico acum. ($), HH semanal (h), HH acum. (h). «Acumuladas: sí/no» oculta las tres acumuladas. El &#9662; de cada semana la pliega (queda solo con sus totales).</li>
 <li>Paquete 2 está «por avance del paquete»: solo se escribe el metrado de la guía (Relleno); Suministro de afirmado se calcula con el mismo % y queda en solo lectura.</li>
 <li>Físico de una partida = metrado ÷ contractual; físico de paquete, nivel y total = económico ÷ BAC de ese grupo (opción A). Totales del ejemplo 1: 22,56 / 48,78 / 76,22 / 100 %, $ 8 200 y 172 HH. Escribe un metrado y todo se recalcula.</li>
+<li><strong>Color del avance real (F0-S):</strong> en las filas «Real», el «Físico acum. (%)» va en blanco si es 0 %, en amarillo (advertencia) si está en curso y en verde (éxito) al 100 %; el semanal no lleva color (es un incremento) y montos, metrados y HH tampoco. Ejemplo 4: Excavación 90 % (amarillo), Eliminación 0 % (blanco), Cama de arena y Relleno 100 % (verde).</li>
+<li>Paneles: el icono de ocultar vive en la esquina superior interior del encabezado de cada panel (derecha en el izquierdo, a la altura de «Control de Proyectos»; izquierda en el derecho, a la altura de «Accesos rápidos»).</li>
 <li>Subfilas «Real» (solo lectura, del RDT validado) por paquete × partida; HH reales de ejemplo (dato por construir, P16). Ejemplo 3 muestra la semana extendida.</li>
 <li>«Crear Plan Maestro» queda deshabilitado hasta el 100 %; al pulsarlo deshabilitado el mensaje dice qué partidas faltan. APROBADO: todo en solo lectura.</li>
 <li>Móvil: solo WBS y descripción quedan fijas; los demás campos y los días se desplazan en horizontal. Los paneles laterales ya son un cajón (el icono de ocultar, uno por panel en su borde interior, es solo de escritorio). El asistente es un icono flotante que no reserva espacio: el lienzo usa todo el alto. Accesibilidad: <code>th scope</code> (col / colgroup), foco visible, cada casilla de metrado con <code>aria-label</code> (partida y día), estados con texto e icono, indicador global con <code>aria-live</code>.</li></ul></details>
@@ -226,12 +233,13 @@ var HHR={exc:[24,27],cam:[4],ace:[9,14],rel:[7],afi:[3],eli:[]};
 var prog={},real={},hhReal={},W=4,hoy=2,escActual='anexo';
 function flat(a,W){var r=[],w,d;for(w=0;w<W;w++){for(d=0;d<7;d++){r.push(((a&&a[w])||[])[d]||0);}}return r;}
 function cargar(esc){
- escActual=esc;W=(esc==='extendido')?5:4;hoy=(esc==='extendido')?5:2;
+ escActual=esc;W=(esc==='extendido')?5:4;hoy=(esc==='extendido')?5:(esc==='avance')?4:2;
  P.forEach(function(p){
   var pl=JSON.parse(JSON.stringify(PLAN[p.id]||[])),re=JSON.parse(JSON.stringify(REAL[p.id]||[])),hh=(HHR[p.id]||[]).slice();
   if(esc==='incompleto'){
    if(p.id==='ace'){pl[3]=[0,0,50,50,0,0,0];}
    if(p.id==='eli'){pl[3]=[0,0,25,25,0,0,0];}}
+  if(esc==='avance'){if(p.id==='cam'){re=JSON.parse(JSON.stringify(PLAN.cam));}if(p.id==='rel'){re=JSON.parse(JSON.stringify(PLAN.rel));}if(p.id==='exc'){re=[[0,10,10,10,10,0,0],[10,0,10,10,10,10,0],[],[]];}if(p.id==='ace'){re=[[0,0,50,50,50,0,0],[50,0,50,50,50,50,0],[],[]];}}
   if(esc==='extendido'&&p.id==='eli'){re=[[],[],[],[0,0,20,20,0,0,0],[0,0,30,30,0,0,0]];hh=[0,0,0,4,6];}
   if(!p.calc){prog[p.id]=flat(pl,W);real[p.id]=flat(re,W);}
   hhReal[p.id]=hh;
@@ -347,7 +355,9 @@ function recalc(){
   var r=cs[kk][+a[2]];var v=r?r[a[3]]:null;
   var t='';if(v!==null&&v!==undefined){t=(a[3]==='fs'||a[3]==='fa')?fPct(v):(a[3]==='es'||a[3]==='ea')?fUsd(v):fHH(v);}
   else if(a[1]==='r'){t='';}
-  c.textContent=t;});
+  c.textContent=t;
+  c.classList.remove('pct-ej','pct-100');
+  if(a[1]==='r'&&a[3]==='fa'&&v!==null&&v!==undefined){var rv=Math.round(v*100)/100;if(rv>=100)c.classList.add('pct-100');else if(rv>0)c.classList.add('pct-ej');}});
  document.querySelectorAll('[data-calc]').forEach(function(c){var a=c.getAttribute('data-calc').split('|');c.textContent=fM(metDia(a[0],'p',+a[1]))||'0';});
  document.querySelectorAll('[data-rd]').forEach(function(c){var a=c.getAttribute('data-rd').split('|');var i=+a[1],wk=Math.floor(i/7);
   if(wk>=hoy){c.textContent='';return;}var v=metDia(a[0],'r',i);c.textContent=v?fM(v):'·';});

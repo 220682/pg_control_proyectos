@@ -85,6 +85,8 @@ tr.tot td{background:rgba(255,255,255,.05);font-weight:600}
 .it.off{opacity:.5}
 .uni{font-size:11px;color:var(--text-2)}
 .prog-mini{width:60px;height:6px;accent-color:var(--accent)}
+/* F0-S: color del avance real (solo porcentajes de avance en ejecucion): 0 % texto normal, en curso advertencia, 100 % exito */
+.pct{font-variant-numeric:tabular-nums;min-width:38px;text-align:right}.pct-ej{color:var(--warn)}.pct-100{color:var(--ok)}
 @media (max-width:640px){.it{padding-left:10px}.modal{max-height:96vh}.pantalla{padding:8px}}
 details.notas{font-size:11px;color:var(--text-2)}
 details.notas summary{cursor:pointer;color:var(--text)}
@@ -155,6 +157,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el formulario</strong><br>No fue posible traer los catálogos ni el Plan Maestro del servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
 <div class="e-vacio"><div class="vacio"><strong>El Plan Maestro no tiene filas para elegir</strong><p>El Plan Maestro aprobado de este servicio no contiene partidas. Revisa Paquetes de trabajo y el Plan Maestro.</p></div></div>
 <details class="card notas"><summary>Notas de esta maqueta: pantalla existente, selector, estados, móvil y accesibilidad</summary><ul>
+<li><strong>Color del avance real (F0-S):</strong> el porcentaje de avance acumulado de cada partida y de cada paquete va en blanco si es 0 % (Eliminación de material), en amarillo si está en curso (Excavación 90 %, Acero 40 %, paquete Banco ducto 62 %) y en verde con marca ✓ al 100 % (Cama de arena; paquete Relleno con sus dos partidas). El número siempre va escrito; el color solo lo refuerza. Metrados y montos no llevan color.</li>
 <li><strong>Es la pantalla que ya existe</strong> (Crear RDT de la app), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos. Mejora solo la presentación con los tokens de <code>design.md</code> (tarjetas, etiquetas, tablas con desplazamiento). Modo «Revisar» = mismo formulario deshabilitado.</li>
 <li><strong>Selector de actividad.</strong> El campo «Partida del DP» de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: paquetes plegables con sus partidas, las partidas directas aparte, y arriba «Contributoria» y «No contributoria» (TA C y NC, sin partida). Paquete <strong>por avance del paquete</strong> (Relleno): se elige el paquete, se escribe solo la guía y las demás partidas se calculan en solo lectura.</li>
 <li><strong>Mismo selector</strong> para el WBS de las actividades C/NC, de los materiales y de los equipos: ahí solo se pueden elegir partidas ya declaradas como Directas ese día (las demás salen atenuadas).</li>
@@ -165,16 +168,16 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="velo" id="velo" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-tit" id="modal">
 <header><h2 id="m-tit">Elegir actividad del Plan Maestro</h2><button type="button" class="icon" id="m-x" aria-label="Cerrar el selector" title="Cerrar">&times;</button></header>
 <div class="cuerpo"><div class="fila"><label class="sr" for="m-q">Buscar partida o paquete</label><input type="search" id="m-q" placeholder="Buscar por nombre o WBS" style="flex:1;min-width:160px"><button type="button" id="m-pl">Plegar todo</button><button type="button" id="m-ex">Expandir todo</button></div>
-<div id="m-lista"></div></div></div></div>
+<p class="muted" style="font-size:10px;margin:4px 0">Avance real acumulado: 0 % sin ejecutar (texto normal) · <span class="pct-ej">en curso (mayor que 0 y menor que 100 %)</span> · <span class="pct-100">&#10003; 100 % completada</span>. El número siempre va escrito.</p><div id="m-lista"></div></div></div></div>
 <script>
 (function(){
  var PM_OK=true,ctx=null,ultimo=null,plegado={},n=0;
- var PK=[{id:'p1',nom:'Banco ducto',modo:'por partidas',cls:'',its:[
-  {id:'exc',wbs:'06.03.01',nom:'Excavación',und:'m³',met:100,av:90},{id:'cam',wbs:'06.03.02',nom:'Cama de arena',und:'ml',met:50,av:20},{id:'ace',wbs:'06.03.03',nom:'Acero',und:'kg',met:1000,av:40}]},
-  {id:'p2',nom:'Relleno',modo:'por avance del paquete',cls:'c2',its:[
-  {id:'rel',wbs:'06.04.01',nom:'Relleno',und:'m³',met:80,av:25,guia:true},{id:'afi',wbs:'06.04.02',nom:'Suministro de afirmado',und:'m³',met:40,av:25}]}];
+ var PK=[{id:'p1',nom:'Banco ducto',modo:'por partidas',cls:'',av:62,its:[
+  {id:'exc',wbs:'06.03.01',nom:'Excavación',und:'m³',met:100,av:90},{id:'cam',wbs:'06.03.02',nom:'Cama de arena',und:'ml',met:50,av:100},{id:'ace',wbs:'06.03.03',nom:'Acero',und:'kg',met:1000,av:40}]},
+  {id:'p2',nom:'Relleno',modo:'por avance del paquete',cls:'c2',av:100,its:[
+  {id:'rel',wbs:'06.04.01',nom:'Relleno',und:'m³',met:80,av:100,guia:true},{id:'afi',wbs:'06.04.02',nom:'Suministro de afirmado',und:'m³',met:40,av:100}]}];
  var DIR=[{id:'eli',wbs:'06.05.01',nom:'Eliminación de material',und:'m³',met:200,av:0}];
- var ACUM={exc:90,cam:10,ace:400,rel:20,afi:10,eli:0};
+ var ACUM={exc:90,cam:50,ace:400,rel:80,afi:40,eli:0};
  var CNC=['Falta de capacitación específica.','Falta de movilidad','Planificación y programación inadecuadas.','Falta de suministro oportuno de materiales.','Cambios en el diseño o alcance del proyecto.','Condiciones climáticas adversas.','Mano de obra insuficiente.','Mano de obra no calificada','Uso de materiales inadecuados o de baja calidad.','Mala comunicación y coordinación entre equipos.','Demoras en permisos y aprobaciones legales.','Falta de equipos y herramientas'];
  var PERSONAL=[{id:'pe1',dni:'71234567',nombre:'RAMOS QUISPE, Jhonny',cargo:'Operador excavadora',esp:'Civil'},{id:'pe2',dni:'72345678',nombre:'HUARANCCA TORRES, Elmer',cargo:'Ayudante',esp:'Civil'},{id:'pe3',dni:'73095782',nombre:'BARDALES TRUJILLO, Sandro Luis',cargo:'Operario civil',esp:'Civil'}];
  var EQS=[['Equipos de este servicio',['Excavadora CAT 320','Grúa 25 t']],['Otros equipos de la empresa',['Camión baranda','Compactadora vibratoria']]];
@@ -243,7 +246,8 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
   document.getElementById('mat-body').innerHTML=h||'<tr><td colspan="5" class="muted">Sin materiales.</td></tr>';}
  function todo(){pintaActs();pintaEq();pintaMat();}
  /* ----- selector ----- */
- function linea(it){return '<span class="wbs">'+it.wbs+'</span><span class="nm">'+esc(it.nom)+(it.guia?' <span class="tag acc2">Guía</span>':'')+'</span><span class="uni">'+it.und+' · '+f(it.met)+'</span><progress class="prog-mini" max="100" value="'+it.av+'" aria-label="Avance real acumulado de '+esc(it.nom)+': '+it.av+' %"></progress><span class="uni">'+it.av+' %</span>';}
+ function pctH(v){var c=v>=100?'pct-100':v>0?'pct-ej':'';return '<span class="pct uni '+c+'">'+(v>=100?'&#10003; ':'')+v+' %</span>';}
+ function linea(it){return '<span class="wbs">'+it.wbs+'</span><span class="nm">'+esc(it.nom)+(it.guia?' <span class="tag acc2">Guía</span>':'')+'</span><span class="uni">'+it.und+' · '+f(it.met)+'</span><progress class="prog-mini" max="100" value="'+it.av+'" aria-label="Avance real acumulado de '+esc(it.nom)+': '+it.av+' %"></progress>'+pctH(it.av);}
  function dibuja(){
   var q=(document.getElementById('m-q').value||'').toLowerCase(),h='',modoAct=ctx&&ctx.modo==='act',dec=dDeclaradas();
   if(!PM_OK){document.getElementById('m-lista').innerHTML='<div class="msg info" role="status"><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>No hay paquetes ni partidas para elegir. El RDT solo registra avance sobre un Plan Maestro aprobado.</div></div>';return;}
@@ -253,7 +257,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
   PK.forEach(function(p){
    var its=p.its.filter(function(i){return !q||(i.nom+' '+i.wbs+' '+p.nom).toLowerCase().indexOf(q)>-1;});if(!its.length)return;
    var pl=!!plegado[p.id],porAv=p.modo!=='por partidas';
-   h+='<div class="pq '+p.cls+'"><div class="pq-h"><button type="button" class="icon" data-pl="'+p.id+'" aria-expanded="'+(!pl)+'" aria-label="'+(pl?'Expandir':'Plegar')+' el paquete '+esc(p.nom)+'">'+(pl?'&#9656;':'&#9662;')+'</button><span class="tag '+(p.cls?'acc2':'acc')+'">Paquete</span><span class="gr">'+esc(p.nom)+' <span class="tag">'+p.modo+'</span></span>'+
+   h+='<div class="pq '+p.cls+'"><div class="pq-h"><button type="button" class="icon" data-pl="'+p.id+'" aria-expanded="'+(!pl)+'" aria-label="'+(pl?'Expandir':'Plegar')+' el paquete '+esc(p.nom)+'">'+(pl?'&#9656;':'&#9662;')+'</button><span class="tag '+(p.cls?'acc2':'acc')+'">Paquete</span><span class="gr">'+esc(p.nom)+' <span class="tag">'+p.modo+'</span></span><span class="uni">Avance del paquete</span>'+pctH(p.av)+
     (porAv&&modoAct?'<button type="button" class="primary" data-pick="pq|'+p.id+'" aria-label="Elegir el paquete '+esc(p.nom)+' (se escribe el metrado de la guía)">Elegir paquete</button>':'')+'</div>';
    if(!pl){its.forEach(function(i){
     if(porAv){h+='<div class="it'+((!modoAct&&!dec[i.id])?' off':'')+'">'+linea(i)+(i.guia?'<span class="uni">(se escribe aquí)</span>':'<span class="uni calc">se calcula con la guía</span>')+'</div>';}

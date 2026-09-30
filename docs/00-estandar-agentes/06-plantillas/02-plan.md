@@ -17,6 +17,10 @@ Nombre del tema, fecha, estado — uno de estos 6 valores: `Propuesta` / `Planif
 
 ## Entorno, repositorios, ramas y worktrees
 
+## Skills aplicables
+
+Skills de `.claude/skills/` (repositorio de documentación y de código) que aplican a este plan, y en qué tanda se usan. Si ninguno aplica: «ninguno aplica» con una frase de motivo.
+
 ## Fases y dependencias
 
 ## Asignación de roles

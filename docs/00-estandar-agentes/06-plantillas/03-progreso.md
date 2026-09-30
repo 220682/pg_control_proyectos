@@ -8,6 +8,10 @@
 
 ## Tabla de roles / Workers y estado
 
+## Skills revisados
+
+Los Skills de `.claude/skills/` que se listaron al empezar y cuáles se usaron; o «Skills revisados: ninguno aplica» con una frase de motivo.
+
 ## Avances terminados
 
 ## Trabajo actual

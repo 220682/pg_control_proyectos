@@ -46,6 +46,7 @@ Define el objetivo, aprueba en los Gates y resuelve las consultas directas del W
 - Verificar si las ramas, worktrees o chats ya existen y reutilizarlos cuando estén libres, antes de pedir crear nuevos.
 - Preguntar antes de crear, renombrar o eliminar infraestructura.
 - Entregar contexto cerrado al Planner, a los Workers y al Auditor.
+- **Skills:** al iniciar, revisar el contenido de `.claude/skills/` de ambos repositorios, y nombrar en el índice de tandas y en cada brief los Skills que el Worker debe usar (ver `04-flujo-sdd-y-planes.md`, paso 8).
 - Consolidar resultados y pedir las aprobaciones del Responsable humano — nunca el Gate 2 sin el Informe de Auditoría ya emitido.
 - Coordinar el cierre solo después de la autorización del Gate 2.
 - **Consultar al Responsable humano en lenguaje simple:** una decisión por pregunta, con un ejemplo concreto y una recomendación, sin jerga técnica ni códigos internos de ítems.

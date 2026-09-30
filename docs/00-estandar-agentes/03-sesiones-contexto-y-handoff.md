@@ -31,6 +31,9 @@ El primer mensaje debe contener solo:
 - Documentos que debe leer (ver `00-indice.md`).
 - Criterios de salida.
 - Restricciones.
+- Skills que debe usar, si el Orquestador los nombra (ver `04-flujo-sdd-y-planes.md`).
+
+**Skills, antes de empezar.** Todo agente, antes de empezar la tarea, lista el contenido de `.claude/skills/` del repositorio de documentación y del repositorio de código en el que va a trabajar. Usa el Skill que aplique, o anota en el progreso del plan «Skills revisados: ninguno aplica» con una frase de motivo.
 
 ## Cierre de cada chat
 

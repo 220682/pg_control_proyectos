@@ -8,7 +8,7 @@
 
 - Tema: llevar a la app la interfaz del artefacto «Matriz de permisos» para que administrador y jefe de proyectos cambien quién ve cada pantalla y quién ejecuta cada acción, sin desplegar.
 - Fecha: 2026-09-30.
-- Estado: **Propuesta** (Spec redactado, pendiente de Gate Spec).
+- Estado: **Propuesta** (Spec redactado, decisiones D1 a D7 resueltas por Victor el 2026-09-30; pendiente de Gate Spec).
 - Orquestador: Claude (sesión de 2026-09-30). Planner, Worker y Auditor: por asignar.
 
 ## Spec / SDD
@@ -54,7 +54,7 @@ Hoy los permisos viven **fijos en el código** (`src/lib/permisos/permisos.ts`, 
 - Modelo de datos para guardar permisos por fila y rol, y el registro de cambios (migración nueva; el número se toma al planificar, después de lo que el grupo de paquetes deje).
 - Lectura de esos permisos desde el servidor, con los valores actuales del flujo 14 como **valores iniciales** (la base de datos se siembra con lo que hoy hace `permisos.ts`, así el día uno nada cambia para nadie).
 - Cambio de las funciones de `permisos.ts` para que consulten lo guardado (o un espejo en caché) y no los roles escritos en el código.
-- Pantalla de gestión: dos tablas, casillas, comentarios, marca económica, registro de cambios visible.
+- Pantalla de gestión: dos tablas, casillas, comentarios, marca económica, botón «Guardar cambios» (borrador, D3) y registro de cambios visible. Grupo «Configuraciones» nuevo en el registro único (D7).
 - Alta de la pantalla en el registro único de accesos, en el panel del servicio y en el apartado OT, **y en la propia matriz de permisos** (la política exige actualizar el artefacto y el flujo 14 en la misma tarea).
 - Pruebas por los 13 roles, con la habilidad `verificar-permisos-por-rol`.
 - Documentación: flujo 14, flujo 16, flujo 02 si aplica, `planes-futuros.md` (promover el ítem y corregir dos entradas desactualizadas), design.md si hay componente nuevo.
@@ -95,19 +95,20 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 ### Diseño / UI aplicable
 
 - La pantalla replica el artefacto (dos tablas con scroll horizontal, columnas de roles, columna «Fila» y «Comentario», contorno de cambio, aprobación), según `docs/05-diseno-y-referencias/design.md`; no se crea un estilo nuevo.
-- Se ubica dentro de los paneles (acceso en el registro único, apartado OT), no como una pantalla suelta.
+- Se ubica como un chip del grupo nuevo «Configuraciones» (D7), registrado en el registro único, no como una pantalla suelta.
 - Estados vacío, carga y error; accesible con teclado; responsive con la regla del repositorio.
 
-### Decisiones pendientes para Victor (una por pregunta; el Orquestador las consulta antes del Gate Spec)
+### Decisiones de Victor (2026-09-30)
 
-| Id | Decisión | Recomendación |
+| Id | Decisión | Resuelto |
 |---|---|---|
-| D1 | ¿Dónde se guardan los permisos? | Base de datos como fuente, con los valores de hoy como siembra. Sin tocar el código para cambiarlos. |
-| D2 | ¿Qué filas no se pueden editar? | «Asignar rol administrador», «Ver como» y «Gestionar permisos» para el administrador. |
-| D3 | ¿Cada cambio aplica al instante, o hay «borrador» y «aprobar» como en el artefacto? | Borrador + aprobar (el artefacto ya lo hace). Hasta aprobar, la app aplica lo último aprobado. |
-| D4 | ¿La pantalla reemplaza al artefacto, o el artefacto sigue como espejo? | La pantalla reemplaza al artefacto; el flujo 14 queda como referencia de la última aprobación y el artefacto como historial. |
-| D5 | ¿La marca «económica» de una interfaz es editable? | Sí, pero solo informativa hasta el Spec de economía. |
-| D6 | ¿Qué hacemos con las filas de lo que crea el grupo de paquetes? | Esperar a que pushee y sumarlas a la siembra al revisar este plan. |
+| D1 | Dónde se guardan los permisos | **Base de datos** como fuente, sembrada con los valores de hoy. Cambiar un permiso no toca el código. |
+| D2 | Filas que no se pueden editar | **Las del administrador:** «Asignar rol administrador», «Ver como» y el acceso del administrador a esta pantalla. |
+| D3 | Cómo se aplican los cambios | **Borrador y botón «Guardar cambios» al final.** Hasta guardar, la app aplica lo último guardado. |
+| D4 | Relación con el artefacto | **El artefacto sigue existiendo. Manda la app:** si difieren, vale la app. Tras cada «Guardar cambios», el artefacto y el flujo 14 se actualizan para coincidir. |
+| D5 | Marca «económica» | **Editable**, pero solo informativa hasta el Spec de economía. |
+| D6 | Filas de lo que crea el grupo de paquetes | **Se agregan al final**, cuando ese grupo pushee (los ocho accesos de paquetes del flujo 14 y las pantallas nuevas). |
+| D7 | Ubicación de la pantalla | **Un chip dentro de «Configuraciones».** Ojo: ese grupo **no existe hoy** en `registro-accesos.ts` (existen Mi entorno, Recursos de empresa, Servicio y los ocho de proceso). El plan lo crea como grupo fuera del nav de servicio, igual que «Recursos de empresa», y lo registra en flujo 16. Por la regla del flujo 16, todos los roles ven el chip y quien no gestiona permisos lo ve deshabilitado. |
 
 ### Riesgos
 
@@ -154,6 +155,7 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 |---|---|---|
 | 2026-09-30 | Objetivo confirmado: que administrador y jefe de proyectos cambien desde la app quién ve y ejecuta qué, sin desplegar; no cambian el alcance por OT, la validación en servidor ni las reglas de las tablas del flujo 14. | Victor |
 | 2026-09-30 | Se llega hasta tener el plan; luego se espera a que el grupo de paquetes termine y pushee, se revisa este plan y se continúa. | Victor |
+| 2026-09-30 | Decisiones D1 a D7 del Spec resueltas (ver tabla «Decisiones de Victor»). Artefacto verificado: versión 42, 49 acciones y 15 interfaces, cero diferencias con el flujo 14; marca «Aprobada» quitada, pendiente de Victor. | Victor / Orquestador |
 | 2026-09-30 | Orquestador y Planner comitean cada vez que terminan algo, sin excederse; el push a `main` se habilita con la aprobación del Spec y del plan. | Victor |
 
 ## Mejoras (de trabajo)

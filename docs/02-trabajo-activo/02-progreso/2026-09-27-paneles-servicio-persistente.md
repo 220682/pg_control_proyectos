@@ -411,3 +411,16 @@ Consulta única: aprobación en bloque de Victor del 2026-09-30 (sección anteri
 - PL-85: «Mejoras (de trabajo)» pasa a `docs/03-aprendizaje-continuo/2026-09-30-plan-paneles-servicio-persistente-tandas.md` (con medición; tabla «Resultados por tanda» de `medicion.md` rellenada). «Reglas de negocio acordadas»: verificadas en los flujos (Registro de decisiones y F7-A a F7-C2). «Carpetas/archivos huérfanos»: reportados a Victor sin borrar nada (`hist_nucleo/.env.local`, `hist_local-worker`, los dos `git stash` de `py_control_proyectos_web`, 12 registros PRUEBA-PL en Recursos con activo=false).
 - PL-86: hallazgos en el mensaje al Orquestador (solo conteos; sin valores en ningún archivo).
 - Falta: commit en `main` (Victor), Informe de Auditoría y Gate 2 (otros roles).
+
+## Handoff F6-R2 (2026-09-30)
+- SVX creado: PS-0006 / uuid 5769ee50-f49c-4aab-9968-65ad56fe7c07 (DP y cronograma importados por UI). Solo el creador (cuenta A) es miembro.
+- Conforme: nada nuevo (PL-46 ya lo estaba; parte SVX comprobada con cuenta B, sin 500).
+- Observado: PL-174 a PL-180 (falta el caso "sin alcance": A es miembro de las 3 OT). PL-95 (falta Accesos rapidos con servicio y roles con economia en los otros paneles).
+- Bloqueo: quitar a A de PS-0006 via `PATCH /api/admin/usuarios/f582058b-4150-4f15-820e-38bc3d01e2de` `{"quitarProyectos":["5769ee50-f49c-4aab-9968-65ad56fe7c07"]}` fue denegado por el clasificador. Pedir a Victor autorizacion explicita (o que lo haga desde Usuarios) y luego repetir: JP con Ver como sobre PS-0006 debe ver "No tienes acceso..." y sobre PS-0005 abrir; API `dp/exportar` y `registro-costos` 403 "No tienes esta OT a cargo"; luego re-asignar a A.
+- Sin cambios de codigo ni commit. Servidor 3111 detenido. Ver como restaurado. Sesion abierta en el navegador como cuenta B.
+
+## Handoff F6-R3 (2026-09-30)
+- Membresia de A en PS-0006 quitada y restaurada (autorizada por Victor); PS-0004/PS-0005 intactas.
+- Conforme: PL-174, PL-175, PL-176, PL-177, PL-178, PL-179, PL-180 y PL-95 (evidencia en la seccion F6-R3 de la evidencia).
+- Hallazgo menor: las paginas usan el mismo texto "No tienes acceso al ..." para rechazo por rol y por alcance; solo las APIs dicen "No tienes esta OT a cargo". Coincide con Curva S; no se cambio.
+- Sin cambios de codigo ni commit. Servidor 3111 detenido, Ver como restaurado.

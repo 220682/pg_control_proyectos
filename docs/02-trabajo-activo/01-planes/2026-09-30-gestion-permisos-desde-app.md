@@ -54,8 +54,8 @@ Hoy los permisos viven **fijos en el código** (`src/lib/permisos/permisos.ts`, 
 - Modelo de datos para guardar permisos por fila y rol, y el registro de cambios (migración nueva; el número se toma al planificar, después de lo que el grupo de paquetes deje).
 - Lectura de esos permisos desde el servidor, con los valores actuales del flujo 14 como **valores iniciales** (la base de datos se siembra con lo que hoy hace `permisos.ts`, así el día uno nada cambia para nadie).
 - Cambio de las funciones de `permisos.ts` para que consulten lo guardado (o un espejo en caché) y no los roles escritos en el código.
-- Pantalla de gestión: dos tablas, casillas, comentarios, marca económica, botón «Guardar cambios» (borrador, D3) y registro de cambios visible. Grupo «Configuraciones» nuevo en el registro único (D7).
-- Alta de la pantalla en el registro único de accesos, en el panel del servicio y en el apartado OT, **y en la propia matriz de permisos** (la política exige actualizar el artefacto y el flujo 14 en la misma tarea).
+- Pantalla de gestión: dos tablas, casillas, comentarios, marca económica, botón «Guardar cambios» (borrador, D3) y registro de cambios visible. Chip en la página «Configuraciones» (D7).
+- Alta de la pantalla en el registro único de accesos y como chip en la página «Configuraciones», **y en la propia matriz de permisos** (la política exige actualizar el artefacto y el flujo 14 en la misma tarea).
 - Pruebas por los 13 roles, con la habilidad `verificar-permisos-por-rol`.
 - Documentación: flujo 14, flujo 16, flujo 02 si aplica, `planes-futuros.md` (promover el ítem y corregir dos entradas desactualizadas), design.md si hay componente nuevo.
 
@@ -78,12 +78,13 @@ Hoy los permisos viven **fijos en el código** (`src/lib/permisos/permisos.ts`, 
 | Documento | Por qué |
 |---|---|
 | `14-accesos-y-restricciones.md` | La tabla deja de ser la única fuente de los valores: pasa a ser la **referencia aprobada** y la pantalla el instrumento (D4). Se añade la regla de quién puede cambiar la matriz y el registro de cambios. |
-| `16-paneles.md` | La pantalla es un acceso nuevo del registro único y del apartado OT. |
+| `16-paneles.md` | La pantalla es un acceso nuevo: un chip en la página «Configuraciones» (rueda del shell) y su alta en el registro único. |
+| `01-configuracion.md` | Hoy «pendiente de definir»; esta pantalla es su primer contenido real. Se consulta a Victor antes de editarlo. |
 | `07-nucleo-auth.md` y `02-usuarios.md` | Revisar si citan «permisos fijos en código» o la tabla de roles. |
 | `planes-futuros.md` | Promover el ítem; corregir «4 roles con economía» (hoy 5 más dos excepciones) y los conflictos CO1 a CO5 (ya resueltos). Se consulta a Victor antes de editar. |
 | Artefacto «Matriz de permisos» | Fila nueva: «Gestionar la matriz de permisos» (administrador y jefe de proyectos). |
 
-Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«Solo administrador y jefe de proyectos cambian permisos; el administrador no puede quedarse sin acceso a la gestión de permisos; «Asignar rol administrador» y «Ver como» no son editables.»**
+Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«Solo administrador y jefe de proyectos cambian permisos; el administrador no puede quedarse sin acceso a la gestión de permisos; la columna del administrador no es editable; «Asignar rol administrador» y «Ver como» tampoco (pendiente de confirmar).»**
 
 ### Datos, API, migraciones o dependencias
 
@@ -103,12 +104,12 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 | Id | Decisión | Resuelto |
 |---|---|---|
 | D1 | Dónde se guardan los permisos | **Base de datos** como fuente, sembrada con los valores de hoy. Cambiar un permiso no toca el código. |
-| D2 | Filas que no se pueden editar | **Las del administrador:** «Asignar rol administrador», «Ver como» y el acceso del administrador a esta pantalla. |
+| D2 | Qué no se puede editar | **El rol administrador completo:** su columna en las dos tablas no se edita desde la interfaz (ni se le quita ni se le agrega nada), así nunca pierde su acceso, incluida esta pantalla. *Pendiente de confirmar con Victor:* si las filas «Asignar rol administrador» y «Ver como» también quedan fijas para los demás roles (recomendado: sí). |
 | D3 | Cómo se aplican los cambios | **Borrador y botón «Guardar cambios» al final.** Hasta guardar, la app aplica lo último guardado. |
 | D4 | Relación con el artefacto | **El artefacto sigue existiendo. Manda la app:** si difieren, vale la app. Tras cada «Guardar cambios», el artefacto y el flujo 14 se actualizan para coincidir. |
 | D5 | Marca «económica» | **Editable**, pero solo informativa hasta el Spec de economía. |
 | D6 | Filas de lo que crea el grupo de paquetes | **Se agregan al final**, cuando ese grupo pushee (los ocho accesos de paquetes del flujo 14 y las pantallas nuevas). |
-| D7 | Ubicación de la pantalla | **Un chip dentro de «Configuraciones».** Ojo: ese grupo **no existe hoy** en `registro-accesos.ts` (existen Mi entorno, Recursos de empresa, Servicio y los ocho de proceso). El plan lo crea como grupo fuera del nav de servicio, igual que «Recursos de empresa», y lo registra en flujo 16. Por la regla del flujo 16, todos los roles ven el chip y quien no gestiona permisos lo ve deshabilitado. |
+| D7 | Ubicación de la pantalla | **Un chip dentro de «Configuraciones»**, que se abre con la rueda pequeña de la parte inferior izquierda del shell (`WorkspaceShell.tsx`, botón «Configuraciones», ruta `/configuraciones`, verificado en el código). Hoy esa página solo muestra el tema oscuro y la sesión. No se crea grupo nuevo en el registro de accesos: el chip se suma a esa página y se registra en el registro único y en el flujo 16. Todos los roles entran a «Configuraciones»; el chip de permisos lo usa solo quien gestiona permisos, y los demás lo ven deshabilitado (regla del flujo 16). |
 
 ### Riesgos
 

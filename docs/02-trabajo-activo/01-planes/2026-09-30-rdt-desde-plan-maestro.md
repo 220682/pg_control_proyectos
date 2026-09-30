@@ -77,7 +77,7 @@ Propuesta, sujeta al Planner (aplicar a mano en el SQL Editor; cada migración s
 - `GET /api/rdts/catalogos`: devuelve las líneas del Plan Maestro aprobado con su paquete (y el mapa de niveles para agrupar) en vez de `dp_partidas`/`dp_subpresupuestos`.
 - API de partes y de validación: verificar en servidor que el paquete y la partida estén en el Plan Maestro aprobado vigente.
 - Dependencias: Spec de Paquetes y Plan Maestro (modelo de líneas y claves estables) y Spec de Niveles (jerarquía del selector).
-- **Servicios existentes:** todos son de prueba (Victor); sin compatibilidad hacia atrás. **No se toca PS-0006** (confirmado por Victor, 2026-09-30); los demás servicios existentes son de prueba y se pueden tocar. Victor autorizó crear un servicio de prueba dedicado para la verificación de este plan (con DP, cronograma y RDT propios).
+- **Servicios existentes:** todos son de prueba (Victor); sin compatibilidad hacia atrás. PS-0006 ya no existe: se eliminó en la limpieza de datos de prueba del plan de paneles, autorizada por Victor (quedan PS-0004 y PS-0005). Todos los servicios existentes son de prueba y se pueden tocar. Victor autorizó crear un servicio de prueba dedicado para la verificación de este plan (con DP, cronograma y RDT propios).
 
 ### Diseño / UI aplicable
 
@@ -113,7 +113,7 @@ Propuesta, sujeta al Planner (aplicar a mano en el SQL Editor; cada migración s
 
 - Lógica pura con vitest: reparto del % del paquete a sus partidas, suma por partida, atribución con partida repartida, clave estable entre versiones.
 - `tsc --noEmit`, suite completa, lint comparado contra `main`.
-- Verificación en vivo con Playwright y login real sobre el servicio de prueba dedicado de este plan (nunca PS-0006): crear RDT listando el Plan Maestro, validar, ver el real en el lienzo y en el PR; una captura por ítem.
+- Verificación en vivo con Playwright y login real sobre el servicio de prueba dedicado de este plan (servicio nuevo creado para este plan): crear RDT listando el Plan Maestro, validar, ver el real en el lienzo y en el PR; una captura por ítem.
 
 ### Aprobación (Gate Spec)
 
@@ -139,7 +139,7 @@ Ver la sección "Ejecución conjunta" de `2026-09-30-paquetes-y-plan-maestro-gri
 | 2026-09-30 | **Gate Spec: Victor aprobó los tres Specs ("todo aprobado")**, con las recomendaciones del Orquestador para todas las decisiones pendientes. Queda abierto, sin bloquear: el nombre del rol extra cuando un archivo trae más de 5 niveles (D6). El texto exacto de cada flujo contradicho se le muestra antes de editarlo. | Victor |
 | 2026-09-30 | El RDT lista los paquetes y partidas del Plan Maestro, no las del DP; sin eso no funciona la trazabilidad. | Victor |
 | 2026-09-30 | El RDT va en su propio Spec; los tres Specs se aprueban juntos y un solo plan los reparte. | Victor |
-| 2026-09-30 | Los servicios existentes son de prueba: sin compatibilidad hacia atrás, salvo PS-0006, que no se toca. Se autoriza crear un servicio de prueba dedicado para este plan. | Victor |
+| 2026-09-30 | Los servicios existentes son de prueba: sin compatibilidad hacia atrás, PS-0006 ya no existe (eliminado en la limpieza del plan de paneles). Se autoriza crear un servicio de prueba dedicado para este plan. | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
 

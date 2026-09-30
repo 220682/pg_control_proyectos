@@ -41,6 +41,10 @@ En un worktree de `py_control_proyectos_web` donde `node_modules` se crea como J
 
 **Workaround verificado:** dentro de worktrees, usar siempre `--webpack` para build y dev (`npx next build --webpack`, `npm run dev -- --webpack -p <puerto>`). El build con Turbopack se hace en el checkout principal, donde `node_modules` es una carpeta real, no un junction.
 
+## `.env.local` en worktrees
+
+Copiar el `.env.local` del checkout principal al worktree de un Worker, entre carpetas locales del mismo proyecto, no requiere consulta (decisión de Victor, 2026-09-27). Se hace con `cp` sin leer ni mostrar valores, se verifica con `cmp` y se comprueba que git lo ignora (`git status` del worktree en 0). Alcance: solo `.env.local` del mismo proyecto; cualquier otro archivo de entorno o de secretos se sigue consultando. Antes de proponer borrar un `.env.local` se compara por `cmp`/hash y por nombres de variable, sin mostrar valores: un archivo con el mismo nombre puede ser la única fuente de otras credenciales.
+
 ## Commits durante la implementación
 
 - No un commit por cada ítem de la Punch List.

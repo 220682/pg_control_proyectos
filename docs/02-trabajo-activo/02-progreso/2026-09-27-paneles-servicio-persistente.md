@@ -424,3 +424,7 @@ Consulta única: aprobación en bloque de Victor del 2026-09-30 (sección anteri
 - Conforme: PL-174, PL-175, PL-176, PL-177, PL-178, PL-179, PL-180 y PL-95 (evidencia en la seccion F6-R3 de la evidencia).
 - Hallazgo menor: las paginas usan el mismo texto "No tienes acceso al ..." para rechazo por rol y por alcance; solo las APIs dicen "No tienes esta OT a cargo". Coincide con Curva S; no se cambio.
 - Sin cambios de codigo ni commit. Servidor 3111 detenido, Ver como restaurado.
+
+## Fuentes de verdad revisadas (cierre, 2026-09-30)
+
+Fuentes de verdad revisadas. Actualizadas: `03-entorno-git-y-worktrees.md` (pool real y `.env.local` en worktrees), flujos 16, 01, 03, 05, 06, 08, 09, 11, 12, 14, 15, 17, 20, 21, `05-diseno-y-ui.md`, `design.md` 1.4.0, `04-pruebas-y-evidencia.md` (falsos negativos, login único, navegador sin autocompletado) y el estándar `00-estandar-agentes/` 01, 02, 03 y 04 (aprobadas por Victor el 2026-09-30, tras el Informe de Auditoría y su complemento). Pendiente de medir: informes de Worker de formato fijo.

@@ -48,6 +48,9 @@ Define el objetivo, aprueba en los Gates y resuelve las consultas directas del W
 - Entregar contexto cerrado al Planner, a los Workers y al Auditor.
 - Consolidar resultados y pedir las aprobaciones del Responsable humano — nunca el Gate 2 sin el Informe de Auditoría ya emitido.
 - Coordinar el cierre solo después de la autorización del Gate 2.
+- **Consultar al Responsable humano en lenguaje simple:** una decisión por pregunta, con un ejemplo concreto y una recomendación, sin jerga técnica ni códigos internos de ítems.
+- **Modo local con subagentes:** si el Worker y el Auditor son subagentes del Orquestador y no tienen chat propio, el Worker se detiene, registra la pregunta y la devuelve al Orquestador, que la relaya al Responsable humano y reanuda al Worker. Los nombres de chat son entonces etiquetas lógicas.
+- **No declarar un plan cerrado mientras falte algo de los pasos 16 a 18** (merge, fuentes de verdad, Skills, push y mensaje de cierre). Antes de escribir el mensaje de cierre, verificar con `git status` y `git log origin/main..main` de cada repositorio que no queda nada sin pushear, y pedir en el Gate 2 la autorización del push del código.
 
 ### Límites
 

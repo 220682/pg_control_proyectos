@@ -44,6 +44,15 @@ Comprimir o resumir el contexto de un chat puede usarse solo si una tarea larga 
 
 Ante cualquier cambio de sesión, chat, LLM o entorno a mitad de una tarea, se escribe un handoff como **sección fechada al final del archivo de progreso** del plan, con la plantilla `06-plantillas/07-handoff.md`: objetivo y estado, plan/progreso/evidencia relacionados, rama/worktree y último commit, terminado y no terminado, pruebas ejecutadas, bloqueos y riesgos, qué debe leer el siguiente agente, y el próximo paso concreto.
 
+## Planes grandes en tandas
+
+Un plan de más de unos 15 ítems, o de una fase completa, se reparte en tandas de 4 a 8 ítems:
+
+- Un Worker nuevo por tanda, con un brief de 8 KB como máximo y un tope de unas 80 llamadas.
+- El Worker lee solo lo que el brief nombra (busca por ID en vez de leer el plan completo).
+- Cada tanda se marca en el índice de tandas como **paralelizable** (documentación o código puro, sin navegador) o **usa el navegador** (se ejecutan una a una: dos tandas con navegador nunca corren a la vez).
+- Se mide cada sesión (llamadas, contexto máximo, caché leída) y se guarda en un archivo de medición.
+
 ## Límite conocido: mensajería entre sesiones
 
 > Aprendizaje promovido: una sesión de Worker se interrumpió pensando en retomarla más tarde con una herramienta de mensajería entre sesiones, y esa herramienta no pudo alcanzarla — la sesión había sido creada con otro mecanismo (de administración de sesiones en la nube) que no la registra como "agente alcanzable" por la mensajería entre pares.

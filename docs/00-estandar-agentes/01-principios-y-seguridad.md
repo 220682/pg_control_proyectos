@@ -42,3 +42,4 @@ Ninguna de estas acciones se ejecuta por iniciativa propia de un agente; cada un
 - Revisar el contexto, el alcance y el diff completo antes de dar por terminada una fase o una tarea.
 - No declarar una tarea o un ítem de la Punch List como terminado sin evidencia real de verificación.
 - Si algo no se pudo verificar, se documenta la limitación en vez de afirmar que se hizo.
+- **Sin reemplazos masivos sobre el plan, el índice de tandas ni la evidencia.** Esos archivos se editan solo con cambios puntuales por fila (buscar el ID y editar esa fila); nunca con scripts de reemplazo masivo. Antes de cualquier edición automatizada de esos archivos, commitear el estado previo o copiar el archivo. *Origen: un script vació el plan y hubo que restaurarlo y reaplicar 175 estados (plan paneles-servicio-persistente).*

@@ -30,13 +30,14 @@ Primero definamos el objetivo de la tarea.
  4. GATE SPEC — ¿aprueba el Spec?   No → vuelve a 3
  5. Delegación al Planner — Orquestador (el Spec aprobado es la entrada)
  6. Plan + Punch List — Planner, en el único archivo de plan; anticipa conflictos de negocio revisando los flujos afectados → commit + push a main
- 7. GATE 1 — ¿aprueba plan + Punch List?   No → vuelve a 6.   Sí → autoriza toda la implementación, sin aprobaciones intermedias
+ 7. GATE 1 — ¿aprueba plan + Punch List?   No → vuelve a 6.   Sí → autoriza toda la implementación, sin aprobaciones intermedias.
+    En una sola consulta, el Planner pide también: (i) los datos de prueba que el plan necesita (servicios de prueba sin alcance real, registros de prueba marcados y desactivables, permiso para quitar o reponer una membresía); (ii) la pre-autorización de las operaciones que el clasificador de permisos suele bloquear (login con credenciales de prueba, quitar una membresía, herramientas de navegador), que nunca cubre leer ni mostrar credenciales; (iii) si el plan obliga a cambiar flujos de negocio que se contradicen, una sola tabla «qué dice hoy / qué pasaría a decir / documento afectado» cuya aprobación cubre a todos los Workers. Lo no pedido aquí se registra como Observado desde el brief.
  8. Implementación — Worker, en su rama <entorno>-worker-N (código) → commit + push a su rama cada ~35%, nunca a medias de un ítem, nunca a main
  9. ¿Conflicto de regla de negocio no anticipado? Sí → el Worker consulta al Responsable humano en su propio chat, en el momento, y registra pregunta y respuesta en el progreso; vuelve a 8
 10. Verificación y evidencia — Worker: pruebas de interfaz cuando aplica (nunca solo por código), Punch List completada, archivo de evidencia + enlace al artifact de checklist visual si existe
 11. Consolidar hallazgos — Worker: escribe reglas de negocio validadas, aprendizajes y evidencia (commit + push a main del repositorio de documentación); deja anotado lo que toque fuentes de verdad centrales
 12. Auditoría — Auditor: primero confirma con git log / git branch --contains que los commits están en la rama del Worker asignado; luego revisa SDD, plan, Punch List y evidencia. Informe: APLICAR AHORA / PROPONER A RESPONSABLE / NO PROMOVER / PROPONER SKILL
-13. ¿Informe listo para cierre?   No → vuelve a 8
+13. ¿Informe listo para cierre?   No → vuelve a 8. El informe no está listo si omite el segundo chequeo (destinos de hallazgos) o la clasificación APLICAR AHORA / PROPONER / NO PROMOVER / PROPONER SKILL: el Orquestador lo devuelve al Auditor antes del Gate 2
 14. Orquestador consolida y presenta — informe + resultados + propuestas de cambio a fuentes de verdad centrales
 15. GATE 2 — ¿aprueba el cierre?   No → vuelve a 8
 16. Tres acciones independientes (cualquier orden, cada una solo si aplica):
@@ -80,6 +81,8 @@ Ningún rol lee todo el árbol de documentación de entrada. Cada uno lee: (1) e
 ### Excepción de consulta directa del Worker (D6)
 
 El Orquestador es, en general, el punto único de contacto operativo entre el Responsable humano y los demás agentes (ver `02-roles-y-delegacion.md`). **Excepción:** ante un conflicto de regla de negocio no anticipado durante la implementación (paso 9), el Worker consulta al Responsable humano directamente, **en su propio chat**, sin pasar por el Orquestador, y registra la pregunta y la respuesta en el progreso antes de continuar.
+
+En modo local con subagentes (sin chat propio del Worker) la consulta pasa por el Orquestador, que la relaya al Responsable humano y reanuda al Worker (ver `02-roles-y-delegacion.md`).
 
 Referencia cruzada: ver el incidente "Orquestador salta el flujo de roles" y la FAQ del flujo del Orquestador en `03-aprendizaje-continuo/historico.md` del repositorio de documentación.
 

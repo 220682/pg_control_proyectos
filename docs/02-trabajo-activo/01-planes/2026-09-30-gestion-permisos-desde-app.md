@@ -8,14 +8,14 @@
 
 - Tema: llevar a la app la interfaz del artefacto «Matriz de permisos» para que administrador y jefe de proyectos cambien quién ve cada pantalla y quién ejecuta cada acción, sin desplegar.
 - Fecha: 2026-09-30.
-- Estado: **Propuesta** (Spec redactado, decisiones D1 a D7 resueltas por Victor el 2026-09-30; pendiente de Gate Spec).
+- Estado: **Spec aprobado** por Victor el 2026-09-30 (Gate Spec cumplido). Siguiente: delegar al Planner; el Gate 1 espera a que el grupo de paquetes pushee.
 - Orquestador: Claude (sesión de 2026-09-30). Planner, Worker y Auditor: por asignar.
 
 ## Spec / SDD
 
 ### Estado
 
-`Propuesto`.
+`Aprobado` (2026-09-30).
 
 ### Problema y contexto
 
@@ -47,7 +47,7 @@ Hoy los permisos viven **fijos en el código** (`src/lib/permisos/permisos.ts`, 
 3. **Cada cambio queda registrado:** quién, cuándo, qué fila, qué rol, valor anterior y nuevo.
 4. La validación ocurre siempre en servidor: un cambio enviado por alguien sin permiso para gestionar permisos se rechaza (403), aunque el navegador lo permita.
 5. Una defensa contra el bloqueo propio: el sistema **nunca** deja sin acceso a la propia pantalla de gestión (el administrador siempre puede gestionarla) ni quita las dos filas exclusivas del administrador.
-6. La pantalla replica el artefacto y se somete a él: al entrar en producción, el Spec fija si la pantalla **reemplaza** al artefacto como instrumento de edición y qué documento queda como referencia (ver decisión D4).
+6. La pantalla se asemeja al artefacto en estructura, sin limitarse a él (puede mejorarlo). Manda la app; el artefacto sigue existiendo y se actualiza tras cada guardado (D4).
 
 ### Alcance
 
@@ -95,7 +95,8 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 
 ### Diseño / UI aplicable
 
-- La pantalla replica el artefacto (dos tablas con scroll horizontal, columnas de roles, columna «Fila» y «Comentario», contorno de cambio, aprobación), según `docs/05-diseno-y-referencias/design.md`; no se crea un estilo nuevo.
+- **Criterio de fidelidad (Victor, 2026-09-30):** la pantalla se asemeja en **estructura** al artefacto (dos tablas, roles en columnas, comentario por fila), pero eso **no limita mejorar lo actual** (por ejemplo, filtros, búsqueda, agrupación, mejor lectura del registro de cambios). Toda mejora respeta `design.md` y no cambia las reglas ya decididas.
+- La pantalla parte del artefacto (dos tablas con scroll horizontal, columnas de roles, columna «Fila» y «Comentario», contorno de cambio, aprobación), según `docs/05-diseno-y-referencias/design.md`; no se crea un estilo nuevo.
 - Se ubica como un chip dentro de la página «Configuraciones» (D7), registrado en el registro único, no como una pantalla suelta.
 - Estados vacío, carga y error; accesible con teclado; responsive con la regla del repositorio.
 
@@ -140,7 +141,7 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 
 ### Aprobación (Gate Spec)
 
-- [ ] Victor aprueba este Spec.
+- [x] Victor aprueba este Spec (2026-09-30), con el criterio de fidelidad añadido.
 
 ## Entorno, repositorios, ramas y worktrees
 
@@ -157,6 +158,7 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 | 2026-09-30 | Objetivo confirmado: que administrador y jefe de proyectos cambien desde la app quién ve y ejecuta qué, sin desplegar; no cambian el alcance por OT, la validación en servidor ni las reglas de las tablas del flujo 14. | Victor |
 | 2026-09-30 | Se llega hasta tener el plan; luego se espera a que el grupo de paquetes termine y pushee, se revisa este plan y se continúa. | Victor |
 | 2026-09-30 | Decisiones D1 a D7 del Spec resueltas (ver tabla «Decisiones de Victor»). Artefacto verificado: versión 42, 49 acciones y 15 interfaces, cero diferencias con el flujo 14; marca «Aprobada» quitada, pendiente de Victor. | Victor / Orquestador |
+| 2026-09-30 | **Gate Spec aprobado.** Criterio añadido: la interfaz se asemeja en estructura al artefacto sin limitar mejoras. | Victor |
 | 2026-09-30 | Orquestador y Planner comitean cada vez que terminan algo, sin excederse; el push a `main` se habilita con la aprobación del Spec y del plan. | Victor |
 
 ## Mejoras (de trabajo)
@@ -165,7 +167,7 @@ Ninguna.
 
 ## Reglas de negocio acordadas en esta tarea
 
-Ninguna todavía (la regla propuesta arriba espera el Gate Spec).
+Aprobada en el Gate Spec (2026-09-30), a integrar en el flujo 14 al cierre: «Solo administrador y jefe de proyectos cambian permisos; la columna del administrador no es editable; «Asignar rol administrador» y «Ver como» son solo del administrador y no se dan a otro rol; el administrador no puede quedarse sin acceso a la gestión.»
 
 ## Carpetas/archivos huérfanos
 

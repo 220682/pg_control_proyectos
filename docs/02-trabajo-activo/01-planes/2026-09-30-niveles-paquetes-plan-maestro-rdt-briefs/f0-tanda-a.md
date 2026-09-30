@@ -32,4 +32,6 @@ Fase F0 · **Depende de:** nada · **Bloquea:** F1-C y F2-B (no pueden construir
 
 ## Cierre
 
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F0-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F0-A.md`, no en el plan ni en el progreso compartidos).
+
 `resultados/F0-A.md` con el estado de F0A-1 a F0A-7, el handoff y las preguntas de diseño. Commit de `docs/05-diseno-y-referencias/**` en `main` (solo tus archivos). Mensaje final: ítems cerrados, pendientes y llamadas usadas. El Orquestador presenta las maquetas a Victor.

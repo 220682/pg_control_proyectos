@@ -30,4 +30,6 @@ Fase F5 · **Depende de:** F5-A cerrada **y del checkpoint de migraciones: Victo
 
 ## Cierre
 
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F5-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F5-B.md`, no en el plan ni en el progreso compartidos).
+
 `resultados/F5-B.md` (estado de F5B-1 a F5B-5, evidencia, hallazgos, handoff, llamadas). Mensaje final: cerrados, pendientes y llamadas.

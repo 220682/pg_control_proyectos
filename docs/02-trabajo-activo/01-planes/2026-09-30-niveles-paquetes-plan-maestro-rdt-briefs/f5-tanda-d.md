@@ -30,4 +30,6 @@ Fase F5 · **Depende de:** el Gate 1 con la **tabla en bloque de cambios a flujo
 
 ## Cierre
 
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F5-D.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F5-D.md`, no en el plan ni en el progreso compartidos).
+
 `resultados/F5-D.md` (estado de F5D-1 a F5D-6, la tabla con sus casillas, handoff, llamadas). Commit en `main` de `pg_control_proyectos`, `git add` explícito.

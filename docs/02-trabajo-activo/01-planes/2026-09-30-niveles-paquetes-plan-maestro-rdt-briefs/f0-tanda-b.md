@@ -1,6 +1,6 @@
 # F0-B · Maquetas del lienzo del Plan Maestro, paneles ocultables y selector del RDT
 
-Lee primero `00-reglas-de-contexto.md`. **Carril de diseño** (docs), el mismo Worker o uno nuevo después de F0-A. Escribes solo en `docs/05-diseno-y-referencias/**`.
+Lee primero `00-reglas-de-contexto.md`. Contrato que lees: `contrato-c6-interfaz.md`. **Carril de diseño** (docs), el mismo Worker o uno nuevo después de F0-A. Escribes solo en `docs/05-diseno-y-referencias/**`.
 Fase F0 · **Depende de:** F0-A cerrada (mismo estilo y `design.md`) · **Bloquea:** F3-C, F3-D y F4-C (interfaz). Datos y lógica **no** esperan.
 **Commit:** en `main` de `pg_control_proyectos`, `git add` explícito.
 
@@ -29,5 +29,7 @@ Fase F0 · **Depende de:** F0-A cerrada (mismo estilo y `design.md`) · **Bloque
 - No usar datos reales. No publicar credenciales.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F0-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F0-B.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F0-B.md` (estado de F0B-1 a F0B-7, handoff, preguntas de diseño). Commit en `main`. Mensaje final: cerrados, pendientes, llamadas.

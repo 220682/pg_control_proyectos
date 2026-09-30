@@ -45,6 +45,19 @@
 - La integración se hace **en la rama del carril 1** (`local-worker-1`, sin crear otra): el Orquestador une primero Paquetes, luego Plan Maestro, luego RDT. El merge a `main` ocurre **solo tras el Gate 2**.
 - Con cuatro Workers, la regla de la mejora anterior «un solo worktree activo a la vez» se **reemplaza** por «un worktree por carril»; se mantienen tandas de 4 a 8 ítems, brief ≤ 8 KB y ~80 llamadas por sesión.
 
+## Skills aplicables
+
+Política vigente (flujo pasos 6, 8 y 12; `03-sesiones-contexto-y-handoff.md` «Inicio de cada chat»). Skills de `.claude/skills/` de `pg_control_proyectos`; **el repositorio de la app no tiene carpeta de Skills** (verificado 2026-09-30).
+
+| Skill | Quién | Dónde se usa |
+|---|---|---|
+| `cerrar-tanda` | todo Worker | Al final de **toda** tanda (las 19). **Adaptación de este plan:** con varios Workers a la vez, sus pasos de estados, evidencia y traspaso se escriben en `resultados/<tanda>.md`, no en el plan, la evidencia ni el progreso compartidos (evita choques entre carriles); los demás pasos van igual. El Orquestador consolida |
+| `verificar-permisos-por-rol` | Worker | F3-B (añade `puedeCrearVersionPlanMaestro` a `permisos.ts`), F5-A (edita `permisos.ts`, el registro de accesos y sus pruebas) y F5-C (permisos por rol en vivo con «Ver como») |
+| `seguir-flujo-de-planes` | Orquestador | Al lanzar **cada ola** (seis) y **antes de escribir el mensaje de cierre** |
+| Comprobación de uso | Auditor | Paso 12: comprueba que se usaron los Skills citados aquí y en los briefs, o que consta por qué no |
+
+Todo Worker, antes de empezar, lista `.claude/skills/` de ambos repositorios y anota «Skills revisados» en su `resultados/<tanda>.md`; el Orquestador lo copia a la sección «Skills revisados» del progreso. Los 19 briefs y el índice de tandas nombran los Skills que corresponden a cada tanda.
+
 ## Fases y dependencias
 
 Detalle completo, grafo y olas en `…-briefs/00-indice-de-tandas.md`.
@@ -106,7 +119,7 @@ Plantilla en `…-briefs/00-indice-de-tandas.md` § «Plantilla del prompt de la
 
 ### Prompt del Auditor
 
-Alcance: los tres Specs, este plan, la Punch List, los `resultados/*.md`, la evidencia y los flujos modificados. Primer chequeo con `git log` / `git branch --contains` (no de memoria): los commits están en las ramas de los carriles asignados y no en `main`; existieron chats de Worker separados. Segundo: apartados obligatorios trasladados a su destino. Además: que la **matriz de propiedad** se respetó (ningún archivo editado por dos carriles en una misma fase), que cada cambio a flujos corresponde a una fila aprobada de la tabla en bloque y que el texto final coincide con el código, y que el artefacto «Matriz de permisos» está al día. El informe se guarda como **archivo propio** en `docs/02-trabajo-activo/04-auditoria/2026-09-30-niveles-paquetes-plan-maestro-rdt.md` con la clasificación `APLICAR AHORA` / `PROPONER A RESPONSABLE` / `NO PROMOVER` / `PROPONER SKILL` (plantilla `06-informe-auditoria.md`); si falta la clasificación, el Orquestador lo devuelve al Auditor.
+Alcance: los tres Specs, este plan, la Punch List, los `resultados/*.md`, la evidencia y los flujos modificados. Primer chequeo con `git log` / `git branch --contains` (no de memoria): los commits están en las ramas de los carriles asignados y no en `main`; existieron chats de Worker separados. Segundo: apartados obligatorios trasladados a su destino. Además: que la **matriz de propiedad** se respetó (ningún archivo editado por dos carriles en una misma fase), que cada cambio a flujos corresponde a una fila aprobada de la tabla en bloque y que el texto final coincide con el código, y que el artefacto «Matriz de permisos» está al día. **Skills (paso 12):** comprueba que se usaron los Skills de la sección «Skills aplicables» y de los briefs (`cerrar-tanda` en las 19 tandas, `verificar-permisos-por-rol` en las tres que tocan permisos, `seguir-flujo-de-planes` por el Orquestador en cada ola y antes del cierre), o que consta por qué no. El informe se guarda como **archivo propio** en `docs/02-trabajo-activo/04-auditoria/2026-09-30-niveles-paquetes-plan-maestro-rdt.md` con la clasificación `APLICAR AHORA` / `PROPONER A RESPONSABLE` / `NO PROMOVER` / `PROPONER SKILL` (plantilla `06-informe-auditoria.md`); si falta la clasificación, el Orquestador lo devuelve al Auditor.
 
 ## Archivos / componentes afectados
 
@@ -414,11 +427,12 @@ Una sola aprobación de Victor cubre a todos los Workers de F5-D (mismo método 
 | 2026-09-30 | Fase de diseño previa: las maquetas de Paquetes y del lienzo se diseñan y se aprueban antes de construir la interfaz | Victor |
 | 2026-09-30 | Servicios existentes de prueba; se autoriza crear un servicio de prueba dedicado; PS-0006 ya no existe | Victor |
 | 2026-09-30 | Política nueva: el informe del Auditor es un archivo propio en `02-trabajo-activo/04-auditoria/`, no va dentro del plan | Victor |
+| 2026-09-30 | Política de Skills incorporada al plan a pedido del coordinador: `cerrar-tanda` en toda tanda (adaptado al cierre por `resultados/<tanda>.md`), `verificar-permisos-por-rol` en F3-B, F5-A y F5-C, `seguir-flujo-de-planes` por el Orquestador en cada ola y antes del cierre; el Auditor comprueba su uso | Coordinador / Planner |
 | 2026-09-30 | Decisiones de método del Planner (a confirmar en el Gate 1): integración en la rama del carril 1; cierre de tanda por `resultados/<tanda>.md`; navegador solo en F5; `permisos.ts` congelado salvo una función | Planner |
 
 ## Enlaces a progreso, evidencia y auditoría homónimos
 
-Se crean **solo cuando inicie la ejecución** (el Orquestador, desde las plantillas `03-progreso.md` y `04-evidencia.md`):
+Se crean **solo cuando inicie la ejecución** (el Orquestador, desde las plantillas `03-progreso.md` —con su sección «Skills revisados»— y `04-evidencia.md`):
 
 - Progreso: `docs/02-trabajo-activo/02-progreso/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`
 - Evidencia: `docs/02-trabajo-activo/03-evidencia/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`

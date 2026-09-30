@@ -1,6 +1,6 @@
 # F3-C · Plan Maestro: lienzo (columnas, semanas, seis columnas) y ocultar paneles
 
-Lee primero `00-reglas-de-contexto.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c3-plan-maestro.md` y `contrato-c6-interfaz.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
 Fase F3 · **Depende de:** F3-B cerrada **y de la maqueta aprobada por Victor**: `mockups/plan-maestro-lienzo.html` y `mockups/paneles-ocultables.html` (F0-B). Sin maqueta aprobada, no empieces.
 **Punto de commit:** al cerrar la tanda, en `local-worker-2`.
 
@@ -31,5 +31,7 @@ Fase F3 · **Depende de:** F3-B cerrada **y de la maqueta aprobada por Victor**:
 - Ante contradicción con un flujo o la maqueta: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F3-C.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F3-C.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F3-C.md` (estado de F3C-1 a F3C-6, handoff, comprobaciones para F5, llamadas). Commit en `local-worker-2`, `git add` explícito.

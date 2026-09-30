@@ -1,7 +1,7 @@
 # F3-A · Plan Maestro: lógica pura del lienzo (totales, semanas, 100 %, real)
 
 Lee primero `00-reglas-de-contexto.md`. Carril **2 · Plan Maestro** · rama `local-worker-2` (worktree `.worktrees/local-worker-2`, puerto 3112).
-Fase F3 · **Depende de:** nada · No depende de la maqueta (sin pantalla). Contratos: `00-contratos-tecnicos.md` § C3 (y § C4 para `RealPorClave`).
+Fase F3 · **Depende de:** nada · No depende de la maqueta (sin pantalla). Contratos que lees: `contrato-c3-plan-maestro.md` (y `contrato-c4-real-por-clave.md` para `RealPorClave`).
 **Punto de commit:** al cerrar la tanda, en `local-worker-2`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -30,5 +30,7 @@ Fase F3 · **Depende de:** nada · No depende de la maqueta (sin pantalla). Cont
 - Ante contradicción con un flujo escrito, cambio de contrato o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F3-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F3-A.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F3-A.md` (estado de F3A-1 a F3A-7, handoff, llamadas). Commit en `local-worker-2`, `git add` explícito.

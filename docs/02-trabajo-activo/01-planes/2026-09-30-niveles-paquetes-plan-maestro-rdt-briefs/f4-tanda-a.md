@@ -1,7 +1,7 @@
 # F4-A · RDT: datos, catálogo desde el Plan Maestro y real por clave
 
 Lee primero `00-reglas-de-contexto.md`. Carril **4 · RDT** · rama `local-worker-4` (worktree `.worktrees/local-worker-4`, puerto 3114).
-Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos: `00-contratos-tecnicos.md` § C3 (líneas), § C4 (real por clave) y § C5.
+Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos que lees: `contrato-c3-plan-maestro.md` (líneas), `contrato-c4-real-por-clave.md` y `contrato-c5-rdt.md`.
 **Migraciones reservadas: `db/082`–`084`** (se escriben, **no se aplican**).
 **Punto de commit:** al cerrar la tanda, en `local-worker-4`.
 
@@ -30,5 +30,7 @@ Fase F4 · **Depende de:** nada · No depende de la maqueta. Contratos: `00-cont
 - Ante contradicción con un flujo, cambio de contrato o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F4-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F4-A.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F4-A.md` (estado de F4A-1 a F4A-5, handoff con migraciones, llamadas). Commit en `local-worker-4`, `git add` explícito.

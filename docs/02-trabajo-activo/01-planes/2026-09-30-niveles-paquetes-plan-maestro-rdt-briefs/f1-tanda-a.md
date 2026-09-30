@@ -1,7 +1,7 @@
 # F1-A · Niveles: lógica pura (detección, roles, muestra, hermanas)
 
 Lee primero `00-reglas-de-contexto.md`. Carril **1 · Niveles** · rama `local-worker-1` (worktree `.worktrees/local-worker-1`, puerto 3111).
-Fase F1 · **Depende de:** nada · **No depende de la maqueta** (es lógica sin pantalla). Contrato: `00-contratos-tecnicos.md` § C1.
+Fase F1 · **Depende de:** nada · **No depende de la maqueta** (es lógica sin pantalla). Contrato que lees: `contrato-c1-niveles.md`.
 **Punto de commit:** al cerrar la tanda, en `local-worker-1`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -31,5 +31,7 @@ Fase F1 · **Depende de:** nada · **No depende de la maqueta** (es lógica sin 
 - Ante contradicción con un flujo escrito, acción destructiva o duda de negocio: detente y devuelve la pregunta (opciones y recomendación) al Orquestador.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F1-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F1-A.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F1-A.md` según `00-reglas-de-contexto.md` (estado de tus seis ítems, handoff, llamadas). Commit en `local-worker-1`, `git add` explícito, sin push.

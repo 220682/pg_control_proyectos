@@ -1,6 +1,6 @@
 # F1-C · Niveles: pantallas de confirmación, aviso de recarga y consumidores propios
 
-Lee primero `00-reglas-de-contexto.md`. Carril **1 · Niveles** · rama `local-worker-1`, puerto 3111.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c1-niveles.md` y `contrato-c6-interfaz.md`. Carril **1 · Niveles** · rama `local-worker-1`, puerto 3111.
 Fase F1 · **Depende de:** F1-B cerrada **y de la maqueta aprobada por Victor**: `mockups/importar-dp-niveles.html` y `mockups/cronograma-niveles.html` (F0-A). Sin maqueta aprobada, no empieces.
 **Punto de commit:** al cerrar la tanda, en `local-worker-1`.
 
@@ -30,5 +30,7 @@ Fase F1 · **Depende de:** F1-B cerrada **y de la maqueta aprobada por Victor**:
 - Ante contradicción con un flujo escrito o con la maqueta aprobada: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F1-C.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F1-C.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F1-C.md` (estado de F1C-1 a F1C-5, handoff, comprobaciones de navegador pendientes para F5, llamadas). Commit en `local-worker-1`, `git add` explícito.

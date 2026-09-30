@@ -1,7 +1,7 @@
 # F2-A · Paquetes: vínculos, API y lógica (sin pantalla)
 
 Lee primero `00-reglas-de-contexto.md`. Carril **3 · Paquetes** · rama `local-worker-3` (worktree `.worktrees/local-worker-3`, puerto 3113).
-Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos: `00-contratos-tecnicos.md` § C2 (y § C1 para `NodoEstructura`).
+Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos que lees: `contrato-c2-paquetes.md` (y `contrato-c1-niveles.md` solo para `NodoEstructura`).
 **Migraciones reservadas: `db/079`–`081`** (se escriben, **no se aplican**).
 **Punto de commit:** al cerrar la tanda, en `local-worker-3`.
 
@@ -31,5 +31,7 @@ Fase F2 · **Depende de:** nada · No depende de la maqueta. Contratos: `00-cont
 - No cambies permisos. Sin push. Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F2-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F2-A.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F2-A.md` (estado de F2A-1 a F2A-6, handoff con migraciones escritas, llamadas). Commit en `local-worker-3`, `git add` explícito.

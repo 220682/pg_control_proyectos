@@ -1,6 +1,6 @@
 # F2-B · Paquetes: pantalla de dos lados, declarar y crear paquete
 
-Lee primero `00-reglas-de-contexto.md`. Carril **3 · Paquetes** · rama `local-worker-3`, puerto 3113.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c2-paquetes.md` y `contrato-c6-interfaz.md` (y `contrato-c1-niveles.md` solo para `NodoEstructura`). Carril **3 · Paquetes** · rama `local-worker-3`, puerto 3113.
 Fase F2 · **Depende de:** F2-A cerrada **y de la maqueta aprobada por Victor**: `mockups/paquetes-declarar.html` y `mockups/paquetes-agrupar.html` (F0-A). Sin maqueta aprobada, no empieces.
 **Punto de commit:** al cerrar la tanda, en `local-worker-3`.
 
@@ -31,5 +31,7 @@ Fase F2 · **Depende de:** F2-A cerrada **y de la maqueta aprobada por Victor**:
 - Ante contradicción con un flujo o con la maqueta: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F2-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F2-B.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F2-B.md` (estado de F2B-1 a F2B-6, handoff, comprobaciones de navegador para F5, llamadas). Commit en `local-worker-3`, `git add` explícito.

@@ -1,7 +1,7 @@
 # F3-B · Plan Maestro: datos y API (líneas, borrador, aprobar)
 
 Lee primero `00-reglas-de-contexto.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
-Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos: `00-contratos-tecnicos.md` § C3 y § C4.
+Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos que lees: `contrato-c3-plan-maestro.md` y `contrato-c4-real-por-clave.md`.
 **Migraciones reservadas: `db/076`–`078`** (se escriben, **no se aplican**).
 **Punto de commit:** al cerrar la tanda, en `local-worker-2`.
 
@@ -31,5 +31,7 @@ Fase F3 · **Depende de:** F3-A cerrada. No depende de la maqueta. Contratos: `0
 - Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F3-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F3-B.md`, no en el plan ni en el progreso compartidos). **Usa también `verificar-permisos-por-rol`**: añades `puedeCrearVersionPlanMaestro` a `permisos.ts`; verifica los 13 roles contra las tablas 1 y 2 del flujo 14 (función y API, llamadas sin efecto).
 
 `resultados/F3-B.md` (estado de F3B-1 a F3B-6, handoff con migraciones y la autorización pendiente, llamadas). Commit en `local-worker-2`, `git add` explícito.

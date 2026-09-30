@@ -1,6 +1,6 @@
 # F3-D · Plan Maestro: paquetes, Prog./Real, estados y rendimiento
 
-Lee primero `00-reglas-de-contexto.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c3-plan-maestro.md`, `contrato-c4-real-por-clave.md` y `contrato-c6-interfaz.md`. Carril **2 · Plan Maestro** · rama `local-worker-2`, puerto 3112.
 Fase F3 · **Depende de:** F3-C cerrada. Misma maqueta aprobada (`mockups/plan-maestro-lienzo.html`).
 **Punto de commit:** al cerrar la tanda, en `local-worker-2`.
 
@@ -27,5 +27,7 @@ Fase F3 · **Depende de:** F3-C cerrada. Misma maqueta aprobada (`mockups/plan-m
 - Ante contradicción con un flujo, con la maqueta o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F3-D.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F3-D.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F3-D.md` (estado de F3D-1 a F3D-5, handoff, comprobaciones para F5, llamadas). Commit en `local-worker-2`, `git add` explícito.

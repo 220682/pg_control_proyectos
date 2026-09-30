@@ -1,7 +1,7 @@
 # F1-B · Niveles: datos, importación del DP y del cronograma, bloqueo de recarga
 
 Lee primero `00-reglas-de-contexto.md`. Carril **1 · Niveles** · rama `local-worker-1`, puerto 3111.
-Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla). Contratos: `00-contratos-tecnicos.md` § C1.
+Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla). Contrato que lees: `contrato-c1-niveles.md`.
 **Migraciones reservadas: `db/073`–`075`** (se escriben, **no se aplican**).
 **Punto de commit:** al cerrar la tanda, en `local-worker-1`.
 
@@ -33,5 +33,7 @@ Fase F1 · **Depende de:** F1-A cerrada. No depende de la maqueta (sin pantalla)
 - Ante contradicción con un flujo escrito, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F1-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F1-B.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F1-B.md` (estado de F1B-1 a F1B-6, handoff con las migraciones escritas y su orden, llamadas). Commit en `local-worker-1`, `git add` explícito.

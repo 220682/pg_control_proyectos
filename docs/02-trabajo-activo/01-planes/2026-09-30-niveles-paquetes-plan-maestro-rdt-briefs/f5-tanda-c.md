@@ -28,4 +28,6 @@ Fase F5 · **Depende de:** F5-B cerrada (el servicio de prueba ya tiene DP, cron
 
 ## Cierre
 
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F5-C.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F5-C.md`, no en el plan ni en el progreso compartidos). **Usa también `verificar-permisos-por-rol`** en F5C-2 (permisos por rol en vivo con «Ver como»).
+
 `resultados/F5-C.md` (estado de F5C-1 a F5C-5, evidencia, hallazgos, handoff, llamadas).

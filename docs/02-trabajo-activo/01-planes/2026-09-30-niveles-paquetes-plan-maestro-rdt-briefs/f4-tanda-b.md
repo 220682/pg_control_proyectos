@@ -1,7 +1,7 @@
 # F4-B · RDT: API de partes (crear, validar, modo por avance del paquete)
 
 Lee primero `00-reglas-de-contexto.md`. Carril **4 · RDT** · rama `local-worker-4`, puerto 3114.
-Fase F4 · **Depende de:** F4-A cerrada. No depende de la maqueta (sin pantalla). Contrato: `00-contratos-tecnicos.md` § C5.
+Fase F4 · **Depende de:** F4-A cerrada. No depende de la maqueta (sin pantalla). Contrato que lees: `contrato-c5-rdt.md`.
 **Punto de commit:** al cerrar la tanda, en `local-worker-4`.
 
 ## Ítems (estado inicial `Sin verificar`)
@@ -28,5 +28,7 @@ Fase F4 · **Depende de:** F4-A cerrada. No depende de la maqueta (sin pantalla)
 - Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F4-B.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F4-B.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F4-B.md` (estado de F4B-1 a F4B-5, handoff, llamadas). Commit en `local-worker-4`, `git add` explícito.

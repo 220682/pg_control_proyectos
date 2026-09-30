@@ -1,6 +1,6 @@
 # F4-C · RDT: pantalla de Crear RDT, consolidado y status
 
-Lee primero `00-reglas-de-contexto.md`. Carril **4 · RDT** · rama `local-worker-4`, puerto 3114.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c5-rdt.md` y `contrato-c6-interfaz.md` (y `contrato-c1-niveles.md` solo para `NodoEstructura`). Carril **4 · RDT** · rama `local-worker-4`, puerto 3114.
 Fase F4 · **Depende de:** F4-B cerrada **y de la maqueta aprobada por Victor**: `mockups/crear-rdt-selector-paquetes.html` (F0-B). Sin maqueta aprobada, no empieces.
 **Punto de commit:** al cerrar la tanda, en `local-worker-4`.
 
@@ -28,5 +28,7 @@ Fase F4 · **Depende de:** F4-B cerrada **y de la maqueta aprobada por Victor**:
 - Ante contradicción con un flujo o con la maqueta: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F4-C.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F4-C.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F4-C.md` (estado de F4C-1 a F4C-5, handoff, comprobaciones para F5, llamadas). Commit en `local-worker-4`, `git add` explícito.

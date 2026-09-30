@@ -1,6 +1,6 @@
 # Índice de tandas, carriles y propiedad de archivos
 
-Plan: `../2026-09-30-niveles-paquetes-plan-maestro-rdt.md`. Reglas: `00-reglas-de-contexto.md`. Contratos: `00-contratos-tecnicos.md`. Una tanda = un Worker = una sesión (~80 llamadas). **Máximo 4 Workers a la vez.**
+Plan: `../2026-09-30-niveles-paquetes-plan-maestro-rdt.md`. Reglas: `00-reglas-de-contexto.md`. Contratos: `00-contratos-tecnicos.md` (índice de los `contrato-c*.md`). Una tanda = un Worker = una sesión (~80 llamadas). **Máximo 4 Workers a la vez.**
 
 ## Carriles
 
@@ -26,7 +26,7 @@ Todas las tandas de F1..F4 ─► [merge ordenado por el Orquestador] ─► F5-
 F5-D (documentación) corre en paralelo con F5-B y F5-C y necesita la tabla en bloque aprobada en el Gate 1
 F5-* ─► Auditoría ─► Gate 2
 ```
-Entre carriles **no hay espera de código**: cada uno construye contra `00-contratos-tecnicos.md` y datos simulados; lo real se une en F5-A. Esperan solo las maquetas (tandas de interfaz) y las migraciones aplicadas (F5-B en adelante).
+Entre carriles **no hay espera de código** (cada uno construye contra sus `contrato-c*.md` y datos simulados; lo real se une en F5-A). Esperan solo las maquetas (tandas de interfaz) y las migraciones aplicadas (F5-B en adelante).
 
 ## Olas (cuántas a la vez)
 
@@ -39,7 +39,7 @@ Entre carriles **no hay espera de código**: cada uno construye contra `00-contr
 | 5 | F5-A | merges de los 4 carriles |
 | 6 | F5-B, luego F5-C · F5-D en paralelo | migraciones aplicadas por Victor |
 
-El Orquestador puede adelantar una tanda si hay un cupo libre y sus dependencias están cerradas. F3-C y F4-C no empiezan sin la maqueta del lienzo y del selector RDT aprobadas.
+El Orquestador puede adelantar una tanda si hay cupo y sus dependencias están cerradas.
 
 ## Matriz de propiedad de archivos (app; un solo carril por archivo en cada fase)
 
@@ -55,23 +55,15 @@ El Orquestador puede adelantar una tanda si hay un cupo libre y sus dependencias
 | F5-D | `docs/04-flujos-de-negocio/**` · `AGENTS.md` si la tabla lo exige · artefacto «Matriz de permisos» |
 | Orquestador | `docs/02-trabajo-activo/**` (plan, progreso, evidencia, auditoría, `resultados/`) |
 
-Archivos **compartidos de hecho** y cómo se evita el choque: `api/cronograma/route.ts` y `FormularioCronograma.tsx` (carril 1 los retira del vínculo con metrado; carril 3 crea su propia API en `paquetes-trabajo/vinculos`); `rdts/catalogos` (carril 4) y `FormularioCrearRdt.tsx` (carril 4) consumen el mapa de niveles por el contrato `NodoEstructura`, no importan `src/lib/niveles/` hasta F5-A; `pr/page.tsx` y `dashboard/page.tsx` solo los lee el carril 2 en pruebas, no los edita.
+Choques evitados: el carril 1 retira del cronograma el vínculo con metrado y el carril 3 crea su propia API (`paquetes-trabajo/vinculos`); los carriles 2 a 4 consumen los niveles por el contrato `NodoEstructura` y no importan `src/lib/niveles/` hasta F5-A; `dashboard/page.tsx` y `pr/page.tsx` (salvo la agrupación del carril 1) los lee el carril 2 solo en pruebas.
 
 ## Migraciones reservadas (hoy la última es la `072`)
 
-| Carril | Rango | Contenido previsto |
-|---|---|---|
-| 1 | 073–075 | niveles y encabezados por servicio y origen; `reemplazar_dp` (firma de 13 parámetros, como `db/071`) |
-| 2 | 076–078 | relajar `unique (plan_maestro_id, wbs)` (autorización expresa); columnas de línea y copia del paquete |
-| 3 | 079–081 | `paquete_trabajo_vinculos`; `orden` y `nivel` en `paquetes_trabajo` |
-| 4 | 082–084 | `paquete_trabajo_id` en `rdt_actividades` y `rdt_actividad_partidas`; campos de derivadas (por confirmar) |
-| F5 | 085–086 | reserva |
-
-Ninguna depende de otra (las claves foráneas solo apuntan a tablas que ya existen). Se aplican **en orden numérico**, a mano por Victor, una por una con su confirmación. Nadie las aplica desde el código.
+Carril 1: **073–075** · carril 2: **076–078** · carril 3: **079–081** · carril 4: **082–084** · F5: 085–086 (reserva). Su contenido previsto está en el plan («Migraciones reservadas») y en el contrato de cada carril. Ninguna depende de otra (las claves foráneas solo apuntan a tablas que ya existen). Se aplican **en orden numérico**, a mano por Victor, una por una con su confirmación. Nadie las aplica desde el código.
 
 ## Orden de integración (lo hace el Orquestador, nunca un Worker)
 
-1. Al cerrar F1–F4, se crean los merges **en la rama del carril 1** (`local-worker-1`, rama de integración; no se crea una rama nueva): primero 3 (Paquetes), luego 2 (Plan Maestro), luego 4 (RDT). Por la matriz no se esperan conflictos; si aparece uno, se resuelve en F5-A con el dueño del archivo.
+1. Al cerrar F1–F4, los merges se hacen **en la rama del carril 1** (`local-worker-1`; no se crea otra rama): primero 3 (Paquetes), luego 2 (Plan Maestro), luego 4 (RDT). No se esperan conflictos; si aparece uno, se resuelve en F5-A.
 2. F5-A corre sobre esa rama: suite, `tsc`, lint contra `main`, build, pruebas cruzadas y `db/README.md`.
 3. Victor aplica las migraciones 073–084 (checkpoint). Luego F5-B y F5-C.
 4. El merge de esa rama a `main` ocurre **solo tras el Gate 2**, con el push de la app autorizado por Victor en ese momento.
@@ -82,29 +74,17 @@ Ninguna depende de otra (las claves foráneas solo apuntan a tablas que ya exist
 Eres el Worker de la tanda <ID> del plan niveles-paquetes-plan-maestro-rdt. Lee, en este orden: 00-reglas-de-contexto.md y <ID>.md de
 docs/02-trabajo-activo/01-planes/2026-09-30-niveles-paquetes-plan-maestro-rdt-briefs/. Carril <N>, rama <rama>, worktree <ruta>, puerto <p>.
 <Si aplica: turno de navegador concedido / maqueta aprobada: <archivo>.>
+Skills: lista .claude/skills/ de ambos repositorios y usa los que tu brief nombra (cerrar-tanda al final).
 Cierra escribiendo resultados/<ID>.md según las reglas. No leas otros briefs ni el plan completo.
 ```
 
-## Lista de tandas
+## Skills por tanda (flujo paso 8: el Orquestador los nombra aquí y en cada brief)
 
-| Tanda | Carril | Ítems | Brief |
-|---|---|---|---|
-| F0-A | Diseño | 7 | `f0-tanda-a.md` |
-| F0-B | Diseño | 7 | `f0-tanda-b.md` |
-| F1-A | 1 | 6 | `f1-tanda-a.md` |
-| F1-B | 1 | 6 | `f1-tanda-b.md` |
-| F1-C | 1 | 5 | `f1-tanda-c.md` |
-| F2-A | 3 | 6 | `f2-tanda-a.md` |
-| F2-B | 3 | 6 | `f2-tanda-b.md` |
-| F2-C | 3 | 5 | `f2-tanda-c.md` |
-| F3-A | 2 | 7 | `f3-tanda-a.md` |
-| F3-B | 2 | 6 | `f3-tanda-b.md` |
-| F3-C | 2 | 6 | `f3-tanda-c.md` |
-| F3-D | 2 | 5 | `f3-tanda-d.md` |
-| F4-A | 4 | 5 | `f4-tanda-a.md` |
-| F4-B | 4 | 5 | `f4-tanda-b.md` |
-| F4-C | 4 | 5 | `f4-tanda-c.md` |
-| F5-A | integración | 6 | `f5-tanda-a.md` |
-| F5-B | integración | 5 | `f5-tanda-b.md` |
-| F5-C | integración | 5 | `f5-tanda-c.md` |
-| F5-D | documentación | 6 | `f5-tanda-d.md` |
+| Skill | Quién | Cuándo |
+|---|---|---|
+| `cerrar-tanda` | todo Worker | al final de **toda** tanda (los 19 briefs); adaptado: estados, evidencia y traspaso van en `resultados/<tanda>.md` |
+| `verificar-permisos-por-rol` | Worker | F3-B (añade una función a `permisos.ts`), F5-A (edita `permisos.ts` y el registro de accesos) y F5-C (permisos por rol en vivo) |
+| `seguir-flujo-de-planes` | Orquestador | al lanzar **cada ola** y antes de escribir el mensaje de cierre |
+| Comprobación | Auditor | paso 12: verifica que se usaron los Skills citados, o por qué no |
+
+Todo Worker lista `.claude/skills/` de ambos repositorios al empezar (el de la app hoy no tiene carpeta de Skills) y anota «Skills revisados» en su `resultados/<tanda>.md`. Ítems por tanda: Punch List del plan.

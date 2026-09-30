@@ -1,7 +1,7 @@
 # F5-A · Integración: unir los cuatro carriles y pruebas cruzadas
 
 Lee primero `00-reglas-de-contexto.md`. **Carril de integración** · rama `local-worker-1` (la del carril 1, ya con los merges de los carriles 3, 2 y 4 hechos **por el Orquestador**, en ese orden), puerto 3111.
-Fase F5 · **Depende de:** todas las tandas de F1 a F4 cerradas y merges hechos. Contrato: `00-contratos-tecnicos.md` (todas las secciones: léelas por Grep según necesites).
+Fase F5 · **Depende de:** todas las tandas de F1 a F4 cerradas y merges hechos. Contratos que lees: todos los `contrato-c*.md` (índice en `00-contratos-tecnicos.md`).
 **Eres el único que puede editar los archivos congelados** (`permisos.ts`, `registro-accesos.ts`, pruebas de `src/lib/config/`, `db/README.md`).
 **Punto de commit:** al cerrar la tanda, en `local-worker-1`.
 
@@ -21,7 +21,7 @@ Fase F5 · **Depende de:** todas las tandas de F1 a F4 cerradas y merges hechos.
 - Orden de merges (Orquestador): carril 3 → carril 2 → carril 4 sobre `local-worker-1`. Migraciones: Victor las aplica **después** de esta tanda (checkpoint); tú solo verificas que los archivos existen, están en orden y no se pisan.
 - Baseline de lint: hay que medirlo en `main` antes de comparar (el 2026-09-23 eran 9 errores y 18 avisos; hoy puede ser distinto). `npm run build` con Turbopack no corre en worktrees con `node_modules` enlazado: usa `--webpack`.
 - Restricciones que ya rigen: el motor del PR, el Dashboard y la Curva S no se modifican; todo en USD y costo directo.
-- Los totales y fórmulas salen de `00-contratos-tecnicos.md` § C3 y del Anexo del Spec.
+- Los totales y fórmulas salen de `contrato-c3-plan-maestro.md` y del Anexo del Spec.
 
 ## Qué NO hacer
 
@@ -30,5 +30,7 @@ Fase F5 · **Depende de:** todas las tandas de F1 a F4 cerradas y merges hechos.
 - Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F5-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F5-A.md`, no en el plan ni en el progreso compartidos). **Usa también `verificar-permisos-por-rol`**: editas `permisos.ts`, `registro-accesos.ts` y sus pruebas; comprueba que ningún rol cambió de acceso salvo lo aprobado.
 
 `resultados/F5-A.md` (estado de F5A-1 a F5A-6, conflictos y cómo se resolvieron, handoff, llamadas). Commit en `local-worker-1`, `git add` explícito.

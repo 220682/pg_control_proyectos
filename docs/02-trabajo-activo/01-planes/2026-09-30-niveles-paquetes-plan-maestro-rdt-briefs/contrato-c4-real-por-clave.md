@@ -1,0 +1,5 @@
+> Parte de los contratos técnicos compartidos (índice: `00-contratos-tecnicos.md`). Un carril **no cambia** un contrato por su cuenta: si lo necesita, se detiene y devuelve la pregunta al Orquestador. Lo marcado «por confirmar» lo verifica el Worker en el código. Verificado en `main` `45c9e0a`, solo lectura, 2026-09-30.
+
+## C4 · Real por clave (dueño: carril 4, consume carril 2)
+
+`realPorClaveReporte(admin, proyectoId): Promise<RealPorClave[]>` en `src/lib/rdts/real-por-clave.ts`. Fuente (verificada): partes `VALIDADO` (`rdt_partes.estado_validacion`, fecha `fecha_lima`); metrado = `rdt_actividades.metrado_ejecutado` solo de `ta = 'D'`; horas = `rdt_tareo_horas (tareo_id, actividad_id, horas)` de `rdt_tareo` con `es_moi = false`; vínculo = `rdt_actividad_partidas` + la columna nueva `paquete_trabajo_id`. El EV se calcula al leer (metrado × precio). Horas de equipos **no** entran (`rdt_equipos_parte` no tiene tabla puente). Mientras no exista, el carril 2 lee `reales: []` detrás de un adaptador.

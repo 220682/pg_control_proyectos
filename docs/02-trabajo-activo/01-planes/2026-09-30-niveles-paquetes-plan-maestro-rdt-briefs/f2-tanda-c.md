@@ -1,6 +1,6 @@
 # F2-C · Paquetes: orden, plegado, edición y estados
 
-Lee primero `00-reglas-de-contexto.md`. Carril **3 · Paquetes** · rama `local-worker-3`, puerto 3113.
+Lee primero `00-reglas-de-contexto.md`. Contratos que lees: `contrato-c2-paquetes.md` y `contrato-c6-interfaz.md`. Carril **3 · Paquetes** · rama `local-worker-3`, puerto 3113.
 Fase F2 · **Depende de:** F2-B cerrada. Misma maqueta aprobada (`mockups/paquetes-agrupar.html`).
 **Punto de commit:** al cerrar la tanda, en `local-worker-3`.
 
@@ -28,5 +28,7 @@ Fase F2 · **Depende de:** F2-B cerrada. Misma maqueta aprobada (`mockups/paquet
 - Ante contradicción con un flujo o la maqueta: detente y devuelve la pregunta.
 
 ## Cierre
+
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F2-C.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F2-C.md`, no en el plan ni en el progreso compartidos).
 
 `resultados/F2-C.md` (estado de F2C-1 a F2C-5, handoff, comprobaciones para F5, llamadas). Commit en `local-worker-3`, `git add` explícito.

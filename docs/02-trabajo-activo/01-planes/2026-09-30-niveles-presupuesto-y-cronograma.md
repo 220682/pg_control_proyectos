@@ -119,7 +119,7 @@ Propuesta, sujeta al Planner (todo aditivo; nada se borra sin autorización):
 - **D6.** Con más de 5 niveles, ¿cómo se llama el rol extra? Y si el archivo del cronograma no trae una fila de servicio, el nivel Servicio es implícito (el servicio seleccionado): propuesta, a confirmar.
 - **D7 (definida por Victor en el plan hermano).** Si ya existe un Plan Maestro aprobado, no se puede volver a cargar un DP ni un cronograma (restricción); el borrador no restringe. Sin Plan Maestro aprobado, la recarga se bloquea, se avisa qué se perdería y solo después de una confirmación explícita se permite. Aplica también a la reimportación de este plan.
 
-**Servicios existentes (Victor, 2026-09-30):** todos son de prueba, así que no se exige compatibilidad hacia atrás con ellos. Excepción: **no se toca el servicio de prueba que Victor acaba de crear**, porque quiere ver resultados en él; el Orquestador pregunta cuál es antes de cualquier migración de datos. Esto no autoriza migraciones destructivas: cada migración se sigue confirmando con Victor.
+**Servicios existentes (Victor, 2026-09-30):** todos son de prueba, así que no se exige compatibilidad hacia atrás con ellos. Excepción: **no se toca PS-0006** (confirmado por Victor el 2026-09-30); cualquier otro servicio existente es de prueba y se puede tocar. Victor autorizó crear un servicio de prueba dedicado para la verificación de este plan (con DP, cronograma y RDT propios). Esto no autoriza migraciones destructivas: cada migración se sigue confirmando con Victor.
 
 **Riesgos:** tocar la importación del DP, que hoy funciona y alimenta PR y Dashboard; unos 17 archivos dependen de la convención; los servicios ya importados deben seguir igual tras la migración.
 

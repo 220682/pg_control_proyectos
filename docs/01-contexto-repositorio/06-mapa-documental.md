@@ -21,7 +21,7 @@ Ver el plan `docs/02-trabajo-activo/01-planes/2026-09-27-reestructuracion-docume
 | Navegación de `docs/` | [`docs/README.md`](../README.md) |
 | Estándar de trabajo de agentes | [`00-estandar-agentes/00-indice.md`](../00-estandar-agentes/00-indice.md) |
 | Contexto de este repositorio | [`01-contexto-repositorio/00-indice.md`](00-indice.md) |
-| Trabajo activo (planes/progreso/evidencia) | [`02-trabajo-activo/README.md`](../02-trabajo-activo/README.md) |
+| Trabajo activo (planes/progreso/evidencia/auditoría) | [`02-trabajo-activo/README.md`](../02-trabajo-activo/README.md) |
 | Aprendizaje continuo | [`03-aprendizaje-continuo/README.md`](../03-aprendizaje-continuo/README.md) |
 | Flujos de negocio | [`04-flujos-de-negocio/README.md`](../04-flujos-de-negocio/README.md) |
 | Diseño y mockups | [`05-diseno-y-referencias/README.md`](../05-diseno-y-referencias/README.md) |

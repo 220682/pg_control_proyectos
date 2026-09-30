@@ -10,7 +10,7 @@ Qué leer según tu rol y el tipo de solicitud. No leas la carpeta completa por 
 | Spec/SDD | `04-flujo-sdd-y-planes.md` (pasos 1–4) + `06-plantillas/01-spec-sdd.md`. |
 | Planificación | `04-flujo-sdd-y-planes.md` (pasos 5–7) + `06-plantillas/02-plan.md` y `06-plantillas/05-punch-list.md` + **todos** los flujos de negocio del repositorio afectados. |
 | Implementación (Worker) | `04-flujo-sdd-y-planes.md` (pasos 8–11) + `02-roles-y-delegacion.md` § Worker + solo los flujos de negocio que tu parte toca + `05-diseno-y-ui.md` del contexto del repositorio si es UI. |
-| Auditoría | `04-flujo-sdd-y-planes.md` (paso 12) + `06-plantillas/06-informe-auditoria.md` + **todos** los flujos de negocio afectados por el plan. |
+| Auditoría | `04-flujo-sdd-y-planes.md` (paso 12) + `06-plantillas/06-informe-auditoria.md` (el informe se guarda en `02-trabajo-activo/04-auditoria/`) + **todos** los flujos de negocio afectados por el plan. |
 | Cierre / handoff | `04-flujo-sdd-y-planes.md` (pasos 13–18) + `03-sesiones-contexto-y-handoff.md` + `06-plantillas/07-handoff.md` o `06-plantillas/09-cierre.md` según corresponda. |
 
 ## Tabla de lectura mínima por rol y paso

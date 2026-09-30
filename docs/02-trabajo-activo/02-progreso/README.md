@@ -6,7 +6,7 @@ Un archivo MD vivo por plan iniciado (`YYYY-MM-DD-<tema>.md`, basado en `03-prog
 
 ## Qué no vive acá
 
-No contiene capturas ni resultados extensos de pruebas — eso va en `../03-evidencia/`. No se crea un archivo acá para un plan que todavía no inició ejecución aprobada (esos quedan solo en `planes-futuros.md`).
+No contiene capturas ni resultados extensos de pruebas — eso va en `../03-evidencia/`; el informe del Auditor va en `../04-auditoria/`. No se crea un archivo acá para un plan que todavía no inició ejecución aprobada (esos quedan solo en `planes-futuros.md`).
 
 ## Qué leer después
 

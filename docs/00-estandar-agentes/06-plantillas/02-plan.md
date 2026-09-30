@@ -1,6 +1,6 @@
 # Plantilla — Plan
 
-> Un plan real vive en `02-trabajo-activo/01-planes/YYYY-MM-DD-<tema>.md`, con progreso y evidencia homónimos en las carpetas hermanas.
+> Un plan real vive en `02-trabajo-activo/01-planes/YYYY-MM-DD-<tema>.md`, con progreso, evidencia y auditoría homónimos en las carpetas hermanas (`02-progreso/`, `03-evidencia/`, `04-auditoria/`).
 
 ## Identificación y estado
 

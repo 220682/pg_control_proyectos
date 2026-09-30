@@ -231,7 +231,7 @@ Si el usuario dice **"cierra sesión en control de proyectos"**: actualizar el o
 
 Cuando el usuario dice una frase equivalente a "vamos a trabajar en un plan con agente orquestador", aplica la política de [docs/00-estandar-agentes/02-roles-y-delegacion.md](docs/00-estandar-agentes/02-roles-y-delegacion.md): el Orquestador es el punto único de contacto operativo entre Victor y los demás agentes (Planner, Worker, Auditor); coordina objetivo, plan, aprobación, implementación, auditoría y cierre, y no aprueba en nombre de Victor ni hace merge, push, commit, PR, ni crea rama, worktree o infraestructura sin autorización explícita.
 
-Las tareas ejecutadas con este flujo viven en [docs/02-trabajo-activo/01-planes/](docs/02-trabajo-activo/01-planes/), no en `docs/03-aprendizaje-continuo/`. Antes de empezar, leer también [docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md](docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md) y [docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md](docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md).
+Las tareas ejecutadas con este flujo viven en [docs/02-trabajo-activo/01-planes/](docs/02-trabajo-activo/01-planes/), no en `docs/03-aprendizaje-continuo/`; el informe del Auditor de cada plan vive aparte, en [docs/02-trabajo-activo/04-auditoria/](docs/02-trabajo-activo/04-auditoria/). Antes de empezar, leer también [docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md](docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md) y [docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md](docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md).
 
 ### Tareas de implementación, Mejoras continuas y Reglas de negocio
 

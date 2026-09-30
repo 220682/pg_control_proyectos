@@ -29,7 +29,7 @@ Varios Workers pueden terminar a la vez. Antes de aplicar, crea el archivo `resu
 ## Cómo aplicar (sin exponer credenciales)
 
 - Fuente: la carpeta `C:\Users\BRANDY\Downloads\DIARIO`, archivo `entorno_variable.txt`. Nombres de variable: `PR_DB_URL` (conexión directa) y `SUPABASE_ACCESS_TOKEN` (API de administración). El `.env.local` de la app **no sirve**: solo trae URL y llaves REST, que no crean tablas.
-- Un script de un solo uso (Python con `psycopg2`, ya instalado en esta máquina), guardado **fuera del repositorio** (carpeta temporal de la sesión) y **borrado al terminar**. Lee el valor de la variable dentro del proceso; **no lo imprime, no lo pasa como argumento de línea de comandos** y limpia los mensajes de error antes de mostrarlos.
+- Un script de un solo uso, **con nombre `migrar_<tanda>.py`** (para que la regla de permiso de Victor lo reconozca y sea estrecha), Python con `psycopg2` (ya instalado en esta máquina), guardado **fuera del repositorio** (carpeta temporal de la sesión) y **borrado al terminar**. Lee el valor de la variable dentro del proceso; **no lo imprime, no lo pasa como argumento de línea de comandos** y limpia los mensajes de error antes de mostrarlos.
 - **Nunca abras, muestres ni copies** `entorno_variable.txt`: ni `cat`, ni `grep` con valores, ni lo pegues en un resultado, brief, log, captura o commit. Solo se usan los nombres.
 - Cada archivo va **dentro de una transacción**: si falla, se revierte solo.
 - **Vía alterna**, solo si la directa es inalcanzable (antecedente de IPv6 en `docs/03-aprendizaje-continuo/2026-09-21-acceso-postgres-sin-ipv6.md`): la API de administración de Supabase con `SUPABASE_ACCESS_TOKEN`; el identificador del proyecto sale de la parte inicial de `NEXT_PUBLIC_SUPABASE_URL`, que no es secreta.
@@ -41,6 +41,10 @@ Varios Workers pueden terminar a la vez. Antes de aplicar, crea el archivo `resu
 3. Anota en tu `resultados/<tanda>.md`: archivo, vía usada (directa o API), hora, verificación y resultado, conteos antes y después. **Sin ningún valor secreto.**
 4. Borra el script temporal y el candado. Comprueba con `git status` que no quedó nada con credenciales.
 5. Cada migración incluye, al final, un comentario con cómo deshacerla. **No se ejecuta** sin autorización de Victor.
+
+## Si el sistema pide aprobación o deniega
+
+Ningún agente puede cambiar sus propias reglas de permiso. Si el sistema pide aprobación o deniega el script, **no lo rodees** (ni lo partas en pedazos, ni uses otra herramienta para lo mismo): déjalo listo, anota en tu `resultados/<tanda>.md` el comando exacto y detente. Victor lo aprueba en ese momento o lo corre él mismo con el prefijo `!`.
 
 ## Detente y avisa (no improvises) si
 

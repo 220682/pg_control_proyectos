@@ -2,6 +2,8 @@
 
 > **Fuente normativa del flujo de trabajo con Orquestador/Planner/Worker/Auditor (D1).** Si un plan, un progreso o un artifact derivado difiere de lo que dice este documento, se corrige el plan o el artifact — nunca este documento. Si este documento no cubre un punto, aplica el plan activo. Documento agnóstico: no nombra personas, repositorios ni rutas propias de ningún proyecto — esos datos viven en `01-contexto-repositorio/` de cada repositorio que use este estándar.
 
+**Versión visual e interactiva de este flujo:** artefacto «Flujo SDD a Cierre» — https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd. Recorre los pasos con sus roles y los dos Gates, y muestra que un «No» vuelve al paso anterior. Es una ayuda derivada: si difiere de este documento, manda este documento y se corrige el artefacto. Última actualización del artefacto: 2026-09-27; todavía no incluye el informe del Auditor en `02-trabajo-activo/04-auditoria/` ni la revisión de Skills antes de empezar.
+
 ## Diferencia entre chat normal y plan de implementación
 
 Una conversación simple (pregunta, análisis, corrección puntual) no activa este flujo. El flujo de Objetivo a Cierre se activa cuando el Responsable humano pide trabajar con un plan gestionado por roles (Orquestador, Planner, Worker, Auditor) — típicamente un cambio con varias fases, que toca más de un archivo o componente, o que requiere aprobación explícita antes de ejecutar.

@@ -557,7 +557,7 @@ Gate 1: **pendiente** (versión 5 del plan: alineada con la matriz de permisos a
 | PL-09 | F2 | Status de Requerimiento con SV1: ambos paneles con SV1 y filtro de OT = SV1; si se cambia la multiselección `ots` de la tabla, el contexto de los paneles sigue siendo SV1 | Captura + URL | Conforme |
 | PL-10 | F2 | Consolidado RQ con SV1: ambos paneles con SV1 y filtro N° OT = SV1 | Captura + URL | Conforme |
 | PL-11 | F2 | Notificaciones, Mi entorno (`?accion=crear-rq` y `?accion=subir-rdt`) y Recursos de empresa (Personal, Cargos, Equipos): los paneles conservan SV1 | Captura + URL de cada una | Conforme |
-| PL-12 | F2 | DP, PR, Dashboard, Curva S y Registro de costos (rutas `/proyectos/<id>/…`): ambos paneles con SV1 (regresión de lo que ya funcionaba) | Captura + URL de cada una | Observado |
+| PL-12 | F2 | DP, PR, Dashboard, Curva S y Registro de costos (rutas `/proyectos/<id>/…`): ambos paneles con SV1 (regresión de lo que ya funcionaba) | Captura + URL de cada una | Conforme (registro de costos visto en vivo con logística y jefe de proyectos sobre PS-0004, PS-0005 y PS-0006 en F6-R3, PL-179; la cuenta A no lo abre por ser administrador según la tabla 1) |
 | PL-13 | F2 | `/proyectos/<SV1>/requerimientos` redirige a Status de Requerimiento y los paneles conservan SV1 | URL final + captura | Conforme |
 | PL-14 | F2 | Cambiar de servicio (SV1 a SV2) con el selector de una pantalla: la URL y ambos paneles pasan a SV2 | URL antes y después + captura | Conforme |
 | PL-15 | F2 | Volver a "Todos los servicios" y elegir SV2: los paneles muestran SV2 sin restos de SV1 | Captura | Conforme |
@@ -807,7 +807,7 @@ Aquí "asistente" es el chat de ayuda del shell (`ChatPlaceholder`), no el rol d
 | PL-83 | F7 | La matriz derivada del registro coincide con la matriz base del flujo 14 (salvo lo que Victor haya aprobado); el Worker no reescribe la matriz base y deja anotado cómo repetir la comparación | Diff + comando o prueba usada | Conforme |
 | PL-84 | F7 | `design.md` documenta el chip deshabilitado, el registro y la política (con la confirmación de Victor que exige su regla de evolución) | Diff | Conforme |
 | PL-85 | F7 | Apartados "Mejoras (de trabajo)", "Reglas de negocio acordadas" y "Carpetas/archivos huérfanos" trasladados a sus destinos; huérfanos reportados a Victor sin borrar nada | Diff + mensaje | Conforme |
-| PL-86 | F7 | Ninguna credencial de las cuentas de prueba aparece en ningún archivo de ninguno de los dos repositorios | Búsqueda en el diff | Observado |
+| PL-86 | F7 | Ninguna credencial de las cuentas de prueba aparece en ningún archivo de ninguno de los dos repositorios | Búsqueda en el diff | Conforme (F7-D, Auditor y Orquestador: 0 coincidencias en `git diff HEAD` de ambos repos; el correo de una cuenta aparece una vez en un plan cerrado de 2026-09-20, que es un correo y no una clave; la carpeta `.playwright-mcp/`, ignorada por git, se borró; queda por confirmar por Victor que una cadena de 8 dígitos presente desde antes en dos pruebas de `main` (`plantilla.test.ts`, `exportador-pdf.test.ts`) no es una contraseña; este plan no la introdujo) |
 | PL-87 | F6 | Evidencia completa en `03-evidencia/` con enlace al artifact de checklist visual si se crea, y limitaciones declaradas (SVX si no existe, rol de la cuenta B) | Archivo de evidencia | Conforme |
 
 ## Riesgos y bloqueos
@@ -1177,7 +1177,62 @@ Ver "Registro de decisiones". Se trasladan a `04-flujos-de-negocio/` (16, 01, 14
 
 ## Informe de Auditoría
 
-Pendiente.
+**Fecha:** 2026-09-30. **Auditor:** agente independiente (no implementó ni corrigió nada; no usó navegador ni servidor dev). **Objeto:** rama `local-worker-1` (HEAD `0690c81`, línea base `main` `1942b01`) y documentos de `pg_control_proyectos` (HEAD `4a27657`).
+
+**Veredicto: Apto para Gate 2**, con una verificación pendiente sobre credenciales (hallazgo H1, que no pude cerrar por un bloqueo del sistema, sin evidencia de fuga real) y las correcciones menores listadas abajo. No hay bloqueantes demostrados.
+
+### Qué verifiqué y cómo
+
+1. **Diff acotado.** `git diff --stat main...local-worker-1`: 105 archivos, 4343+/1026-. Sin cambios en `db/`, migraciones, `package*.json` ni `src/lib/{pr,dashboard,curva-s,plan-maestro,dp}`. Sí hay cambios en las páginas/APIs de PR, Dashboard (servicio y portafolio), DP (ver, importar, exportar), Curva S y Plan Maestro; los revisé línea a línea (`git diff -U0`): solo añaden guardia de rol/alcance y los mensajes de rechazo. Excepción menor: `api/curva-s/route.ts` añade validación de formato de id (400) y comprobación de existencia (404) además de la guardia (ver O1). `GET /api/proyectos/[id]/partidas` no se tocó. Sin `.env` versionado (solo `.env.local.example`).
+2. **Calidad.** `npm test`: 70 archivos, 675 pruebas verdes. `npx tsc --noEmit`: limpio (0 líneas). `npm run lint`: 27 problemas, 9 errores y 18 advertencias (misma cuenta que `main`). `npx next build --webpack`: EXIT 0 (no había servidor en :3111: solo conexiones TIME_WAIT).
+3. **Tablas 1 y 2 del flujo 14 contra `permisos.ts`.** Parseé las tablas del archivo y comparé cada fila de la tabla 2 (todas: proyecto y sistema, Recursos, RDT, planificación, RQ y costos, descargas) y las de la tabla 1 con las 53 funciones de `permisos.ts`: coinciden todas (economía = admin, JP, JOT, SCo, JCo; DP suma SOT; Plan Maestro suma planner; el resto de interfaces y las 7 descargas abiertas usan `tieneRolConocido`, que rechaza al usuario sin rol; importar DP, editar servicio/checklist, archivar/eliminar, contenedores, borrados de RDT y RQ, perfil propio, Recursos, actualizar estado RQ = admin + logística, comentar RQ = admin, JP, logística, registro de costos: subir solo logística, descargar admin y JP). `permisos.test.ts` (589 líneas, pruebas por los 13 roles) y `matriz-accesos.test.ts` pasan (96 pruebas en los 3 archivos; `DIFERENCIAS_CONOCIDAS` vacío). Límite: `matriz-base-flujo14.ts` solo transcribe ~30 filas; el resto lo contrasté yo por lectura.
+4. **Punch List.** 181 filas: 162 Conforme + 8 Conforme con detalle F6-R3, 10 Observado, 1 No aplica (PL-181, cerrada por decisión R30). Revisé 45 filas Conforme de 12 fases (PL-01, 05, 18, 24, 30, 35, 40, 45, 52, 58, 62, 70, 83, 91, 95, 98, 102, 106, 108, 123, 125, 130, 139, 143, 147, 150, 158, 162, 166, 170, 174 a 180, entre otras) contra la sección de evidencia y los handoffs: todas tienen evidencia textual concreta y, donde es en vivo, ligada a comandos/rutas/roles. Ninguna Conforme sin evidencia. Ver O2 y O3.
+5. **Credenciales.** Ver H1 y conteos abajo.
+6. **Flujos.** 16, 01, 03, 05, 06, 08, 09, 11, 12, 15, 17, 20, 21 y README: sin encabezados duplicados, sin bloque de reglas pegado al final (cada archivo termina en su cierre natural: Spec, código, enlaces o historia), sin residuos (`todos menos asistente`, `dueño del ciclo`, `reservado al administrador`, `por construir`); la única mención de `puedeAdjudicarProyecto` (11-dashboard.md) es la nota de que ya no rige el interruptor. Las reglas de roles de 05, 06, 08, 09, 12, 20, 21 y 11 coinciden con el flujo 14.
+7. **Cambios de permisos sin respaldo.** Comparé `git diff main...local-worker-1 -- permisos.ts` y los cambios de guardia en páginas/APIs con las tablas 1 y 2 y con el Registro de decisiones (`^\| 2026-09-30`). Todos están respaldados: adjudicar/transición suman admin y JP; JOT deja de archivar, editar checklist y perfil; crear RQ suma admin; JP borra RDT/RQ/contenedores; estado de RQ suma admin; descarga de registro de costos suma admin; el interruptor Parcial/Completo pasa a `puedeVerEconomia` (C35, nota 1 del flujo 14); alcance por OT añadido a Plan Maestro, DP exportar y dashboard del portafolio (decisiones del 2026-09-30). No encontré ninguno sin respaldo.
+
+### Hallazgos
+
+**Bloqueantes:** ninguno demostrado.
+
+**A corregir (menores, antes o después del Gate 2 según decida Victor):**
+- **H1. Credenciales, verificación incompleta.** Mi búsqueda heurística en memoria (8 cadenas candidatas extraídas del archivo de cuentas: correos, textos entre comillas simples invertidas y tokens tras «contraseña/clave») arrojó coincidencias, pero incluye ruido (una cadena de 24 caracteres aparece en `AGENTS.md` y en 146 líneas de docs; es casi seguro un nombre de repositorio o frase, no una clave). Al intentar imprimir el contexto enmascarado de las 4 cadenas con coincidencias, el sistema denegó la acción (materialización de credenciales) y no insistí. Quedan sin clasificar: una cadena de 8 caracteres con dígitos que aparece en `src/lib/rdts/plantilla.test.ts` y `src/lib/requerimientos/exportador-pdf.test.ts` (también en `main`, o sea preexistente al plan) y una de 7 caracteres con 1 coincidencia extra en el worktree respecto de `main`. Confirmado: el correo de una cuenta aparece 1 vez en `docs/.../2026-09-20-sub-lote-2-alcance-proyecto.md` (correo, no clave; ya reportado en F7-D); `git diff HEAD` = 0 en los tres árboles. Acción sugerida: que el Orquestador o Victor confirme (fuera de esta auditoría) que esas cadenas no son una contraseña; hasta entonces PL-86 queda Observado.
+- **H2. Evidencia no coincide con lo pedido en 35 filas.** Su columna «Evidencia» dice «Captura» pero no existe archivo `PL-nnn*.jpg` (PL-24, 25, 27, 28, 29, 40, 91, 92, 94, 98, 101, 123, 136, 139, 143, 149, 156, 158 a 169, 174, 176 a 179, 102, 106, 108). La evidencia real es textual (snapshot, tablas por rol, API), aceptable por la regla de contexto («verifica con snapshot de texto»), pero Victor debe saber que la carpeta tiene 78 capturas para 181 ítems.
+- **H3. Evidencia desactualizada en PL-35.** Dice 103 archivos y 4304+/1024-; el diff actual es 105 archivos y 4343+/1026- (por el commit `0690c81` posterior). No cambia la conformidad (el criterio, sin `db/`/migraciones/paquetes, se cumple hoy).
+
+**Observaciones:**
+- O1. `api/curva-s/route.ts` añade validación de id y 404 (no solo guardia); coherente con el resto, pero técnicamente sale de «solo cambia la guardia» sobre una ruta protegida por la regla del plan.
+- O2. PL-91 tiene una nota de F5B «no probado en vivo (sin SVX)»; queda cubierta por PL-177 en F6-R3 (PS-0006), donde se probó en vivo.
+- O3. `puedeVerApartadoProyectos` sigue en `permisos.ts` y se pasa como prop del layout a `WorkspaceShell`, pero el componente solo la declara en su tipo y no la usa: código muerto (sin efecto en permisos; retirable).
+- O4. Nota 1 del flujo 14: el Dashboard Parcial «lo ven los 13 roles» pero el código lo restringe a los 5 de economía (deja fuera a 8 roles también del Parcial). Está declarado como brecha del plan futuro; solo se deja constancia.
+- O5. `.playwright-mcp/` de `pg_control_proyectos`: 30 archivos, ignorada por git; la heurística encontró 4 coincidencias en 2 archivos (a borrar al final, como indica el encargo).
+
+### Los 10 Observado
+
+| ID | Motivo | Opinión |
+|---|---|---|
+| PL-07 | Archivo de RDTs subidos vacío en PS-0004; no hay filas para comprobar los paneles | Aceptable: PL-19 (mismo código de panel) es Conforme; solo faltan datos. Verificación manual con datos. |
+| PL-12 | Registro de costos exige rol; con cuenta A redirige y no se vio la pantalla | Aceptable: el resto (DP, PR, Dashboard, Curva S) probado; PL-179 (F6-R3) vio el registro de costos con logística en PS-0004/5. Se puede cerrar como Conforme por PL-179. |
+| PL-65 | Consolidado RDTs y Consolidado RQ sin filas, no se vio el scroll con columnas fijas; Consolidado RQ sin `sticky` ya en la línea base | Aceptable con revisión manual con datos; no es regresión (`sticky` ausente desde `1942b01`). |
+| PL-78 | No hay RQ en los servicios de prueba: no se observó filtrar sobre filas | Aceptable; comprobación manual pendiente con un servicio que tenga RQ. |
+| PL-86 | Búsqueda de credenciales: pendiente de cierre (H1) | Corregible: cerrar H1; los conteos de F7-D (0 en diff y log) los reproduje solo para `git diff HEAD` (0). |
+| PL-101 | Guardia antes de leer datos verificada; pero el panel izquierdo muestra «Servicio actual» (N.º OT y nombre) a cualquier rol con ficha, también en pantallas denegadas | Aceptable si Victor confirma que N.º OT y nombre no son datos económicos (la tabla 1 da la ficha a los 13 roles); si no, corregible con cambio de UI. |
+| PL-117 | Sin comparación numérica de filas contra las líneas base; sin desborde en 17 pantallas | Aceptable; queda revisión visual del Responsable humano, como estaba previsto. |
+| PL-137 | Ramas «rechazar VALIDADO sin JOT» y «corregir sin JOT» solo por prueba unitaria y lectura | Aceptable: verifiqué por lectura `puedeValidarRdt`, `puedeRechazarRdtValidado` y `puedeCorregirRdt` contra la tabla 2 (coinciden) y sus pruebas pasan. |
+| PL-149 | Falta captura del artefacto y comprobación del Auditor | Comprobación del Auditor hecha por lectura: el flujo 14 lista Ficha, Editar servicio/checklist, Recursos, «solo subir», descargas y la nota del asistente. No verifiqué el artefacto en línea (sin navegador): la captura la aporta el Responsable humano. Aceptable. |
+| PL-156 | Falta captura; estado del artefacto sigue «En revisión» (solo Victor lo cambia) | Aceptable: las 10 filas de descargas de la tabla 2 coinciden con el código; el estado del artefacto es decisión de Victor. |
+
+### Conteos de credenciales (solo números; heurística de 8 cadenas candidatas, con ruido)
+
+| Repositorio | Archivos versionados (coincidencias / archivos) | `git diff HEAD` | `git log -p -n 40` |
+|---|---|---|---|
+| `pg_control_proyectos` | 172 / 70 (146 de una sola cadena benigna probable) | 0 | 261 |
+| `py_control_proyectos_web` (principal) | 7 / 5 | 0 | 70 |
+| worktree `local-worker-1` | 8 / 6 | 0 | 78 |
+| `git diff main...local-worker-1` | 3 | | |
+| `.playwright-mcp/` (ignorada) | 4 / 2 de 30 archivos | | |
+
+Script temporal borrado. No se escribió ninguna credencial en este informe.
 
 ## Mensaje de cierre
 

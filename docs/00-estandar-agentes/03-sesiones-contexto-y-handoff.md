@@ -43,6 +43,8 @@ Al cerrar una tarea, se marca el chat como histórico (por ejemplo, con un prefi
 
 Comprimir o resumir el contexto de un chat puede usarse solo si una tarea larga llena demasiado el contexto disponible. No convierte un chat viejo en contexto válido para una tarea nueva.
 
+**Relevo del Orquestador.** Un Orquestador de un plan largo mide su propio contexto con el script de medición al terminar cada ola y, si ya pasó de una sesión cómoda, escribe el handoff y sigue en un chat nuevo. Referencia: los Workers apuntan a 200k o menos; el Orquestador del plan de paneles llegó a 552k y el del plan de niveles y paquetes a 564k, y conviene relevarlo antes. Los subagentes quedan atados al chat que los lanzó y sus avisos de fin le llegan solo a él, así que **el relevo se hace entre olas, nunca a mitad de una**.
+
 ## Handoff obligatorio
 
 Ante cualquier cambio de sesión, chat, LLM o entorno a mitad de una tarea, se escribe un handoff como **sección fechada al final del archivo de progreso** del plan, con la plantilla `06-plantillas/07-handoff.md`: objetivo y estado, plan/progreso/evidencia relacionados, rama/worktree y último commit, terminado y no terminado, pruebas ejecutadas, bloqueos y riesgos, qué debe leer el siguiente agente, y el próximo paso concreto.
@@ -56,6 +58,7 @@ Un plan de más de unos 15 ítems, o de una fase completa, se reparte en tandas 
 - Cada tanda se marca en el índice de tandas como **paralelizable** (documentación o código puro, sin navegador) o **usa el navegador** (se ejecutan una a una: dos tandas con navegador nunca corren a la vez).
 - Se mide cada sesión (llamadas, contexto máximo, caché leída) y se guarda en un archivo de medición.
 - Antes de declarar terminada su tanda, cada Worker entrega al Orquestador su resumen de cierre en un archivo propio por tanda (estado de sus ítems, evidencia, hallazgos, mejoras de trabajo y reglas de negocio detectadas) y no edita los archivos compartidos del plan. El Orquestador lo consolida en el archivo de progreso a medida que llegan; al terminar la última fase, el Worker de documentación traslada cada entrada a su destino final (flujos de negocio, aprendizaje continuo, evidencia).
+- **Manejo de los hallazgos de cada Worker.** El resumen de cierre tiene secciones fijas: estado de los ítems de la tanda con su evidencia; hallazgos clasificados en cuatro grupos (mejora de trabajo, regla de negocio acordada, archivo o carpeta huérfano, conflicto con un flujo o pregunta para el Responsable humano); traspaso; llamadas y contexto usado; y «Skills revisados». Una pregunta de negocio o un conflicto con un flujo **no espera al cierre**: el Worker se detiene, se la devuelve al Orquestador en el momento y la registra con la respuesta. Ningún Worker borra nada por su cuenta.
 
 ## Límite conocido: mensajería entre sesiones
 

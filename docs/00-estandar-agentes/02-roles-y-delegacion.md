@@ -105,6 +105,16 @@ No debe:
 - Modificar reglas permanentes o fuentes de verdad centrales sin aprobación (ver la excepción escrita puntual que un plan puede otorgar).
 - Trabajar en la rama o el worktree de otro Worker.
 
+## Worker de documentación
+
+En un plan por tandas, la documentación final la hace una **tanda aparte, al final**, con un Worker propio; no se reparte entre los Workers de código. Trabaja en el repositorio de documentación (`main`), sin rama ni carpeta de trabajo de código, y corre en paralelo con la verificación en vivo, antes de la auditoría.
+
+- Aplica a los flujos de negocio la tabla de cambios («dice hoy» y «pasaría a decir») que el Responsable humano aprobó en bloque en el Gate 1, y actualiza los artefactos derivados (por ejemplo la matriz de permisos).
+- Lee los resúmenes de cierre de todas las tandas y traslada cada mejora de trabajo, regla de negocio y archivo huérfano a su destino final (ver `05-aprendizaje-continuo.md`). Las reglas de negocio se integran **en el flujo**, nunca en un archivo aparte.
+- Comprueba que el texto final de cada flujo coincide con lo implementado, leyendo el código de la rama integrada.
+- No edita `AGENTS.md`, el estándar de agentes ni nada que la tabla aprobada no incluya: lo anota para el Auditor. No borra nada.
+- Los Workers de código no editan los flujos de negocio; dejan sus hallazgos en su resumen de cierre.
+
 ## Auditor
 
 Revisa el plan aprobado, los resultados del Worker, la evidencia de pruebas, el registro de decisiones y los documentos afectados.

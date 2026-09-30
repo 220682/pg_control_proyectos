@@ -4,7 +4,7 @@
 
 - Tema: paneles con servicio persistente y panel izquierdo completo (flujo 16).
 - Fecha: 2026-09-27.
-- Estado: `Pendiente del Responsable humano` — Spec/SDD aprobado en el Gate Spec (2026-09-27, con un ajuste incorporado). Plan, Punch List y análisis de decisiones abiertas redactados por el Planner (2026-09-27), listos para el Gate 1. **Versión 8 (2026-09-29):** la ejecución se reparte en tandas (un Worker por tanda; briefs, índice y medición en `2026-09-27-paneles-servicio-persistente-briefs/`); R30 y C35 resueltas.
+- Estado: `CERRADO` (Gate 2 aprobado por Victor el 2026-09-30; código mergeado a `main` del repositorio de la app en `45c9e0a`, sin push; documentación en `main` de `pg_control_proyectos`) — Spec/SDD aprobado en el Gate Spec (2026-09-27, con un ajuste incorporado). Plan, Punch List y análisis de decisiones abiertas redactados por el Planner (2026-09-27), listos para el Gate 1. **Versión 8 (2026-09-29):** la ejecución se reparte en tandas (un Worker por tanda; briefs, índice y medición en `2026-09-27-paneles-servicio-persistente-briefs/`); R30 y C35 resueltas.
 - Entorno: `local` (verificado: sesión de Claude Code en la máquina de Victor, Windows).
 - Chat del Orquestador sugerido: `local_1.orquestador_paneles-servicio-persistente` (Victor lo renombra; el agente no tiene herramienta para hacerlo).
 
@@ -639,7 +639,7 @@ Gate 1: **pendiente** (versión 5 del plan: alineada con la matriz de permisos a
 | PL-98 | F5B | Enlaces internos: la ficha del servicio, su checklist de documentos (que enlaza a PR y DP) y la grilla del portafolio (enlace al dashboard) no muestran a un rol fuera de la tabla 1 un enlace que lleve a una pantalla rechazada | Captura con "Ver como" | Conforme |
 | PL-99 | F5B y F5C | La referencia de F5B y F5C es la versión aprobada del flujo 14 (commit 8027037, artefacto versión 17); el Worker anota en el progreso el commit del flujo 14 contra el que verifica y, si cambia durante la tarea, lo comunica al Orquestador antes de seguir | Nota en el progreso | Conforme |
 | PL-100 | F7 | El flujo 14 aprobado (tablas 1 y 2) coincide con lo implementado; solo se toca si Victor decide algo nuevo (las tres descargas propuestas, A12), con consulta previa y sin dejar dos versiones conviviendo | Diff de `pg_control_proyectos` (vacío o con la decisión) | Conforme |
-| PL-101 | F5B | La guardia se evalúa antes de leer datos del servicio: para un rol fuera de la tabla 1 no se ejecutan consultas de datos de PR, DP, Dashboard, Curva S, Plan Maestro ni Registro de costos y la respuesta no revela nombre ni datos del servicio | Revisión de código + captura | Observado |
+| PL-101 | F5B | La guardia se evalúa antes de leer datos del servicio: para un rol fuera de la tabla 1 no se ejecutan consultas de datos de PR, DP, Dashboard, Curva S, Plan Maestro ni Registro de costos y la respuesta no revela nombre ni datos del servicio | Revisión de código + captura | Conforme (la guardia se evalúa antes de leer datos en las seis pantallas; el «Servicio actual» del panel izquierdo es información para todos los roles y no se oculta, según decisión de Victor del 2026-09-30: lo que se oculta es el dato económico a quien no puede verlo) |
 | PL-119 | F2B | Cronograma, Paquetes de Trabajo, RDTs (status, archivo de subidos, consolidado) y consolidado RQ (ver) abren para los 13 roles, incluido el rol Asistente; las acciones dentro de cada pantalla siguen la tabla 2 | Tabla rol × pantalla con "Ver como" + capturas | Conforme |
 | PL-120 | F2B | Recursos de empresa (Personal, Cargos, Equipos, Causas CNC en consulta) abren para los 13 roles, en páginas y APIs de lectura; gestionar Causas CNC (alta y baja) sigue solo con las filas de la tabla 2, en pantalla y en API | Capturas + respuestas de la API | Conforme |
 | PL-121 | F2B | Las interfaces declaradas sin datos económicos no muestran dinero (USD ni S/: costos, precios, tarifas, valores): revisión de Consolidado RDTs, Paquetes de Trabajo, Status y archivo de RDTs, RQ, Recursos de empresa, ficha del servicio y grilla del portafolio. Si aparece alguno, es un hallazgo que se devuelve a Victor antes de seguir | Revisión de código + capturas | Conforme |
@@ -1145,6 +1145,7 @@ Ubicación normativa propuesta: la regla del sistema, en el flujo 16 (regla del 
 | 2026-09-30 | **Confirmadas por Victor (ya no provisionales):** el dashboard del portafolio muestra solo las OT con alcance del usuario (el administrador todas); perfil extendido solo administrador y jefe de proyectos (tabla 2); `GET /api/cronograma` y `/api/rdts/consolidado` sin alcance por OT en lectura (R30). |
 | 2026-09-30 | **Reescritura de flujos aprobada por Victor** (16, 01, 17, 03, 05, 06, 08, 09, 11, 12, 15, 20, 21, README, `05-diseno-y-ui.md`, `design.md`) según las resoluciones C1 a C36 y V1 a V7; **descargas de A13** (plantilla de cronograma, PDF de RDT estructurado, archivo de RDT subido, PDF individual RQ, formato vacío PROM-GP-008): los 13 roles, usuario sin rol conocido rechazado; **actualizar el artefacto** «Matriz de permisos» autorizado (publicado v7 por F7-B; el estado «En revisión» solo lo cambia Victor). |
 | 2026-09-30 | **Incidente F7-B:** un script del Worker vació este archivo; se restauró desde HEAD (66e1026) y se reaplicaron los estados de la Punch List desde los handoffs. Notas sin commitear que no eran estados pudieron perderse: las decisiones de esta fecha se repusieron arriba. |
+| 2026-09-30 | **Gate 2 y cierre (Victor).** Aprobados el Gate 2, el cierre del plan y el merge de `local-worker-1` a `main` de la app (`45c9e0a`, sin push); artefacto aprobado; la cadena de 8 dígitos de dos pruebas de `main` es un número de documento, no una credencial; «Servicio actual» del panel izquierdo es información para todos los roles: solo se oculta el dato económico a quien no puede verlo (PL-101 Conforme). |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -1236,7 +1237,14 @@ Script temporal borrado. No se escribió ninguna credencial en este informe.
 
 ## Mensaje de cierre
 
-Pendiente.
+**Cierre del plan (2026-09-30).** Gate 2 aprobado por Victor tras el Informe de Auditoría («Apto para Gate 2»).
+
+- **Resultado:** 38 tandas de ejecución más las de corrección F6-R1, F6-R2, F6-R3 y F7-C2; Punch List de 181 ítems: 173 Conforme, 7 Observado (PL-07, 65, 78, 117, 137, 149, 156; causas externas o pasos de Victor) y 1 No aplica (PL-181).
+- **Código:** rama `local-worker-1` mergeada a `main` del repositorio de la app (`45c9e0a`), sin push. 675 pruebas verdes, `tsc` limpio, lint sin deuda nueva (9 errores y 18 advertencias, igual que la línea base), build correcto; sin cambios en `db/` ni en los cálculos.
+- **Documentación:** flujos 16, 01, 03, 05, 06, 08, 09, 11, 12, 14, 15, 17, 20, 21 y README, `05-diseno-y-ui.md` y `design.md` 1.4.0 actualizados; artefacto «Matriz de permisos» publicado en la versión 7 (su estado «En revisión» lo cambia solo Victor); aprendizajes en `03-aprendizaje-continuo/2026-09-30-plan-paneles-servicio-persistente-tandas.md`.
+- **Decisiones de Victor del cierre:** Gate 2 y cierre aprobados; merge a `main` aprobado; artefacto aprobado; la cadena de 8 dígitos presente en dos pruebas de `main` es un número de documento y no una credencial (las pruebas la usan como DNI); «Servicio actual» (número y nombre) en el panel izquierdo es información para todos los roles y no se oculta: lo que se oculta es cualquier dato económico a quien no puede verlo (PL-101 Conforme).
+- **Pendiente fuera del plan (limpieza opcional de Victor):** `hist_nucleo/.env.local`, `hist_local-worker`, los dos `git stash` de la app, los 12 registros `PRUEBA-PL` de Recursos (todos desactivados) y el servicio de prueba `PS-0006`.
+
 
 ## Elementos postergados propuestos para planes futuros
 

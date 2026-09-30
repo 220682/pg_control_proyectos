@@ -32,12 +32,12 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 | [`2026-09-21-dashboard-fase-3-agente-c.md`](2026-09-21-dashboard-fase-3-agente-c.md) | Implementada y verificada (Punch List 25/25) — evidencia externa: artifact [Dashboards y Curva S — Fase 3](https://claude.ai/artifact/CdUMm5cdoxGjYPUsMHM85q) |
 | [`2026-09-21-curva-s-fase-3-agente-d.md`](2026-09-21-curva-s-fase-3-agente-d.md) | CERRADO (Punch List 20/20, PR #16 mergeado) — misma evidencia externa que Dashboard Fase 3 |
 | [`2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md`](2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md) | Ejecutado |
+| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Cerrada (Gate 2 aprobado por Victor, 2026-09-30) — Punch List 181 ítems: 173 Conforme, 7 Observado por causas externas o pasos de Victor, 1 No aplica; código mergeado a `main` de la app (`45c9e0a`); Informe de Auditoría «Apto para Gate 2» |
 
 ### En preparación
 
 | Plan | Estado |
 |---|---|
-| [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Pendiente del Responsable humano — Spec/SDD aprobado (Gate Spec, 2026-09-27); plan y Punch List (181 ítems, 13 fases; versión 7, con alcance por OT al leer en las seis pantallas con economía, cerrando C21) redactados por el Planner, esperando el Gate 1. Rama y worktree `local-worker-1` creados. Sin fases condicionadas: los conflictos CO1 a CO5 quedaron resueltos. Duda abierta: si el alcance por OT también cubre las pantallas sin economía (R30). Estado al 2026-09-30: tandas de implementación y verificación F0 a F6 cerradas en `local-worker-1`; documentación F7-A a F7-D hecha en `main` sin commit (pendiente de autorización); faltan el Informe de Auditoría y el Gate 2. Progreso y evidencia: `../02-progreso/2026-09-27-paneles-servicio-persistente.md` y `../03-evidencia/2026-09-27-paneles-servicio-persistente.md` |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

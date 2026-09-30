@@ -240,6 +240,23 @@ Totales por fila y semana. Físico de una partida = metrado ÷ contractual. Fís
 
 Comprobaciones: los semanales de cada fila suman 100%, el económico suma el BAC ($8 200) y las HH suman 172.
 
+## Novedades verificadas tras cerrar el plan de paneles (2026-09-30)
+
+Verificadas en el código y los flujos vigentes, no de memoria. **No cambian ninguna decisión aprobada en el Gate Spec**; ajustan detalles de ejecución.
+
+| # | Hallazgo | Efecto en estos Specs |
+|---|---|---|
+| 1 | `.worktrees/local-worker-1` se avanzó a `main` (`45c9e0a`, sin push, limpio). Su `node_modules` es un enlace al del repositorio principal: Turbopack no corre ahí, se usa `--webpack` (`03-entorno-git-y-worktrees.md`). La última migración sigue siendo la `072`: el plan de paneles no agregó ninguna. | Los rangos de migración se reservan desde la `073`. |
+| 2 | Existe un **registro único de accesos** (`src/lib/config/registro-accesos.ts`, 611 líneas) con pruebas (`registro-accesos.test.ts`, `registro-humo.test.ts`, `matriz-accesos.test.ts`, `panel-izquierdo.test.ts`, `nav-proyecto.test.ts`). Todo chip o acción pasa por ahí. | Estos Specs no crean chips. Si un Worker toca el registro, actualiza sus pruebas; `registro-accesos.ts` y `permisos.ts` son archivos de choque. |
+| 3 | Ya hay una acción registrada **"Crear paquete"** (A7, `/paquetes-trabajo?accion=crear`) que abre Paquetes con el formulario de paquete nuevo abierto (`abrirNuevoAlInicio`). Victor pidió "Crear paquete (no chip)" dentro de la pantalla. | Se conservan las dos cosas: el botón dentro de Paquetes y la acción del panel, que abre la pantalla ya en "modo crear" (casillas activas). **A confirmar por Victor.** |
+| 4 | El flujo 14 ya lista "Subir / reemplazar cronograma", "Gestionar Plan Maestro (crear / congelar línea base)" y "Gestionar paquetes de trabajo", los tres con los mismos roles (administrador, jefe de proyectos, planner). Además conserva una sección "Accesos requeridos para paquetes (pendiente)" con acciones más finas (crear, editar, archivar, registrar avance…). | Mover la declaración actividad → partida → metrado del cronograma a Paquetes **no cambia roles**: se ajusta el texto de esas filas y de la sección pendiente (recomendación: una sola acción "Gestionar paquetes"). El artefacto «Matriz de permisos» se actualiza en la misma tarea. |
+| 5 | Ver Plan Maestro exige rol con economía o planner **y alcance por OT al leer** (F5B). Cronograma, Paquetes y las pantallas de RDT se ven con los 13 roles y sin alcance por OT al leer (R30). | Sin cambio: el lienzo hereda esa guarda. |
+| 6 | El flujo 16 ya describe el panel izquierdo. "Recursos de empresa" tiene su propio mostrar/ocultar; en móvil los paneles son un cajón. | "Ocultar paneles laterales" es nuevo, solo para escritorio, y no reemplaza ese botón. |
+| 7 | Mejora `2026-09-30-plan-paneles-servicio-persistente-tandas.md`: la consulta a Victor sobre flujos se hizo **en bloque** (tabla de contradicciones con lo que dice hoy y lo que pasaría a decir) y una sola aprobación cubrió a todos los Workers. Un Worker de fase entera no cabe en una sesión. Faltó un servicio de prueba con datos. | El Planner arma esa tabla en bloque para el Gate 1. Las tandas siguen en 4 a 8 ítems. **Este plan necesita un servicio de prueba dedicado con DP, cronograma y RDT**, distinto del que Victor quiere conservar. |
+| 8 | Prácticas de verificación: agrupar el trabajo por cuenta o usar "Ver como" (`POST /api/ver-como`), no tomar snapshot del login relleno, comprobar redirecciones con la URL final, no usar scripts de reemplazo masivo sobre el plan, declarar al inicio las herramientas de navegador que se usarán. | Se copian a los briefs de las tandas. |
+
+**Servicio de prueba a no tocar:** el plan de paneles usó PS-0004, PS-0005 y PS-0006. Victor dijo que no se toque el servicio de prueba recién creado; **falta confirmar con Victor cuál es** (¿PS-0006?) antes de cualquier migración o prueba de escritura.
+
 ## Entorno, repositorios, ramas y worktrees
 
 - Modo: local. Documentación en `pg_control_proyectos` (`main`, directo); código en `py_control_proyectos_web`.

@@ -36,14 +36,19 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Retomar la ola 1: relanzar F0-A, F1-A y F2-A con Workers nuevos que continúen desde el trabajo parcial (ver Handoff del 2026-09-30, segundo).
+Ola 1 y ola 2 cerradas. Falta escribir y lanzar F0-U (maquetas con los tres paneles, alineación de tablas y color del avance real) y, en paralelo, F4-B. Ver el «Handoff del 2026-09-30 (tercero)».
 
 ## Pendientes
 
-1. **Lanzar la ola 1** (hasta 4 Workers a la vez): F0-A (maquetas de Niveles y Paquetes, trabaja en `pg_control_proyectos`, sin carpeta de la app), F1-A (carril 1, `local-worker-1`), F3-A (carril 2, `local-worker-2`), F2-A (carril 3, `local-worker-3`; escribe **y aplica** las migraciones 079–081: es la primera en el orden). Usar la «Plantilla del prompt de lanzamiento» del índice de tandas. Cada Worker usa `cerrar-tanda` y deja `resultados/<tanda>.md`.
-2. **Reglas de permiso:** el sistema de permisos denegó al Planner tocar lo relacionado con credenciales; puede bloquear también a los Workers al aplicar migraciones. Victor pidió «ir viendo lo de las reglas». **Estado (2026-09-30):** el sistema impide que un agente modifique sus propias reglas de permiso (lo denegó al intentarlo); las reglas las agrega Victor, y el Orquestador ya le entregó la lista exacta (scripts `migrar_<tanda>.py` permitidos y lectura de la carpeta de credenciales prohibida). Comprobar con Victor, **antes de la ola 2** (F1-B y F4-A aplican migraciones), que las agregó. Si el sistema pide aprobación para un script, Victor lo aprueba en el momento o lo corre él con el prefijo `!` (ver el protocolo).
-3. Victor revisa las maquetas de F0-A antes de las tandas de interfaz de Niveles y Paquetes, y las de F0-B antes del lienzo y del selector del RDT.
-4. Medir cada sesión de Worker con el script de `…-paneles-servicio-persistente-briefs/medicion.md` (meta: ≤ 80 llamadas, ≤ 200k de contexto).
+1. **Victor revisa la maqueta `plan-maestro-tres-paneles.html`** (ya la vio; dijo «la maqueta ya está» y que esa consideración rige para todas las interfaces). Decisiones suyas abiertas, una por pregunta: (a) quién aprueba el borrador del Plan Maestro que reemplaza uno aprobado (recomendado: administrador y jefe de proyectos, como la creación); (b) disciplina obligatoria en paquete y partida directa, lista real del catálogo y herencia de la partida dentro de un paquete (recomendado: obligatoria y hereda); (c) equipos de Crear RDT eligen su partida con el mismo cuadro (recomendado: sí); (d) iconos de los accesos de la maqueta (recomendado: dejar los símbolos de texto), variante de «Ver como» con otro rol (recomendado: no) y «Recursos de empresa» plegado (recomendado: sí); (e) nombre del rol extra cuando un archivo trae más de 5 niveles.
+2. **Tanda F0-U (por escribir el encargo y lanzar; una sola, máx. ~80 llamadas y ≤ 200k; dividir en dos si hace falta, porque F0-R llegó a 245k).** Indicaciones de Victor, 2026-09-30, al cierre de esta sesión:
+   - **Todas las maquetas del plan muestran los tres paneles como en la app** (izquierdo, centro, derecho), con el marco de `plan-maestro-tres-paneles.html`: Importar DP, Cronograma, Paquetes (Declarar parte con los paneles ocultos), lienzo y Crear RDT.
+   - **Alineación de tablas, en todas las pantallas (regla para `design.md`):** el encabezado de cada columna **va sobre su dato y alineado igual** (los numéricos y las unidades a la **derecha**, con el encabezado a la derecha también); hoy los encabezados «Und.» y «Met.» quedan a la izquierda y el dato a la derecha, separados (captura de Victor). **No dar ancho de más a una columna cuyo dato no lo necesita** (por ejemplo «Und.» y «Met.»).
+   - **Color de los porcentajes de avance: Victor no lo vio en ninguna parte.** Hoy solo aparece en un ejemplo aparte (el 4) del lienzo y en el selector de Crear RDT; debe verse **en la vista principal**, en las filas **«Real»** (avance físico real): 0 % en blanco, en curso en amarillo, 100 % en verde. **Solo el avance real; nunca lo programado o planificado** (las filas «Prog.» no se colorean). La vista principal del lienzo mostró la leyenda pero no el color.
+3. **Tandas de código de la ola 3 (máx. 3 a la vez).** Sin espera de maquetas: **F4-B** (Crear RDT por paquete; criterio de Victor abajo). Esperan F0-U y su aprobación: F1-C, F2-B, F3-C, F3-D y F4-C. Después F2-C, F5-A (primero los merges en `local-worker-1`: Paquetes, luego Plan Maestro, luego RDT), F5-B, F5-C y F5-D.
+4. **Reglas de negocio y mejoras por trasladar al final (F5-D, previa consulta a Victor por cada choque con un flujo):** las anotadas en los resultados consolidados arriba (niveles, disciplina, bloqueo por filas «para revisar», plegado, color de avance real, posición de los iconos, metrado acumulado del servicio, filas por paquete, abreviaturas Met./Acum./Prog./Ejec., alineación de tablas) y la fila nueva «crear versión nueva del Plan Maestro con una aprobada» del flujo 14 y de la matriz de permisos.
+5. **Verificación pendiente:** las migraciones 076 a 078 las aplicó el Worker de F3-B y el Orquestador no pudo comprobarlas (el sistema denegó su consulta por leer credenciales; no se rodeó). F5-A las comprueba junto con 073 a 084, o Victor con un script aprobado (nombre `migrar_*.py`, modos `check` y `apply`).
+6. **Abiertos sin bloquear:** corregir la ruta del servidor de base de datos de Claude (`D:\VICTOR\CLAUDE CODE\mcp_postgresql`); actualizar el artefacto «Flujo SDD a Cierre»; nota del plan semanal (3WLA) en `planes-futuros.md` solo si la pide; plan aparte para unificar el estilo de todas las pantallas existentes.
 
 ## Commits, ramas y worktrees usados
 
@@ -68,7 +73,7 @@ Retomar la ola 1: relanzar F0-A, F1-A y F2-A con Workers nuevos que continúen d
 
 ## Próximo paso verificable
 
-Con contexto limpio: leer este archivo y el índice de tandas, lanzar la ola 1 y comprobar que cada Worker crea su `resultados/<tanda>.md`.
+Con contexto limpio: leer el «Handoff del 2026-09-30 (tercero)», escribir el encargo de F0-U, lanzar F0-U y F4-B (máx. 3 a la vez) y comprobar que cada Worker crea su `resultados/<tanda>.md`.
 
 ## Medición de Workers (script de `medicion.md` del plan de paneles; metas: ≤ 80 llamadas, ≤ 200k de contexto, ≤ 12M de caché)
 
@@ -81,6 +86,11 @@ Con contexto limpio: leer este archivo y el índice de tandas, lanzar la ola 1 y
 | F0-A (cierre) | `agent-a9251d5b33bb0a5e0` | 8 | 8 | — | — | Sí | sesión de cierre |
 | F4-A | `agent-a4b8f156afc8bfd8f` | ~31 | 31 | — | — | Sí | migraciones sin aplicar |
 | F1-B | `agent-afb2521e5141dc180` | ~40 | 41 | — | — | Sí | migraciones sin aplicar |
+| F3-B | `agent-a55a0017e65b4d0f6` | 36 | 39 | 159k | 3,9M | Sí | |
+| F0-R | `agent-ad3c809a1efa88fd5` | 34 | 41 | 245k | 5,0M | Llamadas sí; **contexto no (245k > 200k)** | reescribió 7 maquetas y leyó la pantalla real entera; para las siguientes, dividir en dos tandas |
+| F0-S | `agent-afa8d237ea73dd463` | 18 | 24 | 110k | 1,4M | Sí | |
+| F0-T | `agent-a51e312647cfe3cc5` | 26 | 37 | 156k | 3,1M | Sí | |
+| **Orquestador (esta sesión)** | `3a959253-7780-4b11-907…` | 80 | 79 | **259k** | **13,0M** | **No (259k > 200k)** | no medí mi contexto al cerrar cada ola; relevo hecho a pedido de Victor |
 | F0-B | `agent-ac9205eddb66f403b` | ~34 | 43 | — | — | Sí | usó navegador (desvío menor) |
 | F2-A (cierre) | `agent-abbaf56e5b94e969a` | 33 | 33 | — | — | Sí | sesión de cierre; migraciones sin aplicar |
 | F1-A (cierre) | `agent-ae31f694a87b97cf3` | 10 | 10 | — | — | Sí | sesión de cierre |
@@ -134,7 +144,7 @@ Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1
 
 ## Última actualización y responsable
 
-2026-09-30, Orquestador.
+2026-09-30 (cierre de sesión), Orquestador.
 
 ## Handoffs
 
@@ -160,3 +170,14 @@ Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1
 - **Medición:** pendiente con `medicion.md` del plan de paneles; mide F3-A y las tres cortadas (anotar «cortada por límite»).
 - **Commits:** nada de la app subido (sin push, sin merge). Ramas `local-worker-1` y `-3` con un commit WIP cada una; `local-worker-2` con F3-A; `-4` intacta.
 - **Pendientes de Victor sin cambios:** reglas de permiso antes de la ola 2; maquetas de F0-A a su revisión; rol extra con más de 5 niveles; ruta del servidor de base de datos; nota 3WLA solo si la pide. Hallazgo nuevo (de F3-A): usar `git stash -u` en un árbol compartido es riesgoso (mejora de trabajo, consolidar al cierre).
+
+### Handoff del 2026-09-30 (tercero: Orquestador → Orquestador con contexto limpio)
+
+- **Por qué el relevo:** la sesión llegó a 80 llamadas y 259k de contexto (13 M de caché), por encima de la meta de 200k, y el Orquestador no midió su contexto al cerrar cada ola como pide `03-sesiones-contexto-y-handoff.md`. Victor pidió cerrar y cambiar de sesión. **La próxima sesión mide su contexto al terminar cada ola.**
+- **Qué leer, en este orden:** la sección «Flujo con Orquestador» de `AGENTS.md` y su primera lectura obligatoria (`04-flujo-sdd-y-planes.md`); el Skill `seguir-flujo-de-planes`; este archivo entero (en especial «Decisiones de Victor sobre las maquetas», «Migraciones aplicadas», «Resultados consolidados» y «Pendientes»); el índice de tandas, las reglas de contexto y el protocolo de migraciones de `…-briefs/`; los encargos `f0-tanda-r.md`, `f0-tanda-s.md` y `f0-tanda-t.md` (antecedente de F0-U). **No** releer los 21 flujos ni los tres Specs.
+- **Estado (verificado con comandos al cerrar):** ola 1 y ola 2 cerradas y consolidadas: F0-A, F0-B, F0-R, F0-S, F0-T (diseño), F1-A, F1-B, F2-A, F3-A, F3-B, F4-A (código). Nada de la app está subido ni fusionado. Ramas: `local-worker-1` en `2652116` (F1-A y F1-B), `local-worker-2` en `35bcf07` (F3-A y F3-B), `local-worker-3` en `73a8680` (F2-A), `local-worker-4` en `a037e98` (F4-A); `main` de la app en `45c9e0a`. Migraciones 073 a 084 aplicadas (comprobadas 073 a 075 y 079 a 084; 076 a 078 por confirmar, ver Pendientes). El candado y los scripts temporales están borrados.
+- **Criterio de Victor para F4-B (filas por paquete en Crear RDT):** el real de cada partida se suma en el DP y el PR como cualquier partida; el acumulado del paquete se guarda como el de una partida, pero **solo en el Plan Maestro**. No se modifica la migración 053 (congelada) salvo autorización expresa de Victor; propuesta del Orquestador: guardar las filas derivadas como actividades propias. «Met. acum.» en Crear RDT es el acumulado del servicio en total para esa partida.
+- **Cómo hablarle a Victor:** lenguaje simple, sin códigos internos ni siglas, una decisión por pregunta con ejemplo y recomendación, decir qué se verificó y qué no. Se enoja cuando no se sigue el flujo, cuando se repite una pregunta ya respondida o cuando no se lee la política de contexto.
+- **Límites:** el Orquestador no implementa, no hace merge ni push de la app sin autorización en el Gate 2, no edita flujos ni `AGENTS.md` por su cuenta, no incluye `Trazabilidad.xlsx` en commits, no abre `entorno_variable.txt` ni rodea una denegación del sistema. Un script de migración debe traer los modos `check` (por defecto) y `apply` y llamarse `migrar_*.py`; un script nuevo que lea credenciales puede ser denegado por el clasificador, en cuyo caso Victor lo corre.
+- **Reglas de permiso de Victor (ya agregadas con `/permissions`):** Allow de `python *migrar_*.py check` y `apply` (Bash y PowerShell); Deny de la carpeta de credenciales y de cualquier comando con `entorno_variable`.
+- **Próximo paso concreto:** escribir `f0-tanda-u.md` (máx. 8 KB) con las indicaciones del pendiente 2, lanzar F0-U y F4-B, y medir cada sesión con `…-paneles-servicio-persistente-briefs/medicion.md`.

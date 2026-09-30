@@ -69,6 +69,23 @@ Retomar la ola 1: relanzar F0-A, F1-A y F2-A con Workers nuevos que continúen d
 
 Con contexto limpio: leer este archivo y el índice de tandas, lanzar la ola 1 y comprobar que cada Worker crea su `resultados/<tanda>.md`.
 
+## Medición de Workers (script de `medicion.md` del plan de paneles; metas: ≤ 80 llamadas, ≤ 200k de contexto, ≤ 12M de caché)
+
+| Tanda | Sesión | Llamadas | Herramientas | Contexto máx. | Caché | ¿Cumple? | Nota |
+|---|---|---|---|---|---|---|---|
+| F3-A | `agent-aecdc3c15a32996b` | 14 | 15 | 99k | 1,1M | Sí | Cerrada (el resumen decía ~19 llamadas; manda la medición) |
+| F0-A (1.ª sesión) | `agent-a8d82746485b2169` | 17 | 32 | 140k | 1,5M | Sí | Cortada por límite de uso |
+| F1-A (1.ª sesión) | `agent-a46c4b15b573649e` | 12 | 22 | 114k | 0,9M | Sí | Cortada por límite de uso |
+| F2-A (1.ª sesión) | `agent-a02847794eaaf438` | 23 | 25 | 117k | 2,0M | Sí | Cortada por límite de uso |
+
+## Ola 1, relanzamiento (2026-09-30, tarde)
+
+Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1-A, 9 archivos), `local-worker-2` en `72aace7` (F3-A), `local-worker-3` en `3dd2c00` (WIP F2-A, 8 archivos), `local-worker-4` intacta en `45c9e0a`; `main` de la app = `origin/main`; `pg_control_proyectos` sincronizado, solo `Trazabilidad.xlsx` modificado (no se incluye). Relanzados tres Workers (F0-A, F1-A, F2-A) con la instrucción de revisar el WIP y no rehacerlo; F2-A comprueba primero si las migraciones 079 a 081 ya existen en la base.
+
+### Resultados consolidados de la ola 1
+
+- **F0-A (maquetas de Niveles y Paquetes): cerrada, 7 de 7 ítems conformes** (`resultados/F0-A.md`). El Worker revisó el WIP `d0b700e` contra el brief y no hizo falta corregir nada. Verificación solo estructural (sin navegador, según el brief); el Orquestador comprobó además que en el ejemplo de 5 niveles el nivel 2 propone «Área». **Nadie ha abierto las maquetas a simple vista: Victor las revisa.** Seis preguntas de diseño para Victor en el resultado. Al aprobar: quitar «pendiente de aprobación» en `design.md` y `mockups/README.md`. Sin hallazgos nuevos. Sesión de cierre: 8 llamadas (medición del script pendiente de anotar).
+
 ## Última actualización y responsable
 
 2026-09-30, Orquestador.

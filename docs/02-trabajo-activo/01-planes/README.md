@@ -38,6 +38,9 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
+| [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); delegación al Planner pendiente |
+| [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); delegación al Planner pendiente |
+| [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); delegación al Planner pendiente |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

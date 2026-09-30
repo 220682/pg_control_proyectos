@@ -62,6 +62,16 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 - **Estado:** pendiente, sin promover.
 - **Requiere Spec/SDD:** sí.
 
+### Cronograma como línea base y línea real de avance (Gantt)
+
+- **Origen:** pedido directo de Victor, 2026-09-30 (durante el Spec `2026-09-30-paquetes-y-plan-maestro-grilla`). Ya figuraba como "fase 2, no construida" en el flujo 15.
+- **Qué es:** el cronograma que se entrega al cliente como base debe devolverse con dos líneas: la **línea base** (las fechas del archivo cargado, fijas) y la **línea real de avance físico** (editable: puede quedar antes, después, más corta o más larga que la base). Su función es seguir el avance físico del servicio.
+- **Dato que lo sostiene:** el vínculo actividad ↔ partida con metrado (`cronograma_actividad_partidas.metrado`, `db/071`), que el Spec del 30-sep mueve a la pantalla de Paquetes de Trabajo. Por eso ese dato no se descarta: el avance de una actividad saldría del avance de sus partidas. El flujo 15 lista además como pendientes el candado de checklist "Cronograma" y restringir el reemplazo mientras el servicio siga "En Planeación".
+- **Por qué se pospone:** Victor lo declaró "otro tema, aún no implementado"; primero se resuelve Paquetes de Trabajo y Plan Maestro.
+- **Pospuesto:** 2026-09-30.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí.
+
 ### Acceso directo a Postgres/Supabase para correr SQL
 
 - **Origen:** decisión pendiente registrada el 2026-09-17 (antes en `docs/memoria-sesion.md`, ya retirado).

@@ -24,6 +24,10 @@ Fase F3 · **Depende de:** F3-B cerrada **y de la maqueta aprobada por Victor**:
 - Interfaz: `design.md` §3 (layout y asistente), §5, §8 (columnas `sticky` y scroll), §9, §10; tablas largas con scroll horizontal sin perder contexto; no inventes componentes. **No hay chip, ruta ni acceso nuevo**.
 - Sin navegador en esta tanda: lo que lo exija queda `Observado — pendiente de F5`.
 
+## Columnas adicionales (decisión de Victor, 2026-09-30)
+
+El lienzo trae por defecto solo las columnas fijas del Spec. Las demás (área, disciplina, frente, costo total, HH totales, método de medición) se ofrecen con el botón «Personalizar campos», reutilizando `src/components/ui/PersonalizarCampos.tsx` (recibe `campos`, `minimos`, `visibles` y `onCambiar`) y `src/lib/ui/campos-visibles`, igual que Status de Requerimiento. No crear otro selector de columnas.
+
 ## Qué NO hacer
 
 - No edites `permisos.ts`, `registro-accesos.ts`, `nav-proyecto.*`, `panel-*` ni sus pruebas (congelados). No edites `paquetes-trabajo/**` ni `rdts/**`.

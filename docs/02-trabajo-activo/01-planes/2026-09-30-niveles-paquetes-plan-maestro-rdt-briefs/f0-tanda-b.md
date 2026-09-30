@@ -23,6 +23,10 @@ Fase F0 · **Depende de:** F0-A cerrada (mismo estilo y `design.md`) · **Bloque
 - `design.md` §3 «Asistente flotante» y §8 (scroll, columnas fijas `sticky`). La imagen de referencia de Victor: línea naranja, fijo a la izquierda, días a la derecha.
 - Las maquetas de F0-A (estilo).
 
+## Botón «Personalizar campos» (decisión de Victor, 2026-09-30)
+
+La maqueta del lienzo incluye el botón «Personalizar campos» que ya existe en Status de Requerimiento (mismo componente y mismo aspecto), para agregar columnas opcionales más allá de las fijas del Spec.
+
 ## Qué NO hacer
 
 - No tocar código ni flujos. No agregar columnas que los Specs no nombran. No inventar componentes reales.

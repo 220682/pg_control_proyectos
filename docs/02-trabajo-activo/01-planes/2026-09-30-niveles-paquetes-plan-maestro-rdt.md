@@ -428,6 +428,8 @@ Una sola aprobación de Victor cubre a todos los Workers de F5-D (mismo método 
 | 2026-09-30 | Servicios existentes de prueba; se autoriza crear un servicio de prueba dedicado; PS-0006 ya no existe | Victor |
 | 2026-09-30 | Política nueva: el informe del Auditor es un archivo propio en `02-trabajo-activo/04-auditoria/`, no va dentro del plan | Victor |
 | 2026-09-30 | Política de Skills incorporada al plan a pedido del coordinador: `cerrar-tanda` en toda tanda (adaptado al cierre por `resultados/<tanda>.md`), `verificar-permisos-por-rol` en F3-B, F5-A y F5-C, `seguir-flujo-de-planes` por el Orquestador en cada ola y antes del cierre; el Auditor comprueba su uso | Coordinador / Planner |
+| 2026-09-30 | Preguntas del Gate 1 sobre carpetas de trabajo, maquetas, columnas fijas del lienzo y datos del paquete: Victor pidió dejar por defecto las opciones propuestas por el Orquestador (autorizar las tres carpetas de trabajo nuevas; revisar las maquetas antes de construir la interfaz; columnas fijas del Spec; paquete con nombre, nivel, modo de medición, partida guía y orden) | Victor |
+| 2026-09-30 | Columnas adicionales del lienzo (área, disciplina, frente, costo total, HH totales, método de medición y otras): se ofrecen con el botón «Personalizar campos», el mismo que ya usan Status de Requerimiento y otras pantallas (`src/components/ui/PersonalizarCampos.tsx` y `src/lib/ui/campos-visibles`); no se crea otro selector de columnas | Victor |
 | 2026-09-30 | Decisiones de método del Planner (a confirmar en el Gate 1): integración en la rama del carril 1; cierre de tanda por `resultados/<tanda>.md`; navegador solo en F5; `permisos.ts` congelado salvo una función | Planner |
 
 ## Enlaces a progreso, evidencia y auditoría homónimos

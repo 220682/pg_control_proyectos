@@ -84,7 +84,7 @@ Hoy los permisos viven **fijos en el código** (`src/lib/permisos/permisos.ts`, 
 | `planes-futuros.md` | Promover el ítem; corregir «4 roles con economía» (hoy 5 más dos excepciones) y los conflictos CO1 a CO5 (ya resueltos). Se consulta a Victor antes de editar. |
 | Artefacto «Matriz de permisos» | Fila nueva: «Gestionar la matriz de permisos» (administrador y jefe de proyectos). |
 
-Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«Solo administrador y jefe de proyectos cambian permisos; el administrador no puede quedarse sin acceso a la gestión de permisos; la columna del administrador no es editable; «Asignar rol administrador» y «Ver como» tampoco (pendiente de confirmar).»**
+Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«Solo administrador y jefe de proyectos cambian permisos; el administrador no puede quedarse sin acceso a la gestión de permisos; la columna del administrador no es editable; «Asignar rol administrador» y «Ver como» son solo del administrador y no se pueden dar a otro rol.»**
 
 ### Datos, API, migraciones o dependencias
 
@@ -104,7 +104,7 @@ Regla de negocio nueva que este Spec propone (a confirmar en el Gate Spec): **«
 | Id | Decisión | Resuelto |
 |---|---|---|
 | D1 | Dónde se guardan los permisos | **Base de datos** como fuente, sembrada con los valores de hoy. Cambiar un permiso no toca el código. |
-| D2 | Qué no se puede editar | **El rol administrador completo:** su columna en las dos tablas no se edita desde la interfaz (ni se le quita ni se le agrega nada), así nunca pierde su acceso, incluida esta pantalla. *Pendiente de confirmar con Victor:* si las filas «Asignar rol administrador» y «Ver como» también quedan fijas para los demás roles (recomendado: sí). |
+| D2 | Qué no se puede editar | **El rol administrador completo:** su columna en las dos tablas no se edita desde la interfaz (ni se le quita ni se le agrega nada), así nunca pierde su acceso, incluida esta pantalla. Además, «Ver como» y «Asignar rol administrador» quedan fijas: solo el administrador, y ningún otro rol puede recibirlas desde la pantalla (Victor: «nadie puede ver "ver como"»; se aplicó la misma regla a «Asignar rol administrador» por igual motivo, a confirmar al aprobar el Spec). |
 | D3 | Cómo se aplican los cambios | **Borrador y botón «Guardar cambios» al final.** Hasta guardar, la app aplica lo último guardado. |
 | D4 | Relación con el artefacto | **El artefacto sigue existiendo. Manda la app:** si difieren, vale la app. Tras cada «Guardar cambios», el artefacto y el flujo 14 se actualizan para coincidir. |
 | D5 | Marca «económica» | **Editable**, pero solo informativa hasta el Spec de economía. |

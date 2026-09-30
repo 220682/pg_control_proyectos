@@ -63,6 +63,7 @@ Retomar la ola 1: relanzar F0-A, F1-A y F2-A con Workers nuevos que continúen d
 
 - Riesgo: permisos para migraciones (ver pendiente 2).
 - Abierto sin bloquear: nombre del rol extra cuando un archivo trae más de 5 niveles.
+- Idea de Victor (2026-09-30): las maquetas nuevas de Niveles y Paquetes tienen mejor diseño que las demás pantallas; unificar el estilo de todas en un plan aparte. No es de este plan; el Orquestador no la ha comparado aún.
 - La nota sobre el plan semanal (3WLA) en `planes-futuros.md` no se agregó; solo si Victor lo pide.
 
 ## Próximo paso verificable

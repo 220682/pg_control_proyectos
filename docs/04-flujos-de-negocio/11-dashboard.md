@@ -21,14 +21,18 @@ al final — quien conoce el Parcial no tiene que reaprender el Completo.
 | **Enlace a la Curva S** | — | ✓ |
 | Resumen ejecutivo (2 líneas, al final) | ✓ | ✓ |
 
-**El toggle Parcial/Completo es funcional**: se edita con el mismo permiso que ya
-edita el proyecto (`puedeAdjudicarProyecto`), cambia sin recargar a mano ni
-dejar la pantalla en un estado intermedio (`router.refresh()`), y no crea
-un permiso nuevo.
+**El interruptor Parcial/Completo es funcional**: lo activan los roles que pueden
+ver datos económicos según la matriz aprobada (`puedeVerEconomia`; tabla 1 del
+[flujo 14](14-accesos-y-restricciones.md)) — decisión de Victor, 2026-09-29. Cambia
+sin recargar a mano ni dejar la pantalla en un estado intermedio
+(`router.refresh()`) y no crea un permiso nuevo. Hoy la pantalla se abre solo con
+esos mismos roles, así que quien la ve puede alternar; que los demás roles vean
+el Parcial fijo, sin interruptor, pertenece al plan futuro de economía
+(`planes-futuros.md`). `puedeAdjudicarProyecto` ya no rige el interruptor.
 
 **La Curva S no vive en ningún Dashboard.** Tiene pantalla propia
-(`(workspace)/proyectos/[id]/curva-s`) y chip propio en el grupo
-Planificación. El Completo solo la **enlaza**, nunca la embebe.
+(`(workspace)/proyectos/[id]/curva-s`) y chip propio (ubicación por panel
+abajo). El Completo solo la **enlaza**, nunca la embebe.
 
 ## Ubicación en la app
 
@@ -36,10 +40,17 @@ Planificación. El Completo solo la **enlaza**, nunca la embebe.
 mismo nav izquierda / panel derecho que el resto de pantallas de un
 servicio.
 
-El chip **Dashboard** vive en el grupo **Planificación** (`nav-proyecto.ts`),
-en la cadena de control: `… → DP → PR → Dashboard → Curva S`. Aparece en
-los tres paneles (derecho, Mi entorno, e izquierda con un servicio abierto),
-desde una única definición.
+El chip **Dashboard** se declara una sola vez en el registro único de accesos
+(`registro-accesos.ts`, flujo 16), en la cadena de control
+`… → DP → PR → Dashboard → Curva S`, y se ubica distinto según el panel:
+
+- **Panel izquierdo** (con un servicio abierto): grupo **Reportes**.
+- **Panel derecho:** grupo **Planificación**.
+- **Mi entorno:** no aparece (no es uno de sus diez chips, flujo 03).
+
+Lo ven habilitado los roles con datos económicos (`puedeVerDashboard`); los demás
+lo ven deshabilitado con título explicativo (flujo 16). Requiere un servicio elegido.
+Además, el alcance por OT es requisito de partida (flujo 14, tabla 1).
 
 ## Filtros (scopean todo lo de abajo)
 

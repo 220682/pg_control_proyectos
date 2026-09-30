@@ -33,7 +33,7 @@ Al intentar `git push -u origin main` esa sesión fue rechazada (`non-fast-forwa
 
 ## Pool real de ramas y worktrees del repositorio de código
 
-**Por verificar.** Este repositorio (`pg_control_proyectos`) no tiene acceso directo a `py_control_proyectos_web`: no se puede ejecutar `git branch -a` ni `git worktree list` sobre ese repositorio desde acá. La tabla de pool `work-1`/`work-2` de `convenciones-de-trabajo.md` (creada 2026-09-23) está marcada como obsoleta en la nomenclatura (ver arriba) y no fue verificada de nuevo en esta tarea. Antes de asignar un Worker de código a una rama concreta, quien tenga acceso a `py_control_proyectos_web` debe correr `git branch -a` / `git worktree list` ahí y actualizar esta sección con el resultado real — no se copia la tabla vieja como si fuera vigente.
+**Verificado el 2026-09-27 (Orquestador) y 2026-09-30.** El repositorio de la app está en `D:\VICTOR\CLAUDE CODE\py_control_proyectos_web` y es accesible desde una sesión local: se pueden correr `git`, el servidor de desarrollo y Playwright sobre él. Estado real: ramas `main` y `local-worker-1`; worktrees: el checkout principal y `.worktrees/local-worker-1` (los demás restos de `.worktrees/` se conservan como `hist_nucleo` y `hist_local-worker`, sin abrir). La nomenclatura `work-1`/`work-2` de `convenciones-de-trabajo.md` está obsoleta y su tabla no se debe usar como vigente. La existencia de una carpeta se comprueba con `ls`, no con la salida de `git worktree list` (esta no muestra carpetas sueltas). Antes de asignar un Worker de código a una rama, correr `git branch -a` y `git worktree list` en `py_control_proyectos_web` y actualizar esta sección.
 
 ## Worktrees y bundler (verificado 2026-09-23)
 

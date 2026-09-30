@@ -32,7 +32,7 @@ Las reglas funcionales y operativas permanentes del sistema, una vez por tema du
 | 20 | Plan Maestro | [20-plan-maestro.md](20-plan-maestro.md) |
 | 21 | Curva S | [21-curva-s.md](21-curva-s.md) |
 
-**Borrado administrador** no es un flujo: es una regla transversal (solo admin destruye RQ / RDT / proyecto / programa / portafolio). Está citada en 05, 06 y 08.
+**Borrado administrador** no es un flujo: es una regla transversal: el borrado definitivo de RQ, RDT, proyecto (archivar y eliminar), programa y portafolio lo ejecutan solo el administrador y el jefe de proyectos (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)); ningún otro rol, el jefe de oficina técnica incluido. Está citada en [05](05-rq.md), [06](06-rdt.md) y [08](08-programa-portafolio-proyecto.md).
 
 ## Qué no vive acá
 

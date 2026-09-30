@@ -46,7 +46,7 @@ DP importado
   -> Ajustar distribucion diaria (borrador)
   -> Aprobar linea base
   -> Registrar RDT estructurado con WBS DP
-  -> Validar RDT (administrador o jefe de proyectos)
+  -> Validar RDT (administrador, jefe de proyectos o jefe de oficina técnica)
   -> Visualizar Programado, Real validado y PV por semana
 ```
 
@@ -77,10 +77,13 @@ Al aprobar, el estado pasa a `APROBADO`. Si se aprueba una nueva version para el
 
 ### 3. RDT a ejecucion real
 
-El RDT estructurado conserva el WBS de la partida DP. Quien puede validar es solamente:
+El RDT estructurado conserva el WBS de la partida DP. Quien puede validar o rechazar es solamente:
 
 - Administrador.
 - Jefe de proyectos.
+- Jefe de oficina técnica.
+
+Rechazar un RDT que ya está `VALIDADO` (para destrabarlo) es más restrictivo: solo administrador y jefe de proyectos.
 
 Durante la validacion, el sistema verifica que toda actividad directa del RDT tenga un WBS existente en el DP de la misma OT. Si es valido, registra el vinculo actividad RDT - partida DP y cambia el RDT a `VALIDADO`.
 
@@ -105,12 +108,15 @@ Si el servicio dura seis semanas, se generan seis grupos semanales; no existe un
 
 ## Permisos
 
+Fuente única: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md). Resumen:
+
 | Accion | Roles |
 |---|---|
-| Ver Plan Maestro | Todos excepto asistente |
+| Ver Plan Maestro (lleva datos económicos) | Administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos, jefe de costos y planner |
 | Generar, ajustar y aprobar Plan Maestro | Administrador, jefe de proyectos, planner |
-| Crear RDT estructurado | Supervisor operativo, administrador, jefe de proyectos |
-| Validar o rechazar RDT | Administrador, jefe de proyectos |
+| Crear RDT estructurado | Supervisor operativo, administrador, jefe de proyectos, jefe de oficina técnica |
+| Validar o rechazar RDT | Administrador, jefe de proyectos, jefe de oficina técnica |
+| Rechazar un RDT ya validado | Administrador, jefe de proyectos |
 
 ## Pendiente (Fase 2)
 

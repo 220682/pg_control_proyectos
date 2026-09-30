@@ -2,9 +2,9 @@
 
 ## Objetivo
 
-Definir cómo se organizan los accesos del sistema mediante tres paneles, diferenciando navegación, información y acciones operativas. El flujo debe mostrar únicamente las funciones permitidas al usuario y mantener todas las acciones asociadas al servicio seleccionado.
+Definir cómo se organizan los accesos del sistema mediante tres paneles, diferenciando navegación, información y acciones operativas. Todos los roles ven todos los accesos; los que el rol no puede usar se muestran deshabilitados, con un título que lo explica. Todas las acciones se mantienen asociadas al servicio seleccionado.
 
-Este flujo es de interfaz y navegación. No reemplaza la jerarquía funcional del proyecto ni crea una nueva estructura de negocio.
+Este flujo es de interfaz y navegación. No reemplaza la jerarquía funcional del proyecto ni crea una nueva estructura de negocio. Quién puede hacer qué lo decide el flujo 14 (`14-accesos-y-restricciones.md`) y el artefacto «Matriz de permisos»; este flujo solo dice cómo se muestra.
 
 ## Principio central
 
@@ -17,28 +17,15 @@ El panel izquierdo no debe crear una jerarquía adicional como “servicio → p
 
 ## Tres paneles
 
-## Panel izquierdo — contexto del servicio
+### Panel izquierdo — contexto del servicio
 
-Su contenido depende de si existe un servicio seleccionado.
+Está siempre activo en el workspace y lo ven todos los roles. Tiene dos bloques.
 
-## Sin servicio seleccionado
+**Recursos de empresa** (catálogos que no pertenecen a un proyecto): Personal, Cargos, Equipos y Causas CNC. «Materiales» no es un recurso de empresa. El bloque lleva un botón mostrar/ocultar: **sin servicio seleccionado está visible; con servicio seleccionado está oculto**, y el usuario lo despliega cuando quiere. Los recursos de empresa nunca se reemplazan por los del servicio ni se mezclan con ellos. Lo que el rol no puede usar se muestra deshabilitado (regla 2). No hay acciones que requieran `servicio_id` sin servicio.
 
-Muestra recursos generales de la empresa que no pertenecen a un proyecto específico:
+**Accesos del servicio** (solo con servicio seleccionado): los del servicio actual, organizados como se describe en «Organización del panel izquierdo». Todas las acciones reciben automáticamente el identificador del servicio seleccionado (ver «Contexto del servicio» y la regla E1).
 
-* Cargos de personal.
-* Maquinaria.
-* Herramientas.
-* Otros catálogos corporativos autorizados.
-
-No debe mostrar acciones que requieran `servicio_id`.
-
-## Con servicio seleccionado
-
-Muestra los accesos propios del servicio actual. Todas las acciones deben recibir automáticamente el identificador del servicio seleccionado.
-
-El usuario no debe poder cambiar de servicio durante una acción iniciada desde este panel.
-
-## Panel central — Mi entorno
+### Panel central — Mi entorno
 
 Ruta:
 
@@ -46,11 +33,11 @@ Ruta:
 /mi-entorno
 ```
 
-Muestra las herramientas disponibles para el usuario según sus roles y permisos, aunque no pertenezcan únicamente a un solo rol.
+Muestra las herramientas disponibles para el usuario según sus roles y permisos, aunque no pertenezcan únicamente a un solo rol. Ver flujo 03.
 
 El grupo se determina mediante la prioridad definida por `slugEntornoDesdeRoles`, sin reemplazar la evaluación individual de permisos.
 
-## Panel derecho — herramientas y accesos rápidos
+### Panel derecho — herramientas y accesos rápidos
 
 Agrupa los accesos del servicio y las acciones rápidas por grupo o rol:
 
@@ -63,13 +50,28 @@ Agrupa los accesos del servicio y las acciones rápidas por grupo o rol:
 * Costos.
 * Otros grupos configurados.
 
+Un chip cuya pantalla existe abre esa pantalla con el servicio ya elegido (`?proyectoId=`). Un chip cuya pantalla no existe queda inerte, sin enlace, y el título dice «Sin pantalla todavía».
+
 Se implementa mediante los patrones existentes de `NAV_PROYECTO`, `GruposAccordion`, `PanelSecciones` y `WorkspaceShell`.
+
+## Asistente: elemento del shell fuera de los tres paneles
+
+El asistente no es un cuarto panel ni un chip. Es un elemento propio del shell (`WorkspaceShell`) que convive con los tres paneles sin alterar su estructura.
+
+* **Icono en toda pantalla del workspace**, con y sin servicio, en escritorio y móvil: un icono flotante (48 px) abajo a la derecha, dentro del panel central (`main`). Un clic despliega el panel del asistente y otro clic (o Escape, o el botón de cerrar) lo repliega.
+* **Panel desplegable no modal**: no bloquea el resto de la pantalla y queda por debajo de los cajones y los modales.
+* **Una sola instancia** en toda pantalla del workspace. Quedan fuera las pantallas sin shell: login y activar (no hay sesión) y el dashboard del portafolio (`app/programas/…`), que se reporta como excepción a Victor.
+* **No es un chip**: no figura en el registro de accesos ni en la matriz del flujo 14, y no depende de ningún permiso. Está disponible para todos los roles (no confundir con el rol de usuario «asistente»).
+* **Vista previa sin datos**: hoy solo muestra un aviso y un campo de texto sin efecto; no llama a ninguna API. Ver flujo 17 (no habilitado): el asistente del shell no es el agente allí descrito.
+* **Estado al navegar**: el shell vive en el layout del workspace, así que al navegar entre pantallas del workspace el asistente conserva su estado (abierto o replegado) y no se duplica.
+
+Posición, capas y patrón visual: `design.md` §3.
 
 ## Clasificación de chips
 
 Todos los chips deben clasificarse como uno de estos dos tipos.
 
-## Chips informativos
+### Chips informativos
 
 Permiten consultar, visualizar o descargar información. No crean ni modifican datos.
 
@@ -86,7 +88,7 @@ Ejemplos:
 * Consolidado RDTs.
 * RQ.
 
-## Chips de acción
+### Chips de acción
 
 Ejecutan una operación sobre el servicio actual.
 
@@ -104,32 +106,47 @@ La separación debe ser visual y funcional. Un chip informativo no debe activar 
 
 ## Organización del panel izquierdo
 
-Con servicio seleccionado, se recomienda organizarlo así:
+Con servicio seleccionado, el panel izquierdo tiene siete grupos:
 
 ```
 Servicio seleccionado
 ├── Alcance y presupuesto
+│   ├── OT
 │   ├── Alcance
 │   ├── Presupuesto
+│   ├── DP (Datos del proyecto)
 │   └── Paquetes de trabajo
 ├── Planificación
-│   └── Cronograma
-├── Recursos
+│   ├── Cronograma
+│   └── Plan Maestro
+├── Recursos del servicio
 │   ├── Cargos (HH)
-│   └── Equipos (HM)
+│   ├── Equipos (HM)
+│   ├── Materiales (c/c)
+│   └── Personal nuevo
 ├── Documentación
 │   ├── Planos
 │   └── PETS
 ├── Reportes
 │   ├── Consolidado RDTs
-│   └── RQ
-└── Acciones
-    ├── Generar RQ
-    ├── Crear RDT
-    └── Crear paquete de trabajo
+│   ├── Requerimiento (RQ)
+│   ├── PR
+│   ├── Dashboard
+│   ├── Curva S
+│   ├── Registro de costos
+│   └── Consolidado del servicio
+├── Acciones
+│   ├── Generar RQ
+│   ├── Crear RDT
+│   ├── Subir RDT
+│   └── Crear paquete de trabajo
+└── Servicio
+    ├── Ficha del servicio
+    ├── Editar servicio
+    └── Editar checklist
 ```
 
-La ubicación de un chip puede ajustarse a la arquitectura visual, pero no debe duplicarse sin una razón clara.
+La ubicación de un chip puede ajustarse a la arquitectura visual, pero no debe duplicarse sin una razón clara. La estructura vigente está en `src/lib/config/panel-izquierdo.ts`, derivada del registro de accesos.
 
 ## Paquetes de trabajo en el panel
 
@@ -155,37 +172,58 @@ servicio seleccionado → autorización → operación → retorno al mismo serv
 
 El contexto debe conservarse mediante:
 
-* Parámetro de ruta.
+* Parámetro de URL `?proyectoId=` (o ruta `/proyectos/[id]`).
 * Identificador seguro en sesión o contexto de servidor.
 * Validación de pertenencia del recurso al servicio.
 
 Nunca se debe confiar únicamente en un `servicio_id` enviado desde el navegador.
 
+**Acciones desde el panel (E1).** Las acciones (Generar RQ, Crear RDT, Subir RDT, Crear paquete) abren con el servicio seleccionado ya elegido en su selector de OT y no guardan nada al abrirse. El selector sigue siendo editable, pero **si se cambia el servicio dentro de la acción, la URL y los paneles lo siguen**: nunca hay dos servicios distintos a la vez.
+
 ## Reglas de navegación
 
 1. Sin servicio no se muestran acciones específicas del servicio.
-2. Con servicio se muestran solo accesos autorizados para ese servicio y usuario.
-3. Un chip oculto por permisos no debe ser accesible solo escribiendo la URL.
+2. Con servicio se muestran **todos** los accesos a todos los roles; los que el rol no puede usar se muestran **deshabilitados** (`aria-disabled`, atenuados, cursor no permitido y sin enlace), con un título que explica por qué. Ver no es acceder.
+3. Un chip deshabilitado no es accesible escribiendo la URL: el servidor valida igual que antes y rechaza la ruta directa. La barrera del servidor no cambia con lo que la interfaz muestre.
 4. Toda ruta debe validar autenticación, rol y pertenencia al servicio.
 5. Las acciones iniciadas desde el panel mantienen el servicio actual.
 6. Al volver a “Mi entorno”, se conserva el grupo y el contexto permitido.
-7. Las pantallas a pantalla completa deben ofrecer “Salir a Mi entorno” cuando corresponda.
+7. Las pantallas a pantalla completa ofrecen el chip «Salir a Mi entorno» y, con servicio seleccionado, este lleva a `/mi-entorno?proyectoId=…` (conserva el servicio); sin servicio lleva a `/mi-entorno`. El pie del panel izquierdo también tiene un acceso a Mi entorno siempre visible.
 8. Las notificaciones deben dirigir a `/notificaciones`, no duplicarse en otros paneles.
 9. Los estados y colores deben reutilizar las fuentes únicas existentes.
-10. Cada chip nuevo debe registrarse también en el flujo 14 de accesos y restricciones y en el artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT), que es la base de ese flujo (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`).
+10. Todo acceso nuevo se declara una sola vez en el registro único de accesos (ver «Tabla de accesos») y, además, en el artefacto «Matriz de permisos» (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT), base del flujo 14 (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Toda pantalla nueva sigue la «Política de interfaz nueva».
+
+### Entrar a una pantalla sin ver su contenido
+
+Poder entrar a una pantalla no equivale a ver todo su contenido: un rol puede usar una acción de una pantalla sin ver sus datos (por ejemplo, logística sube el registro de costos sin verlo). Hay además dos excepciones acotadas de la tabla 1 del flujo 14: el planner ve y gestiona Plan Maestro, y el supervisor de oficina técnica ve el DP (no lo importa). El detalle por rol vive solo en el flujo 14; aquí solo se fija que la interfaz debe mostrar el acceso deshabilitado o habilitado según esa tabla, sin inferir permisos de escritura a partir de poder ver.
+
+## Política de interfaz nueva
+
+Aprobada por Victor el 2026-09-30. **Toda pantalla nueva del workspace nace con esta política, sin que Victor tenga que pedirla chip por chip:**
+
+1. **Vive dentro del shell** (`WorkspaceShell`, los tres paneles); no crea layout paralelo.
+2. **Se declara una sola vez** en el registro único de accesos, con id, nombre, grupo, tipo (informativo o acción), ruta o acción, si requiere servicio (sí, opcional o no), permiso requerido y en qué paneles es visible. De ese registro salen automáticamente el panel izquierdo, el derecho, Mi entorno, el envío de `?proyectoId=`, el estado habilitado o deshabilitado y la matriz derivada del flujo 14. Si la pantalla no debe tener chip, se declara como excepción con motivo. Una prueba automática falla si hay una pantalla del workspace sin entrada ni excepción.
+3. **Conserva el servicio.** Recibe `?proyectoId=` (o vive bajo `/proyectos/[id]`), no lo pierde al navegar ni al redirigir (usa el helper de servicio) y lo preselecciona en su selector de OT o en su filtro N° OT. Cambiar el servicio dentro de la pantalla actualiza la URL.
+4. **Tiene tipo.** Un chip informativo consulta, visualiza o descarga y no muta datos; un chip de acción ejecuta una operación sobre el servicio actual y lo indica.
+5. **Permisos.** Define su función de permiso en `permisos.ts`, con ver, crear, editar, eliminar o archivar, subir, registrar avance y descargar evaluados por separado. La interfaz muestra deshabilitado, con título explicativo, lo que el rol no puede usar; el servidor valida autenticación, rol y pertenencia del recurso al servicio, nunca solo el `servicio_id` del navegador. Ver no implica poder.
+6. **Sale en la matriz del flujo 14**, derivada del registro; la tabla no se edita a mano.
+7. **Diseño.** Respeta `design.md`: componentes existentes, tablas con scroll horizontal y encabezado fijo, sin `max-w-*` en el contenedor de página, navegación móvil, `scope` en los `<th>`.
+8. **Estados y colores** de las fuentes únicas existentes (por ejemplo `claseBadgeEstado`); estados de carga, vacío y error contemplados.
+9. **Las notificaciones** van a `/notificaciones`, no se duplican en otros paneles.
+10. **Su Punch List incluye estos puntos por defecto**, con la prueba de cada permiso por los dos lados (cuenta con permisos altos y cuenta sin permisos de administración) y la prueba de humo del registro. La plantilla de ítems está en `docs/01-contexto-repositorio/05-diseno-y-ui.md`.
 
 ## Tabla de accesos
 
-El flujo 14 debe derivarse de los mismos identificadores usados por los paneles y permisos. No se deben mantener listas independientes que puedan quedar desactualizadas.
+La fuente de los paneles es el **registro único de accesos** (`src/lib/config/registro-accesos.ts`). El flujo 14 y el artefacto «Matriz de permisos» son la base de quién puede qué: el registro se ajusta a ellos, y la matriz que se deriva del registro solo se compara con el flujo 14 para detectar diferencias; no se edita a mano ni lo reemplaza.
 
-Cada acceso debería tener metadatos comunes:
+Cada acceso tiene metadatos comunes:
 
 * `id` o slug.
 * Nombre.
 * Grupo.
 * Tipo: informativo o acción.
 * Ruta o acción.
-* Requiere servicio: sí/no.
+* Requiere servicio: `sí`, `opcional` o `no`. «Opcional» aplica a las pantallas que abren sin servicio y lo preseleccionan si se abren con él (Plan Maestro, Status de Requerimiento, Consolidado RQ, Status de RDTs).
 * Permiso requerido.
 * Visible en panel izquierdo.
 * Visible en panel central.
@@ -209,48 +247,32 @@ No se debe inferir automáticamente que quien puede ver también puede modificar
 
 ## Estado de implementación
 
-## Existente o parcial
+Implementado:
 
-* `WorkspaceShell`.
-* `/mi-entorno`.
-* `EntornoTrabajoGrupo`.
-* `herramientasPorGrupo`.
-* `NAV_PROYECTO`.
-* `GruposAccordion`.
-* Panel derecho parcial.
-* Panel central existente.
+* `WorkspaceShell` con los tres paneles y el asistente como icono flotante.
+* `/mi-entorno` (`EntornoTrabajoGrupo`, `herramientasPorGrupo`).
+* Panel izquierdo completo: Recursos de empresa con botón mostrar/ocultar y siete grupos con servicio (27 chips: 17 con pantalla y 10 inertes sin enlace).
+* Panel derecho con chips que abren la pantalla con el servicio elegido.
+* Registro único de accesos (`registro-accesos.ts`, `panel-izquierdo.ts`, `panel-derecho.ts`) y prueba de cobertura de pantallas.
+* Chips deshabilitados con título por permiso.
 
-## Pendiente
-
-* Panel izquierdo completo.
-* Separación visual definitiva entre informativos y acciones.
-* Catálogos corporativos sin servicio.
-* Accesos propios del servicio seleccionado.
-* Inclusión de Paquetes de trabajo.
-* Matriz visual de permisos del flujo 14.
-* Registro centralizado de chips para evitar deuda de actualización.
+Pendiente: los 10 chips sin pantalla (sin enlace hasta que exista la pantalla).
 
 ## Criterios de aceptación
 
-* El panel izquierdo cambia correctamente según exista o no un servicio seleccionado.
-* Los recursos corporativos no se mezclan con recursos del servicio.
+* El panel izquierdo muestra Recursos de empresa (con mostrar/ocultar) con y sin servicio, y los accesos del servicio cuando hay uno seleccionado.
+* Los recursos de empresa no se mezclan con recursos del servicio.
 * Los chips informativos y de acción aparecen separados.
-* Las acciones quedan fijadas al servicio actual.
+* Las acciones quedan fijadas al servicio actual y, si se cambia, la URL y los paneles lo siguen.
 * Paquetes de trabajo aparece dentro del alcance del servicio.
-* Se respetan permisos en la interfaz y en el servidor.
-* Las rutas directas no permiten evadir permisos.
+* Todos los roles ven todos los chips; los no autorizados aparecen deshabilitados con título.
+* El servidor rechaza las rutas directas sin permiso, igual que antes.
 * El panel central muestra herramientas según permisos reales.
 * El panel derecho conserva los grupos existentes.
-* Cada nuevo chip puede incorporarse a la matriz de accesos.
-* Se conserva la navegación móvil y las tablas con scrol
+* Cada nuevo acceso se declara en el registro y sale en la matriz derivada.
+* El asistente aparece como icono en toda pantalla del workspace, una sola vez.
+* Se conserva la navegación móvil y las tablas con scroll.
 
-**No implementado como visión completa** (partes ya existen por separado, pero no bajo este diseño de conjunto). Pedido por Victor el 2026-09-16: 3 paneles que organizan los chips de acceso a la interfaz.
+Historia: pedido de Victor el 2026-09-16 (tres paneles que organizan los chips de acceso); ampliado el 2026-09-27 con el servicio persistente entre pantallas (plan `2026-09-27-paneles-servicio-persistente`).
 
-1. **Panel derecho** — divide las acciones en apartados por grupo/rol (Proyecto, Planificación, Supervisión operativa, SSOMA, etc.), cada uno con sus chips. Acceso rápido a la interfaz. Ya existe parcialmente: `NAV_PROYECTO` (`nav-proyecto.ts`) + `GruposAccordion` (`PanelSecciones.tsx`), renderizado en `WorkspaceShell.tsx`.
-2. **Panel central** — el "entorno del usuario" (`/mi-entorno`): muestra los apartados/chips a los que el usuario tiene acceso, no solo los de su propio rol. Ya existe: `EntornoTrabajoGrupo.tsx` + `herramientasPorGrupo` (`grupo-proceso.ts`). También abarca otras funciones además de chips (ej. crear usuario, según permiso).
-3. **Panel izquierdo — NO EXISTE TODAVÍA.**
-   - Sin servicio seleccionado: recursos de la empresa (catálogo, no por proyecto) — por ahora 3 campos: cargos de personal, maquinaria, herramientas.
-   - Con un servicio seleccionado: cambia a mostrar los chips PROPIOS de ese servicio (no un desplegable de OT — ya se entiende que es "su alcance"): Alcance, Presupuesto, Cronograma, Cargos (HH), Equipos (HM), Planos, PETS, Consolidado RDTs, RQ.
-   - Dos tipos de chip, separados visualmente: **informativos** (solo ver + descargar, sin modificar) y **acciones** (van debajo, disparan una acción sobre ESE servicio sin opción de cambiar de servicio — ej. Generar RQ, Crear RDTs ya fijados al servicio actual).
-
-Flujo relacionado: 14 (Accesos y restricciones) — la tabla de roles×accesos se deriva de estos mismos paneles.
+Flujo relacionado: 14 (Accesos y restricciones).

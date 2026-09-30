@@ -2,6 +2,8 @@
 
 Independiente de la generación PR. Excel DP → `proyecto_dp`. Spec `2026-08-16-dp-import`.
 
+**Quién importa:** administrador y jefe de proyectos, sobre un servicio a su cargo (fila «Importar DP» de la tabla 2 del [flujo 14](14-accesos-y-restricciones.md)). Ver y exportar el DP sigue a la tabla 1 y a la nota 7.
+
 ## Arquitectura de validación: 3 fases (Victor, 2026-09-17)
 
 Al importar un DP, el análisis corre en 3 fases secuenciales. Ninguna fase se salta: la 2 solo corre si la 1 no encontró nada, la 3 solo corre si la 2 extrajo datos con éxito.

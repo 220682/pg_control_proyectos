@@ -6,6 +6,8 @@ Tabla visual con **columnas = roles** y **filas = accesos**. Pedido por Victor e
 
 El instrumento editable es el artefacto **«Matriz de permisos»** (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT). Este archivo conserva la última versión aprobada (aprobación del 2026-09-28, 16:02 UTC, versión 17 de las marcas del artefacto). Es la base de los accesos y está ligado al flujo 16 (Paneles).
 
+**Actualización 2026-09-30 (tarea paneles-servicio-persistente, F7-B):** solo se añadieron las filas de descargas decididas (tabla 2, nota 7), la nota del asistente del shell y se retiró la marca «por construir» de Recursos (ya construido); ninguna decisión aprobada cambió.
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -43,7 +45,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Panel izquierdo del servicio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
-¹ **Confirmado por Victor (2026-09-28): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven los roles que corresponde** (los 5 de esta tabla, más las dos excepciones). Hoy el código todavía muestra economía en los dos modos (flujo 11); hasta que el Spec futuro de economía separe realmente los datos de cada modo (`planes-futuros.md`), esta fila es el estado **objetivo**, no el actual — el informe "antes/después por rol" de la fase F0 del plan debe señalar esta brecha. Quién alterna entre Parcial y Completo queda por confirmar; propuesta: administrador y jefe de proyectos, igual que Editar servicio.
+¹ **Confirmado por Victor (2026-09-28): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven los roles que corresponde** (los 5 de esta tabla, más las dos excepciones). Hoy el código todavía muestra economía en los dos modos (flujo 11); hasta que el Spec futuro de economía separe realmente los datos de cada modo (`planes-futuros.md`), esta fila es el estado **objetivo**, no el actual — el informe "antes/después por rol" de la fase F0 del plan debe señalar esta brecha. Quién alterna entre Parcial y Completo (Victor, C35, 2026-09-29): lo alternan los roles que ven datos económicos (`puedeVerEconomia`: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos); los demás lo verían fijo en Parcial, que es del plan futuro (`planes-futuros.md`).
 
 ² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
 
@@ -68,17 +70,17 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Subir documento del proyecto (catálogo AL_INICIO/CIERRE) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | **Recursos (Personal, Cargos, Equipos, Causas CNC)** ⁶ | | | | | | | | | | | | | | |
 | Crear personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Editar personal existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Eliminar o desactivar personal **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Crear cargo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Editar cargo existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Eliminar o desactivar cargo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Crear equipo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Editar equipo existente **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Eliminar o desactivar equipo **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar personal existente | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Crear cargo | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar cargo existente | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar cargo | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Crear equipo | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar equipo existente | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Eliminar o desactivar equipo | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Crear causa CNC | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Activar / desactivar causa CNC | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
-| Editar la descripción de una causa CNC **(por construir)** | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
+| Editar la descripción de una causa CNC | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
@@ -99,6 +101,15 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Descargar consolidado RQ (PROM-GP-004) ⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | No (descarga) |
 | Subir registro de costos por servicio (solo subir; no ve ni descarga el contenido) | — | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Descargar registro de costos por servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (descarga) |
+| **Descargas** ⁷ | | | | | | | | | | | | | | |
+| Exportar DP (Excel o PDF) | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — | No (descarga) |
+| Descargar RDTs según filtro (ZIP) y listado de RDTs (PDF PROM-GP-0006) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar el PDF de un RDT estructurado | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar el archivo de un RDT subido (PDF o foto) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar listado RQ según filtro (PDF PROM-GP-008) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar el PDF individual de un RQ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar el formato vacío PROM-GP-008 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar la plantilla de cronograma (.xlsx generada desde el DP) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
 
 ³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
 
@@ -106,13 +117,15 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ⁵ Todos los roles ven el consolidado RQ (tabla 1); la descarga se dejó como estaba: administrador, jefe de proyectos, jefe de oficina técnica y logística. Ampliarla está **por decidir**.
 
-⁶ **Aprobado por Victor en el artefacto (2026-09-28), tras su propio recorrido de las interfaces del sistema.** Estado real, verificado en el código (no supuesto) antes de la propuesta: **Personal** solo permitía crear (sin editar ni eliminar); **Cargos** y **Equipos** eran de solo lectura (nadie podía crear, editar ni eliminar); **Causas CNC** permitía crear y activar/desactivar (sin editar el texto, sin borrado real). Las filas marcadas **"(por construir)"** son trabajo nuevo: no existe hoy ninguna pantalla ni API para ellas. Las que no llevan esa marca (crear personal, crear causa CNC, activar/desactivar causa CNC) ya existen y solo se confirma el rol.
+⁶ **Aprobado por Victor en el artefacto (2026-09-28), tras su propio recorrido de las interfaces del sistema.** Estado real, verificado en el código (no supuesto) antes de la propuesta: **Personal** solo permitía crear (sin editar ni eliminar); **Cargos** y **Equipos** eran de solo lectura (nadie podía crear, editar ni eliminar); **Causas CNC** permitía crear y activar/desactivar (sin editar el texto, sin borrado real). Las filas que entonces se marcaron «por construir» (editar/eliminar Personal; crear/editar/eliminar Cargos y Equipos; editar el texto de una causa CNC) **ya están construidas** (fase F5D del plan de paneles, 2026-09-30): las 9 acciones existen, por eso se retiró la marca, sin cambiar quién puede ejecutarlas.
+
+⁷ **Descargas decididas por Victor (2026-09-30).** Las tres propuestas del artefacto (RDTs y listado de RDTs, listado RQ, exportar DP) quedan confirmadas. Las cinco descargas que el código ya tenía y la matriz no listaba (plantilla de cronograma, PDF de un RDT estructurado, archivo de un RDT subido, PDF individual de un RQ, formato vacío PROM-GP-008) quedan escritas como **los 13 roles; un usuario sin rol conocido queda rechazado**. Exportar DP sigue a «ver DP» (tabla 1). El registro de costos y el consolidado RQ se decidieron el 2026-09-28 (filas de arriba y nota 5). Sin adjuntos de RQ ni documentos del checklist: hoy solo se suben (no hay ruta de descarga por API; la subida es la acción ya listada). *Brecha con el código, ya cumplida (F6-R1, commit `0690c81`, 2026-09-30):* la plantilla de cronograma (`/api/cronograma/plantilla`) y `/api/requerimientos/formato-vacio` ahora responden a los 13 roles y rechazan (403) a quien no tiene rol conocido.
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 
-- **Administrador y jefe de proyectos:** acceso a todas las interfaces. En acciones, no hay una regla general de "todo menos N" — cada acción se decidió una por una en el artefacto. El jefe de proyectos pasa a poder, entre otras, adjudicar y crear programas y portafolios, archivar proyectos, eliminar contenedores, editar servicio, editar checklist, importar DP, subir documento del proyecto, editar su perfil y ejecutar los borrados definitivos de RDT y RQ. **No** puede: asignar rol administrador ni "Ver como" (exclusivas de administrador, por diseño de sistema), ni actualizar estado de RQ ni subir el registro de costos (tareas operativas de logística) — **por confirmar con Victor si deben agregarse**.
+- **Administrador y jefe de proyectos:** acceso a todas las interfaces. En acciones, no hay una regla general de "todo menos N" — cada acción se decidió una por una en el artefacto. El jefe de proyectos pasa a poder, entre otras, adjudicar y crear programas y portafolios, archivar proyectos, eliminar contenedores, editar servicio, editar checklist, importar DP, subir documento del proyecto, editar su perfil y ejecutar los borrados definitivos de RDT y RQ. **No** puede: asignar rol administrador ni "Ver como" (exclusivas de administrador, por diseño de sistema), ni actualizar estado de RQ ni subir el registro de costos (tareas operativas de logística; decidido por Victor el 2026-09-29).
 - **Jefe de oficina técnica:** conserva adjudicar, confirmar transición, subir RDT, derivar RQ y descargar el consolidado RQ; **gana** crear RDT y validar o rechazar RDT; **deja de** archivar o eliminar proyectos, editar servicio, editar checklist y editar su perfil.
 - **Supervisor de oficina técnica:** ve el DP pero **ya no lo importa** (importar DP queda para administrador y jefe de proyectos).
 - **Administrador:** ahora puede crear RQ y actualizar el estado de RQ, además de lo que ya hacía.
@@ -123,11 +136,15 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 
 ### Puntos por decidir
 
-1. **Descargas.** Las descargas son acciones y se están completando en el artefacto (sección «Descargas»). Ya decidido: registro de costos (administrador y jefe de proyectos) y consolidado RQ (como estaba, nota 5). Siguen como **propuesta a revisar** en el artefacto, y aún no están en este flujo: descargar RDTs y listado de RDTs (ZIP y PDF PROM-GP-0006), descargar listado RQ (PDF PROM-GP-008) y exportar DP. Al aprobarlas se agregan aquí.
+1. **Descargas.** Resuelto el 2026-09-30: todas las descargas están decididas y escritas en la tabla 2 (nota 7). Sin puntos abiertos, salvo la brecha del código que la nota 7 indica.
 2. **Diferencias con el código actual.** La implementación debe alinear `permisos.ts` a esta matriz; el informe «antes/después por rol» lo produce la fase F0 del plan `docs/02-trabajo-activo/01-planes/2026-09-27-paneles-servicio-persistente.md`.
-3. Otros flujos que asignan al jefe de oficina técnica el ciclo de vida del proyecto o reservan los borrados al administrador (por ejemplo 02, 05, 06, 08, 12 y 13) contradicen esta matriz en los puntos de arriba. Se ajustan al cierre del plan, con consulta a Victor por cada contradicción (política de coherencia y trazabilidad).
-4. Si el jefe de proyectos también debe poder actualizar estado de RQ y subir registro de costos, hoy exclusivos de logística.
-5. Quién alterna el Dashboard entre Parcial y Completo (ver nota ¹).
+3. **Otros flujos.** Cerrado el 2026-09-30: los flujos 05, 06, 08, 12 y el resto de los alcanzados se reescribieron con la aprobación de Victor según esta matriz; los flujos 02 y 13 no citan el ciclo de vida del proyecto ni reservan los borrados al administrador, y no requirieron cambios.
+4. **Estado de RQ y registro de costos para el jefe de proyectos.** Cerrado (Victor, 2026-09-29): siguen siendo solo de logística (más el administrador en el estado de RQ, ya en la tabla 2).
+5. **Quién alterna el Dashboard entre Parcial y Completo.** Cerrado (Victor, C35, 2026-09-29): ver nota ¹.
+
+### Asistente del shell (excepción, sin fila en las tablas)
+
+El asistente (icono flotante y panel desplegable del shell, flujo 16) **no es una interfaz ni una acción con permiso**: no figura en el registro de accesos ni en las tablas 1 y 2, y está disponible para los 13 roles, sin datos ni API (flujo 17: agente no habilitado). No confundir con el **rol** de usuario «asistente» (columna Asist). Se anota aquí y en el artefacto solo por trazabilidad.
 
 ### Otros grupos del nav (Costos, Oficina Técnica, Administración, SSOMA)
 

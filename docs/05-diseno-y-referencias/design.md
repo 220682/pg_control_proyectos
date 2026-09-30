@@ -1,5 +1,5 @@
 ---
-version: 1.2.4
+version: 1.4.0
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
 actualizado: 2026-09-20
@@ -85,6 +85,15 @@ La aplicación usa esta estructura fija (`src/components/ui/WorkspaceShell.tsx`)
 <aside className="w-64">...</aside>   {/* herramientas/grupos, fija */}
 ```
 
+### Asistente flotante (cuarto elemento del shell)
+
+Aprobado por Victor el 2026-09-30 como excepción a «estructura fija»: el asistente no es un cuarto panel ni un layout paralelo. Regla funcional en `docs/04-flujos-de-negocio/16-paneles.md` («Asistente: elemento del shell fuera de los tres paneles»).
+
+- **Posición:** icono flotante de 48 px (`h-12 w-12`, redondo) abajo a la derecha **dentro de `<main>`** (`absolute bottom-4 right-4`, `lg:right-6`, con `safe-area-inset-bottom`), no sobre los paneles laterales.
+- **Patrón:** botón que alterna un panel desplegable **no modal** (`role="dialog"` con `aria-modal="false"`, `aria-expanded`, `aria-controls`; Escape lo cierra y devuelve el foco al icono). Ancho máximo 24 rem y alto acotado a la ventana.
+- **Capas:** `z-40`, **por debajo** de los cajones móviles y los modales (`z-50`). Una sola instancia en toda pantalla del workspace; no aparece en login, activar ni en el dashboard del portafolio.
+- No se usa como precedente para otros botones flotantes: cualquier otro elemento fuera de los tres paneles requiere aprobación.
+
 ### Contenido de página
 
 El contenido de cada página vive dentro de:
@@ -99,7 +108,7 @@ El contenido de cada página vive dentro de:
 
 - El panel central ya es flexible mediante `flex-1 min-w-0`.
 - **Prohibido** usar `max-w-*` en el contenedor principal de una página: genera espacio muerto antes del panel derecho (ver caso real corregido en Status de RDTs, 2026-09-20).
-- No crear otro layout global, sidebar ni wrapper de ancho máximo sin aprobación.
+- No crear otro layout global, sidebar ni wrapper de ancho máximo sin aprobación (el asistente flotante de arriba es la única excepción aprobada).
 - Mantener densidad de workspace: la interfaz es una herramienta de trabajo, no una landing page.
 - Si una pantalla necesita lectura extensa, resolver el ancho dentro de su contenido y sin romper el panel central.
 
@@ -201,6 +210,18 @@ La densidad es deliberadamente compacta.
 ### Selects
 
 No hay `<Select>` genérico. Usar `<select>` HTML nativo y mapas de etiqueta existentes, siguiendo el patrón de `SelectFiltro.tsx`.
+
+### Chip de acceso deshabilitado y registro de accesos
+
+Aprobado por Victor el 2026-09-30. Los chips de los paneles (izquierdo, derecho y Mi entorno) salen del **registro único de accesos** (`src/lib/config/registro-accesos.ts`); no se declaran a mano en cada panel. Estados de un chip (`PanelSecciones.tsx`):
+
+| Estado | Cuándo | Aspecto |
+|---|---|---|
+| Activo | El rol tiene permiso y la pantalla existe | Enlace normal con `?proyectoId=` si hay servicio |
+| Deshabilitado | La pantalla existe y el rol no tiene permiso | `aria-disabled="true"`, `opacity-40 cursor-not-allowed`, sin enlace y con `title` que explica el motivo (por permiso) |
+| Inerte | La pantalla aún no existe | Sin enlace, título «Sin pantalla todavía» |
+
+Un chip nunca se oculta por permisos: se muestra deshabilitado (ver no es acceder). La política completa para pantallas nuevas (registro, prueba de cobertura, conservar el servicio, permisos, matriz) está en `docs/04-flujos-de-negocio/16-paneles.md`, sección «Política de interfaz nueva», y la plantilla de Punch List en `docs/01-contexto-repositorio/05-diseno-y-ui.md`.
 
 ### Crear componentes nuevos
 
@@ -443,6 +464,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.4.0 | 2026-09-30 | Con confirmación de Victor (regla de evolución): §3 documenta el asistente flotante (posición, capas, patrón) como excepción a «estructura fija»; §5 documenta el chip deshabilitado, el registro único de accesos y la política de interfaz nueva. |
 | 1.3.0 | 2026-09-23 | Sección 13 nueva: "Gráficos de líneas" (8 reglas), a partir del precedente Curva S (Fase 3). Antigua sección 13 "Control de calidad" pasa a 14, "Historial de cambios" pasa a 15. |
 | 1.2.4 | 2026-09-20 | Sección 8 corregida otra vez: el fix de 1.2.3 (sticky en el `<tr>` completo) causaba filas superpuestas/tapadas al hacer scroll — peor que el bug original. Movido el `sticky` de la fila a cada celda (`<th>`), que es el patrón ya probado en `TablaConsolidadoRdts.tsx`. Regla añadida: sticky siempre va en la celda, nunca en la fila, con más de un encabezado apilado. |
 | 1.2.3 | 2026-09-20 | Dos correcciones sobre lo publicado hace un momento, tras feedback de Victor en vivo: (1) sección 8 — encabezados de tabla de dos filas necesitan las DOS filas sticky y apiladas (`top-0`/`h-6` + `top-6`), no solo la primera, porque la fila de filtros desaparecía al bajar el scroll; (2) sección 4.3 — el `gap-2` del contenedor se sumaba al `mb-2` propio de `CabeceraPagina`, por eso la reducción de espacio no se notaba; ahora es una sola medida por bloque (`mb-2`), sin `gap` en el contenedor. |

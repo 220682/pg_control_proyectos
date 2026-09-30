@@ -56,8 +56,12 @@ no hay con qué partida calcular metrado × precio.
 
 ## Reglas fijas (Victor)
 
-1. Pantalla propia con chip propio (`/proyectos/{id}/curva-s`, grupo
-   Planificación) — no una sección del Dashboard.
+1. Pantalla propia con chip propio (`/proyectos/{id}/curva-s`) — no una
+   sección del Dashboard. El chip se declara una sola vez en el registro
+   único de accesos (flujo 16) y se ubica por panel: **Reportes** en el
+   panel izquierdo (con servicio abierto) y **Planificación** en el derecho;
+   no está en Mi entorno (flujo 03). Lo ven habilitado los roles con datos
+   económicos; los demás lo ven deshabilitado (flujo 16).
 2. Todo en USD, rotulado como costo directo (reglas 9 y 11 de PR Fase 2).
 3. **Sin Plan Maestro aprobado no hay PV** — la pantalla lo dice
    explícitamente y no dibuja una curva de PV inventada (patrón "Pendiente"
@@ -89,7 +93,7 @@ El punto de cada semana es el acumulado a su día de cierre (viernes), o al
 ## Endpoint
 
 `GET /api/curva-s?proyectoId=...&desde=...&hasta=...` — validación en
-servidor: rol (todos menos asistente, igual que PR/Plan Maestro) y alcance
+servidor: rol (los de datos económicos: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos — `puedeVerCurvaS`, tabla 1 del [flujo 14](14-accesos-y-restricciones.md)) y alcance
 sobre la OT (`validarEscrituraProyecto`, con bypass de administrador). Sin
 `desde`/`hasta`, el servidor calcula "todo el servicio" a partir de los
 datos reales (mínimo entre el primer día del Plan Maestro aprobado y el
@@ -131,4 +135,4 @@ y no se mezcla con SPI.
 | Endpoint | `src/app/api/curva-s/route.ts` |
 | Pantalla | `src/app/(workspace)/proyectos/[id]/curva-s/page.tsx` |
 | Componentes | `src/components/curva-s/PantallaCurvaS.tsx`, `GraficoCurvaS.tsx` |
-| Ítem de navegación | `src/lib/config/nav-proyecto.ts` (clave `curva-s`, grupo Planificación) |
+| Acceso (chip) | `src/lib/config/registro-accesos.ts` (id `curva-s`, grupo Planificación; derivado en `nav-proyecto.ts` y `panel-izquierdo.ts`) |

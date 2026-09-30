@@ -29,3 +29,4 @@ Rehecho en la Fase 5 de la reestructuración documental (2026-09-27), una fila p
 | `tests` | [`2026-09-23-tests-contadores-congelados.md`](2026-09-23-tests-contadores-congelados.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
 | `worktrees/turbopack` | [`2026-09-23-turbopack-worktree-junction.md`](2026-09-23-turbopack-worktree-junction.md) | Promovido a `01-contexto-repositorio/03-entorno-git-y-worktrees.md` |
 | `principios` | [`2026-09-23-verificar-antes-de-afirmar.md`](2026-09-23-verificar-antes-de-afirmar.md) | Promovido (principio universal) a `00-estandar-agentes/01-principios-y-seguridad.md` |
+| `sesiones/contexto` | [`2026-09-30-plan-paneles-servicio-persistente-tandas.md`](2026-09-30-plan-paneles-servicio-persistente-tandas.md) | Pendiente de promoción — lecciones de las tandas del plan paneles-servicio-persistente y su medición |

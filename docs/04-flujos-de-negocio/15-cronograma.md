@@ -10,9 +10,9 @@ Un cronograma por servicio (`proyecto_cronograma`, `proyecto_id` como llave — 
 
 Predecesoras/sucesoras son informativas: su ausencia no marca la fila como incompleta.
 
-**Quién sube/reemplaza:** Geren (jefe_de_proyectos, administrador) y Planner. **Quién ve:** todos menos asistente.
+**Quién sube/reemplaza:** administrador, jefe de proyectos y Planner (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)), sobre un servicio a su cargo. **Quién ve:** los 13 roles (el cronograma no lleva datos económicos, tabla 1); sin alcance por OT al leer (R30). **Descargar la plantilla** (.xlsx generada desde el DP): los 13 roles; un usuario sin rol conocido queda rechazado.
 
-Pantalla: `/cronograma` (selector de OT + carga + informe). Chip **Cronograma**, único en el apartado "Planificación" del entorno del usuario — aparece en todos los grupos salvo deshabilitado para asistente. También en el panel de accesos por servicio (`nav-proyecto.ts`, grupo Planificación).
+Pantalla: `/cronograma` (selector de OT + carga + informe). El chip **Cronograma** se declara una sola vez en el registro único de accesos (flujo 16), grupo Planificación, y aparece en el panel izquierdo (con servicio), en el panel derecho y en Mi entorno. **Sigue exigiendo un servicio elegido** (`requiereServicio: 'si'`): al abrir se preselecciona el servicio de `?proyectoId=`, y Mi entorno lo envía. Ya no hay un chip propio «del entorno del usuario» que dependa del grupo: los diez chips de Mi entorno son los mismos en todos los grupos (flujo 03).
 
 **Duración del servicio:** las tarjetas de Portafolio y el Dashboard de servicio ahora prefieren la duración calculada del Cronograma (fecha de inicio más temprana → fecha de fin más tardía) sobre la fórmula del presupuesto (que hoy siempre da sin dato, ver flujo 11).
 

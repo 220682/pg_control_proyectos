@@ -56,10 +56,15 @@ input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent)}
 .e-datos{display:flex;flex-direction:column;flex:1;min-height:0}
 /* shell simulado: paneles laterales ocultables (solo escritorio) */
 .cuerpo{flex:1;min-height:0;display:flex;gap:8px}
-.lateral{flex:0 0 120px;border:1px dashed var(--line);border-radius:8px;padding:8px;font-size:10px;color:var(--text-2)}
-.cuerpo.sin-lat .lateral{display:none}
-.centro{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;padding-bottom:58px}
-.asistente{position:absolute;right:10px;bottom:8px;width:44px;height:44px;border-radius:50%;padding:0;background:var(--accent-2);border-color:var(--accent-2);color:#fff;font-weight:700;z-index:40}
+.pnl{position:relative;flex:0 0 120px;display:flex}
+.lateral{flex:1;border:1px dashed var(--line);border-radius:8px;padding:8px 24px 8px 8px;font-size:10px;color:var(--text-2)}
+.pnl.der .lateral{padding:8px 8px 8px 24px}
+/* un solo icono por panel, en su borde interior; oculto: queda una tira de 24 px con el icono */
+.pnl .tg{position:absolute;top:4px;width:20px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;background:var(--bg-base);z-index:6}
+.pnl.izq .tg{right:3px}.pnl.der .tg{left:3px}
+.pnl.oculto{flex:0 0 24px}.pnl.oculto .lateral{display:none}.pnl.oculto .tg{left:2px;right:auto}
+.centro{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}
+.asistente{position:absolute;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;padding:0;background:var(--accent-2);border-color:var(--accent-2);color:#fff;font-weight:700;z-index:40}
 /* indicador global */
 .global{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--bg-elevated)}
 .global progress{width:160px;height:8px;accent-color:var(--accent)}
@@ -83,6 +88,7 @@ thead .fx{z-index:5}
 .fx-cu{width:70px;min-width:70px;max-width:70px}
 .fx-hh{width:66px;min-width:66px;max-width:66px}
 .fx-bac{width:70px;min-width:70px;max-width:70px}
+.fx-disc{width:96px;min-width:96px;max-width:96px}
 .fx-falta{width:124px;min-width:124px;max-width:124px}
 .linea{border-right:3px solid var(--warn)}
 .lbl{display:block;font-size:10px;line-height:1.15;font-weight:600}
@@ -113,7 +119,7 @@ tr.dir td.fx-wbs{border-left:4px solid transparent}
 details.notas{margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text-2);flex:0 0 auto;max-height:30vh;overflow:auto}
 details.notas summary{cursor:pointer;color:var(--text)}
 details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
-@media (max-width:1023px){.lateral{display:none}#btn-lat{display:none}}
+@media (max-width:1023px){.pnl{display:none}}
 @media (max-width:640px){
  body{overflow:auto;height:auto;min-height:100%}
  .pantalla{overflow:visible}
@@ -148,7 +154,6 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="cab"><nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Plan Maestro</nav>
 <div class="fila" style="margin-bottom:4px"><h1>Plan Maestro</h1><span class="tag warn" id="tag-estado">BORRADOR</span>
 <span class="muted" id="sub-estado">Editable: escribe el metrado por día en las filas «Prog.».</span><span class="grow"></span>
-<button type="button" id="btn-lat" aria-pressed="false" title="Ocultar los paneles laterales del servicio para dar ancho al lienzo">Ocultar paneles laterales</button>
 <button type="button" id="btn-guardar">Guardar borrador</button>
 <button type="button" class="primary" id="btn-crear" aria-disabled="true" aria-describedby="estado-global">Crear Plan Maestro</button>
 <button type="button" id="btn-version" hidden title="Solo administrador y jefe de proyectos, con motivo (P5)">Crear versión nueva…</button></div>
@@ -161,19 +166,19 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <button type="button" class="pill" id="sw-real" aria-pressed="true" title="Mostrar u ocultar las subfilas «Real»">Real: sí</button>
 <button type="button" class="pill" id="btn-plegar" title="Plegar todas las semanas">Plegar semanas</button>
 <button type="button" class="pill" id="btn-expandir" title="Expandir todas las semanas">Expandir semanas</button>
-<span class="muted">Semana de sábado a viernes · ámbar = línea divisoria de columnas fijas</span></div>
+<span class="muted">Semana de sábado a viernes · línea amarilla (la de advertencia) = divisoria de columnas fijas</span></div>
 </div>
 <div class="global" id="estado-global" role="status" aria-live="polite"><strong>Repartido</strong><progress id="prog-g" max="100" value="0" aria-label="Porcentaje del metrado del servicio ya repartido"></progress><span id="pct-g"></span><span id="txt-g"></span></div>
 <div class="msg err" id="msg-crear" role="alert" hidden><span aria-hidden="true">&#9888;</span><div><strong>No se puede crear el Plan Maestro todavía</strong><br><span id="msg-crear-txt"></span></div></div>
 <div class="msg info" id="msg-ok" role="status" hidden><span aria-hidden="true">&#10003;</span><div>Plan Maestro creado (simulado): la versión pasa a APROBADO y queda en solo lectura.</div></div>
 <div class="msg warn" id="msg-ext" role="status" hidden><span aria-hidden="true">&#9888;</span><div><strong>Real fuera del rango programado</strong><br>La ejecución real de «Eliminación de material» llegó a la semana S5, posterior al último día programado (S4). Se agregó la semana S5 (extendida) para mostrarla; lo programado no cambia.</div></div>
 <div class="cuerpo" id="cuerpo">
-<aside class="lateral" aria-label="Panel izquierdo del servicio (simulado)">Panel izquierdo (navegación)</aside>
+<div class="pnl izq" id="pl-izq"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><aside class="lateral" aria-label="Panel izquierdo del servicio (simulado)">Panel izquierdo (navegación)</aside></div>
 <div class="centro">
 <div class="lienzo" id="lienzo" tabindex="0" role="region" aria-label="Lienzo del Plan Maestro: desplazar a la derecha para ver todos los días"><table id="tabla"><caption class="sr">Plan Maestro: filas de partidas a la izquierda y una columna por día agrupada por semana a la derecha</caption><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
-<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente (no tapa columnas: la franja inferior está reservada)">IA</button>
+<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
 </div>
-<aside class="lateral" aria-label="Panel derecho del servicio (simulado)">Panel derecho (herramientas)</aside>
+<div class="pnl der" id="pl-der"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><aside class="lateral" aria-label="Panel derecho del servicio (simulado)">Panel derecho (herramientas)</aside></div>
 </div>
 </div>
 <div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el Plan Maestro del servicio…</p>
@@ -181,13 +186,13 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el Plan Maestro</strong><br>No fue posible traer las filas y los metrados de este servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
 <div class="e-vacio"><div class="vacio"><strong>Este servicio aún no tiene partidas para programar</strong><p>El lienzo se arma con las partidas declaradas en Paquetes de trabajo (en paquetes o directas). Declara primero actividad, partida y metrado.</p><p style="margin-top:8px"><button type="button" class="primary">Ir a Paquetes de trabajo</button></p></div></div>
 <details class="notas"><summary>Notas de esta maqueta: columnas, estados, móvil (390 px) y accesibilidad</summary><ul>
-<li><strong>Columnas fijas</strong> a la izquierda de la línea ámbar (sticky de celda): WBS, descripción, Und., metrado, costo unitario y HH por unidad. «Falta repartir» acompaña a cada fila. No hay columnas de Tiempo (duración, inicio, fin). «Personalizar campos» agrega el BAC de la fila (opcional).</li>
+<li><strong>Columnas fijas</strong> a la izquierda de la línea ámbar (sticky de celda): WBS, descripción, Und., metrado, costo unitario y HH por unidad. «Falta repartir» acompaña a cada fila. No hay columnas de Tiempo (duración, inicio, fin). «Personalizar campos» agrega dos columnas opcionales y ninguna otra: el BAC de la fila y la <strong>Disciplina</strong> (catálogo simulado: Civil, Mecánica, Eléctrica, Instrumentación; la lista real la dará Victor). La línea divisoria usa el amarillo de advertencia que ya existe (<code>--warn</code>); la columna de metrado se rotula «Met.»; la semana plegada se deja como está hoy (solo sus columnas de totales).</li>
 <li><strong>Por semana, seis columnas</strong> rotuladas con nombre y unidad: Físico semanal (%), Físico acum. (%), Económico semanal ($), Económico acum. ($), HH semanal (h), HH acum. (h). «Acumuladas: sí/no» oculta las tres acumuladas. El &#9662; de cada semana la pliega (queda solo con sus totales).</li>
 <li>Paquete 2 está «por avance del paquete»: solo se escribe el metrado de la guía (Relleno); Suministro de afirmado se calcula con el mismo % y queda en solo lectura.</li>
 <li>Físico de una partida = metrado ÷ contractual; físico de paquete, nivel y total = económico ÷ BAC de ese grupo (opción A). Totales del ejemplo 1: 22,56 / 48,78 / 76,22 / 100 %, $ 8 200 y 172 HH. Escribe un metrado y todo se recalcula.</li>
 <li>Subfilas «Real» (solo lectura, del RDT validado) por paquete × partida; HH reales de ejemplo (dato por construir, P16). Ejemplo 3 muestra la semana extendida.</li>
 <li>«Crear Plan Maestro» queda deshabilitado hasta el 100 %; al pulsarlo deshabilitado el mensaje dice qué partidas faltan. APROBADO: todo en solo lectura.</li>
-<li>Móvil: solo WBS y descripción quedan fijas; los demás campos y los días se desplazan en horizontal. Los paneles laterales ya son un cajón (el botón «Ocultar paneles» es solo de escritorio). Accesibilidad: <code>th scope</code> (col / colgroup), foco visible, cada casilla de metrado con <code>aria-label</code> (partida y día), estados con texto e icono, indicador global con <code>aria-live</code>.</li></ul></details>
+<li>Móvil: solo WBS y descripción quedan fijas; los demás campos y los días se desplazan en horizontal. Los paneles laterales ya son un cajón (el icono de ocultar, uno por panel en su borde interior, es solo de escritorio). El asistente es un icono flotante que no reserva espacio: el lienzo usa todo el alto. Accesibilidad: <code>th scope</code> (col / colgroup), foco visible, cada casilla de metrado con <code>aria-label</code> (partida y día), estados con texto e icono, indicador global con <code>aria-live</code>.</li></ul></details>
 </main>
 <script>
 (function(){
@@ -255,10 +260,11 @@ function fHH(n){return fmt(n,2,true);}
 function fM(n){return fmt(n,2,true);}
 /* ---------- estructura de filas ---------- */
 var ALL=P.map(function(p){return p.id;});
-var FX=[{k:'wbs',t:'WBS'},{k:'desc',t:'Descripción'},{k:'und',t:'Und.'},{k:'met',t:'Metrado'},{k:'cu',t:'Costo unit. ($)'},{k:'hh',t:'HH por unidad (h)'},{k:'bac',t:'BAC ($)',opt:true},{k:'falta',t:'Falta repartir'}];
-var vis={wbs:1,desc:1,und:1,met:1,cu:1,hh:1,bac:0,falta:1};
+var FX=[{k:'wbs',t:'WBS'},{k:'desc',t:'Descripción'},{k:'und',t:'Und.'},{k:'met',t:'Met.'},{k:'cu',t:'Costo unit. ($)'},{k:'hh',t:'HH por unidad (h)'},{k:'disc',t:'Disciplina',opt:true},{k:'bac',t:'BAC ($)',opt:true},{k:'falta',t:'Falta repartir'}];
+var vis={wbs:1,desc:1,und:1,met:1,cu:1,hh:1,disc:0,bac:0,falta:1};
 var MIN={wbs:1,desc:1};
 var plegS={},plegF={},acum=true,conReal=true,aprobado=false;
+var DISC={p1:'Civil',p2:'Civil',exc:'Civil',cam:'Civil',ace:'Mecánica',rel:'Civil',afi:'Civil',eli:'Civil'}; /* catálogo simulado: Civil, Mecánica, Eléctrica, Instrumentación */
 var ents=[]; /* filas */
 function armarEnts(){
  ents=[{key:'n2',tipo:'n2',wbs:'06',nom:'Canalización de media tensión',ids:ALL,anc:[],ind:0}];
@@ -297,18 +303,18 @@ function construirFilas(){
   var p=e.tipo==='part'?PB[e.id]:null;
   ['p','r'].forEach(function(kind){
    var tr='<tr class="'+(e.tipo==='n2'?'n2':e.tipo==='pq'?'pqh':'part')+' '+cls+(kind==='r'?' real':'')+'" data-anc="'+anc+'" data-ent="'+e.key+'">';
-   var desc='',wbs='',und='',met='',cu='',hh='',bacv='',fal='';
+   var desc='',wbs='',und='',met='',cu='',hh='',bacv='',fal='',dsc='';
    if(kind==='p'){
     var ind='<span class="sangria" style="width:'+(e.ind*14)+'px"></span>';
-    if(e.tipo==='n2'){wbs=e.wbs;desc=ind+'<button type="button" class="icon" data-ffold="n2" aria-expanded="true" aria-label="Plegar el nivel Canalización de media tensión" title="Plegar">&#9662;</button> '+esc(e.nom)+' <span class="tag">Prog.</span>';bacv=fUsd(bac(e.ids));}
-    else if(e.tipo==='pq'){desc=ind+'<button type="button" class="icon" data-ffold="'+e.key+'" aria-expanded="true" aria-label="Plegar el paquete '+esc(e.nom)+'" title="Plegar">&#9662;</button> <span class="tag '+(e.cls==='pq1'?'acc':'acc2')+'">Paquete</span> '+esc(e.nom)+' <span class="tag">'+e.modo+'</span>';bacv=fUsd(bac(e.ids));}
-    else{wbs=p.wbs;desc=ind+esc(p.nom)+' <span class="tag">Prog.</span>'+(p.calc?' <span class="tag">Calculada</span>':'')+(e.cls==='dir'?' <span class="tag">Directa</span>':'');und=p.und;met=fM(p.met);cu=fmt(p.cu,2);hh=fmt(p.hh,2,true);bacv=fUsd(p.met*p.cu);}
+    if(e.tipo==='n2'){wbs=e.wbs;desc=ind+'<button type="button" class="icon" data-ffold="n2" aria-expanded="true" aria-label="Plegar el nivel Canalización de media tensión" title="Plegar">&#9662;</button> '+esc(e.nom)+' <span class="tag">Prog.</span>';bacv=fUsd(bac(e.ids));dsc='<span class="muted">Civil</span>';}
+    else if(e.tipo==='pq'){desc=ind+'<button type="button" class="icon" data-ffold="'+e.key+'" aria-expanded="true" aria-label="Plegar el paquete '+esc(e.nom)+'" title="Plegar">&#9662;</button> <span class="tag '+(e.cls==='pq1'?'acc':'acc2')+'">Paquete</span> '+esc(e.nom)+' <span class="tag">'+e.modo+'</span>';bacv=fUsd(bac(e.ids));dsc=DISC[e.key]||'';}
+    else{wbs=p.wbs;desc=ind+esc(p.nom)+' <span class="tag">Prog.</span>'+(p.calc?' <span class="tag">Calculada</span>':'')+(e.cls==='dir'?' <span class="tag">Directa</span>':'');und=p.und;met=fM(p.met);cu=fmt(p.cu,2);hh=fmt(p.hh,2,true);bacv=fUsd(p.met*p.cu);dsc=DISC[p.id]||'';}
     fal='<span data-f="'+e.key+'"></span>';
    }else{
     var ind2='<span class="sangria" style="width:'+(e.ind*14)+'px"></span>';
     desc=ind2+'<span class="tag">&#8627; Real</span> <span class="muted">solo lectura (RDT validado)</span>';
    }
-   tr+=fxCell('wbs',wbs)+fxCell('desc',desc)+fxCell('und',und)+fxCell('met',met,' num')+fxCell('cu',cu,' num')+fxCell('hh',hh,' num')+fxCell('bac',bacv,' num')+fxCell('falta',fal);
+   tr+=fxCell('wbs',wbs)+fxCell('desc',desc)+fxCell('und',und)+fxCell('met',met,' num')+fxCell('cu',cu,' num')+fxCell('hh',hh,' num')+fxCell('disc',dsc)+fxCell('bac',bacv,' num')+fxCell('falta',fal);
    tr+=celdas(e,kind,e.tipo==='part')+'</tr>';
    tb+=tr;
   });
@@ -316,7 +322,7 @@ function construirFilas(){
  document.getElementById('tbody').innerHTML=tb;
 }
 function construirCab(){
- var r1='<tr id="h1"><th class="fx" scope="colgroup" colspan="8" data-fxg="1">Partida (columnas fijas)</th>';
+ var r1='<tr id="h1"><th class="fx" scope="colgroup" colspan="9" data-fxg="1">Partida (columnas fijas)</th>';
  var r2='<tr id="h2">';
  FX.forEach(function(c){r2+='<th scope="col" class="fx fx-'+c.k+(c.k==='falta'?' linea':'')+'" data-fx="'+c.k+'"><span class="lbl">'+c.t+'</span></th>';});
  var w,d,c,f,f0,f6;
@@ -327,8 +333,8 @@ function construirCab(){
   for(c=0;c<6;c++){r2+='<th scope="col" class="s w'+w+(c===0?' wini':'')+(c%2===1?' a':'')+'" data-w="'+w+'" data-t="s"><span class="lbl">'+TIT[c][0]+' '+TIT[c][1]+'<small>('+TIT[c][2]+')</small></span></th>';}
  }
  r1+='</tr>';r2+='</tr>';
- var r3='<tr class="tot" id="h3">'+fxCell('wbs','')+fxCell('desc','<strong>Total del servicio</strong> <span class="tag">Prog.</span><br><span class="muted" id="tot-info"></span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('bac','<span id="tot-bac"></span>',' num')+fxCell('falta','<span data-f="tot"></span>')+celdas({key:'tot'},'p',false)+'</tr>';
- var r4='<tr class="tot real" id="h4">'+fxCell('wbs','')+fxCell('desc','<span class="tag">&#8627; Real</span> <span class="muted">total del servicio</span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('bac','',' num')+fxCell('falta','')+celdas({key:'tot'},'r',false)+'</tr>';
+ var r3='<tr class="tot" id="h3">'+fxCell('wbs','')+fxCell('desc','<strong>Total del servicio</strong> <span class="tag">Prog.</span><br><span class="muted" id="tot-info"></span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','<span id="tot-bac"></span>',' num')+fxCell('falta','<span data-f="tot"></span>')+celdas({key:'tot'},'p',false)+'</tr>';
+ var r4='<tr class="tot real" id="h4">'+fxCell('wbs','')+fxCell('desc','<span class="tag">&#8627; Real</span> <span class="muted">total del servicio</span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','',' num')+fxCell('falta','')+celdas({key:'tot'},'r',false)+'</tr>';
  document.getElementById('thead').innerHTML=r1+r2+r3+r4;
 }
 /* ---------- recálculo y textos ---------- */
@@ -390,7 +396,7 @@ function layout(){
  FX.forEach(function(c){if(!vis[c.k])return;var cells=document.querySelectorAll('.fx-'+c.k);
   cells.forEach(function(x){x.style.left=left+'px';});
   var w=cells[0]?cells[0].getBoundingClientRect().width:0;
-  var cw={wbs:74,desc:270,und:44,met:68,cu:70,hh:66,bac:70,falta:124};left+=(vm&&c.k==='wbs')?60:(vm&&c.k==='desc')?130:cw[c.k];});
+  var cw={wbs:74,desc:270,und:44,met:68,cu:70,hh:66,disc:96,bac:70,falta:124};left+=(vm&&c.k==='wbs')?60:(vm&&c.k==='desc')?130:cw[c.k];});
  var top=0;document.querySelectorAll('#thead tr').forEach(function(tr){if(tr.classList.contains('real')&&!conReal)return;
   tr.querySelectorAll('th,td').forEach(function(x){x.style.top=top+'px';});top+=tr.getBoundingClientRect().height;});
 }
@@ -422,8 +428,9 @@ document.getElementById('btn-plegar').addEventListener('click',function(){for(va
 document.getElementById('btn-expandir').addEventListener('click',function(){plegS={};aplicar();});
 var sa=document.getElementById('sw-acum');sa.addEventListener('click',function(){acum=!acum;sa.setAttribute('aria-pressed',acum?'true':'false');sa.textContent='Acumuladas: '+(acum?'sí':'no');aplicar();});
 var sr=document.getElementById('sw-real');sr.addEventListener('click',function(){conReal=!conReal;sr.setAttribute('aria-pressed',conReal?'true':'false');sr.textContent='Real: '+(conReal?'sí':'no');aplicar();});
-var lat=document.getElementById('btn-lat');lat.addEventListener('click',function(){var c=document.getElementById('cuerpo');var off=c.classList.toggle('sin-lat');
- lat.setAttribute('aria-pressed',off?'true':'false');lat.textContent=off?'Mostrar paneles laterales':'Ocultar paneles laterales';setTimeout(layout,0);});
+document.querySelectorAll('[data-tg]').forEach(function(b){b.addEventListener('click',function(){var lado=b.getAttribute('data-tg'),p=document.getElementById('pl-'+lado);var oc=p.classList.toggle('oculto');
+ var t=(oc?'Mostrar':'Ocultar')+' panel '+(lado==='izq'?'izquierdo':'derecho');b.setAttribute('aria-expanded',oc?'false':'true');b.setAttribute('aria-label',t);b.title=t;
+ b.innerHTML=(lado==='izq')?(oc?'&#8250;':'&#8249;'):(oc?'&#8249;':'&#8250;');setTimeout(layout,0);});});
 document.getElementById('btn-guardar').addEventListener('click',function(){var m=document.getElementById('msg-ok');m.hidden=false;m.querySelector('div').textContent='Borrador guardado (simulado). Puede quedar parcial y retomarse otro día.';});
 var bc=document.getElementById('btn-crear');bc.addEventListener('click',function(){
  var er=document.getElementById('msg-crear'),ok=document.getElementById('msg-ok');

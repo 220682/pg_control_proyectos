@@ -163,6 +163,7 @@ tr.sib[hidden]{display:none}
 <div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:80%;margin-bottom:8px"></div><div class="sk" style="width:60%"></div></div></div><div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo leer el archivo</strong><br>Revisa que sea el formato de cronograma esperado y vuelve a intentarlo. Si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div><div class="e-vacio"><div class="vacio"><strong>Aún no hay un archivo para confirmar</strong><p>Carga el archivo del cronograma en el paso 1 y aquí verás sus niveles.</p><p style="margin-top:8px"><button type="button" class="primary">Volver al paso 1</button></p></div></div>
 <details class="notas" open><summary>Notas de esta maqueta: estados, móvil (390 px) y accesibilidad</summary><ul>
 <li>Mismo patrón que «Importar DP», con roles propios del cronograma (Servicio, Área, Fase, Actividad resumen, Tarea) y la columna Duración. Los roles son la propuesta D2 del Spec; están pendientes de confirmar.</li>
+<li>Las filas «Para revisar» (si las hay) bloquean «Aprobar niveles» hasta confirmar su rol, igual que en Importar DP.</li>
 <li>Estados con datos, vacío, cargando y error desde los botones superiores; aviso de recarga con sus dos variantes.</li>
 <li>Móvil: tabla con desplazamiento horizontal dentro de su caja. Accesibilidad: <code>th scope="col"</code>, foco visible, teclado, estado con texto e icono.</li></ul></details>
 </main>
@@ -207,11 +208,15 @@ tr.sib[hidden]{display:none}
    if(!last&&r===9){errs.push('Solo el ultimo nivel puede ser '+root.getAttribute('data-hoja-rol')+'.');}
    if(par&&by[par]){var rp=RANK[by[par].value.replace('Á','A')];if(r<=rp&&!(r===9&&rp===9)){errs.push('El rol de "'+s.getAttribute('data-nombre')+'" no puede ser igual o mayor que el de su nivel superior.');}}
   });
+  var pend=root.querySelectorAll('[data-revisar]:not(.ok)').length;
+  if(pend){errs.push('Quedan '+pend+' fila(s) para revisar: confirma su rol antes de aprobar.');}
   var box=root.querySelector('.val-msg');var btn=root.querySelector('.btn-aprobar');
   if(errs.length){box.hidden=false;box.querySelector('ul').innerHTML=errs.filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(e){return '<li>'+e+'</li>';}).join('');btn.setAttribute('aria-disabled','true');}
   else{box.hidden=true;btn.removeAttribute('aria-disabled');}
  }
  document.querySelectorAll('.niveles').forEach(function(root){
+  root.addEventListener('click',function(e){var r=e.target.closest('[data-resolver]');if(!r)return;
+   var t=r.parentNode.querySelector('[data-revisar]');t.className='tag ok';t.innerHTML='<span aria-hidden="true">&#10003;</span> Revisado';r.remove();validar(root);});
   root.addEventListener('change',function(e){if(e.target.matches('select[data-grupo-id]')){validar(root);}});
   validar(root);
   var b=root.querySelector('.btn-aprobar');

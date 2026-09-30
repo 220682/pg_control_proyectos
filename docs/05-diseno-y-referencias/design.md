@@ -1,5 +1,5 @@
 ---
-version: 1.5.0
+version: 1.7.0
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
 actualizado: 2026-09-30
@@ -90,17 +90,18 @@ La aplicación usa esta estructura fija (`src/components/ui/WorkspaceShell.tsx`)
 Aprobado por Victor el 2026-09-30 como excepción a «estructura fija»: el asistente no es un cuarto panel ni un layout paralelo. Regla funcional en `docs/04-flujos-de-negocio/16-paneles.md` («Asistente: elemento del shell fuera de los tres paneles»).
 
 - **Posición:** icono flotante de 48 px (`h-12 w-12`, redondo) abajo a la derecha **dentro de `<main>`** (`absolute bottom-4 right-4`, `lg:right-6`, con `safe-area-inset-bottom`), no sobre los paneles laterales.
+- **No ocupa espacio (decisión de Victor, 2026-09-30):** flota sobre el contenido; ninguna pantalla reserva una franja inferior para él, ni en escritorio ni en móvil. El lienzo y las tablas aprovechan todo el alto disponible.
 - **Patrón:** botón que alterna un panel desplegable **no modal** (`role="dialog"` con `aria-modal="false"`, `aria-expanded`, `aria-controls`; Escape lo cierra y devuelve el foco al icono). Ancho máximo 24 rem y alto acotado a la ventana.
 - **Capas:** `z-40`, **por debajo** de los cajones móviles y los modales (`z-50`). Una sola instancia en toda pantalla del workspace; no aparece en login, activar ni en el dashboard del portafolio.
 - No se usa como precedente para otros botones flotantes: cualquier otro elemento fuera de los tres paneles requiere aprobación.
 
-### Paneles laterales ocultables (propuesta F0-B)
+### Paneles laterales ocultables (rehecha en F0-R, pendiente de revisión de Victor)
 
-Propuesta de la Fase F0-B (2026-09-30); **vigente cuando Victor apruebe** `mockups/paneles-ocultables.html`. Solo escritorio (`lg`, 1024 px en adelante); en móvil los paneles ya son un cajón y el control no aparece.
+Maqueta `mockups/paneles-ocultables.html`; **vigente cuando Victor apruebe** la versión de F0-R. Solo escritorio (`lg`, 1024 px en adelante); en móvil los paneles ya son un cajón y el control no aparece.
 
-- **Control:** en la barra de la pantalla (no dentro de los paneles), botones `Button.tsx` de texto con `aria-pressed` y `aria-controls`: «Ocultar panel izquierdo», «Ocultar panel derecho» y «Ocultar ambos» (el texto pasa a «Mostrar …»). Sin chip ni acceso nuevo.
+- **Control:** **sin botones de texto en la barra.** Un **solo icono por panel** (botón de solo icono, `aria-expanded`, `aria-controls` al panel, `aria-label` y `title` «Ocultar/Mostrar panel izquierdo/derecho»), **dentro del propio panel y en su borde interior** (el lado que da al contenido), en posición absoluta para no deformar el panel. Con el panel oculto, el icono sigue visible en una tira de 24 px. Se eliminó «Ocultar ambos»: sin barra donde ponerlo no cabe sin distorsionar; se ocultan con dos clics. Sin chip ni acceso nuevo.
 - **Efecto:** el panel oculto libera su ancho (`w-60` el izquierdo, `w-64` el derecho) y el centro lo toma; el estado se recuerda por usuario y, si no puede guardarse, los paneles quedan visibles.
-- **Asistente:** no cambia (icono de 48 px, `z-40`). En pantallas con tabla ancha (Plan Maestro, Paquetes) el contenedor reserva una **franja inferior de 4 rem** para que el icono no tape columnas ni la barra de desplazamiento horizontal.
+- **Asistente:** ver «Asistente flotante»: no reserva espacio.
 
 ### Contenido de página
 
@@ -233,40 +234,44 @@ Un chip nunca se oculta por permisos: se muestra deshabilitado (ver no es accede
 
 ### Jerarquía en árbol con casillas, marca de paquete y plegado
 
-Propuesta de la Fase F0 del plan niveles-paquetes-plan-maestro-rdt (2026-09-30); **queda vigente cuando Victor apruebe las maquetas** `mockups/paquetes-declarar.html` y `mockups/paquetes-agrupar.html`. Es una composición de lo que ya existe: no introduce un componente nuevo ni un token nuevo. Los nombres de componentes del código real que la implementen los fija el Planner tras leer `src/components/ui/`; aquí no se inventa ninguno.
+Maquetas `mockups/paquetes-declarar.html`, `mockups/paquetes-agrupar.html`, `mockups/importar-dp-niveles.html` y `mockups/cronograma-niveles.html`, **aprobadas por Victor el 2026-09-30** con seis decisiones (ajustadas en F0-R). Es una composición de lo que ya existe: no introduce un componente nuevo ni un token nuevo. Los nombres de componentes del código real que la implementen los fija el Planner tras leer `src/components/ui/`; aquí no se inventa ninguno.
 
 | Pieza | Regla | Se apoya en |
 |---|---|---|
 | Árbol | Tabla nativa (`<table>`, clases de `Table.tsx`); la jerarquía se muestra con sangría de 14 px por nivel en la celda del nombre, no con un componente de árbol. Primera columna (EDT o WBS) fija al desplazar en horizontal (`sticky left-0`, sticky de celda, no de fila) | §5 Tablas, §8 |
 | Casillas | Columna de casilla **al inicio** de cada fila, visible solo en modo «crear paquete»; no aparece en la fila de Servicio. Cada casilla con `aria-label` que nombra la fila | §9, §10 |
 | Modo crear | El botón «Crear paquete» (`Button.tsx`) abre una barra con nombre (`Input.tsx`), nivel (`<select>` nativo) y «Guardar» / «Cancelar». Errores junto al campo, con texto e icono y `role="alert"` | §9 |
-| Marca de paquete | Borde grueso a la izquierda (4 px) con `--color-accent` o `--color-accent-secondary`, **más** una etiqueta de texto «Paquete». Nunca solo color. Una casilla en la cabecera del paquete selecciona todos sus ítems | §4.1, §10 |
+| Marca de paquete | Borde grueso a la izquierda (4 px) más un fondo tenue, **alternando `--color-accent` y `--color-accent-secondary` entre paquetes contiguos** (se recalcula al mover), **más** una etiqueta de texto «Paquete». Nunca solo color. Una casilla en la cabecera del paquete selecciona todos sus ítems | §4.1, §10 |
 | Orden | Dos botones de solo icono (subir, bajar) con `aria-label` y `title`; alternativa de teclado Alt + flecha arriba / abajo con el foco en el paquete | §9, §10 |
-| Plegado | Botón de solo icono con `aria-expanded`; plegado muestra solo la cabecera (nombre, nivel, cantidad de ítems, subtotal) | §9, §10 |
+| Plegado | Botón de solo icono con `aria-expanded`; plegado muestra solo la cabecera (nombre, nivel, disciplina, cantidad de ítems, subtotal). **El plegado se reinicia al abrir la pantalla** (todo abierto; no se recuerda) | §9, §10 |
 | Hito | Fila atenuada (`opacity-60`) con la marca «Hito» en texto e icono y sin campos editables | §10 |
-| Restante | Texto + icono con los colores semánticos de 4.1.1 (`emerald` completa, `amber` resta) y barra `<progress>` con `aria-label`; nunca solo color | §4.1.1 |
-| Dos listas lado a lado | Dos cajas con `flex-1 min-h-0` y scroll propio; en pantallas angostas (menos de 900 px) pasan a pestañas y se muestra una sola | §8 |
+| Restante | Texto + icono con los colores semánticos de 4.1.1 (`emerald` completa, `amber` resta) y barra `<progress>` con `aria-label`; nunca solo color. **El restante por partida se ve en ambas listas** (cronograma y DP) | §4.1.1 |
+| Niveles: filas de muestra | Una fila de muestra por grupo de hermanas con botón «Ver N hermanas» que despliega las demás. Las filas «Para revisar» (texto e icono) **bloquean «Aprobar niveles»** hasta confirmar su rol con «Confirmar rol» | §9 |
+| Disciplina | Selector de disciplina al crear un paquete y en la partida directa (sin paquete); catálogo **simulado** en las maquetas (Civil, Mecánica, Eléctrica, Instrumentación), la lista real la define Victor. Columna opcional en el lienzo | §9 |
+| Dos listas lado a lado | Dos cajas con `flex-1 min-h-0` y scroll propio; en pantallas angostas (menos de 900 px) pasan a pestañas «Cronograma / DP» y se muestra una sola | §8 |
 
 Estados obligatorios (§9): vacío, cargando, error y datos, en cada una de las cuatro maquetas de F0-A.
 
-### Lienzo del Plan Maestro (propuesta F0-B)
+**Abreviaturas iguales en todas las pantallas del plan:** «Met.» (metrado), «Acum.», «Prog.», «Ejec.». En Crear RDT los tres encabezados son «Met. acum.», «Met. prog.» y «Met. ejec.», completos y sin cortarse (ver §7).
 
-Propuesta de la Fase F0-B; **vigente cuando Victor apruebe** `mockups/plan-maestro-lienzo.html`. Composición de lo existente, sin componente ni token nuevo; los nombres reales los fija el Planner.
+### Lienzo del Plan Maestro
+
+Maqueta `mockups/plan-maestro-lienzo.html`, **aprobada por Victor el 2026-09-30** con cuatro ajustes (F0-R). Composición de lo existente, sin componente ni token nuevo; los nombres reales los fija el Planner.
 
 | Pieza | Regla | Se apoya en |
 |---|---|---|
-| Zonas | Columnas **fijas** a la izquierda (WBS, descripción, Und., metrado, costo unitario, HH por unidad y «Falta repartir»), línea divisoria de 3 px en `amber` (4.1.1) y a la derecha una columna por día, agrupadas por semana (sábado a viernes). Sin columnas de Tiempo | §8 |
+| Zonas | Columnas **fijas** a la izquierda (WBS, descripción, Und., «Met.», costo unitario, HH por unidad y «Falta repartir»), línea divisoria de 3 px en el `amber` de advertencia (4.1.1) y a la derecha una columna por día, agrupadas por semana (sábado a viernes). Sin columnas de Tiempo | §8 |
 | Seis columnas por semana | Físico, económico y HH, cada uno semanal y acumulado, con rótulo de dos líneas (nombre y unidad entre paréntesis). Un interruptor oculta las tres acumuladas; nunca se mezclan en una columna | §7, §10 |
-| Semanas | Botón de solo icono con `aria-expanded` en el encabezado de cada semana; plegada deja solo sus columnas de totales; «Plegar semanas» y «Expandir semanas» para todas | §9, §10 |
+| Semanas | Botón de solo icono con `aria-expanded` en el encabezado de cada semana; plegada deja solo sus columnas de totales (se deja como está hoy); «Plegar semanas» y «Expandir semanas» para todas | §9, §10 |
 | Filas | Nivel y paquete plegables con subtotal, partidas repetidas por paquete, partidas directas (marca de paquete de §5 «Jerarquía en árbol»). Cada partida tiene subfila «Prog.» (campos numéricos) y «Real» (texto, solo lectura, interruptor para ocultarla) | §5 |
 | Restante | «Falta repartir» por fila y un indicador global con `<progress>`; texto e icono con los colores de 4.1.1 (`emerald` completa, `amber` falta, `rose` excede) | §4.1.1 |
 | Encabezado | Cuatro filas `sticky` de celda (etiquetas de semana, rótulos, total del servicio «Prog.» y «Real»); los `top` se calculan sumando alturas, no se adivinan | §8 |
-| Personalizar campos | El mismo `PersonalizarCampos.tsx` de los listados (mismo aspecto), para columnas fijas opcionales | componente existente |
+| Personalizar campos | El mismo `PersonalizarCampos.tsx` de los listados (mismo aspecto), para **dos** columnas fijas opcionales y ninguna otra: BAC y **Disciplina** (catálogo simulado en la maqueta) | componente existente |
 | Estados | `BORRADOR` (editable) y `APROBADO` (todo en solo lectura); semana extendida marcada con etiqueta «real fuera del rango»; «Crear Plan Maestro» con `aria-disabled` hasta el 100 % y mensaje `role="alert"` que dice qué partidas faltan | §9 |
 
-### Selector de actividad del RDT (propuesta F0-B)
+### Crear RDT y selector de actividad (rehecha en F0-R, pendiente de revisión de Victor)
 
-Vigente cuando Victor apruebe `mockups/crear-rdt-selector-paquetes.html`. Diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5) y las partidas directas aparte. En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para actividades, horas C/NC y materiales. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
+Maqueta `mockups/crear-rdt-selector-paquetes.html`. **Se usa la pantalla que ya existe** (`src/components/ui/FormularioCrearRdt.tsx`), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo de personal, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos; solo mejora la presentación con los tokens de este documento. El campo de partida de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5), partidas directas aparte y, arriba, «Contributoria» / «No contributoria». En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para el WBS de las actividades C/NC, de los materiales y de los equipos (solo partidas declaradas ese día). Encabezados «Met. acum.», «Met. prog.» y «Met. ejec.» completos. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
 
 ### Crear componentes nuevos
 
@@ -336,6 +341,8 @@ Si todavía no existe una convención implementada, proponer y documentar la dec
 | Moneda | Símbolo, separadores y decimales uniformes | Misma convención que tabla |
 | Porcentaje | Valor y símbolo %; precisión definida | Misma convención que tabla |
 | Estado | Etiqueta humana mediante mapa | Mismo mapa y color semántico |
+
+**Abreviaturas:** «Met.», «Acum.», «Prog.», «Ejec.» son las mismas en todas las pantallas del plan (Plan Maestro, Paquetes, Importar DP, Crear RDT); un encabezado nunca se corta: se le da el ancho mínimo necesario.
 
 No usar formatos diferentes en dos pantallas para el mismo dato. No usar el locale del navegador de manera implícita si el proyecto define formato propio.
 
@@ -510,6 +517,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.7.0 | 2026-09-30 | F0-R, con las decisiones de Victor sobre las maquetas: F0-A y el lienzo quedan aprobados (marca de paquete alterna dos colores, plegado que se reinicia, restante en ambas listas, pestañas en pantallas angostas, filas «para revisar» que bloquean aprobar; lienzo con Disciplina opcional, «Met.» y amarillo de advertencia); §3 paneles ocultables rehecha (un icono por panel en su borde interior) y asistente que no ocupa espacio (se quita la franja de 4 rem); Crear RDT rehecha sobre la pantalla existente; regla de abreviaturas (§5, §7); disciplina (catálogo simulado). Sin tokens ni componentes nuevos. |
 | 1.6.0 | 2026-09-30 | Propuesta de F0-B (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §3 «Paneles laterales ocultables»; §5 «Lienzo del Plan Maestro» y «Selector de actividad del RDT»; §8 regla del lienzo con columnas fijas y días. Sin tokens ni componentes nuevos. |
 | 1.5.0 | 2026-09-30 | Propuesta de F0-A (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §5 nueva subsección «Jerarquía en árbol con casillas, marca de paquete y plegado». Sin tokens ni componentes nuevos. |
 | 1.4.0 | 2026-09-30 | Con confirmación de Victor (regla de evolución): §3 documenta el asistente flotante (posición, capas, patrón) como excepción a «estructura fija»; §5 documenta el chip deshabilitado, el registro único de accesos y la política de interfaz nueva. |

@@ -3,75 +3,98 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Crear RDT — Selector de actividad</title>
+<title>Crear RDT — pantalla existente con selector de actividad</title>
 <style>
 :root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
 button:hover:not([disabled]){border-color:var(--accent);color:var(--accent)}
-button[disabled],button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+button[disabled],button[aria-disabled=true],fieldset:disabled button{opacity:.4;cursor:not-allowed}
 button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
-button.primary:hover{color:var(--bg-base);filter:brightness(1.1)}
+button.primary:hover:not([disabled]){color:var(--bg-base);filter:brightness(1.1)}
 button.icon{padding:1px 6px;min-width:24px}
-input[type=text],input[type=number],input[type=search]{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:11px;max-width:100%}
-input[type=number]{width:84px;text-align:right}
+button.add{font-size:10px;padding:2px 8px;color:var(--text-2)}
+button.del{border:0;color:var(--err);padding:2px 4px}
+input[type=text],input[type=number],input[type=search],input[type=date],select,textarea{background:var(--bg-base);border:1px solid var(--line);border-radius:4px;padding:4px 6px;font-size:11px;max-width:100%}
+input:focus,select:focus,textarea:focus{border-color:rgba(34,211,238,.5);outline:none}
+input.n{width:54px;text-align:right;padding:4px}
 input[readonly]{opacity:.7;border-style:dashed}
+fieldset{border:0;min-width:0}
 [hidden]{display:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .demo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
 .demo a{color:var(--accent)}
 .demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
 .demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
-.pantalla{padding:10px 12px;max-width:1000px}
+.pantalla{padding:10px 12px}
 .pantalla:not([data-estado=datos]) .e-datos,.pantalla:not([data-estado=vacio]) .e-vacio,.pantalla:not([data-estado=carga]) .e-carga,.pantalla:not([data-estado=error]) .e-error{display:none}
 .miga{font-size:10px;color:var(--text-2);margin-bottom:4px}
-h1{font-size:16px;font-weight:600;margin-bottom:2px}
-h2{font-size:12px;font-weight:600;margin-bottom:4px}
+h1{font-size:16px;font-weight:600}
+.desc{font-size:11px;color:var(--text-2);margin-bottom:6px}
 .muted{color:var(--text-2)}.ok{color:var(--ok)}.err{color:var(--err)}.warn{color:var(--warn)}
 .card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}
 .fila{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.grow{flex:1}
 .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2);white-space:nowrap}
 .tag.acc{border-color:var(--accent);color:var(--accent)}.tag.acc2{border-color:var(--accent-2);color:#9db7ff}.tag.warn{border-color:var(--warn);color:var(--warn)}.tag.ok{border-color:var(--ok);color:var(--ok)}
-.tw{overflow:auto;border:1px solid var(--line);border-radius:8px}
+.sec{margin:12px 0 4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+.cab-sec{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.lbl{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);margin-bottom:2px}
+.ident{display:grid;gap:8px;border:1px solid var(--line);border-radius:10px;padding:10px;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--bg-elevated)}
+.ident select,.ident input[type=text],.ident input[type=date]{width:100%}
+.ident .val{padding:4px 2px;font-size:11px}
+@media (max-width:900px){.ident{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated)}
 table{border-collapse:collapse;width:100%;font-size:11px}
-th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
-th{color:var(--text-2);font-weight:600;white-space:nowrap}
+th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}
+th{color:var(--text-2);font-weight:600;background:var(--bg-elevated);position:sticky;top:0}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+th.met{min-width:76px}
+tr.tot td{background:rgba(255,255,255,.05);font-weight:600}
+.cod{color:var(--accent);font-weight:600}
 .msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0;font-size:11px}
-.msg.err{border-color:var(--err)}.msg.err strong{color:var(--err)}.msg.warn{border-color:var(--warn)}.msg.warn strong{color:var(--warn)}.msg.info{border-color:var(--accent-2)}
+.msg.err{border-color:var(--err)}.msg.err strong{color:var(--err)}.msg.warn{border-color:var(--warn)}.msg.warn strong{color:var(--warn)}.msg.info{border-color:var(--accent-2)}.msg.acc{border-color:var(--accent);color:var(--accent)}
 .vacio{border:1px dashed var(--line);border-radius:10px;padding:24px 12px;text-align:center;color:var(--text-2)}
 .vacio strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
 .sk{height:10px;border-radius:4px;background:linear-gradient(90deg,#141b2b,#1f2a40,#141b2b);background-size:200% 100%;animation:sk 1.2s linear infinite}
 @keyframes sk{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.sk{animation:none}}
 .calc{font-style:italic;color:var(--text-2)}
+.pick{display:flex;gap:6px;align-items:center;min-width:210px;max-width:260px;overflow:hidden;text-overflow:ellipsis;text-align:left;border-radius:4px;padding:4px 6px}
+.pick.vacia{color:var(--text-2)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.g2{grid-template-columns:1fr}}
 /* selector (modal) */
 .velo{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px}
 .modal{background:var(--bg-elevated);border:1px solid var(--line);border-radius:12px;width:640px;max-width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.7)}
 .modal header{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}
-.modal header h2{flex:1;margin:0;font-size:13px}
+.modal header h2{flex:1;margin:0;font-size:13px;font-weight:600}
 .modal .cuerpo{padding:8px 12px;overflow:auto}
 .pq{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;margin-bottom:8px;overflow:hidden}
 .pq.c2{border-left-color:var(--accent-2)}
 .pq.dir{border-left-color:transparent}
+.pq.esp{border-left-color:var(--warn)}
 .pq-h{display:flex;gap:8px;align-items:center;padding:5px 8px;background:#111a2c;font-weight:600;flex-wrap:wrap}
 .pq-h .gr{flex:1}
 .it{display:flex;gap:8px;align-items:center;padding:4px 8px 4px 26px;border-top:1px solid var(--line);flex-wrap:wrap}
 .it .nm{flex:1;min-width:140px}
 .it .wbs{font-variant-numeric:tabular-nums;color:var(--text-2);min-width:62px}
-.sel{background:rgba(34,211,238,.08)}
+.it.off{opacity:.5}
 .uni{font-size:11px;color:var(--text-2)}
 .prog-mini{width:60px;height:6px;accent-color:var(--accent)}
-@media (max-width:640px){.it{padding-left:10px}.modal{max-height:96vh}}
+@media (max-width:640px){.it{padding-left:10px}.modal{max-height:96vh}.pantalla{padding:8px}}
+details.notas{font-size:11px;color:var(--text-2)}
+details.notas summary{cursor:pointer;color:var(--text)}
+details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 </style>
 </head>
 <body>
 <div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
 <a href="index.html">&larr; Índice de mockups</a>
-<span>Maqueta · Crear RDT · selector de actividad del Plan Maestro · datos simulados (anexo del Spec)</span>
+<span>Maqueta · Crear RDT (pantalla existente) + selector de actividad del Plan Maestro · datos simulados</span>
 <div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
 <button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
 <button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
@@ -80,32 +103,64 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 <div class="grp" role="group" aria-label="Plan Maestro del servicio"><span>Plan Maestro:</span>
 <button type="button" data-pm="si" aria-pressed="true">Aprobado</button>
 <button type="button" data-pm="no" aria-pressed="false">Sin aprobar</button></div>
+<div class="grp" role="group" aria-label="Modo de la pantalla"><span>Modo:</span>
+<button type="button" data-modo="crear" aria-pressed="true">Crear</button>
+<button type="button" data-modo="ver" aria-pressed="false">Revisar (solo lectura)</button></div>
 </div>
 <main class="pantalla" data-estado="datos" id="pant">
 <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Crear RDT</nav>
-<h1>Crear RDT</h1>
-<p class="muted">Extracto: solo los bloques que eligen actividad. El resto del RDT no cambia.</p>
+<h1 id="h-tit">Crear RDT</h1>
+<p class="desc" id="h-desc">Reporte diario de trabajo · PROM-GP-002</p>
 <div class="e-datos">
-<div class="msg info" id="aviso-pm" role="status" hidden><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>Este servicio aún no tiene un Plan Maestro aprobado, y el RDT solo registra avance sobre lo que está en él. Cuando se apruebe, aquí aparecerán sus paquetes y partidas.</div></div>
-<section class="card" aria-labelledby="t-act"><div class="fila"><h2 id="t-act" style="margin:0">Actividades ejecutadas</h2><span class="grow" style="flex:1"></span><button type="button" class="primary" data-elegir="act">+ Actividad</button></div>
-<div class="tw"><table><caption class="sr">Actividades ejecutadas en el día</caption><thead><tr><th scope="col">Paquete</th><th scope="col">WBS</th><th scope="col">Partida</th><th scope="col">Und.</th><th scope="col" class="num">Metrado hoy</th><th scope="col">Cómo se obtiene</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="act-body"><tr id="act-vacia"><td colspan="7" class="muted">Sin actividades. Pulsa «+ Actividad» para elegir del Plan Maestro.</td></tr></tbody></table></div></section>
-<section class="card" aria-labelledby="t-hh"><div class="fila"><h2 id="t-hh" style="margin:0">Horas por persona (C / NC)</h2></div>
-<div class="tw"><table><caption class="sr">Horas por persona</caption><thead><tr><th scope="col">Persona</th><th scope="col">Actividad</th><th scope="col" class="num">Horas C</th><th scope="col" class="num">Horas NC</th></tr></thead><tbody>
-<tr><td>Operario 1</td><td><button type="button" data-elegir="hh1" id="hh1">Elegir actividad</button></td><td class="num"><input type="number" min="0" step="0.5" value="8" aria-label="Horas C de Operario 1"></td><td class="num"><input type="number" min="0" step="0.5" value="0" aria-label="Horas NC de Operario 1"></td></tr>
-<tr><td>Oficial 1</td><td><button type="button" data-elegir="hh2" id="hh2">Elegir actividad</button></td><td class="num"><input type="number" min="0" step="0.5" value="6" aria-label="Horas C de Oficial 1"></td><td class="num"><input type="number" min="0" step="0.5" value="2" aria-label="Horas NC de Oficial 1"></td></tr></tbody></table></div></section>
-<section class="card" aria-labelledby="t-mat"><div class="fila"><h2 id="t-mat" style="margin:0">Materiales</h2></div>
-<div class="tw"><table><caption class="sr">Materiales usados</caption><thead><tr><th scope="col">Material</th><th scope="col">Actividad</th><th scope="col" class="num">Cantidad</th></tr></thead><tbody>
-<tr><td>Arena fina</td><td><button type="button" data-elegir="mat1" id="mat1">Elegir actividad</button></td><td class="num"><input type="number" min="0" value="12" aria-label="Cantidad de Arena fina"></td></tr></tbody></table></div></section>
+<fieldset id="fs">
+<div class="fila" style="justify-content:flex-end">
+<select id="sel-plantilla" aria-label="Cargar plantilla"><option value="">Cargar plantilla…</option><option>Plantilla · Bancoductos turno día</option><option>Plantilla · Relleno y afirmado</option></select>
+<button type="button" id="btn-plantilla">&#8681; Guardar plantilla</button>
+<button type="button" class="primary" id="btn-cargar">&#10003; Cargar RDT al sistema</button>
 </div>
-<div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el Plan Maestro del servicio…</p><div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:70%"></div></div></div>
-<div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el Plan Maestro</strong><br>No fue posible traer los paquetes y partidas del servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
+<ul class="msg err" id="errs" role="alert" hidden style="list-style:none"></ul>
+<p class="msg acc" id="aviso" role="status" hidden></p>
+<div class="msg info" id="aviso-pm" role="status" hidden><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>Este servicio aún no tiene un Plan Maestro aprobado, y el RDT solo registra avance sobre lo que está en él. Cuando se apruebe, el selector mostrará sus paquetes y partidas.</div></div>
+
+<p class="sec">1.0 Identificación</p>
+<div class="ident">
+<label><span class="lbl">N° OT vigente</span><select id="sel-ot"><option>PS-0001 — Bancoductos Rampa Sur / Norte</option><option>PS-0002 — Tie-in HDPE GCI 06</option></select></label>
+<div><span class="lbl">Cliente</span><p class="val">Marcobre</p></div>
+<label><span class="lbl">Fecha</span><input type="date" value="2026-10-07"></label>
+<label><span class="lbl">Turno</span><select><option>Día</option><option>Noche</option></select></label>
+<label><span class="lbl">Especialidad</span><input type="text" placeholder="Civil, mecánica…" value="Civil"></label>
+<label><span class="lbl">Ubicación / área</span><input type="text" value="Marcona · Rampa Sur"></label>
+<label><span class="lbl">Semana N°</span><input type="text" inputmode="numeric" value="32"></label>
+<div><span class="lbl">Partidas del DP</span><p class="val muted" id="n-part">6 disponibles</p></div>
+<label><span class="lbl">Jornada laboral (h)</span><input type="text" class="n" id="jornada" inputmode="decimal" value="10"></label>
+</div>
+
+<div class="cab-sec"><p class="sec">2.0 Reporte de avance</p><button type="button" class="add" id="add-act">+ Actividad</button></div>
+<div class="tw"><table><caption class="sr">Reporte de avance: actividades del día</caption><thead><tr><th scope="col">Ítem</th><th scope="col">Partida del DP</th><th scope="col">Descripción de la actividad</th><th scope="col">WBS</th><th scope="col">TA</th><th scope="col">Unid.</th><th scope="col" class="num met">Met. acum.</th><th scope="col" class="num met">Met. prog.</th><th scope="col" class="num met">Met. ejec.</th><th scope="col">Restricciones</th><th scope="col">CNC</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="act-body"></tbody></table></div>
+
+<div class="cab-sec"><p class="sec">3.0 Tareo de personal · HH por actividad</p><button type="button" class="add" id="add-per">+ Persona</button></div>
+<div class="tw"><table><caption class="sr">Tareo de personal: horas por actividad</caption><thead id="tar-head"></thead><tbody id="tar-body"></tbody></table></div>
+
+<div class="g2">
+<div><div class="cab-sec"><p class="sec">Equipos · HM del día</p><button type="button" class="add" id="add-eq">+ Equipo</button></div>
+<div class="tw"><table><caption class="sr">Equipos y horas máquina</caption><thead><tr><th scope="col">Equipo</th><th scope="col">WBS</th><th scope="col" class="num">HM</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="eq-body"></tbody></table></div></div>
+<div><div class="cab-sec"><p class="sec">Materiales · informativo</p><button type="button" class="add" id="add-mat">+ Material</button></div>
+<p class="muted" style="font-size:10px;margin-bottom:4px">No se cuantifica ni se suma a ningún acumulado, es solo para tener el dato a mano.</p>
+<div class="tw"><table><caption class="sr">Materiales usados (informativo)</caption><thead><tr><th scope="col">Descripción</th><th scope="col">WBS</th><th scope="col">Und.</th><th scope="col" class="num">Cantidad</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="mat-body"></tbody></table></div>
+<p class="sec">Observaciones</p><textarea rows="3" style="width:100%;resize:vertical" aria-label="Observaciones"></textarea></div>
+</div>
+</fieldset>
+</div>
+<div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el servicio y sus catálogos…</p><div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:70%;margin-bottom:8px"></div><div class="sk" style="width:55%"></div></div></div>
+<div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el formulario</strong><br>No fue posible traer los catálogos ni el Plan Maestro del servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
 <div class="e-vacio"><div class="vacio"><strong>El Plan Maestro no tiene filas para elegir</strong><p>El Plan Maestro aprobado de este servicio no contiene partidas. Revisa Paquetes de trabajo y el Plan Maestro.</p></div></div>
-<details class="card" style="font-size:11px;color:var(--text-2)"><summary style="cursor:pointer;color:var(--text)">Notas de esta maqueta: modo por avance del paquete, estados, móvil y accesibilidad</summary><ul style="margin:6px 0 2px 16px;line-height:1.5">
-<li>El selector lista lo que está en el Plan Maestro aprobado: paquetes plegables con sus partidas, y aparte las partidas directas (sin paquete). Ya no lista el DP.</li>
-<li>Paquete <strong>por partidas</strong> (Banco ducto): se elige cada partida y se escribe su metrado. Paquete <strong>por avance del paquete</strong> (Relleno): se elige el paquete, se escribe solo el metrado de la guía (Relleno) y las demás partidas aparecen calculadas con el mismo % y en solo lectura. Prueba: elige «Relleno» y escribe un metrado.</li>
-<li>Horas C/NC y materiales usan el mismo selector (botón «Elegir actividad»).</li>
-<li>Selector: diálogo modal (<code>role="dialog"</code>, <code>aria-modal</code>), foco a la búsqueda al abrir, Escape lo cierra y devuelve el foco al botón; paquetes con <code>aria-expanded</code>; botones con el nombre de la partida en <code>aria-label</code>. En 390 px ocupa casi toda la pantalla y las filas pasan a dos líneas.</li>
-<li>Con «Sin aprobar» se ve el mensaje en la pantalla y el selector no ofrece filas.</li></ul></details>
+<details class="card notas"><summary>Notas de esta maqueta: pantalla existente, selector, estados, móvil y accesibilidad</summary><ul>
+<li><strong>Es la pantalla que ya existe</strong> (Crear RDT de la app), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos. Mejora solo la presentación con los tokens de <code>design.md</code> (tarjetas, etiquetas, tablas con desplazamiento). Modo «Revisar» = mismo formulario deshabilitado.</li>
+<li><strong>Selector de actividad.</strong> El campo «Partida del DP» de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: paquetes plegables con sus partidas, las partidas directas aparte, y arriba «Contributoria» y «No contributoria» (TA C y NC, sin partida). Paquete <strong>por avance del paquete</strong> (Relleno): se elige el paquete, se escribe solo la guía y las demás partidas se calculan en solo lectura.</li>
+<li><strong>Mismo selector</strong> para el WBS de las actividades C/NC, de los materiales y de los equipos: ahí solo se pueden elegir partidas ya declaradas como Directas ese día (las demás salen atenuadas).</li>
+<li>Encabezados completos y sin cortarse: «Met. acum.», «Met. prog.», «Met. ejec.» (abreviaturas iguales en todas las pantallas del plan: Met., Acum., Prog., Ejec.).</li>
+<li>Total de cada persona en ámbar si no coincide con la jornada (informativo, no bloquea). Estados: con datos, vacío, cargando y error; «Sin aprobar» muestra el aviso y el selector no ofrece filas.</li>
+<li>Accesibilidad: <code>th scope</code>, foco visible, selector con <code>role="dialog"</code>, <code>aria-modal</code>, foco a la búsqueda, Escape cierra y devuelve el foco; paquetes con <code>aria-expanded</code>. En 390 px las tablas se desplazan en horizontal y el selector ocupa casi toda la pantalla.</li></ul></details>
 </main>
 <div class="velo" id="velo" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-tit" id="modal">
 <header><h2 id="m-tit">Elegir actividad del Plan Maestro</h2><button type="button" class="icon" id="m-x" aria-label="Cerrar el selector" title="Cerrar">&times;</button></header>
@@ -113,68 +168,172 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 <div id="m-lista"></div></div></div></div>
 <script>
 (function(){
- var PM_OK=true,ctx=null,ultimoBoton=null;
+ var PM_OK=true,ctx=null,ultimo=null,plegado={},n=0;
  var PK=[{id:'p1',nom:'Banco ducto',modo:'por partidas',cls:'',its:[
   {id:'exc',wbs:'06.03.01',nom:'Excavación',und:'m³',met:100,av:90},{id:'cam',wbs:'06.03.02',nom:'Cama de arena',und:'ml',met:50,av:20},{id:'ace',wbs:'06.03.03',nom:'Acero',und:'kg',met:1000,av:40}]},
   {id:'p2',nom:'Relleno',modo:'por avance del paquete',cls:'c2',its:[
   {id:'rel',wbs:'06.04.01',nom:'Relleno',und:'m³',met:80,av:25,guia:true},{id:'afi',wbs:'06.04.02',nom:'Suministro de afirmado',und:'m³',met:40,av:25}]}];
  var DIR=[{id:'eli',wbs:'06.05.01',nom:'Eliminación de material',und:'m³',met:200,av:0}];
- var plegado={};
- function f(n){return String(Math.round(n*100)/100).replace('.',',');}
- function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
- var pant=document.getElementById('pant');
- document.querySelectorAll('[data-set-estado]').forEach(function(b){b.addEventListener('click',function(){pant.setAttribute('data-estado',b.getAttribute('data-set-estado'));
-  document.querySelectorAll('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});});});
- document.querySelectorAll('[data-pm]').forEach(function(b){b.addEventListener('click',function(){PM_OK=b.getAttribute('data-pm')==='si';
-  document.querySelectorAll('[data-pm]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});document.getElementById('aviso-pm').hidden=PM_OK;});});
- function linea(p,it){return '<div class="it" data-row="'+it.id+'"><span class="wbs">'+it.wbs+'</span><span class="nm">'+esc(it.nom)+(it.guia?' <span class="tag acc2">Guía</span>':'')+'</span><span class="uni">'+it.und+' · '+f(it.met)+'</span><progress class="prog-mini" max="100" value="'+it.av+'" aria-label="Avance real acumulado de '+esc(it.nom)+': '+it.av+' %"></progress><span class="uni">'+it.av+' %</span>';}
+ var ACUM={exc:90,cam:10,ace:400,rel:20,afi:10,eli:0};
+ var CNC=['Falta de capacitación específica.','Falta de movilidad','Planificación y programación inadecuadas.','Falta de suministro oportuno de materiales.','Cambios en el diseño o alcance del proyecto.','Condiciones climáticas adversas.','Mano de obra insuficiente.','Mano de obra no calificada','Uso de materiales inadecuados o de baja calidad.','Mala comunicación y coordinación entre equipos.','Demoras en permisos y aprobaciones legales.','Falta de equipos y herramientas'];
+ var PERSONAL=[{id:'pe1',dni:'71234567',nombre:'RAMOS QUISPE, Jhonny',cargo:'Operador excavadora',esp:'Civil'},{id:'pe2',dni:'72345678',nombre:'HUARANCCA TORRES, Elmer',cargo:'Ayudante',esp:'Civil'},{id:'pe3',dni:'73095782',nombre:'BARDALES TRUJILLO, Sandro Luis',cargo:'Operario civil',esp:'Civil'}];
+ var EQS=[['Equipos de este servicio',['Excavadora CAT 320','Grúa 25 t']],['Otros equipos de la empresa',['Camión baranda','Compactadora vibratoria']]];
+ var TA={D:'Directo',C:'Contributoria',NC:'No contributoria','':'—'};
+ var acts=[],pers=[],eqs=[],mats=[];
+ function uid(p){n+=1;return p+n;}
+ function f(v){return String(Math.round(v*100)/100).replace('.',',');}
+ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+ function buscaP(id){var r=null;PK.forEach(function(p){p.its.forEach(function(i){if(i.id===id)r={p:p,i:i};});});DIR.forEach(function(i){if(i.id===id)r={p:null,i:i};});return r;}
+ function nuevaAct(){return {id:uid('a'),ta:'',pid:'',wbs:'',desc:'',und:'',paq:'',prog:'',ejec:'',restr:'',cnc:'',calc:false};}
+ function llena(a,pid){var r=buscaP(pid);a.ta='D';a.pid=pid;a.wbs=r.i.wbs;a.desc=r.i.nom;a.und=r.i.und;a.paq=r.p?r.p.nom:'';}
+ function dDeclaradas(){var o={};acts.forEach(function(a){if(a.ta==='D'&&a.pid)o[a.pid]=a.wbs;});return o;}
+ function selWbs(tipo,id,val,vacio){var t=(val?'<span class="cod" style="font-weight:400">'+esc(val)+'</span>':'<span class="muted">'+vacio+'</span>');
+  return '<button type="button" class="pick'+(val?'':' vacia')+'" data-open="wbs|'+tipo+'|'+id+'" aria-label="Elegir la partida (WBS) de '+tipo+'">'+t+'</button>';}
+ /* ----- actividades ----- */
+ function pintaActs(){var h='';
+  acts.forEach(function(a,i){var cod='T'+(i+1),cs=''+(a.calc?' ':'');
+   var pick;
+   if(a.calc){pick='<span class="calc">Calculada con la guía del paquete</span>';}
+   else{var t=a.ta==='D'&&a.pid?(a.paq?'<span class="tag acc'+(a.paq==='Relleno'?'2':'')+'">'+esc(a.paq)+'</span> ':'<span class="tag">Directa</span> ')+esc(a.wbs)+' · '+esc(a.desc):(a.ta==='C'||a.ta==='NC')?esc(TA[a.ta]):'— sin partida —';
+    pick='<button type="button" class="pick'+(a.ta?'':' vacia')+'" data-open="act|'+a.id+'" aria-label="Elegir la actividad del Plan Maestro para '+cod+'">'+t+'</button>';}
+   var wbs=(a.ta==='C'||a.ta==='NC')?selWbs('actividad '+cod,a.id+'|act',a.wbs,'— elige partida —'):'<span class="muted">'+(a.wbs||'—')+'</span>';
+   var ac=a.pid&&ACUM[a.pid]!==undefined?f(ACUM[a.pid]):'—';
+   var ro=a.calc?' readonly aria-label="calculado"':'';
+   h+='<tr data-a="'+a.id+'"><td class="cod">'+cod+'</td><td>'+pick+'</td>'+
+    '<td><input type="text" style="min-width:210px" data-s="acts" data-id="'+a.id+'" data-f="desc" value="'+esc(a.desc)+'" placeholder="Qué se hizo" aria-label="Descripción de '+cod+'"'+(a.calc?' readonly':'')+'></td>'+
+    '<td>'+wbs+'</td><td class="muted">'+TA[a.ta]+'</td><td class="muted">'+(a.und||'—')+'</td><td class="num muted">'+ac+'</td>'+
+    '<td class="num"><input type="number" class="n" min="0" step="any" data-s="acts" data-id="'+a.id+'" data-f="prog" value="'+esc(a.prog)+'" aria-label="Metrado programado de '+cod+'"'+ro+'></td>'+
+    '<td class="num"><input type="number" class="n" min="0" step="any" data-s="acts" data-id="'+a.id+'" data-f="ejec" value="'+esc(a.ejec)+'" aria-label="Metrado ejecutado de '+cod+'"'+ro+'></td>'+
+    '<td><input type="text" style="min-width:150px" data-s="acts" data-id="'+a.id+'" data-f="restr" value="'+esc(a.restr)+'" aria-label="Restricciones de '+cod+'"></td>'+
+    '<td><select data-s="acts" data-id="'+a.id+'" data-f="cnc" aria-label="CNC de '+cod+'" style="min-width:170px"><option value="">—</option>'+CNC.map(function(c){return '<option'+(c===a.cnc?' selected':'')+'>'+esc(c)+'</option>';}).join('')+'</select></td>'+
+    '<td><button type="button" class="del" data-quitar="act|'+a.id+'" aria-label="Quitar la actividad '+cod+'" title="Quitar actividad">&#128465;</button></td></tr>';});
+  document.getElementById('act-body').innerHTML=h||'<tr><td colspan="12" class="muted">Sin actividades. Pulsa «+ Actividad».</td></tr>';
+  pintaTareo();calcGuia();}
+ function calcGuia(){var g=null,c=null;acts.forEach(function(a){if(a.pid==='rel')g=a;if(a.calc)c=a;});
+  if(!g||!c)return;['prog','ejec'].forEach(function(k){var v=(parseFloat(g[k])||0)/80*40;c[k]=v?f(v):'';
+   var inp=document.querySelector('[data-a="'+c.id+'"] [data-f="'+k+'"]');if(inp)inp.value=c[k].replace(',','.');});}
+ /* ----- tareo ----- */
+ function horasTot(p){var s=0;acts.forEach(function(a){s+=parseFloat(p.horas[a.id])||0;});return s;}
+ function pintaTareo(){var hd='<tr><th scope="col">#</th><th scope="col">Persona</th><th scope="col">DNI</th><th scope="col">Apellidos y nombres</th><th scope="col">Cargo</th><th scope="col">Especialidad</th>';
+  acts.forEach(function(a,i){hd+='<th scope="col" style="text-align:center" title="'+esc(a.desc)+'">T'+(i+1)+'</th>';});
+  hd+='<th scope="col" class="num">Total</th><th scope="col"><span class="sr">Quitar</span></th></tr>';document.getElementById('tar-head').innerHTML=hd;
+  var h='';pers.forEach(function(p,i){
+   var opts='<option value="">Elige la persona…</option>'+PERSONAL.map(function(x){return '<option value="'+x.id+'"'+(x.id===p.pid&&!p.manual?' selected':'')+'>'+esc(x.nombre)+'</option>';}).join('')+'<option value="__M__"'+(p.manual?' selected':'')+'>+ Agregar trabajador no listado</option>';
+   var datos=p.pid&&!p.manual?'<td class="muted">'+p.dni+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.cargo)+'</td><td class="muted">'+esc(p.esp||'—')+'</td>':
+    '<td><input type="text" style="width:74px" maxlength="8" inputmode="numeric" data-s="pers" data-id="'+p.id+'" data-f="dni" value="'+esc(p.dni)+'" aria-label="DNI"></td><td><input type="text" style="min-width:170px" data-s="pers" data-id="'+p.id+'" data-f="nombre" value="'+esc(p.nombre)+'" aria-label="Apellidos y nombres"></td><td><input type="text" style="min-width:130px" data-s="pers" data-id="'+p.id+'" data-f="cargo" value="'+esc(p.cargo)+'" aria-label="Cargo"></td><td><input type="text" style="min-width:110px" placeholder="Civil, SSOMA… (opcional)" data-s="pers" data-id="'+p.id+'" data-f="esp" value="'+esc(p.esp)+'" aria-label="Especialidad"></td>';
+   h+='<tr data-p="'+p.id+'"><td>'+(i+1)+'</td><td><select data-s="pers" data-id="'+p.id+'" data-f="sel" style="min-width:170px" aria-label="Persona '+(i+1)+'">'+opts+'</select></td>'+datos;
+   acts.forEach(function(a){h+='<td><input type="number" class="n" min="0" step="any" style="width:44px" data-h="'+p.id+'|'+a.id+'" value="'+esc(p.horas[a.id]||'')+'" aria-label="Horas de la persona '+(i+1)+' en la actividad"></td>';});
+   h+='<td class="num" data-ptot="'+p.id+'"></td><td><button type="button" class="del" data-quitar="per|'+p.id+'" aria-label="Quitar persona '+(i+1)+'" title="Quitar persona">&#128465;</button></td></tr>';});
+  h+='<tr class="tot"><td colspan="6">Total HH</td>';acts.forEach(function(a){h+='<td class="num" data-ctot="'+a.id+'"></td>';});h+='<td class="num" data-gtot></td><td></td></tr>';
+  document.getElementById('tar-body').innerHTML=h;totales();}
+ function totales(){var j=parseFloat(document.getElementById('jornada').value)||0,g=0;
+  pers.forEach(function(p){var t=horasTot(p);g+=t;var c=document.querySelector('[data-ptot="'+p.id+'"]');if(c){c.textContent=f(t);c.style.color=(t===j)?'var(--accent)':'var(--warn)';c.title='Jornada: '+f(j)+' h';}});
+  acts.forEach(function(a){var s=0;pers.forEach(function(p){s+=parseFloat(p.horas[a.id])||0;});var c=document.querySelector('[data-ctot="'+a.id+'"]');if(c)c.textContent=f(s);});
+  var gt=document.querySelector('[data-gtot]');if(gt){gt.textContent=f(g);gt.style.color='var(--accent)';}}
+ /* ----- equipos y materiales ----- */
+ function wbsCell(tipo,id,val){return selWbs(tipo,id+'|'+tipo,val,'—');}
+ function pintaEq(){var h='',hm=0;eqs.forEach(function(e){hm+=parseFloat(e.hm)||0;
+  var c=e.manual?'<input type="text" autofocus style="min-width:200px" placeholder="Nombre del equipo (solo este RDT)" data-s="eqs" data-id="'+e.id+'" data-f="desc" value="'+esc(e.desc)+'" aria-label="Nombre del equipo">':
+   '<select style="min-width:200px" data-s="eqs" data-id="'+e.id+'" data-f="sel" aria-label="Equipo"><option value="">Elige el equipo…</option>'+EQS.map(function(g){return '<optgroup label="'+g[0]+'">'+g[1].map(function(x){return '<option'+(x===e.desc?' selected':'')+'>'+esc(x)+'</option>';}).join('')+'</optgroup>';}).join('')+'<option value="__M__">+ Agregar equipo no listado (solo este RDT)</option></select>';
+  h+='<tr><td>'+c+'</td><td>'+wbsCell('eq',e.id,e.wbs)+'</td><td class="num"><input type="number" class="n" min="0" step="any" style="width:44px" data-s="eqs" data-id="'+e.id+'" data-f="hm" value="'+esc(e.hm)+'" aria-label="HM"></td><td><button type="button" class="del" data-quitar="eq|'+e.id+'" aria-label="Quitar equipo" title="Quitar equipo">&#128465;</button></td></tr>';});
+  if(eqs.length){h+='<tr class="tot"><td colspan="2">Total HM</td><td class="num" style="color:var(--accent)" id="tot-hm">'+f(hm)+'</td><td></td></tr>';}
+  document.getElementById('eq-body').innerHTML=h||'<tr><td colspan="4" class="muted">Sin equipos. Usa «+ Equipo» si se empleó maquinaria.</td></tr>';}
+ function pintaMat(){var h='';mats.forEach(function(m){
+  h+='<tr><td><input type="text" style="min-width:130px" placeholder="Qué material" data-s="mats" data-id="'+m.id+'" data-f="desc" value="'+esc(m.desc)+'" aria-label="Material"></td><td>'+wbsCell('mat',m.id,m.wbs)+'</td><td><input type="text" style="width:56px" data-s="mats" data-id="'+m.id+'" data-f="und" value="'+esc(m.und)+'" aria-label="Unidad"></td><td class="num"><input type="number" class="n" min="0" step="any" style="width:60px" data-s="mats" data-id="'+m.id+'" data-f="cant" value="'+esc(m.cant)+'" aria-label="Cantidad"></td><td><button type="button" class="del" data-quitar="mat|'+m.id+'" aria-label="Quitar material" title="Quitar material">&#128465;</button></td></tr>';});
+  document.getElementById('mat-body').innerHTML=h||'<tr><td colspan="5" class="muted">Sin materiales.</td></tr>';}
+ function todo(){pintaActs();pintaEq();pintaMat();}
+ /* ----- selector ----- */
+ function linea(it){return '<span class="wbs">'+it.wbs+'</span><span class="nm">'+esc(it.nom)+(it.guia?' <span class="tag acc2">Guía</span>':'')+'</span><span class="uni">'+it.und+' · '+f(it.met)+'</span><progress class="prog-mini" max="100" value="'+it.av+'" aria-label="Avance real acumulado de '+esc(it.nom)+': '+it.av+' %"></progress><span class="uni">'+it.av+' %</span>';}
  function dibuja(){
-  var q=(document.getElementById('m-q').value||'').toLowerCase(),h='';
+  var q=(document.getElementById('m-q').value||'').toLowerCase(),h='',modoAct=ctx&&ctx.modo==='act',dec=dDeclaradas();
   if(!PM_OK){document.getElementById('m-lista').innerHTML='<div class="msg info" role="status"><span aria-hidden="true">&#9432;</span><div><strong>Sin Plan Maestro aprobado</strong><br>No hay paquetes ni partidas para elegir. El RDT solo registra avance sobre un Plan Maestro aprobado.</div></div>';return;}
+  if(modoAct&&!q){h+='<div class="pq esp"><div class="pq-h"><span class="gr">Sin partida del Plan Maestro <span class="tag">horas que no suman avance</span></span></div><div class="it"><span class="nm">Actividad contributoria (C): se carga a una partida declarada hoy</span><button type="button" data-pick="ta|C" aria-label="Elegir Contributoria">Contributoria</button></div><div class="it"><span class="nm">Actividad no contributoria (NC)</span><button type="button" data-pick="ta|NC" aria-label="Elegir No contributoria">No contributoria</button></div></div>';}
+  function btn(tag,it,p){var off=!modoAct&&!dec[it.id];
+   return '<div class="it'+(off?' off':'')+'">'+linea(it)+(off?'<span class="uni">no declarada hoy</span>':'<button type="button" data-pick="'+tag+'" aria-label="Elegir la partida '+esc(it.nom)+(p?' del paquete '+esc(p.nom):'')+'">Elegir</button>')+'</div>';}
   PK.forEach(function(p){
    var its=p.its.filter(function(i){return !q||(i.nom+' '+i.wbs+' '+p.nom).toLowerCase().indexOf(q)>-1;});if(!its.length)return;
    var pl=!!plegado[p.id],porAv=p.modo!=='por partidas';
    h+='<div class="pq '+p.cls+'"><div class="pq-h"><button type="button" class="icon" data-pl="'+p.id+'" aria-expanded="'+(!pl)+'" aria-label="'+(pl?'Expandir':'Plegar')+' el paquete '+esc(p.nom)+'">'+(pl?'&#9656;':'&#9662;')+'</button><span class="tag '+(p.cls?'acc2':'acc')+'">Paquete</span><span class="gr">'+esc(p.nom)+' <span class="tag">'+p.modo+'</span></span>'+
-    (porAv?'<button type="button" class="primary" data-pick="pq|'+p.id+'" aria-label="Elegir el paquete '+esc(p.nom)+' (se escribe el metrado de la guía)">Elegir paquete</button>':'')+'</div>';
-   if(!pl){its.forEach(function(i){h+=linea(p,i);
-    if(porAv){h+=i.guia?'<span class="uni">(se escribe aquí)</span>':'<span class="uni calc">se calcula con la guía</span>';}
-    else{h+='<button type="button" data-pick="pa|'+p.id+'|'+i.id+'" aria-label="Elegir la partida '+esc(i.nom)+' del paquete '+esc(p.nom)+'">Elegir</button>';}
-    h+='</div>';});}
+    (porAv&&modoAct?'<button type="button" class="primary" data-pick="pq|'+p.id+'" aria-label="Elegir el paquete '+esc(p.nom)+' (se escribe el metrado de la guía)">Elegir paquete</button>':'')+'</div>';
+   if(!pl){its.forEach(function(i){
+    if(porAv){h+='<div class="it'+((!modoAct&&!dec[i.id])?' off':'')+'">'+linea(i)+(i.guia?'<span class="uni">(se escribe aquí)</span>':'<span class="uni calc">se calcula con la guía</span>')+'</div>';}
+    else{h+=btn('pa|'+i.id,i,p);}});}
    h+='</div>';});
   var dd=DIR.filter(function(i){return !q||(i.nom+' '+i.wbs).toLowerCase().indexOf(q)>-1;});
-  if(dd.length){h+='<div class="pq dir"><div class="pq-h"><span class="gr">Partidas directas <span class="tag">sin paquete</span></span></div>';dd.forEach(function(i){h+=linea(null,i)+'<button type="button" data-pick="di|'+i.id+'" aria-label="Elegir la partida directa '+esc(i.nom)+'">Elegir</button></div>';});h+='</div>';}
+  if(dd.length){h+='<div class="pq dir"><div class="pq-h"><span class="gr">Partidas directas <span class="tag">sin paquete</span></span></div>';dd.forEach(function(i){h+=btn('di|'+i.id,i,null);});h+='</div>';}
   if(!h){h='<div class="vacio"><strong>Sin resultados</strong>Ninguna partida ni paquete coincide con la búsqueda.</div>';}
   document.getElementById('m-lista').innerHTML=h;}
- function abre(c,btn){ctx=c;ultimoBoton=btn;document.getElementById('velo').hidden=false;document.getElementById('m-q').value='';dibuja();document.getElementById('m-q').focus();}
- function cierra(){document.getElementById('velo').hidden=true;if(ultimoBoton){ultimoBoton.focus();}}
- document.querySelectorAll('[data-elegir]').forEach(function(b){b.addEventListener('click',function(){abre(b.getAttribute('data-elegir'),b);});});
+ function abre(c,btn){ctx=c;ultimo=btn;document.getElementById('m-tit').textContent=c.modo==='act'?'Elegir actividad del Plan Maestro':'Elegir la partida (WBS) · solo las declaradas hoy';document.getElementById('velo').hidden=false;document.getElementById('m-q').value='';dibuja();document.getElementById('m-q').focus();}
+ function cierra(){document.getElementById('velo').hidden=true;var b=ultimo&&document.body.contains(ultimo)?ultimo:document.getElementById('add-act');b.focus();}
+ function aplica(tag){var a=tag.split('|');
+  if(ctx.modo==='act'){var act=acts.filter(function(x){return x.id===ctx.id;})[0];
+   if(a[0]==='ta'){act.ta=a[1];act.pid='';act.wbs='';act.und='';act.paq='';}
+   else if(a[0]==='pq'){var i=acts.indexOf(act),g=nuevaAct(),c=nuevaAct();llena(g,'rel');llena(c,'afi');c.calc=true;acts.splice(i,1,g,c);}
+   else{llena(act,a[a.length-1]);}}
+  else{var w=buscaP(a[a.length-1]).i.wbs,t=ctx.tipo,x;
+   if(t==='act'){x=acts.filter(function(y){return y.id===ctx.id;})[0];x.wbs=w;}
+   if(t==='eq'){x=eqs.filter(function(y){return y.id===ctx.id;})[0];x.wbs=w;}
+   if(t==='mat'){x=mats.filter(function(y){return y.id===ctx.id;})[0];x.wbs=w;}}
+  todo();}
+ /* ----- eventos ----- */
+ var pant=document.getElementById('pant');
+ document.querySelectorAll('[data-set-estado]').forEach(function(b){b.addEventListener('click',function(){pant.setAttribute('data-estado',b.getAttribute('data-set-estado'));
+  document.querySelectorAll('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});});});
+ document.querySelectorAll('[data-pm]').forEach(function(b){b.addEventListener('click',function(){PM_OK=b.getAttribute('data-pm')==='si';
+  document.querySelectorAll('[data-pm]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});document.getElementById('aviso-pm').hidden=PM_OK;document.getElementById('n-part').textContent=PM_OK?'6 disponibles':'Sin Plan Maestro';});});
+ document.querySelectorAll('[data-modo]').forEach(function(b){b.addEventListener('click',function(){var ver=b.getAttribute('data-modo')==='ver';document.getElementById('fs').disabled=ver;
+  document.getElementById('h-tit').textContent=ver?'Revisar RDT':'Crear RDT';document.getElementById('h-desc').textContent=ver?'Solo lectura · para validar o rechazar, vuelve a Status de RDTs':'Reporte diario de trabajo · PROM-GP-002';
+  document.querySelectorAll('[data-modo]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});});});
+ document.getElementById('add-act').addEventListener('click',function(){acts.push(nuevaAct());pintaActs();});
+ document.getElementById('add-per').addEventListener('click',function(){pers.push({id:uid('p'),pid:'',manual:false,dni:'',nombre:'',cargo:'',esp:'',horas:{}});pintaTareo();});
+ document.getElementById('add-eq').addEventListener('click',function(){eqs.push({id:uid('e'),manual:false,desc:'',wbs:'',hm:''});pintaEq();});
+ document.getElementById('add-mat').addEventListener('click',function(){mats.push({id:uid('m'),desc:'',wbs:'',und:'',cant:''});pintaMat();});
+ document.getElementById('jornada').addEventListener('input',function(e){e.target.value=e.target.value.replace(/[^\d.,]/g,'').slice(0,5);totales();});
+ document.getElementById('btn-plantilla').addEventListener('click',function(){var a=document.getElementById('aviso');document.getElementById('errs').hidden=true;a.hidden=false;a.textContent='Plantilla guardada (simulado).';});
+ document.getElementById('btn-cargar').addEventListener('click',function(){var e=document.getElementById('errs'),a=document.getElementById('aviso'),er=[];
+  if(!document.getElementById('jornada').value.trim())er.push('Indica la jornada laboral (H).');
+  if(!acts.some(function(x){return x.ta;}))er.push('Elige al menos una actividad del Plan Maestro.');
+  if(er.length){a.hidden=true;e.hidden=false;e.innerHTML=er.map(function(x){return '<li>'+x+'</li>';}).join('');return;}
+  e.hidden=true;a.hidden=false;a.textContent='RDT listo para cargar (simulado: la maqueta no guarda).';});
+ document.addEventListener('input',function(e){var t=e.target,s=t.getAttribute('data-s'),h=t.getAttribute('data-h');
+  if(h){var k=h.split('|'),p=pers.filter(function(x){return x.id===k[0];})[0];p.horas[k[1]]=t.value;totales();return;}
+  if(!s||t.tagName==='SELECT')return;var lista={acts:acts,pers:pers,eqs:eqs,mats:mats}[s],o=lista.filter(function(x){return x.id===t.getAttribute('data-id');})[0],fl=t.getAttribute('data-f');
+  o[fl]=t.value;if(s==='acts'&&(fl==='prog'||fl==='ejec'))calcGuia();if(s==='eqs'&&fl==='hm'){var hm=0;eqs.forEach(function(x){hm+=parseFloat(x.hm)||0;});var c=document.getElementById('tot-hm');if(c)c.textContent=f(hm);}});
+ document.addEventListener('change',function(e){var t=e.target,s=t.getAttribute('data-s');if(!s||t.tagName!=='SELECT')return;
+  var id=t.getAttribute('data-id'),fl=t.getAttribute('data-f');
+  if(s==='acts'){acts.filter(function(x){return x.id===id;})[0].cnc=t.value;return;}
+  if(s==='pers'){var p=pers.filter(function(x){return x.id===id;})[0];if(t.value==='__M__'){p.manual=true;p.pid='';p.dni=p.nombre=p.cargo=p.esp='';}else{p.manual=false;var r=PERSONAL.filter(function(x){return x.id===t.value;})[0];p.pid=t.value;if(r){p.dni=r.dni;p.nombre=r.nombre;p.cargo=r.cargo;p.esp=r.esp;}}pintaTareo();return;}
+  if(s==='eqs'){var q=eqs.filter(function(x){return x.id===id;})[0];if(t.value==='__M__'){q.manual=true;q.desc='';}else{q.manual=false;q.desc=t.value;}pintaEq();}});
+ document.addEventListener('click',function(e){
+  var op=e.target.closest('[data-open]');if(op){var a=op.getAttribute('data-open').split('|');
+   if(a[0]==='act'){abre({modo:'act',id:a[1]},op);}else{abre({modo:'wbs',tipo:a[1]==='eq'||a[1]==='mat'?a[1]:'act',id:a[2]==='act'?a[2]:a[2]},op);}return;}
+  var pl=e.target.closest('[data-pl]');if(pl){var id=pl.getAttribute('data-pl');plegado[id]=!plegado[id];dibuja();return;}
+  var pk=e.target.closest('[data-pick]');if(pk){aplica(pk.getAttribute('data-pick'));cierra();return;}
+  var q=e.target.closest('[data-quitar]');if(q){var k=q.getAttribute('data-quitar').split('|'),id2=k[1];
+   if(k[0]==='act'){var x=acts.filter(function(y){return y.id===id2;})[0];var i=acts.indexOf(x);acts.splice(i,1);if(x.pid==='rel'&&acts[i]&&acts[i].calc){acts.splice(i,1);}
+    pers.forEach(function(p){delete p.horas[id2];});pintaActs();}
+   if(k[0]==='per'){pers=pers.filter(function(y){return y.id!==id2;});pintaTareo();}
+   if(k[0]==='eq'){eqs=eqs.filter(function(y){return y.id!==id2;});pintaEq();}
+   if(k[0]==='mat'){mats=mats.filter(function(y){return y.id!==id2;});pintaMat();}}
+ });
  document.getElementById('m-x').addEventListener('click',cierra);
  document.getElementById('velo').addEventListener('mousedown',function(e){if(e.target.id==='velo')cierra();});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!document.getElementById('velo').hidden){cierra();}});
  document.getElementById('m-q').addEventListener('input',dibuja);
  document.getElementById('m-pl').addEventListener('click',function(){PK.forEach(function(p){plegado[p.id]=true;});dibuja();});
  document.getElementById('m-ex').addEventListener('click',function(){plegado={};dibuja();});
- function buscaP(id){var r=null;PK.forEach(function(p){p.its.forEach(function(i){if(i.id===id)r={p:p,i:i};});});DIR.forEach(function(i){if(i.id===id)r={p:null,i:i};});return r;}
- function recalcAfi(){var g=document.getElementById('in-rel');if(!g)return;var v=parseFloat(g.value)||0,pct=v/80;
-  var pc=document.getElementById('pct-rel');if(pc)pc.textContent=f(pct*100)+' % del paquete hoy';
-  var a=document.getElementById('in-afi');if(a)a.value=f(pct*40);}
- function addFila(html,id){var b=document.getElementById('act-body');document.getElementById('act-vacia').hidden=true;b.insertAdjacentHTML('beforeend',html.replace('%ID%',id));}
- document.addEventListener('click',function(e){
-  var pl=e.target.closest('[data-pl]');if(pl){var id=pl.getAttribute('data-pl');plegado[id]=!plegado[id];dibuja();return;}
-  var pk=e.target.closest('[data-pick]');if(pk){var a=pk.getAttribute('data-pick').split('|');var txt='';
-   if(ctx==='act'){
-    if(a[0]==='pq'){var p=PK.filter(function(x){return x.id===a[1];})[0];
-     addFila('<tr data-fa><td><span class="tag acc2">Paquete</span> '+esc(p.nom)+'</td><td>06.04.01</td><td>Relleno <span class="tag acc2">Guía</span></td><td>m³</td><td class="num"><input type="number" min="0" step="any" id="in-rel" aria-label="Metrado de hoy de Relleno (guía del paquete)" value=""></td><td><span class="tag">Por avance del paquete</span> <span id="pct-rel" class="muted">0 % del paquete hoy</span></td><td><button type="button" class="icon" data-quitar aria-label="Quitar el paquete Relleno" title="Quitar">&times;</button></td></tr>'+
-      '<tr data-fa><td><span class="tag acc2">Paquete</span> '+esc(p.nom)+'</td><td>06.04.02</td><td>Suministro de afirmado <span class="tag">Calculada</span></td><td>m³</td><td class="num"><input type="text" id="in-afi" readonly aria-label="Metrado calculado de Suministro de afirmado (solo lectura)" value="0" style="width:84px"></td><td class="calc">= mismo % que la guía × 40 m³</td><td></td></tr>','');
-     var g=document.getElementById('in-rel');g.addEventListener('input',recalcAfi);}
-    else{var r=buscaP(a[a.length-1]);addFila('<tr data-fa><td>'+(r.p?'<span class="tag acc">Paquete</span> '+esc(r.p.nom):'<span class="tag">Directa</span>')+'</td><td>'+r.i.wbs+'</td><td>'+esc(r.i.nom)+'</td><td>'+r.i.und+'</td><td class="num"><input type="number" min="0" step="any" aria-label="Metrado de hoy de '+esc(r.i.nom)+'"></td><td><span class="tag">Por partida</span></td><td><button type="button" class="icon" data-quitar aria-label="Quitar '+esc(r.i.nom)+'" title="Quitar">&times;</button></td></tr>','');}
-   }else{
-    if(a[0]==='pq'){txt='Relleno (paquete)';}else{var r2=buscaP(a[a.length-1]);txt=(r2.p?r2.p.nom+' › ':'Directa › ')+r2.i.nom;}
-    ultimoBoton.textContent=txt;ultimoBoton.className='tag acc';}
-   cierra();return;}
-  var q=e.target.closest('[data-quitar]');if(q){var tr=q.closest('tr');var n=tr.nextElementSibling;if(tr.querySelector('#in-rel')&&n){n.remove();}tr.remove();
-   if(!document.querySelector('#act-body tr[data-fa]')){document.getElementById('act-vacia').hidden=false;}}
- });
+ /* datos de ejemplo iniciales */
+ var a1=nuevaAct();llena(a1,'exc');a1.prog='10';a1.ejec='12';
+ var g=nuevaAct(),c=nuevaAct();llena(g,'rel');llena(c,'afi');c.calc=true;g.prog='6';g.ejec='4';
+ var a3=nuevaAct();a3.ta='C';a3.wbs='06.03.01';a3.desc='Transporte interno de materiales';a3.restr='Grúa ocupada 2 h';a3.cnc='Falta de equipos y herramientas';
+ var a4=nuevaAct();a4.ta='NC';a4.wbs='06.03.01';a4.desc='Espera de tubería HDPE';
+ acts=[a1,g,c,a3,a4];
+ var r=PERSONAL[0],r2=PERSONAL[1];
+ pers=[{id:uid('p'),pid:r.id,manual:false,dni:r.dni,nombre:r.nombre,cargo:r.cargo,esp:r.esp,horas:{}},{id:uid('p'),pid:r2.id,manual:false,dni:r2.dni,nombre:r2.nombre,cargo:r2.cargo,esp:r2.esp,horas:{}}];
+ pers[0].horas[a1.id]='10';pers[1].horas[a1.id]='6';pers[1].horas[g.id]='2';pers[1].horas[a3.id]='2';
+ eqs=[{id:uid('e'),manual:false,desc:'Excavadora CAT 320',wbs:'06.03.01',hm:'10'}];
+ mats=[{id:uid('m'),desc:'Arena fina',wbs:'06.03.02',und:'m³',cant:'12'}];
+ todo();calcGuia();
 })();
 </script>
 </body>

@@ -1,8 +1,8 @@
 ---
-version: 1.4.0
+version: 1.5.0
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
-actualizado: 2026-09-20
+actualizado: 2026-09-30
 estado: activo
 ---
 
@@ -222,6 +222,24 @@ Aprobado por Victor el 2026-09-30. Los chips de los paneles (izquierdo, derecho 
 | Inerte | La pantalla aún no existe | Sin enlace, título «Sin pantalla todavía» |
 
 Un chip nunca se oculta por permisos: se muestra deshabilitado (ver no es acceder). La política completa para pantallas nuevas (registro, prueba de cobertura, conservar el servicio, permisos, matriz) está en `docs/04-flujos-de-negocio/16-paneles.md`, sección «Política de interfaz nueva», y la plantilla de Punch List en `docs/01-contexto-repositorio/05-diseno-y-ui.md`.
+
+### Jerarquía en árbol con casillas, marca de paquete y plegado
+
+Propuesta de la Fase F0 del plan niveles-paquetes-plan-maestro-rdt (2026-09-30); **queda vigente cuando Victor apruebe las maquetas** `mockups/paquetes-declarar.html` y `mockups/paquetes-agrupar.html`. Es una composición de lo que ya existe: no introduce un componente nuevo ni un token nuevo. Los nombres de componentes del código real que la implementen los fija el Planner tras leer `src/components/ui/`; aquí no se inventa ninguno.
+
+| Pieza | Regla | Se apoya en |
+|---|---|---|
+| Árbol | Tabla nativa (`<table>`, clases de `Table.tsx`); la jerarquía se muestra con sangría de 14 px por nivel en la celda del nombre, no con un componente de árbol. Primera columna (EDT o WBS) fija al desplazar en horizontal (`sticky left-0`, sticky de celda, no de fila) | §5 Tablas, §8 |
+| Casillas | Columna de casilla **al inicio** de cada fila, visible solo en modo «crear paquete»; no aparece en la fila de Servicio. Cada casilla con `aria-label` que nombra la fila | §9, §10 |
+| Modo crear | El botón «Crear paquete» (`Button.tsx`) abre una barra con nombre (`Input.tsx`), nivel (`<select>` nativo) y «Guardar» / «Cancelar». Errores junto al campo, con texto e icono y `role="alert"` | §9 |
+| Marca de paquete | Borde grueso a la izquierda (4 px) con `--color-accent` o `--color-accent-secondary`, **más** una etiqueta de texto «Paquete». Nunca solo color. Una casilla en la cabecera del paquete selecciona todos sus ítems | §4.1, §10 |
+| Orden | Dos botones de solo icono (subir, bajar) con `aria-label` y `title`; alternativa de teclado Alt + flecha arriba / abajo con el foco en el paquete | §9, §10 |
+| Plegado | Botón de solo icono con `aria-expanded`; plegado muestra solo la cabecera (nombre, nivel, cantidad de ítems, subtotal) | §9, §10 |
+| Hito | Fila atenuada (`opacity-60`) con la marca «Hito» en texto e icono y sin campos editables | §10 |
+| Restante | Texto + icono con los colores semánticos de 4.1.1 (`emerald` completa, `amber` resta) y barra `<progress>` con `aria-label`; nunca solo color | §4.1.1 |
+| Dos listas lado a lado | Dos cajas con `flex-1 min-h-0` y scroll propio; en pantallas angostas (menos de 900 px) pasan a pestañas y se muestra una sola | §8 |
+
+Estados obligatorios (§9): vacío, cargando, error y datos, en cada una de las cuatro maquetas de F0-A.
 
 ### Crear componentes nuevos
 
@@ -464,6 +482,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.5.0 | 2026-09-30 | Propuesta de F0-A (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §5 nueva subsección «Jerarquía en árbol con casillas, marca de paquete y plegado». Sin tokens ni componentes nuevos. |
 | 1.4.0 | 2026-09-30 | Con confirmación de Victor (regla de evolución): §3 documenta el asistente flotante (posición, capas, patrón) como excepción a «estructura fija»; §5 documenta el chip deshabilitado, el registro único de accesos y la política de interfaz nueva. |
 | 1.3.0 | 2026-09-23 | Sección 13 nueva: "Gráficos de líneas" (8 reglas), a partir del precedente Curva S (Fase 3). Antigua sección 13 "Control de calidad" pasa a 14, "Historial de cambios" pasa a 15. |
 | 1.2.4 | 2026-09-20 | Sección 8 corregida otra vez: el fix de 1.2.3 (sticky en el `<tr>` completo) causaba filas superpuestas/tapadas al hacer scroll — peor que el bug original. Movido el `sticky` de la fila a cada celda (`<th>`), que es el patrón ya probado en `TablaConsolidadoRdts.tsx`. Regla añadida: sticky siempre va en la celda, nunca en la fila, con más de un encabezado apilado. |

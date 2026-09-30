@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Importar DP — confirmación de niveles</title>
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
+--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover:not([aria-disabled=true]){border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover:not([aria-disabled=true]){color:var(--bg-base);filter:brightness(1.1)}
+button.danger{border-color:var(--err);color:var(--err)}
+button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+button.icon{padding:2px 6px;min-width:24px}
+input[type=text],input[type=number],select{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:11px;max-width:100%}
+input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent)}
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px 10px;overflow:auto}
+.pantalla:not([data-estado=datos]) .e-datos,.pantalla:not([data-estado=vacio]) .e-vacio,
+.pantalla:not([data-estado=carga]) .e-carga,.pantalla:not([data-estado=error]) .e-error{display:none}
+.cab{margin-bottom:8px}
+.miga{font-size:10px;color:var(--text-2);margin-bottom:4px}
+.cab h1{font-size:16px;font-weight:600}
+.cab p{font-size:11px;color:var(--text-2);margin-top:2px}
+.pasos{display:flex;gap:6px;margin:6px 0 0;list-style:none;flex-wrap:wrap}
+.pasos li{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:10px;color:var(--text-2)}
+.pasos li[aria-current=step]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.card h2{font-size:12px;font-weight:600;margin-bottom:4px}
+.fila{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.grow{flex:1}
+.muted{color:var(--text-2)}
+.ok{color:var(--ok)}.err{color:var(--err)}.warn{color:var(--warn)}
+.tabla-wrap{flex:1;min-height:120px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated)}
+.tabla-wrap.auto{flex:0 0 auto}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th,td{padding:4px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{position:sticky;top:0;z-index:2;background:var(--bg-elevated);font-weight:600;color:var(--text-2);white-space:nowrap;border-bottom:1px solid var(--line)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.cod{white-space:nowrap;font-variant-numeric:tabular-nums}
+.fija{position:sticky;left:0;background:var(--bg-elevated);z-index:1}
+th.fija{z-index:3}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2);white-space:nowrap}
+.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.warn{border-color:var(--warn);color:var(--warn)}.tag.err{border-color:var(--err);color:var(--err)}
+.tag.acc{border-color:var(--accent);color:var(--accent)}.tag.acc2{border-color:var(--accent-2);color:#9db7ff}
+.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px}
+.msg.err{border-color:var(--err);color:var(--text)}.msg.err strong{color:var(--err)}
+.msg.warn{border-color:var(--warn)}.msg.warn strong{color:var(--warn)}
+.msg.info{border-color:var(--accent-2)}
+.vacio{border:1px dashed var(--line);border-radius:10px;padding:28px 12px;text-align:center;color:var(--text-2)}
+.vacio strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
+.sk{height:10px;border-radius:4px;background:linear-gradient(90deg,#141b2b,#1f2a40,#141b2b);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+details.notas{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text-2)}
+details.notas summary{cursor:pointer;color:var(--text)}
+details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
+.lateral{display:none;flex:0 0 150px;border:1px dashed var(--line);border-radius:8px;padding:8px;font-size:10px;color:var(--text-2)}
+.cuerpo{flex:1;min-height:0;display:flex;gap:8px}
+.cuerpo.lat-on .lateral{display:block}
+[hidden]{display:none!important}
+.indent{display:inline-block}
+.rol{min-width:150px}
+tr.sib td{background:rgba(255,255,255,.02)}
+tr.sib[hidden]{display:none}
+.hereda{color:var(--text-2);font-size:10px}
+@media (max-width:640px){
+ body{overflow:auto;height:auto;min-height:100%}
+ .pantalla{overflow:visible}
+ .tabla-wrap{min-height:0}
+ .rol{min-width:120px}
+}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Importar DP · confirmación de niveles · datos simulados</span>
+<div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
+<button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
+<button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
+<button type="button" data-set-estado="carga" aria-pressed="false">Cargando</button>
+<button type="button" data-set-estado="error" aria-pressed="false">Error</button></div></div>
+<main class="pantalla" data-estado="datos"><div class="cab"><nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Importar DP</nav>
+<h1>Importar DP</h1><p>Paso 2 de 3: confirma los niveles del presupuesto antes de ver el informe de extracción.</p>
+<ol class="pasos" aria-label="Pasos de la importación"><li>1 · Archivo leído</li><li aria-current="step">2 · Confirmar niveles</li><li>3 · Informe de extracción</li></ol></div>
+<div class="e-datos"><div class="fila" role="group" aria-label="Ejemplo mostrado"><span class="muted">Ejemplo:</span>
+<button type="button" data-tab="p4" data-grupo="ej" aria-pressed="true">Presupuesto de 4 niveles</button>
+<button type="button" data-tab="p5" data-grupo="ej" aria-pressed="false">Presupuesto de 5 niveles (el nivel 2 propone «Área»)</button></div>
+<section data-panel="p4" data-grupo="ej"><div class="card"><h2>Se encontraron 4 niveles en el presupuesto</h2>
+<p class="muted">Servicio · Subpresupuesto · Paquete de partidas · Partida · 7 grupos de hermanas · 1 para revisar.</p></div><div class="msg warn"><span aria-hidden="true">&#9888;</span><div><strong>Un grupo quedó para revisar.</strong> «06.01.A Varios» no sigue el patrón de sus hermanas (sin metrado ni unidad). Despliega el grupo y elige su rol.</div></div><div class="niveles" data-hoja-rol="Partida">
+<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="num">Nivel</th><th scope="col">Código</th><th scope="col">Descripción</th><th scope="col">Metrado</th><th scope="col">Hermanas</th><th scope="col">Rol</th><th scope="col">Estado</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td class="cod"><span class="indent" style="padding-left:0px">SERV</span></td><td>Canalización de media tensión (servicio de prueba)</td><td>—</td><td><span class="muted">—</span></td><td><span class="tag acc">Servicio</span> <span class="hereda">(el nombre coincide con el servicio)</span></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">2</td><td class="cod"><span class="indent" style="padding-left:14px">01</span></td><td>Obras provisionales</td><td>—</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 2, grupo de 01" data-grupo-id="a2" data-padre="a1" data-nombre="Obras provisionales" data-hoja="0"><option>Servicio</option><option>Área</option><option selected>Subpresupuesto</option><option>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">2</td><td class="cod"><span class="indent" style="padding-left:14px">06</span></td><td>Obras civiles</td><td>—</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">3</td><td class="cod"><span class="indent" style="padding-left:28px">01.01</span></td><td>Campamento y cerco</td><td>—</td><td><span class="muted">—</span></td><td><select class="rol" aria-label="Rol del nivel 3, grupo de 01.01" data-grupo-id="a3" data-padre="a2" data-nombre="Campamento y cerco" data-hoja="0"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option selected>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">01.01.01</span></td><td>Campamento provisional</td><td>1.00 glb</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 4, grupo de 01.01.01" data-grupo-id="a4" data-padre="a3" data-nombre="Campamento provisional" data-hoja="1"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option selected>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">01.01.02</span></td><td>Cerco perimétrico</td><td>120.00 m</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">3</td><td class="cod"><span class="indent" style="padding-left:28px">06.01</span></td><td>Excavaciones</td><td>—</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 3, grupo de 06.01" data-grupo-id="a5" data-padre="a2" data-nombre="Excavaciones" data-hoja="0"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option selected>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">3</td><td class="cod"><span class="indent" style="padding-left:28px">06.03</span></td><td>Bancoductos</td><td>—</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.01.01</span></td><td>Excavación en roca</td><td>85.00 m3</td><td><button type="button" data-toggle-sib data-n="2" aria-expanded="false">Ver 2 hermanas</button></td><td><select class="rol" aria-label="Rol del nivel 4, grupo de 06.01.01" data-grupo-id="a6" data-padre="a5" data-nombre="Excavación en roca" data-hoja="1"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option selected>Partida</option></select></td><td><span class="tag warn"><span aria-hidden="true">&#9888;</span> Para revisar</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.01.02</span></td><td>Excavación en terreno normal</td><td>240.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.01.A</span></td><td>Varios (sin metrado ni unidad)</td><td>—</td><td><span class="hereda">hermana</span></td><td><select class="rol" aria-label="Rol del nivel 4, grupo de 06.01.A" data-extra="a6-x" data-padre="" data-nombre="Varios (sin metrado ni unidad)" data-hoja="1"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option selected>Partida</option></select></td><td><span class="tag warn"><span aria-hidden="true">&#9888;</span> Para revisar</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.01</span></td><td>Excavación de zanja para bancoducto</td><td>420.00 m3</td><td><button type="button" data-toggle-sib data-n="6" aria-expanded="false">Ver 6 hermanas</button></td><td><select class="rol" aria-label="Rol del nivel 4, grupo de 06.03.01" data-grupo-id="a7" data-padre="a5" data-nombre="Excavación de zanja para bancoducto" data-hoja="1"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option selected>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.02</span></td><td>Perfilado y compactado de fondo</td><td>600.00 m2</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.03</span></td><td>Cama de arena</td><td>90.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.04</span></td><td>Instalación de bancoductos</td><td>300.00 m</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.05</span></td><td>Suministro de afirmado</td><td>150.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.06</span></td><td>Relleno y compactado</td><td>330.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03.07</span></td><td>Eliminación de material excedente</td><td>180.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+</table></div>
+<div class="msg err val-msg" role="alert" hidden style="margin-top:8px"><span aria-hidden="true">&#9888;</span><div><strong>Revisa los roles elegidos</strong><ul style="margin-left:16px"></ul></div></div>
+<div class="msg info ok-msg" role="status" hidden style="margin-top:8px"><span aria-hidden="true">&#10003;</span><div>Niveles aprobados (simulado). Continúa con el informe de extracción.</div></div>
+<div class="fila" style="margin-top:8px"><button type="button" class="primary btn-aprobar">Aprobar niveles</button><button type="button">Cancelar</button><span class="muted">El rol elegido en la fila de muestra vale para las demás hermanas del mismo nivel y del mismo padre.</span></div>
+</div></section>
+<section data-panel="p5" data-grupo="ej" hidden><div class="card"><h2>Se encontraron 5 niveles en el presupuesto</h2>
+<p class="muted">Servicio · Área · Subpresupuesto · Paquete de partidas · Partida · 5 grupos de hermanas · 0 para revisar.</p></div><div class="msg info"><span aria-hidden="true">&#8505;</span><div>El nivel 2 no tiene nombre fijo en el archivo: el sistema propone <strong>Área</strong>. Puedes cambiarlo en el desplegable.</div></div><div class="niveles" data-hoja-rol="Partida">
+<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="num">Nivel</th><th scope="col">Código</th><th scope="col">Descripción</th><th scope="col">Metrado</th><th scope="col">Hermanas</th><th scope="col">Rol</th><th scope="col">Estado</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td class="cod"><span class="indent" style="padding-left:0px">SERV</span></td><td>Canalización de media tensión (servicio de prueba)</td><td>—</td><td><span class="muted">—</span></td><td><span class="tag acc">Servicio</span> <span class="hereda">(el nombre coincide con el servicio)</span></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">2</td><td class="cod"><span class="indent" style="padding-left:14px">A1</span></td><td>Zona Norte</td><td>—</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 2, grupo de A1" data-grupo-id="b2" data-padre="b1" data-nombre="Zona Norte" data-hoja="0"><option>Servicio</option><option selected>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">2</td><td class="cod"><span class="indent" style="padding-left:14px">A2</span></td><td>Zona Sur</td><td>—</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">3</td><td class="cod"><span class="indent" style="padding-left:28px">06</span></td><td>Obras civiles</td><td>—</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 3, grupo de 06" data-grupo-id="b3" data-padre="b2" data-nombre="Obras civiles" data-hoja="0"><option>Servicio</option><option>Área</option><option selected>Subpresupuesto</option><option>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">3</td><td class="cod"><span class="indent" style="padding-left:28px">07</span></td><td>Suministros</td><td>—</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.03</span></td><td>Bancoductos</td><td>—</td><td><button type="button" data-toggle-sib data-n="1" aria-expanded="false">Ver 1 hermana</button></td><td><select class="rol" aria-label="Rol del nivel 4, grupo de 06.03" data-grupo-id="b4" data-padre="b3" data-nombre="Bancoductos" data-hoja="0"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option selected>Paquete de partidas</option><option>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">4</td><td class="cod"><span class="indent" style="padding-left:42px">06.01</span></td><td>Excavaciones</td><td>—</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+<tbody>
+<tr><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.01</span></td><td>Excavación de zanja para bancoducto</td><td>420.00 m3</td><td><button type="button" data-toggle-sib data-n="6" aria-expanded="false">Ver 6 hermanas</button></td><td><select class="rol" aria-label="Rol del nivel 5, grupo de 06.03.01" data-grupo-id="b5" data-padre="b4" data-nombre="Excavación de zanja para bancoducto" data-hoja="1"><option>Servicio</option><option>Área</option><option>Subpresupuesto</option><option>Paquete de partidas</option><option selected>Partida</option></select></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.02</span></td><td>Perfilado y compactado de fondo</td><td>600.00 m2</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.03</span></td><td>Cama de arena</td><td>90.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.04</span></td><td>Instalación de bancoductos</td><td>300.00 m</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.05</span></td><td>Suministro de afirmado</td><td>150.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.06</span></td><td>Relleno y compactado</td><td>330.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+<tr class="sib" hidden><td class="num">5</td><td class="cod"><span class="indent" style="padding-left:56px">06.03.07</span></td><td>Eliminación de material excedente</td><td>180.00 m3</td><td><span class="hereda">hermana</span></td><td><span class="hereda">= igual que la muestra</span></td><td><span class="hereda">hereda</span></td></tr>
+</tbody>
+</table></div>
+<div class="msg err val-msg" role="alert" hidden style="margin-top:8px"><span aria-hidden="true">&#9888;</span><div><strong>Revisa los roles elegidos</strong><ul style="margin-left:16px"></ul></div></div>
+<div class="msg info ok-msg" role="status" hidden style="margin-top:8px"><span aria-hidden="true">&#10003;</span><div>Niveles aprobados (simulado). Continúa con el informe de extracción.</div></div>
+<div class="fila" style="margin-top:8px"><button type="button" class="primary btn-aprobar">Aprobar niveles</button><button type="button">Cancelar</button><span class="muted">El rol elegido en la fila de muestra vale para las demás hermanas del mismo nivel y del mismo padre.</span></div>
+</div></section>
+<section class="card" aria-labelledby="t-recarga"><h2 id="t-recarga">Aviso al volver a cargar el DP (aparece al pulsar «Cargar archivo» si el servicio ya tiene uno)</h2>
+<div class="fila" role="group" aria-label="Situación del servicio (solo para la maqueta)"><span class="muted">Situación del servicio:</span>
+<button type="button" data-recarga="sin" aria-pressed="true">Sin Plan Maestro aprobado</button>
+<button type="button" data-recarga="con" aria-pressed="false">Con Plan Maestro aprobado</button></div>
+<div data-recarga-panel="sin"><div class="msg warn" role="alertdialog" aria-labelledby="t-sin"><span aria-hidden="true">&#9888;</span><div>
+<strong id="t-sin">Volver a cargar reemplaza lo que ya existe</strong>
+<p style="margin:4px 0">Se perdería lo siguiente:</p><ul style="margin-left:16px;line-height:1.5"><li>El DP actual del servicio (148 partidas en 4 subpresupuestos).</li><li>El mapa de niveles guardado; se reconstruye con la nueva confirmación y se conservan las confirmaciones de códigos que sigan existiendo.</li><li>Los vínculos y paquetes en borrador que apunten a códigos que ya no existan.</li></ul>
+<label style="display:flex;gap:6px;align-items:center;margin:8px 0"><input type="checkbox" id="conf-recarga"> Entiendo lo que se perdería y quiero continuar</label>
+<div class="fila" style="margin:0"><button type="button">Cancelar</button><button type="button" class="danger" id="btn-reemplazar" aria-disabled="true">Reemplazar y continuar</button></div></div></div></div>
+<div data-recarga-panel="con" hidden><div class="msg err" role="alert"><span aria-hidden="true">&#9940;</span><div>
+<strong>No se puede volver a cargar el DP</strong>
+<p style="margin:4px 0">Este servicio ya tiene un Plan Maestro aprobado. Mientras exista, el DP no puede reemplazarse.</p>
+<div class="fila" style="margin:6px 0 0"><button type="button" aria-disabled="true" title="Bloqueado: hay un Plan Maestro aprobado">Cargar archivo</button></div></div></div></div>
+</section></div>
+<div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Leyendo el archivo y contando los niveles…</p>
+<div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:80%;margin-bottom:8px"></div><div class="sk" style="width:60%"></div></div></div><div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo leer el archivo</strong><br>Revisa que sea el formato de presupuesto esperado y vuelve a intentarlo. Si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div><div class="e-vacio"><div class="vacio"><strong>Aún no hay un archivo para confirmar</strong><p>Carga el archivo del presupuesto en el paso 1 y aquí verás sus niveles.</p><p style="margin-top:8px"><button type="button" class="primary">Volver al paso 1</button></p></div></div>
+<details class="notas" open><summary>Notas de esta maqueta: estados, móvil (390 px) y accesibilidad</summary><ul>
+<li>Estados: con datos, vacío, cargando y error se cambian con los botones superiores; el aviso de recarga tiene sus dos variantes (bloqueo duro con Plan Maestro aprobado; lista de lo que se perdería y confirmación explícita sin él).</li>
+<li>Móvil: la tabla se desplaza en horizontal dentro de su caja; los botones envuelven en varias líneas.</li>
+<li>Accesibilidad: <code>th scope="col"</code>, foco visible, desplegables y botones operables con teclado, «Para revisar» con texto e icono (no solo color), mensajes con <code>role="alert"</code>/<code>status</code>.</li>
+<li>Validación: el rol del último nivel debe ser Partida y cada nivel debe ser menor que el de su padre; si no, se desactiva «Aprobar niveles» y se explica por qué. Prueba poner «Partida» en el nivel 2.</li>
+<li>Los íconos de texto (&#9888; &#10003;) representan a <code>lucide-react</code> de la app real.</li></ul></details>
+</main>
+<script>
+(function(){
+ var p=document.querySelector('.pantalla');
+ document.querySelectorAll('[data-set-estado]').forEach(function(b){
+  b.addEventListener('click',function(){
+   p.setAttribute('data-estado',b.getAttribute('data-set-estado'));
+   document.querySelectorAll('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+  });
+ });
+ document.querySelectorAll('[data-toggle-sib]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var tb=b.closest('tbody');var open=b.getAttribute('aria-expanded')==='true';
+   tb.querySelectorAll('tr.sib').forEach(function(r){r.hidden=open;});
+   b.setAttribute('aria-expanded',open?'false':'true');
+   b.textContent=(open?'Ver ':'Ocultar ')+b.getAttribute('data-n')+(b.getAttribute('data-n')==='1'?' hermana':' hermanas');
+  });
+ });
+ document.querySelectorAll('[data-tab]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var g=b.getAttribute('data-grupo');
+   document.querySelectorAll('[data-tab][data-grupo="'+g+'"]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('[data-panel][data-grupo="'+g+'"]').forEach(function(s){s.hidden=s.getAttribute('data-panel')!==b.getAttribute('data-tab');});
+  });
+ });
+ var lat=document.getElementById('btn-lat');
+ if(lat){lat.addEventListener('click',function(){
+  var c=document.querySelector('.cuerpo');var on=c.classList.toggle('lat-on');
+  lat.setAttribute('aria-pressed',on?'true':'false');
+  lat.textContent=on?'Ocultar paneles laterales':'Mostrar paneles laterales';});}
+ /* validacion de roles de niveles */
+ var RANK={'Servicio':0,'Area':1,'Subpresupuesto':2,'Paquete de partidas':3,'Fase':1.5,'Actividad resumen':2,'Partida':9,'Tarea':9};
+ function validar(root){
+  var sels=root.querySelectorAll('select[data-grupo-id]');var by={};var errs=[];
+  sels.forEach(function(s){by[s.getAttribute('data-grupo-id')]=s;});
+  sels.forEach(function(s){
+   var par=s.getAttribute('data-padre');var last=s.getAttribute('data-hoja')==='1';
+   var r=RANK[s.value.replace('Á','A')];
+   if(last&&r!==9){errs.push('El ultimo nivel debe ser '+root.getAttribute('data-hoja-rol')+'.');}
+   if(!last&&r===9){errs.push('Solo el ultimo nivel puede ser '+root.getAttribute('data-hoja-rol')+'.');}
+   if(par&&by[par]){var rp=RANK[by[par].value.replace('Á','A')];if(r<=rp&&!(r===9&&rp===9)){errs.push('El rol de "'+s.getAttribute('data-nombre')+'" no puede ser igual o mayor que el de su nivel superior.');}}
+  });
+  var box=root.querySelector('.val-msg');var btn=root.querySelector('.btn-aprobar');
+  if(errs.length){box.hidden=false;box.querySelector('ul').innerHTML=errs.filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(e){return '<li>'+e+'</li>';}).join('');btn.setAttribute('aria-disabled','true');}
+  else{box.hidden=true;btn.removeAttribute('aria-disabled');}
+ }
+ document.querySelectorAll('.niveles').forEach(function(root){
+  root.addEventListener('change',function(e){if(e.target.matches('select[data-grupo-id]')){validar(root);}});
+  validar(root);
+  var b=root.querySelector('.btn-aprobar');
+  b.addEventListener('click',function(){if(b.getAttribute('aria-disabled')==='true')return;
+   var o=root.querySelector('.ok-msg');o.hidden=false;});
+ });
+ /* recarga */
+ document.querySelectorAll('[data-recarga]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var v=b.getAttribute('data-recarga');
+   document.querySelectorAll('[data-recarga]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('[data-recarga-panel]').forEach(function(s){s.hidden=s.getAttribute('data-recarga-panel')!==v;});
+  });
+ });
+ var conf=document.getElementById('conf-recarga');var go=document.getElementById('btn-reemplazar');
+ if(conf&&go){conf.addEventListener('change',function(){if(conf.checked){go.removeAttribute('aria-disabled');}else{go.setAttribute('aria-disabled','true');}});}
+ /* panes en movil */
+ document.querySelectorAll('[data-pane-btn]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var id=b.getAttribute('data-pane-btn');
+   document.querySelectorAll('[data-pane-btn]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('.pane').forEach(function(s){s.classList.toggle('pane-on',s.id===id);});
+  });
+ });
+})();
+</script>
+</body>
+</html>

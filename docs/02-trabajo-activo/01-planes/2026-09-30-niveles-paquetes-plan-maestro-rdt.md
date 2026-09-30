@@ -6,7 +6,7 @@
 
 - Tema: rediseño de la cadena Cronograma → Paquetes de Trabajo → Plan Maestro → RDT, con niveles de presupuesto y cronograma confirmados al importar.
 - Fecha: 2026-09-30.
-- Estado: **Planificando** — **Gate 1 aprobado por Victor** (2026-09-30). Pasa a «Implementando» cuando el Orquestador lance la ola 1.
+- Estado: **Implementando** — **Gate 1 aprobado por Victor** (2026-09-30). Ola 1 lanzada el 2026-09-30 (F0-A, F1-A, F2-A, F3-A).
 - Gate 1: **aprobado por Victor** (respuestas en «Gate 1 — respuestas de Victor» y en el Registro de decisiones). Las migraciones las aplican los Workers de cada carril, según `…-briefs/00-protocolo-migraciones.md` (escrito por el Orquestador el 2026-09-30, con la autorización de Victor).
 
 ## Referencia al Spec aprobado

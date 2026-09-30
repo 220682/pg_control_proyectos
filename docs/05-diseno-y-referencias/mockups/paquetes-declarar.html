@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paquetes de trabajo — Declarar</title>
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
+--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover:not([aria-disabled=true]){border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover:not([aria-disabled=true]){color:var(--bg-base);filter:brightness(1.1)}
+button.danger{border-color:var(--err);color:var(--err)}
+button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+button.icon{padding:2px 6px;min-width:24px}
+input[type=text],input[type=number],select{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:11px;max-width:100%}
+input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent)}
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px 10px;overflow:auto}
+.pantalla:not([data-estado=datos]) .e-datos,.pantalla:not([data-estado=vacio]) .e-vacio,
+.pantalla:not([data-estado=carga]) .e-carga,.pantalla:not([data-estado=error]) .e-error{display:none}
+.cab{margin-bottom:8px}
+.miga{font-size:10px;color:var(--text-2);margin-bottom:4px}
+.cab h1{font-size:16px;font-weight:600}
+.cab p{font-size:11px;color:var(--text-2);margin-top:2px}
+.pasos{display:flex;gap:6px;margin:6px 0 0;list-style:none;flex-wrap:wrap}
+.pasos li{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:10px;color:var(--text-2)}
+.pasos li[aria-current=step]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.card h2{font-size:12px;font-weight:600;margin-bottom:4px}
+.fila{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.grow{flex:1}
+.muted{color:var(--text-2)}
+.ok{color:var(--ok)}.err{color:var(--err)}.warn{color:var(--warn)}
+.tabla-wrap{flex:1;min-height:120px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated)}
+.tabla-wrap.auto{flex:0 0 auto}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th,td{padding:4px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{position:sticky;top:0;z-index:2;background:var(--bg-elevated);font-weight:600;color:var(--text-2);white-space:nowrap;border-bottom:1px solid var(--line)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.cod{white-space:nowrap;font-variant-numeric:tabular-nums}
+.fija{position:sticky;left:0;background:var(--bg-elevated);z-index:1}
+th.fija{z-index:3}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2);white-space:nowrap}
+.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.warn{border-color:var(--warn);color:var(--warn)}.tag.err{border-color:var(--err);color:var(--err)}
+.tag.acc{border-color:var(--accent);color:var(--accent)}.tag.acc2{border-color:var(--accent-2);color:#9db7ff}
+.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px}
+.msg.err{border-color:var(--err);color:var(--text)}.msg.err strong{color:var(--err)}
+.msg.warn{border-color:var(--warn)}.msg.warn strong{color:var(--warn)}
+.msg.info{border-color:var(--accent-2)}
+.vacio{border:1px dashed var(--line);border-radius:10px;padding:28px 12px;text-align:center;color:var(--text-2)}
+.vacio strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
+.sk{height:10px;border-radius:4px;background:linear-gradient(90deg,#141b2b,#1f2a40,#141b2b);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+details.notas{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text-2)}
+details.notas summary{cursor:pointer;color:var(--text)}
+details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
+.lateral{display:none;flex:0 0 150px;border:1px dashed var(--line);border-radius:8px;padding:8px;font-size:10px;color:var(--text-2)}
+.cuerpo{flex:1;min-height:0;display:flex;gap:8px}
+.cuerpo.lat-on .lateral{display:block}
+[hidden]{display:none!important}
+.indent{display:inline-block}
+.rol{min-width:150px}
+tr.sib td{background:rgba(255,255,255,.02)}
+tr.sib[hidden]{display:none}
+.hereda{color:var(--text-2);font-size:10px}
+@media (max-width:640px){
+ body{overflow:auto;height:auto;min-height:100%}
+ .pantalla{overflow:visible}
+ .tabla-wrap{min-height:0}
+ .rol{min-width:120px}
+}
+
+.panes{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:8px;flex:1;min-height:0;min-width:0}
+.pane{display:flex;flex-direction:column;min-height:0;min-width:0}
+.pane h2{font-size:12px;font-weight:600;margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.pane-sel{display:none}
+.estado-pie{margin-top:8px}
+@media (max-width:900px){.panes{grid-template-columns:1fr}.pane{display:none}.pane.pane-on{display:flex}.pane-sel{display:flex}.cuerpo{flex-direction:column}.lateral{flex:0 0 auto}}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Paquetes de trabajo · paso «Declarar» · datos simulados</span>
+<div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
+<button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
+<button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
+<button type="button" data-set-estado="carga" aria-pressed="false">Cargando</button>
+<button type="button" data-set-estado="error" aria-pressed="false">Error</button></div></div>
+<main class="pantalla" data-estado="datos"><div class="cab"><nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Paquetes de trabajo</nav>
+<div class="fila" style="margin-bottom:0"><h1 class="grow">Paquetes de trabajo</h1>
+<button type="button" id="btn-lat" aria-pressed="false">Mostrar paneles laterales</button></div>
+<ol class="pasos" aria-label="Pasos de Paquetes de trabajo"><li aria-current="step">Declarar</li><li>Agrupar</li></ol></div>
+<div class="e-datos" style="display:flex;flex-direction:column;flex:1;min-height:0">
+<div class="cuerpo"><aside class="lateral" aria-label="Paneles laterales (ocultos por defecto)">Paneles laterales del servicio (izquierdo y derecho). Por defecto están ocultos para dar ancho a las dos listas.</aside>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;min-height:0">
+<div class="fila pane-sel" role="group" aria-label="Lista mostrada (en pantallas angostas)"><button type="button" data-pane-btn="pane-c" aria-pressed="true">Cronograma</button><button type="button" data-pane-btn="pane-d" aria-pressed="false">Presupuesto</button></div>
+<div class="panes">
+<section class="pane pane-on" id="pane-c" aria-labelledby="h-c"><h2 id="h-c">Cronograma <span class="tag">declara partida y metrado</span></h2><div class="tabla-wrap"><table><caption class="sr">Cronograma con su jerarquía; por actividad se declara partida y metrado</caption><thead><tr><th scope="col" class="fija">EDT</th><th scope="col">Actividad</th><th scope="col">Inicio</th><th scope="col">Fin</th><th scope="col" class="num">Dur. (d)</th><th scope="col">Partida del DP</th><th scope="col" class="num">Metrado</th><th scope="col">Und.</th><th scope="col">Restante de la partida</th></tr></thead><tbody><tr><td class="cod fija">1</td><td><span class="indent" style="padding-left:0px"><button type="button" class="icon" aria-expanded="true" aria-label="Plegar Canalización de media tensión (servicio de prueba)" data-fold>&#9662;</button> Canalización de media tensión (servicio de prueba)</span></td><td></td><td></td><td class="num">95</td><td class="muted">—</td><td class="muted num">—</td><td></td><td></td></tr><tr><td class="cod fija">06</td><td><span class="indent" style="padding-left:14px"><button type="button" class="icon" aria-expanded="true" aria-label="Plegar Redes de bancoductos" data-fold>&#9662;</button> Redes de bancoductos</span></td><td>01/10</td><td>09/12</td><td class="num">70</td><td class="muted">—</td><td class="muted num">—</td><td></td><td></td></tr><tr><td class="cod fija">06.03</td><td><span class="indent" style="padding-left:28px"><button type="button" class="icon" aria-expanded="true" aria-label="Plegar Bancoductos" data-fold>&#9662;</button> Bancoductos</span></td><td>01/10</td><td>18/11</td><td class="num">48</td><td class="muted">—</td><td class="muted num">—</td><td></td><td></td></tr><tr><td class="cod fija">06.03.01</td><td><span class="indent" style="padding-left:42px"><button type="button" class="icon" aria-expanded="true" aria-label="Plegar Excavación de zanja" data-fold>&#9662;</button> Excavación de zanja</span></td><td>01/10</td><td>13/10</td><td class="num">12</td><td class="muted">—</td><td class="muted num">—</td><td></td><td></td></tr><tr><td class="cod fija">06.03.01.1</td><td><span class="indent" style="padding-left:56px">Excavación tramo 1</span></td><td>01/10</td><td>06/10</td><td class="num">6</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option selected>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Excavación tramo 1" style="width:84px" value="250.00"></td><td>m3</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.01.2</td><td><span class="indent" style="padding-left:56px">Excavación tramo 2</span></td><td>07/10</td><td>13/10</td><td class="num">6</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option selected>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Excavación tramo 2" style="width:84px" value="170.00"></td><td>m3</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.02</td><td><span class="indent" style="padding-left:42px">Perfilado y compactado de fondo</span></td><td>14/10</td><td>21/10</td><td class="num">8</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option selected>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Perfilado y compactado de fondo" style="width:84px" value="600.00"></td><td>m2</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.03</td><td><span class="indent" style="padding-left:42px">Cama de arena</span></td><td>22/10</td><td>25/10</td><td class="num">4</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option selected>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Cama de arena" style="width:84px" value="90.00"></td><td>m3</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.04</td><td><span class="indent" style="padding-left:42px">Instalación de bancoductos</span></td><td>26/10</td><td>09/11</td><td class="num">15</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option selected>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Instalación de bancoductos" style="width:84px" value="300.00"></td><td>m</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr style="opacity:.6"><td class="cod fija">06.03.04.H</td><td><span class="indent" style="padding-left:42px"><span class="tag" title="Hito: duración 0, no lleva metrado"><span aria-hidden="true">&#9670;</span> Hito</span> Fin de tendido de bancoductos</span></td><td>09/11</td><td>09/11</td><td class="num">0</td><td class="muted">— sin partida —</td><td class="muted num">—</td><td></td><td></td></tr><tr><td class="cod fija">06.03.05</td><td><span class="indent" style="padding-left:42px">Suministro de afirmado</span></td><td>10/11</td><td>13/11</td><td class="num">4</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option selected>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Suministro de afirmado" style="width:84px" value="150.00"></td><td>m3</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.06</td><td><span class="indent" style="padding-left:42px">Relleno y compactado</span></td><td>10/11</td><td>18/11</td><td class="num">9</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option selected>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Relleno y compactado" style="width:84px" value="200.00"></td><td>m3</td><td><span class="tag warn"><span aria-hidden="true">&#9888;</span> Resta 130.00</span></td></tr><tr><td class="cod fija">06.03.07</td><td><span class="indent" style="padding-left:42px">Eliminación de material excedente</span></td><td>19/11</td><td>22/11</td><td class="num">4</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option selected>06.03.07 Eliminación de material excedente</option></select> <span class="tag acc" title="Pre-llenado por el enlace automático por EDT">auto</span></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Eliminación de material excedente" style="width:84px" value="180.00"></td><td>m3</td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod fija">06.03.08</td><td><span class="indent" style="padding-left:42px">Señalización y cierre de zanja</span></td><td>23/11</td><td>25/11</td><td class="num">3</td><td><select aria-label="Partida del DP" style="width:230px"><option value="">— Elegir partida —</option><option>06.03.01 Excavación de zanja para bancoducto</option><option>06.03.02 Perfilado y compactado de fondo</option><option>06.03.03 Cama de arena</option><option>06.03.04 Instalación de bancoductos</option><option>06.03.05 Suministro de afirmado</option><option>06.03.06 Relleno y compactado</option><option>06.03.07 Eliminación de material excedente</option></select></td><td class="num"><input type="number" step="0.01" aria-label="Metrado de Señalización y cierre de zanja" style="width:84px" placeholder="0.00"></td><td></td><td><span class="tag warn"><span aria-hidden="true">&#9888;</span> Sin declarar</span></td></tr></tbody></table></div></section>
+<section class="pane" id="pane-d" aria-labelledby="h-d"><h2 id="h-d">Presupuesto (solo partidas) <span class="tag"><span aria-hidden="true">&#128274;</span> Solo consulta</span></h2><div class="tabla-wrap"><table><caption class="sr">Presupuesto: solo partidas, solo consulta</caption><thead><tr><th scope="col">WBS</th><th scope="col">Partida</th><th scope="col">Und.</th><th scope="col" class="num">Contractual</th><th scope="col" class="num">Declarado</th><th scope="col">Restante</th></tr></thead><tbody><tr><td class="cod">06.03.01</td><td>Excavación de zanja para bancoducto</td><td>m3</td><td class="num">420.00</td><td class="num">420.00 <progress value="100" max="100" aria-label="Declarado de 06.03.01: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod">06.03.02</td><td>Perfilado y compactado de fondo</td><td>m2</td><td class="num">600.00</td><td class="num">600.00 <progress value="100" max="100" aria-label="Declarado de 06.03.02: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod">06.03.03</td><td>Cama de arena</td><td>m3</td><td class="num">90.00</td><td class="num">90.00 <progress value="100" max="100" aria-label="Declarado de 06.03.03: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod">06.03.04</td><td>Instalación de bancoductos</td><td>m</td><td class="num">300.00</td><td class="num">300.00 <progress value="100" max="100" aria-label="Declarado de 06.03.04: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod">06.03.05</td><td>Suministro de afirmado</td><td>m3</td><td class="num">150.00</td><td class="num">150.00 <progress value="100" max="100" aria-label="Declarado de 06.03.05: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr><tr><td class="cod">06.03.06</td><td>Relleno y compactado</td><td>m3</td><td class="num">330.00</td><td class="num">200.00 <progress value="61" max="100" aria-label="Declarado de 06.03.06: 61 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag warn"><span aria-hidden="true">&#9888;</span> Resta 130.00</span></td></tr><tr><td class="cod">06.03.07</td><td>Eliminación de material excedente</td><td>m3</td><td class="num">180.00</td><td class="num">180.00 <progress value="100" max="100" aria-label="Declarado de 06.03.07: 100 por ciento" style="width:42px;height:6px;vertical-align:middle"></progress></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> 0.00 · completa</span></td></tr></tbody></table></div></section>
+</div>
+<div class="fila estado-pie"><span class="msg warn" role="status" style="margin:0"><span aria-hidden="true">&#9888;</span><span><strong>Falta repartir 130.00 m3 en 06.03.06.</strong> Además, «Señalización y cierre de zanja» aún no tiene partida.</span></span>
+<span class="grow"></span><button type="button" class="primary">Guardar declaración</button><button type="button">Continuar a «Agrupar»</button></div>
+</div></div></div>
+<div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Cargando el cronograma y el presupuesto del servicio…</p>
+<div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:80%;margin-bottom:8px"></div><div class="sk" style="width:60%"></div></div></div><div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar la información</strong><br>No fue posible traer el cronograma o el presupuesto de este servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div><div class="e-vacio"><div class="vacio"><strong>Este servicio aún no tiene cronograma ni presupuesto cargados</strong><p>Para declarar partidas y metrados primero carga el DP y el cronograma.</p><p style="margin-top:8px"><button type="button" class="primary">Ir a Importar DP</button> <button type="button">Ir a Cronograma</button></p></div></div>
+<details class="notas" open><summary>Notas de esta maqueta: estados, móvil (390 px) y accesibilidad</summary><ul>
+<li>Columna <strong>Metrado</strong> con el desplegable de partida pre-llenado donde el enlace automático por EDT acertó (etiqueta «auto»). Los hitos van atenuados con la marca &#9670; Hito y sin metrado. El <strong>restante</strong> aparece por actividad y por partida (texto, icono y barra; no solo color).</li>
+<li>Ejemplo real: 06.03.01 a 06.03.07. La excavación (06.03.01) se declara en dos tareas (250.00 + 170.00 = 420.00 m3); el relleno (06.03.06) queda con 130.00 m3 por repartir.</li>
+<li>Móvil: debajo de 900 px las dos listas pasan a pestañas «Cronograma | Presupuesto»; cada tabla se desplaza en horizontal con la columna EDT fija.</li>
+<li>Accesibilidad: <code>th scope="col"</code>, foco visible, cada desplegable y campo con <code>aria-label</code>, botones de plegar con <code>aria-expanded</code> (teclado: Tab + Enter/Espacio).</li></ul></details>
+</main>
+<script>
+(function(){
+ var p=document.querySelector('.pantalla');
+ document.querySelectorAll('[data-set-estado]').forEach(function(b){
+  b.addEventListener('click',function(){
+   p.setAttribute('data-estado',b.getAttribute('data-set-estado'));
+   document.querySelectorAll('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+  });
+ });
+ document.querySelectorAll('[data-toggle-sib]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var tb=b.closest('tbody');var open=b.getAttribute('aria-expanded')==='true';
+   tb.querySelectorAll('tr.sib').forEach(function(r){r.hidden=open;});
+   b.setAttribute('aria-expanded',open?'false':'true');
+   b.textContent=(open?'Ver ':'Ocultar ')+b.getAttribute('data-n')+(b.getAttribute('data-n')==='1'?' hermana':' hermanas');
+  });
+ });
+ document.querySelectorAll('[data-tab]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var g=b.getAttribute('data-grupo');
+   document.querySelectorAll('[data-tab][data-grupo="'+g+'"]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('[data-panel][data-grupo="'+g+'"]').forEach(function(s){s.hidden=s.getAttribute('data-panel')!==b.getAttribute('data-tab');});
+  });
+ });
+ var lat=document.getElementById('btn-lat');
+ if(lat){lat.addEventListener('click',function(){
+  var c=document.querySelector('.cuerpo');var on=c.classList.toggle('lat-on');
+  lat.setAttribute('aria-pressed',on?'true':'false');
+  lat.textContent=on?'Ocultar paneles laterales':'Mostrar paneles laterales';});}
+ /* validacion de roles de niveles */
+ var RANK={'Servicio':0,'Area':1,'Subpresupuesto':2,'Paquete de partidas':3,'Fase':1.5,'Actividad resumen':2,'Partida':9,'Tarea':9};
+ function validar(root){
+  var sels=root.querySelectorAll('select[data-grupo-id]');var by={};var errs=[];
+  sels.forEach(function(s){by[s.getAttribute('data-grupo-id')]=s;});
+  sels.forEach(function(s){
+   var par=s.getAttribute('data-padre');var last=s.getAttribute('data-hoja')==='1';
+   var r=RANK[s.value.replace('Á','A')];
+   if(last&&r!==9){errs.push('El ultimo nivel debe ser '+root.getAttribute('data-hoja-rol')+'.');}
+   if(!last&&r===9){errs.push('Solo el ultimo nivel puede ser '+root.getAttribute('data-hoja-rol')+'.');}
+   if(par&&by[par]){var rp=RANK[by[par].value.replace('Á','A')];if(r<=rp&&!(r===9&&rp===9)){errs.push('El rol de "'+s.getAttribute('data-nombre')+'" no puede ser igual o mayor que el de su nivel superior.');}}
+  });
+  var box=root.querySelector('.val-msg');var btn=root.querySelector('.btn-aprobar');
+  if(errs.length){box.hidden=false;box.querySelector('ul').innerHTML=errs.filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(e){return '<li>'+e+'</li>';}).join('');btn.setAttribute('aria-disabled','true');}
+  else{box.hidden=true;btn.removeAttribute('aria-disabled');}
+ }
+ document.querySelectorAll('.niveles').forEach(function(root){
+  root.addEventListener('change',function(e){if(e.target.matches('select[data-grupo-id]')){validar(root);}});
+  validar(root);
+  var b=root.querySelector('.btn-aprobar');
+  b.addEventListener('click',function(){if(b.getAttribute('aria-disabled')==='true')return;
+   var o=root.querySelector('.ok-msg');o.hidden=false;});
+ });
+ /* recarga */
+ document.querySelectorAll('[data-recarga]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var v=b.getAttribute('data-recarga');
+   document.querySelectorAll('[data-recarga]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('[data-recarga-panel]').forEach(function(s){s.hidden=s.getAttribute('data-recarga-panel')!==v;});
+  });
+ });
+ var conf=document.getElementById('conf-recarga');var go=document.getElementById('btn-reemplazar');
+ if(conf&&go){conf.addEventListener('change',function(){if(conf.checked){go.removeAttribute('aria-disabled');}else{go.setAttribute('aria-disabled','true');}});}
+ /* panes en movil */
+ document.querySelectorAll('[data-pane-btn]').forEach(function(b){
+  b.addEventListener('click',function(){
+   var id=b.getAttribute('data-pane-btn');
+   document.querySelectorAll('[data-pane-btn]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+   document.querySelectorAll('.pane').forEach(function(s){s.classList.toggle('pane-on',s.id===id);});
+  });
+ });
+})();
+
+document.querySelectorAll('[data-fold]').forEach(function(b){b.addEventListener('click',function(){
+ var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',open?'false':'true');b.innerHTML=open?'&#9656;':'&#9662;';
+ var tr=b.closest('tr');var tb=tr.parentNode;var rows=Array.prototype.slice.call(tb.children);var i=rows.indexOf(tr);
+ var ind=function(r){var s=r.querySelector('.indent');return s?parseInt(s.style.paddingLeft||'0',10):0;};var base=ind(tr);
+ for(var k=i+1;k<rows.length;k++){if(ind(rows[k])<=base)break;rows[k].hidden=open;}
+});});
+</script>
+</body>
+</html>

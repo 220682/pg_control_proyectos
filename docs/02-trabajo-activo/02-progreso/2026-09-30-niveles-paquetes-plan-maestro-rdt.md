@@ -11,7 +11,8 @@
 
 - Gate Spec: aprobado por Victor (2026-09-30), los tres Specs.
 - Gate 1: aprobado por Victor (2026-09-30): plan, tabla de cambios a flujos en bloque, carpetas de trabajo, migraciones aplicadas por los Workers.
-- Carpetas de trabajo creadas (2026-09-30, autorizadas por Victor). **La ola 1 todavía NO se lanzó.** El estado del plan sigue en «Planificando»; pasa a «Implementando» al lanzar la ola 1.
+- Carpetas de trabajo creadas (2026-09-30, autorizadas por Victor).
+- **Ola 1 lanzada (2026-09-30):** F0-A (maquetas), F1-A (carril 1, puerto 3101), F3-A (carril 2, puerto 3102) y F2-A (carril 3, puerto 3103, con las migraciones 079 a 081). Estado del plan: «Implementando». Skills revisados por el Orquestador: `seguir-flujo-de-planes`. Pendiente: medir cada sesión y consolidar sus resúmenes aquí al llegar.
 
 ## Tabla de roles / Workers y estado
 
@@ -19,7 +20,7 @@
 |---|---|
 | Orquestador | Activo. Este chat llegó a ~564k de contexto; se recomienda traspaso a un chat nuevo antes de lanzar la ola 1. |
 | Planner | Terminó el plan (y sus dos ajustes). No tiene más trabajo pendiente. |
-| Workers | Ninguno lanzado. Ola 1: F0-A, F1-A, F2-A, F3-A. |
+| Workers | Ola 1: F3-A **cerrada** (7 ítems conformes, commit `72aace7` en `local-worker-2`, `resultados/F3-A.md`). F0-A, F1-A y F2-A **cortadas a medias** por el límite de uso de la cuenta (error 429, se reinicia 4:50 pm Lima): trabajo parcial guardado, tandas NO cerradas ni medidas. |
 | Auditor | No asignado (va después de F5). |
 
 ## Skills revisados
@@ -35,7 +36,7 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Preparar el traspaso a un Orquestador con contexto limpio y lanzar la ola 1.
+Retomar la ola 1: relanzar F0-A, F1-A y F2-A con Workers nuevos que continúen desde el trabajo parcial (ver Handoff del 2026-09-30, segundo).
 
 ## Pendientes
 
@@ -83,3 +84,16 @@ Con contexto limpio: leer este archivo y el índice de tandas, lanzar la ola 1 y
 - **Cómo habla Victor y cómo hay que hablarle:** lenguaje simple, sin códigos internos de ítems ni siglas, una decisión por pregunta con recomendación; verificar antes de afirmar; no declarar cerrado nada sin la lista de verificación del Skill.
 - **Límites:** el Orquestador no implementa, no hace merge ni push de la app sin autorización en el Gate 2, no edita `AGENTS.md` ni los flujos por su cuenta.
 - **Próximo paso concreto:** lanzar F0-A, F1-A, F2-A y F3-A con la plantilla del índice.
+
+### Handoff del 2026-09-30 (segundo: Orquestador → Orquestador con contexto limpio)
+
+- **Estado de la ola 1:** F3-A cerrada y verificada (commit `72aace7`, árbol limpio, 696 pruebas, `tsc` en 0; el lint lo tomó igual a `main` sin compararlo). Las otras tres se cortaron por límite de uso de la cuenta; ninguna escribió su `resultados/<tanda>.md`.
+- **Trabajo parcial guardado (sin verificar, hay que revisarlo antes de seguir):**
+  - F0-A: sin commit en `pg_control_proyectos` (se subió como «WIP F0-A» junto con este traspaso): maquetas `cronograma-niveles.html`, `importar-dp-niveles.html`, `paquetes-agrupar.html`, `paquetes-declarar.html`, más cambios a `design.md`, `mockups/README.md` e `index.html`. Falta comprobar contra el brief `f0-tanda-a.md` qué ítems están completos.
+  - F1-A: commit `61cdc02` «WIP» en `local-worker-1` con `src/lib/niveles/**` (9 archivos, con pruebas). Sin verificar `npm test`/`tsc`.
+  - F2-A: commit `3dd2c00` «WIP» en `local-worker-3` con `db/079`–`081` y `src/lib/paquetes-trabajo/` (5 archivos). **No se sabe si las migraciones 079–081 se aplicaron** (no hay resultado ni candado en `resultados/`); el Worker nuevo debe comprobarlo con `select 1` y consultas de existencia antes de aplicar, sin asumir.
+- **Cómo retomar:** lanzar Workers nuevos con la plantilla del índice, añadiendo al prompt: «Hay trabajo parcial ya commiteado como WIP: revísalo contra tu brief, completa lo que falte y no lo rehagas». Puertos de prueba usados: 3101 a 3103 (el índice no los fija; el brief de F3-A dice 3112, sin efecto).
+- **Límite de uso:** el reinicio fue 4:50 pm (Lima). Con 4 Workers a la vez se agotó la cuenta; considerar lanzar 2 o 3 a la vez.
+- **Medición:** pendiente con `medicion.md` del plan de paneles; mide F3-A y las tres cortadas (anotar «cortada por límite»).
+- **Commits:** nada de la app subido (sin push, sin merge). Ramas `local-worker-1` y `-3` con un commit WIP cada una; `local-worker-2` con F3-A; `-4` intacta.
+- **Pendientes de Victor sin cambios:** reglas de permiso antes de la ola 2; maquetas de F0-A a su revisión; rol extra con más de 5 niveles; ruta del servidor de base de datos; nota 3WLA solo si la pide. Hallazgo nuevo (de F3-A): usar `git stash -u` en un árbol compartido es riesgoso (mejora de trabajo, consolidar al cierre).

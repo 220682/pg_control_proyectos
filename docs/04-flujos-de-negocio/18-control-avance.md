@@ -334,13 +334,12 @@ El PR es el consolidado técnico. Debe poder consultar:
 ```text
 Servicio
 → Disciplina
-→ Paquete (o partida directa, sin paquete)
 → Partida
 → Actividad
 → Día / semana
 ```
 
-El área y el frente **ya no forman parte de la ruta**: salieron de los datos del paquete (flujo 19). La disciplina la hereda la partida de su paquete, o la define la propia partida directa en el Plan Maestro (flujo 20).
+El PR trabaja **por partida**: el paquete vive solo en el Plan Maestro y el real de sus partidas se suma por partida (flujos 10 y 20); el PR y el Dashboard no consumen datos de paquete. El área y el frente **ya no forman parte de la ruta**: salieron de los datos del paquete (flujo 19). La disciplina la hereda la partida de su paquete, o la define la propia partida directa en el Plan Maestro (flujo 20).
 
 El Dashboard es una vista derivada y debe mostrar:
 
@@ -348,7 +347,6 @@ El Dashboard es una vista derivada y debe mostrar:
 - Avance físico.
 - SPI y CPI.
 - PPC.
-- Paquetes atrasados.
 - Partidas sin asignar.
 - Partidas sin actividad.
 - Incidencias abiertas.

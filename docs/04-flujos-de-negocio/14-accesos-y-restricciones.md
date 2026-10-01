@@ -10,7 +10,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-09-30 (tarea paneles-servicio-persistente, F7-B):** solo se añadieron las filas de descargas decididas (tabla 2, nota 7), la nota del asistente del shell y se retiró la marca «por construir» de Recursos (ya construido); ninguna decisión aprobada cambió.
 
-**Actualización 2026-10-01 (plan niveles-paquetes-plan-maestro-rdt, F5-D):** tabla 2 ajustada a lo implementado (cronograma, Plan Maestro y paquetes con su texto nuevo; filas nuevas «Crear una versión nueva del Plan Maestro» y «Reasignar de paquete un RDT»; notas 8 a 10) y sección de paquetes reescrita. La tabla 1 no cambia. No hay chip ni acceso nuevo en el registro.
+**Actualización 2026-10-01 (plan niveles-paquetes-plan-maestro-rdt, F5-D):** tabla 2 ajustada a lo implementado (cronograma, Plan Maestro y paquetes con su texto nuevo; filas nuevas «Crear una versión nueva del Plan Maestro» y «Reasignar de paquete un RDT»; notas 8 a 10) y sección de paquetes reescrita. La tabla 1 no cambia. No hay chip ni acceso nuevo en el registro. **Corrección 2026-10-01 (F5-G):** aprobar el borrador que reemplaza una versión aprobada lo hacen los tres roles de «Gestionar Plan Maestro»; solo crear la versión nueva es de administrador y jefe de proyectos (nota 9).
 
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
@@ -95,8 +95,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Eliminar RDT (borrado definitivo; cubre archivo y parte estructurado, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
 | Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
-| Gestionar Plan Maestro (programar en el lienzo y crear = aprobar la primera versión) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
-| Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; incluye aprobar el borrador que la reemplaza) ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; solo crear el borrador, aprobarlo es «Gestionar Plan Maestro») ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar paquetes de trabajo (crear, editar, mover partidas, archivar, declarar vínculos con metrado y hitos; la disciplina es obligatoria) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
@@ -129,7 +129,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ⁸ **Recarga bloqueada (plan niveles-paquetes-plan-maestro-rdt, 2026-09-30).** Con un Plan Maestro `APROBADO` el servicio no admite recargar el DP ni reemplazar el cronograma; sin Plan Maestro aprobado se avisa de lo que se perdería y se pide confirmación. No cambia quién puede la acción: es una precondición de negocio validada en servidor, como la nota 3 ([09](09-importar-dp.md), [15](15-cronograma.md), [20](20-plan-maestro.md)). «Gestionar Plan Maestro» ya no incluye «congelar línea base» como acción aparte: el planner programa y crea (aprueba) la primera versión; «Gestionar paquetes» incluye declarar vínculos con metrado y hitos (el cronograma ya no los edita).
 
-⁹ **Decidido por Victor (Gate 1, 2026-09-30).** Con un Plan Maestro aprobado, crear una versión nueva y aprobar el borrador que la reemplaza lo hacen solo el administrador y el jefe de proyectos, con motivo obligatorio; el planner conserva programar y crear la primera versión. Implementado en `puedeCrearVersionPlanMaestro` (`permisos.ts`) para crear el borrador; ver la brecha de aprobar en «Pendiente» ([20](20-plan-maestro.md)).
+⁹ **Decidido por Victor (Gate 1, 2026-09-30; aprobar el borrador, 2026-10-01).** Con un Plan Maestro aprobado, **crear** una versión nueva (el borrador, con motivo obligatorio) lo hacen solo el administrador y el jefe de proyectos; el planner conserva programar y crear la primera versión. **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo hacen los tres roles de «Gestionar Plan Maestro» (administrador, jefe de proyectos y planner), igual que la primera aprobación. Implementado: crear el borrador usa `puedeCrearVersionPlanMaestro` (`POST`) y aprobar usa `puedeGestionarPlanMaestro` (`PATCH`), de modo que el código coincide con el flujo.
 
 ¹⁰ **Decidido por Victor (2026-09-30).** Reasignar un RDT de paquete mientras no esté `VALIDADO` lo hace quien valida (mismos roles que «Validar / rechazar RDT»); el supervisor que crea el RDT no reasigna, corrige reemplazando el parte ([06](06-rdt.md)). Vive en la ruta de validar del RDT (`puedeValidarRdt`); no es un permiso nuevo en el código. «Crear paquete» (acción rápida del panel) sigue la fila «Gestionar paquetes de trabajo»: administrador, jefe de proyectos y planner.
 
@@ -154,7 +154,7 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 4. **Estado de RQ y registro de costos para el jefe de proyectos.** Cerrado (Victor, 2026-09-29): siguen siendo solo de logística (más el administrador en el estado de RQ, ya en la tabla 2).
 5. **Quién alterna el Dashboard entre Parcial y Completo.** Cerrado (Victor, C35, 2026-09-29): ver nota ¹.
 
-6. **Aprobar el borrador que reemplaza un Plan Maestro aprobado.** Decidido por Victor (2026-09-30): solo administrador y jefe de proyectos (nota 9). **Brecha con el código:** hoy `PATCH /api/plan-maestro` usa `puedeGestionarPlanMaestro`, de modo que el planner podría aprobar un borrador que creó un administrador o un jefe de proyectos; solo `POST` (crear el borrador sobre una aprobada) usa `puedeCrearVersionPlanMaestro`. Queda como corrección de código pendiente (resultado F3-B, handoff).
+6. **Aprobar el borrador que reemplaza un Plan Maestro aprobado.** Resuelto por Victor (2026-10-01): lo aprueban los tres roles de «Gestionar Plan Maestro» (administrador, jefe de proyectos y planner); solo crear la versión nueva queda para administrador y jefe de proyectos (nota 9). Sin brecha con el código.
 
 ### Asistente del shell (excepción, sin fila en las tablas)
 

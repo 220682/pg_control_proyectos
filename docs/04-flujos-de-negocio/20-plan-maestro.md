@@ -93,7 +93,7 @@ Al crear, el sistema guarda y aprueba; el estado pasa a `APROBADO` (solo lectura
 
 ### 4. Versión nueva
 
-Con un Plan Maestro `APROBADO`, el botón «Crear versión nueva» pide un **motivo obligatorio** (máximo 500 caracteres) y crea un borrador que **parte de las asignaciones y de las disciplinas de la aprobada** (misma actividad y WBS). **Solo administrador y jefe de proyectos** pueden crear una versión nueva (fila propia en la tabla 2 del [flujo 14](14-accesos-y-restricciones.md)). El motivo se muestra en la versión aprobada. La versión nueva es la vía para cambiar el DP o el cronograma, cuya recarga está bloqueada mientras haya una aprobada.
+Con un Plan Maestro `APROBADO`, el botón «Crear versión nueva» pide un **motivo obligatorio** (máximo 500 caracteres) y crea un borrador que **parte de las asignaciones y de las disciplinas de la aprobada** (misma actividad y WBS). **Solo administrador y jefe de proyectos** pueden crear una versión nueva (fila propia en la tabla 2 del [flujo 14](14-accesos-y-restricciones.md)). **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo pueden hacer los tres roles que gestionan el Plan Maestro (administrador, jefe de proyectos y planner), igual que la primera aprobación. El motivo se muestra en la versión aprobada. La versión nueva es la vía para cambiar el DP o el cronograma, cuya recarga está bloqueada mientras haya una aprobada.
 
 ### 5. Disciplina
 
@@ -141,7 +141,8 @@ Fuente única: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md). Resum
 |---|---|
 | Ver Plan Maestro (lleva datos económicos) | Administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos, jefe de costos y planner |
 | Crear borrador, repartir en el lienzo y crear (aprobar) el Plan Maestro | Administrador, jefe de proyectos, planner |
-| **Crear una versión nueva** (cuando ya hay una aprobada) | **Administrador, jefe de proyectos** |
+| **Crear una versión nueva** (el borrador, cuando ya hay una aprobada) | **Administrador, jefe de proyectos** |
+| Aprobar el borrador de una versión nueva (reemplaza a la aprobada) | Administrador, jefe de proyectos, planner |
 | Crear RDT estructurado | Supervisor operativo, administrador, jefe de proyectos, jefe de oficina técnica |
 | Validar o rechazar RDT | Administrador, jefe de proyectos, jefe de oficina técnica |
 | Rechazar un RDT ya validado | Administrador, jefe de proyectos |

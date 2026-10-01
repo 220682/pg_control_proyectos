@@ -39,13 +39,12 @@ Responde:
 
 Contiene:
 
-- Partida.
+- Partida (repetible: repartida en varios paquetes y/o directa).
 - Unidad.
-- Metrado contractual.
+- Metrado contractual y metrado de la línea.
 - Precio unitario.
 - BAC.
-- Actividad de cronograma.
-- Fecha de inicio y fin.
+- Actividad de cronograma (su fecha de inicio y fin es solo guía sombreada).
 - Metrado programado por día o semana.
 - Costo programado por día o semana.
 - PV semanal y acumulado.
@@ -81,7 +80,7 @@ Deben registrar:
 
 ### Ejecución real
 
-La ejecución real proviene de RDT validados. Cada registro debe alimentar la fecha, partida, paquete opcional, cantidad, HH, costo y evidencia correspondiente.
+La ejecución real proviene de RDT validados. Cada registro debe alimentar la fecha, **paquete × partida** (o partida directa) del Plan Maestro aprobado, cantidad, HH, costo y evidencia correspondiente. **El real se declara contra paquete × partida**: por paquete × partida vive solo en el Plan Maestro y por partida (suma de sus paquetes) alimenta al PR (flujos 06, 10 y 20).
 
 Responde:
 
@@ -132,45 +131,32 @@ Columnas fijas
 → ...
 ```
 
-Las columnas fijas deben incluir:
+Las **columnas fijas del lienzo** son seis (más «Falta repartir»):
 
 - WBS.
-- Área.
-- Disciplina.
-- Frente.
-- Paquete.
-- Código de partida.
 - Descripción.
-- Unidad.
-- Metrado contractual.
-- Precio unitario.
-- BAC.
-- HH contractuales.
-- Duración.
-- Inicio base.
-- Fin base.
-- Método de medición.
+- Und. (unidad).
+- Metrado (de la línea).
+- Costo unitario.
+- HH por unidad.
+
+**Tiempo (duración, inicio y fin base) no va** como columna. Las demás —área, disciplina, frente, costo total, HH totales, método de medición y otras— **se ofrecen con el botón «Personalizar campos»** (el mismo que usan otras pantallas; no hay otro selector de columnas). Hoy la app ofrece Costo total ($), HH totales y Disciplina; el resto no tiene dato de origen todavía (ver flujo 20).
 
 Cada semana agrupa:
 
 - Sábado a viernes, según configuración del servicio.
-- Metrado programado diario.
-- Metrado real diario validado.
+- Metrado programado diario («Prog.») y metrado real diario validado («Real»), en **subfilas** por partida: lo programado se edita por línea (actividad × partida) y lo real se ve **por paquete × partida**.
 - Cierre semanal.
 
-El cierre semanal muestra:
+El cierre semanal tiene **seis columnas, rotuladas para no mezclarlas** (física, económica y de HH, cada una semanal y acumulada; el interruptor «Acumuladas» deja solo las tres semanales):
 
-- Metrado programado.
-- Metrado real.
-- Variación.
-- Avance económico programado.
-- Avance físico programado.
-- HH programadas.
-- Avance económico real.
-- Avance físico real.
-- HH reales.
-- Incidencias.
-- Causa y acción siguiente.
+- Avance físico (%), semanal y acumulado.
+- Avance económico ($), semanal y acumulado.
+- HH, semanal y acumulado.
+
+Variación, incidencias, causa y acción siguiente no están construidas como columnas del lienzo (siguen pendientes con el 3WLA).
+
+**Color del avance real** (solo avance real, nunca programado): en la columna de avance físico acumulado de las filas «Real», 0 % sin color (blanco), en curso amarillo y 100 % verde con ✓; se compara contra el redondeo mostrado y hay una leyenda visible.
 
 Las semanas deben agregarse horizontalmente según la duración del servicio. No se debe limitar la interfaz a un número fijo de semanas.
 
@@ -291,7 +277,7 @@ PPC y SPI miden cosas diferentes y no deben mezclarse.
 ## Flujo de datos RDT → Plan Maestro
 
 1. El usuario registra un RDT asociado a una OT vigente.
-2. El RDT identifica servicio, fecha, partida y paquete opcional.
+2. El RDT identifica servicio, fecha y paquete × partida del Plan Maestro aprobado (o partida directa).
 3. El usuario registra cantidad, unidad, HH, HM, costo y evidencia.
 4. El sistema valida que la partida pertenezca al servicio.
 5. El sistema valida unidad y cantidad.

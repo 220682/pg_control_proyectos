@@ -47,6 +47,8 @@ que agrega por fecha en una sola pasada (no una subconsulta por día) y
 acumula con función de ventana — necesario para que la pantalla no se
 vuelva cuadrática con proyectos grandes.
 
+**Sin cambio de fórmulas por el plan niveles-paquetes-plan-maestro-rdt.** Una partida puede repetirse en el Plan Maestro (repartida en varios paquetes y/o directa): `curva_s_proyecto` y el PV **suman todas las líneas de la partida**, y el vínculo del RDT lleva el paquete **sin afectar el EV** (que sigue siendo metrado × `dp_partidas.precio_unitario` por partida).
+
 **AC no filtra por partida vinculada, a propósito**: suma todas las horas
 (no-MOI) de partes validados, tengan o no vínculo a una partida vigente del
 DP — así el total cuadra exacto con el AC del PR

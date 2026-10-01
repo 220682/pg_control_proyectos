@@ -35,6 +35,24 @@ Si siguiendo estos 4 pasos el sistema no logra extraer datos de alguna partida (
 
 Solo corre si la fase 2 extrajo los datos con éxito. Compara lo extraído contra lo esperado (ej. una partida indica una actividad pero no tiene HH). Si encuentra algo raro o distinto, **no bloquea**: completa la importación igual y deja la observación guardada de forma durable, visible mientras dure el proyecto — mismo criterio ya aplicado para "partidas sin mano de obra" (`028_dp_resumen_no_restrictivo.sql`, columna `observaciones` en `proyecto_dp`). Tampoco es una lista cerrada: cada tipo nuevo de discrepancia detectada se suma al catálogo de observaciones, no reemplaza a las anteriores.
 
+## Paso de confirmación de niveles (plan niveles-paquetes-plan-maestro-rdt, 2026-09-30)
+
+Las tres fases se conservan. Entre el análisis y el guardado se suma un paso de **confirmación de niveles**: el archivo se analiza primero sin guardar (`soloAnalizar`) y la pantalla de Importar DP pasa a dos pasos.
+
+- **Cuenta de niveles.** El sistema detecta cuántos niveles tiene la estructura del presupuesto (de 2 a 5; la detección admite códigos con puntos, esquema, ancho fijo, sangría o lista plana). El nivel 1 es el Servicio (implícito si el presupuesto no trae esa fila). Un servicio con profundidad fuera de 2 a 5 muestra error y no deja aprobar.
+- **Rol por nivel.** Cada nivel lleva un rol elegido en un desplegable (orden fijo; Servicio y Partida son obligatorios y Partida va en el último nivel). El rol se guarda **por nivel**, no por grupo de hermanas: cambiar uno cambia todo el nivel, y la pantalla lo dice.
+- **Fila de muestra por grupo.** Cada grupo de hermanas (mismo nivel y mismo padre) muestra una fila de muestra con «Ver N hermanas»; confirmar el rol confirma el grupo completo. Las columnas Und. y Met. van separadas.
+- **Filas «para revisar».** Una hermana cuya profundidad de subárbol difiere de la de su grupo se marca «para revisar». **Mientras haya filas para revisar sin confirmar, «Aprobar niveles» queda bloqueado.** Una partida directa del subpresupuesto que convive con paquetes no se marca como error.
+- **Mapa guardado.** Al aprobar se guarda el mapa (`servicio_niveles`) y los encabezados de cada nivel (`servicio_encabezados`, origen DP) con `confirmado = true`; sin confirmar se guarda el propuesto con `confirmado = false`. Subpresupuestos y paquetes de partidas (`dp_subpresupuestos`, `dp_paquetes`) se siguen poblando con el patrón de código de 1 y 2 segmentos para lo que aún los consume; un DP de 3 niveles produce el mismo agrupamiento de siempre. DP y PR agrupan según el mapa; sin mapa, como antes.
+
+### Recarga bloqueada
+
+Volver a importar un DP sobre un servicio con datos derivados se evalúa antes de guardar:
+
+- **Con Plan Maestro `APROBADO`: recarga bloqueada** (409, sin opción de continuar). Para cambiar el DP hace falta antes una versión nueva del Plan Maestro (flujo 20).
+- **Sin Plan Maestro aprobado:** si hay algo que perder (vínculos del cronograma, paquetes, borrador del Plan Maestro) se muestra el **aviso de lo que se perdería** y una casilla de confirmación (`confirmarPerdida`); sin confirmar no se reemplaza. Si no hay nada que perder, la carga es libre. Un borrador no bloquea.
+- La conciliación de partidas (flujo existente) es un aviso distinto; al reenviar con resoluciones se reenvía también la confirmación.
+
 ### Resolución automática — a futuro, no ahora
 
 Más adelante se planea sumarle al agente capacidad de **resolver** algunos de estos hallazgos por su cuenta (ej. renombrar/ubicar una hoja con nombre distinto, elegir la fila correcta ante un WBS duplicado). Por ahora el agente solo **detecta y reporta** las 3 fases — no corrige nada automáticamente. Esa capacidad queda pendiente hasta que Victor la pida.

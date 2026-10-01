@@ -25,14 +25,16 @@ Origen: DP, hoja CD (costo directo, regla 9 de [18-control-avance.md](18-control
 
 Origen: Plan Maestro aprobado y Cronograma. Se recalcula cuando se aprueba una versión nueva del Plan Maestro (la anterior pasa a `REEMPLAZADO`, sin dejar rastro en el PR).
 
-- `metrado_planificado_acum`: suma de `plan_maestro_asignaciones` de la versión `APROBADO`, por partida.
-- `fecha_inicio_base` / `fecha_fin_base`: desde `cronograma_actividad_partidas` — inicio es la fecha más temprana de las actividades vinculadas a la partida, fin la más tardía. Se recalculan cuando cambia el vínculo cronograma ↔ partida.
+- `metrado_planificado_acum`: suma de `plan_maestro_asignaciones` de la versión `APROBADO`, por partida. **La suma es por partida aunque esté repartida en varios paquetes** (y/o como directa): todas las líneas de la partida se suman (fórmula sin cambio).
+- `fecha_inicio_base` / `fecha_fin_base`: desde `cronograma_actividad_partidas` — inicio es la fecha más temprana de las actividades vinculadas a la partida, fin la más tardía. Se recalculan cuando cambia el vínculo cronograma ↔ partida. **El vínculo con metrado se declara en Paquetes** ([flujo 19](19-paquetes-de-trabajo-y-jerarquia-de-control.md)), no en el Cronograma.
 
 PV **no se almacena** aquí — depende de la fecha de corte y se calcula al leer (bloque C).
 
 ### B — Ejecución real
 
-Origen: RDT validado. Toda actividad (D, C y NC) se carga a una partida (regla 12 de negocio) — solo las D generan metrado ejecutado; C y NC aportan horas y costo, no avance.
+Origen: RDT validado. Toda actividad (D, C y NC) se carga a una partida (regla 12 de negocio), dentro de un paquete × partida del Plan Maestro aprobado — solo las D generan metrado ejecutado; C y NC aportan horas y costo, no avance.
+
+**El PR suma por partida.** El real por paquete × partida vive solo en el Plan Maestro ([flujo 20](20-plan-maestro.md)); el real por partida (la suma de lo declarado en todos sus paquetes) es lo que alimenta al PR. **Las filas derivadas** del modo «por avance del paquete» ([flujo 06](06-rdt.md)) se guardan como actividades propias de su partida: el motor del PR (`recalcular_pr_desde_rdt`, `db/053`) **no cambia**, no hay doble conteo de metrado ni de horas, y **cada derivada cuenta como una actividad D más en `actividades_acum`**, por lo que también entra en el PPC (decisión de Victor).
 
 - `metrado_acumulado`, `hh_reales_acum`, `hh_d_acum`, `hh_c_acum`, `hh_nc_acum`, `hm_reales_acum`, `costo_real_acum`, `actividades_acum`, `actividades_con_cnc_acum`.
 - A nivel proyecto (`proyecto_pr`): `hh_mo_indirecta_acum` (MOI, horas sin costo — regla 10 de negocio), y el balde `*_legacy_sin_partida_acum` (solo RDT anteriores a la regla 12, que no se pueden reasignar retroactivamente).

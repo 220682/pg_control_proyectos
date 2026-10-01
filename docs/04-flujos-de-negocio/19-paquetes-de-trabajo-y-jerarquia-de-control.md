@@ -1,103 +1,74 @@
 19 — Paquetes de trabajo y jerarquía de control
 Objetivo
-Permitir que el usuario agrupe partidas del presupuesto en paquetes de trabajo controlables, sin modificar la base contractual. La partida continúa siendo la unidad de trazabilidad y reportabilidad; el paquete es una capa operativa de agrupación.
+Permitir que el usuario agrupe partes de la estructura del servicio en paquetes de trabajo controlables, sin modificar la base contractual. La partida continúa siendo la unidad de trazabilidad y reportabilidad; el paquete es una capa operativa de agrupación.
 
-Jerarquía recomendada
-La jerarquía funcional visible es:
-
-text
-Servicio
-└── Área o ubicación
-    └── Disciplina
-        └── Frente de trabajo
-            └── Paquete de trabajo
-                └── Partidas
-                    └── Actividades del cronograma
-                        └── Registros RDT
-Desde el punto de vista de datos, área, disciplina y frente deben manejarse preferentemente como atributos clasificadores del paquete, no como niveles rígidos obligatorios. Esto evita forzar relaciones cuando una partida se ejecuta en varias ubicaciones o frentes.
-
-La estructura contractual se conserva así:
-
-text
-Servicio
-└── Presupuesto / DP / WBS
-    └── Partidas
-Y los paquetes se relacionan con esas partidas:
+Estructura y jerarquía
+La jerarquía de la estructura viene del **mapa de niveles** confirmado al importar el DP y el cronograma (flujos 09 y 15): de 2 a 5 niveles, con Servicio arriba y Partida en el último. Los paquetes se arman sobre esa estructura y se relacionan con las partidas del DP:
 
 text
 Servicio
 ├── Presupuesto / DP / WBS
 │   └── Partidas
 └── Paquetes de trabajo
-    └── Partidas asignadas
-Frente y paquete
-El frente de trabajo es una agrupación operativa amplia, por ejemplo “Cimentaciones” o “Montaje mecánico”. El paquete es una unidad concreta que puede planificarse, ejecutarse y medirse, por ejemplo “Cimentación de tanque T-101”.
+    └── Vínculos (actividad del cronograma × partida, con metrado)
+Cadena funcional:
 
 text
-Frente: Obras civiles del área norte
-├── Paquete: Excavación de cimentaciones
-├── Paquete: Acero y encofrado
-└── Paquete: Concreto estructural
+Servicio
+└── Paquete de trabajo (opcional)
+    └── Partida
+        └── Actividad del cronograma
+            └── Registros RDT
+Área, frente, unidad, meta y responsable **ya no son datos del paquete**: se retiraron en el plan niveles-paquetes-plan-maestro-rdt (decisión por defecto de Victor, Gate 1, 2026-09-30). Si hacen falta como columnas en el Plan Maestro, se ofrecen con «Personalizar campos» (flujo 20). La **disciplina** sí se conserva (ver abajo), como catálogo fijo.
+
+El paquete es una unidad concreta que puede planificarse, ejecutarse y medirse, por ejemplo “Cimentación de tanque T-101”. No es un frente ni un nivel rígido de la estructura contractual.
+
 Datos del paquete
-Servicio.
+- Servicio.
+- Nombre (obligatorio).
+- **Nivel** (profundidad de la estructura en la que se arma; p. ej. en un presupuesto de 3 niveles, 3).
+- **Modo de medición** (ver más abajo).
+- **Partida guía** (solo en el modo «por avance del paquete»; debe ser una de las partidas del paquete).
+- **Orden** (se sube o baja con ▲▼ o Alt+↑/↓).
+- **Disciplina** (obligatoria al crear; catálogo fijo, ver abajo).
+- Estado (`BORRADOR`, `VALIDADO`, `ARCHIVADO`).
+- Presupuesto y avance calculados, no escritos.
 
-Código único.
+**El paquete no tiene fechas.** No se programa en paquetes: lo programado vive en el lienzo del Plan Maestro (flujo 20) y se edita por línea (actividad × partida). Las fechas del cronograma no se tocan.
 
-Nombre.
+Disciplina
+- Catálogo **fijo de 5**: Civil, Mecánica, Eléctrica, Instrumentación y Tuberías (tabla `disciplinas`, solo lectura para la app; lectura para cualquier usuario autenticado).
+- **Obligatoria al crear el paquete** (la API la exige y la pantalla marca el campo). En un borrador se puede cambiar; en `VALIDADO` o `ARCHIVADO` queda fija.
+- **Una partida dentro de un paquete hereda la disciplina del paquete.** La partida directa (sin paquete) define la propia en el Plan Maestro (flujo 20). Los paquetes anteriores a este plan quedan **sin disciplina** y deben elegirla al editarse.
 
-Área o ubicación, escrita por el usuario o seleccionada entre valores existentes.
+Vínculos y declaración del metrado
+El paquete **agrupa vínculos actividad × partida**. El vínculo y su metrado se **declaran en la pantalla de Paquetes** (paso «Declarar»), no en el Cronograma (flujo 15):
+- Cada vínculo lleva un **metrado exacto mayor que cero**; una actividad puede tener varias partidas. El enlace por EDT exacto se propone pre-llenado (etiqueta «auto»); si es el único enlace de una partida sin vínculos, el metrado propuesto es el contractual.
+- **Hitos:** una tarea marcada como hito (`requiere_partidas = false`) no requiere partida ni metrado y no participa en la regla del 100 %.
+- Se muestra el **restante** por actividad y por partida (texto, icono y barra): «Resta / Excede / completa».
+- Un vínculo pertenece a **un solo paquete** vigente; no se puede quitar un vínculo que está en un paquete no archivado.
+- La regla del 100 % por partida **se exige para crear el Plan Maestro** (flujo 20); en Paquetes solo se avisa, no bloquea guardar la declaración ni el paquete.
 
-Disciplina desde catálogo fijo.
+Partida repartida entre paquetes
+**Una partida repartida entre varios paquetes es la regla general** (ya no una excepción «autorizada»): cada paquete toma una porción de su metrado, la pantalla muestra «250.00 de 420.00 (60 %) · repartida en 2 paquetes» y **la suma de las porciones debe llegar al 100 % del metrado contractual**. Las partidas que no van en ningún paquete son **partidas directas** (sin paquete), permitidas. La clave de reporte de cada línea es `paquete|DIRECTA : partida`, y el PR suma por partida (flujo 10).
 
-Frente de trabajo, existente o nuevo.
-
-Unidad de control.
-
-Meta.
-
-Responsable.
-
-Estado.
-
-Partidas asignadas.
-
-Fechas planificadas opcionales.
-
-Presupuesto calculado.
-
-Avance calculado.
+Crear paquete
+- Botón «Crear paquete» dentro de la pantalla de Paquetes (no es un chip nuevo); el acceso rápido «Crear paquete» abre la pantalla con `?accion=crear`, ya en modo crear (flujo 16).
+- En el paso «Agrupar» se marcan con casillas los ítems de la estructura (todos menos el Servicio); marcar un nivel resumen marca sus hijas libres. Se escribe nombre, se confirma el nivel y se elige la disciplina.
+- El paquete se marca visualmente con borde, fondo tenue y etiqueta «Paquete», en dos colores alternos.
+- Editar y archivar solo en `BORRADOR`; subir o bajar el orden vale en cualquier estado salvo `ARCHIVADO`.
+- La pantalla tiene dos lados: cronograma (jerarquía plegable, columna «Met.») y DP (solo partidas, solo consulta); bajo `lg`, pestañas «Cronograma | DP».
+- Quién gestiona: administrador, jefe de proyectos y planner; los 13 roles ven (tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md)).
 
 Unidades diferentes
-El paquete puede tener una unidad conceptual distinta a las unidades de sus partidas.
+Las partidas de un paquete conservan sus unidades originales (m³, kg, m², unidades): no se suman físicamente. El paquete no tiene unidad ni meta propias.
 
-text
-Paquete: Cimentación de tanque T-101
-Unidad del paquete: cimentación terminada
-Meta: 1 unidad
+Avance
+**Los pesos por partida y el avance ponderado del diseño original quedan superados.** El avance se declara según el modo de medición:
+- **Por partida** (`POR_PARTIDAS`): cada partida con su unidad y metrado.
+- **Por la guía** (`AVANCE_PAQUETE`): se declara el avance de la partida guía y el mismo % se aplica a todas las partidas del paquete.
 
-Partidas:
-- Excavación: 120 m³
-- Concreto pobre: 15 m³
-- Acero: 8 500 kg
-- Encofrado: 280 m²
-- Concreto estructural: 75 m³
-- Pernos: 24 unidades
-No se suman físicamente m³, kg, m² y unidades. Cada partida conserva su unidad original y recibe un peso dentro del paquete.
-
-Avance ponderado
-text
-Avance del paquete = Σ(peso de la partida × avance validado de la partida)
-Ejemplo de pesos y avance:
-
-Partida	Peso	Avance	Aporte
-Excavación	10 %	100 %	10 %
-Concreto pobre	5 %	100 %	5 %
-Acero	25 %	60 %	15 %
-Encofrado	20 %	50 %	10 %
-Concreto estructural	30 %	20 %	6 %
-Pernos	10 %	0 %	0 %
-Total	100 %		46 %
-El paquete se reporta al 46 %, pero el usuario puede abrir el detalle por partida.
+Para mostrar un avance del paquete en el selector del RDT: por avance = % de la guía; por partidas = promedio simple de sus partidas. Lo oficial es el **real por paquete × partida**, que se ve en el Plan Maestro (flujos 18 y 20); el real por partida (suma de todos sus paquetes) alimenta al PR. Solo RDT validados alimentan el avance oficial.
 
 Reportabilidad
 La cadena de trazabilidad será:
@@ -108,20 +79,20 @@ La partida sigue siendo la unidad base para presupuesto, valorización, avance v
 
 ## Modo de medición (Fase 1 — implementado 2026-09-23)
 
-El paquete se crea eligiendo uno de dos modos de medición, definido en la columna `paquetes_trabajo.modo_medicion` (migración `072`):
+El paquete tiene un modo de medición, definido en la columna `paquetes_trabajo.modo_medicion` (migración `072`):
 
 | Modo | Descripción |
 |---|---|
-| `AVANCE_PAQUETE` | Se declara el avance del paquete como porcentaje de su **partida guía** y ese mismo % se aplica a **todas** las partidas del paquete. La partida guía (`dp_partida_guia_id`) jala su **unidad y metrado** del DP; con eso se calcula `% = metrado_ejecutado / metrado_guía`. Ejemplo: guía cama de arena 10 ml, declaras 5 ml → 50% → excavación 7.5 m³, cama de arena 5 ml, relleno 7.5 m³. |
+| `AVANCE_PAQUETE` | Se declara el avance del paquete como porcentaje de su **partida guía** y ese mismo % se aplica a **todas** las partidas del paquete. La partida guía (`dp_partida_guia_id`) jala su **unidad y metrado** del DP; con eso se calcula `% = metrado_ejecutado / metrado_guía`. Ejemplo: guía cama de arena 10 ml, declaras 5 ml → 50 % → excavación 7.5 m³, cama de arena 5 ml, relleno 7.5 m³. En el RDT (flujo 06) el servidor guarda una fila derivada de solo lectura por cada partida. El metrado de la guía dentro del paquete es la suma de su metrado declarado. |
 | `POR_PARTIDAS` | El paquete no tiene unidad propia; el avance se declara **partida por partida**, cada una con su unidad y metrado originales. |
 
-**El modo de medición solo es editable mientras el paquete esté en `BORRADOR`.** Una vez en `VALIDADO` o `ARCHIVADO`, queda fijo.
+**El modo de medición solo es editable mientras el paquete esté en `BORRADOR`.** Una vez en `VALIDADO` o `ARCHIVADO`, queda fijo. La pantalla de Paquetes crea hoy en `POR_PARTIDAS`; el modo `AVANCE_PAQUETE` lo admite la API y el RDT, sin selector en la pantalla de Paquetes.
 
-La partida guía **no** se elige por peso ni por jerarquía: la selecciona el usuario al crear el paquete, y debe ser una de las partidas asignadas.
+La partida guía **no** se elige por peso ni por jerarquía: la selecciona el usuario, y debe ser una de las partidas del paquete.
 
 ## Capa operativa (regla fundacional)
 
-El paquete de trabajo **agrupa y secciona** partidas del DP bajo un nombre propio. Es una **capa operativa** de agrupación; **no reemplaza la partida contractual**. La partida sigue siendo la unidad de trazabilidad, costo, valorización y auditoría.
+El paquete de trabajo **agrupa y secciona** vínculos del DP bajo un nombre propio. Es una **capa operativa** de agrupación; **no reemplaza la partida contractual**. La partida sigue siendo la unidad de trazabilidad, costo, valorización y auditoría.
 
 Selector del presupuesto
 Agregar el selector:
@@ -152,135 +123,44 @@ Tiene sentido para consolidar varios paquetes bajo un responsable y controlar PV
 
 Integración con el sistema
 text
-Presupuesto / DP
-→ Selector de control
-→ Paquetes opcionales
-→ Partidas
-→ Cronograma
-→ Plan Maestro
+Presupuesto / DP (con mapa de niveles)
+→ Cronograma (con mapa de niveles)
+→ Paquetes opcionales (declaran vínculos con metrado)
+→ Plan Maestro (lienzo)
 → Plan semanal / 3WLA
 → RDT validado
 → PR
 → Dashboard
 El cronograma debe continuar vinculándose contra DP/WBS y no contra PR. Si una partida tiene varias actividades, la relación debe conservarse a nivel de partida.
 
-Implementación recomendada para la app real
-La lógica de paquetes debe implementarse sobre la estructura existente del servicio y del presupuesto, no creando una segunda fuente de verdad. La base debe seguir usando la partida del presupuesto como unidad contractual y técnica. El paquete es una capa agregadora y operativa.
+Implementación en la app real
+La lógica de paquetes se implementa sobre la estructura existente del servicio y del presupuesto, no creando una segunda fuente de verdad. La partida del presupuesto sigue siendo la unidad contractual y técnica. El paquete es una capa agregadora y operativa.
 
 Base de datos y esquema
-- Mantener la partida de presupuesto como unidad base de trazabilidad, costo y avance.
-- Crear o reutilizar tablas / modelos del servicio para:
-  - áreas por servicio,
-  - frentes por servicio,
-  - catálogos de disciplina,
-  - paquetes por servicio,
-  - relación paquete-partida con peso y asignación,
-  - configuración de modo de control por servicio o presupuesto.
-- No duplicar la estructura contractual del DP. Los campos de partida y su metrado deben quedar vinculados a `dp_partidas` o la entidad equivalente ya existente.
-- Si el esquema lo permite, reservar `control_account_id` como campo opcional para una futura extensión EVM, pero nunca hacerlo obligatorio en esta fase.
+- `paquetes_trabajo` (nombre, nivel, modo de medición, partida guía, orden, `disciplina_id`, estado) y `paquete_trabajo_vinculos` (paquete × actividad × partida con metrado), migraciones `079` a `081` y `085`; catálogo `disciplinas` (`085`).
+- `paquete_trabajo_partidas` y `paquete_trabajo_programacion` **quedan sin uso y se conservan** (nada se borra sin autorización de Victor).
+- No duplicar la estructura contractual del DP: los vínculos apuntan a `dp_partidas` y a `cronograma_actividades`.
+- Si el esquema lo permite, reservar `control_account_id` como campo opcional para una futura extensión EVM, nunca obligatorio.
 
-Modo de control
-El servicio o el presupuesto debe permitir elegir:
-- `DIRECTO_PARTIDAS`
-- `POR_PAQUETES`
-- `MIXTO`
+API (verificada contra la rama integrada)
+- `GET /api/paquetes-trabajo?proyectoId=`: `paquetes` (con `vinculos`, `disciplinaId` y `disciplinaNombre`), `actividades` (estructura), `partidasDp` y `restantePorPartida`; los 13 roles leen.
+- `POST` crea (exige nombre, nivel y disciplina; no acepta fechas ni programación); `PATCH` con `EDITAR`, `MOVER` y `ARCHIVAR`.
+- `PUT /api/paquetes-trabajo/vinculos`: el conjunto recibido es el estado final de los vínculos del servicio; valida partida y actividad del servicio, metrado > 0, hito sin metrado; llama `recalcular_pr_fechas_base`.
+- `GET /api/disciplinas`: catálogo (solo lectura).
+- Validación siempre en servidor, con los permisos de gestión y el alcance por servicio.
 
-En control directo, no se obliga a crear paquetes. En control por paquetes, cada paquete debe tener al menos una partida y un peso total válido. En control mixto, algunas partidas tienen control directo y otras se agrupan.
-
-Rutas / endpoints sugeridos
-- GET /servicios/:id/paquetes
-- POST /servicios/:id/paquetes
-- GET /servicios/:id/paquetes/:paqueteId
-- PATCH /servicios/:id/paquetes/:paqueteId
-- POST /servicios/:id/paquetes/:paqueteId/partidas
-- PATCH /servicios/:id/paquetes/:paqueteId/partidas/:partidaId
-- POST /servicios/:id/paquetes/:paqueteId/validar
-- POST /servicios/:id/paquetes/:paqueteId/archivar
-- GET /servicios/:id/paquetes/:paqueteId/avance
-
-En la app real, estas rutas deben reutilizar los permisos del servicio actual y la validación del usuario autenticado.
-
-Componentes / pantallas sugeridas
-- Listado de paquetes con búsqueda, filtros por servicio, área, disciplina, frente, estado y responsable.
-- Crear paquete.
-- Detalle de paquete.
-- Edición básica.
-- Gestión de partidas asignadas.
-- Cálculo de presupuesto y avance ponderado.
-- Acciones internas: asignar partidas, calcular pesos, validar paquete, archivar.
-
-Formulario recomendado
-- Nombre obligatorio.
-- Descripción opcional.
-- Área: editable o seleccionable según configuración.
-- Disciplina: seleccionada desde catálogo fijo o opcional si el paquete es flexible.
-- Frente: crear o elegir según el servicio.
-- Unidad de control obligatoria para el paquete.
-- Meta obligatoria cuando la unidad es cuantificable.
-- Responsable opcional.
-- Estado de paquete.
-- Fechas opcionales.
-- Selección múltiple de partidas del presupuesto del servicio.
+Las rutas `/servicios/:id/paquetes/...` del diseño original eran sugeridas y no se usaron.
 
 Reglas de negocio
 Cada paquete pertenece a un servicio.
 
 Las partidas deben pertenecer al presupuesto del servicio actual.
 
-Área, disciplina y frente de trabajo son clasificadores configurables del paquete. Cada uno será obligatorio únicamente cuando el paquete requiera control o reportabilidad por ese eje. El sistema podrá definir paquetes estándar, con los tres clasificadores obligatorios, y paquetes flexibles, donde dichos campos sean opcionales.
+El paquete debe tener nombre, nivel y disciplina; y al menos un vínculo con metrado.
 
-Para paquetes del tipo estándar, el sistema podrá exigir área, disciplina y frente como campos obligatorios. Para paquetes flexibles o especiales, estos campos podrán ser opcionales según la configuración del servicio.
+Una partida puede repartirse entre varios paquetes; la suma de sus porciones debe llegar al 100 % del metrado contractual para crear el Plan Maestro. No se excede el metrado disponible.
 
-Regla funcional definitiva
-Campo | Regla recomendada
-Área | Obligatoria si el paquete se controla o reporta por ubicación.
-Disciplina | Obligatoria si el paquete pertenece a una especialidad definida.
-Frente | Obligatorio si el paquete forma parte de un frente operativo.
-Nombre | Siempre obligatorio.
-Unidad de control | Obligatoria para medir el paquete.
-Meta | Obligatoria cuando el paquete use una unidad cuantificable.
-Partidas | Al menos una para activar el paquete.
-Pesos | 100 % para activar el paquete medible.
-
-Tipos de paquete
-Paquete estándar
-Usado en la mayoría de los trabajos de obra.
-
-Área: obligatoria.
-Disciplina: obligatoria.
-Frente: obligatorio.
-
-Ejemplo:
-Área: Planta de procesos.
-Disciplina: Civil.
-Frente: Cimentaciones.
-Paquete: Cimentación de tanque T-101.
-
-Paquete flexible
-Usado cuando el control no necesita los tres clasificadores.
-
-Área: opcional.
-Disciplina: opcional.
-Frente: opcional.
-
-Ejemplo:
-Paquete: Pruebas generales del servicio.
-Unidad: sistema liberado.
-Meta: 1 sistema.
-
-En este caso, puede no existir una única ubicación, disciplina o frente aplicable.
-
-La disciplina proviene de un catálogo controlado cuando exista disciplina definida.
-
-El paquete debe tener nombre, unidad y meta.
-
-Debe tener al menos una partida.
-
-La suma de pesos debe ser 100 % para activar el paquete.
-
-No se duplican partidas activas, salvo distribución parcial autorizada.
-
-El presupuesto se calcula desde las partidas asignadas.
+El presupuesto del paquete se calcula desde sus partidas.
 
 Solo RDT validados alimentan el avance oficial.
 
@@ -290,59 +170,32 @@ Todos los cambios importantes se auditan.
 
 Validaciones funcionales
 - Servicio actual obligatorio.
-- Área, disciplina y frente obligatorios solo si corresponden al tipo de paquete.
-- Nombre, unidad y meta obligatorios.
-- Al menos una partida.
-- Pesos entre 0 y 100.
-- Suma de pesos igual a 100 % para paquetes medibles.
-- Partidas pertenecen al servicio actual.
-- No duplicar partidas activas, salvo distribución parcial soportada.
-- No exceder la cantidad o monto disponible.
+- Nombre, nivel y disciplina obligatorios; disciplina del catálogo y activa.
+- Metrado del vínculo > 0 (hito sin metrado).
+- Un vínculo en un solo paquete vigente.
+- Partidas y actividades pertenecen al servicio actual.
 - No eliminar físicamente paquetes con avance.
 - Aplicar permisos y auditoría existentes.
 
-Cálculo de avance
-avance_paquete = Σ(peso_partida × avance_validado_partida)
-
-No se suman unidades incompatibles. Una partida puede estar en m³, kg, m² o unidades, mientras el paquete puede tener una unidad conceptual distinta.
-
 Pruebas recomendadas
-- creación válida,
-- datos faltantes,
-- pesos incorrectos,
-- partidas de otro servicio,
-- duplicidades,
-- cálculo presupuestal,
-- avance ponderado,
-- unidades diferentes,
-- modos de control,
-- permisos,
+- creación válida y datos faltantes (nombre, disciplina),
+- restante por actividad y partida, hitos fuera de la regla,
+- partida repartida entre dos paquetes (Σ = contractual),
+- vínculo ya tomado por otro paquete,
+- modos de medición,
+- permisos de los 13 roles,
 - auditoría,
 - protección contra eliminación destructiva.
 
 Criterios de aceptación
-Se puede elegir control directo, por paquetes o mixto.
+Se declaran vínculos actividad × partida con metrado exacto, con hitos aparte.
 
-Se puede crear un área dentro del servicio.
+Se crea un paquete con nombre, nivel y disciplina, agrupando ítems de la estructura.
 
-Se selecciona disciplina desde catálogo.
-
-Se crea o selecciona un frente.
-
-Se crea paquete con unidad y meta.
-
-Se asignan partidas múltiples.
-
-Se validan pesos y duplicidades.
-
-Se calcula el presupuesto.
-
-Se calcula el avance ponderado.
+Se reparte una partida entre varios paquetes y se ve su restante.
 
 Se mantienen las unidades originales.
 
-Se consulta por área, disciplina y frente.
-
 Se llega desde el paquete hasta la partida.
 
-Queda preparada la integración con cronograma, Plan Maestro, 3WLA, RDT, PR y Dashboard.
+Queda preparada la integración con el Plan Maestro, el RDT, el PR y el Dashboard.

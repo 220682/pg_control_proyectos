@@ -36,7 +36,7 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Olas 1 a 3 cerradas. F0-U1, F0-U2 y F4-B hechas; Victor revisa las maquetas (abiertas en su navegador). Las tandas de interfaz esperan su aprobación. Ver «Resultados consolidados de la ola 3».
+Olas 1 a 4 cerradas: toda la implementación de código de los cuatro carriles está hecha (F1-C, F2-B, F2-C, F3-C, F3-D, F4-B, F4-C). Falta la integración (F5-A), las verificaciones en vivo (F5-B, F5-C), la documentación (F5-D), la auditoría y el Gate 2. Ver el «Handoff del 2026-09-30 (cuarto)».
 
 ## Pendientes
 
@@ -95,6 +95,14 @@ Con contexto limpio: leer el «Handoff del 2026-09-30 (tercero)», escribir el e
 | F0-U2 | `agent-a67b0094045fc14b6` | 25 | 28 | 139k | 2,4M | Sí | cortada por límite de uso y retomada |
 | F4-B | `agent-ad861d19361b8f39d` | 27 | 27 | 145k | 2,5M | Sí | cortada por límite de uso y retomada |
 | **Orquestador (sesión 2, al cerrar la ola 3)** | `cfbd2d3e-42a3-49ac-aa8d…` | 23 | 27 | **155k** | 2,3M | Sí | medido al cerrar la ola |
+| F0-V | `agent-a5d91844e44b2368e` | 17 | 19 | 85k | 1,1M | Sí | corrección del color y barras |
+| F1-C | `agent-a90b64214f7847c53` | 51 | 54 | 193k | 7,0M | Sí | |
+| F2-B | `agent-a39f9ab0e09060855` | 34 | 44 | 186k | 4,2M | Sí | |
+| F3-C | `agent-a10bfa80a29758566` | 43 | 52 | **213k** | 6,1M | Llamadas y caché sí; contexto no | |
+| F2-C | `agent-a8f371bef78fc458a` | 27 | 35 | 145k | 2,9M | Sí | |
+| F3-D | `agent-ac12e550e7afa11d4` | 33 | 41 | 158k | 3,8M | Sí | |
+| F4-C | `agent-a8169d0e9054acd82` | 61 | 69 | **251k** | 10,5M | Llamadas y caché sí; contexto no | cerca del tope de caché; pantalla grande (selector, Status, Consolidado) |
+| **Orquestador (sesión 2, al cerrar la ola 4)** | `cfbd2d3e-42a3-49ac-aa8d…` | 48 | 49 | **214k** | 6,9M | No (214k > 200k) | relevo entre olas, hecho |
 | F0-B | `agent-ac9205eddb66f403b` | ~34 | 43 | — | — | Sí | usó navegador (desvío menor) |
 | F2-A (cierre) | `agent-abbaf56e5b94e969a` | 33 | 33 | — | — | Sí | sesión de cierre; migraciones sin aplicar |
 | F1-A (cierre) | `agent-ae31f694a87b97cf3` | 10 | 10 | — | — | Sí | sesión de cierre |
@@ -154,11 +162,31 @@ Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1
 - **F4-B (Crear RDT por paquete: API de partes): cerrada, 5 de 5 conformes** (`resultados/F4-B.md`, commit `14bae8d` en `local-worker-4`, sin push ni merge; 5 archivos de `src/app/api/rdts/partes/**` y `src/lib/rdts/`). Verificado por el Orquestador: árbol limpio, commit presente, ningún cambio en `db/` ni `src/lib/pr/`. Reportado por el Worker: 709 pruebas verdes (72 archivos), `tsc` limpio, lint 27 igual a `main`. Criterio de Victor aplicado: las derivadas se guardan como **actividades propias** (con su metrado, `es_derivada` y `declaracion_id`), la prueba espejo de 053 no cuenta doble (cama 5, excavación 15, relleno 15); `db/053` intacta. Contrato para F4-C: `POST` con `claveReporte` por actividad y `materialesClaves[]`; `PATCH` con `asignaciones` en VALIDAR y REASIGNAR_PAQUETE; `GET partes/[id]` con `paquetesActividades` y `filasDerivadas`. **Avisos:** reasignar paquete usa el permiso de validar (el supervisor que crea no puede reasignar; si se quiere, es cambio del flujo 14); materiales son texto libre y solo se validan sus claves; cada derivada cuenta como una actividad D más en `actividades_acum` (insumo del PPC: revisar en F5); la creación no es atómica con `guardar_rdt_parte` (si falla el paso de paquete se borra el parte); un RDT antiguo sin paquete solo valida si su partida es directa en el plan aprobado; requiere 076 a 078 aplicadas.
 - **Abiertas para Victor:** las tres preguntas de F0-U1, las dos de F0-U2, el bloqueo de `plan-maestro-lienzo.html`, y si el supervisor puede reasignar paquete.
 
+### Resultados consolidados de la ola 4 (2026-09-30, noche): tandas de interfaz
+
+Victor aprobó las maquetas («todo está bien») con tres ajustes, hechos en F0-V (`resultados/F0-V.md`, commit `81a0783`): el color del avance real no se veía porque `tr.real td{color}` pisaba las clases del amarillo y el verde (corregido; en la vista inicial se ven Excavación 90 % y Acero 40 % en amarillo, Cama de arena y Relleno 100 % en verde, Eliminación 0 % en blanco; el real existe hasta la semana 2); barras de desplazamiento blancas pasadas a un azulado (pista `#0b1222`, pulgar `#3d5a8a`; `design.md` 1.9.1; en la app `globals.css` las tiene grises: no se unificó); «Und.» y «Met.» separadas en Importar DP (Victor respondió «no» a juntarlas). El lienzo antiguo `plan-maestro-lienzo.html` quedó como aviso con redirección. Maquetas aprobadas el 2026-09-30, salvo `paneles-ocultables.html`.
+
+Tandas de código (todas sin push ni merge, sin navegador; lo visual queda **Observado, pendiente de F5**; cada una con su lista de comprobaciones en su `resultados/`):
+- **F1-C Niveles, pantallas** (`ba81f64` en `local-worker-1`, 736 pruebas): paso de confirmar niveles en Importar DP y Cronograma, aviso de recarga, DP y PR agrupan por el mapa. Avisos: el mapa guarda un rol **por nivel**, no por grupo como la maqueta; «para revisar» viene del detector de profundidad; profundidad fuera de 2 a 5 ya no se importa; `POST /api/cronograma` acepta `soloAnalizar`.
+- **F2-B Paquetes, pantalla** (`7038e5e` en `local-worker-3`, 718 pruebas) y **F2-C** (`d4c5b3b`, 733 pruebas): Declarar y Agrupar, crear, editar en borrador, detalle con trazabilidad, plegar todo, estados; sin fechas. Cambio aditivo al contrato C2: `GET /api/paquetes-trabajo` devuelve `vinculos`. **Disciplina NO implementada:** no existe catálogo ni columna; decisión de Victor pendiente. Partidas directas sin flechas de orden (la API no les da orden). Huérfanos: `repartirAvanceDelPaquete` y `validarPartidasDelPaquete` sin uso en la pantalla; `paquete_trabajo_partidas` y `paquete_trabajo_programacion` sin uso.
+- **F3-C Plan Maestro, lienzo y paneles ocultables** (`82cc863` en `local-worker-2`, 753 pruebas) y **F3-D** (`9f631b6`, 770 pruebas): lienzo, paneles ocultables (icono en la esquina interior, recuerdo por usuario), niveles por prop `nodos`, real de versión anterior, estados y rendimiento (−86 % de celdas con ventana de filas). Cambio aditivo al contrato C3: `GET /api/plan-maestro` devuelve `actividades` con fechas. Avisos: solo «Costo total» y «HH totales» como columnas opcionales (BAC y Disciplina no existen); barras azuladas solo en el lienzo; `layout.tsx` debe pasar el id del usuario al shell; el shell deja relleno inferior para el asistente aunque `design.md` dice que no reserva espacio; falta la fila «por avance del paquete»; las filas «Real» salen en 0 % hasta unir el carril 4. Huérfano: `generarPropuestaDiaria`. Medición de rendimiento como script manual (`scripts/medicion/`), no en `npm test` (falta el alias `@/` en `vitest.config.ts`).
+- **F4-C RDT, pantalla, Status y Consolidado** (`7ba9814` en `local-worker-4`, 737 pruebas): Crear RDT existente con el cuadro «Elegir actividad del Plan Maestro», por avance del paquete con filas calculadas de solo lectura, C/NC/equipos/materiales con el mismo cuadro, columna y filtro «Paquete» en Status y Consolidado. Decisiones por confirmar: % de paquete «por avance» = el de su guía, «por partidas» = promedio simple; sin columna de tareo para las filas calculadas; «Activ.» de Status cuenta también las derivadas; no hay interfaz para reasignar paquete ni asignar al validar (la API ya lo admite).
+- **Para F5-A (integración):** unir `nodos` reales (carril 1) al lienzo; sustituir `leerRealPorClave` por `realPorClaveReporte`; unificar `claveReporte`; pasar `id` del usuario en `layout.tsx`; decidir el alias `@/` en `vitest.config.ts`; revisar «Activ.» y `actividades_acum` con derivadas; registrar los cambios aditivos a C2 y C3 en los contratos; comprobar migraciones 073 a 084 (076 a 078 aún sin comprobar).
+- **Mejoras de trabajo (para F5-D):** los heredocs largos de Bash con comillas fallan: escribir con Write y ejecutar un script guardado; la herramienta de edición exige `Read` previo; un Worker cortado por el límite de uso se reanuda con `SendMessage` sin rehacer; la regla de lint `react-hooks/set-state-in-effect` obliga a derivar el estado en los manejadores.
+
 ## Última actualización y responsable
 
-2026-09-30 (noche, cierre de la ola 3), Orquestador.
+2026-09-30 (noche, cierre de la ola 4), Orquestador.
 
 ## Handoffs
+
+### Handoff del 2026-09-30 (cuarto: Orquestador → Orquestador con contexto limpio)
+
+- **Por qué el relevo:** la sesión llegó a 48 llamadas y 214k de contexto (meta 200k); se hace entre olas, con todos los Workers cerrados.
+- **Estado (verificado con comandos al cerrar):** código de los cuatro carriles terminado y sin subir. `local-worker-1` = `ba81f64` (F1-A, F1-B, F1-C), `local-worker-2` = `9f631b6` (F3-A a F3-D), `local-worker-3` = `d4c5b3b` (F2-A a F2-C), `local-worker-4` = `7ba9814` (F4-A a F4-C); `main` de la app en `45c9e0a`. Migraciones 073 a 084 aplicadas (076 a 078 por comprobar).
+- **Próximo paso concreto:** con Victor, cerrar sus decisiones abiertas (abajo); luego lanzar **F5-A** (integración: merges en `local-worker-1` en el orden Paquetes, Plan Maestro, RDT, y la lista «Para F5-A» de la ola 4). Después F5-B (un Worker, usa navegador) y F5-C; F5-D (documentación) en paralelo con F5-B y F5-C; luego Auditor (informe en `04-auditoria/`) y Gate 2. El merge a `main` y el push de la app solo tras el Gate 2 con autorización de Victor. Antes de declarar cerrado: pasos 16 a 18 y el Skill `seguir-flujo-de-planes`.
+- **Decisiones abiertas de Victor (una por pregunta, con recomendación):** (1) Disciplina: crear el catálogo y la columna ahora (recomendado; hace falta la lista real) o dejarla fuera del plan; (2) rol por nivel (como quedó) o por grupo; (3) quién aprueba el borrador del Plan Maestro que reemplaza uno aprobado (administrador y jefe de proyectos); (4) disciplina obligatoria y herencia dentro de un paquete; (5) reasignar paquete: hoy lo hacen quienes validan, no el supervisor que crea; (6) espacio inferior del asistente y barras azuladas en toda la app: plan aparte de unificación de estilo; (7) nombre del rol extra con más de 5 niveles; (8) ruta del servidor de base de datos de Claude y artefacto «Flujo SDD a Cierre»; (9) las filas «por avance del paquete» y «Nivel» del lienzo se integran en F5-A: confirmar.
+- **Cómo hablarle a Victor y límites:** como en el handoff anterior. Lanzar de 2 a 3 Workers a la vez; el navegador solo en F5, uno a la vez; si un Worker se corta por límite de uso, reanudarlo con `SendMessage` sin rehacer.
 
 ### Handoff del 2026-09-30 (Orquestador → Orquestador con contexto limpio)
 

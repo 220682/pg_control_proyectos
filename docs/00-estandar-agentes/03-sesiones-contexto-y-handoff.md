@@ -45,6 +45,8 @@ Comprimir o resumir el contexto de un chat puede usarse solo si una tarea larga 
 
 **Relevo del Orquestador.** Un Orquestador de un plan largo mide su propio contexto con el script de medición al terminar cada ola y, si ya pasó de una sesión cómoda, escribe el handoff y sigue en un chat nuevo. Referencia: los Workers apuntan a 200k o menos; el Orquestador del plan de paneles llegó a 552k y el del plan de niveles y paquetes a 564k, y conviene relevarlo antes. Los subagentes quedan atados al chat que los lanzó y sus avisos de fin le llegan solo a él, así que **el relevo se hace entre olas, nunca a mitad de una**.
 
+**Prompt para el siguiente Orquestador (política desde 2026-09-30, indicada por Victor).** En **cada** cambio de sesión del Orquestador, el saliente termina su último mensaje entregando a Victor el **prompt completo para el Orquestador siguiente**, listo para pegar: cómo trabajar (qué leer, en qué orden y qué no leer), dónde estamos, la primera tarea, las políticas vigentes, cómo hablarle a Victor, qué no hacer y los pendientes con él. El handoff del archivo de progreso es el respaldo; el prompt es la entrega. Un relevo sin prompt no está terminado.
+
 ## Handoff obligatorio
 
 Ante cualquier cambio de sesión, chat, LLM o entorno a mitad de una tarea, se escribe un handoff como **sección fechada al final del archivo de progreso** del plan, con la plantilla `06-plantillas/07-handoff.md`: objetivo y estado, plan/progreso/evidencia relacionados, rama/worktree y último commit, terminado y no terminado, pruebas ejecutadas, bloqueos y riesgos, qué debe leer el siguiente agente, y el próximo paso concreto.

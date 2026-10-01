@@ -53,14 +53,23 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 - **Estado:** pendiente, sin promover.
 - **Requiere Spec/SDD:** sí.
 
+### Archivo agnóstico equivalente a la «Matriz de permisos» (fuera de Claude)
+
+- **Origen:** pedido directo de Victor, 2026-10-01 (durante el Spec `2026-10-01-dashboard-economia-y-curva-s`). La matriz de permisos hoy vive como artefacto Claude (`matriz/actual`, base del artefacto), no como archivo del repositorio; la auditoría del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` lo señaló ("`matriz/actual` no es un archivo del repo").
+- **Qué es:** crear un archivo del repositorio (por ejemplo en `pg_control_proyectos`) que sea la versión **agnóstica y versionable** de la matriz de permisos — la tabla de interfaces (con/sin datos económicos) y la tabla de acciones, una casilla por rol — para que deje de depender de Claude/artefactos y sirva en cualquier repositorio o entorno. Mientras no exista, el artefacto y el flujo 14 siguen siendo la referencia, y el archivo nuevo debe mantenerse sincronizado fila por fila (política de coherencia y trazabilidad).
+- **Por qué se pospone:** no bloquea el Spec de dashboards; Victor lo dejó como plan futuro.
+- **Pospuesto:** 2026-10-01.
+- **Estado:** pendiente, sin promover.
+- **Requiere Spec/SDD:** sí (define dónde vive el archivo, si reemplaza al artefacto como instrumento de edición y cómo se sincroniza con `permisos.ts`).
+
 ### Dashboard Parcial sin datos económicos y restricción económica definitiva
 
 - **Origen:** pedido directo de Victor, 2026-09-28 (durante el plan `2026-09-27-paneles-servicio-persistente`). La tabla base de visibilidad por rol ya está en el flujo 14.
 - **Qué es:** (1) el Dashboard **Parcial sin datos económicos** y el **Completo con ellos** (hoy los dos muestran BAC, PV, EV, AC, CPI y EAC en USD; solo difieren en PPC/Pareto CNC y el enlace a Curva S, flujo 11); (2) cuando exista el Parcial sin economía, moverlo a la sección "sin datos económicos" de la matriz del flujo 14; (3) resolver los conflictos operativos que la regla de "4 roles con economía" deja abiertos (planner y Plan Maestro; supervisor de oficina técnica y DP; supervisor de logística y Registro de costos; jefe de costos; acciones destructivas del jefe de proyectos), listados al final de la sección nueva del flujo 14.
 - **Por qué se pospone:** es una configuración distinta de los paneles; Victor pidió que sea otro Spec.
 - **Pospuesto:** 2026-09-28.
-- **Estado:** pendiente, sin promover.
-- **Requiere Spec/SDD:** sí.
+- **Estado:** promovido → [`2026-10-01-dashboard-economia-y-curva-s.md`](2026-10-01-dashboard-economia-y-curva-s.md) (Spec en curso, Gate Spec pendiente).
+- **Requiere Spec/SDD:** sí — ahora en curso como Spec.
 
 ### Cronograma como línea base y línea real de avance (Gantt)
 

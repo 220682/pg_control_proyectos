@@ -1,5 +1,5 @@
 ---
-version: 1.8.0
+version: 1.9.0
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
 actualizado: 2026-09-30
@@ -94,6 +94,10 @@ Aprobado por Victor el 2026-09-30 como excepción a «estructura fija»: el asis
 - **Patrón:** botón que alterna un panel desplegable **no modal** (`role="dialog"` con `aria-modal="false"`, `aria-expanded`, `aria-controls`; Escape lo cierra y devuelve el foco al icono). Ancho máximo 24 rem y alto acotado a la ventana.
 - **Capas:** `z-40`, **por debajo** de los cajones móviles y los modales (`z-50`). Una sola instancia en toda pantalla del workspace; no aparece en login, activar ni en el dashboard del portafolio.
 - No se usa como precedente para otros botones flotantes: cualquier otro elemento fuera de los tres paneles requiere aprobación.
+
+### Toda maqueta del plan se muestra con los tres paneles
+
+Decisión de Victor (2026-09-30): toda maqueta de este plan se muestra con los tres paneles (izquierdo, centro y derecho, con el asistente flotante y el cajón en móvil), usando el marco de `mockups/plan-maestro-tres-paneles.html` (compartido en `mockups/marco-tres-paneles.css/.js`). Los rótulos y accesos salen de ese marco, que sale de la app; no se inventan. Las pantallas ya existentes de la app quedan fuera de este plan (se unificarán en un plan aparte).
 
 ### Paneles laterales ocultables (rehecha en F0-R, pendiente de revisión de Victor)
 
@@ -230,6 +234,11 @@ La densidad es deliberadamente compacta.
 - `thClase`
 - `tdClase`
 - `filaClase`
+
+**Alineación de columnas (regla de Victor, 2026-09-30, para todas las pantallas).** El encabezado de cada columna va sobre su dato y alineado igual: texto a la izquierda; numéricos, porcentajes, montos, fechas y unidades a la **derecha**, con el encabezado también a la derecha. No se da ancho de más a una columna cuyo dato no lo necesita (Und., Met., %, códigos cortos): ancho justo al contenido, y el espacio sobrante va a la columna de texto largo.
+
+- Correcto: `<th class="text-right">Met.</th>` con `<td class="text-right tabular-nums">420.00</td>`.
+- Incorrecto: encabezado «Met.» a la izquierda con el dato a la derecha, separados por el ancho sobrante.
 
 ### Selects
 
@@ -473,6 +482,7 @@ Reutilizar componentes/patrones existentes. Si no existen, proponer el patrón a
 8. ¿Qué estados de carga, vacío y error requiere la pantalla?
 9. ¿Qué requisito de accesibilidad aplica especialmente aquí (incluyendo `scope="col"` en tablas nuevas/modificadas)?
 10. ¿Hay una pantalla aprobada similar que deba usarse como referencia?
+11. ¿Cada encabezado va alineado igual que su dato (texto a la izquierda; numéricos, porcentajes, montos, fechas y unidades a la derecha) y las columnas cortas tienen ancho justo? (§5 Tablas)
 
 Si falta una respuesta crítica, especialmente sobre un campo de texto libre sin precedente, el agente debe preguntar antes de escribir código. Si no presenta este análisis, el código será rechazado.
 
@@ -532,6 +542,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.9.0 | 2026-09-30 | F0-U1, indicaciones de Victor, pendientes de su revisión: §3 nueva línea «Toda maqueta del plan se muestra con los tres paneles»; §5 Tablas, regla de alineación de columnas (encabezado alineado con su dato, ancho justo) con un ejemplo correcto y uno incorrecto; ítem 11 del checklist de §11. Sin tokens ni componentes nuevos. |
 | 1.8.0 | 2026-09-30 | F0-S, con dos indicaciones de Victor, pendientes de su revisión: §3 «Paneles laterales ocultables» fija la posición del icono (esquina superior interior del encabezado de cada panel, a la altura del título; visible también con el panel oculto); §4.1.2 nueva, color de los porcentajes de avance real en ejecución (0 % blanco, en curso amarillo, 100 % verde; solo porcentajes de avance; pantallas existentes fuera de este plan). Sin tokens ni componentes nuevos. |
 | 1.7.0 | 2026-09-30 | F0-R, con las decisiones de Victor sobre las maquetas: F0-A y el lienzo quedan aprobados (marca de paquete alterna dos colores, plegado que se reinicia, restante en ambas listas, pestañas en pantallas angostas, filas «para revisar» que bloquean aprobar; lienzo con Disciplina opcional, «Met.» y amarillo de advertencia); §3 paneles ocultables rehecha (un icono por panel en su borde interior) y asistente que no ocupa espacio (se quita la franja de 4 rem); Crear RDT rehecha sobre la pantalla existente; regla de abreviaturas (§5, §7); disciplina (catálogo simulado). Sin tokens ni componentes nuevos. |
 | 1.6.0 | 2026-09-30 | Propuesta de F0-B (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §3 «Paneles laterales ocultables»; §5 «Lienzo del Plan Maestro» y «Selector de actividad del RDT»; §8 regla del lienzo con columnas fijas y días. Sin tokens ni componentes nuevos. |

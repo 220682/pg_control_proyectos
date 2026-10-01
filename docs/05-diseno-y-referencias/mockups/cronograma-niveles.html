@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cronograma — confirmación de niveles</title>
+<link rel="stylesheet" href="marco-tres-paneles.css" />
 <style>
 :root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
 --line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;}
@@ -48,6 +49,7 @@ th,td{padding:4px 6px;text-align:left;border-bottom:1px solid var(--line);vertic
 th{position:sticky;top:0;z-index:2;background:var(--bg-elevated);font-weight:600;color:var(--text-2);white-space:nowrap;border-bottom:1px solid var(--line)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 td.cod{white-space:nowrap;font-variant-numeric:tabular-nums}
+.w-min{width:1%;white-space:nowrap}
 .fija{position:sticky;left:0;background:var(--bg-elevated);z-index:1}
 th.fija{z-index:3}
 .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 7px;font-size:10px;color:var(--text-2);white-space:nowrap}
@@ -76,8 +78,6 @@ tr.sib td{background:rgba(255,255,255,.02)}
 tr.sib[hidden]{display:none}
 .hereda{color:var(--text-2);font-size:10px}
 @media (max-width:640px){
- body{overflow:auto;height:auto;min-height:100%}
- .pantalla{overflow:visible}
  .tabla-wrap{min-height:0}
  .rol{min-width:120px}
 }
@@ -91,8 +91,17 @@ tr.sib[hidden]{display:none}
 <button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
 <button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
 <button type="button" data-set-estado="carga" aria-pressed="false">Cargando</button>
-<button type="button" data-set-estado="error" aria-pressed="false">Error</button></div></div>
-<main class="pantalla" data-estado="datos"><div class="cab"><nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
+<button type="button" data-set-estado="error" aria-pressed="false">Error</button></div>
+<div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
+<button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
+<button type="button" data-pan="10" aria-pressed="false">Izquierdo oculto</button>
+<button type="button" data-pan="01" aria-pressed="false">Derecho oculto</button>
+<button type="button" data-pan="11" aria-pressed="false">Ambos ocultos</button></div></div>
+<div class="shell" id="shell">
+<aside class="pnl izq" id="pl-izq" aria-label="Panel izquierdo del servicio"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-controls="in-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><div class="pin" id="in-izq"><div class="ph"><span class="logo" aria-hidden="true">&#9638;</span><span>Control de <em>Proyectos</em></span></div><div class="scroll-izq nav-izq" data-testid="panel-izquierdo-scroll"></div><div class="pie pie-izq"></div></div></aside>
+<main class="centro">
+<header class="mhead"><button type="button" id="m-menu" aria-label="Abrir menú" aria-haspopup="dialog">&#9776;</button><span class="mt">Control de <em>Proyectos</em></span><button type="button" id="m-herr" aria-label="Abrir herramientas" aria-haspopup="dialog">&#9707;</button></header>
+<div class="pantalla" data-estado="datos"><div class="cab"><nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
 <h1>Cronograma</h1><p>Paso 2 de 3: confirma los niveles del cronograma antes de ver el informe de extracción.</p>
 <ol class="pasos" aria-label="Pasos de la importación"><li>1 · Archivo leído</li><li aria-current="step">2 · Confirmar niveles</li><li>3 · Vista del cronograma</li></ol></div>
 <div class="e-datos"><div class="fila" role="group" aria-label="Ejemplo mostrado"><span class="muted">Ejemplo:</span>
@@ -100,7 +109,7 @@ tr.sib[hidden]{display:none}
 <button type="button" data-tab="c3" data-grupo="ejc" aria-pressed="false">Cronograma sin fila de servicio (3 niveles)</button></div>
 <section data-panel="c4" data-grupo="ejc"><div class="card"><h2>Se encontraron 4 niveles en el cronograma</h2>
 <p class="muted">Servicio · Fase · Actividad resumen · Tarea · 4 grupos de hermanas · 0 para revisar. Roles propios del cronograma (propuesta a confirmar).</p></div><div class="msg info"><span aria-hidden="true">&#8505;</span><div>Las hojas con duración 0 días (por ejemplo «1.2.1.6 Fin de tendido») siguen siendo <strong>Hito</strong> automáticamente; no se eligen en el desplegable.</div></div><div class="niveles" data-hoja-rol="Tarea">
-<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="num">Nivel</th><th scope="col">Código</th><th scope="col">Descripción</th><th scope="col" class="num">Duración</th><th scope="col">Hermanas</th><th scope="col">Rol</th><th scope="col">Estado</th></tr></thead>
+<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="w-min num">Nivel</th><th scope="col" class="w-min">Código</th><th scope="col">Descripción</th><th scope="col" class="w-min num">Duración</th><th scope="col" class="w-min">Hermanas</th><th scope="col" class="w-min">Rol</th><th scope="col" class="w-min">Estado</th></tr></thead>
 <tbody>
 <tr><td class="num">1</td><td class="cod"><span class="indent" style="padding-left:0px">1</span></td><td>Canalización de media tensión (servicio de prueba)</td><td class="num">95 d</td><td><span class="muted">—</span></td><td><span class="tag acc">Servicio</span> <span class="hereda">(el nombre coincide con el servicio)</span></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
 </tbody>
@@ -127,7 +136,7 @@ tr.sib[hidden]{display:none}
 </div></section>
 <section data-panel="c3" data-grupo="ejc" hidden><div class="card"><h2>Se encontraron 3 niveles en el cronograma</h2>
 <p class="muted">Servicio implícito · Actividad resumen · Tarea · 3 grupos de hermanas · 0 para revisar. Roles propios del cronograma (propuesta a confirmar).</p></div><div class="msg info"><span aria-hidden="true">&#8505;</span><div>El archivo no trae una fila de servicio: el nivel <strong>Servicio</strong> es implícito (el servicio seleccionado) y no se edita.</div></div><div class="niveles" data-hoja-rol="Tarea">
-<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="num">Nivel</th><th scope="col">Código</th><th scope="col">Descripción</th><th scope="col" class="num">Duración</th><th scope="col">Hermanas</th><th scope="col">Rol</th><th scope="col">Estado</th></tr></thead>
+<div class="tabla-wrap"><table><caption class="sr">Lista en orden con una fila de muestra por grupo de hermanas y su rol</caption><thead><tr><th scope="col" class="w-min num">Nivel</th><th scope="col" class="w-min">Código</th><th scope="col">Descripción</th><th scope="col" class="w-min num">Duración</th><th scope="col" class="w-min">Hermanas</th><th scope="col" class="w-min">Rol</th><th scope="col" class="w-min">Estado</th></tr></thead>
 <tbody>
 <tr><td class="num">1</td><td class="cod"><span class="indent" style="padding-left:0px">—</span></td><td>Canalización de media tensión (servicio de prueba) — el archivo no trae esta fila</td><td class="num">—</td><td><span class="muted">—</span></td><td><span class="tag acc">Servicio</span> <span class="hereda">(implícito: el servicio seleccionado)</span></td><td><span class="tag ok"><span aria-hidden="true">&#10003;</span> Propuesto</span></td></tr>
 </tbody>
@@ -162,11 +171,18 @@ tr.sib[hidden]{display:none}
 <div class="e-carga" role="status" aria-busy="true" aria-live="polite"><p class="muted" style="margin-bottom:8px">Leyendo el cronograma y contando los niveles…</p>
 <div class="card"><div class="sk" style="width:40%;margin-bottom:10px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk" style="width:80%;margin-bottom:8px"></div><div class="sk" style="width:60%"></div></div></div><div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo leer el archivo</strong><br>Revisa que sea el formato de cronograma esperado y vuelve a intentarlo. Si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div><div class="e-vacio"><div class="vacio"><strong>Aún no hay un archivo para confirmar</strong><p>Carga el archivo del cronograma en el paso 1 y aquí verás sus niveles.</p><p style="margin-top:8px"><button type="button" class="primary">Volver al paso 1</button></p></div></div>
 <details class="notas" open><summary>Notas de esta maqueta: estados, móvil (390 px) y accesibilidad</summary><ul>
+<li><strong>Tres paneles (F0-U1):</strong> la pantalla se muestra con el marco de <code>plan-maestro-tres-paneles.html</code> (izquierdo, centro, derecho, asistente flotante y cajones en móvil), con «Cronograma» como acceso activo. Abre con los tres paneles abiertos; la tabla conserva su scroll horizontal. Marco compartido en <code>marco-tres-paneles.css/.js</code>.</li>
+<li><strong>Alineación de tablas:</strong> cada encabezado va sobre su dato y alineado igual (texto a la izquierda; Nivel y Duración a la derecha) y las columnas cortas toman el ancho justo; el sobrante va a Descripción.</li>
 <li>Mismo patrón que «Importar DP», con roles propios del cronograma (Servicio, Área, Fase, Actividad resumen, Tarea) y la columna Duración. Los roles son la propuesta D2 del Spec; están pendientes de confirmar.</li>
 <li>Las filas «Para revisar» (si las hay) bloquean «Aprobar niveles» hasta confirmar su rol, igual que en Importar DP.</li>
 <li>Estados con datos, vacío, cargando y error desde los botones superiores; aviso de recarga con sus dos variantes.</li>
 <li>Móvil: tabla con desplazamiento horizontal dentro de su caja. Accesibilidad: <code>th scope="col"</code>, foco visible, teclado, estado con texto e icono.</li></ul></details>
+</div>
+<button type="button" class="asistente" id="btn-asis" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
 </main>
+<aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
+</div>
+<div id="cajones"></div>
 <script>
 (function(){
  var p=document.querySelector('.pantalla');
@@ -243,5 +259,7 @@ tr.sib[hidden]{display:none}
  });
 })();
 </script>
+<script>window.MARCO_ACTIVO='cronograma';window.MARCO_PANELES='00';</script>
+<script src="marco-tres-paneles.js"></script>
 </body>
 </html>

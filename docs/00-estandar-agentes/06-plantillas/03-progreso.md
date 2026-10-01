@@ -20,9 +20,17 @@ Los Skills de `.claude/skills/` que se listaron al empezar y cuáles se usaron; 
 
 ## Commits, ramas y worktrees usados
 
-## Hallazgos registrados en el momento
+## Medición
 
-Incluye preguntas de negocio y la respuesta del Responsable humano (excepción de consulta directa del Worker).
+Una fila por sesión medida (plantilla `10-medicion-y-eficiencia.md`), llenada por el Orquestador al cerrar cada tanda, al terminar cada ola y al cierre del plan.
+
+## Operaciones de git
+
+Una línea por operación del Worker git: `operación rama → resultado`.
+
+## Hallazgos y preguntas de negocio
+
+Los hallazgos viven en el **libro de hallazgos del plan** (`02-plan.md`), no aquí. Aquí solo se registran las preguntas de negocio hechas al Responsable humano con su respuesta (el Worker las devuelve al Orquestador en el momento) y un enlace a la fila del libro.
 
 ## Bloqueos, riesgos y decisiones requeridas
 

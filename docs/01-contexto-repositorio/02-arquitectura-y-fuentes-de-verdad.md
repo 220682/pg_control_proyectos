@@ -56,7 +56,7 @@ El agente **no edita el flujo por su cuenta sin haberlo consultado primero** cua
 
 1. Se escribe **dentro de la estructura existente del flujo**, en la sección donde encaja — nunca pegada al final como nota aparte.
 2. Si contradice una regla ya escrita, se **modifica lo existente** con lo acordado con el Responsable humano; no quedan las dos versiones (la vieja y la nueva) conviviendo en el mismo flujo.
-3. Si el conflicto surgió durante la implementación (Worker), la consulta es directa, en el propio chat del Worker (excepción D6, ver `00-estandar-agentes/02-roles-y-delegacion.md`) — no se sigue implementando con el conflicto sin resolver.
+3. Si el conflicto surgió durante la implementación (Worker), el Worker devuelve la pregunta al Orquestador, que la consulta a Victor en el momento (regla D6, ver `00-estandar-agentes/02-roles-y-delegacion.md`) — no se sigue implementando con el conflicto sin resolver.
 4. Se anota en el plan/progreso dónde quedó aplicada la regla (enlace al flujo y a la sección).
 
 ## Cuándo se actualiza README raíz y AGENTS.md

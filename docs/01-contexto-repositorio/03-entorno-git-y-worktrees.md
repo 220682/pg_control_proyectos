@@ -2,18 +2,16 @@
 
 ## Dónde se trabaja
 
-- **Claude (app de escritorio o web):** ejecuta el flujo completo, tanto local como en la nube — es donde corren Orquestador, Planner, Worker y Auditor.
-- **VS Code:** solo para revisar archivos y diffs, no para administrar chats/sesiones.
-- **App/web de Claude:** para visualizar chats, ver el historial y renombrarlos manualmente (cuando el agente no tiene herramienta para renombrar su propio chat).
+Desde el 2026-10-01 todo el trabajo corre **en terminal**, con Claude Code o con Cursor: un Orquestador y sus subagentes (ver `09-medicion-y-modelos.md`). Ya no se coordina con chats con nombre ni con aplicaciones de escritorio o web. Para trabajar sin la laptop, Victor entra a ella por un medio de control remoto externo mientras queda encendida; el avance real vive siempre en git y en el archivo de progreso, no en una sesión.
 
 ## Regla de los dos repos (según el plan y las convenciones aprobadas)
 
 | Tipo de trabajo | Repositorio | Rama | Worktree |
 |---|---|---|---|
 | Documentación de proceso (Spec, plan, progreso, evidencia, hallazgos, informe de auditoría, fuentes de verdad, mensaje de cierre) | `pg_control_proyectos` | `main`, directo, sin rama ni merge | No se usa |
-| Código de la app | `py_control_proyectos_web` | `<entorno>-worker-N` (ej. `local-worker-1`, `nube-worker-1`); nunca `main` hasta el merge tras el Gate 2 | `.worktrees/` de ese repo, subcarpeta con el mismo nombre de la rama |
+| Código de la app | `py_control_proyectos_web` | `<entorno>-worker-N` (ej. `local-worker-1`); nunca `main` hasta el merge tras el Gate 2 | `.worktrees/` de ese repo, subcarpeta con el mismo nombre de la rama |
 
-- `entorno` es `local` o `nube`; se verifica con la herramienta disponible (`list_environments`), no se asume.
+- `entorno` es `local` o `nube`; se verifica con la herramienta disponible, no se asume. Hoy se trabaja en `local`.
 - La nomenclatura `work-1`/`work-2` está **obsoleta**. Solo se conserva como dato histórico en las tareas que la usaron.
 - No se crea, borra, renombra o reasigna rama ni worktree sin autorización de Victor.
 - Los roles de coordinación (Orquestador, Planner, Auditor) trabajan en `main` de `pg_control_proyectos`.
@@ -53,18 +51,6 @@ Copiar el `.env.local` del checkout principal al worktree de un Worker, entre ca
 - `git add` explícito de los archivos tocados — nunca `git add -A` o `git add .` sin revisar qué se está agregando.
 - Aplica tanto en `pg_control_proyectos` (documentación) como en `py_control_proyectos_web` (código), salvo que Victor indique otra cosa para una tarea puntual.
 
-## Chats
+## Sesiones y subagentes
 
-Patrón de nombre (§2.9 del plan de reestructuración; convención vigente de Victor, conservada íntegra):
-
-```text
-<entorno>_<jerarquía>.<rol>_<tarea>
-```
-
-`entorno` es `local` o `nube` (verificado, no asumido); `jerarquía` es `1` Orquestador, `2` Planner, `3` Worker, `4` Auditor; `tarea` es el slug del plan. Si hay más de un Worker en la misma tarea, se diferencian por fase (`<tarea>-fase1`, `<tarea>-fase2`), no por número de Worker.
-
-- Todo chat se renombra según este patrón al empezar a trabajar en su rol y tarea. Si el agente no tiene herramienta para renombrar su propio chat, le pide a Victor que lo haga desde la app/web de Claude.
-- Un chat corresponde a una tarea o etapa clara; no se reutiliza un chat de una tarea cerrada para una tarea nueva.
-- Al cerrar una tarea, se antepone el prefijo `hist_` al nombre del chat.
-- Los chats no se borran, se renombran. Eliminar un chat requiere la misma autorización explícita que eliminar una rama o un worktree.
-- La regla universal de sesiones (contexto, handoff, autonomía para crear un chat nuevo) está en `../00-estandar-agentes/03-sesiones-contexto-y-handoff.md`.
+Las sesiones no se nombran ni se renombran: el Orquestador lanza subagentes y los identifica por su rol y tanda (por ejemplo «Worker F2-A»), y esa descripción queda en el registro de sesión que lee el script de medición. Un subagente corresponde a una tanda; no se reutiliza para otra. Al terminar su tanda se cierra y su resumen de cierre queda en el archivo de resultados del plan. La regla universal de sesiones (contexto, handoff, relevo del Orquestador) está en `../00-estandar-agentes/03-sesiones-contexto-y-handoff.md` y `../00-estandar-agentes/08-medicion-y-relevo.md`.

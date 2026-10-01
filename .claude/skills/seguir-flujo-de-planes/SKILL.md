@@ -12,6 +12,7 @@ Aplica a cualquier repositorio que trabaje con un documento normativo del flujo 
 1. Lee completos, no de memoria, el documento normativo del flujo y el de roles de tu repositorio. Si existe una versión visual o interactiva del flujo, ábrela. Si difiere del documento, manda el documento.
 2. Lista los Skills disponibles en los repositorios donde vas a trabajar y usa los que apliquen.
 3. Di en qué paso del flujo estás, qué puerta sigue y qué necesita el responsable humano de ti.
+4. Si eres el orquestador, lanza cada subagente con una descripción «<Rol N> · <tanda>» y mide tus sesiones por evento: al cerrar cada tanda, al terminar cada ola y al cierre del plan. Compara tu contexto con el umbral de relevo; si lo pasas, haz el relevo entre olas (verifica con git que nada queda sin subir, escribe el handoff y entrega el prompt para el orquestador siguiente).
 
 ## Puertas: no avances sin esto
 
@@ -19,6 +20,7 @@ Aplica a cualquier repositorio que trabaje con un documento normativo del flujo 
 - **Plan y lista de ítems aprobados** en la primera aprobación, junto con los cambios a las reglas ya escritas (una tabla de «dice hoy» y «pasaría a decir»). Esa aprobación es también donde se pide autorización para crear ramas y carpetas de trabajo; sin ella, no se crean.
 - **Implementación solo por Workers**, cada uno en su rama. El Orquestador no implementa. Nadie hace merge antes de la segunda aprobación.
 - **Auditoría emitida**: el informe existe como archivo propio, confirma que los commits están en la rama del Worker y trae la clasificación de hallazgos (aplicar ahora, proponer al responsable, no promover, proponer Skill). Sin informe emitido no se pide la segunda aprobación. Si falta la clasificación, se devuelve al Auditor.
+- **Hallazgos trasladados**: ninguna fila del libro de hallazgos sigue en `Registrada`; las observaciones sobre la política están en la lista del auditor.
 - **Segunda aprobación**: pide en ella, de forma explícita, la autorización para subir el código.
 
 ## Antes de declarar cerrado un plan
@@ -30,7 +32,7 @@ Verifica cada punto con un comando o una lectura, no por suposición:
 3. Las mejoras de política y cambios a fuentes de verdad aprobados están aplicados.
 4. Los Skills aprobados están creados y son agnósticos.
 5. Las reglas de negocio y mejoras registradas durante el plan están en su destino final; los archivos huérfanos se reportaron sin borrar nada.
-6. El mensaje de cierre está dentro del plan, dice lo que de verdad ocurrió en los puntos 1 a 5, y está subido.
+6. El mensaje de cierre está dentro del plan, dice lo que de verdad ocurrió en los puntos 1 a 5, incluye el consumo total de tokens medido con el script (no estimado) y está subido.
 7. Solo entonces escribe «cerrado». Si falta algo, dile al responsable exactamente qué falta.
 
 ## Cómo hablar con el responsable humano

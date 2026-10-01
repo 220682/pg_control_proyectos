@@ -37,6 +37,8 @@ Ninguna de estas acciones se ejecuta por iniciativa propia de un agente; cada un
 | Crear, renombrar o eliminar una rama o un worktree | Autorización explícita del Responsable humano, fuera de los Gates si no estaba en el plan. |
 | Migraciones destructivas o cambios de infraestructura | Autorización explícita y revisión previa del contexto real. |
 
+**Verificador de acciones.** Antes de ejecutar cualquiera de las acciones de esta tabla que sea irreversible (merge y push del código, borrar, migrar, crear o borrar ramas), se consulta al verificador (`07-verificador-de-acciones.md`, borrador por probar). Solo puede vetar: que apruebe no sustituye al Gate que autoriza la acción.
+
 ## Revisar antes de entregar
 
 - Revisar el contexto, el alcance y el diff completo antes de dar por terminada una fase o una tarea.

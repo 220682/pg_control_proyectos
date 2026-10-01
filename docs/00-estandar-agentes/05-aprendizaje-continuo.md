@@ -6,9 +6,10 @@ Un hallazgo durante un plan puede ser una de estas cosas — nunca se mezclan:
 
 | Categoría | Qué es | Dónde vive |
 |---|---|---|
-| **Hallazgo** | Cualquier observación registrada en el momento en que ocurre, antes de clasificarla. | El progreso o el plan de la tarea activa, en el apartado que corresponda. |
+| **Hallazgo** | Cualquier observación registrada en el momento en que ocurre, antes de clasificarla. | El libro de hallazgos del plan de la tarea activa (los cuatro apartados de `02-plan.md`). |
 | **Mejora de trabajo / aprendizaje** | Un aprendizaje sobre **cómo se trabaja** (método, herramientas, workarounds operativos) — no una regla del sistema que se está construyendo. | Un archivo individual en `03-aprendizaje-continuo/` del repositorio de documentación. |
 | **Regla de negocio** | Una regla del sistema que se está construyendo (cómo se calcula, valida o comporta algo). | Directo en el flujo de negocio dueño de esa regla, integrada en su estructura — nunca como nota aparte. |
+| **Observación sobre la política** | Un fallo, hueco o contradicción del proceso mismo (estándar, `AGENTS.md`, Skills). | Apartado «Observaciones sobre la política» del plan; el Auditor la clasifica y el Responsable humano decide en el Gate 2. Nadie la edita por su cuenta. |
 | **Decisión pendiente** | Algo que el Responsable humano decide explícitamente postergar. | `planes-futuros.md` (o el archivo equivalente de trabajo pospuesto). |
 | **Evidencia** | El resultado verificado de un ítem de la Punch List. | El archivo de evidencia homónimo del plan. |
 | **Procedimiento reusable** | Un procedimiento que ya se repitió más de una vez y conviene convertir en Skill. | Propuesta del Auditor (`PROPONER SKILL`) → Skill agnóstico tras el Gate 2. |

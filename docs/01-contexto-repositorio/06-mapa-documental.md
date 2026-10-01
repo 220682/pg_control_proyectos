@@ -19,6 +19,9 @@ Ver el plan `docs/02-trabajo-activo/01-planes/2026-09-27-reestructuracion-docume
 | Norma raíz para agentes | [`AGENTS.md`](../../AGENTS.md) |
 | Visión y arquitectura del sistema | [`README.md`](../../README.md) |
 | Navegación de `docs/` | [`docs/README.md`](../README.md) |
+| Verificador de acciones, medición y relevo (estándar) | [`00-estandar-agentes/07-verificador-de-acciones.md`](../00-estandar-agentes/07-verificador-de-acciones.md) y [`00-estandar-agentes/08-medicion-y-relevo.md`](../00-estandar-agentes/08-medicion-y-relevo.md) |
+| Jev, modelos, medición y arquitectura funcional (este repositorio) | [`07-jev-verificador.md`](07-jev-verificador.md), [`09-medicion-y-modelos.md`](09-medicion-y-modelos.md) y [`08-arquitectura-funcional-y-datos.md`](08-arquitectura-funcional-y-datos.md) |
+| Herramientas locales | [`scripts/README.md`](../../scripts/README.md) |
 | Estándar de trabajo de agentes | [`00-estandar-agentes/00-indice.md`](../00-estandar-agentes/00-indice.md) |
 | Contexto de este repositorio | [`01-contexto-repositorio/00-indice.md`](00-indice.md) |
 | Trabajo activo (planes/progreso/evidencia/auditoría) | [`02-trabajo-activo/README.md`](../02-trabajo-activo/README.md) |

@@ -2,7 +2,7 @@
 
 > **Fuente normativa del flujo de trabajo con Orquestador/Planner/Worker/Auditor (D1).** Si un plan, un progreso o un artifact derivado difiere de lo que dice este documento, se corrige el plan o el artifact — nunca este documento. Si este documento no cubre un punto, aplica el plan activo. Documento agnóstico: no nombra personas, repositorios ni rutas propias de ningún proyecto — esos datos viven en `01-contexto-repositorio/` de cada repositorio que use este estándar.
 
-**Versión visual e interactiva de este flujo:** artefacto «Flujo SDD a Cierre» — https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd. Recorre los pasos con sus roles y los dos Gates, y muestra que un «No» vuelve al paso anterior. Es una ayuda derivada: si difiere de este documento, manda este documento y se corrige el artefacto. Última actualización del artefacto: 2026-09-27; todavía no incluye el informe del Auditor en `02-trabajo-activo/04-auditoria/` ni la revisión de Skills antes de empezar.
+**Versión visual e interactiva de este flujo:** artefacto «Flujo SDD a Cierre» — https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd. Recorre los pasos con sus roles y los dos Gates, y muestra que un «No» vuelve al paso anterior. Es una ayuda derivada: si difiere de este documento, manda este documento y se corrige el artefacto. Última actualización del artefacto: 2026-10-01, como borrador pendiente de la aprobación del Responsable humano; incluye el informe del Auditor, la revisión de Skills, el Documentador, el equipo por defecto, la medición y el verificador.
 
 ## Diferencia entre chat normal y plan de implementación
 
@@ -31,14 +31,14 @@ Primero definamos el objetivo de la tarea.
  3. Spec/SDD — Orquestador + Responsable humano (plantilla 01-spec-sdd) → commit + push a main
  4. GATE SPEC — ¿aprueba el Spec?   No → vuelve a 3
  5. Delegación al Planner — Orquestador (el Spec aprobado es la entrada)
- 6. Plan + Punch List — Planner, en el único archivo de plan; anticipa conflictos de negocio revisando los flujos afectados; lista los Skills aplicables (`.claude/skills/`) y los cita en el plan → commit + push a main
+ 6. Plan + Punch List — Planner, en el único archivo de plan (con el equipo del plan: roles, modelos y cuántos Workers); anticipa conflictos de negocio revisando los flujos afectados; lista los Skills aplicables (`.claude/skills/`) y los cita en el plan → commit + push a main
  7. GATE 1 — ¿aprueba plan + Punch List?   No → vuelve a 6.   Sí → autoriza toda la implementación, sin aprobaciones intermedias.
     En una sola consulta, el Planner pide también: (i) los datos de prueba que el plan necesita (servicios de prueba sin alcance real, registros de prueba marcados y desactivables, permiso para quitar o reponer una membresía); (ii) la pre-autorización de las operaciones que el clasificador de permisos suele bloquear (login con credenciales de prueba, quitar una membresía, herramientas de navegador), que nunca cubre leer ni mostrar credenciales; (iii) si el plan obliga a cambiar flujos de negocio que se contradicen, una sola tabla «qué dice hoy / qué pasaría a decir / documento afectado» cuya aprobación cubre a todos los Workers. Lo no pedido aquí se registra como Observado desde el brief.
  8. Implementación — Worker, en su rama <entorno>-worker-N (código) → commit + push a su rama cada ~35%, nunca a medias de un ítem, nunca a main. El Orquestador nombra, en el índice de tandas y en cada brief, los Skills que el Worker debe usar (por ejemplo `cerrar-tanda` al final de toda tanda; `verificar-permisos-por-rol` si la tanda toca permisos por rol)
- 9. ¿Conflicto de regla de negocio no anticipado? Sí → el Worker consulta al Responsable humano en su propio chat, en el momento, y registra pregunta y respuesta en el progreso; vuelve a 8
+ 9. ¿Conflicto de regla de negocio no anticipado? Sí → el Worker se detiene y devuelve la pregunta al Orquestador, que la consulta al Responsable humano en el momento; la pregunta y la respuesta se registran en el progreso; vuelve a 8
 10. Verificación y evidencia — Worker: pruebas de interfaz cuando aplica (nunca solo por código), Punch List completada, archivo de evidencia + enlace al artifact de checklist visual si existe
-11. Consolidar hallazgos — Worker: escribe reglas de negocio validadas, aprendizajes y evidencia (commit + push a main del repositorio de documentación); deja anotado lo que toque fuentes de verdad centrales. En un plan por tandas con varios Workers, cada Worker deja sus hallazgos en el resumen de cierre de su tanda, el Orquestador los consolida en el progreso y el Worker de documentación los traslada a su destino (ver `02-roles-y-delegacion.md` y `03-sesiones-contexto-y-handoff.md`)
-12. Auditoría — Auditor: primero confirma con git log / git branch --contains que los commits están en la rama del Worker asignado; luego revisa SDD, plan, Punch List y evidencia. Informe (archivo propio en `02-trabajo-activo/04-auditoria/`, mismo nombre base que el plan): APLICAR AHORA / PROPONER A RESPONSABLE / NO PROMOVER / PROPONER SKILL. Comprueba además que se usaron los Skills citados en el plan y los briefs, o que consta por qué no
+11. Consolidar hallazgos. Plan chico, sin tandas: el Worker anota cada hallazgo en el libro de hallazgos del plan en el momento y, al final, escribe reglas validadas, aprendizajes y evidencia en su destino (commit + push a main del repositorio de documentación). Plan por tandas: cada Worker deja sus hallazgos en el resumen de cierre de su tanda, el Orquestador los pasa al libro de hallazgos del plan a medida que llegan, y el Documentador (tanda final, antes de la auditoría) traslada cada fila a su destino (ver `02-roles-y-delegacion.md` § Documentador). En ambos casos lo que toque fuentes de verdad centrales queda anotado como «observación sobre la política» para el Auditor
+12. Auditoría — Auditor: primero confirma con git log / git branch --contains que los commits están en la rama del Worker asignado; luego revisa SDD, plan, Punch List y evidencia. Informe (archivo propio en `02-trabajo-activo/04-auditoria/`, mismo nombre base que el plan): APLICAR AHORA / PROPONER A RESPONSABLE / NO PROMOVER / PROPONER SKILL. Comprueba además que se usaron los Skills citados en el plan y los briefs, o que consta por qué no, que ninguna fila del libro de hallazgos sigue en `Registrada`, y clasifica la lista de observaciones sobre la política que dejó el Documentador
 13. ¿Informe listo para cierre?   No → vuelve a 8. El informe no está listo si omite el segundo chequeo (destinos de hallazgos) o la clasificación APLICAR AHORA / PROPONER / NO PROMOVER / PROPONER SKILL: el Orquestador lo devuelve al Auditor antes del Gate 2
 14. Orquestador consolida y presenta — informe + resultados + propuestas de cambio a fuentes de verdad centrales
 15. GATE 2 — ¿aprueba el cierre?   No → vuelve a 8
@@ -48,13 +48,16 @@ Primero definamos el objetivo de la tarea.
     c. Skill aprobado → .claude/skills/<nombre>/SKILL.md, redactado de forma agnóstica
 17. Mensaje de cierre — Orquestador, dentro del propio archivo del plan: confirma qué ocurrió de 16a–16c y que todo quedó pusheado → commit + push a main
 18. Cierre — el plan es 100% recién cuando todo está pusheado/mergeado; el archivo del plan nunca se borra ni se resume
+    Fuera del flujo: el Orquestador ejecuta la medición en cada tanda, ola y al cierre (`08-medicion-y-relevo.md`); el Analista del flujo solo trabaja cuando el Responsable humano lo invoca directamente (`02-roles-y-delegacion.md`)
 ```
 
 Las únicas flechas que "suben" son cuando el Responsable humano dice **No** en un Gate.
 
+**Verificador de acciones (borrador por probar).** Antes de las acciones 16a y 16b, de borrar o crear ramas y worktrees, de aplicar migraciones y antes de escribir el mensaje del paso 17, se consulta al verificador según `07-verificador-de-acciones.md`. Solo veta; no reemplaza los Gates ni los comandos de verificación.
+
 ## Tabla — quién hace qué, en qué rama, y qué pasa en Git
 
-Columna "Qué debe leer antes": ver la regla de lectura mínima más abajo. **Excepción de lectura por rol (D10):** el Orquestador, el Planner y el Auditor leen todos los flujos de negocio del repositorio de documentación; el Worker lee solo los que el plan indica afectados por su parte.
+Columna "Qué debe leer antes": ver la regla de lectura mínima más abajo. **Excepción de lectura por rol (D10):** el Planner y el Auditor leen todos los flujos de negocio del repositorio de documentación; el Orquestador lee el índice de los flujos y solo los que el Spec o el plan indican afectados (más cualquiera que necesite para validar un conflicto que se le consulte); el Worker lee solo los que el plan indica afectados por su parte.
 
 | Paso | Quién lo hace | Repositorio | Rama | Qué pasa en Git | Cuándo | Qué debe leer antes (mínimo, sin leer de más) |
 |---|---|---|---|---|---|---|
@@ -78,13 +81,13 @@ Columna "Qué debe leer antes": ver la regla de lectura mínima más abajo. **Ex
 
 ### Regla general de lectura mínima
 
-Ningún rol lee todo el árbol de documentación de entrada. Cada uno lee: (1) el estándar que le corresponde a su rol, (2) el archivo de plan/progreso/evidencia del tema activo, (3) los flujos de negocio o el `design.md` según la excepción de lectura por rol de arriba (**D10**: Orquestador, Planner y Auditor — todos los flujos; Worker — solo los que el plan indica afectados por su parte), y (4) el **índice** (no el contenido completo) de aprendizaje continuo — abriendo una mejora puntual completa solo cuando su etiqueta coincide con lo que se está por hacer. El Responsable humano no tiene lectura obligatoria: decide el objetivo y aprueba en los Gates con lo que el rol correspondiente le presenta.
+Ningún rol lee todo el árbol de documentación de entrada. Cada uno lee: (1) el estándar que le corresponde a su rol, (2) el archivo de plan/progreso/evidencia del tema activo, (3) los flujos de negocio o el `design.md` según la excepción de lectura por rol de arriba (**D10**: Planner y Auditor — todos los flujos; Orquestador — el índice de flujos y los que el Spec o el plan indican afectados; Worker — solo los que el plan indica afectados por su parte), y (4) el **índice** (no el contenido completo) de aprendizaje continuo — abriendo una mejora puntual completa solo cuando su etiqueta coincide con lo que se está por hacer. El Responsable humano no tiene lectura obligatoria: decide el objetivo y aprueba en los Gates con lo que el rol correspondiente le presenta.
 
-### Excepción de consulta directa del Worker (D6)
+### Consulta de negocio del Worker (D6)
 
-El Orquestador es, en general, el punto único de contacto operativo entre el Responsable humano y los demás agentes (ver `02-roles-y-delegacion.md`). **Excepción:** ante un conflicto de regla de negocio no anticipado durante la implementación (paso 9), el Worker consulta al Responsable humano directamente, **en su propio chat**, sin pasar por el Orquestador, y registra la pregunta y la respuesta en el progreso antes de continuar.
+El Orquestador es, en general, el punto único de contacto operativo entre el Responsable humano y los demás agentes (ver `02-roles-y-delegacion.md`). **Sin excepciones:** ante un conflicto de regla de negocio no anticipado durante la implementación (paso 9), el Worker se detiene y devuelve la pregunta al Orquestador en el momento; este la consulta al Responsable humano y reanuda al Worker, y la pregunta y la respuesta se registran en el progreso antes de continuar.
 
-En modo local con subagentes (sin chat propio del Worker) la consulta pasa por el Orquestador, que la relaya al Responsable humano y reanuda al Worker (ver `02-roles-y-delegacion.md`).
+Los Workers son subagentes del Orquestador y no tienen un canal propio hacia el Responsable humano (ver `02-roles-y-delegacion.md`).
 
 Referencia cruzada: ver el incidente "Orquestador salta el flujo de roles" y la FAQ del flujo del Orquestador en `03-aprendizaje-continuo/historico.md` del repositorio de documentación.
 
@@ -129,4 +132,4 @@ flowchart TD
     class V0,ENV,N1,DELEG,N2,N3,N4,N5,N6a,N6b,N6c,N7,N8 paso;
 ```
 
-**Léelo así, de arriba a abajo:** el Responsable humano plantea el objetivo → el Orquestador define entorno y nomenclatura → nace el Spec → (¿aprueba?) → el Orquestador delega al Planner → Plan + Punch List → (¿aprueba, Gate 1?) → el Worker programa en su propia rama `<entorno>-worker-N` → si surge un conflicto de negocio no anticipado, el Worker consulta al Responsable humano en su propio chat y sigue → el Worker anota hallazgos en el repositorio de documentación → el Auditor revisa y propone (incluyendo, si corresponde, convertir una mejora repetida en Skill) → (¿aprueba, Gate 2?) → **tres cosas ocurren a la vez**: se mergea el código, se pushean los cambios aprobados a fuentes de verdad, y se crea el Skill si el Auditor lo propuso → el Orquestador escribe el mensaje de cierre dentro del propio plan → cierre. Las únicas flechas que "suben" son cuando el Responsable humano dice **No** en un Gate.
+**Léelo así, de arriba a abajo:** el Responsable humano plantea el objetivo → el Orquestador define entorno y nomenclatura → nace el Spec → (¿aprueba?) → el Orquestador delega al Planner → Plan + Punch List → (¿aprueba, Gate 1?) → el Worker programa en su propia rama `<entorno>-worker-N` → si surge un conflicto de negocio no anticipado, el Worker devuelve la pregunta al Orquestador, que la consulta al Responsable humano, y sigue → el Worker anota hallazgos en el repositorio de documentación → el Auditor revisa y propone (incluyendo, si corresponde, convertir una mejora repetida en Skill) → (¿aprueba, Gate 2?) → **tres cosas ocurren a la vez**: se mergea el código, se pushean los cambios aprobados a fuentes de verdad, y se crea el Skill si el Auditor lo propuso → el Orquestador escribe el mensaje de cierre dentro del propio plan → cierre. Las únicas flechas que "suben" son cuando el Responsable humano dice **No** en un Gate.

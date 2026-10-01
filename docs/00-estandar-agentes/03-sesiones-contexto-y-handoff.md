@@ -2,28 +2,18 @@
 
 ## Regla de contexto
 
-- Un chat = una tarea o una etapa clara de una tarea.
-- No mezclar tareas distintas en el mismo chat.
-- Al cerrar una tarea, sus chats dejan de ser contexto activo y quedan como historial.
-- Para una tarea nueva se abre un chat nuevo con contexto limpio. Una conversación histórica no se reutiliza como contexto activo de una tarea nueva.
+- Una sesión = una tarea o una etapa clara de una tarea.
+- No mezclar tareas distintas en la misma sesión.
+- Al cerrar una tarea, sus sesiones dejan de ser contexto activo y quedan como historial.
+- Para una tarea nueva se abre una sesión nueva con contexto limpio. Una sesión histórica no se reutiliza como contexto activo de una tarea nueva.
 
-## Nombres de chats
+## Identificar las sesiones
 
-Patrón sugerido, adaptable a la herramienta de sesiones disponible en cada entorno:
+El estándar no depende de nombres de chat ni de una aplicación concreta. El Orquestador lanza cada subagente (Planner, Worker, Auditor, Analista del flujo) y lo identifica por **rol, tarea y tanda** en la descripción con que lo lanza (por ejemplo «Worker F2-A»), de modo que el registro de sesión permita medirlo después. **Lanzar un subagente es autónomo del Orquestador:** no es «crear infraestructura» en el sentido que requiere autorización, es abrir el espacio de trabajo que el plan ya aprobado definió.
 
-```text
-<entorno>_<jerarquía>.<rol>_<tarea>
-```
+## Inicio de cada sesión
 
-- `entorno`: identifica dónde corre la sesión (ej. `local`, `nube`) — se verifica con la herramienta disponible, nunca se asume (ver `01-principios-y-seguridad.md`).
-- `jerarquía`: número fijo por rol, para que el listado quede ordenado (ej. `1` Orquestador, `2` Planner, `3` Worker, `4` Auditor).
-- `tarea`: slug corto de la tarea.
-- Si hay más de un Worker en la misma tarea, se diferencian por fase de esa tarea, no por número de worker (`<tarea>-fase1`, `<tarea>-fase2`).
-- **Crear un chat nuevo (Planner, Worker, Auditor) es autónomo del Orquestador:** no es "crear infraestructura" en el sentido que requiere autorización — es abrir el espacio de trabajo que el plan ya aprobado definió.
-
-## Inicio de cada chat
-
-El primer mensaje debe contener solo:
+El primer mensaje (el brief) debe contener solo:
 
 - Rol.
 - Objetivo o subalcance.
@@ -35,21 +25,19 @@ El primer mensaje debe contener solo:
 
 **Skills, antes de empezar.** Todo agente, antes de empezar la tarea, lista el contenido de `.claude/skills/` del repositorio de documentación y del repositorio de código en el que va a trabajar. Usa el Skill que aplique, o anota en el progreso del plan «Skills revisados: ninguno aplica» con una frase de motivo.
 
-## Cierre de cada chat
+## Cierre de cada sesión
 
-Al cerrar una tarea, se marca el chat como histórico (por ejemplo, con un prefijo como `hist_`): señala que la tarea terminó y que el rol/entorno queda libre para la siguiente. No se reutiliza un chat histórico para una tarea nueva. Los chats no se borran, se marcan como históricos — eliminar un chat requiere la misma autorización explícita que eliminar una rama o un worktree.
+Al cerrar una tarea, sus sesiones quedan como historial: no se reutilizan para una tarea nueva y no se borran sin autorización explícita (la misma que exige borrar una rama o un worktree).
 
-## Compactar contexto
+## Compactar contexto y relevo del Orquestador
 
-Comprimir o resumir el contexto de un chat puede usarse solo si una tarea larga llena demasiado el contexto disponible. No convierte un chat viejo en contexto válido para una tarea nueva.
-
-**Relevo del Orquestador.** Un Orquestador de un plan largo mide su propio contexto con el script de medición al terminar cada ola y, si ya pasó de una sesión cómoda, escribe el handoff y sigue en un chat nuevo. Referencia: los Workers apuntan a 200k o menos; el Orquestador del plan de paneles llegó a 552k y el del plan de niveles y paquetes a 564k, y conviene relevarlo antes. Los subagentes quedan atados al chat que los lanzó y sus avisos de fin le llegan solo a él, así que **el relevo se hace entre olas, nunca a mitad de una**.
+Comprimir o resumir el contexto de una sesión se usa solo si una tarea larga llena demasiado el contexto disponible; no convierte una sesión vieja en contexto válido para una tarea nueva. El Orquestador de un plan largo mide su contexto al terminar cada ola y, si pasa del umbral, hace el relevo con los pasos de `08-medicion-y-relevo.md`. Referencia: los Workers apuntan a 200k o menos; el Orquestador del plan de paneles llegó a 552k y el del plan de niveles y paquetes a 564k. El relevo se hace entre olas, nunca a mitad de una.
 
 **Prompt para el siguiente Orquestador (política desde 2026-09-30, indicada por Victor).** En **cada** cambio de sesión del Orquestador, el saliente termina su último mensaje entregando a Victor el **prompt completo para el Orquestador siguiente**, listo para pegar: cómo trabajar (qué leer, en qué orden y qué no leer), dónde estamos, la primera tarea, las políticas vigentes, cómo hablarle a Victor, qué no hacer y los pendientes con él. El handoff del archivo de progreso es el respaldo; el prompt es la entrega. Un relevo sin prompt no está terminado.
 
 ## Handoff obligatorio
 
-Ante cualquier cambio de sesión, chat, LLM o entorno a mitad de una tarea, se escribe un handoff como **sección fechada al final del archivo de progreso** del plan, con la plantilla `06-plantillas/07-handoff.md`: objetivo y estado, plan/progreso/evidencia relacionados, rama/worktree y último commit, terminado y no terminado, pruebas ejecutadas, bloqueos y riesgos, qué debe leer el siguiente agente, y el próximo paso concreto.
+Ante cualquier cambio de sesión, LLM o entorno a mitad de una tarea, se escribe un handoff como **sección fechada al final del archivo de progreso** del plan, con la plantilla `06-plantillas/07-handoff.md`: objetivo y estado, plan/progreso/evidencia relacionados, rama/worktree y último commit, terminado y no terminado, pruebas ejecutadas, bloqueos y riesgos, qué debe leer el siguiente agente, y el próximo paso concreto.
 
 ## Planes grandes en tandas
 
@@ -59,8 +47,8 @@ Un plan de más de unos 15 ítems, o de una fase completa, se reparte en tandas 
 - El Worker lee solo lo que el brief nombra (busca por ID en vez de leer el plan completo).
 - Cada tanda se marca en el índice de tandas como **paralelizable** (documentación o código puro, sin navegador) o **usa el navegador** (se ejecutan una a una: dos tandas con navegador nunca corren a la vez).
 - Se mide cada sesión (llamadas, contexto máximo, caché leída) y se guarda en un archivo de medición.
-- Antes de declarar terminada su tanda, cada Worker entrega al Orquestador su resumen de cierre en un archivo propio por tanda (estado de sus ítems, evidencia, hallazgos, mejoras de trabajo y reglas de negocio detectadas) y no edita los archivos compartidos del plan. El Orquestador lo consolida en el archivo de progreso a medida que llegan; al terminar la última fase, el Worker de documentación traslada cada entrada a su destino final (flujos de negocio, aprendizaje continuo, evidencia).
-- **Manejo de los hallazgos de cada Worker.** El resumen de cierre tiene secciones fijas: estado de los ítems de la tanda con su evidencia; hallazgos clasificados en cuatro grupos (mejora de trabajo, regla de negocio acordada, archivo o carpeta huérfano, conflicto con un flujo o pregunta para el Responsable humano); traspaso; llamadas y contexto usado; y «Skills revisados». Una pregunta de negocio o un conflicto con un flujo **no espera al cierre**: el Worker se detiene, se la devuelve al Orquestador en el momento y la registra con la respuesta. Ningún Worker borra nada por su cuenta.
+- Antes de declarar terminada su tanda, cada Worker entrega al Orquestador su resumen de cierre en un archivo propio por tanda (plantilla `06-plantillas/12-resumen-de-cierre-de-tanda.md`: estado de sus ítems, evidencia y hallazgos) y no edita los archivos compartidos del plan. El Orquestador pasa los hallazgos al **libro de hallazgos del plan** (los cuatro apartados de `02-plan.md`) a medida que llegan; al terminar la última fase, el Documentador traslada cada fila a su destino final (flujos de negocio, aprendizaje continuo, evidencia) según `02-roles-y-delegacion.md`.
+- **Manejo de los hallazgos de cada Worker.** El resumen de cierre tiene secciones fijas: estado de los ítems de la tanda con su evidencia; hallazgos clasificados en cinco grupos (mejora de trabajo, regla de negocio acordada, observación sobre la política, archivo o carpeta huérfano, conflicto con un flujo o pregunta para el Responsable humano); traspaso; llamadas y contexto usado; y «Skills revisados». Una pregunta de negocio o un conflicto con un flujo **no espera al cierre**: el Worker se detiene, se la devuelve al Orquestador en el momento y la registra con la respuesta. Ningún Worker borra nada por su cuenta.
 
 ## Límite conocido: mensajería entre sesiones
 
@@ -69,4 +57,4 @@ Un plan de más de unos 15 ítems, o de una fase completa, se reparte en tandas 
 1. No asumir que una sesión creada con una herramienta de administración de sesiones remotas se puede redirigir después con una herramienta de mensajería entre agentes — son sistemas distintos y una sesión creada con la primera puede no aparecer en la segunda. Verificar con la herramienta de listado de agentes antes de asumir que se puede retomar.
 2. Antes de interrumpir un Worker con intención de retomarlo después, evitarlo si no es estrictamente necesario — no hay garantía de poder reanudar esa sesión exacta.
 3. Si de todas formas hay que interrumpir o redirigir, esperar a que el Worker haya pusheado su avance real a su rama primero (o confirmar que ya lo hizo): así, si la sesión no se puede reanudar, retomar significa lanzar una sesión nueva apuntando a esa misma rama, sin perder el trabajo.
-4. **La rama de git (o el sistema de control de versiones que use el repositorio de código) es el punto de verdad compartido entre sesiones de Worker, no el historial de chat de una sesión específica.** El plan y el estado real de avance deben poder reconstruirse desde ahí (commits + archivo de plan en el repositorio de documentación), nunca depender de que una sesión de chat particular siga viva.
+4. **La rama de git (o el sistema de control de versiones que use el repositorio de código) es el punto de verdad compartido entre sesiones de Worker, no el historial de conversación de una sesión específica.** El plan y el estado real de avance deben poder reconstruirse desde ahí (commits + archivo de plan en el repositorio de documentación), nunca depender de que una sesión de chat particular siga viva.

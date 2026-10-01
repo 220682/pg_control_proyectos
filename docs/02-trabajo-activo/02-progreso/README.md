@@ -2,7 +2,7 @@
 
 ## Qué vive acá
 
-Un archivo MD vivo por plan iniciado (`YYYY-MM-DD-<tema>.md`, basado en `03-progreso.md`): estado general, fase actual, roles/Workers, avances, pendientes, commits/ramas/worktrees usados, bloqueos y próximo paso verificable.
+Un archivo MD vivo por plan iniciado (`YYYY-MM-DD-<tema>.md`, basado en `03-progreso.md`): estado general, fase actual, equipo y Workers, avances, pendientes, commits/ramas/worktrees usados, la sección «Medición» (una fila por sesión medida, llenada por el Orquestador), las operaciones de git del Worker git, las preguntas de negocio con su respuesta, bloqueos, próximo paso verificable y los handoffs. Los hallazgos **no** viven acá: viven en el libro de hallazgos del plan.
 
 ## Qué no vive acá
 

@@ -2,7 +2,7 @@
 
 ## Qué vive acá
 
-Las 9 plantillas oficiales, única ubicación válida para plantillas en todo el repositorio: `01-spec-sdd.md`, `02-plan.md`, `03-progreso.md`, `04-evidencia.md`, `05-punch-list.md`, `06-informe-auditoria.md`, `07-handoff.md`, `08-aprendizaje.md`, `09-cierre.md`.
+Las 14 plantillas oficiales, única ubicación válida para plantillas en todo el repositorio: `01-spec-sdd.md`, `02-plan.md`, `03-progreso.md`, `04-evidencia.md`, `05-punch-list.md`, `06-informe-auditoria.md`, `07-handoff.md`, `08-aprendizaje.md`, `09-cierre.md`, `10-medicion-y-eficiencia.md`, `11-informe-de-avance.md`, `12-resumen-de-cierre-de-tanda.md`, `13-brief-de-tanda.md`, `14-prompt-de-relevo.md`.
 
 ## Qué no vive acá
 

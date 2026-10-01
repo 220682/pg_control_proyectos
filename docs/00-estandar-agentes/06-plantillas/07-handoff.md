@@ -1,6 +1,6 @@
 # Plantilla — Handoff
 
-> Sección fechada al final del archivo de progreso. Se agrega ante cualquier cambio de sesión, chat, LLM o entorno a mitad de una tarea.
+> Sección fechada al final del archivo de progreso. Se agrega ante cualquier cambio de sesión, LLM o entorno a mitad de una tarea.
 
 ## Fecha
 

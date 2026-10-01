@@ -8,153 +8,28 @@ Este archivo es la fuente normativa para todos los agentes de IA que trabajen en
 
 ## Stack y comandos
 
-### Estado verificado del stack
-
-- Este repositorio no contiene un proyecto Node.js/Next.js completo con package.json.
-- No hay evidencia verificada de scripts de lint, build, tests ni migraciones en esta carpeta.
-- La aplicación web real se menciona como un proyecto hermano fuera de este repositorio, y no se debe asumir que aquí se desarrolla el runtime.
-- El contenido actual es principalmente documentación, especificaciones, ejemplos, plantillas y archivos de soporte.
-
-### Comandos verificados
-
-Instalación:
-- No verificada en este repositorio.
-
-Desarrollo:
-- No verificado en este repositorio.
-
-Lint:
-- No verificado.
-
-Type-check:
-- No verificado.
-
-Pruebas:
-- No verificado en este repositorio.
-
-Build:
-- No verificado en este repositorio.
-
-Migraciones:
-- No verificado en este repositorio.
-- No se deben ejecutar migraciones SQL ni cambios destructivos sin revisión explícita del contexto real del proyecto.
-
-Git y publicación:
-- Verificado: el repositorio fue inicializado y publicado a GitHub.
-- La rama principal se usa como main.
-
-Si un comando no fue confirmado aquí, se considera "por confirmar" y no se debe inventar.
+Este repositorio es documental: no tiene `package.json` ni scripts verificados de instalación, desarrollo, lint, type-check, pruebas, build ni migraciones. La aplicación real es el proyecto hermano `py_control_proyectos_web`; aquí no se desarrolla el runtime. El repositorio está publicado en GitHub y su rama principal es `main`. Todo comando no confirmado se considera "por confirmar" y no se inventa. No se ejecutan migraciones SQL ni cambios destructivos sin revisión explícita del contexto real.
 
 ## Estructura del repositorio
 
 - [README.md](README.md): resumen general del repositorio.
 - [docs](docs): documentación operativa, flujos y mejoras — ver [docs/README.md](docs/README.md) para el mapa completo de las siete áreas.
+- [scripts](scripts/README.md): herramientas locales (medición de sesiones, verificación de referencias, verificador de acciones).
 - [docs/00-estandar-agentes](docs/00-estandar-agentes): estándar reusable de agentes (roles, flujo Spec/SDD → Cierre, plantillas).
 - [docs/01-contexto-repositorio](docs/01-contexto-repositorio): configuración específica de este repositorio (propósito, fuentes de verdad, entorno Git/worktrees, pruebas, diseño).
-- [docs/02-trabajo-activo](docs/02-trabajo-activo): planes, progreso, evidencia y auditoría de cada tarea real — incluye lo que hacen los Workers (código, pantallas, consultas, migraciones) y las tareas del flujo de Orquestador con Punch List.
+- [docs/02-trabajo-activo](docs/02-trabajo-activo): planes, progreso, evidencia, auditoría y eficiencia de cada tarea real — incluye lo que hacen los Workers (código, pantallas, consultas, migraciones) y las tareas del flujo de Orquestador con Punch List.
 - [docs/03-aprendizaje-continuo](docs/03-aprendizaje-continuo): solo aprendizajes sobre cómo se trabaja (método, herramientas, workarounds), extraídos de un plan. No contiene reglas de negocio del sistema.
 - [docs/04-flujos-de-negocio](docs/04-flujos-de-negocio): conjunto principal de especificaciones por flujo, fuente de verdad de las reglas funcionales.
 - [docs/05-diseno-y-referencias](docs/05-diseno-y-referencias): sistema de diseño (`design.md`) y mockups de referencia.
 - [docs/06-material-de-apoyo](docs/06-material-de-apoyo): material de referencia no normativo — incluye `conocimiento/` (fundamentos EVM/LPS), `Informacion para pruebas/`, `Formatos/`, `Dashboard ejemplo/` e `Imagenes para fronted/`.
 
-## Arquitectura funcional
+## Arquitectura y fuentes de verdad
 
-La organización funcional que aparece con mayor consistencia es la siguiente:
-
-- Autenticación.
-- Usuarios y permisos.
-- Servicios y proyectos.
-- Presupuesto / DP.
-- Cronograma.
-- Paquetes de trabajo.
-- Plan Maestro.
-- Plan semanal / 3WLA.
-- RDT.
-- PR.
-- Dashboard.
-- RQ.
-- Notificaciones.
-
-### Flujo principal documentado
-
-1. Presupuesto + alcance.
-2. Cronograma.
-3. Relación WBS ↔ cronograma.
-4. Plan Maestro.
-5. Plan semanal / 3WLA.
-6. RDT.
-7. PR.
-8. Dashboard.
-
-La regla central documentada es que el sistema no debe mezclar:
-- lo planificado,
-- lo ejecutado,
-- lo estimado,
-- lo consolidado,
-- y la vista ejecutiva.
-
-## Modelo de datos y fuentes de verdad
-
-### Presupuesto / DP
-Fuente del alcance, partidas, metrados y costos base.
-- Es la base contractual del proyecto.
-- No debe confundirse con ejecución real.
-
-### Cronograma
-Fuente de fechas, duración y secuencia.
-- Define cuándo se ejecuta cada actividad.
-- No es, por sí solo, la fuente del costo programado semanal.
-
-### Plan Maestro
-Fuente del valor planificado temporal.
-- Reparte metrado y costo por semana.
-- Es el origen del PV.
-- No reemplaza el plan semanal operativo.
-
-### RDT validado
-Fuente del avance real y de los costos reales medidos.
-- Alimenta la ejecución real y validación del campo.
-- Los materiales sin control real no deben convertirse en costo real sin validación.
-
-### PR
-Consolidado técnico del proyecto.
-- No es la fuente original del alcance ni del cronograma.
-- Sí es la capa de consolidación entre plan y real para análisis técnico.
-
-### Dashboard
-Vista derivada.
-- Consume el PR y el historial.
-- No es fuente de datos; es una representación ejecutiva del estado del proyecto.
-
-### Paquetes de trabajo
-Agrupación operativa opcional.
-- No reemplazan la partida contractual ni la estructura base del presupuesto.
+La arquitectura funcional, el flujo principal documentado (presupuesto, cronograma, Plan Maestro, plan semanal, RDT, PR, dashboard) y el modelo de datos con la fuente de verdad de cada pieza están en [docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md](docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md). Regla central: el sistema no mezcla lo planificado, lo ejecutado, lo estimado, lo consolidado y la vista ejecutiva.
 
 ## Flujos principales
 
-Los flujos documentados con mayor detalle son:
-
-- [docs/04-flujos-de-negocio/01-configuracion.md](docs/04-flujos-de-negocio/01-configuracion.md) (pendiente de definir/implementar)
-- [docs/04-flujos-de-negocio/02-usuarios.md](docs/04-flujos-de-negocio/02-usuarios.md)
-- [docs/04-flujos-de-negocio/03-entorno.md](docs/04-flujos-de-negocio/03-entorno.md)
-- [docs/04-flujos-de-negocio/04-notificaciones.md](docs/04-flujos-de-negocio/04-notificaciones.md)
-- [docs/04-flujos-de-negocio/05-rq.md](docs/04-flujos-de-negocio/05-rq.md)
-- [docs/04-flujos-de-negocio/06-rdt.md](docs/04-flujos-de-negocio/06-rdt.md)
-- [docs/04-flujos-de-negocio/07-nucleo-auth.md](docs/04-flujos-de-negocio/07-nucleo-auth.md)
-- [docs/04-flujos-de-negocio/08-programa-portafolio-proyecto.md](docs/04-flujos-de-negocio/08-programa-portafolio-proyecto.md)
-- [docs/04-flujos-de-negocio/09-importar-dp.md](docs/04-flujos-de-negocio/09-importar-dp.md)
-- [docs/04-flujos-de-negocio/10-generacion-pr.md](docs/04-flujos-de-negocio/10-generacion-pr.md)
-- [docs/04-flujos-de-negocio/11-dashboard.md](docs/04-flujos-de-negocio/11-dashboard.md)
-- [docs/04-flujos-de-negocio/12-checklist.md](docs/04-flujos-de-negocio/12-checklist.md)
-- [docs/04-flujos-de-negocio/13-orden-de-trabajo.md](docs/04-flujos-de-negocio/13-orden-de-trabajo.md)
-- [docs/04-flujos-de-negocio/14-accesos-y-restricciones.md](docs/04-flujos-de-negocio/14-accesos-y-restricciones.md)
-- [docs/04-flujos-de-negocio/15-cronograma.md](docs/04-flujos-de-negocio/15-cronograma.md)
-- [docs/04-flujos-de-negocio/16-paneles.md](docs/04-flujos-de-negocio/16-paneles.md)
-- [docs/04-flujos-de-negocio/17-chat-agentico.md](docs/04-flujos-de-negocio/17-chat-agentico.md)
-- [docs/04-flujos-de-negocio/18-control-avance.md](docs/04-flujos-de-negocio/18-control-avance.md)
-- [docs/04-flujos-de-negocio/19-paquetes-de-trabajo-y-jerarquia-de-control.md](docs/04-flujos-de-negocio/19-paquetes-de-trabajo-y-jerarquia-de-control.md)
-- [docs/04-flujos-de-negocio/20-plan-maestro.md](docs/04-flujos-de-negocio/20-plan-maestro.md)
-- [docs/04-flujos-de-negocio/21-curva-s.md](docs/04-flujos-de-negocio/21-curva-s.md)
+Los 21 flujos de negocio, con su índice, viven en [docs/04-flujos-de-negocio/README.md](docs/04-flujos-de-negocio/README.md); son la fuente de verdad de las reglas funcionales. Los de uso más frecuente: [14 accesos y restricciones](docs/04-flujos-de-negocio/14-accesos-y-restricciones.md), [16 paneles](docs/04-flujos-de-negocio/16-paneles.md), [18 control de avance](docs/04-flujos-de-negocio/18-control-avance.md) y [20 plan maestro](docs/04-flujos-de-negocio/20-plan-maestro.md).
 
 ## Políticas de coherencia y trazabilidad
 
@@ -229,21 +104,22 @@ Si el usuario dice **"cierra sesión en control de proyectos"**: actualizar el o
 
 ## Flujo con Orquestador
 
-Cuando el usuario dice una frase equivalente a "vamos a trabajar en un plan con agente orquestador", aplica la política de [docs/00-estandar-agentes/02-roles-y-delegacion.md](docs/00-estandar-agentes/02-roles-y-delegacion.md): el Orquestador es el punto único de contacto operativo entre Victor y los demás agentes (Planner, Worker, Auditor); coordina objetivo, plan, aprobación, implementación, auditoría y cierre, y no aprueba en nombre de Victor ni hace merge, push, commit, PR, ni crea rama, worktree o infraestructura sin autorización explícita.
+Cuando el usuario dice una frase equivalente a "vamos a trabajar en un plan con agente orquestador", aplica la política de [docs/00-estandar-agentes/02-roles-y-delegacion.md](docs/00-estandar-agentes/02-roles-y-delegacion.md): el Orquestador es el punto único de contacto operativo entre Victor y los demás agentes (Planner, Worker, Auditor y Analista del flujo); coordina objetivo, plan, aprobación, implementación, auditoría y cierre, y no aprueba en nombre de Victor ni hace merge, push, commit, PR, ni crea rama, worktree o infraestructura sin autorización explícita.
 
-**Primera lectura obligatoria de este flujo:** [docs/00-estandar-agentes/04-flujo-sdd-y-planes.md](docs/00-estandar-agentes/04-flujo-sdd-y-planes.md), la fuente normativa de los 18 pasos, con los dos Gates y el cierre, y su versión visual e interactiva, el artefacto «Flujo SDD a Cierre» (https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd). Usar además el Skill `seguir-flujo-de-planes` (en `.claude/skills/`) al activar el flujo y antes de declarar cerrado un plan, y revisar los Skills disponibles al empezar (ver [docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md](docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md)).
+**Primera lectura obligatoria de este flujo:** [docs/00-estandar-agentes/04-flujo-sdd-y-planes.md](docs/00-estandar-agentes/04-flujo-sdd-y-planes.md), la fuente normativa de los 18 pasos, con los dos Gates y el cierre, y su versión visual e interactiva, el artefacto «Flujo SDD a Cierre» (https://claude.ai/artifact/8Wq3QsjFfiNs8YSs5T1gjd). Se trabaja en terminal con un Orquestador y subagentes (sin chats con nombre); no se usa Opus (ver [docs/01-contexto-repositorio/09-medicion-y-modelos.md](docs/01-contexto-repositorio/09-medicion-y-modelos.md)). El Orquestador mide sus sesiones y releva su propia sesión según [docs/00-estandar-agentes/08-medicion-y-relevo.md](docs/00-estandar-agentes/08-medicion-y-relevo.md), y antes de acciones irreversibles consulta al verificador ([07-verificador-de-acciones.md](docs/00-estandar-agentes/07-verificador-de-acciones.md), borrador por probar). Usar además el Skill `seguir-flujo-de-planes` (en `.claude/skills/`) al activar el flujo y antes de declarar cerrado un plan, y revisar los Skills disponibles al empezar (ver [docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md](docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md)).
 
 Las tareas ejecutadas con este flujo viven en [docs/02-trabajo-activo/01-planes/](docs/02-trabajo-activo/01-planes/), no en `docs/03-aprendizaje-continuo/`; el informe del Auditor de cada plan vive aparte, en [docs/02-trabajo-activo/04-auditoria/](docs/02-trabajo-activo/04-auditoria/). Antes de empezar, leer también [docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md](docs/01-contexto-repositorio/03-entorno-git-y-worktrees.md) y [docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md](docs/00-estandar-agentes/03-sesiones-contexto-y-handoff.md).
 
 ### Tareas de implementación, Mejoras continuas y Reglas de negocio
 
-Tres categorías distintas, no dos:
+Cuatro categorías distintas, no menos:
 
 - **Tarea de implementación** = lo que hace un Worker: código, pantallas, consultas, migraciones — trabajo operativo de construcción. Vive en `docs/02-trabajo-activo/01-planes/`. Registra QUÉ se implementó, no la regla permanente.
 - **Mejora de trabajo / mejora continua** = un aprendizaje sobre **cómo trabajamos** (método, herramientas, workarounds operativos) — no una regla del sistema. Vive en `docs/03-aprendizaje-continuo/` como destino final.
 - **Regla de negocio** = una regla del sistema (cómo se calcula, valida o comporta algo). **No se guarda en un archivo aparte** — va directo al `Flujo de trabajo` correspondiente, integrada en su estructura (no pegada al final). Si contradice una regla ya escrita, se modifica lo existente con lo acordado con Victor durante la tarea.
+- **Observación sobre la política** = un fallo, hueco o contradicción del proceso mismo (estándar, `AGENTS.md`, Skills). Se anota en el apartado «Observaciones sobre la política» del plan; nadie la edita por su cuenta: el Auditor la clasifica y Victor decide en el Gate 2.
 
-**Cómo trasladar:** toda tarea de implementación tiene tres apartados obligatorios (`## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea`, `## Carpetas/archivos huérfanos` — ver `docs/00-estandar-agentes/06-plantillas/02-plan.md`) que **se llenan en el momento en que ocurre cada hallazgo**, no al cerrar. Si una regla nueva contradice una ya escrita en un flujo, el agente pregunta a Victor ahí mismo, valida la respuesta, la escribe en el apartado y recién entonces continúa (repite el ciclo si no queda resuelto). El agente no edita una fuente de verdad por su cuenta. Al cerrar, cada entrada ya registrada se traslada a su destino: mejoras de trabajo a un archivo nuevo en `docs/03-aprendizaje-continuo/`, reglas de negocio directo al Flujo correspondiente, huérfanos reportados a Victor (en `pg_control_proyectos` y `py_control_proyectos_web`, sin borrar nada por su cuenta). El Auditor verifica que esto se haya hecho antes de cerrar la tarea (ver `docs/00-estandar-agentes/02-roles-y-delegacion.md` § Auditor). Ver `docs/README.md` para el detalle del ciclo.
+**Cómo trasladar:** toda tarea de implementación tiene cuatro apartados obligatorios, que forman el libro de hallazgos del plan (`## Mejoras (de trabajo)`, `## Reglas de negocio acordadas en esta tarea`, `## Observaciones sobre la política`, `## Carpetas/archivos huérfanos` — ver `docs/00-estandar-agentes/06-plantillas/02-plan.md`) que **se llenan en el momento en que ocurre cada hallazgo**, no al cerrar. Si una regla nueva contradice una ya escrita en un flujo, el agente pregunta a Victor ahí mismo, valida la respuesta, la escribe en el apartado y recién entonces continúa (repite el ciclo si no queda resuelto). El agente no edita una fuente de verdad por su cuenta. Al cerrar, el Documentador (ver `docs/00-estandar-agentes/02-roles-y-delegacion.md`) traslada cada entrada ya registrada a su destino: mejoras de trabajo a un archivo nuevo en `docs/03-aprendizaje-continuo/`, reglas de negocio directo al Flujo correspondiente, huérfanos reportados a Victor (en `pg_control_proyectos` y `py_control_proyectos_web`, sin borrar nada por su cuenta). El Auditor verifica que esto se haya hecho antes de cerrar la tarea (ver `docs/00-estandar-agentes/02-roles-y-delegacion.md` § Auditor). Ver `docs/README.md` para el detalle del ciclo.
 
 ## Flujo de trabajo del agente
 
@@ -297,27 +173,9 @@ Antes de cerrar una tarea, revisar:
 
 ## Inventario de fuentes de instrucciones
 
-### Fuente canónica
-- Este archivo: [AGENTS.md](AGENTS.md)
-
-### Fuente complementaria
-- [README.md](README.md)
-- [docs/README.md](docs/README.md) — orquestador de `docs/`, donde se trabaja
-- [docs/04-flujos-de-negocio/README.md](docs/04-flujos-de-negocio/README.md)
-- [docs/04-flujos-de-negocio/18-control-avance.md](docs/04-flujos-de-negocio/18-control-avance.md)
-- [docs/04-flujos-de-negocio/20-plan-maestro.md](docs/04-flujos-de-negocio/20-plan-maestro.md)
-
-### Duplicada
-- No se detectaron duplicados de instrucciones formales con conflicto directo; sí hay documentación funcional repetida en varios archivos, pero no una fuente normativa rival.
-
-### Desactualizada
-- El contenido de varias notas de memoria puede estar parcialmente sesgado por continuidad de sesión. Se deben tratar como contexto operativo, no como norma definitiva del repositorio.
-
-### Contradictoria
-- No se detectó contradicción directa en las instrucciones del repositorio; sí hay una diferencia operacional clara entre este repositorio documental y la app real que vive fuera del workspace.
-
-### Generada o no normativa
-- Los archivos de sesión y memoria de continuidad son útiles para contexto, pero no deben reemplazar la fuente normativa.
+- **Canónica:** este archivo. **Complementarias:** [README.md](README.md), [docs/README.md](docs/README.md) (orquestador de `docs/`) y [docs/04-flujos-de-negocio/README.md](docs/04-flujos-de-negocio/README.md).
+- Los archivos de sesión y de memoria de continuidad son contexto operativo, no norma: no reemplazan la fuente normativa.
+- No se detectaron duplicados ni contradicciones directas entre instrucciones formales. Hay una diferencia operacional clara entre este repositorio documental y la app real, que vive fuera del workspace.
 
 ## Nota importante
 

@@ -11,18 +11,23 @@ Qué leer según tu rol y el tipo de solicitud. No leas la carpeta completa por 
 | Planificación | `04-flujo-sdd-y-planes.md` (pasos 5–7) + `06-plantillas/02-plan.md` y `06-plantillas/05-punch-list.md` + **todos** los flujos de negocio del repositorio afectados. |
 | Implementación (Worker) | `04-flujo-sdd-y-planes.md` (pasos 8–11) + `02-roles-y-delegacion.md` § Worker + solo los flujos de negocio que tu parte toca + `05-diseno-y-ui.md` del contexto del repositorio si es UI. |
 | Auditoría | `04-flujo-sdd-y-planes.md` (paso 12) + `06-plantillas/06-informe-auditoria.md` (el informe se guarda en `02-trabajo-activo/04-auditoria/`) + **todos** los flujos de negocio afectados por el plan. |
+| Acción irreversible o reservada a una puerta (merge, push, borrar, migrar, crear o borrar ramas) | `07-verificador-de-acciones.md` (borrador por probar) + `01-principios-y-seguridad.md`. |
+| Medir sesiones, relevar al Orquestador o medir la eficiencia de un plan | `08-medicion-y-relevo.md` + `06-plantillas/10-medicion-y-eficiencia.md`. |
 | Cierre / handoff | `04-flujo-sdd-y-planes.md` (pasos 13–18) + `03-sesiones-contexto-y-handoff.md` + `06-plantillas/07-handoff.md` o `06-plantillas/09-cierre.md` según corresponda. |
 
-## Tabla de lectura mínima por rol y paso
+## Qué lee, dónde trabaja y dónde deja su entrega cada rol
 
-Ver la tabla completa en `04-flujo-sdd-y-planes.md` (columna "Qué debe leer antes"). Resumen:
+Ver el detalle por paso en `04-flujo-sdd-y-planes.md` (columna «Qué debe leer antes»). Regla: **todo archivo nuevo nace enlazado** desde el índice o README de su carpeta y desde el plan o el progreso; ninguno queda suelto.
 
-| Rol | Lee siempre | Lee de los flujos de negocio | Lee de aprendizaje continuo |
+| Rol | Lee | Trabaja en | Deja su entrega o evidencia en |
 |---|---|---|---|
-| Responsable humano | Nada obligatorio: decide el objetivo y aprueba en los Gates con lo que el rol correspondiente le presenta. | — | — |
-| Orquestador | Este estándar + el plan/progreso/evidencia del tema activo. | Todos los que existan. | Solo el índice. |
-| Planner | El Spec aprobado + `02-plan.md`/`05-punch-list.md`. | Todos los que existan (para anticipar conflictos). | Solo el índice. |
-| Worker | El plan aprobado + `design.md` del contexto del repositorio si es UI. | Solo los que el plan indica afectados por su parte. | Solo el índice, abriendo una mejora puntual cuando su etiqueta coincide con la tarea. |
-| Auditor | El plan + progreso + evidencia. | Todos los que existan. | Solo el índice. |
+| Responsable humano | Nada obligatorio: aprueba en las puertas con lo que el rol correspondiente le presenta | — | El Orquestador registra sus respuestas en el registro de decisiones del plan |
+| Orquestador | Este estándar; el plan, el progreso y la evidencia del tema; el índice de flujos y los que el Spec o el plan indican afectados; solo el índice de aprendizaje continuo | Progreso (medición, roles), registro de decisiones y libro de hallazgos del plan, briefs y su índice, handoff | Progreso, informe de avance, mensaje de cierre en el plan, prompt de relevo |
+| Planner | El Spec aprobado; `02-plan.md` y `05-punch-list.md`; todos los flujos; solo el índice de aprendizaje | El archivo del plan y la carpeta `-briefs/` | El plan listo para el Gate 1, con la tabla de cambios a flujos y las pre-autorizaciones |
+| Worker de código | Su brief; los flujos que su parte toca; `design.md` si es interfaz | Su rama y su worktree en el repositorio de código | `resultados/<tanda>.md` con los hallazgos en cinco grupos |
+| Documentador | Los cuatro apartados del libro de hallazgos; la tabla del Gate 1; los resúmenes de cierre; los flujos afectados | Flujos de negocio, aprendizaje continuo, artefactos derivados e índices | Su resumen de cierre y la lista para el Auditor |
+| Worker git | La instrucción puntual del Orquestador | Git de ambos repositorios | Una línea por operación en el progreso |
+| Auditor | El plan, el progreso y la evidencia; todos los flujos; el libro de hallazgos | `02-trabajo-activo/04-auditoria/` | El informe de auditoría |
+| Analista del flujo | El README de `02-trabajo-activo/05-eficiencia/` y solo lo que necesite | `02-trabajo-activo/05-eficiencia/` | Su informe de eficiencia |
 
 No se replica el contenido de las políticas acá: cada fila apunta al documento que las tiene.

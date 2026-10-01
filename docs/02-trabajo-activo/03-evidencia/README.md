@@ -8,7 +8,7 @@ Un archivo MD por plan (`YYYY-MM-DD-<tema>.md`, basado en `04-evidencia.md`): Pu
 
 ## Qué no vive acá
 
-No es una bitácora de avance narrativo (eso va en `../02-progreso/`) ni redefine el alcance del plan (eso vive en `../01-planes/`). El informe del Auditor vive en `../04-auditoria/`.
+No es una bitácora de avance narrativo (eso va en `../02-progreso/`) ni redefine el alcance del plan (eso vive en `../01-planes/`). El informe del Auditor vive en `../04-auditoria/` y el del Analista del flujo en `../05-eficiencia/`.
 
 ## Qué leer después
 

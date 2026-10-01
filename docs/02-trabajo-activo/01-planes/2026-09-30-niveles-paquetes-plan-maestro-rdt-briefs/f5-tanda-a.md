@@ -1,36 +1,28 @@
 # F5-A · Integración: unir los cuatro carriles y pruebas cruzadas
 
-Lee primero `00-reglas-de-contexto.md`. **Carril de integración** · rama `local-worker-1` (la del carril 1, ya con los merges de los carriles 3, 2 y 4 hechos **por el Orquestador**, en ese orden), puerto 3111.
-Fase F5 · **Depende de:** todas las tandas de F1 a F4 cerradas y merges hechos. Contratos que lees: todos los `contrato-c*.md` (índice en `00-contratos-tecnicos.md`).
-**Eres el único que puede editar los archivos congelados** (`permisos.ts`, `registro-accesos.ts`, pruebas de `src/lib/config/`, `db/README.md`).
-**Punto de commit:** al cerrar la tanda, en `local-worker-1`.
+Lee primero `00-reglas-de-contexto.md` y `00-protocolo-migraciones.md`; luego los `resultados/` de F1-C, F2-B, F2-C, F2-D, F3-C, F3-D, F3-E, F4-B y F4-C **solo por Grep** de lo que necesites (traen avisos para ti). **Carril de integración** · rama `local-worker-1` en `D:\VICTOR\CLAUDE CODE\py_control_proyectos_web\.worktrees\local-worker-1`, puerto 3111. Los merges de los carriles 3, 2 y 4 **ya los hizo el Orquestador, sin conflictos** (`0000276` sobre `0418dd9`, `b7d5b46`); no hagas merge ni cambies de rama.
+Fase F5 · Contratos que lees: todos los `contrato-c*.md` (índice en `00-contratos-tecnicos.md`). **Eres el único que puede editar los archivos congelados** (`permisos.ts`, `registro-accesos.ts`, pruebas de `src/lib/config/`, `db/README.md`, `vitest.config.ts`). Meta: ~80 llamadas, ≤ 200k; si no cabe, cierra lo que tengas y deja el handoff (el Orquestador lanza la segunda parte).
 
 ## Ítems (estado inicial `Sin verificar`)
 
 | ID | Qué debe cumplirse | Evidencia mínima |
 |---|---|---|
-| F5A-1 | La rama integrada compila sin conflictos sin resolver; los conflictos que aparecieron (se esperan ninguno por la matriz de propiedad) están resueltos con el criterio del dueño del archivo y anotados. `db/README.md` lista las migraciones 073 a 084 con su orden de aplicación | `git status`, diff de `db/README.md` |
-| F5A-2 | `npm test`, `npx tsc --noEmit`, `npm run lint` (comparado con el total medido en `main` `45c9e0a`, que mides tú primero) y `npx next build --webpack` en verde; sin deuda de lint nueva en los archivos tocados | Salida de comandos |
-| F5A-3 | **Prueba cruzada del anexo de 4 semanas** de punta a punta en un archivo nuevo de pruebas: paquetes con una partida repartida → líneas del Plan Maestro → totales semanales y acumulados → planificado del PR (suma por partida) → PV de la Curva S; los números del anexo salen exactos | Prueba verde |
-| F5A-4 | **Prueba cruzada del RDT**: el real se atribuye al paquete × partida; el PR suma por partida aunque esté en dos paquetes; la clave sigue igual tras una versión nueva del Plan Maestro | Prueba verde |
-| F5A-5 | Los datos simulados se reemplazan por los reales: las pantallas de Paquetes, lienzo y selector del RDT consumen `NodoEstructura[]` de `src/lib/niveles/`; `reales` del lienzo sale de `realPorClaveReporte`; sin adaptadores vacíos | Diff + pruebas |
-| F5A-6 | Permisos y accesos: las pruebas existentes de `registro-accesos`, `matriz-accesos`, `panel-*` y `nav-proyecto` siguen verdes **sin chip nuevo**; `puedeCrearVersionPlanMaestro` (administrador y jefe de proyectos) probada con los 13 roles; la acción «Crear paquete» del panel abre Paquetes en modo crear | Pruebas verdes |
-
-## Contrato técnico verificado (2026-09-30, `45c9e0a`)
-
-- Orden de merges (Orquestador): carril 3 → carril 2 → carril 4 sobre `local-worker-1`. Migraciones: Victor las aplica **después** de esta tanda (checkpoint); tú solo verificas que los archivos existen, están en orden y no se pisan.
-- Baseline de lint: hay que medirlo en `main` antes de comparar (el 2026-09-23 eran 9 errores y 18 avisos; hoy puede ser distinto). `npm run build` con Turbopack no corre en worktrees con `node_modules` enlazado: usa `--webpack`.
-- Restricciones que ya rigen: el motor del PR, el Dashboard y la Curva S no se modifican; todo en USD y costo directo.
-- Los totales y fórmulas salen de `contrato-c3-plan-maestro.md` y del Anexo del Spec.
+| F5A-1 | La rama integrada compila; `db/README.md` lista las migraciones **073 a 086** con su orden de aplicación y para qué sirve cada una. **Todas ya están aplicadas** (073 a 075, 079 a 084 comprobadas; 085 y 086 aplicadas y comprobadas por el Orquestador): **no apliques ninguna**. Comprueba **solo lectura** que 076 a 078 existen en la base (columnas de `plan_maestro_partidas` de 076 a 078, restricción de WBS único ya retirada) con un script `migrar_F5-A.py` con **solo modo `check`** (Victor lo tiene permitido: `python *migrar_*.py check`), fuera del repositorio y borrado al terminar; nunca abras `entorno_variable.txt`. Si el sistema lo deniega, no lo rodees: anota el comando exacto | Salida de `check`; diff de `db/README.md` |
+| F5A-2 | `npm test`, `npx tsc --noEmit`, `npm run lint` (compara con el total de `main` `45c9e0a`, que mides tú primero: las ramas dieron 27 problemas, 9 errores) y `npx next build --webpack` en verde; sin deuda de lint nueva | Salida de comandos |
+| F5A-3 | **Prueba cruzada del anexo de 4 semanas**, en un archivo nuevo: paquetes con una partida repartida → líneas del Plan Maestro → totales semanales y acumulados → planificado del PR (suma por partida) → PV de la Curva S; el anexo sale exacto (físico acumulado 22,56 / 48,78 / 76,22 / 100 %; económico 1 850 / 2 150 / 2 250 / 1 950 = 8 200; HH 172) | Prueba verde |
+| F5A-4 | **Prueba cruzada del RDT:** el real se atribuye a paquete × partida; el PR suma por partida aunque esté en dos paquetes; la clave sigue igual tras una versión nueva; las derivadas (actividades propias) no cuentan doble; revisa cómo cuentan «Activ.» de Status y `actividades_acum` (insumo del PPC) con las derivadas y anótalo | Prueba verde + nota |
+| F5A-5 | **Reemplaza lo simulado por lo real:** (a) el lienzo recibe `NodoEstructura[]` reales de `src/lib/niveles/` (filas de «Nivel» y «por avance del paquete»; Victor aprobó integrarlas); (b) `reales` del lienzo sale de `realPorClaveReporte` (sustituye `leerRealPorClave` de `real-adaptador.ts`); (c) unifica `claveReporte` (hoy duplicada en carriles 3 y 4); (d) `layout.tsx` pasa `usuario.id` al shell (recuerdo de paneles por usuario); (e) decide y, si cabe, agrega el alias `@/` en `vitest.config.ts` y mueve a la suite `scripts/medicion/lienzo-render.medicion.ts` si es posible; (f) sin adaptadores vacíos | Diff + pruebas |
+| F5A-6 | Permisos y accesos: las pruebas de `registro-accesos`, `matriz-accesos`, `panel-*` y `nav-proyecto` siguen verdes **sin chip nuevo**; `puedeCrearVersionPlanMaestro` (administrador y jefe de proyectos) probada con los 13 roles; la acción «Crear paquete» abre Paquetes en modo crear; `reasignar paquete` queda para administrador, jefe de proyectos y jefe de oficina técnica (como hoy) | Pruebas verdes |
+| F5A-7 | **Contratos:** registra en `contrato-c2-paquetes.md` y `contrato-c3-plan-maestro.md` (que están en `pg_control_proyectos`, ruta del brief) los cambios aditivos hechos: C2 `GET` devuelve `vinculos`, `disciplinaId`, `disciplinaNombre`; C3 `GET` devuelve `actividades` con fechas, `disciplinaId`, `disciplinaNombre`, `disciplinaHeredada` y `disciplinas`; C5 `claveReporte`, `materialesClaves`, `asignaciones`, `filasDerivadas`. Los editas tú y no commiteas en esa carpeta: déjalos como texto en `resultados/F5-A.md` y el Orquestador los pasa | Texto en el resultado |
 
 ## Qué NO hacer
 
-- No apliques migraciones. No hagas push ni merge a `main` (lo hace el Orquestador tras el Gate 2). No crees chips ni accesos.
-- No cambies contratos: si una prueba cruzada muestra que un contrato falla, detente y devuelve la pregunta.
-- Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta.
+- No apliques migraciones. No hagas push ni merge a `main` (lo hace el Orquestador tras el Gate 2). No crees chips ni accesos. No modifiques el motor del PR, el Dashboard ni la Curva S (`src/lib/pr`, `dashboard`, `curva-s`, `db/053`, `061`, `070`): solo pruebas que los lean.
+- No cambies contratos por tu cuenta: si una prueba cruzada muestra que un contrato falla, detente y devuelve la pregunta.
+- Ante contradicción con un flujo, acción destructiva o duda de negocio: detente y devuelve la pregunta. Escribe los archivos con Write (los heredocs largos de Bash con comillas fallan). Sin navegador (F5-B y F5-C).
 
 ## Cierre
 
-**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en tu `resultados/F5-A.md`. **Usa `cerrar-tanda` al terminar** (adaptación de este plan: sus pasos de estados, evidencia y traspaso van en tu `resultados/F5-A.md`, no en el plan ni en el progreso compartidos). **Usa también `verificar-permisos-por-rol`**: editas `permisos.ts`, `registro-accesos.ts` y sus pruebas; comprueba que ningún rol cambió de acceso salvo lo aprobado.
+**Skills:** al empezar, lista `.claude/skills/` de `pg_control_proyectos` (hoy: `cerrar-tanda`, `verificar-permisos-por-rol`, `seguir-flujo-de-planes`) y del repositorio de la app (hoy sin carpeta de Skills) y anota «Skills revisados» en `resultados/F5-A.md`. **Usa `cerrar-tanda` al terminar** (sus pasos de estados, evidencia y traspaso van en `resultados/F5-A.md`). **Usa también `verificar-permisos-por-rol`**: editas `permisos.ts`, `registro-accesos.ts` y sus pruebas; comprueba que ningún rol cambió de acceso salvo lo aprobado.
 
-`resultados/F5-A.md` (estado de F5A-1 a F5A-6, conflictos y cómo se resolvieron, handoff, llamadas). Commit en `local-worker-1`, `git add` explícito.
+`resultados/F5-A.md` (estado de F5A-1 a F5A-7, handoff, llamadas). Commit en `local-worker-1`, `git add` explícito.

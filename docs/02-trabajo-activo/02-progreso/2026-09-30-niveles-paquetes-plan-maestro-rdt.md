@@ -36,7 +36,7 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Ola 1 y ola 2 cerradas. Falta escribir y lanzar F0-U (maquetas con los tres paneles, alineación de tablas y color del avance real) y, en paralelo, F4-B. Ver el «Handoff del 2026-09-30 (tercero)».
+Olas 1 a 3 cerradas. F0-U1, F0-U2 y F4-B hechas; Victor revisa las maquetas (abiertas en su navegador). Las tandas de interfaz esperan su aprobación. Ver «Resultados consolidados de la ola 3».
 
 ## Pendientes
 
@@ -91,6 +91,10 @@ Con contexto limpio: leer el «Handoff del 2026-09-30 (tercero)», escribir el e
 | F0-S | `agent-afa8d237ea73dd463` | 18 | 24 | 110k | 1,4M | Sí | |
 | F0-T | `agent-a51e312647cfe3cc5` | 26 | 37 | 156k | 3,1M | Sí | |
 | **Orquestador (esta sesión)** | `3a959253-7780-4b11-907…` | 80 | 79 | **259k** | **13,0M** | **No (259k > 200k)** | no medí mi contexto al cerrar cada ola; relevo hecho a pedido de Victor |
+| F0-U1 | `agent-a6469df024fe6a763` | 43 | 46 | 201k | 6,2M | Contexto en el límite (201k, meta 200k); sesión cortada por límite de uso y retomada | 4 maquetas con marco; sin navegador |
+| F0-U2 | `agent-a67b0094045fc14b6` | 25 | 28 | 139k | 2,4M | Sí | cortada por límite de uso y retomada |
+| F4-B | `agent-ad861d19361b8f39d` | 27 | 27 | 145k | 2,5M | Sí | cortada por límite de uso y retomada |
+| **Orquestador (sesión 2, al cerrar la ola 3)** | `cfbd2d3e-42a3-49ac-aa8d…` | 23 | 27 | **155k** | 2,3M | Sí | medido al cerrar la ola |
 | F0-B | `agent-ac9205eddb66f403b` | ~34 | 43 | — | — | Sí | usó navegador (desvío menor) |
 | F2-A (cierre) | `agent-abbaf56e5b94e969a` | 33 | 33 | — | — | Sí | sesión de cierre; migraciones sin aplicar |
 | F1-A (cierre) | `agent-ae31f694a87b97cf3` | 10 | 10 | — | — | Sí | sesión de cierre |
@@ -142,9 +146,17 @@ Verificado con comandos antes de relanzar: `local-worker-1` en `61cdc02` (WIP F1
 - **Regla de maquetas (Victor, 2026-09-30, tarde):** toda maqueta de este plan debe mostrar **los tres paneles como se ven en la app** (izquierdo de navegación, centro, derecho de accesos rápidos), no solo el centro ni cajas grises. Las maquetas actuales (Importar DP, Cronograma, Paquetes, lienzo, Crear RDT) muestran solo el centro; hoy la maqueta F0-T (Plan Maestro con los tres paneles reales) sirve para **comprobar que la idea es clara**. Si Victor la aprueba, una tanda posterior (F0-U) coloca todas las maquetas dentro del mismo marco, con el estado de paneles que corresponda a cada pantalla (por ejemplo, Paquetes «Declarar» parte con los paneles ocultos, según su encargo). Hasta entonces no se lanzan las tandas de interfaz que dependen de esas maquetas.
 - **F0-T (maqueta del Plan Maestro con los tres paneles reales): hecha, 4 de 4 ítems conformes, pendiente de revisión de Victor** (`resultados/F0-T.md`, commit `524b646` en `main`, verificado por el Orquestador: la maqueta nueva `plan-maestro-tres-paneles.html`, más `index.html` y `README.md`). Sin navegador: solo lectura, `node --check` y una prueba en Node de los constructores de los paneles. Los rótulos y el orden de los paneles salen de `WorkspaceShell.tsx`, `panel-izquierdo.ts`, `panel-derecho.ts` y `registro-accesos.ts` de la app; no hay chips ni accesos nuevos. Cuatro estados de paneles; icono en la esquina superior interior; asistente flotante; móvil con cajones. Hallazgo: en la app real «Consolidado de servicio» está en el grupo Reportes del panel izquierdo y sin pantalla; la maqueta lo reproduce así, no arriba como en la captura. Decisión técnica: los paneles de la maqueta salen de tablas locales copiadas del registro de la app; si la app cambia un rótulo, se actualizan. Preguntas para Victor: iconos como glifos de texto o dibujados reales; variante de «Ver como» con un rol de menos permisos; «Recursos de empresa» plegado o abierto. Sin reglas nuevas ni huérfanos.
 
+### Resultados consolidados de la ola 3 (2026-09-30, noche)
+
+- **Lanzamiento:** 3 Workers a la vez (F0-U1, F0-U2, F4-B). Los tres se cortaron por límite de uso (se reinicia 9:50 pm Lima) y se reanudaron sin rehacer. La tanda de maquetas se dividió en dos (F0-U1 y F0-U2) para no pasar de 200k de contexto.
+- **F0-U1 (maquetas de Importar DP, Cronograma y Paquetes con los tres paneles; regla de alineación): hecha, pendiente de revisión de Victor** (`resultados/F0-U1.md`, commit `8197e48` en `main`, verificado: 9 archivos de diseño; `node --check` del marco en 0). Marco compartido en `mockups/marco-tres-paneles.css` y `.js`; Paquetes «Declarar» abre con ambos paneles ocultos; `design.md` 1.9.0 con la regla de alineación (encabezado sobre su dato y alineado igual; numéricos y unidades a la derecha; sin ancho de más). Ítems 1 a 3 **Observados** (sin navegador); 4 a 6 conformes. Preguntas: fechas a la derecha como números; metrado con su unidad en una columna en Importar DP; listas de Paquetes angostas con tres paneles (scroll horizontal en vez de pestañas). Hallazgo: el marco duplica los rótulos de `plan-maestro-tres-paneles.html`; si la app cambia uno, actualizar ambos (unificar es mejora futura).
+- **F0-U2 (Plan Maestro y Crear RDT con los tres paneles; color del avance real a la vista): hecha, 1 ítem bloqueado** (`resultados/F0-U2.md`, commit `278e374` en `main`). Color solo en el «Físico acum. (%)» de las filas «Real» del lienzo (0 % blanco, en curso amarillo, 100 % verde con ✓), con los tres casos y leyenda; en Crear RDT, columna nueva «Avance real (%)» y el color en el cuadro de elegir actividad; alineación en ambas. **F0U2-2 bloqueado:** el sistema denegó sobrescribir `plan-maestro-lienzo.html` (reducirlo a aviso con redirección); no se rodeó; el contenido ya está completo en `plan-maestro-tres-paneles.html` (comprobado por lectura). Decisión pendiente de Victor (recomendado: aprobar). Preguntas: color también en columnas semanales (recomendado: no); dejar la columna «Avance real (%)» en Crear RDT (recomendado: sí). Crear RDT lleva el marco duplicado dentro (migrar al archivo compartido si se unifica).
+- **F4-B (Crear RDT por paquete: API de partes): cerrada, 5 de 5 conformes** (`resultados/F4-B.md`, commit `14bae8d` en `local-worker-4`, sin push ni merge; 5 archivos de `src/app/api/rdts/partes/**` y `src/lib/rdts/`). Verificado por el Orquestador: árbol limpio, commit presente, ningún cambio en `db/` ni `src/lib/pr/`. Reportado por el Worker: 709 pruebas verdes (72 archivos), `tsc` limpio, lint 27 igual a `main`. Criterio de Victor aplicado: las derivadas se guardan como **actividades propias** (con su metrado, `es_derivada` y `declaracion_id`), la prueba espejo de 053 no cuenta doble (cama 5, excavación 15, relleno 15); `db/053` intacta. Contrato para F4-C: `POST` con `claveReporte` por actividad y `materialesClaves[]`; `PATCH` con `asignaciones` en VALIDAR y REASIGNAR_PAQUETE; `GET partes/[id]` con `paquetesActividades` y `filasDerivadas`. **Avisos:** reasignar paquete usa el permiso de validar (el supervisor que crea no puede reasignar; si se quiere, es cambio del flujo 14); materiales son texto libre y solo se validan sus claves; cada derivada cuenta como una actividad D más en `actividades_acum` (insumo del PPC: revisar en F5); la creación no es atómica con `guardar_rdt_parte` (si falla el paso de paquete se borra el parte); un RDT antiguo sin paquete solo valida si su partida es directa en el plan aprobado; requiere 076 a 078 aplicadas.
+- **Abiertas para Victor:** las tres preguntas de F0-U1, las dos de F0-U2, el bloqueo de `plan-maestro-lienzo.html`, y si el supervisor puede reasignar paquete.
+
 ## Última actualización y responsable
 
-2026-09-30 (cierre de sesión), Orquestador.
+2026-09-30 (noche, cierre de la ola 3), Orquestador.
 
 ## Handoffs
 

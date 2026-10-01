@@ -21,6 +21,14 @@ Fase F4 · **Depende de:** F4-A cerrada. No depende de la maqueta (sin pantalla)
 - Modo A/B del plan del 23-sep: A = se declara la unidad de la **partida guía**, `% = declarado ÷ metrado de la guía` y se aplica a todas las partidas del paquete; B = partida por partida. La función `repartirAvanceDelPaquete` ya existe en `src/lib/paquetes-trabajo/paquetes-trabajo.ts` (se **importa**). Con partida repartida, la base es la porción de la guía dentro de ese paquete.
 - Notificación al subir: solo Administración (sin cambio). Nada de esto toca `recalcular_pr_desde_rdt`.
 
+## Criterio de Victor (2026-09-30; manda sobre F4B-3)
+
+- Migraciones 082 a 084 **ya aplicadas** (no las vuelvas a aplicar). Lee `resultados/F4-A.md` (riesgo de la 053).
+- **El real de cada partida se suma en el DP y el PR como el de cualquier partida.** El **acumulado del paquete se guarda como el de una partida, pero solo en el Plan Maestro** (clave paquete × partida); el PR nunca ve el real «por paquete».
+- **No modifiques `db/053` (congelada) ni crees otra migración que la cambie** sin autorización expresa de Victor. Propuesta: guarda cada fila derivada como **actividad propia** (con su `metrado_ejecutado` = metrado repartido, un solo vínculo de partida, `es_derivada` y `declaracion_id` apuntando a la actividad declarada), de modo que 053 sume una vez por partida sin cambios. Demuestra con una prueba (espejo en JS de la suma de 053) que el PR no cuenta dos veces el metrado declarado. Si ves que no se puede sin tocar 053, **detente y devuelve la pregunta** con opciones.
+- `realPorClaveReporte` (F4-A) debe seguir dando el real por clave sin contar dos veces una declaración y sus derivadas.
+- «Met. acum.» en Crear RDT = metrado acumulado **del servicio en total** para esa partida (para saber cuánto falta); si tu API lo entrega, que sea con ese significado.
+
 ## Qué NO hacer
 
 - No cambies permisos ni el motor del PR (`db/053`, `src/lib/pr/**`). No edites `paquetes-trabajo/**`, `plan-maestro/**`. No apliques migraciones. Sin push.

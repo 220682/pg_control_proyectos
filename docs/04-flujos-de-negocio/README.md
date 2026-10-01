@@ -34,6 +34,8 @@ Las reglas funcionales y operativas permanentes del sistema, una vez por tema du
 
 **Borrado administrador** no es un flujo: es una regla transversal: el borrado definitivo de RQ, RDT, proyecto (archivar y eliminar), programa y portafolio lo ejecutan solo el administrador y el jefe de proyectos (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)); ningún otro rol, el jefe de oficina técnica incluido. Está citada en [05](05-rq.md), [06](06-rdt.md) y [08](08-programa-portafolio-proyecto.md).
 
+**Plan en curso que reescribe flujos (2026-09-30):** [`niveles-paquetes-plan-maestro-rdt`](../02-trabajo-activo/01-planes/2026-09-30-niveles-paquetes-plan-maestro-rdt.md) actualiza los flujos 06, 09, 10, 14, 15, 16, 18, 19, 20 y 21 según su tabla en bloque aprobada por Victor; mientras no se cierre, el estado de cada fila está en esa tabla.
+
 ## Qué no vive acá
 
 Bitácoras de sesión, estado de planes o procedimientos de agentes — eso vive en `../00-estandar-agentes/` y `../02-trabajo-activo/`.

@@ -25,6 +25,15 @@ Está siempre activo en el workspace y lo ven todos los roles. Tiene dos bloques
 
 **Accesos del servicio** (solo con servicio seleccionado): los del servicio actual, organizados como se describe en «Organización del panel izquierdo». Todas las acciones reciben automáticamente el identificador del servicio seleccionado (ver «Contexto del servicio» y la regla E1).
 
+### Ocultar y mostrar los paneles laterales
+
+En escritorio (pantalla `lg` o mayor), cada panel lateral lleva **un icono propio de ocultar/mostrar en la esquina superior interior de su encabezado** (el del panel izquierdo, a su derecha; el del derecho, a su izquierda). Al ocultar un panel queda una tira estrecha (24 px) con el mismo icono para volver a mostrarlo, y el panel central toma el ancho liberado. El contenido oculto sigue montado: no pierde su estado. El icono es un botón con nombre accesible y estado expandido/contraído.
+
+- **Recuerdo por usuario:** el estado de cada panel se guarda por usuario en el navegador y se restaura al volver; si no puede guardarse o leerse, los dos paneles quedan visibles.
+- **Móvil:** el cajón de navegación no cambia y el control no aparece.
+- Es un control de interfaz, **no un acceso**: no entra en el registro de accesos ni en la matriz del flujo 14, y es independiente del botón mostrar/ocultar de Recursos de empresa.
+- El asistente flotante no debe tapar las columnas de las pantallas anchas (por ejemplo, el lienzo del Plan Maestro, [flujo 20](20-plan-maestro.md)); hoy el contenido reserva espacio inferior para él.
+
 ### Panel central — Mi entorno
 
 Ruta:
@@ -160,7 +169,7 @@ Dentro de esa pantalla se mostrarán las acciones permitidas:
 * Registrar o consultar avance.
 * Cerrar o archivar.
 
-No es necesario crear un chip separado para cada operación si la pantalla ya contiene acciones internas. Sin embargo, “Crear paquete” puede aparecer como acceso rápido para roles autorizados.
+No es necesario crear un chip separado para cada operación si la pantalla ya contiene acciones internas. Sin embargo, “Crear paquete” aparece como acceso rápido (acción del panel): **abre `/paquetes-trabajo` con el servicio elegido y el formulario de paquete nuevo abierto (modo crear, `?accion=crear`)**, no guarda nada al abrirse, y lo pueden usar administrador, jefe de proyectos y planner (flujo 14, «Gestionar paquetes de trabajo»); al resto se le muestra deshabilitado. No es un chip nuevo ni un permiso nuevo. «Asignar partidas» incluye declarar los vínculos con metrado y los hitos; el avance real ya no se registra en el paquete sino en el RDT (flujos 06 y 18), y el paquete solo lo consulta.
 
 ## Contexto del servicio
 
@@ -251,6 +260,7 @@ Implementado:
 
 * `WorkspaceShell` con los tres paneles y el asistente como icono flotante.
 * `/mi-entorno` (`EntornoTrabajoGrupo`, `herramientasPorGrupo`).
+* Paneles laterales ocultables con un icono por panel y recuerdo por usuario (plan niveles-paquetes-plan-maestro-rdt, F3-C; lógica y compilación verificadas, observación visual por rol pendiente de F5).
 * Panel izquierdo completo: Recursos de empresa con botón mostrar/ocultar y siete grupos con servicio (27 chips: 17 con pantalla y 10 inertes sin enlace).
 * Panel derecho con chips que abren la pantalla con el servicio elegido.
 * Registro único de accesos (`registro-accesos.ts`, `panel-izquierdo.ts`, `panel-derecho.ts`) y prueba de cobertura de pantallas.
@@ -265,6 +275,8 @@ Pendiente: los 10 chips sin pantalla (sin enlace hasta que exista la pantalla).
 * Los chips informativos y de acción aparecen separados.
 * Las acciones quedan fijadas al servicio actual y, si se cambia, la URL y los paneles lo siguen.
 * Paquetes de trabajo aparece dentro del alcance del servicio.
+* «Crear paquete» abre Paquetes en modo crear, con el servicio elegido.
+* Cada panel lateral se oculta y se muestra con su icono en la esquina interior, y el estado se recuerda por usuario.
 * Todos los roles ven todos los chips; los no autorizados aparecen deshabilitados con título.
 * El servidor rechaza las rutas directas sin permiso, igual que antes.
 * El panel central muestra herramientas según permisos reales.
@@ -273,6 +285,6 @@ Pendiente: los 10 chips sin pantalla (sin enlace hasta que exista la pantalla).
 * El asistente aparece como icono en toda pantalla del workspace, una sola vez.
 * Se conserva la navegación móvil y las tablas con scroll.
 
-Historia: pedido de Victor el 2026-09-16 (tres paneles que organizan los chips de acceso); ampliado el 2026-09-27 con el servicio persistente entre pantallas (plan `2026-09-27-paneles-servicio-persistente`).
+Historia: pedido de Victor el 2026-09-16 (tres paneles que organizan los chips de acceso); ampliado el 2026-09-27 con el servicio persistente entre pantallas (plan `2026-09-27-paneles-servicio-persistente`) y el 2026-09-30 con ocultar paneles y «Crear paquete» en modo crear (plan `2026-09-30-niveles-paquetes-plan-maestro-rdt`).
 
 Flujo relacionado: 14 (Accesos y restricciones).

@@ -10,6 +10,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-09-30 (tarea paneles-servicio-persistente, F7-B):** solo se añadieron las filas de descargas decididas (tabla 2, nota 7), la nota del asistente del shell y se retiró la marca «por construir» de Recursos (ya construido); ninguna decisión aprobada cambió.
 
+**Actualización 2026-10-01 (plan niveles-paquetes-plan-maestro-rdt, F5-D):** tabla 2 ajustada a lo implementado (cronograma, Plan Maestro y paquetes con su texto nuevo; filas nuevas «Crear una versión nueva del Plan Maestro» y «Reasignar de paquete un RDT»; notas 8 a 10) y sección de paquetes reescrita. La tabla 1 no cambia. No hay chip ni acceso nuevo en el registro.
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -64,7 +66,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Eliminar contenedor (programa / portafolio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Editar servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Editar checklist del proyecto | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
-| Importar DP (Datos del Proyecto) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Importar DP (Datos del Proyecto) ⁸ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar usuarios (crear / editar / eliminar) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Editar perfil extendido (propio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Asignar rol administrador | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
@@ -86,14 +88,16 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
+| Reasignar de paquete un RDT aún no validado ¹⁰ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Rechazar un RDT ya validado (destraba para corregir, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar RDT (borrado definitivo; cubre archivo y parte estructurado, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
-| Subir / reemplazar cronograma | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
-| Gestionar Plan Maestro (crear / congelar línea base) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
-| Gestionar paquetes de trabajo | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| Gestionar Plan Maestro (programar en el lienzo y crear = aprobar la primera versión) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; incluye aprobar el borrador que la reemplaza) ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Gestionar paquetes de trabajo (crear, editar, mover partidas, archivar, declarar vínculos con metrado y hitos; la disciplina es obligatoria) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
@@ -123,6 +127,12 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ⁷ **Descargas decididas por Victor (2026-09-30).** Las tres propuestas del artefacto (RDTs y listado de RDTs, listado RQ, exportar DP) quedan confirmadas. Las cinco descargas que el código ya tenía y la matriz no listaba (plantilla de cronograma, PDF de un RDT estructurado, archivo de un RDT subido, PDF individual de un RQ, formato vacío PROM-GP-008) quedan escritas como **los 13 roles; un usuario sin rol conocido queda rechazado**. Exportar DP sigue a «ver DP» (tabla 1). El registro de costos y el consolidado RQ se decidieron el 2026-09-28 (filas de arriba y nota 5). Sin adjuntos de RQ ni documentos del checklist: hoy solo se suben (no hay ruta de descarga por API; la subida es la acción ya listada). *Brecha con el código, ya cumplida (F6-R1, commit `0690c81`, 2026-09-30):* la plantilla de cronograma (`/api/cronograma/plantilla`) y `/api/requerimientos/formato-vacio` ahora responden a los 13 roles y rechazan (403) a quien no tiene rol conocido.
 
+⁸ **Recarga bloqueada (plan niveles-paquetes-plan-maestro-rdt, 2026-09-30).** Con un Plan Maestro `APROBADO` el servicio no admite recargar el DP ni reemplazar el cronograma; sin Plan Maestro aprobado se avisa de lo que se perdería y se pide confirmación. No cambia quién puede la acción: es una precondición de negocio validada en servidor, como la nota 3 ([09](09-importar-dp.md), [15](15-cronograma.md), [20](20-plan-maestro.md)). «Gestionar Plan Maestro» ya no incluye «congelar línea base» como acción aparte: el planner programa y crea (aprueba) la primera versión; «Gestionar paquetes» incluye declarar vínculos con metrado y hitos (el cronograma ya no los edita).
+
+⁹ **Decidido por Victor (Gate 1, 2026-09-30).** Con un Plan Maestro aprobado, crear una versión nueva y aprobar el borrador que la reemplaza lo hacen solo el administrador y el jefe de proyectos, con motivo obligatorio; el planner conserva programar y crear la primera versión. Implementado en `puedeCrearVersionPlanMaestro` (`permisos.ts`) para crear el borrador; ver la brecha de aprobar en «Pendiente» ([20](20-plan-maestro.md)).
+
+¹⁰ **Decidido por Victor (2026-09-30).** Reasignar un RDT de paquete mientras no esté `VALIDADO` lo hace quien valida (mismos roles que «Validar / rechazar RDT»); el supervisor que crea el RDT no reasigna, corrige reemplazando el parte ([06](06-rdt.md)). Vive en la ruta de validar del RDT (`puedeValidarRdt`); no es un permiso nuevo en el código. «Crear paquete» (acción rápida del panel) sigue la fila «Gestionar paquetes de trabajo»: administrador, jefe de proyectos y planner.
+
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
@@ -144,6 +154,8 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 4. **Estado de RQ y registro de costos para el jefe de proyectos.** Cerrado (Victor, 2026-09-29): siguen siendo solo de logística (más el administrador en el estado de RQ, ya en la tabla 2).
 5. **Quién alterna el Dashboard entre Parcial y Completo.** Cerrado (Victor, C35, 2026-09-29): ver nota ¹.
 
+6. **Aprobar el borrador que reemplaza un Plan Maestro aprobado.** Decidido por Victor (2026-09-30): solo administrador y jefe de proyectos (nota 9). **Brecha con el código:** hoy `PATCH /api/plan-maestro` usa `puedeGestionarPlanMaestro`, de modo que el planner podría aprobar un borrador que creó un administrador o un jefe de proyectos; solo `POST` (crear el borrador sobre una aprobada) usa `puedeCrearVersionPlanMaestro`. Queda como corrección de código pendiente (resultado F3-B, handoff).
+
 ### Asistente del shell (excepción, sin fila en las tablas)
 
 El asistente (icono flotante y panel desplegable del shell, flujo 16) **no es una interfaz ni una acción con permiso**: no figura en el registro de accesos ni en las tablas 1 y 2, y está disponible para los 13 roles, sin datos ni API (flujo 17: agente no habilitado). No confundir con el **rol** de usuario «asistente» (columna Asist). Se anota aquí y en el artefacto solo por trazabilidad.
@@ -164,20 +176,16 @@ Sin accesos propios más allá de «Notificaciones» (común a todos los grupos,
 
 Estaba pendiente desde el pedido original (2026-09-16): **Cronograma** (flujo 15) y **Crear RDTs** (flujo 06) no estaban registrados en esta tabla. Ambos quedan registrados arriba.
 
-## Accesos requeridos para paquetes de trabajo (pendiente, no implementado)
+## Accesos de paquetes de trabajo (implementados)
 
-Los paquetes deben sumarse a esta matriz con los siguientes accesos mínimos, cuando se implemente la interfaz (hoy solo existe el modelo de datos, `dp_paquetes`):
+Los paquetes ya tienen interfaz (`/paquetes-trabajo`, flujo 19) y quedan en la matriz así, sin duplicar permisos de partidas, RDT ni dashboard:
 
-- Ver paquetes del servicio.
-- Crear paquete.
-- Editar paquete.
-- Asignar o quitar partidas.
-- Revisar avance del paquete.
-- Registrar avance o datos de control del paquete.
-- Archivar o cerrar paquete.
-- Ver detalle de paquete y trazabilidad a partida.
-
-Estas acciones se habilitan según el servicio, el rol y la configuración de control del presupuesto, sin duplicar permisos ya existentes para partidas, RDT ni dashboard.
+- **Ver paquetes del servicio y su detalle:** los 13 roles (tabla 1, «Paquetes de trabajo, ver»).
+- **Crear, editar, mover partidas entre paquetes, archivar, declarar vínculos con metrado y hitos, elegir disciplina:** una sola función de permiso, «Gestionar paquetes de trabajo» (tabla 2): administrador, jefe de proyectos y planner, con OT a cargo.
+- **Crear paquete como acceso rápido del panel:** abre `/paquetes-trabajo?proyectoId=…&accion=crear` (flujo 16); no es un chip ni un permiso aparte.
+- **Reasignar el RDT de un paquete a otro:** se rige por validar RDT (tabla 2, nota 10), no por gestionar paquetes.
+- **Registrar el avance real:** ya no se declara en el paquete; se declara en el RDT contra paquete × partida (flujos 06 y 18) y el paquete solo lo muestra.
+- **Disciplina:** dato obligatorio (catálogo fijo `GET /api/disciplinas`, lectura para cualquier usuario autenticado); no es un permiso ni un acceso.
 
 ## Pendiente a futuro
 

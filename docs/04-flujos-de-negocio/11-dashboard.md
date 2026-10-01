@@ -107,6 +107,8 @@ Una vez asignado, nunca se reasigna ni se cicla. Los colores de estado
 (`emerald`/`rose`/`amber`, design.md §4.1.1) son para semáforo y
 validación — no se reutilizan como color de serie.
 
+**Color del avance real.** Cuando una pantalla pinta el avance físico real (hoy, el «Físico acum. (%)» de las filas «Real» del lienzo del Plan Maestro, flujos 18 y 20), usa los mismos colores de estado: 0 % sin color (blanco), en curso amarillo (`amber`) y 100 % verde (`emerald`, con la marca ✓ para no depender solo del color). **Solo el avance real lleva color; lo programado nunca.** Es un color de estado, no una serie: no cambia la paleta de PV, AC y EV de arriba.
+
 ## Resumen ejecutivo breve
 
 Califica **plazo y costo por separado** (SPI y CPI, cada uno con su propio umbral) — nunca con una sola palabra derivada del semáforo (que es CPI+IP por diseño, sin SPI a propósito). Un CPI muy favorable puede convivir con un SPI de atraso real (ej. AC casi en cero porque el RDT real todavía no se capturó del todo); calificar con el semáforo en ese caso produce una frase contradictoria con el propio SPI impreso al lado. Implementado en `construirResumenEjecutivoBreve` (`src/lib/dashboard/dashboard.ts`).

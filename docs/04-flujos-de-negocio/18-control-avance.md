@@ -140,7 +140,7 @@ Las **columnas fijas del lienzo** son seis (más «Falta repartir»):
 - Costo unitario.
 - HH por unidad.
 
-**Tiempo (duración, inicio y fin base) no va** como columna. Las demás —área, disciplina, frente, costo total, HH totales, método de medición y otras— **se ofrecen con el botón «Personalizar campos»** (el mismo que usan otras pantallas; no hay otro selector de columnas). Hoy la app ofrece Costo total ($), HH totales y Disciplina; el resto no tiene dato de origen todavía (ver flujo 20).
+**Tiempo (duración, inicio y fin base) no va** como columna. Las columnas adicionales **se ofrecen con el botón «Personalizar campos»** (el mismo que usan otras pantallas; no hay otro selector de columnas) y son tres: **Costo total ($)**, **HH totales** y **Disciplina**, apagadas por defecto (ver flujo 20). Área, frente y método de medición no se ofrecen: ya no son datos del paquete (flujo 19).
 
 Cada semana agrupa:
 
@@ -333,14 +333,14 @@ El PR es el consolidado técnico. Debe poder consultar:
 
 ```text
 Servicio
-→ Área
 → Disciplina
-→ Frente
-→ Paquete
+→ Paquete (o partida directa, sin paquete)
 → Partida
 → Actividad
 → Día / semana
 ```
+
+El área y el frente **ya no forman parte de la ruta**: salieron de los datos del paquete (flujo 19). La disciplina la hereda la partida de su paquete, o la define la propia partida directa en el Plan Maestro (flujo 20).
 
 El Dashboard es una vista derivada y debe mostrar:
 

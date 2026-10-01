@@ -1,5 +1,5 @@
 ---
-version: 1.9.0
+version: 1.9.1
 proyecto: Control de Proyectos Web
 stack: Next.js 16 + React 19 + Tailwind CSS v4
 actualizado: 2026-09-30
@@ -543,6 +543,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 | Versión | Fecha | Cambio |
 |---|---|---|
 | 1.9.0 | 2026-09-30 | F0-U1, indicaciones de Victor, pendientes de su revisión: §3 nueva línea «Toda maqueta del plan se muestra con los tres paneles»; §5 Tablas, regla de alineación de columnas (encabezado alineado con su dato, ancho justo) con un ejemplo correcto y uno incorrecto; ítem 11 del checklist de §11. Sin tokens ni componentes nuevos. |
+| 1.9.1 | 2026-09-30 | F0-V, indicaciones de Victor: §8 regla de barras de desplazamiento azuladas (no blancas) y su CSS; corrección de la regla de color del avance real en las filas «Real» (`tr.real td.pct-ej` / `.pct-100`, que antes quedaba pisada por `tr.real td`). Sin tokens nuevos. |
 | 1.8.0 | 2026-09-30 | F0-S, con dos indicaciones de Victor, pendientes de su revisión: §3 «Paneles laterales ocultables» fija la posición del icono (esquina superior interior del encabezado de cada panel, a la altura del título; visible también con el panel oculto); §4.1.2 nueva, color de los porcentajes de avance real en ejecución (0 % blanco, en curso amarillo, 100 % verde; solo porcentajes de avance; pantallas existentes fuera de este plan). Sin tokens ni componentes nuevos. |
 | 1.7.0 | 2026-09-30 | F0-R, con las decisiones de Victor sobre las maquetas: F0-A y el lienzo quedan aprobados (marca de paquete alterna dos colores, plegado que se reinicia, restante en ambas listas, pestañas en pantallas angostas, filas «para revisar» que bloquean aprobar; lienzo con Disciplina opcional, «Met.» y amarillo de advertencia); §3 paneles ocultables rehecha (un icono por panel en su borde interior) y asistente que no ocupa espacio (se quita la franja de 4 rem); Crear RDT rehecha sobre la pantalla existente; regla de abreviaturas (§5, §7); disciplina (catálogo simulado). Sin tokens ni componentes nuevos. |
 | 1.6.0 | 2026-09-30 | Propuesta de F0-B (plan niveles-paquetes-plan-maestro-rdt), pendiente de aprobación de las maquetas por Victor: §3 «Paneles laterales ocultables»; §5 «Lienzo del Plan Maestro» y «Selector de actividad del RDT»; §8 regla del lienzo con columnas fijas y días. Sin tokens ni componentes nuevos. |

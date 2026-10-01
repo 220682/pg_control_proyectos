@@ -174,9 +174,18 @@ Tandas de código (todas sin push ni merge, sin navegador; lo visual queda **Obs
 - **Para F5-A (integración):** unir `nodos` reales (carril 1) al lienzo; sustituir `leerRealPorClave` por `realPorClaveReporte`; unificar `claveReporte`; pasar `id` del usuario en `layout.tsx`; decidir el alias `@/` en `vitest.config.ts`; revisar «Activ.» y `actividades_acum` con derivadas; registrar los cambios aditivos a C2 y C3 en los contratos; comprobar migraciones 073 a 084 (076 a 078 aún sin comprobar).
 - **Mejoras de trabajo (para F5-D):** los heredocs largos de Bash con comillas fallan: escribir con Write y ejecutar un script guardado; la herramienta de edición exige `Read` previo; un Worker cortado por el límite de uso se reanuda con `SendMessage` sin rehacer; la regla de lint `react-hooks/set-state-in-effect` obliga a derivar el estado en los manejadores.
 
+### Estado al 2026-10-01 (Orquestador, sesión nueva)
+
+- Cerradas desde el cuarto handoff: F2-D (Disciplina del paquete, 085), F3-E (Disciplina en el Plan Maestro, 086) y F5-A (integración; commit `0250dab`).
+- **Victor hizo el merge y el push de la app** (`main` = `origin/main` = `0250dab`, comprobado con git). Autoriza lo demás del plan.
+- **Decisión de Victor (2026-10-01): las filas derivadas del modo «por avance del paquete» SÍ cuentan como actividad en «Activ.» de Status y en el PPC, como hoy. No se toca el motor del PR (`db/053`).** Regla de negocio para F5-D (flujos 06 y 10), previa consulta por cualquier choque.
+- Servicio de prueba de F5-B: se crea en el portafolio donde ya están PS-0004 y PS-0005.
+- Migraciones 073 a 086: Victor cree que están bien aplicadas. El `check` de solo lectura fue **denegado por el sistema** al Orquestador (script regenerado; no se rodeó). Queda comprobado de forma indirecta por F5-B (en pantalla). Si 086 falta, el Plan Maestro falla y F5-B lo anotará.
+- Pendiente de documentar: texto de contratos C2, C3 y C5 (en `resultados/F5-A.md`), progreso de F5-B, F5-C, F5-D, Auditor y Gate 2.
+
 ## Última actualización y responsable
 
-2026-09-30 (noche, cierre de la ola 4), Orquestador.
+2026-10-01, Orquestador.
 
 ## Handoffs
 

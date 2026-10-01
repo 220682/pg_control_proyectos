@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Crear RDT — pantalla existente con selector de actividad</title>
+<title>Crear RDT — tres paneles y selector de actividad</title>
 <style>
 :root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -53,6 +53,8 @@ th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertic
 th{color:var(--text-2);font-weight:600;background:var(--bg-elevated);position:sticky;top:0}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 th.met{min-width:76px}
+.aj{width:1%}
+th.aj,th.num{vertical-align:bottom}
 tr.tot td{background:rgba(255,255,255,.05);font-weight:600}
 .cod{color:var(--accent);font-weight:600}
 .msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0;font-size:11px}
@@ -91,12 +93,90 @@ tr.tot td{background:rgba(255,255,255,.05);font-weight:600}
 details.notas{font-size:11px;color:var(--text-2)}
 details.notas summary{cursor:pointer;color:var(--text)}
 details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
+/* shell de escritorio: izquierdo w-60 (240 px), centro flexible, derecho w-64 (256 px) */
+.shell{flex:1;min-height:0;display:flex;background:var(--bg-base)}
+.pnl{position:relative;flex:0 0 240px;display:flex;background:var(--bg-elevated);min-width:0}
+.pnl.izq{border-right:1px solid var(--line)}
+.pnl.der{flex-basis:256px;border-left:1px solid var(--line)}
+.pin{flex:1;min-width:0;display:flex;flex-direction:column;padding:0 16px 12px;overflow:hidden}
+.pnl.der .pin{overflow-y:auto}
+/* encabezado del panel (38 px): el icono vive en su esquina superior interior, a la altura del título */
+.ph{display:flex;align-items:center;gap:8px;height:38px;margin:0 -16px 10px;padding:0 34px 0 16px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;flex:0 0 auto}
+.ph .logo{width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 14px rgba(34,211,238,.4);display:flex;align-items:center;justify-content:center;color:var(--bg-base);font-size:11px;flex:0 0 auto}
+.ph em{font-style:normal;color:var(--accent)}
+.pnl.der .ph{padding:0 16px 0 34px;text-transform:uppercase;letter-spacing:.04em;font-size:10px;font-weight:500;color:var(--text-2)}
+/* un solo icono por panel, en su borde interior; oculto: queda una tira de 24 px con el icono */
+.pnl .tg{position:absolute;top:6px;width:20px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;background:var(--bg-base);z-index:6}
+.pnl.izq .tg{right:3px}.pnl.der .tg{left:3px}
+.pnl.oculto{flex:0 0 24px;border:0;background:transparent}.pnl.oculto .pin{display:none}.pnl.oculto .tg{left:2px;right:auto}
+.centro{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}
+/* asistente: icono flotante de 48 px sobre el contenido (no reserva espacio) */
+.asistente{position:absolute;right:24px;bottom:16px;width:48px;height:48px;border-radius:50%;padding:0;background:var(--bg-elevated);border:1px solid var(--line);color:var(--accent);font-weight:700;font-size:12px;z-index:40;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+/* contenido de los paneles (rótulos y registro de accesos de la app) */
+.scroll-izq{flex:1;min-height:0;overflow-y:auto}
+.ttl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.6);padding:0 12px;margin-bottom:4px}
+.grp-n{margin-top:14px}
+.pit{display:flex;align-items:center;gap:8px;border-radius:8px;padding:6px 12px;font-size:12px;color:var(--text-2);text-decoration:none;border:0;background:none;width:100%;text-align:left;cursor:pointer}
+a.pit:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.pit.sel{background:rgba(34,211,238,.1);color:var(--accent)}
+.pit.inerte{color:rgba(148,163,184,.6);cursor:default}
+.ic{flex:0 0 auto;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c)}
+.acc-blk{margin-top:4px;padding-top:4px;border-top:1px dashed var(--line)}
+.acc-blk .sub{font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.5);padding:0 12px 2px}
+.srv{margin:4px 4px 0;border:1px solid rgba(34,211,238,.2);background:rgba(34,211,238,.05);border-radius:8px;padding:6px 12px}
+.srv .k{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.6)}
+.srv .n{font-size:12px;font-weight:600;color:var(--accent)}
+.srv .m{font-size:12px;line-height:1.3}
+.pie{flex:0 0 auto;border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.ibs{display:flex;gap:6px}
+.ib{position:relative;width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,.05);color:var(--text-2);font-size:15px}
+.ib svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ib .bd{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:999px;background:var(--accent);color:var(--bg-base);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.vc label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.6);margin-bottom:4px}
+.vc select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:11px;color:var(--text)}
+.usr{display:flex;align-items:center;gap:10px;padding:6px}
+.usr .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--bg-base);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.usr b{display:block;font-size:13px;font-weight:500}.usr span{display:block;font-size:11px;color:var(--text-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:4px 10px;font-size:11px;color:var(--text-2);text-decoration:none}
+a.chip:hover{color:var(--accent)}
+.chip.inerte{cursor:default}
+.mk{border:1px solid currentColor;border-radius:4px;padding:0 4px;font-size:8px;text-transform:uppercase;letter-spacing:.04em;opacity:.7}
+.sep-d{margin:0 0 14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.ag{border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:8px;padding:8px 12px;margin-bottom:8px}
+.ag>button{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;padding:0;font-size:12px;font-weight:600;color:var(--text);border-radius:0}
+.ag>button:hover{border:0}
+.ag .cv{color:var(--text-2);transition:transform .15s}
+.ag>button[aria-expanded=true] .cv{transform:rotate(180deg)}
+.ag .lst{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.ag .lst .pit{padding:2px 4px;border-radius:6px}
+.ag .lst .pit.sel{background:none;color:var(--accent-2)}
+.rec>button{display:flex;width:100%;justify-content:space-between;align-items:center;border:0;padding:4px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.6);border-radius:6px}
+.rec>button:hover{border:0;color:var(--text)}
+/* móvil: barra superior y cajones */
+.mhead{display:none;flex:0 0 auto;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--bg-elevated)}
+.mhead button{width:40px;height:40px;padding:0;font-size:16px;border-radius:8px}
+.mhead .mt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;font-weight:600}
+.mhead .mt em{font-style:normal;color:var(--accent)}
+.pvelo{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50}
+.cajon{position:fixed;top:0;bottom:0;width:min(288px,88vw);background:var(--bg-elevated);z-index:51;display:flex;flex-direction:column;padding:16px;overflow-y:auto}
+.cajon.l{left:0;border-right:1px solid var(--line)}.cajon.r{right:0;border-left:1px solid var(--line)}
+.cajon .ct{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);flex:0 0 auto}
+.cajon .ct button{width:36px;height:36px;padding:0;font-size:16px;border-radius:8px}
+/* F0-U2: marco de tres paneles (copiado de plan-maestro-tres-paneles.html) */
+html,body{height:100%}
+body{display:flex;flex-direction:column;overflow:hidden}
+.demo{flex:0 0 auto}
+.centro{overflow:hidden}
+.pantalla{flex:1;min-height:0;overflow:auto}
+@media (max-width:1023px){body{overflow:auto;height:auto;min-height:100%}.shell{height:100dvh;flex:none}.pnl{display:none}.mhead{display:flex}.asistente{right:16px;bottom:16px}}
+
 </style>
 </head>
 <body>
 <div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
 <a href="index.html">&larr; Índice de mockups</a>
-<span>Maqueta · Crear RDT (pantalla existente) + selector de actividad del Plan Maestro · datos simulados</span>
+<span>Maqueta · Crear RDT (pantalla existente) con los tres paneles + selector de actividad del Plan Maestro · datos simulados</span>
 <div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
 <button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
 <button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
@@ -108,8 +188,17 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="grp" role="group" aria-label="Modo de la pantalla"><span>Modo:</span>
 <button type="button" data-modo="crear" aria-pressed="true">Crear</button>
 <button type="button" data-modo="ver" aria-pressed="false">Revisar (solo lectura)</button></div>
+<div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
+<button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
+<button type="button" data-pan="10" aria-pressed="false">Izquierdo oculto</button>
+<button type="button" data-pan="01" aria-pressed="false">Derecho oculto</button>
+<button type="button" data-pan="11" aria-pressed="false">Ambos ocultos</button></div>
 </div>
-<main class="pantalla" data-estado="datos" id="pant">
+<div class="shell" id="shell">
+<aside class="pnl izq" id="pl-izq" aria-label="Panel izquierdo del servicio"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-controls="in-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><div class="pin" id="in-izq"><div class="ph"><span class="logo" aria-hidden="true">&#9638;</span><span>Control de <em>Proyectos</em></span></div><div class="scroll-izq nav-izq" data-testid="panel-izquierdo-scroll"></div><div class="pie pie-izq"></div></div></aside>
+<main class="centro">
+<header class="mhead"><button type="button" id="m-menu" aria-label="Abrir menú" aria-haspopup="dialog">&#9776;</button><span class="mt">Control de <em>Proyectos</em></span><button type="button" id="m-herr" aria-label="Abrir herramientas" aria-haspopup="dialog">&#9707;</button></header>
+<div class="pantalla" data-estado="datos" id="pant">
 <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Crear RDT</nav>
 <h1 id="h-tit">Crear RDT</h1>
 <p class="desc" id="h-desc">Reporte diario de trabajo · PROM-GP-002</p>
@@ -138,7 +227,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 </div>
 
 <div class="cab-sec"><p class="sec">2.0 Reporte de avance</p><button type="button" class="add" id="add-act">+ Actividad</button></div>
-<div class="tw"><table><caption class="sr">Reporte de avance: actividades del día</caption><thead><tr><th scope="col">Ítem</th><th scope="col">Partida del DP</th><th scope="col">Descripción de la actividad</th><th scope="col">WBS</th><th scope="col">TA</th><th scope="col">Unid.</th><th scope="col" class="num met">Met. acum.</th><th scope="col" class="num met">Met. prog.</th><th scope="col" class="num met">Met. ejec.</th><th scope="col">Restricciones</th><th scope="col">CNC</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="act-body"></tbody></table></div>
+<div class="tw"><table><caption class="sr">Reporte de avance: actividades del día</caption><thead><tr><th scope="col" class="aj">Ítem</th><th scope="col">Partida del DP</th><th scope="col">Descripción de la actividad</th><th scope="col" class="aj">WBS</th><th scope="col" class="aj">TA</th><th scope="col" class="num aj">Unid.</th><th scope="col" class="num met aj">Met. acum.</th><th scope="col" class="num aj">Avance real (%)</th><th scope="col" class="num met aj">Met. prog.</th><th scope="col" class="num met aj">Met. ejec.</th><th scope="col">Restricciones</th><th scope="col">CNC</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="act-body"></tbody></table></div>
 
 <div class="cab-sec"><p class="sec">3.0 Tareo de personal · HH por actividad</p><button type="button" class="add" id="add-per">+ Persona</button></div>
 <div class="tw"><table><caption class="sr">Tareo de personal: horas por actividad</caption><thead id="tar-head"></thead><tbody id="tar-body"></tbody></table></div>
@@ -148,7 +237,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="tw"><table><caption class="sr">Equipos y horas máquina</caption><thead><tr><th scope="col">Equipo</th><th scope="col">WBS</th><th scope="col" class="num">HM</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="eq-body"></tbody></table></div></div>
 <div><div class="cab-sec"><p class="sec">Materiales · informativo</p><button type="button" class="add" id="add-mat">+ Material</button></div>
 <p class="muted" style="font-size:10px;margin-bottom:4px">No se cuantifica ni se suma a ningún acumulado, es solo para tener el dato a mano.</p>
-<div class="tw"><table><caption class="sr">Materiales usados (informativo)</caption><thead><tr><th scope="col">Descripción</th><th scope="col">WBS</th><th scope="col">Und.</th><th scope="col" class="num">Cantidad</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="mat-body"></tbody></table></div>
+<div class="tw"><table><caption class="sr">Materiales usados (informativo)</caption><thead><tr><th scope="col">Descripción</th><th scope="col">WBS</th><th scope="col" class="num">Und.</th><th scope="col" class="num">Cantidad</th><th scope="col"><span class="sr">Quitar</span></th></tr></thead><tbody id="mat-body"></tbody></table></div>
 <p class="sec">Observaciones</p><textarea rows="3" style="width:100%;resize:vertical" aria-label="Observaciones"></textarea></div>
 </div>
 </fieldset>
@@ -157,6 +246,9 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="e-error"><div class="msg err" role="alert"><span aria-hidden="true">&#9888;</span><div><strong>No se pudo cargar el formulario</strong><br>No fue posible traer los catálogos ni el Plan Maestro del servicio. Intenta de nuevo; si el problema sigue, avisa al administrador.<div style="margin-top:6px"><button type="button">Reintentar</button></div></div></div></div>
 <div class="e-vacio"><div class="vacio"><strong>El Plan Maestro no tiene filas para elegir</strong><p>El Plan Maestro aprobado de este servicio no contiene partidas. Revisa Paquetes de trabajo y el Plan Maestro.</p></div></div>
 <details class="card notas"><summary>Notas de esta maqueta: pantalla existente, selector, estados, móvil y accesibilidad</summary><ul>
+<li><strong>Tres paneles (F0-U2):</strong> la pantalla va dentro del mismo marco de tres paneles de la maqueta del Plan Maestro (panel izquierdo con «Crear RDT» activo en Acciones, panel derecho con «Accesos rápidos» y los grupos del servicio —abierto «Supervisión operativa»—, iconos de ocultar/mostrar en la esquina interior de cada panel, asistente flotante de 48 px y cajón en móvil). Se alternan con el grupo «Paneles» de arriba; el centro conserva todos sus datos y las tablas anchas se desplazan en horizontal.</li>
+<li><strong>Alineación (F0-U2):</strong> el encabezado de cada columna va sobre su dato y alineado igual: texto a la izquierda; unidades, metrados, porcentajes y horas a la derecha, con el encabezado también a la derecha. Las columnas cortas (Ítem, WBS, TA, Unid., metrados, avance) toman el ancho justo y el sobrante queda en la descripción.</li>
+<li><strong>Color del avance real (F0-S/F0-U2):</strong> la columna nueva «Avance real (%)» de la tabla 2.0 lleva la misma regla que el selector; hay una actividad de cada caso: Eliminación de material 0 % (blanco), Excavación 90 % (amarillo) y Relleno 100 % (verde con ✓).</li>
 <li><strong>Color del avance real (F0-S):</strong> el porcentaje de avance acumulado de cada partida y de cada paquete va en blanco si es 0 % (Eliminación de material), en amarillo si está en curso (Excavación 90 %, Acero 40 %, paquete Banco ducto 62 %) y en verde con marca ✓ al 100 % (Cama de arena; paquete Relleno con sus dos partidas). El número siempre va escrito; el color solo lo refuerza. Metrados y montos no llevan color.</li>
 <li><strong>Es la pantalla que ya existe</strong> (Crear RDT de la app), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos. Mejora solo la presentación con los tokens de <code>design.md</code> (tarjetas, etiquetas, tablas con desplazamiento). Modo «Revisar» = mismo formulario deshabilitado.</li>
 <li><strong>Selector de actividad.</strong> El campo «Partida del DP» de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: paquetes plegables con sus partidas, las partidas directas aparte, y arriba «Contributoria» y «No contributoria» (TA C y NC, sin partida). Paquete <strong>por avance del paquete</strong> (Relleno): se elige el paquete, se escribe solo la guía y las demás partidas se calculan en solo lectura.</li>
@@ -164,7 +256,12 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <li>Encabezados completos y sin cortarse: «Met. acum.», «Met. prog.», «Met. ejec.» (abreviaturas iguales en todas las pantallas del plan: Met., Acum., Prog., Ejec.).</li>
 <li>Total de cada persona en ámbar si no coincide con la jornada (informativo, no bloquea). Estados: con datos, vacío, cargando y error; «Sin aprobar» muestra el aviso y el selector no ofrece filas.</li>
 <li>Accesibilidad: <code>th scope</code>, foco visible, selector con <code>role="dialog"</code>, <code>aria-modal</code>, foco a la búsqueda, Escape cierra y devuelve el foco; paquetes con <code>aria-expanded</code>. En 390 px las tablas se desplazan en horizontal y el selector ocupa casi toda la pantalla.</li></ul></details>
+</div>
+<button type="button" class="asistente" id="btn-asis" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
 </main>
+<aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
+</div>
+<div id="cajones"></div>
 <div class="velo" id="velo" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-tit" id="modal">
 <header><h2 id="m-tit">Elegir actividad del Plan Maestro</h2><button type="button" class="icon" id="m-x" aria-label="Cerrar el selector" title="Cerrar">&times;</button></header>
 <div class="cuerpo"><div class="fila"><label class="sr" for="m-q">Buscar partida o paquete</label><input type="search" id="m-q" placeholder="Buscar por nombre o WBS" style="flex:1;min-width:160px"><button type="button" id="m-pl">Plegar todo</button><button type="button" id="m-ex">Expandir todo</button></div>
@@ -202,30 +299,31 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
    var wbs=(a.ta==='C'||a.ta==='NC')?selWbs('actividad '+cod,a.id+'|act',a.wbs,'— elige partida —'):'<span class="muted">'+(a.wbs||'—')+'</span>';
    var ac=a.pid&&ACUM[a.pid]!==undefined?f(ACUM[a.pid]):'—';
    var ro=a.calc?' readonly aria-label="calculado"':'';
-   h+='<tr data-a="'+a.id+'"><td class="cod">'+cod+'</td><td>'+pick+'</td>'+
+   h+='<tr data-a="'+a.id+'"><td class="cod aj">'+cod+'</td><td>'+pick+'</td>'+
     '<td><input type="text" style="min-width:210px" data-s="acts" data-id="'+a.id+'" data-f="desc" value="'+esc(a.desc)+'" placeholder="Qué se hizo" aria-label="Descripción de '+cod+'"'+(a.calc?' readonly':'')+'></td>'+
-    '<td>'+wbs+'</td><td class="muted">'+TA[a.ta]+'</td><td class="muted">'+(a.und||'—')+'</td><td class="num muted">'+ac+'</td>'+
+    '<td class="aj">'+wbs+'</td><td class="muted aj">'+TA[a.ta]+'</td><td class="num muted aj">'+(a.und||'—')+'</td><td class="num muted aj">'+ac+'</td><td class="num aj">'+avRow(a)+'</td>'+
     '<td class="num"><input type="number" class="n" min="0" step="any" data-s="acts" data-id="'+a.id+'" data-f="prog" value="'+esc(a.prog)+'" aria-label="Metrado programado de '+cod+'"'+ro+'></td>'+
     '<td class="num"><input type="number" class="n" min="0" step="any" data-s="acts" data-id="'+a.id+'" data-f="ejec" value="'+esc(a.ejec)+'" aria-label="Metrado ejecutado de '+cod+'"'+ro+'></td>'+
     '<td><input type="text" style="min-width:150px" data-s="acts" data-id="'+a.id+'" data-f="restr" value="'+esc(a.restr)+'" aria-label="Restricciones de '+cod+'"></td>'+
     '<td><select data-s="acts" data-id="'+a.id+'" data-f="cnc" aria-label="CNC de '+cod+'" style="min-width:170px"><option value="">—</option>'+CNC.map(function(c){return '<option'+(c===a.cnc?' selected':'')+'>'+esc(c)+'</option>';}).join('')+'</select></td>'+
     '<td><button type="button" class="del" data-quitar="act|'+a.id+'" aria-label="Quitar la actividad '+cod+'" title="Quitar actividad">&#128465;</button></td></tr>';});
-  document.getElementById('act-body').innerHTML=h||'<tr><td colspan="12" class="muted">Sin actividades. Pulsa «+ Actividad».</td></tr>';
+  document.getElementById('act-body').innerHTML=h||'<tr><td colspan="13" class="muted">Sin actividades. Pulsa «+ Actividad».</td></tr>';
   pintaTareo();calcGuia();}
+ function avRow(a){var r=a.pid?buscaP(a.pid):null;return r?pctH(r.i.av):'<span class="muted">—</span>';}
  function calcGuia(){var g=null,c=null;acts.forEach(function(a){if(a.pid==='rel')g=a;if(a.calc)c=a;});
   if(!g||!c)return;['prog','ejec'].forEach(function(k){var v=(parseFloat(g[k])||0)/80*40;c[k]=v?f(v):'';
    var inp=document.querySelector('[data-a="'+c.id+'"] [data-f="'+k+'"]');if(inp)inp.value=c[k].replace(',','.');});}
  /* ----- tareo ----- */
  function horasTot(p){var s=0;acts.forEach(function(a){s+=parseFloat(p.horas[a.id])||0;});return s;}
  function pintaTareo(){var hd='<tr><th scope="col">#</th><th scope="col">Persona</th><th scope="col">DNI</th><th scope="col">Apellidos y nombres</th><th scope="col">Cargo</th><th scope="col">Especialidad</th>';
-  acts.forEach(function(a,i){hd+='<th scope="col" style="text-align:center" title="'+esc(a.desc)+'">T'+(i+1)+'</th>';});
+  acts.forEach(function(a,i){hd+='<th scope="col" class="num" title="'+esc(a.desc)+'">T'+(i+1)+'</th>';});
   hd+='<th scope="col" class="num">Total</th><th scope="col"><span class="sr">Quitar</span></th></tr>';document.getElementById('tar-head').innerHTML=hd;
   var h='';pers.forEach(function(p,i){
    var opts='<option value="">Elige la persona…</option>'+PERSONAL.map(function(x){return '<option value="'+x.id+'"'+(x.id===p.pid&&!p.manual?' selected':'')+'>'+esc(x.nombre)+'</option>';}).join('')+'<option value="__M__"'+(p.manual?' selected':'')+'>+ Agregar trabajador no listado</option>';
    var datos=p.pid&&!p.manual?'<td class="muted">'+p.dni+'</td><td>'+esc(p.nombre)+'</td><td>'+esc(p.cargo)+'</td><td class="muted">'+esc(p.esp||'—')+'</td>':
     '<td><input type="text" style="width:74px" maxlength="8" inputmode="numeric" data-s="pers" data-id="'+p.id+'" data-f="dni" value="'+esc(p.dni)+'" aria-label="DNI"></td><td><input type="text" style="min-width:170px" data-s="pers" data-id="'+p.id+'" data-f="nombre" value="'+esc(p.nombre)+'" aria-label="Apellidos y nombres"></td><td><input type="text" style="min-width:130px" data-s="pers" data-id="'+p.id+'" data-f="cargo" value="'+esc(p.cargo)+'" aria-label="Cargo"></td><td><input type="text" style="min-width:110px" placeholder="Civil, SSOMA… (opcional)" data-s="pers" data-id="'+p.id+'" data-f="esp" value="'+esc(p.esp)+'" aria-label="Especialidad"></td>';
    h+='<tr data-p="'+p.id+'"><td>'+(i+1)+'</td><td><select data-s="pers" data-id="'+p.id+'" data-f="sel" style="min-width:170px" aria-label="Persona '+(i+1)+'">'+opts+'</select></td>'+datos;
-   acts.forEach(function(a){h+='<td><input type="number" class="n" min="0" step="any" style="width:44px" data-h="'+p.id+'|'+a.id+'" value="'+esc(p.horas[a.id]||'')+'" aria-label="Horas de la persona '+(i+1)+' en la actividad"></td>';});
+   acts.forEach(function(a){h+='<td class="num"><input type="number" class="n" min="0" step="any" style="width:44px" data-h="'+p.id+'|'+a.id+'" value="'+esc(p.horas[a.id]||'')+'" aria-label="Horas de la persona '+(i+1)+' en la actividad"></td>';});
    h+='<td class="num" data-ptot="'+p.id+'"></td><td><button type="button" class="del" data-quitar="per|'+p.id+'" aria-label="Quitar persona '+(i+1)+'" title="Quitar persona">&#128465;</button></td></tr>';});
   h+='<tr class="tot"><td colspan="6">Total HH</td>';acts.forEach(function(a){h+='<td class="num" data-ctot="'+a.id+'"></td>';});h+='<td class="num" data-gtot></td><td></td></tr>';
   document.getElementById('tar-body').innerHTML=h;totales();}
@@ -242,7 +340,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
   if(eqs.length){h+='<tr class="tot"><td colspan="2">Total HM</td><td class="num" style="color:var(--accent)" id="tot-hm">'+f(hm)+'</td><td></td></tr>';}
   document.getElementById('eq-body').innerHTML=h||'<tr><td colspan="4" class="muted">Sin equipos. Usa «+ Equipo» si se empleó maquinaria.</td></tr>';}
  function pintaMat(){var h='';mats.forEach(function(m){
-  h+='<tr><td><input type="text" style="min-width:130px" placeholder="Qué material" data-s="mats" data-id="'+m.id+'" data-f="desc" value="'+esc(m.desc)+'" aria-label="Material"></td><td>'+wbsCell('mat',m.id,m.wbs)+'</td><td><input type="text" style="width:56px" data-s="mats" data-id="'+m.id+'" data-f="und" value="'+esc(m.und)+'" aria-label="Unidad"></td><td class="num"><input type="number" class="n" min="0" step="any" style="width:60px" data-s="mats" data-id="'+m.id+'" data-f="cant" value="'+esc(m.cant)+'" aria-label="Cantidad"></td><td><button type="button" class="del" data-quitar="mat|'+m.id+'" aria-label="Quitar material" title="Quitar material">&#128465;</button></td></tr>';});
+  h+='<tr><td><input type="text" style="min-width:130px" placeholder="Qué material" data-s="mats" data-id="'+m.id+'" data-f="desc" value="'+esc(m.desc)+'" aria-label="Material"></td><td>'+wbsCell('mat',m.id,m.wbs)+'</td><td class="num"><input type="text" style="width:56px;text-align:right" data-s="mats" data-id="'+m.id+'" data-f="und" value="'+esc(m.und)+'" aria-label="Unidad"></td><td class="num"><input type="number" class="n" min="0" step="any" style="width:60px" data-s="mats" data-id="'+m.id+'" data-f="cant" value="'+esc(m.cant)+'" aria-label="Cantidad"></td><td><button type="button" class="del" data-quitar="mat|'+m.id+'" aria-label="Quitar material" title="Quitar material">&#128465;</button></td></tr>';});
   document.getElementById('mat-body').innerHTML=h||'<tr><td colspan="5" class="muted">Sin materiales.</td></tr>';}
  function todo(){pintaActs();pintaEq();pintaMat();}
  /* ----- selector ----- */
@@ -331,13 +429,118 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
  var g=nuevaAct(),c=nuevaAct();llena(g,'rel');llena(c,'afi');c.calc=true;g.prog='6';g.ejec='4';
  var a3=nuevaAct();a3.ta='C';a3.wbs='06.03.01';a3.desc='Transporte interno de materiales';a3.restr='Grúa ocupada 2 h';a3.cnc='Falta de equipos y herramientas';
  var a4=nuevaAct();a4.ta='NC';a4.wbs='06.03.01';a4.desc='Espera de tubería HDPE';
- acts=[a1,g,c,a3,a4];
+ var a5=nuevaAct();llena(a5,'eli');
+ acts=[a1,g,c,a5,a3,a4];
  var r=PERSONAL[0],r2=PERSONAL[1];
  pers=[{id:uid('p'),pid:r.id,manual:false,dni:r.dni,nombre:r.nombre,cargo:r.cargo,esp:r.esp,horas:{}},{id:uid('p'),pid:r2.id,manual:false,dni:r2.dni,nombre:r2.nombre,cargo:r2.cargo,esp:r2.esp,horas:{}}];
  pers[0].horas[a1.id]='10';pers[1].horas[a1.id]='6';pers[1].horas[g.id]='2';pers[1].horas[a3.id]='2';
  eqs=[{id:uid('e'),manual:false,desc:'Excavadora CAT 320',wbs:'06.03.01',hm:'10'}];
  mats=[{id:uid('m'),desc:'Arena fina',wbs:'06.03.02',und:'m³',cant:'12'}];
  todo();calcGuia();
+})();
+</script>
+<script>
+(function(){
+var ABIERTO=2; /* grupo abierto del panel derecho: Supervisión operativa */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+/* ---------- paneles: contenido real (registro de accesos y estructura de la app) ---------- */
+var C={proy:'#22d3ee',plan:'#4f7df3',cost:'#fbbf24',sup:'#c084fc',log:'#34d399',ot:'#38bdf8',adm:'#fb923c',sso:'#fb7185',rec:'#2dd4bf'};
+/* id: [etiqueta, color, glifo, activo(1)/inerte(0), acción(1)] */
+var R={
+ 'ot':['(OT) Orden de trabajo','proy','✓',0],'alcance-servicio':['Alcance del servicio','proy','◎',0],'presupuesto':['Presupuesto del proyecto','proy','$',0],
+ 'dp':['DP (Datos del proyecto)','proy','▤',1],'paquetes-trabajo':['Paquetes de Trabajo','plan','▣',1],'cronograma':['Cronograma','plan','≡',1],'plan-maestro':['Plan Maestro','plan','▦',1],
+ 'cargos-hh':['Cargos (HH)','proy','☺',0],'equipos-hm':['Equipos (HM)','proy','✚',0],'materiales':['Materiales (c/c)','proy','▥',0],'personal-nuevo':['Personal NUEVO','proy','+',0],
+ 'planos':['Planos','ot','┼',0],'pets':['Pets','sso','✔',0],
+ 'consolidado-rdts':['Consolidado RDTs','sup','▤',1],'status-requerimiento':['Status de requerimiento','log','◫',1],'pr':['PR (Reporte del proyecto)','plan','▧',1],'dashboard':['Dashboard','plan','▦',1],'curva-s':['Curva S','plan','∿',1],
+ 'costos-servicios':['Registro de costos por servicios','log','$',1],'consolidado-servicio':['Consolidado de servicio','proy','✓',0],
+ 'crear-requerimiento-servicios':['Crear requerimiento de servicios','log','▤',1,1],'crear-rdt':['Crear RDTs','sup','▤',1,1],'rdt':['Subir RDTs','sup','✔',1,1],'crear-paquete':['Crear paquete','plan','+',1,1],
+ 'ficha-servicio':['Ficha del servicio','proy','i',1],'editar-servicio':['Editar servicio','proy','✎',1,1],'editar-checklist':['Editar checklist','proy','≡',1,1],
+ 'tareo-moi':['Tareo MOI','adm','◷',0],'consolidado-moi':['Consolidado MOI','adm','▤',0],'status-servicios':['Status de servicios','cost','~',0],'acta-conformidad':['Acta de conformidad','sup','✔',0],
+ 'consolidado-rq':['Consolidado RQ','log','▤',1],'notif':['Notificaciones','proy','◔',1],
+ '3wla':['3WLA','plan','▦',0],'programacion-diaria':['Programación diaria','plan','▤',0],'status-capacitaciones':['Status de capacitaciones','plan','▤',0],'programacion-capacitaciones':['Programación de capacitaciones','plan','▤',0],
+ 'status-rdts':['Status de RDTs','sup','≡',1],'listado-rdts':['Archivo de RDTs subidos','sup','◷',1],'informe-servicio':['Informe de servicio','sup','▤',0]};
+var IZQ=[['Alcance y presupuesto',['ot',['alcance-servicio','Alcance'],['presupuesto','Presupuesto'],'dp','paquetes-trabajo']],
+ ['Planificación',['cronograma','plan-maestro']],
+ ['Recursos del servicio',['cargos-hh','equipos-hm',['materiales','Materiales (c/c)'],'personal-nuevo']],
+ ['Documentación',['planos',['pets','PETS']]],
+ ['Reportes',['consolidado-rdts',['status-requerimiento','Requerimiento (RQ)'],'pr','dashboard','curva-s',['costos-servicios','Registro de costos'],'consolidado-servicio']],
+ ['Acciones',[['crear-requerimiento-servicios','Generar RQ'],['crear-rdt','Crear RDT'],['rdt','Subir RDT'],'crear-paquete']],
+ ['Servicio',['ficha-servicio','editar-servicio','editar-checklist']]];
+var DER=[['Planificación','plan',['notif','cronograma','paquetes-trabajo','plan-maestro','3wla','programacion-diaria','pr','dashboard','curva-s','status-capacitaciones','programacion-capacitaciones']],
+ ['Costos','cost',['notif','status-servicios']],
+ ['Supervisión operativa','sup',['notif','crear-rdt','rdt','status-rdts','listado-rdts','consolidado-rdts','informe-servicio','acta-conformidad']],
+ ['Logística','log',['notif','crear-requerimiento-servicios','status-requerimiento','consolidado-rq','costos-servicios']],
+ ['Oficina Técnica','ot',['notif']],
+ ['Administración','adm',['notif','tareo-moi','consolidado-moi']],
+ ['SSOMA','sso',['notif','pets']]];
+var RAPIDO=[['tareo-moi'],['pets'],['acta-conformidad'],['status-servicios'],['status-requerimiento','Requerimiento'],['consolidado-rq'],['rdt']];
+var RECURSOS=['Personal','Cargos','Equipos','Causas CNC'];
+function ico(c,g){return '<span class="ic" style="--c:'+C[c]+'" aria-hidden="true">'+g+'</span>';}
+function fila(def,lado){var id=typeof def==='string'?def:def[0],a=R[id],et=(typeof def==='string'?a[0]:def[1]),sel=(id==='crear-rdt');
+ var mk=(lado==='der'&&a[4])?' <span class="mk">Acción</span>':'';
+ if(a[3]){return '<a href="#" class="pit'+(sel?' sel':'')+'" data-chip="'+id+'"'+(sel?' aria-current="page"':'')+'>'+ico(a[1],a[2])+esc(et)+mk+'</a>';}
+ return '<span class="pit inerte" data-chip="'+id+'" title="Sin pantalla todavía">'+ico(a[1],a[2])+esc(et)+mk+'</span>';}
+function navIzq(){var h='<nav aria-label="Navegación principal"><a href="#" class="pit" style="margin-bottom:0"><span class="ic" style="--c:'+C.proy+'" aria-hidden="true">▦</span>Todos los servicios</a>'
+ +'<div class="srv" data-testid="servicio-actual"><p class="k">Servicio actual</p><p class="n">S-0001 (simulado)</p><p class="m">Servicio de prueba</p></div>'
+ +'<div class="rec grp-n"><button type="button" class="rec-bt" aria-expanded="false">Recursos de empresa <span class="cv" aria-hidden="true">›</span></button><div class="rec-ls" hidden>'
+ +RECURSOS.map(function(n){return '<a href="#" class="pit"><span class="ic" style="--c:'+C.rec+'" aria-hidden="true">●</span>'+n+'</a>';}).join('')+'</div></div>';
+ IZQ.forEach(function(g){var inf=[],acc=[];g[1].forEach(function(d){var id=typeof d==='string'?d:d[0];(R[id][4]?acc:inf).push(d);});
+  var solo=(g[0]==='Acciones');
+  h+='<div class="grp-n" data-grupo="'+g[0]+'"><p class="ttl">'+g[0]+'</p>'+inf.map(function(d){return fila(d,'izq');}).join('');
+  if(acc.length){h+='<div'+(solo?'':' class="acc-blk"')+'>'+(solo?'':'<p class="sub">Acciones</p>')+acc.map(function(d){return fila(d,'izq');}).join('')+'</div>';}
+  h+='</div>';});
+ return h+'</nav>';}
+var SVG={users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+ bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+ out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>'};
+function pieIzq(){return '<div class="ibs"><button type="button" class="ib" title="Usuarios" aria-label="Usuarios"><svg viewBox="0 0 24 24" aria-hidden="true">'+SVG.users+'</svg></button>'
+ +'<button type="button" class="ib" title="Notificaciones" aria-label="Notificaciones, 3 pendientes"><svg viewBox="0 0 24 24" aria-hidden="true">'+SVG.bell+'</svg><span class="bd">3</span></button>'
+ +'<button type="button" class="ib" title="Configuraciones" aria-label="Configuraciones"><span aria-hidden="true">⚙</span></button>'
+ +'<button type="button" class="ib" title="Cerrar sesión" aria-label="Cerrar sesión"><svg viewBox="0 0 24 24" aria-hidden="true">'+SVG.out+'</svg></button></div>'
+ +'<div class="vc"><label>Ver como</label><select aria-label="Ver como"><option>Mi rol (Administrador)</option></select></div>'
+ +'<a href="#" class="usr" title="Mi entorno"><span class="av" aria-hidden="true">UP</span><span style="min-width:0"><b>Usuario de prueba</b><span>Administrador</span></span></a>';}
+function herr(){var h='<div class="sep-d"><p class="ttl" style="padding:0;margin-bottom:8px">Accesos rápidos</p><div class="chips" data-testid="accesos-rapidos">'
+ +RAPIDO.map(function(d){var a=R[d[0]],et=d[1]||a[0],mk=a[4]?' <span class="mk">Acción</span>':'';
+  return a[3]?'<a href="#" class="chip" data-chip="'+d[0]+'"><span aria-hidden="true">'+a[2]+'</span>'+esc(et)+mk+'</a>':'<span class="chip inerte" data-chip="'+d[0]+'" title="Sin pantalla todavía"><span aria-hidden="true">'+a[2]+'</span>'+esc(et)+'</span>';}).join('')+'</div></div>'
+ +'<p class="ttl" style="padding:0;margin-bottom:8px">Grupos del servicio</p><div class="acord">';
+ DER.forEach(function(g,k){h+='<div class="ag" data-g="'+k+'"><button type="button" aria-expanded="'+(k===ABIERTO?'true':'false')+'" style="'+(k===ABIERTO?'color:'+C[g[1]]:'')+'">'+g[0]+'<span class="cv" aria-hidden="true">&#9662;</span></button><div class="lst"'+(k===ABIERTO?'':' hidden')+'>'
+  +g[2].map(function(id){return fila(id,'der');}).join('')+'</div></div>';});
+ return h+'</div>';}
+function pintaPaneles(){
+ document.querySelectorAll('.nav-izq').forEach(function(e){e.innerHTML=navIzq();});
+ document.querySelectorAll('.pie-izq').forEach(function(e){e.innerHTML=pieIzq();});
+ document.querySelectorAll('.herr').forEach(function(e){e.innerHTML=herr();});}
+/* "Notificaciones" del panel derecho usa el mismo registro por grupo: se rotula igual en los siete grupos */
+document.addEventListener('click',function(e){
+ var a=e.target.closest('a[href="#"]');if(a){e.preventDefault();}
+ var rb=e.target.closest('.rec-bt');if(rb){var ls=rb.parentNode.querySelector('.rec-ls'),o=ls.hidden;ls.hidden=!o;rb.setAttribute('aria-expanded',o?'true':'false');rb.querySelector('.cv').textContent=o?'⌄':'›';return;}
+ var gb=e.target.closest('.ag>button');if(gb){var box=gb.closest('.acord'),mio=gb.parentNode,abierto=gb.getAttribute('aria-expanded')==='true';
+  box.querySelectorAll('.ag').forEach(function(x){var b=x.querySelector('button'),on=(x===mio)&&!abierto;b.setAttribute('aria-expanded',on?'true':'false');x.querySelector('.lst').hidden=!on;
+   b.style.color=on?C[DER[+x.getAttribute('data-g')][1]]:'';});}
+});
+pintaPaneles();
+/* ---------- ocultar/mostrar paneles (solo escritorio) ---------- */
+var ocu={izq:false,der:false};
+function pintaTg(lado){var b=document.querySelector('[data-tg="'+lado+'"]'),p=document.getElementById('pl-'+lado),oc=ocu[lado];p.classList.toggle('oculto',oc);
+ var t=(oc?'Mostrar':'Ocultar')+' panel '+(lado==='izq'?'izquierdo':'derecho');b.setAttribute('aria-expanded',oc?'false':'true');b.setAttribute('aria-label',t);b.title=t;
+ b.innerHTML=(lado==='izq')?(oc?'&#8250;':'&#8249;'):(oc?'&#8249;':'&#8250;');}
+function setPaneles(i,d){ocu.izq=!!i;ocu.der=!!d;pintaTg('izq');pintaTg('der');
+ var k=(ocu.izq?'1':'0')+(ocu.der?'1':'0');document.querySelectorAll('[data-pan]').forEach(function(o){o.setAttribute('aria-pressed',o.getAttribute('data-pan')===k?'true':'false');});
+ }
+document.querySelectorAll('[data-tg]').forEach(function(b){b.addEventListener('click',function(){var l=b.getAttribute('data-tg');setPaneles(l==='izq'?!ocu.izq:ocu.izq,l==='der'?!ocu.der:ocu.der);});});
+document.querySelectorAll('[data-pan]').forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-pan');setPaneles(k.charAt(0)==='1',k.charAt(1)==='1');});});
+/* ---------- cajones móviles (sin el icono de ocultar) ---------- */
+var caj=document.getElementById('cajones'),origen=null;
+function abreCajon(lado,btn){cerrarCajon(true);origen=btn;
+ var der=(lado==='r');
+ caj.innerHTML='<div class="pvelo" data-cierra="1"></div><aside class="cajon '+lado+'" role="dialog" aria-modal="true" aria-label="'+(der?'Herramientas':'Menú')+'"><div class="ct"><span>'+(der?'Herramientas':'Menú')+'</span><button type="button" data-cierra="1" aria-label="Cerrar">&times;</button></div>'
+  +(der?'<div class="herr"></div>':'<div class="scroll-izq nav-izq"></div><div class="pie pie-izq"></div>')+'</aside>';
+ pintaPaneles();caj.querySelector('button[data-cierra]').focus();}
+function cerrarCajon(sinFoco){caj.innerHTML='';if(!sinFoco&&origen){origen.focus();}if(!sinFoco){origen=null;}}
+document.getElementById('m-menu').addEventListener('click',function(){abreCajon('l',this);});
+document.getElementById('m-herr').addEventListener('click',function(){abreCajon('r',this);});
+caj.addEventListener('click',function(e){if(e.target.closest('[data-cierra]')){cerrarCajon();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&caj.firstChild){cerrarCajon();}});
 })();
 </script>
 </body>

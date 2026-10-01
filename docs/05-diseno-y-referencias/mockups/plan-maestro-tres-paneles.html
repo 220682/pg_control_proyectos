@@ -140,18 +140,19 @@ thead .s{background:#0d1426}
 .fin-we{background:rgba(255,255,255,.025)}
 .fx{position:sticky;z-index:2;overflow:hidden;text-overflow:ellipsis}
 thead .fx{z-index:5}
-.fx-wbs{width:74px;min-width:74px;max-width:74px}
-.fx-desc{width:270px;min-width:270px;max-width:270px}
-.fx-und{width:44px;min-width:44px;max-width:44px}
-.fx-met{width:68px;min-width:68px;max-width:68px}
-.fx-cu{width:70px;min-width:70px;max-width:70px}
-.fx-hh{width:66px;min-width:66px;max-width:66px}
+.fx-wbs{width:68px;min-width:68px;max-width:68px}
+.fx-desc{width:300px;min-width:300px;max-width:300px}
+.fx-und{width:40px;min-width:40px;max-width:40px}
+.fx-met{width:62px;min-width:62px;max-width:62px}
+.fx-cu{width:66px;min-width:66px;max-width:66px}
+.fx-hh{width:62px;min-width:62px;max-width:62px}
 .fx-bac{width:70px;min-width:70px;max-width:70px}
 .fx-disc{width:96px;min-width:96px;max-width:96px}
 .fx-falta{width:124px;min-width:124px;max-width:124px}
 .linea{border-right:3px solid var(--warn)}
 .lbl{display:block;font-size:10px;line-height:1.15;font-weight:600}
 .lbl small{display:block;font-weight:400;color:var(--text-2)}
+thead .fx .lbl{white-space:normal}
 tr.n2 td{background:var(--n2-bg);font-weight:600}
 tr.pqh td{background:var(--pq-bg);font-weight:600}
 tr.tot td{background:var(--tot-bg);color:var(--text);font-weight:600}
@@ -209,8 +210,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <div class="grp" role="group" aria-label="Ejemplo mostrado"><span>Ejemplo:</span>
 <button type="button" data-esc="anexo" aria-pressed="true">1 · Anexo completo (100 %)</button>
 <button type="button" data-esc="incompleto" aria-pressed="false">2 · Borrador incompleto</button>
-<button type="button" data-esc="extendido" aria-pressed="false">3 · Real fuera del rango</button>
-<button type="button" data-esc="avance" aria-pressed="false">4 · Avance real: 0 %, en curso y 100 %</button></div>
+<button type="button" data-esc="extendido" aria-pressed="false">3 · Real fuera del rango</button></div>
 <div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
 <button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
 <button type="button" data-pan="10" aria-pressed="false">Izquierdo oculto</button>
@@ -245,7 +245,7 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <span class="muted">Semana de sábado a viernes · línea amarilla (la de advertencia) = divisoria de columnas fijas</span></div>
 </div>
 <div class="global" id="estado-global" role="status" aria-live="polite"><strong>Repartido</strong><progress id="prog-g" max="100" value="0" aria-label="Porcentaje del metrado del servicio ya repartido"></progress><span id="pct-g"></span><span id="txt-g"></span></div>
-<p class="leyenda-pct muted" style="font-size:10px;margin:2px 0 4px">Leyenda del <strong>Físico acum. (%)</strong> de las filas «Real» (solo avance en ejecución): <span>0 % = sin ejecutar (texto normal)</span> · <span class="pct-ej">&#9679; en curso (mayor que 0 y menor que 100 %)</span> · <span class="pct-100">&#10003; 100 % (completada)</span>. El número siempre va escrito; el color solo lo refuerza. Las filas «Prog.» no llevan color. Ver el ejemplo 4.</p>
+<p class="leyenda-pct muted" style="font-size:11px;margin:2px 0 4px"><strong>Color del avance real</strong> (solo el «Físico acum. (%)» de las filas «Real»: partida, paquete, nivel y total del servicio): <span>0 % = sin ejecutar (texto normal)</span> · <span class="pct-ej">&#9679; en curso (mayor que 0 y menor que 100 %)</span> · <span class="pct-100">&#10003; 100 % (completada)</span>. El número siempre va escrito; el color solo lo refuerza. Las filas «Prog.», los montos y los metrados no llevan color.</p>
 <div class="msg err" id="msg-crear" role="alert" hidden><span aria-hidden="true">&#9888;</span><div><strong>No se puede crear el Plan Maestro todavía</strong><br><span id="msg-crear-txt"></span></div></div>
 <div class="msg info" id="msg-ok" role="status" hidden><span aria-hidden="true">&#10003;</span><div>Plan Maestro creado (simulado): la versión pasa a APROBADO y queda en solo lectura.</div></div>
 <div class="msg warn" id="msg-ext" role="status" hidden><span aria-hidden="true">&#9888;</span><div><strong>Real fuera del rango programado</strong><br>La ejecución real de «Eliminación de material» llegó a la semana S5, posterior al último día programado (S4). Se agregó la semana S5 (extendida) para mostrarla; lo programado no cambia.</div></div>
@@ -260,7 +260,8 @@ details.notas ul{margin:6px 0 2px 16px;line-height:1.5}
 <li><strong>Por semana, seis columnas</strong> rotuladas con nombre y unidad: Físico semanal (%), Físico acum. (%), Económico semanal ($), Económico acum. ($), HH semanal (h), HH acum. (h). «Acumuladas: sí/no» oculta las tres acumuladas. El &#9662; de cada semana la pliega (queda solo con sus totales).</li>
 <li>Paquete 2 está «por avance del paquete»: solo se escribe el metrado de la guía (Relleno); Suministro de afirmado se calcula con el mismo % y queda en solo lectura.</li>
 <li>Físico de una partida = metrado ÷ contractual; físico de paquete, nivel y total = económico ÷ BAC de ese grupo (opción A). Totales del ejemplo 1: 22,56 / 48,78 / 76,22 / 100 %, $ 8 200 y 172 HH. Escribe un metrado y todo se recalcula.</li>
-<li><strong>Color del avance real (F0-S):</strong> en las filas «Real», el «Físico acum. (%)» va en blanco si es 0 %, en amarillo (advertencia) si está en curso y en verde (éxito) al 100 %; el semanal no lleva color (es un incremento) y montos, metrados y HH tampoco. Ejemplo 4: Excavación 90 % (amarillo), Eliminación 0 % (blanco), Cama de arena y Relleno 100 % (verde).</li>
+<li><strong>Color del avance real (F0-S/F0-U2):</strong> en las filas «Real», el «Físico acum. (%)» va en blanco si es 0 %, en amarillo (advertencia) si está en curso y en verde (éxito) con ✓ al 100 %; el semanal no lleva color (es un incremento) y montos, metrados, HH y filas «Prog.» tampoco. Vale para partida, paquete, nivel y total del servicio. La vista principal (ejemplo 1) ya muestra los tres casos, a la semana S4: Excavación 90 % y Acero 40 % (amarillo), Eliminación de material 0 % (blanco), Cama de arena y Relleno 100 % (verde). Leyenda visible sobre la tabla.</li>
+<li><strong>Alineación (F0-U2):</strong> el encabezado de cada columna va sobre su dato y alineado igual: texto a la izquierda; unidad, metrado, costo unitario, HH por unidad, BAC, días y las seis columnas de cada semana a la derecha (encabezado también a la derecha). Las columnas cortas (WBS, Und., Met., costo unitario, HH) toman el ancho justo y el sobrante va a la descripción.</li>
 <li><strong>Tres paneles reales (F0-T):</strong> el panel izquierdo (<code>w-60</code>) y el derecho (<code>w-64</code>) reproducen los de <code>WorkspaceShell</code> con un servicio activo: marca «Control de Proyectos», «Todos los servicios», cuadro «Servicio actual», «Recursos de empresa» (plegado con servicio), los grupos de <code>ESTRUCTURA_IZQUIERDA</code> (Alcance y presupuesto, Planificación, Recursos del servicio, Documentación, Reportes, Acciones, Servicio), pie con Usuarios, Notificaciones, Configuraciones y Cerrar sesión, «Ver como» y el usuario; y a la derecha «Accesos rápidos» (siete chips) y «Grupos del servicio» (siete grupos plegables, uno abierto a la vez). Los rótulos salen del registro de accesos de la app; los accesos sin pantalla van atenuados (inertes). «Plan Maestro» aparece como la pantalla actual. No hay chip ni acceso nuevo. Los glifos de texto representan a <code>lucide-react</code>. El número y el nombre del servicio, el usuario y el rol son simulados; se muestra un rol con acceso a todo (no se simulan chips deshabilitados por rol).</li>
 <li>Paneles: el icono de ocultar vive en la esquina superior interior del encabezado de cada panel (derecha en el izquierdo, a la altura de «Control de Proyectos»; izquierda en el derecho, a la altura de «ACCESOS RÁPIDOS»). Cuatro estados seleccionables arriba (Paneles): tres abiertos, izquierdo oculto, derecho oculto, ambos ocultos. Con un panel oculto queda una tira de 24 px con su icono y el centro toma el ancho, sin deformarse (el lienzo conserva sus columnas fijas).</li>
 <li>Subfilas «Real» (solo lectura, del RDT validado) por paquete × partida; HH reales de ejemplo (dato por construir, P16). Ejemplo 3 muestra la semana extendida.</li>
@@ -296,23 +297,22 @@ var PLAN={
  ace:[[0,0,50,50,50,50,0],[50,0,50,50,50,50,50],[50,0,50,50,50,50,50],[0,0,50,50,50,50,0]],
  rel:[[0,0,5,5,5,5,0],[0,0,5,5,5,5,0],[0,0,5,5,5,5,0],[0,0,5,5,5,5,0]],
  eli:[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,25,25,25,25,0],[0,0,25,25,25,25,0]]};
-var REAL={
- exc:[[0,10,10,10,10,0,0],[10,0,10,10,10,10,0]],
- cam:[[0,0,5,5,0,0,0]],
- ace:[[0,0,50,50,50,0,0],[50,0,50,50,50,50,0]],
- rel:[[0,0,5,5,5,5,0]],
+var REAL={ /* avance real simulado de la vista principal: Excavación 90 % (en curso), Acero 40 % (en curso), Cama de arena y Relleno 100 %, Eliminación 0 % (sin ejecutar) */
+ exc:[[0,10,10,10,10,0,0],[10,0,10,10,10,10,0],[],[]],
+ cam:PLAN.cam,
+ ace:[[0,0,50,50,50,0,0],[50,0,50,50,50,50,0],[],[]],
+ rel:PLAN.rel,
  eli:[]};
-var HHR={exc:[24,27],cam:[4],ace:[9,14],rel:[7],afi:[3],eli:[]};
+var HHR={exc:[24,27],cam:[2,3,6,6],ace:[9,14],rel:[6,6,6,6],afi:[3,3,3,3],eli:[]};
 var prog={},real={},hhReal={},W=4,hoy=2,escActual='anexo';
 function flat(a,W){var r=[],w,d;for(w=0;w<W;w++){for(d=0;d<7;d++){r.push(((a&&a[w])||[])[d]||0);}}return r;}
 function cargar(esc){
- escActual=esc;W=(esc==='extendido')?5:4;hoy=(esc==='extendido')?5:(esc==='avance')?4:2;
+ escActual=esc;W=(esc==='extendido')?5:4;hoy=(esc==='extendido')?5:4;
  P.forEach(function(p){
   var pl=JSON.parse(JSON.stringify(PLAN[p.id]||[])),re=JSON.parse(JSON.stringify(REAL[p.id]||[])),hh=(HHR[p.id]||[]).slice();
   if(esc==='incompleto'){
    if(p.id==='ace'){pl[3]=[0,0,50,50,0,0,0];}
    if(p.id==='eli'){pl[3]=[0,0,25,25,0,0,0];}}
-  if(esc==='avance'){if(p.id==='cam'){re=JSON.parse(JSON.stringify(PLAN.cam));}if(p.id==='rel'){re=JSON.parse(JSON.stringify(PLAN.rel));}if(p.id==='exc'){re=[[0,10,10,10,10,0,0],[10,0,10,10,10,10,0],[],[]];}if(p.id==='ace'){re=[[0,0,50,50,50,0,0],[50,0,50,50,50,50,0],[],[]];}}
   if(esc==='extendido'&&p.id==='eli'){re=[[],[],[],[0,0,20,20,0,0,0],[0,0,30,30,0,0,0]];hh=[0,0,0,4,6];}
   if(!p.calc){prog[p.id]=flat(pl,W);real[p.id]=flat(re,W);}
   hhReal[p.id]=hh;
@@ -341,7 +341,7 @@ function fHH(n){return fmt(n,2,true);}
 function fM(n){return fmt(n,2,true);}
 /* ---------- estructura de filas ---------- */
 var ALL=P.map(function(p){return p.id;});
-var FX=[{k:'wbs',t:'WBS'},{k:'desc',t:'Descripción'},{k:'und',t:'Und.'},{k:'met',t:'Met.'},{k:'cu',t:'Costo unit. ($)'},{k:'hh',t:'HH por unidad (h)'},{k:'disc',t:'Disciplina',opt:true},{k:'bac',t:'BAC ($)',opt:true},{k:'falta',t:'Falta repartir'}];
+var FX=[{k:'wbs',t:'WBS'},{k:'desc',t:'Descripción'},{k:'und',t:'Und.',r:1},{k:'met',t:'Met.',r:1},{k:'cu',t:'Costo unit. ($)',r:1},{k:'hh',t:'HH por unidad (h)',r:1},{k:'disc',t:'Disciplina',opt:true},{k:'bac',t:'BAC ($)',opt:true,r:1},{k:'falta',t:'Falta repartir'}];
 var vis={wbs:1,desc:1,und:1,met:1,cu:1,hh:1,disc:0,bac:0,falta:1};
 var MIN={wbs:1,desc:1};
 var plegS={},plegF={},acum=true,conReal=true,aprobado=false;
@@ -395,7 +395,7 @@ function construirFilas(){
     var ind2='<span class="sangria" style="width:'+(e.ind*14)+'px"></span>';
     desc=ind2+'<span class="tag">&#8627; Real</span> <span class="muted">solo lectura (RDT validado)</span>';
    }
-   tr+=fxCell('wbs',wbs)+fxCell('desc',desc)+fxCell('und',und)+fxCell('met',met,' num')+fxCell('cu',cu,' num')+fxCell('hh',hh,' num')+fxCell('disc',dsc)+fxCell('bac',bacv,' num')+fxCell('falta',fal);
+   tr+=fxCell('wbs',wbs)+fxCell('desc',desc)+fxCell('und',und,' num')+fxCell('met',met,' num')+fxCell('cu',cu,' num')+fxCell('hh',hh,' num')+fxCell('disc',dsc)+fxCell('bac',bacv,' num')+fxCell('falta',fal);
    tr+=celdas(e,kind,e.tipo==='part')+'</tr>';
    tb+=tr;
   });
@@ -405,7 +405,7 @@ function construirFilas(){
 function construirCab(){
  var r1='<tr id="h1"><th class="fx" scope="colgroup" colspan="9" data-fxg="1">Partida (columnas fijas)</th>';
  var r2='<tr id="h2">';
- FX.forEach(function(c){r2+='<th scope="col" class="fx fx-'+c.k+(c.k==='falta'?' linea':'')+'" data-fx="'+c.k+'"><span class="lbl">'+c.t+'</span></th>';});
+ FX.forEach(function(c){r2+='<th scope="col" class="fx fx-'+c.k+(c.k==='falta'?' linea':'')+(c.r?' num':'')+'" data-fx="'+c.k+'"><span class="lbl">'+c.t+'</span></th>';});
  var w,d,c,f,f0,f6;
  for(w=0;w<W;w++){
   f0=fech(w,0);f6=fech(w,6);
@@ -414,8 +414,8 @@ function construirCab(){
   for(c=0;c<6;c++){r2+='<th scope="col" class="s w'+w+(c===0?' wini':'')+(c%2===1?' a':'')+'" data-w="'+w+'" data-t="s"><span class="lbl">'+TIT[c][0]+' '+TIT[c][1]+'<small>('+TIT[c][2]+')</small></span></th>';}
  }
  r1+='</tr>';r2+='</tr>';
- var r3='<tr class="tot" id="h3">'+fxCell('wbs','')+fxCell('desc','<strong>Total del servicio</strong> <span class="tag">Prog.</span><br><span class="muted" id="tot-info"></span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','<span id="tot-bac"></span>',' num')+fxCell('falta','<span data-f="tot"></span>')+celdas({key:'tot'},'p',false)+'</tr>';
- var r4='<tr class="tot real" id="h4">'+fxCell('wbs','')+fxCell('desc','<span class="tag">&#8627; Real</span> <span class="muted">total del servicio</span>')+fxCell('und','')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','',' num')+fxCell('falta','')+celdas({key:'tot'},'r',false)+'</tr>';
+ var r3='<tr class="tot" id="h3">'+fxCell('wbs','')+fxCell('desc','<strong>Total del servicio</strong> <span class="tag">Prog.</span><br><span class="muted" id="tot-info"></span>')+fxCell('und','',' num')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','<span id="tot-bac"></span>',' num')+fxCell('falta','<span data-f="tot"></span>')+celdas({key:'tot'},'p',false)+'</tr>';
+ var r4='<tr class="tot real" id="h4">'+fxCell('wbs','')+fxCell('desc','<span class="tag">&#8627; Real</span> <span class="muted">total del servicio</span>')+fxCell('und','',' num')+fxCell('met','',' num')+fxCell('cu','',' num')+fxCell('hh','',' num')+fxCell('disc','')+fxCell('bac','',' num')+fxCell('falta','')+celdas({key:'tot'},'r',false)+'</tr>';
  document.getElementById('thead').innerHTML=r1+r2+r3+r4;
 }
 /* ---------- recálculo y textos ---------- */
@@ -430,7 +430,7 @@ function recalc(){
   else if(a[1]==='r'){t='';}
   c.textContent=t;
   c.classList.remove('pct-ej','pct-100');
-  if(a[1]==='r'&&a[3]==='fa'&&v!==null&&v!==undefined){var rv=Math.round(v*100)/100;if(rv>=100)c.classList.add('pct-100');else if(rv>0)c.classList.add('pct-ej');}});
+  if(a[1]==='r'&&a[3]==='fa'&&v!==null&&v!==undefined){var rv=Math.round(v*100)/100;if(rv>=100){c.classList.add('pct-100');c.textContent='✓ '+t;}else if(rv>0)c.classList.add('pct-ej');}});
  document.querySelectorAll('[data-calc]').forEach(function(c){var a=c.getAttribute('data-calc').split('|');c.textContent=fM(metDia(a[0],'p',+a[1]))||'0';});
  document.querySelectorAll('[data-rd]').forEach(function(c){var a=c.getAttribute('data-rd').split('|');var i=+a[1],wk=Math.floor(i/7);
   if(wk>=hoy){c.textContent='';return;}var v=metDia(a[0],'r',i);c.textContent=v?fM(v):'·';});
@@ -479,7 +479,7 @@ function layout(){
  FX.forEach(function(c){if(!vis[c.k])return;var cells=document.querySelectorAll('.fx-'+c.k);
   cells.forEach(function(x){x.style.left=left+'px';});
   var w=cells[0]?cells[0].getBoundingClientRect().width:0;
-  var cw={wbs:74,desc:270,und:44,met:68,cu:70,hh:66,disc:96,bac:70,falta:124};left+=(vm&&c.k==='wbs')?60:(vm&&c.k==='desc')?130:cw[c.k];});
+  var cw={wbs:68,desc:300,und:40,met:62,cu:66,hh:62,disc:96,bac:70,falta:124};left+=(vm&&c.k==='wbs')?60:(vm&&c.k==='desc')?130:cw[c.k];});
  var top=0;document.querySelectorAll('#thead tr').forEach(function(tr){if(tr.classList.contains('real')&&!conReal)return;
   tr.querySelectorAll('th,td').forEach(function(x){x.style.top=top+'px';});top+=tr.getBoundingClientRect().height;});
 }

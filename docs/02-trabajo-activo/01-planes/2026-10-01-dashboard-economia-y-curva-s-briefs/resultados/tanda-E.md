@@ -114,3 +114,13 @@ Rama comprobada antes de commitear con `git branch --contains`/`git status`; `gi
 
 - Editadas: `04-flujos-de-negocio/11-dashboard.md`, `14-accesos-y-restricciones.md`, `16-paneles.md`, `21-curva-s.md`; `03-aprendizaje-continuo/README.md`; `02-trabajo-activo/01-planes/README.md` y `planes-futuros.md`; libro de hallazgos del plan.
 - Solo lectura: código del worktree `local-worker-5` (`permisos.ts`, `permisos.test.ts`, `matriz-base-flujo14.ts`, `route.ts` de `api/curva-s`) para comprobar coherencia con los flujos.
+
+## Ronda E2 (2026-10-02)
+
+Traslado de las filas nuevas M4–M9 del libro, registradas después de las tandas T2 y T3.
+
+- **Trasladadas:** M4 → [`2026-10-02-reservar-llamadas-importacion-datos-reales.md`](../../../../03-aprendizaje-continuo/2026-10-02-reservar-llamadas-importacion-datos-reales.md) (etiqueta `briefs/presupuesto`); M5, M6 y M8 → [`2026-10-02-tecnicas-de-verificacion-en-vivo-con-playwright.md`](../../../../03-aprendizaje-continuo/2026-10-02-tecnicas-de-verificacion-en-vivo-con-playwright.md) (etiqueta `playwright/verificacion`; agrupadas por ser tres técnicas de Playwright de la misma clase y de tamaño pequeño). Índice de `03-aprendizaje-continuo/README.md` actualizado con las dos filas.
+- **Pendiente de decisión (no trasladadas):** M7 y M9 — son conocimiento del sistema/API de la app (comportamiento de `PATCH /api/plan-maestro` y contrato de payload de RDT), no método de trabajo; no se creó archivo y **decide Victor en Gate 2**. Filas del libro marcadas en consecuencia.
+- **Verificador (paso 7):** `python scripts/verificar-referencias.py` → 45 archivos, **0 huérfanos, 0 rotos**, 2 menciones sin archivo preexistentes y ajenas.
+- **Commits en `main`:** `f3af620` (M4–M8 en aprendizaje continuo + índice) y el commit de sellado del libro M4–M9 y de esta Ronda E2.
+- **Llamadas:** ~22 aproximadas.

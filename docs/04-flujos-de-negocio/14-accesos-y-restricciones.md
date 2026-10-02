@@ -16,6 +16,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-10-02 (plan observaciones-victor, Lote 2, Gate 1):** la acción «Subir documento del proyecto» se acota a los ítems del **Grupo A** del checklist y a los personalizados (fila de la tabla 2 y nota 4); el servidor rechaza con 400 subir a un ítem del Grupo B y el «Acta de conformidad» (fase CIERRE) queda fuera del alcance. La fila informativa 6 de ese Gate (chip inerte con título «Sin pantalla todavía», flujo 16) no cambia. **El artefacto «Matriz de permisos» lo actualiza solo Victor** (lo edita él; aquí solo queda registrado el cambio).
 
+**Actualización 2026-10-02 (plan dashboard-economia-y-curva-s, Fase E):** la tabla 1 separa el Dashboard y la Curva S en dos filas cada uno: el **Dashboard Parcial** y la **Curva S — avance físico (%)** quedan **sin datos económicos** para los 13 roles; el **Dashboard Completo** y la **Curva S — económica (USD)** los ven **exactamente los cinco roles con economía** (las excepciones de planner y supervisor de OT son para Plan Maestro y DP, no para el Completo). El interruptor Parcial/Completo queda visible pero **deshabilitado con título** para quien no tiene economía (fijo en Parcial) y el servidor **fuerza Parcial** y **rechaza con 403** el modo económico sin permiso. Nota ¹ reescrita; deja de aplicar la antigua lectura de «estado objetivo / plan futuro». **El artefacto «Matriz de permisos» lo actualiza solo Victor** (P05, pendiente).
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -37,11 +39,13 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 | Interfaz | ¿Datos económicos? | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Dashboard del servicio (Parcial y Completo) ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Dashboard del servicio — Parcial ¹ | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Dashboard del servicio — Completo ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
-| Curva S | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Curva S — avance físico (%) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
 | Registro de costos por servicio, ver ² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -53,7 +57,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Panel izquierdo del servicio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
-¹ **Confirmado por Victor (2026-09-28): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven los roles que corresponde** (los 5 de esta tabla, más las dos excepciones). Hoy el código todavía muestra economía en los dos modos (flujo 11); hasta que el Spec futuro de economía separe realmente los datos de cada modo (`planes-futuros.md`), esta fila es el estado **objetivo**, no el actual — el informe "antes/después por rol" de la fase F0 del plan debe señalar esta brecha. Quién alterna entre Parcial y Completo (Victor, C35, 2026-09-29): lo alternan los roles que ven datos económicos (`puedeVerEconomia`: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos); los demás lo verían fijo en Parcial, que es del plan futuro (`planes-futuros.md`).
+¹ **Confirmado por Victor (2026-09-28) y aplicado el 2026-10-02** (plan `2026-10-01-dashboard-economia-y-curva-s`): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven **exactamente los cinco roles con economía** de esta tabla (las excepciones de planner y supervisor de oficina técnica son para Plan Maestro y DP, no para el Completo). Quién alterna entre Parcial y Completo (Victor, C35, 2026-09-29): lo alternan los roles que ven datos económicos (`puedeVerEconomia`: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos); los demás ven el interruptor **deshabilitado con título** y quedan **fijos en Parcial** (D3). El servidor fuerza Parcial para el rol sin economía aunque `tipo_dashboard` esté en `COMPLETO`. La separación del Dashboard Parcial y de la Curva S física ya **no** es un estado objetivo ni depende de `planes-futuros.md`: está implementada.
 
 ² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
 
@@ -197,4 +201,4 @@ Los paquetes ya tienen interfaz (`/paquetes-trabajo`, flujo 19) y quedan en la m
 Interfaz para que administrador y gerente de proyectos gestionen accesos y restricciones por usuario desde una pantalla (en vez de que vivan fijos en código). Pedido de Victor, 2026-09-20 — registrado también en `docs/02-trabajo-activo/01-planes/planes-futuros.md`. Se retoma cuando esta matriz esté estable y probada en producción. Detallado como plan futuro el 2026-09-28: la pantalla replica el artefacto «Matriz de permisos» y se somete a él (ver `docs/02-trabajo-activo/01-planes/planes-futuros.md`).
 
 ### Restricción de datos económicos por rol
-La restricción está **decidida y escrita** en la tabla 1 (2026-09-28). Queda pendiente, como Spec aparte (ver `planes-futuros.md`), el Dashboard Parcial sin datos económicos y la restricción económica definitiva.
+La restricción está **decidida y escrita** en la tabla 1 (2026-09-28) y **aplicada** el 2026-10-02 (plan `2026-10-01-dashboard-economia-y-curva-s`): el Dashboard Parcial (sin dinero, 13 roles), el Dashboard Completo (con dinero, 5 roles) y los dos modos de la Curva S ya respetan la separación económica; el servidor fuerza Parcial y rechaza con 403 el modo económico sin permiso. La entrada «Dashboard Parcial sin datos económicos y restricción económica definitiva» se **retira** de `planes-futuros.md` por quedar promovida a ese plan.

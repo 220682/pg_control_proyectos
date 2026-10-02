@@ -267,6 +267,7 @@ Implementado:
 * Panel derecho con chips que abren la pantalla con el servicio elegido.
 * Registro único de accesos (`registro-accesos.ts`, `panel-izquierdo.ts`, `panel-derecho.ts`) y prueba de cobertura de pantallas.
 * Chips deshabilitados con título por permiso.
+* Chips **Dashboard** y **Curva S** habilitados para los **13 roles** (plan dashboard-economia-y-curva-s, 2026-10-02): la restricción económica vive dentro de la pantalla (Dashboard Completo y Curva S económica para los 5 roles con economía; Parcial y curva física para todos), no en el chip.
 
 Pendiente: los 10 chips sin pantalla (sin enlace hasta que exista la pantalla).
 

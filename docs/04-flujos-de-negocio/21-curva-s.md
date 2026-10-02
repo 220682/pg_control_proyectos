@@ -5,7 +5,8 @@
 ## Objetivo
 
 Mostrar la evolución acumulada de PV, EV y AC a lo largo del tiempo, en una
-pantalla propia con su propio chip. Responde:
+pantalla propia con su propio chip y con **dos modos**: **económico** (PV/EV/AC
+en USD) y **avance físico** (%: PV/BAC y EV/BAC). Responde:
 
 ```text
 ¿Cómo va el servicio en el tiempo — lo planificado contra lo realmente
@@ -58,18 +59,34 @@ DP — así el total cuadra exacto con el AC del PR
 sin sumar el balde legacy aparte. El EV sí exige el vínculo, porque sin él
 no hay con qué partida calcular metrado × precio.
 
+**BAC del modo físico.** El % de avance físico divide PV y EV entre el BAC
+vigente = **`Σ pr_partidas.bac`** (misma base que el PR, §8). Se lee en el
+servidor y **no se devuelve** en la respuesta de `modo=fisica` (contrato PD2,
+V02): el cuerpo físico solo lleva series en % y la brecha en puntos
+porcentuales, sin montos USD.
+
 ## Reglas fijas (Victor)
 
 1. Pantalla propia con chip propio (`/proyectos/{id}/curva-s`) — no una
    sección del Dashboard. El chip se declara una sola vez en el registro
    único de accesos (flujo 16) y se ubica por panel: **Reportes** en el
    panel izquierdo (con servicio abierto) y **Planificación** en el derecho;
-   no está en Mi entorno (flujo 03). Lo ven habilitado los roles con datos
-   económicos; los demás lo ven deshabilitado (flujo 16).
-2. Todo en USD, rotulado como costo directo (reglas 9 y 11 de PR Fase 2).
-3. **Sin Plan Maestro aprobado no hay PV** — la pantalla lo dice
-   explícitamente y no dibuja una curva de PV inventada (patrón "Pendiente"
-   ya usado en PR/Dashboard).
+   no está en Mi entorno (flujo 03). Lo ven habilitado los **13 roles**
+   (`puedeVerCurvaS`, 2026-10-02); dentro de la pantalla, el selector muestra
+   «Económica (USD)» **deshabilitada con título** a quienes no tienen economía
+   (flujo 16).
+2. **Dos modos con un selector** (D1/PD4, 2026-10-02):
+   - **Económica (USD):** PV/EV/AC acumulados, rotulados como costo directo
+     (reglas 9 y 11 de PR Fase 2). Solo los 5 roles con economía.
+   - **Avance físico (%):** planificado = **PV/BAC** y real = **EV/BAC**, con
+     la misma regla de «% avance físico» de `control_de_proyectos.txt` §2.1
+     (ponderación interna por dinero, salida en %; nunca promedio simple de
+     metrados). Los 13 roles; **nunca expone montos**.
+   El rol ve las dos opciones; la que no le corresponde queda deshabilitada
+   con título (patrón "ver no es acceder", flujo 16).
+3. **Sin Plan Maestro aprobado no hay PV** (en los dos modos) — la pantalla lo
+   dice explícitamente («Pendiente») y no dibuja una curva de PV inventada
+   (patrón "Pendiente" ya usado en PR/Dashboard).
 4. Sin dependencias nuevas de gráficos: el gráfico es SVG a mano, igual
    criterio que la dona del Dashboard.
 5. El AC cubre solo HH y HM con tarifa congelada (regla 1 de EVM) —
@@ -85,6 +102,14 @@ no hay con qué partida calcular metrado × precio.
    reimportó, la curva pasada se recalcula con la base nueva — es
    consistente con que solo existe una línea base vigente a la vez (mismo
    criterio que el PR), no un histórico de BAC por fecha.
+9. **El modo físico lee el BAC del servidor** (`Σ pr_partidas.bac`, §8) para
+   calcular PV/BAC y EV/BAC, y **no lo devuelve** en la respuesta de
+   `modo=fisica`: el cuerpo físico no expone USD (contrato PD2/V02).
+10. **Sin BAC no hay serie física:** con `BAC = 0` la pantalla muestra «Este
+    servicio no tiene BAC…» y no dibuja gráfico. Es distinto del servicio
+    **sin RDT validados**: allí hay BAC (>0) pero todas las EV del rango son
+    0, la serie real (EV/BAC) queda vacía con su nota y la tabla muestra «—»
+    en real (aclaración de E01; la línea EV no se dibuja).
 
 ## Granularidad
 
@@ -96,31 +121,49 @@ El punto de cada semana es el acumulado a su día de cierre (viernes), o al
 
 ## Endpoint
 
-`GET /api/curva-s?proyectoId=...&desde=...&hasta=...` — validación en
-servidor: rol (los de datos económicos: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos — `puedeVerCurvaS`, tabla 1 del [flujo 14](14-accesos-y-restricciones.md)) y alcance
-sobre la OT (`validarEscrituraProyecto`, con bypass de administrador). Sin
-`desde`/`hasta`, el servidor calcula "todo el servicio" a partir de los
-datos reales (mínimo entre el primer día del Plan Maestro aprobado y el
-primer RDT validado; máximo entre el fin del Plan Maestro y la fecha de
-corte, para que el PV siempre llegue hasta el fin del plan aunque el rango
-visible sea más corto).
+`GET /api/curva-s?proyectoId=...&desde=...&hasta=...&modo=economica|fisica` —
+validación en servidor:
+
+- **Rol:** la pantalla la ve cualquier rol con `puedeVerCurvaS` (los 13); el
+  **modo económico** exige `puedeVerCurvaSEconomica` = `puedeVerEconomia`
+  (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de
+  costos y jefe de costos) y responde **403** si se fuerza sin permiso
+  (criterio 6).
+- **Modo:** sin `modo` el servidor lo deriva por permiso (`economica` si tiene
+  economía; si no, `fisica`), de forma determinista; un `modo` inválido
+  responde 400. La respuesta de `modo=fisica` **no incluye** montos USD ni
+  `bac` (PD2/V02).
+- **Alcance:** sobre la OT (`validarEscrituraProyecto`, con bypass de
+  administrador). Sin `desde`/`hasta`, el servidor calcula "todo el servicio" a
+  partir de los datos reales (mínimo entre el primer día del Plan Maestro
+  aprobado y el primer RDT validado; máximo entre el fin del Plan Maestro y la
+  fecha de corte, para que el PV siempre llegue hasta el fin del plan aunque el
+  rango visible sea más corto).
 
 ## El gráfico
 
-SVG a mano, un solo eje Y (los tres son dinero acumulado). Leyenda siempre
+SVG a mano. **Un solo eje Y por modo, con su unidad rotulada** — nunca % y USD
+en el mismo eje: en económico, «US$ acumulado (CD)» con PV/EV/AC; en físico,
+«Avance físico (%)» con PV/BAC y EV/BAC (sin AC). Leyenda siempre
 presente + etiqueta directa al final de cada línea (identidad nunca solo
 por color). Línea de corte vertical punteada con etiqueta. Crosshair que
 sigue al puntero y se ancla a la fecha más cercana, con un único tooltip
-que muestra las tres series a la vez — operable también con teclado
+que muestra las series del modo a la vez — operable también con teclado
 (flechas izquierda/derecha, Home/End), mismo detalle que el hover. Paleta
 fija: PV `#3987e5` (azul), EV `#199e70` (aqua), AC `#d95926` (naranja) —
 compartida con el Dashboard, nunca se reasigna.
 
 ## Lectura del punto
 
-Al seleccionar una fecha: PV, EV, AC, SV, CV, SPI y CPI a esa fecha,
-reutilizando las fórmulas de `dashboard.ts` (las mismas que usa `evm.ts`,
-nunca reimplementadas). PPC no aparece acá — mide algo distinto (flujo 18)
+Al seleccionar una fecha, según el modo:
+
+- **Económico:** PV, EV, AC, SV, CV, SPI y CPI a esa fecha, reutilizando las
+  fórmulas de `dashboard.ts` (las mismas que usa `evm.ts`, nunca
+  reimplementadas).
+- **Físico:** % planificado (PV/BAC), % real (EV/BAC) y la brecha en **puntos
+  porcentuales** (pp), sin SV/CV en USD ni montos.
+
+PPC no aparece acá — mide algo distinto (flujo 18)
 y no se mezcla con SPI.
 
 ## Fuera de alcance de esta fase

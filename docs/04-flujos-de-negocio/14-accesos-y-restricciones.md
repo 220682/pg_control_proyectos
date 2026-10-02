@@ -119,7 +119,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
 
-⁴ **Subir documento** no es un rol fijo: puede el administrador o **el rol responsable de ese documento específico**, según `catalogo_documentos.rol_responsable_id` (asignable a cualquiera de los 13 roles al dar de alta el tipo de documento). El `*` indica «si es el responsable de ese documento».
+⁴ **Subir documento** no es un rol fijo: puede el administrador, el jefe de proyectos, **el usuario asignado como responsable de ese documento en el proyecto** (`proyecto_documentos.responsable_usuario_id`) o el rol responsable del documento. Desde el 2026-10-02 el editor del checklist asigna siempre un responsable concreto por proyecto; el `rol_responsable_id` del catálogo dejó de ser obligatorio y es informativo. El `*` indica «si es el responsable de ese documento».
 
 ⁵ Todos los roles ven el consolidado RQ (tabla 1); la descarga se dejó como estaba: administrador, jefe de proyectos, jefe de oficina técnica y logística. Ampliarla está **por decidir**.
 

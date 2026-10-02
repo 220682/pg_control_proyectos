@@ -1,6 +1,8 @@
 # 02 — Usuarios
 
-`/admin/usuarios`: crear (contraseña + invite), roles, cargo, borrar. Solo admin o jefe de proyectos.
+`/admin/usuarios`: crear (contraseña + invite), roles, cargo, área, borrar. Solo admin o jefe de proyectos.
+
+**Área (perfil):** cada usuario se asigna a un área (`perfiles.area_id` → `areas`). El área código `PR` ("Proyecto") se renombró a **`JF` ("Jefatura")**, como área para asignar a los jefes.
 
 **Pendiente:** “Pasar responsabilidades a” como flujo claro (hoy reasignar está en la ficha al borrar).
 

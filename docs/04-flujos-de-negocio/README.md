@@ -36,6 +36,8 @@ Las reglas funcionales y operativas permanentes del sistema, una vez por tema du
 
 **Plan en curso que reescribe flujos (2026-09-30):** [`niveles-paquetes-plan-maestro-rdt`](../02-trabajo-activo/01-planes/2026-09-30-niveles-paquetes-plan-maestro-rdt.md) actualiza los flujos 06, 09, 10, 14, 15, 16, 18, 19, 20 y 21 según su tabla en bloque aprobada por Victor; mientras no se cierre, el estado de cada fila está en esa tabla.
 
+**Plan en curso que reescribe flujos (2026-10-02):** [`observaciones-victor`](../02-trabajo-activo/01-planes/2026-10-02-observaciones-victor-plan.md) actualiza los flujos 02 (área `JF` = "Jefatura") y 12 (catálogo definitivo del checklist y completar por check).
+
 ## Qué no vive acá
 
 Bitácoras de sesión, estado de planes o procedimientos de agentes — eso vive en `../00-estandar-agentes/` y `../02-trabajo-activo/`.

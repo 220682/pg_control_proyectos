@@ -14,6 +14,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
+| [`2026-10-02-observaciones-victor-lote-2-plan.md`](2026-10-02-observaciones-victor-lote-2-plan.md) | En ejecución (Gate 1 aprobado por Victor, 2026-10-02) — acciones del checklist (O5), importación de cronograma (O6) y acta de conformidad (O7) |
 | [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md) | Implementando (Gate 1 aprobado por Victor, 2026-10-02) — checklist, área Jefatura y error de cronograma |
 | [`2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md`](2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md) | En ejecución (Worker, Fases 2–9 del plan) |
 | [`2026-09-23-paquetes-de-trabajo.md`](2026-09-23-paquetes-de-trabajo.md) | Abierta — Fase 1 terminada; progreso y evidencia se crean al retomarla (D9, Gate 1 del 2026-09-27) |

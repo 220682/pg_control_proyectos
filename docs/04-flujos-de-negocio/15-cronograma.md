@@ -2,6 +2,8 @@
 
 **Fase 1 implementada (en main, 2026-09-16/17).** Importa Excel (plantilla WBS de programación, rotulada EDT si así viene del origen/Nombre de tarea/Duración/Comienzo/Fin/Predecesoras/Sucesoras) o PDF exportado de MS Project, y genera un **informe de extracción** (cuántas actividades se leyeron, cuántas quedaron completas, cuántas se enlazaron al DP). No lee `.mpp` nativo.
 
+**Si la importación falla (RB4, decidido por Victor 2026-10-02):** la pantalla muestra el **motivo específico** del fallo (el texto real del error, sin mensaje genérico) y el error queda **logueado en servidor** con el formato del archivo, su nombre y el mensaje, para trazabilidad. Un fallo de lectura o de parseo no se reporta nunca solo como «error».
+
 Un cronograma por servicio (`proyecto_cronograma`, `proyecto_id` como llave — volver a subir lo reemplaza completo, salvo la «Recarga bloqueada» de más abajo). Actividades en `cronograma_actividades`, tipo TAREA/HITO/RESUMEN.
 
 **Terminología:** EDT y WBS son la misma estructura de descomposición. Para evitar ambigüedad, este flujo llama **WBS de programación** al código de la actividad del cronograma, aunque MS Project o el PDF lo rotule como `EDT`; llama **WBS presupuestal** al código contractual de la partida en DP. Pueden coincidir literalmente, pero no se reescriben para forzarlo.

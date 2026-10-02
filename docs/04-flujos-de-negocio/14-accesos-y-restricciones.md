@@ -12,6 +12,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-10-01 (plan niveles-paquetes-plan-maestro-rdt, F5-D):** tabla 2 ajustada a lo implementado (cronograma, Plan Maestro y paquetes con su texto nuevo; filas nuevas «Crear una versión nueva del Plan Maestro» y «Reasignar de paquete un RDT»; notas 8 a 10) y sección de paquetes reescrita. La tabla 1 no cambia. No hay chip ni acceso nuevo en el registro. **Corrección 2026-10-01 (F5-G):** aprobar el borrador que reemplaza una versión aprobada lo hacen los tres roles de «Gestionar Plan Maestro»; solo crear la versión nueva es de administrador y jefe de proyectos (nota 9).
 
+**Actualización 2026-10-02 (plan observaciones-victor, Lote 2, Gate 1):** la acción «Subir documento del proyecto» se acota a los ítems del **Grupo A** del checklist y a los personalizados (fila de la tabla 2 y nota 4); el servidor rechaza con 400 subir a un ítem del Grupo B y el «Acta de conformidad» (fase CIERRE) queda fuera del alcance. La fila informativa 6 de ese Gate (chip inerte con título «Sin pantalla todavía», flujo 16) no cambia. **El artefacto «Matriz de permisos» lo actualiza solo Victor** (lo edita él; aquí solo queda registrado el cambio).
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -71,7 +73,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Editar perfil extendido (propio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | Asignar rol administrador | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Simular otro usuario o rol («Ver como») | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
-| Subir documento del proyecto (catálogo AL_INICIO/CIERRE) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
+| Subir documento del proyecto (catálogo AL_INICIO, Grupo A y personalizados) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | **Recursos (Personal, Cargos, Equipos, Causas CNC)** ⁶ | | | | | | | | | | | | | | |
 | Crear personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Editar personal existente | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
@@ -119,7 +121,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
 
-⁴ **Subir documento** no es un rol fijo: puede el administrador, el jefe de proyectos, **el usuario asignado como responsable de ese documento en el proyecto** (`proyecto_documentos.responsable_usuario_id`) o el rol responsable del documento. Desde el 2026-10-02 el editor del checklist asigna siempre un responsable concreto por proyecto; el `rol_responsable_id` del catálogo dejó de ser obligatorio y es informativo. El `*` indica «si es el responsable de ese documento».
+⁴ **Subir documento** no es un rol fijo: puede el administrador, el jefe de proyectos, **el usuario asignado como responsable de ese documento en el proyecto** (`proyecto_documentos.responsable_usuario_id`) o el rol responsable del documento. Desde el 2026-10-02 el editor del checklist asigna siempre un responsable concreto por proyecto; el `rol_responsable_id` del catálogo dejó de ser obligatorio y es informativo. El `*` indica «si es el responsable de ese documento». **Alcance de la acción (Lote 2, Gate 1 2026-10-02):** la subida cubre **solo los ítems del Grupo A del checklist** (Alcance, Presupuesto, Listado de personal nuevo y Listado de pets) **y los personalizados**; el servidor **rechaza con 400** subir un archivo a un ítem del Grupo B (pantalla propia), y el «Acta de conformidad» (fase CIERRE) sale del alcance porque no figura en la lista (ver [flujo 12](12-checklist.md), sección «Grupos de acción»).
 
 ⁵ Todos los roles ven el consolidado RQ (tabla 1); la descarga se dejó como estaba: administrador, jefe de proyectos, jefe de oficina técnica y logística. Ampliarla está **por decidir**.
 

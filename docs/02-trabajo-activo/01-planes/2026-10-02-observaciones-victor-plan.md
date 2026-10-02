@@ -161,8 +161,8 @@ Ninguna.
 
 | ID | Fecha | Quién | Qué | Destino | Estado |
 |---|---|---|---|---|---|
-| RB1 | 2026-10-02 | Victor | Catálogo definitivo del checklist (13 ítems, orden, responsables, completar por check) | `04-flujos-de-negocio/12-checklist.md` | `Registrada` |
-| RB2 | 2026-10-02 | Victor | Área `JF` = "Jefatura" (reemplaza `PR`/"Proyecto") | `04-flujos-de-negocio/02-usuarios.md` | `Registrada` |
+| RB1 | 2026-10-02 | Victor | Catálogo definitivo del checklist (13 ítems, orden, responsables, completar por check) | `04-flujos-de-negocio/12-checklist.md` | `Trasladada` (commit `5f1ed31`) |
+| RB2 | 2026-10-02 | Victor | Área `JF` = "Jefatura" (reemplaza `PR`/"Proyecto") | `04-flujos-de-negocio/02-usuarios.md` | `Trasladada` (commit `5f1ed31`) |
 
 ### Observaciones sobre la política
 

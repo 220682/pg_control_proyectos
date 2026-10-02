@@ -6,7 +6,7 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Implementación completada (2026-10-02)** — tandas A, B, C, D, T2, T3, E y P03 cerradas; Punch List: todos los ítems Conforme salvo **P05** (artefacto «Matriz de permisos», exclusivo de Victor). Código en `local-worker-5` (HEAD `98df43c`), sin merge (espera Gate 2). Pendiente: ronda documental E2 (traslado de M4–M9), Auditoría y Gate 2. Sesión anterior del Orquestador congelada: se retomó el 2026-10-02, se abortó un merge en progreso en `main` de la app sin Gate 2 (ver OP6).
+- Estado: **Auditoría emitida — listo para Gate 2 (2026-10-02)**. Tandas A, B, C, D, T2, T3, E, E2 y P03 cerradas; informe del Auditor en `04-auditoria/` (commit `e2398b2`), recomendación «listo para Gate 2». Punch List: todo Conforme salvo **P05** (artefacto «Matriz de permisos», exclusivo de Victor). Código en `local-worker-5` (HEAD `98df43c`), sin merge (espera Gate 2). Sesión anterior del Orquestador congelada: se retomó el 2026-10-02, se abortó un merge en progreso en `main` de la app sin Gate 2 (ver OP6).
 
 Puertas:
 
@@ -419,6 +419,8 @@ Nota de sesión: esta sesión del Orquestador llega hasta el cierre del plan; la
 | 2026-10-02 | **Tanda E cerrada** (Documentador, ~55 llamadas): flujos 11, 14, 16 y 21 editados según la tabla (iii) del Gate 1 (commit `d262395`); M1–M3 trasladadas a `03-aprendizaje-continuo/` (`2ec79de`); índices y `planes-futuros.md` actualizados (`0e757f3`); resumen + RB8 (`ffeeb74`); `verificar-referencias.py` 0 huérfanos / 0 rotos (R06 Conforme). B-H2 se agregó como **RB8** (no estaba volcada al libro). OP1–OP6 quedan para el Auditor. | Documentador · E |
 | 2026-10-02 | **Tanda T3 cerrada** (~68 llamadas): **F12 y F13 Completados**. PS-0009 con paquete `PT-001` (9 partidas), Plan Maestro v2 APROBADO (22 asignaciones), 2 RDTs VALIDADOS → **50 % de avance** (BAC/PV 4.482,54; EV 2.241,27; AC 297,76). Bloque «Costo real de recursos»: Σ MO+HM = Total = AC = 297,76 (reconciliación exacta, sin «Sin resolver»). Curva S económica y física dibujadas con datos reales. **Bug fuera de alcance detectado (OP8):** APROBAR con asignaciones inline no las persiste. Sin código tocado. | Worker 1 · T3 |
 | 2026-10-02 | **Tanda P03 cerrada** (~26 llamadas): `permisos.test.ts` vuelve a comparar las 4 filas nuevas del flujo 14 (mapa 5→9 filas × 13 = 117 celdas); 93 tests del archivo, suite 1063 verde, tsc 0. Commit **`98df43c`** en `local-worker-5`. | Worker 1 · P03 |
+| 2026-10-02 | **Ronda E2 cerrada** (~25 llamadas): M4 y M5+M6+M8 trasladadas a `03-aprendizaje-continuo/` (`f3af620`); M7/M9 quedan `Pendiente de decisión` (conocimiento de la API del sistema, no método — decide Victor en Gate 2); libro actualizado (`9f0c4dd`); verificador 0/0; push `0 0`. | Documentador · E2 |
+| 2026-10-02 | **Auditoría emitida** (~30 llamadas): informe en `04-auditoria/2026-10-01-dashboard-economia-y-curva-s.md` (commit `e2398b2`). Dos chequeos CONFORME; (a)–(f) CONFORME; OP1–OP9 clasificadas; sin hallazgos bloqueantes. **Recomendación: listo para Gate 2.** | Auditor |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -479,7 +481,7 @@ Ninguno detectado (tandas A, B, C y D). **Confirmado por el Documentador (tanda 
 
 ## Informe de Auditoría
 
-Pendiente: el Auditor lo escribe tras la Fase E, en `docs/02-trabajo-activo/04-auditoria/` (formato `06-informe-auditoria.md`), fuera de este archivo. El prompt está en «Prompt del Auditor».
+**Emitido (2026-10-02):** [`docs/02-trabajo-activo/04-auditoria/2026-10-01-dashboard-economia-y-curva-s.md`](../04-auditoria/2026-10-01-dashboard-economia-y-curva-s.md) (commit `e2398b2`). Primer y segundo chequeo CONFORME (commits `d40cd74`/`94a5f79`/`5e773c7`/`98df43c` solo en `local-worker-5`; `main` de la app limpio en `35ac5dd`; ninguna fila del libro en `Registrada`). Revisión (a)–(f) CONFORME. Clasificación OP1–OP9 emitida. **Recomendación: listo para Gate 2.** Nota del Auditor: el resumen de la tanda E cita un commit `1e3f09d` inexistente (los reales son `d262395`, `2ec79de`, `0e757f3`, `ffeeb74`); desviación menor, NO PROMOVER.
 
 ## Mensaje de cierre
 

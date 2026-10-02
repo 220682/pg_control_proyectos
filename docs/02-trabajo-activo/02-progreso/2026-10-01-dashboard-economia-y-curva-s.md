@@ -46,14 +46,13 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Implementación completada: tandas A, B, C, D, T2, T3, E y P03 cerradas. Punch List: todo Conforme salvo **P05** (artefacto «Matriz de permisos» — Victor). Siguiente: ronda documental **E2** (traslado de M4–M9 y cierre de filas nuevas del libro), **Auditoría** y **Gate 2**.
+**Auditoría emitida — listo para Gate 2.** Todas las tandas cerradas (A, B, C, D, T2, T3, E, E2, P03); informe del Auditor en `04-auditoria/2026-10-01-dashboard-economia-y-curva-s.md` (commit `e2398b2`, push `0 0`). El Orquestador presenta el Gate 2 a Victor con las decisiones pendientes.
 
 ## Pendientes
 
-1. E2: trasladar M4–M9 a `03-aprendizaje-continuo/` y marcar las filas del libro.
-2. Auditoría (informe en `04-auditoria/`), con la clasificación de OP1–OP9.
-3. Gate 2: aprobación de Victor + autorización explícita del merge/push del código; P05 (artefacto) y decisión sobre el bug OP8; borrado de PS-0009 por Victor (lista de ids en `resultados/tanda-T2.md`/`tanda-T3.md`).
-4. Tras Gate 2: merge `local-worker-5` → `main` (Worker git) y mensaje de cierre.
+1. **Gate 2:** aprobación de Victor + autorización explícita del merge/push del código de la app.
+2. Decisiones de Victor en Gate 2: P05 (artefacto «Matriz de permisos»), bug OP8 (plan de arreglo aparte o `planes-futuros.md`), M7/M9 (destino), clasificación OP1–OP9 del Auditor, borrado de PS-0009 (lista de ids en `resultados/tanda-T2.md`/`tanda-T3.md`).
+3. Tras Gate 2: merge `local-worker-5` → `main` de la app (Worker git, paso 16a), cambios aprobados a fuentes de verdad (16b), Skill si se aprueba (16c), mensaje de cierre (17) y cierre (18).
 
 ## Commits, ramas y worktrees usados
 

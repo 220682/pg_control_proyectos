@@ -6,12 +6,12 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Planificando** — Plan y Punch List entregados por el Planner (2026-10-02); pendiente de Gate 1.
+- Estado: **Gate 1 aprobado (2026-10-02)** — plan + Punch List (40 ítems) aprobados; consultas (i)(ii)(iii) y Q1–Q6 resueltas (ver «Gate 1 — respuestas de Victor»). Precondición de arranque de la Fase A: cierre del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` (Q4).
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-02)`
-- Gate 1: `pendiente`
+- Gate 1: `aprobado por Victor (2026-10-02)`
 - Gate 2: `pendiente`
 
 ## Referencia al Spec aprobado
@@ -157,9 +157,10 @@ Skills de `.claude/skills/` de `pg_control_proyectos` (el repo de la app no tien
 | Fase | Qué | Worker | Depende de |
 |---|---|---|---|
 | A | Permisos y accesos: `puedeVerDashboard` a 13 roles, `puedeVerCurvaS` a 13 roles, nuevo `puedeVerCurvaSEconomica` (5 roles); `registro-accesos.ts` y `matriz-base-flujo14.ts`; sus pruebas; Parcial forzado en servidor para rol sin economía; interruptor Parcial/Completo visible pero deshabilitado con `title` | Worker 1 | Gate 1 + cierre (o coordinación) del plan niveles |
-| B | Dashboard: Parcial sin dinero (ocultado según PD5), Bloque E visible en ambos modos, enlace a Curva S desde ambos, bloque «Costo real de recursos» con reconciliación = AC (PD1) | Worker 1 | A |
-| C | Curva S: selector segmentado de dos modos (PD4), serie física % (PV/BAC y EV/BAC), contrato `GET /api/curva-s?modo=` con 403 (PD2) | Worker 1 | A |
-| D | Integración y verificación en vivo: Playwright con login real, 13 roles, dos caras, móvil; suite/`tsc`/lint/build | Worker 1 + Orquestador | B, C |
+| **T** | **Proyecto de prueba de extremo a extremo** (Gate 1, consulta 1): crear un proyecto con datos desde la creación del servicio hasta la emisión de RDT hasta el ~50 % de avance del servicio — PM, partidas, asignaciones, HH/HM con costo, RDTs validados — para ver toda la estructura funcionando y alimentar la verificación de B, C y D | Worker 1 | A |
+| B | Dashboard: Parcial sin dinero (ocultado según PD5), Bloque E visible en ambos modos, enlace a Curva S desde ambos, bloque «Costo real de recursos» con reconciliación = AC (PD1) | Worker 1 | A (verifica con la Fase T) |
+| C | Curva S: selector segmentado de dos modos (PD4), serie física % (PV/BAC y EV/BAC), contrato `GET /api/curva-s?modo=` con 403 (PD2) | Worker 1 | A (verifica con la Fase T) |
+| D | Integración y verificación en vivo: Playwright con login real, 13 roles, dos caras, móvil; suite/`tsc`/lint/build; proyecto de prueba usado de punta a punta | Worker 1 + Orquestador | B, C, T |
 | E | Documentación: flujos 11, 14, 16 y 21, índice de planes, `planes-futuros.md`; artefacto «Matriz de permisos» (lo edita Victor); traslado del libro de hallazgos | Documentador | D |
 
 Un solo Worker de código: las tres fases tocan `permisos.ts` / `registro-accesos.ts` (además de pisar el terreno del plan niveles), así que un paralelismo aquí solo generaría conflicto. Si Victor autoriza un segundo carril en el Gate 1, B y C podrían correr en paralelo (archivos disjuntos salvo `permisos.ts`, ya tocado en A). El merge a `main` del código ocurre **solo tras el Gate 2** (Worker git).
@@ -222,7 +223,7 @@ Formato `05-punch-list.md`. Estados: `Sin verificar` / `Conforme` / `Observado` 
 
 ### Estado de aprobación
 
-Gate 1: pendiente (la Punch List se aprueba junto con el plan).
+Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), tabla de 12 cambios a flujos, pre-autorizaciones en bloque y preguntas Q1–Q6, todo en una sola aprobación (respuestas más abajo).
 
 ### Ítems funcionales
 
@@ -239,6 +240,8 @@ Gate 1: pendiente (la Punch List se aprueba junto con el plan).
 | F09 | C | El selector de dos modos se ve siempre; «Económica (USD)» deshabilitada con `title` para rol sin economía; los dos activos para rol con economía | Captura por rol | Sin verificar |
 | F10 | C | La curva física dibuja % planificado (PV/BAC) y % real (EV/BAC) con unidad rotulada, sin USD en eje, tooltips, tarjetas ni tabla | Captura | Sin verificar |
 | F11 | C | Sin Plan Maestro aprobado: % planificado «Pendiente» (D5); % real dibujado con los RDT validados existentes | Captura en servicio sin PM | Sin verificar |
+| F12 | T | Proyecto de prueba creado de extremo a extremo: creación del servicio → PM → partidas y asignaciones → HH/HM con costo → RDTs validados hasta ~50 % de avance del servicio (datos marcados y desactivables) | Proyecto de prueba existente con su trayectoria | Sin verificar |
+| F13 | T | Con ese proyecto se ve toda la estructura funcionando: Dashboard (Parcial y Completo), Curva S (los dos modos), bloque «Costo real de recursos» y accesos por rol | Capturas de cada pantalla con el proyecto de prueba | Sin verificar |
 
 ### Datos y cálculos
 
@@ -373,6 +376,21 @@ Tres bloques, según la política del flujo. Las respuestas se añadirán en «G
 | Q5 | ¿Rama/worktree nuevos (`local-worker-5`) o reutilizar uno libre? | El Gate 1 (ii) debe autorizar la infraestructura |
 | Q6 | ¿Quién y cuándo actualiza el artefacto «Matriz de permisos» en la misma tarea? | Política de coherencia: solo Victor puede editarlo |
 
+### Gate 1 — respuestas de Victor (2026-10-02)
+
+Aprobación única: plan, Punch List (40 ítems), tabla de 12 cambios a flujos (iii) y pre-autorizaciones en bloque (ii) — **aprobados**.
+
+| # | Consulta | Respuesta de Victor |
+|---|---|---|
+| 1 | (i) Servicios de prueba | **No depende de servicios existentes: se crea un paso nuevo en el plan** — el agente implementador crea un proyecto con datos desde la creación del servicio hasta la emisión de RDT hasta el ~50 % de avance del servicio, para ver toda la estructura funcionando (ver Fase T y F12–F13). |
+| 2 | Q2 — PD5 (ocultar resumen ejecutivo y semáforo en Parcial) | **Sí**, confirmada. |
+| 3 | Q3 — PD6 (Bloque E en ambos dashboards) | **Sí**, se deja. |
+| 4 | Q4 — secuencia con el plan niveles | **Esperar el cierre** del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` («ya debería cerrar»). |
+| 5 | Q5 — rama/worktree | **OK**: carril nuevo `local-worker-5` + `.worktrees/local-worker-5` (puerto 3115), tras el cierre del plan niveles. |
+| 6 | Q6 — Matriz de permisos | **Actualizar la matriz: debe existir una matriz actualizada en el flujo** (Fase E: tabla 1 del flujo 14 con las filas nuevas) y el artefacto «Matriz de permisos» actualizado por Victor en la misma tarea. |
+
+Nota de sesión: esta sesión del Orquestador llega hasta el cierre del plan; la ejecución (Workers) corre en sesiones/agente aparte (Victor, 2026-10-02).
+
 ## Registro de decisiones
 
 | Fecha | Decisión | Quién |
@@ -391,6 +409,7 @@ Tres bloques, según la política del flujo. Las respuestas se añadirán en «G
 | 2026-10-02 | **PD4:** selector segmentado al patrón de `ToggleTipoDashboard`; no se usa `SelectorDashboard` legacy. | Planner (delegado por el Spec) |
 | 2026-10-02 | **PD5:** lista cerrada de ocultados en Parcial (cabecera USD, resumen ejecutivo, semáforo, dona, desempeño por partida, columnas de costo, orden por desviación). | Planner (delegado por el Spec) |
 | 2026-10-02 | **PD6:** Bloque E (PPC + Pareto) y enlace a Curva S visibles en ambos dashboards; el enlace lleva `?modo=fisica` sin economía. | Planner (delegado por el Spec) |
+| 2026-10-02 | **Gate 1 aprobado:** plan, Punch List (40 ítems), tabla de 12 cambios a flujos y pre-autorizaciones en bloque; consultas 1–6 resueltas (Fase T nueva: proyecto de prueba de extremo a extremo hasta 50 % de avance; PD5 y PD6 confirmadas; espera de cierre del plan niveles; `local-worker-5`; matriz actualizada en el flujo + artefacto por Victor). | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
 

@@ -125,14 +125,14 @@ Formato `05-punch-list.md`. Estados: `Sin verificar` / `Conforme` / `Observado` 
 
 | ID | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|
-| A1 | Migración `db/089_checklist_grupos.sql`: `grupo_accion`, `ruta_accion`, `etiqueta_accion` en `catalogo_documentos`; `grupo_accion='PANTALLA'` en las 9 claves del Grupo B; `ruta_accion` en `cronograma`, `paquete_trabajo`, `plan_maestro`, `requerimiento`; `etiqueta_accion='Crear / Ver'` en las 7 no estructuradas (`dp`/`pr` quedan con `etiqueta_accion` nula). Aditiva, idempotente, con comentario de reversa. | SQL + lectura crítica + conteo de filas por clave antes/después | Sin verificar |
-| A2 | `acciones-checklist.ts`: función pura con la regla D3 y el mapa de permisos D4/D5 (incluye el agregado `?proyectoId=`); prueba unitaria de los cuatro caminos y de las rutas. | `npm test` + `tsc` | Sin verificar |
-| A3 | `page.tsx`: el select añade `fase`, `grupo_accion`, `ruta_accion`, `etiqueta_accion`; **oculta las filas de fase `CIERRE`** (filtrado en JS, conservando los ítems ad-hoc); el render delega en `acciones-checklist`; se conservan `ToggleCompletado` y `SubirDocumento` para el Grupo A. | `tsc` + build + captura de la lista | Sin verificar |
-| A4 | O7 en el gate de cierre: `confirmar-transicion/route.ts` selecciona `catalogo_documentos(fase)` y solo evalúa para «checklist completo» las filas con fase ≠ `CIERRE` (o sin catálogo). **Sin tocar** el CAS de la transición ni el bootstrap. | Lectura crítica + prueba/verificación de que un proyecto con todo lo demás completo **sí** cierra y con un ítem de AL_INICIO pendiente **no** cierra | Sin verificar |
-| A5 | `editor-checklist.tsx`: no ofrece los ítems de fase `CIERRE` (lista de catálogo y `agregarCatalogo`); el badge «Cierre» deja de ser visible. `checklist/route.ts` solo si hace falta filtrar en servidor. | `tsc` + build + captura | Sin verificar |
-| A6 | `documentos/[documentoId]` (POST): rechaza la subida a ítems de `grupo_accion='PANTALLA'` con 400 y mensaje claro, siguiendo el patrón ya existente para `ESTRUCTURADO` (líneas 62–71). | Smoke con fallo 400 + `tsc` | Sin verificar |
-| A7 | Comprobación de datos: consulta de **solo lectura** para ver si hay ítems del Grupo B con `archivo_ruta` no nula (archivos ya subidos que quedarían sin acceso desde la lista). Si los hay, **se reportan y los elimina Victor** (Gate 1, Q2); el Worker no borra nada. | Salida de la consulta | Sin verificar |
-| A8 | `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` verdes en el carril. | Salida de comandos | Sin verificar |
+| A1 | Migración `db/089_checklist_grupos.sql`: `grupo_accion`, `ruta_accion`, `etiqueta_accion` en `catalogo_documentos`; `grupo_accion='PANTALLA'` en las 9 claves del Grupo B; `ruta_accion` en `cronograma`, `paquete_trabajo`, `plan_maestro`, `requerimiento`; `etiqueta_accion='Crear / Ver'` en las 7 no estructuradas (`dp`/`pr` quedan con `etiqueta_accion` nula). Aditiva, idempotente, con comentario de reversa. | SQL + lectura crítica + conteo de filas por clave antes/después | Conforme (089 aplicada y verificada: 14/7/1, 9 PANTALLA, 4 rutas, 7 etiquetas) |
+| A2 | `acciones-checklist.ts`: función pura con la regla D3 y el mapa de permisos D4/D5 (incluye el agregado `?proyectoId=`); prueba unitaria de los cuatro caminos y de las rutas. | `npm test` + `tsc` | Conforme (tests verdes) |
+| A3 | `page.tsx`: el select añade `fase`, `grupo_accion`, `ruta_accion`, `etiqueta_accion`; **oculta las filas de fase `CIERRE`** (filtrado en JS, conservando los ítems ad-hoc); el render delega en `acciones-checklist`; se conservan `ToggleCompletado` y `SubirDocumento` para el Grupo A. | `tsc` + build + captura de la lista | Conforme (SSR de `/proyectos/[id]` con 9 comprobaciones OK) |
+| A4 | O7 en el gate de cierre: `confirmar-transicion/route.ts` selecciona `catalogo_documentos(fase)` y solo evalúa para «checklist completo» las filas con fase ≠ `CIERRE` (o sin catálogo). **Sin tocar** el CAS de la transición ni el bootstrap. | Lectura crítica + prueba/verificación de que un proyecto con todo lo demás completo **sí** cierra y con un ítem de AL_INICIO pendiente **no** cierra | Conforme (prueba de ambos sentidos verde; sin transición real) |
+| A5 | `editor-checklist.tsx`: no ofrece los ítems de fase `CIERRE` (lista de catálogo y `agregarCatalogo`); el badge «Cierre» deja de ser visible. `checklist/route.ts` solo si hace falta filtrar en servidor. | `tsc` + build + captura | Conforme (editor con 0 ítems de CIERRE existiendo `acta_conformidad`; ocultado, no borrado) |
+| A6 | `documentos/[documentoId]` (POST): rechaza la subida a ítems de `grupo_accion='PANTALLA'` con 400 y mensaje claro, siguiendo el patrón ya existente para `ESTRUCTURADO` (líneas 62–71). | Smoke con fallo 400 + `tsc` | Conforme (400 con mensaje claro; Grupo A sin bloquearse) |
+| A7 | Comprobación de datos: consulta de **solo lectura** para ver si hay ítems del Grupo B con `archivo_ruta` no nula (archivos ya subidos que quedarían sin acceso desde la lista). Si los hay, **se reportan y los elimina Victor** (Gate 1, Q2); el Worker no borra nada. | Salida de la consulta | Conforme (**0 filas**: no hay archivos que eliminar) |
+| A8 | `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` verdes en el carril. | Salida de comandos | Conforme (100 archivos/1043 tests OK · tsc exit 0 · lint 27 = baseline · build exit 0) |
 
 ### Worker 2 — Cronograma (O6)
 
@@ -243,6 +243,10 @@ Además de los cuatro bloques estándar de más abajo, el Planner deja estas con
 | 2026-10-02 | La migración `089` **la aplica el Worker** con las credenciales autorizadas (protocolo de migraciones) | Victor |
 | 2026-10-02 | Deuda del Lote 1: **commitear** `PPTO-prueba N°01.xlsx` | Victor |
 | 2026-10-02 | Fila 3 (flujo 14 + artefacto «Matriz de permisos»): cambio aprobado; el artefacto lo edita Victor | Victor |
+| 2026-10-02 | **Tanda A cerrada:** A1–A8 `Conforme`; código en `local-worker-1` (`c219069`, `af60e85`, pusheado); 089 aplicada y verificada | Orquestador (consolidación) |
+| 2026-10-02 | **Bloqueo de B resuelto con la mitigación R7 aprobada en Gate 1:** PS-0006 y PS-0004 tienen Plan Maestro aprobado (409 previo al parser) → Worker 2 **crea un servicio de prueba nuevo** (marcado `PRUEBA-…`, sin PM, sin cronograma, sin datos reales) por el flujo normal de la app con cuenta A, sin tocar PS-0004/PS-0006; si la creación no es posible sin navegador, devuelve la pregunta con las opciones 1–3 del `resultados/B.md` (nada destructivo sin Victor) | Orquestador (R7; autonomía delegada por Victor) |
+| 2026-10-02 | Autorizado a Worker 2: corregir dentro de B3/B4 el **500 crudo** de `POST /api/cronograma` cuando `proyectoId` no es uuid válido (falta `esIdProyectoValido`) → 400 limpio (carril propio, alineado con RB4) | Orquestador |
+| 2026-10-02 | **A-H1** (expresión no nulo-safe en `page.tsx`, inalcanzable hoy) queda **Pendiente de decisión** para el Gate 2: nulo-safe ahora (una línea, archivo dueño) u otro plan | Victor (Gate 2) |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -258,9 +262,9 @@ Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto 
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| — | | | | | | |
-
-Ninguna registrada al entregar el plan (se llenan en el momento en que ocurran en las tandas A y B).
+| MB1 | 2026-10-02 | Worker 1 (tanda A, A-H2) | En worktrees, `next build` (Turbopack) falla por symlink de `node_modules` fuera del worktree; usar `npx next build --webpack` | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
+| MB2 | 2026-10-02 | Worker 1 (A-H3) y Worker 2 (B, hallazgo 1) | Evidenciar SSR/API **sin navegador**: password grant de Supabase → cookie `sb-<ref>-auth-token` (`base64-` troceada a 3180, verificada en `@supabase/ssr`); script temporal fuera del repo | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
+| MB3 | 2026-10-02 | Worker 2 (B, hallazgo 2) | En Windows PowerShell 5.1, `Get-Content -Raw` + `Set-Content` corrompe UTF-8 con acentos; usar la herramienta de edición de archivos | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -278,10 +282,11 @@ Ninguna registrada al entregar el plan (se llenan en el momento en que ocurran e
 | OP1 | 2026-10-02 | Planner | El plan del Lote 1 enlaza `02-progreso/`, `03-evidencia/` y una carpeta `-briefs/` que **no existen**: un plan puede quedar «Cerrada» sin sus homónimos y con enlaces rotos. En este plan se cierra la deuda (D3) | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
 | OP2 | 2026-10-02 | Planner | O6 **reabre O4**: se aprobó y cerró O4 (Gate 2 del Lote 1) sin evidencia de smoke, pese a que el informe del Auditor lo dejó como «APLICAR AHORA». El flujo permitió cerrar una corrección sin la evidencia mínima que su propia evidencia pedía | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
 | OP3 | 2026-10-02 | Planner | La plantilla `02-plan.md` presenta los cuatro apartados del libro de hallazgos como secciones de nivel 2, mientras el plan aprobado del Lote 1 los usa como nivel 3; el lector/verificador puede buscarlos en el nivel equivocado | Auditor y `06-plantillas/02-plan.md` | `Registrada` | — |
+| OP4 | 2026-10-02 | Worker 2 (tanda B) | El brief fija PS-0006 para el smoke **sin chequear antes** si el servicio está bloqueado por Plan Maestro aprobado (409 previo al parser): el chequeo previo (llamada de análisis sin escribir) debería ser un paso del brief o del Gate 1 para no gastar la tanda | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
 
 ## Carpetas/archivos huérfanos
 
-Ninguno detectado en la revisión de inicio. Si durante las tandas aparece alguno, se reporta aquí sin borrar nada.
+Ninguno detectado en la revisión de inicio ni en las tandas A y B (A-H4 y hallazgo 6 de B: ninguno). Si durante la Fase D o la auditoría aparece alguno, se reporta aquí sin borrar nada.
 
 ## Informe de Auditoría
 

@@ -6,7 +6,7 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Implementación — tandas A, B, C y D cerradas (2026-10-02)**; ítems pendientes: F12/F13 (tanda T2), P03/P05/R06 (Fase E), V03/V04 parciales (se intentan en T2). Sesión anterior del Orquestador congelada: se retomó el 2026-10-02, se abortó un merge en progreso en `main` de la app sin Gate 2 (ver OP6). Gate 2: pendiente.
+- Estado: **Implementación completada (2026-10-02)** — tandas A, B, C, D, T2, T3, E y P03 cerradas; Punch List: todos los ítems Conforme salvo **P05** (artefacto «Matriz de permisos», exclusivo de Victor). Código en `local-worker-5` (HEAD `98df43c`), sin merge (espera Gate 2). Pendiente: ronda documental E2 (traslado de M4–M9), Auditoría y Gate 2. Sesión anterior del Orquestador congelada: se retomó el 2026-10-02, se abortó un merge en progreso en `main` de la app sin Gate 2 (ver OP6).
 
 Puertas:
 
@@ -240,8 +240,8 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 | F09 | C | El selector de dos modos se ve siempre; «Económica (USD)» deshabilitada con `title` para rol sin economía; los dos activos para rol con economía | Captura por rol | Conforme (D: `aria-disabled="true"`+`title` sin economía; ambos activos con admin — matiz (a) confirmado) |
 | F10 | C | La curva física dibuja % planificado (PV/BAC) y % real (EV/BAC) con unidad rotulada, sin USD en eje, tooltips, tarjetas ni tabla | Captura | Conforme (D: PS-0004 EV real 12.3 %, eje «Avance físico (%)», sin USD) |
 | F11 | C | Sin Plan Maestro aprobado: % planificado «Pendiente» (D5); % real dibujado con los RDT validados existentes | Captura en servicio sin PM | Conforme con nota (D: PS-0007 banner «Pendiente»; % real con RDT visto en PS-0004; no existe proyecto sin-PM-con-RDT en los datos) |
-| F12 | T | Proyecto de prueba creado de extremo a extremo: creación del servicio → PM → partidas y asignaciones → HH/HM con costo → RDTs validados hasta ~50 % de avance del servicio (datos marcados y desactivables) | Proyecto de prueba existente con su trayectoria | Observado — no creado en D por presupuesto; pendiente tanda T2 |
-| F13 | T | Con ese proyecto se ve toda la estructura funcionando: Dashboard (Parcial y Completo), Curva S (los dos modos), bloque «Costo real de recursos» y accesos por rol | Capturas de cada pantalla con el proyecto de prueba | Observado (sustancia verificada en D con PS-0004/0007/0008; se re-verifica en T2 con el `PRUEBA-DASH`) |
+| F12 | T | Proyecto de prueba creado de extremo a extremo: creación del servicio → PM → partidas y asignaciones → HH/HM con costo → RDTs validados hasta ~50 % de avance del servicio (datos marcados y desactivables) | Proyecto de prueba existente con su trayectoria | Conforme (T2+T3: PS-0009 `PRUEBA-DASH` con DP, cronograma, paquete `PT-001`, PM v2 APROBADO con 22 asignaciones, 2 RDTs VALIDADOS, 50 % de avance; lista de borrado en `resultados/tanda-T2.md` y `tanda-T3.md`) |
+| F13 | T | Con ese proyecto se ve toda la estructura funcionando: Dashboard (Parcial y Completo), Curva S (los dos modos), bloque «Costo real de recursos» y accesos por rol | Capturas de cada pantalla con el proyecto de prueba | Conforme (T3: capturas `T3-F13-*` — Completo con AC 297,76 = Total del bloque; Parcial sin USD; Curva S económica y física con datos reales) |
 
 ### Datos y cálculos
 
@@ -259,7 +259,7 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 |---|---|---|---|---|
 | P01 | A | `permisos.ts`: `puedeVerDashboard` y `puedeVerCurvaS` a los 13 roles; nuevo `puedeVerCurvaSEconomica` = 5; sin rol conocido → false; `puedeVerEconomia` intacto | `npm test` (`permisos.test.ts`) | Conforme (A: commit `d40cd74`) |
 | P02 | A | `registro-accesos.ts` y `matriz-base-flujo14.ts` coherentes: matriz derivada vs base con 0 diferencias | `matriz-accesos.test.ts` | Conforme (A: 0 diferencias) |
-| P03 | A/E | Las pruebas que leen la tabla 1 del flujo 14 por ruta absoluta (`permisos.test.ts`, mapeo de filas × 13 roles) se actualizan en la misma ventana que el flujo 14 (Fase E); si no, `npm test` local queda rojo | `npm test` con el flujo 14 ya editado | Observado — cierra en E (editar flujo 14 + Worker de código restaura filas del mapa) |
+| P03 | A/E | Las pruebas que leen la tabla 1 del flujo 14 por ruta absoluta (`permisos.test.ts`, mapeo de filas × 13 roles) se actualizan en la misma ventana que el flujo 14 (Fase E); si no, `npm test` local queda rojo | `npm test` con el flujo 14 ya editado | Conforme (tanda P03: mapa 5→9 filas × 13 = 117 celdas; 93 tests del archivo, suite 1063 verde, tsc 0; commit `98df43c`) |
 | P04 | A | Alcance por OT intacto en Dashboard y Curva S (pantalla y API), con bypass del administrador como hoy | Prueba con OT ajena y con admin | Conforme (A: tests OT ajena/propia/admin; D: guard sin cambios; prueba en vivo OT ajena se intenta en T2) |
 | P05 | E | Artefacto «Matriz de permisos» actualizado con las filas nuevas, por Victor | Confirmación de Victor | Pendiente (Victor, Fase E) |
 
@@ -288,8 +288,8 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 |---|---|---|---|---|
 | V01 | C | `GET /api/curva-s?modo=economica` con rol sin economía → 403 aunque se fuerce (criterio 6); sin `modo` la respuesta es determinista por permiso | Llamada directa con las dos cuentas | Conforme (D: 403 forzado; sin `modo` → `fisica` sin dinero; admin → 200) |
 | V02 | C | La respuesta de `modo=fisica` no incluye montos USD ni `bac` (cuerpo de respuesta revisado) | Cuerpo JSON de la respuesta | Conforme (C: cuerpo revisado; D: claves sin `ac` confirmado en vivo) |
-| V03 | A | La página del Dashboard valida rol y alcance en servidor; el PATCH de `tipo-dashboard` sigue exigiendo `puedeVerEconomia` (sin cambio) | Prueba de rol sin economía forzando la ruta + revisión del PATCH | Conforme parcial (D: F03 fuerza Parcial en servidor; PATCH sin cambio por revisión de código; 403 del PATCH en vivo se intenta en T2) |
-| V04 | A | Sin sesión o sin alcance: rechazo igual que antes (los guards no se debilitan) | Prueba sin sesión y con OT ajena | Conforme sin sesión (D: 307 → `/login`); Observado OT ajena (guard sin cambios; se intenta en T2 si hay cuenta con alcance ajeno) |
+| V03 | A | La página del Dashboard valida rol y alcance en servidor; el PATCH de `tipo-dashboard` sigue exigiendo `puedeVerEconomia` (sin cambio) | Prueba de rol sin economía forzando la ruta + revisión del PATCH | Conforme (D: F03 forzado de Parcial en servidor; T2: «Ver como» `supervisor_operativo` → `PATCH /tipo-dashboard` 403 «No autorizado») |
+| V04 | A | Sin sesión o sin alcance: rechazo igual que antes (los guards no se debilitan) | Prueba sin sesión y con OT ajena | Conforme (D: sin sesión → 307 `/login`; T2: sesión real de López con OT ajena → 403 «No tienes esta OT a cargo» en API y «No tienes acceso» en Dashboard/Curva S — captura `T2-V04-*`) |
 
 ### Regresión
 
@@ -300,7 +300,7 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 | R03 | D | Los 13 roles entran a Parcial y a Curva S sin perder alcance por OT; el Dashboard del portafolio y el resto de interfaces de economía sin cambios | `verificar-permisos-por-rol` completo | Conforme (D: barrido 13 roles — 8 Parcial, 5 Completo; portafolio admin OK) |
 | R04 | D | Las pruebas del plan coordinado `2026-09-30-niveles-paquetes-plan-maestro-rdt` siguen verdes tras integrar (en especial `integracion-permisos.test.ts`) | Suite completa | Conforme (D: `integracion-permisos` 5 OK; suite completa verde) |
 | R05 | D | Verificación en vivo con login real (móvil y escritorio): sin chips rotos, sin enlaces muertos, paneles coherentes (flujo 16) | Capturas | Conforme (D: 1440 y 390 px vía CDP; capturas `R05-*`) |
-| R06 | E | `python scripts/verificar-referencias.py` sin referencias rotas; índice de `01-planes/README.md` actualizado | Salida del verificador | Pendiente (E) |
+| R06 | E | `python scripts/verificar-referencias.py` sin referencias rotas; índice de `01-planes/README.md` actualizado | Salida del verificador | Conforme (E: 45 archivos, 0 huérfanos, 0 rotos; índice actualizado — las 2 menciones sin archivo son preexistentes y ajenas) |
 
 ## Riesgos y bloqueos
 
@@ -415,6 +415,10 @@ Nota de sesión: esta sesión del Orquestador llega hasta el cierre del plan; la
 | 2026-10-02 | **OP6:** al retomar, se encontró y abortó un merge en progreso `local-worker-5` → `main` de la app sin Gate 2 (política violada); `main` restaurado a `35ac5dd`, 0/0 con origin. | Orquestador |
 | 2026-10-02 | **Tanda D cerrada** (~108 llamadas): 21 ítems Conforme (F03–F11, U02–U05, E01/E03/E04, V01, R01–R05); F12/F13 Observado (proyecto `PRUEBA-DASH` no creado por presupuesto); V03/V04 parciales. Sin cambios de código. Matices (a) y (b) de C confirmados. | Worker 1 · D |
 | 2026-10-02 | Se lanzan en paralelo la **tanda T2** (F12: proyecto de prueba de extremo a extremo + F13 + pendiente V03/V04 en vivo) y el **Documentador (Fase E)**; tras E, Worker de código corto para P03 (restaurar filas del flujo 14 en `permisos.test.ts`). | Orquestador |
+| 2026-10-02 | **Tanda T2 cerrada** (~71 llamadas): creado el servicio de prueba **PS-0009** `PRUEBA-DASH Servicio T2` (id `da33f1fa-0d2c-4cf6-adf3-2d723390b44d`) con DP (BAC US$ 4.482,54; 9 partidas HH/HM con costo) y cronograma (14 actividades). **V03 y V04 cerrados Conforme** (PATCH 403 con «Ver como»; López con OT ajena → 403). F12/F13 parciales: faltaba Paquetes → PM → RDTs. Sin código tocado. | Worker 1 · T2 |
+| 2026-10-02 | **Tanda E cerrada** (Documentador, ~55 llamadas): flujos 11, 14, 16 y 21 editados según la tabla (iii) del Gate 1 (commit `d262395`); M1–M3 trasladadas a `03-aprendizaje-continuo/` (`2ec79de`); índices y `planes-futuros.md` actualizados (`0e757f3`); resumen + RB8 (`ffeeb74`); `verificar-referencias.py` 0 huérfanos / 0 rotos (R06 Conforme). B-H2 se agregó como **RB8** (no estaba volcada al libro). OP1–OP6 quedan para el Auditor. | Documentador · E |
+| 2026-10-02 | **Tanda T3 cerrada** (~68 llamadas): **F12 y F13 Completados**. PS-0009 con paquete `PT-001` (9 partidas), Plan Maestro v2 APROBADO (22 asignaciones), 2 RDTs VALIDADOS → **50 % de avance** (BAC/PV 4.482,54; EV 2.241,27; AC 297,76). Bloque «Costo real de recursos»: Σ MO+HM = Total = AC = 297,76 (reconciliación exacta, sin «Sin resolver»). Curva S económica y física dibujadas con datos reales. **Bug fuera de alcance detectado (OP8):** APROBAR con asignaciones inline no las persiste. Sin código tocado. | Worker 1 · T3 |
+| 2026-10-02 | **Tanda P03 cerrada** (~26 llamadas): `permisos.test.ts` vuelve a comparar las 4 filas nuevas del flujo 14 (mapa 5→9 filas × 13 = 117 celdas); 93 tests del archivo, suite 1063 verde, tsc 0. Commit **`98df43c`** en `local-worker-5`. | Worker 1 · P03 |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -433,6 +437,12 @@ Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto 
 | M1 | 2026-10-02 | Worker 1 (A) | A-H1: `permisos.test.ts` compara la tabla 1 del flujo 14 por ruta absoluta; mover permisos antes que el doc rompe la prueba. Se desacopló (mapa 7→5 filas + pruebas explícitas de los dos modos); Fase E re-añade las filas. | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-02-desacoplar-prueba-permisos-del-flujo-14.md`](../../03-aprendizaje-continuo/2026-10-02-desacoplar-prueba-permisos-del-flujo-14.md) — `2ec79de` |
 | M2 | 2026-10-02 | Worker 1 (D) | Con 22+ ítems con navegador, «una captura por ítem» no cabe en ~80 llamadas: conviene agrupar capturas por pantalla desde el brief. | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-02-agrupar-capturas-por-pantalla-en-tandas-con-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-agrupar-capturas-por-pantalla-en-tandas-con-navegador.md) — `2ec79de` |
 | M3 | 2026-10-02 | Worker 1 (D) | `browser_resize` no aplicaba el viewport (seguía 1440); para móvil 390 px hubo que usar CDP `Emulation.setDeviceMetricsOverride`. | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-02-viewport-movil-con-cdp-emulation.md`](../../03-aprendizaje-continuo/2026-10-02-viewport-movil-con-cdp-emulation.md) — `2ec79de` |
+| M4 | 2026-10-02 | Worker 1 (T2) | Importar DP/cronograma reales por UI exige 2 pasos (analizar niveles → «Aprobar niveles») y cada POST del parser tarda 30–40 s: conviene reservar ~10 llamadas solo para esa carga en los briefs con datos de prueba. | `03-aprendizaje-continuo/` | Registrada | — |
+| M5 | 2026-10-02 | Worker 1 (T2) | `playwright_browser_file_upload` no era fiable: se usó `page.setInputFiles` con el fixture copiado a Temp con nombre ASCII (el original trae `N°`). | `03-aprendizaje-continuo/` | Registrada | — |
+| M6 | 2026-10-02 | Worker 1 (T2) | Para la verificación en vivo fue más barato forzar «Ver como» por `POST /api/ver-como` + `page.reload` que por el combobox de la interfaz. | `03-aprendizaje-continuo/` | Registrada | — |
+| M7 | 2026-10-02 | Worker 1 (T3) | Para un caller de la API de Plan Maestro: `APROBAR` **no** reemplaza a `GUARDAR_ASIGNACIONES`; hay que guardar el reparto antes de aprobar o la versión queda sin PV. | `03-aprendizaje-continuo/` | Registrada | — |
+| M8 | 2026-10-02 | Worker 1 (T3) | Los `window.*` guardados vía `browser_evaluate` se pierden entre llamadas tras ciertos renders: conviene re-`fetch`ar catálogos/plan dentro de cada evaluate de escritura. | `03-aprendizaje-continuo/` | Registrada | — |
+| M9 | 2026-10-02 | Worker 1 (T3) | Payload mínimo de RDT con varias actividades: `metradoProgramado`/`metradoEjecutado` por orden y personas con `horas:[{ordenActividad,horas}]`; el `wbs` y el paquete los fija el servidor desde el Plan. | `03-aprendizaje-continuo/` | Registrada | — |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -459,6 +469,9 @@ Se trasladan a su flujo al cerrar, previa consulta de cada contradicción a Vict
 | OP4 | 2026-10-02 | Worker 1 (C→D) | C-H3: la interpretación de E01 (todas las EV=0 → no dibujar la serie real + nota; tabla con «—») quedó confirmada en la tanda D | Pendiente de decisión — Auditor clasifica; Victor decide en Gate 2 |
 | OP5 | 2026-10-02 | Worker 1 (D) | El presupuesto de ~80 llamadas está subestimado para una tanda con Fase T + 22 ítems de Fase D con navegador y capturas (se usaron ~108); F12 quedó sin ejecutar y requiere la tanda T2 | Pendiente de decisión — Auditor clasifica; Victor decide en Gate 2 |
 | OP6 | 2026-10-02 | Orquestador | Al retomar la sesión congelada se encontró en el repo de la app un **merge en progreso `local-worker-5` → `main` sin Gate 2** (17 archivos staged, sin conflictos), contrario a la política (el merge es solo tras Gate 2). Se abortó con `git merge --abort`; `main` restaurado a `35ac5dd` (0/0 con origin). Se desconoce qué sesión lo inició | Pendiente de decisión — Auditor clasifica; Victor decide en Gate 2 |
+| OP7 | 2026-10-02 | Worker 1 (T2) | El alcance completo de F12 (adjudicar → DP/cronograma → partidas HH/HM → PM con asignaciones → aprobar → RDTs a ~50 % → validar) no cabe en ~60 llamadas: solo la carga de DP + cronograma con confirmación de niveles consume ~10 llamadas y >90 s de parser. Las tandas de creación de datos de extremo a extremo necesitan presupuesto propio mayor o dividirse | Pendiente de decisión — Auditor clasifica; Victor decide en Gate 2 |
+| OP8 | 2026-10-02 | Worker 1 (T3) | **Bug detectado fuera del alcance del plan (no se tocó código):** `PATCH /api/plan-maestro` con `accion:'APROBAR'` acepta `asignaciones` inline, las usa solo para validar y aprueba, pero **no las persiste** (`src/app/api/plan-maestro/route.ts` §APROBAR solo inserta en la rama `GUARDAR_ASIGNACIONES`). Resultado: plan `APROBADO` con 0 asignaciones y PV US$ 0,00. En PS-0009 se destrabó sin código (versión nueva → `GUARDAR_ASIGNACIONES` → `APROBAR`). Latente para cualquier caller que asuma que APROBAR persiste | Pendiente de decisión — Victor decide en Gate 2: plan de arreglo aparte o `planes-futuros.md` |
+| OP9 | 2026-10-02 | Worker 1 (T3) | Matiz a OP7: el bloqueo de T2 («PM sin paquetes») sí era destrabable en una sola tanda (~14 llamadas: vínculo faltante + 1 paquete + PM + repartir + aprobar). Medición real de la creación de datos de extremo a extremo: D ~108 (con 22 ítems), T2 ~71 (parcial), T3 ~68 (completó F12/F13) | Pendiente de decisión — Auditor clasifica junto con OP7 |
 
 ## Carpetas/archivos huérfanos
 
@@ -474,6 +487,7 @@ Pendiente (formato `09-cierre.md`): merge a `main` tras el Gate 2, flujos 11, 14
 
 ## Elementos postergados propuestos para planes futuros
 
+- **Bug OP8:** `PATCH /api/plan-maestro` con `accion:'APROBAR'` y `asignaciones` inline valida pero no persiste las asignaciones (plan APROBADO con PV 0). Detectado en T3 sobre PS-0009; requiere plan de arreglo aparte (decide Victor en Gate 2).
 - **TCPI** como KPI del Dashboard Completo (el fundamento lo lista; hoy no está).
 - **EAC como línea proyectada** sobre la Curva S (hoy marcado "fuera de alcance" en el flujo 21).
 - **Histograma de recursos (HH/HM)** planificado vs real.

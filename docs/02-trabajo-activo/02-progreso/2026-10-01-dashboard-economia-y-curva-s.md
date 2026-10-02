@@ -17,6 +17,10 @@
 - **Tanda C cerrada (2026-10-02):** commit `5e773c7`. Selector de dos modos, serie física PV/BAC y EV/BAC, contrato `GET /api/curva-s?modo=` con 403 (PD2/PD4/D03). `D03`, `D04`, `U01`, `V02` Conforme; el resto Observado por D. Dos matices devueltos (PD4 `aria-disabled`; semántica de E01) para confirmar en D. Detalle en `…-briefs/resultados/tanda-C.md`.
 - **Sesión congelada y retomada (2026-10-02):** la sesión anterior del Orquestador quedó congelada tras C. Al retomar se encontró un **merge en progreso `local-worker-5` → `main` en la app sin Gate 2** (17 archivos staged); se abortó (`git merge --abort`), `main` restaurado a `35ac5dd` (0/0 con origin). Registrado como OP6 en el libro de hallazgos del plan.
 - **Tanda D cerrada (2026-10-02, ~108 llamadas):** verificación en vivo con admin + «Ver como» (Chrome, Playwright), escritorio y móvil 390 px. 21 ítems **Conforme** (F03–F11, U02–U05, E01/E03/E04, V01, R01–R05); matices (a) y (b) de C confirmados. **F12/F13 Observado**: el proyecto `PRUEBA-DASH` no se creó (presupuesto); la sustancia se verificó con PS-0004/0007/0008. V03/V04 parciales (PATCH 403 y OT ajena en vivo pendientes). Sin cambios de código (HEAD sigue `5e773c7`). 9 capturas en `03-evidencia/capturas/dashboard-economia-y-curva-s/`. Detalle en `…-briefs/resultados/tanda-D.md`.
+- **Tanda T2 cerrada (2026-10-02, ~71 llamadas):** creado el servicio de prueba **PS-0009** `PRUEBA-DASH Servicio T2` (id `da33f1fa-…`) con DP (BAC US$ 4.482,54; 9 partidas HH/HM) y cronograma (14 act.). **V03 Conforme** (PATCH tipo-dashboard con «Ver como» sin economía → 403) y **V04 Conforme** (López con OT ajena → 403 API y pantallas). F12 parcial (~80 %): faltaban Paquetes → PM → RDTs. Sin código. Detalle en `resultados/tanda-T2.md`.
+- **Tanda E cerrada (Documentador, ~55 llamadas):** flujos 11/14/16/21 editados según tabla (iii) (commit `d262395`); M1–M3 → `03-aprendizaje-continuo/` (`2ec79de`); índices + `planes-futuros.md` (`0e757f3`); resumen + **RB8** (B-H2 no estaba volcada al libro) (`ffeeb74`); `verificar-referencias.py` 0/0 (R06 Conforme). Push hecho, `0 0`. Detalle en `resultados/tanda-E.md`.
+- **Tanda T3 cerrada (2026-10-02, ~68 llamadas):** **F12/F13 Completados**. PS-0009: paquete `PT-001` (9 partidas), PM v2 APROBADO (22 asignaciones), 2 RDTs VALIDADOS → **50 % de avance**; AC 297,76 = Total del bloque = Σ MO+HM (reconciliación exacta); Curva S económica y física con datos reales; 4 capturas `T3-F13-*`. **Bug fuera de alcance (OP8):** `PATCH /api/plan-maestro` APROBAR con asignaciones inline no las persiste. Sin código. Detalle en `resultados/tanda-T3.md`.
+- **Tanda P03 cerrada (~26 llamadas):** `permisos.test.ts` vuelve a comparar las filas Dashboard Parcial/Completo y Curva S física/económica contra el flujo 14 editado (mapa 5→9 × 13 = 117 celdas); suite 1063 verde, tsc 0. Commit **`98df43c`** en `local-worker-5`.
 
 ## Tabla de roles / Workers y estado
 
@@ -42,14 +46,14 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Tandas A–D cerradas. En paralelo: **tanda T2** (crear el proyecto `PRUEBA-DASH` de extremo a extremo, F12/F13 + pendientes V03/V04 en vivo) y **Documentador (Fase E)** (flujos 11/14/16/21, traslados, índices). Tras E: Worker de código corto para P03 (restaurar filas del flujo 14 en `permisos.test.ts`). Después: Auditoría → Gate 2.
+Implementación completada: tandas A, B, C, D, T2, T3, E y P03 cerradas. Punch List: todo Conforme salvo **P05** (artefacto «Matriz de permisos» — Victor). Siguiente: ronda documental **E2** (traslado de M4–M9 y cierre de filas nuevas del libro), **Auditoría** y **Gate 2**.
 
 ## Pendientes
 
-1. T2: F12 (proyecto de prueba), F13 (re-verificar con él), V03 (PATCH 403 en vivo), V04 (OT ajena en vivo si hay cuenta).
-2. E: flujos 11/14/16/21, índice de planes, `planes-futuros.md`, traslado del libro de hallazgos, `verificar-referencias.py` (R06), P05 (artefacto — Victor).
-3. P03: tras E, actualizar `permisos.test.ts` en `local-worker-5` y correr `npm test`.
-4. Auditoría, Gate 2, merge y mensaje de cierre.
+1. E2: trasladar M4–M9 a `03-aprendizaje-continuo/` y marcar las filas del libro.
+2. Auditoría (informe en `04-auditoria/`), con la clasificación de OP1–OP9.
+3. Gate 2: aprobación de Victor + autorización explícita del merge/push del código; P05 (artefacto) y decisión sobre el bug OP8; borrado de PS-0009 por Victor (lista de ids en `resultados/tanda-T2.md`/`tanda-T3.md`).
+4. Tras Gate 2: merge `local-worker-5` → `main` (Worker git) y mensaje de cierre.
 
 ## Commits, ramas y worktrees usados
 
@@ -67,7 +71,11 @@ Una fila por sesión medida (plantilla `10-medicion-y-eficiencia.md`).
 | C | `ses_f02830508ffern02eppm9wuhSI` | ~42 | no medido directo por opencode | Sí | commit `5e773c7`; dos matices para D |
 | Orquestador (A–C) | `ses_f02cf10c6ffe84DXAbOkjj4uBZ` | — | — | — | sesión congelada tras C; dejó un merge en progreso abortado al retomar (OP6) |
 | D (con Fase T parcial) | `ses_f01caf7f8ffeIW1ELNrFcYbzq1` | ~108 | no medido directo por opencode | No (excede ~80; OP5) | 21 ítems Conforme; F12 pendiente T2; sin código tocado |
-| Orquestador (retoma, D→cierre) | sesión actual | — | — | — | consolidación A–D, lanzamiento T2 y E |
+| T2 | `ses_f01a4905effecWEVWhatyP1yqv` | ~71 | no medido directo | No (objetivo ~60; OP7) | PS-0009 + DP/crono; V03/V04 cerrados; F12 parcial |
+| E (Documentador) | `ses_f01a42166ffeCJGLNpd1KA4RgY` | ~55 | no medido directo | Sí | flujos 11/14/16/21 + traslados; 4 commits pusheados |
+| T3 | `ses_f018dff20ffeZrNUE7YR3RlnO6` | ~68 | no medido directo | Sí | F12/F13 completados; bug OP8 detectado |
+| P03 | `ses_f018dba81ffe1Rz0C83usApsBl` | ~26 | no medido directo | Sí | commit `98df43c`; suite 1063 verde |
+| Orquestador (retoma, D→cierre) | sesión actual | — | — | — | consolidación A–P03, lanzamiento T2/E/T3/P03 |
 
 ## Operaciones de git
 

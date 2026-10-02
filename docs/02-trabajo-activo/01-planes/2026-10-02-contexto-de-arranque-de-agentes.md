@@ -160,16 +160,16 @@ Gate 1: pendiente.
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| V1 | F0 | Los 15 Skills retirados ya no aparecen en el bloque de Skills de un agente nuevo | Arrancar una sesión nueva y contar los Skills: debe bajar de 29 a 14 | Sin verificar |
+| V1 | F0 | Los 15 Skills retirados ya no aparecen en el bloque de Skills de un agente nuevo | Arrancar una sesión nueva y contar los Skills: debe bajar de 29 a 14 | **Sin verificar** — depende de Victor |
 | V2 | F0 | `python scripts/arranque.py 15` corre en los dos repositorios | Salida del comando en la evidencia | Conforme |
-| V3 | F1 | D10 dice índice + flujos afectados, con sus dos excepciones | El texto nuevo está en `04-flujo-sdd-y-planes.md` y `09-medicion-y-modelos.md` | Sin verificar |
-| V4 | F1 | El brief del Worker trae el tramo del rol y el Worker no abre el estándar | Brief de una tanda real: el Worker no leyó `04-flujo-sdd-y-planes.md` | Sin verificar |
-| V5 | F1 | La regla de listar Skills sale de `03-sesiones-contexto-y-handoff.md` | Texto nuevo + un Worker que anota «Skills revisados» sin listar | Sin verificar |
-| V6 | F2 | Los 21 flujos tienen `Lee si:` y el índice es la tabla de disparadores | Un grep de `Lee si:` devuelve 21 coincidencias | Sin verificar |
-| V7 | F2 | Cada `Lee si:` describe algo que el flujo realmente contiene | El Auditor abre 5 flujos al azar y contrasta el disparador con su contenido | Sin verificar |
-| V8 | F3 | El tope de herramientas está como regla en el estándar | Texto en `08-medicion-y-relevo.md` | Sin verificar |
-| V9 | F4 | `AGENTS.md` ya no manda leer todos los flujos | Línea 98 revisada | Sin verificar |
-| V10 | F5 | La línea base del arranque quedó medida antes y después | Dos salidas de `arranque.py`: una de antes (este plan) y una del plan que use la política nueva | Sin verificar |
+| V3 | F1 | D10 dice índice + flujos afectados, con sus dos excepciones | El texto nuevo está en `04-flujo-sdd-y-planes.md`, `00-indice.md` (3 filas), `04-flujos-de-negocio/README.md` y `09-medicion-y-modelos.md` | Conforme |
+| V4 | F1 | El brief del Worker trae el tramo del rol y el Worker no abre el estándar | Brief de una tanda real: el Worker no leyó `04-flujo-sdd-y-planes.md` | **Sin verificar** — depende del primer plan que use la política nueva |
+| V5 | F1 | La regla de listar Skills sale de `03-sesiones-contexto-y-handoff.md` | Texto nuevo + un Worker que anota «Skills revisados» sin listar | Conforme (texto) / **Sin verificar** (práctica) |
+| V6 | F2 | Los 21 flujos tienen `Lee si:` y el índice es la tabla de disparadores | `grep` de `Lee si:` devuelve 21 de 21 | Conforme |
+| V7 | F2 | Cada `Lee si:` describe algo que el flujo realmente contiene | El Auditor abre 5 flujos al azar y contrasta el disparador con su contenido | **Sin verificar** — le toca al Auditor |
+| V8 | F3 | El tope de herramientas está como regla en el estándar | § Tope de salida de herramientas en los briefs, en `08-medicion-y-relevo.md` | Conforme |
+| V9 | F4 | `AGENTS.md` ya no manda leer todos los flujos | Búsqueda de reglas viejas: 0 resultados | Conforme |
+| V10 | F5 | La línea base del arranque quedó medida antes y después | Dos salidas de `arranque.py`: una de antes (este plan) y una del plan que use la política nueva | **Sin verificar** — depende del primer plan nuevo |
 
 ## Riesgos y bloqueos
 
@@ -190,6 +190,8 @@ Gate 1: pendiente.
 | 2026-10-02 | Se declara la desviación del flujo: el Planner fue delegado sin Spec previo | Planner, para que Victor lo confirme o lo corrija |
 | 2026-10-02 | **Gate Spec aprobado**: el diagnóstico medido pasa a ser el Spec de referencia | Victor |
 | 2026-10-02 | **Gate 1 aprobado** con los siete cambios de la tabla. Pre-autorizado: editar esas fuentes de verdad, y commit + push a `main` de documentación por fase. Confirmado que no se toca la app real. **No** autorizado: retirar los 10 Skills de redes sociales | Victor |
+| 2026-10-02 | **Desviación declarada:** las fases F1 a F4 las aplicó la sesión del Planner, no un Worker en su propia sesión, porque Victor lo ordenó así el 2026-10-02 («sí, aplícalos») cuando ya se habían aprobado los Gates. El primer chequeo del Auditor (`git branch --contains`, Existence of a separate Worker chat) **no se cumple** y tiene que saberlo antes de auditar | Planner |
+| 2026-10-02 | Al aplicar los cambios apareció una **cuarta** ubicación de la regla vieja de D10, en `docs/04-flujos-de-negocio/README.md` línea 49, y **dos filas más** en `00-indice.md` (Planner y Auditor). Ninguna estaba en la tabla de cambios: se corrigieron por ser la misma regla, y quedan aquí para que el Auditor no las cuente como cambio no aprobado | Planner |
 
 ## Enlaces a progreso y evidencia homónimos
 

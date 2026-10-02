@@ -13,15 +13,30 @@ Aplica a cualquier repositorio que trabaje con un documento normativo del flujo 
 2. Lista los Skills disponibles en los repositorios donde vas a trabajar y usa los que apliquen.
 3. Di en qué paso del flujo estás, qué puerta sigue y qué necesita el responsable humano de ti.
 4. Si eres el orquestador, lanza cada subagente con una descripción «<Rol N> · <tanda>» y mide tus sesiones por evento: al cerrar cada tanda, al terminar cada ola y al cierre del plan. Compara tu contexto con el umbral de relevo; si lo pasas, haz el relevo entre olas (verifica con git que nada queda sin subir, escribe el handoff y entrega el prompt para el orquestador siguiente).
+5. Lee la política de modelos y esfuerzos (`09-orquestacion-y-modelos.md`): todos los agentes arrancan con esfuerzo medio; Max o esfuerzo alto requieren aprobación de Victor en el Gate 1.
 
 ## Puertas: no avances sin esto
 
 - **Spec aprobado** por el responsable antes de que nadie planifique.
-- **Plan y lista de ítems aprobados** en la primera aprobación, junto con los cambios a las reglas ya escritas (una tabla de «dice hoy» y «pasaría a decir»). Esa aprobación es también donde se pide autorización para crear ramas y carpetas de trabajo; sin ella, no se crean.
+- **Plan y lista de ítems aprobados** en la primera aprobación (Gate 1), junto con:
+  - Los cambios a las reglas ya escritas (una tabla de «dice hoy» y «pasaría a decir»).
+  - La asignación de modelos y esfuerzos por fase (qué fases usan Worker Max o esfuerzo alto, con justificación).
+  - Autorización para crear ramas y carpetas de trabajo; sin ella, no se crean.
 - **Implementación solo por Workers**, cada uno en su rama. El Orquestador no implementa. Nadie hace merge antes de la segunda aprobación.
+- **Cambio de nivel o esfuerzo durante la ejecución**: si una fase requiere cambiar de Worker (Flash/Plus/Max) o incrementar el esfuerzo (Medio→Alto), se suspende, se solicita aprobación de Victor y se registra en el plan.
 - **Auditoría emitida**: el informe existe como archivo propio, confirma que los commits están en la rama del Worker y trae la clasificación de hallazgos (aplicar ahora, proponer al responsable, no promover, proponer Skill). Sin informe emitido no se pide la segunda aprobación. Si falta la clasificación, se devuelve al Auditor.
 - **Hallazgos trasladados**: ninguna fila del libro de hallazgos sigue en `Registrada`; las observaciones sobre la política están en la lista del auditor.
-- **Segunda aprobación**: pide en ella, de forma explícita, la autorización para subir el código.
+- **Segunda aprobación** (Gate 2): pide en ella, de forma explícita, la autorización para subir el código.
+
+## Acciones críticas (Jev)
+
+Antes de merge, push, delete, migrate, branch o close: consulta al verificador (`07-verificador-de-acciones.md`). Umbrales: ≥0.9 continuar, ≤0.1 bloquear, entre 0.1-0.9 escalar.
+
+## Umbrales de contexto
+
+- Verde (<200k tokens): operación normal.
+- Amarillo (200k-300k): no abrir frentes nuevos; cerrar ola en curso.
+- Rojo (>300k): relevo del Orquestador al terminar la ola.
 
 ## Antes de declarar cerrado un plan
 
@@ -32,7 +47,9 @@ Verifica cada punto con un comando o una lectura, no por suposición:
 3. Las mejoras de política y cambios a fuentes de verdad aprobados están aplicados.
 4. Los Skills aprobados están creados y son agnósticos.
 5. Las reglas de negocio y mejoras registradas durante el plan están en su destino final; los archivos huérfanos se reportaron sin borrar nada.
-6. El mensaje de cierre está dentro del plan, dice lo que de verdad ocurrió en los puntos 1 a 5, incluye el consumo total de tokens medido con el script (no estimado) y está subido.
+6. El mensaje de cierre está dentro del plan, dice lo que de verdad ocurrió en los puntos 1 a 5, incluye:
+   - El consumo total de tokens medido con el script (no estimado).
+   - La tabla de esfuerzos reales usados por fase (default vs usado, cambios autorizados).
 7. Solo entonces escribe «cerrado». Si falta algo, dile al responsable exactamente qué falta.
 
 ## Cómo hablar con el responsable humano

@@ -35,7 +35,7 @@ Entre estos dos puntos, Worker, Auditor y Orquestador ejecutan sin pedir aprobac
 
 ## Equipo por defecto de un plan
 
-Un Orquestador, un Planner, de 1 a 3 Workers de código, un Documentador y un Worker git. El Responsable humano decide cuántos Workers de código se usan, y solo se usan varios si el plan permite trabajar sin pisarse (archivos, migraciones y componentes independientes). Todos corren en un modelo de nivel medio de razonamiento, salvo el Worker git, que corre en el modelo económico, a menos que el Responsable humano indique otro. El Analista del flujo no forma parte del equipo ni del flujo (ver su sección). Los modelos concretos están en `01-contexto-repositorio/09-medicion-y-modelos.md`.
+Un Orquestador, un Planner, de 1 a 3 Workers de código, un Documentador y un Worker git. El Responsable humano decide cuántos Workers de código se usan, y solo se usan varios si el plan permite trabajar sin pisarse (archivos, migraciones y componentes independientes). Todos corren con esfuerzo medio por defecto; el modelo concreto y los niveles de esfuerzo los asigna el Orquestador según la política de `09-orquestacion-y-modelos.md`. El Analista del flujo no forma parte del equipo ni del flujo (ver su sección).
 
 ## Responsable humano
 
@@ -162,7 +162,7 @@ El Analista no edita el estándar, `AGENTS.md` ni ninguna fuente de verdad: prop
 
 ## Worker git
 
-Subagente de nivel económico para el trabajo mecánico de git; **no forma parte del trabajo de contenido**. Cada Worker de código sigue haciendo los commits y pushes de su propia rama con la cadencia acordada (~35%), porque los hace con su contexto a mano. El Worker git hace, a pedido del Orquestador y respondiendo en una línea (`operación rama → resultado`):
+Subagente para el trabajo mecánico de git; **no forma parte del trabajo de contenido**. Modelo y esfuerzo según `09-orquestacion-y-modelos.md`. Cada Worker de código sigue haciendo los commits y pushes de su propia rama con la cadencia acordada (~35%), porque los hace con su contexto a mano. El Worker git hace, a pedido del Orquestador y respondiendo en una línea (`operación rama → resultado`):
 
 - Informar el estado de todo: `git status`, `git branch -vv`, `git worktree list` y adelantos y atrasos de cada rama.
 - Actualizar la rama de un carril con `main` cuando no hay conflictos.

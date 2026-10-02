@@ -31,18 +31,26 @@ Skills de `.claude/skills/` (repositorio de documentación y de código) que apl
 
 ## Equipo del plan
 
-Por defecto: un Orquestador, un Planner, de 1 a 3 Workers de código (el Responsable humano decide cuántos y solo si el plan permite trabajar sin pisarse), un Documentador y un Worker git. Todos en Sonnet salvo el Worker git (Haiku), a menos que el Responsable humano indique otro modelo. El Analista del flujo no figura aquí: no participa en el flujo.
+Por defecto: un Orquestador, un Planner, de 1 a 3 Workers de código (el Responsable humano decide cuántos y solo si el plan permite trabajar sin pisarse), un Documentador y un Worker git. Modelo y esfuerzo según `09-orquestacion-y-modelos.md`. El Analista del flujo no figura aquí: no participa en el flujo.
 
-| Rol | Modelo | Sesión o tanda | Rama | Worktree | Estado |
+| Rol | Modelo | Esfuerzo | Sesión o tanda | Rama | Worktree | Estado |
+|---|---|---|---|---|---|---|
+| Orquestador | | Medio | | `main` | N/A | |
+| Planner | | Medio | | `main` | N/A | |
+| Worker 1 | | Medio | | `local-worker-1` | | |
+| Worker 2 | | Medio | | `local-worker-2` | | |
+| Worker 3 | | Medio | | `local-worker-3` | | |
+| Documentador | | Medio | tanda final | `main` | N/A | |
+| Worker git | | Medio | a pedido | opera sobre las demás | | |
+| Auditor | | Medio | | `main` | N/A | |
+
+### Asignación de modelos y esfuerzos por fase (Gate 1)
+
+El Orquestador declara qué fases requieren Worker Max o esfuerzo alto. Victor aprueba o rechaza en el Gate 1.
+
+| Fase | Worker asignado | Modelo | Esfuerzo | Justificación | Aprobación Victor |
 |---|---|---|---|---|---|
-| Orquestador | Sonnet | | `main` | N/A | |
-| Planner | Sonnet | | `main` | N/A | |
-| Worker 1 | Sonnet | | `local-worker-1` | | |
-| Worker 2 | Sonnet | | `local-worker-2` | | |
-| Worker 3 | Sonnet | | `local-worker-3` | | |
-| Documentador | Sonnet | tanda final | `main` | N/A | |
-| Worker git | Haiku | a pedido | opera sobre las demás | | |
-| Auditor | Sonnet | | `main` | N/A | |
+| | | | | | |
 
 ### Brief de cada Worker
 
@@ -100,5 +108,11 @@ Enlace al archivo homónimo en `02-trabajo-activo/04-auditoria/` (formato de `06
 ## Mensaje de cierre
 
 Formato de `09-cierre.md`.
+
+### Tabla de esfuerzos reales usados
+
+| Fase | Modelo asignado | Esfuerzo default | Esfuerzo usado | Cambio autorizado |
+|---|---|---|---|---|
+| | | Medio | | |
 
 ## Elementos postergados propuestos para planes futuros

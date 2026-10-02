@@ -12,7 +12,7 @@ Qué leer según tu rol y el tipo de solicitud. No leas la carpeta completa por 
 | Planificación | `04-flujo-sdd-y-planes.md` (pasos 5–7) + `06-plantillas/02-plan.md` y `06-plantillas/05-punch-list.md` + el **índice de flujos** + solo los flujos que el plan declare afectados. La lista completa, únicamente con las dos excepciones de D10. |
 | Auditoría | `04-flujo-sdd-y-planes.md` (paso 12) + `06-plantillas/06-informe-auditoria.md` (el informe se guarda en `02-trabajo-activo/04-auditoria/`) + el **índice de flujos** + solo los flujos que el plan declara afectados. La lista completa, únicamente con las dos excepciones de D10. |
 | Acción irreversible o reservada a una puerta (merge, push, borrar, migrar, crear o borrar ramas) | `07-verificador-de-acciones.md` (borrador por probar) + `01-principios-y-seguridad.md`. |
-| Asignar modelos a agentes, clasificar complejidad de tareas, o decidir relevo por contexto | `09-orquestacion-y-modelos.md` + `.opencode/config.json` (o `.claude/settings.local.json`). |
+| Asignar modelos a agentes, clasificar complejidad de tareas, decidir relevo por contexto, o consultar umbrales de esfuerzo | `09-orquestacion-y-modelos.md` + `.opencode/config.json` (o `.claude/settings.local.json`). |
 | Medir sesiones, relevar al Orquestador o medir la eficiencia de un plan | `08-medicion-y-relevo.md` + `06-plantillas/10-medicion-y-eficiencia.md`. Para ver de dónde viene el contexto de una sesión, `scripts/arranque.py` con `--bloques`. |
 | Cierre / handoff | `04-flujo-sdd-y-planes.md` (pasos 13–18) + `03-sesiones-contexto-y-handoff.md` + `06-plantillas/07-handoff.md` o `06-plantillas/09-cierre.md` según corresponda. |
 

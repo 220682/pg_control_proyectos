@@ -10,27 +10,38 @@ El Orquestador asigna modelos a los agentes según la complejidad de la tarea, o
 
 | Rol | Modelo base | Esfuerzo | Alternativas |
 |-----|-------------|----------|--------------|
-| Orquestador | `qwen3.8-plus` | Medio-alto | `qwen3.8-max` (Victor elige al iniciar sesión) |
-| Arquitecto | `qwen3.8-max` | Alto | `qwen3.8-plus` |
-| Planificador | `qwen3.8-plus` | Medio-alto | `qwen3.8-flash` |
-| Worker | `qwen3.8-flash` | Ver niveles abajo | — |
-| Documentador | `qwen3.8-flash` | Bajo-medio | `qwen3.8-plus` |
-| Auditor | `qwen3.8-plus` | Alto | `qwen3.8-max` |
-| Git | `qwen3.8-flash` | Bajo | — |
+| Orquestador | `qwen3.8-plus` | Medio | `qwen3.8-max` (Victor elige al iniciar sesión) |
+| Arquitecto | `qwen3.8-max` | Medio | `qwen3.8-plus` |
+| Planificador | `qwen3.8-plus` | Medio | `qwen3.8-flash` |
+| Worker | `qwen3.8-flash` | Medio | Ver niveles abajo |
+| Documentador | `qwen3.8-flash` | Medio | `qwen3.8-plus` |
+| Auditor | `qwen3.8-plus` | Medio | `qwen3.8-max` |
+| Git | `qwen3.8-flash` | Medio | — |
 
-### Niveles de esfuerzo
+### Política de esfuerzo
 
-El nivel de esfuerzo controla la profundidad del razonamiento del modelo:
+**Todos los agentes arrancan con esfuerzo medio por defecto.** No existe nivel "bajo".
 
-| Nivel | Cuándo usar | Costo relativo |
-|-------|-------------|----------------|
-| **Bajo** | Tareas mecánicas, comandos, generación de texto formatado | 1x |
-| **Bajo-medio** | Documentación de alto volumen con formato conocido | 1.5x |
-| **Medio** | Tareas estándar con análisis moderado | 2x |
-| **Medio-alto** | Coordinación, descomposición de tareas, planificación | 3x |
-| **Alto** | Razonamiento complejo, auditoría, arquitectura | 4x |
+| Nivel | Default | Cuándo se incrementa |
+|-------|---------|----------------------|
+| **Medio** | Sí (todos los roles) | — |
+| **Alto** | No | Solo si el plan lo autoriza por fase |
 
-**Regla:** nunca bajar el esfuerzo en Planner ni Auditor. El Orquestador puede ajustar el esfuerzo de los Workers según la complejidad detectada.
+### Incremento de esfuerzo
+
+El esfuerzo **alto** no es automático: se solicita y autoriza de manera puntual.
+
+1. **En el Gate 1** (aprobación del plan): el Orquestador declara qué fases requieren esfuerzo alto y por qué. Victor aprueba o rechaza.
+2. **Durante la ejecución**: si una fase no contemplada requiere esfuerzo alto, el Orquestador suspende, solicita aprobación y registra el cambio.
+3. **En el reporte final**: se listan todas las fases con su esfuerzo real usado (medio o alto).
+
+### Tabla de esfuerzos en el plan
+
+| Fase/Tarea | Esfuerzo default | Esfuerzo usado | Justificación | Aprobación Victor | Timestamp |
+|------------|-----------------|----------------|---------------|-------------------|-----------|
+| Migración de datos | Medio | Alto | Razonamiento profundo sobre esquema legacy | Aprobada | 2026-10-02 14:30 |
+| Actualización flujos 14 y 16 | Medio | Medio | — | — | — |
+| Documentación | Medio | Medio | — | — | — |
 
 ## Niveles de Worker
 
@@ -38,9 +49,9 @@ El Orquestador clasifica automáticamente cada tarea:
 
 | Nivel | Criterios | Modelo | Esfuerzo | Aprobación |
 |-------|-----------|--------|----------|------------|
-| **Flash** | Simple, bien especificada, sin ambigüedad, sin dependencias, sin riesgo | `qwen3.8-flash` | Bajo | No requiere |
+| **Flash** | Simple, bien especificada, sin ambigüedad, sin dependencias, sin riesgo | `qwen3.8-flash` | Medio | No requiere |
 | **Plus** | Requiere análisis, tiene dependencias, o afecta múltiples archivos/flujos | `qwen3.8-plus` | Medio | No requiere |
-| **Max** | Razonamiento profundo, remota, o riesgo alto | `qwen3.8-max` | Alto | **Requiere aprobación de Victor** |
+| **Max** | Razonamiento profundo, remota, o riesgo alto | `qwen3.8-max` | Medio (Alto si el plan lo autoriza) | **Requiere aprobación de Victor** |
 
 ## Asignación dinámica de Workers durante el plan
 
@@ -63,24 +74,24 @@ Fase 2: Actualización de flujos 14 y 16 → Worker Plus
 Fase 3: Documentación de cambios → Worker Flash
 ```
 
-### Cambio de nivel durante la ejecución
+### Cambio de nivel o esfuerzo durante la ejecución
 
-Si durante la implementación una fase requiere cambiar de nivel de Worker (ej: de Flash a Max, o de Plus a Max):
+Si durante la implementación una fase requiere cambiar de nivel de Worker (ej: de Flash a Max) o incrementar el esfuerzo (de Medio a Alto):
 
 1. **El Orquestador detecta la necesidad** (por complejidad emergente, dependencias no previstas, o riesgo identificado)
 2. **Suspende la fase** hasta obtener aprobación
 3. **Solicita aprobación de Victor** indicando:
    - Fase/tarea afectada
-   - Nivel original asignado
-   - Nivel solicitado y justificación
+   - Nivel o esfuerzo original asignado
+   - Nivel o esfuerzo solicitado y justificación
    - Impacto estimado (tiempo, costo)
 4. **Registra el cambio** en el plan con:
    - Timestamp
    - Justificación del cambio
    - Aprobación de Victor (o rechazo)
-   - Nuevo nivel asignado
+   - Nuevo nivel o esfuerzo asignado
 
-**No se ejecuta la fase con el nuevo nivel hasta que Victor apruebe.**
+**No se ejecuta la fase con el nuevo nivel o esfuerzo hasta que Victor apruebe.**
 
 ### Registro de cambios de nivel
 
@@ -90,13 +101,23 @@ El plan debe incluir una tabla de cambios de nivel de Worker:
 |------------|---------------|-------------|---------------|-------------------|-----------|
 | Migración de datos | Plus | Max | Dependencias no previstas en esquema legacy | Aprobada | 2026-10-02 14:30 |
 
-### Registro de Max
+### Registro de Max y esfuerzo alto
 
-Todo uso de Max se registra en el plan (con o sin aprobación de Victor). El registro incluye:
+Todo uso de Max o esfuerzo alto se registra en el plan (con o sin aprobación de Victor). El registro incluye:
 - Descripción de la tarea
-- Justificación del nivel Max
+- Justificación del nivel Max o esfuerzo alto
 - Estado de la aprobación (pendiente, aprobada, rechazada)
 - Resultado de la tarea
+
+### Reporte final de esfuerzos
+
+Al cerrar el plan, el Orquestador incluye en el reporte final una tabla con los esfuerzos reales usados por fase:
+
+| Fase | Modelo asignado | Esfuerzo default | Esfuerzo usado | Cambio autorizado |
+|------|-----------------|------------------|----------------|-------------------|
+| Fase 1 | `qwen3.8-flash` | Medio | Medio | No |
+| Fase 2 | `qwen3.8-max` | Medio | Alto | Sí (Victor, 2026-10-02 14:30) |
+| Fase 3 | `qwen3.8-plus` | Medio | Medio | No |
 
 ## Acciones críticas (Jev)
 
@@ -136,16 +157,18 @@ Credenciales, claves, tokens, rutas de archivos de secretos, valores de variable
 
 ```
 1. Victor inicia sesión → elige modelo del Orquestador (Plus o Max)
-2. Orquestador lee configuración de roles y modelos
+2. Orquestador lee configuración de roles, modelos y política de esfuerzo (default: medio)
 3. Para cada tarea:
    a. Analizar complejidad (Flash/Plus/Max)
-   b. Si Max → solicitar aprobación de Victor
-   c. Asignar agente con modelo correspondiente
-   d. Si la acción es crítica → consultar Jev antes de ejecutar
+   b. Asignar esfuerzo medio por defecto
+   c. Si Max o esfuerzo alto → solicitar aprobación de Victor
+   d. Asignar agente con modelo y esfuerzo correspondiente
+   e. Si la acción es crítica → consultar Jev antes de ejecutar
 4. Monitorear contexto:
    a. Verde → continuar
    b. Amarillo → no abrir frentes nuevos
    c. Rojo → preparar relevo
+5. Al cerrar el plan → incluir tabla de esfuerzos reales usados
 ```
 
 ## Agente Git

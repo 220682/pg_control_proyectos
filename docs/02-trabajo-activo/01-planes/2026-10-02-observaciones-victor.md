@@ -18,7 +18,7 @@ Puertas:
 | O1 | 2026-10-02 | "El desplegable de responsable existe pero solo lista a uno de los dos usuarios; debe incluir a todos, también al administrador, en orden de roles." | En `Editar checklist`, el `SelectorUsuario` de los ítems de catálogo se pasa con `filtrarPorRolClave={item.rolResponsableClave}`: solo lista usuarios con el rol responsable de ese documento. Por eso ve 1 de 2 y el administrador no aparece. | `Registrada` | 1 |
 | O2 | 2026-10-02 | "Encontré un rol con iniciales PR; hay que eliminarlo si no existe o cambiarlo por JF, indicando rol para jefatura." | **No es rol, es el área** código `PR` = "Proyecto" (tabla `areas`, `db/014`). **Resolución:** renombrarla a **`JF` = "Jefatura"**, como área para asignar a los jefes. | `Registrada` | 1 |
 | O3 | 2026-10-02 | "Reordenar el checklist con esta lista definitiva; los no mencionados de AL_INICIO se eliminan; **todos los ítems llevan casilla y todos llevan responsable**; completar se marca por check." | Ver sección «Catálogo definitivo del checklist». | `Registrada` | 1 |
-| O4 | 2026-10-02 | "El importador de cronograma falla; antes mostraba qué tipo de error era y ahora solo dice 'error'. Quiero que se muestre el motivo **y además se corrija ese error**." | Doble alcance: (a) regresión en la superficie del error (`FormularioCronograma.tsx` → `traducirErrorApi` / `respuestaErrorInesperado` de `api/cronograma/route.ts`); (b) corregir el error subyacente de importación. Causa raíz a diagnosticar al iniciar el Plan (ver riesgo R1). | `Registrada` | 1 |
+| O4 | 2026-10-02 | "El importador de cronograma falla (salió error después de intentar leer el archivo, Excel o PDF); antes mostraba qué tipo de error era y ahora solo dice 'error'. Quiero que se **documente/loguee el error** (por si vuelve a fallar) **y se arregle**." | Triple alcance: (a) regresión en la superficie del error (`FormularioCronograma.tsx` → `traducirErrorApi` / `respuestaErrorInesperado` de `api/cronograma/route.ts`); (b) **loguear el error en servidor** con detalle (mensaje, archivo, formato) para trazabilidad futura; (c) corregir el error subyacente de lectura/parseo (Excel y PDF). Causa raíz a diagnosticar al iniciar el Plan (ver riesgo R1). | `Registrada` | 1 |
 
 Estados: `Registrada` → `Trasladada` · `Descartada` · `Pendiente de decisión`.
 
@@ -56,7 +56,7 @@ Victor navega la app y detecta defectos puntuales. Este Spec los registra y defi
 - **O1:** En `Editar checklist`, los desplegables de responsable listan **todos los usuarios** (incluido el administrador), **ordenados por rol**, sin filtro por el rol del documento.
 - **O2:** El área `PR` ("Proyecto") pasa a llamarse **`JF` ("Jefatura")**.
 - **O3:** El checklist queda con el **catálogo definitivo** de arriba: orden exacto, tres ítems nuevos, tres renombres y eliminación de los AL_INICIO no mencionados; **todos marcables y todos con responsable**; completar se marca por check.
-- **O4:** Se **corrige el error subyacente** de la importación de cronograma y, además, la pantalla vuelve a mostrar el **mensaje de error específico** (el motivo), no uno genérico.
+- **O4:** Se **corrige el error subyacente** de lectura/parseo de la importación de cronograma; el error queda **logueado en servidor** con su detalle (mensaje, archivo, formato) para trazabilidad futura; y la pantalla vuelve a mostrar el **mensaje de error específico** (el motivo), no uno genérico.
 
 ## Alcance
 
@@ -92,7 +92,7 @@ Victor navega la app y detecta defectos puntuales. Este Spec los registra y defi
 - `src/lib/usuarios/lista-usuarios.ts` (orden por rol).
 - `src/lib/config/registro-accesos.ts` ("Personal NUEVO" → "Listado de personal nuevo").
 - `src/lib/checklist/checklist.ts` (`documentoCompleto`: completar por check manual para todos, incluidos DP/PR).
-- `src/app/api/cronograma/route.ts` + `src/components/ui/FormularioCronograma.tsx` + `src/lib/errores/traducir-error.ts` (O4).
+- `src/app/api/cronograma/route.ts` + `src/components/ui/FormularioCronograma.tsx` + `src/lib/errores/traducir-error.ts` (O4): logging de error en servidor (patrón `console.error` con contexto) + restaurar mensaje específico + corregir el parseo.
 
 ## Diseño / UI aplicable
 
@@ -117,13 +117,14 @@ Riesgos de implementación a vigilar en el Plan:
 - **O1:** en Editar checklist, todo ítem muestra un desplegable con **todos** los usuarios (incluido el administrador) ordenados por rol.
 - **O2:** el selector "Área" de crear/editar usuario muestra "JF — Jefatura" en lugar de "PR — Proyecto".
 - **O3:** el checklist muestra, en el orden exacto de la tabla, los 13 ítems con esos nombres; no queda "Materiales con costo"; **todos** tienen casilla y responsable; completar se marca por check. "Acta de conformidad" (CIERRE) sigue igual.
-- **O4:** al importar un cronograma (PDF o Excel) el error subyacente queda corregido (la importación funciona) y, cuando sí falla, la pantalla muestra el motivo específico, no un "error" genérico.
+- **O4:** al importar un cronograma (PDF o Excel) el error de lectura/parseo queda corregido (la importación funciona); cuando sí falla, la pantalla muestra el motivo específico y el error queda registrado en el log del servidor con su detalle.
 
 ## Estrategia de prueba / evidencia
 
 - `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` (repositorio `py_control_proyectos_web`).
-- Verificación en vivo contra el Supabase real: editar checklist y ver orden/nombres/responsables; importar un cronograma (éxito y fallo con mensaje específico); área "JF — Jefatura" en crear/editar usuario.
-- Evidencia en `docs/02-trabajo-activo/03-evidencia/` con capturas.
+- **Tooling de verificación (decisión del Orquestador):** pruebas unitarias (vitest) para la lógica pura + **script de smoke de API** (Node, golpea los endpoints reales con `.env.local`, sin navegador) + **navegación manual de Victor** para la confirmación visual. Playwright solo opcional si una pantalla concreta lo exigiera (se evita por su inestabilidad).
+- Smoke de API: checklist (GET/PATCH) con orden/nombres/responsables; importación de cronograma con archivos de prueba (`docs/06-material-de-apoyo/Informacion para pruebas/CRON-PROMCOSER-AESA-001.pdf` y `Cron-prueba N°01.xlsx`) cubriendo éxito y fallo con mensaje específico; área "JF — Jefatura".
+- Evidencia en `docs/02-trabajo-activo/03-evidencia/` con capturas y salidas del smoke.
 
 ## Aprobación (Gate Spec)
 

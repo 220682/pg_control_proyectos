@@ -11,6 +11,7 @@ Puertas:
 - Gate 1 (Lote 1): `aprobado por Victor (2026-10-02)` — ver [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md)
 - Gate 2 (Lote 1): `aprobado por Victor (2026-10-02)` — merge `ce5623e`, ver el plan
 - **Lote 2 (O5, O6, O7):** `registrado 2026-10-02` — **Gate Spec: `aprobado por Victor (2026-10-02)`**. Grupos de O5 decididos; ítems sin pantalla quedan con botones muertos (decisión anotada en la sección de grupos).
+- Gate 1 (Lote 2): `aprobado por Victor (2026-10-02)` — ver [`2026-10-02-observaciones-victor-lote-2-plan.md`](2026-10-02-observaciones-victor-lote-2-plan.md)
 
 ## Registro de observaciones de Victor
 

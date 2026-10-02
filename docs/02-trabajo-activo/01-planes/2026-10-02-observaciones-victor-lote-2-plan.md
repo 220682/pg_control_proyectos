@@ -6,12 +6,12 @@
 
 - Tema: Lote 2 de observaciones de Victor — (O5) acción por grupo en cada fila del checklist, (O6) importación de cronograma de punta a punta con mensaje de error específico, (O7) «Acta de conformidad» fuera de la lista.
 - Fecha: 2026-10-02.
-- Estado: **Planificando**.
+- Estado: **En ejecución** — Gate 1 aprobado; fases A y B lanzadas (2026-10-02).
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-02)`
-- Gate 1: `pendiente`
+- Gate 1: `aprobado por Victor (2026-10-02)` — respuestas completas abajo
 - Gate 2: `pendiente`
 
 ## Referencia al Spec aprobado
@@ -89,8 +89,8 @@ A y B son independientes (matriz de propiedad disjunta): corren en paralelo.
 |---|---|---|---|---|---|
 | Orquestador | Sonnet | esta sesión | `main` (docs) | N/A | Activo |
 | Planner | Sonnet | este plan | `main` (docs) | N/A | Plan entregado |
-| Worker 1 | Sonnet | tanda A | `local-worker-1` | `.worktrees/local-worker-1` | Pendiente |
-| Worker 2 | Sonnet | tanda B | `local-worker-2` | `.worktrees/local-worker-2` | Pendiente |
+| Worker 1 | Sonnet | tanda A | `local-worker-1` | `.worktrees/local-worker-1` | Tanda A en curso |
+| Worker 2 | Sonnet | tanda B | `local-worker-2` | `.worktrees/local-worker-2` | Tanda B en curso |
 | Documentador | Sonnet | tanda final | `main` (docs) | N/A | Pendiente |
 | Worker git | Haiku | a pedido | opera sobre las demás | — | Pendiente |
 | Auditor | Sonnet | | `main` (docs) | N/A | Pendiente |
@@ -131,7 +131,7 @@ Formato `05-punch-list.md`. Estados: `Sin verificar` / `Conforme` / `Observado` 
 | A4 | O7 en el gate de cierre: `confirmar-transicion/route.ts` selecciona `catalogo_documentos(fase)` y solo evalúa para «checklist completo» las filas con fase ≠ `CIERRE` (o sin catálogo). **Sin tocar** el CAS de la transición ni el bootstrap. | Lectura crítica + prueba/verificación de que un proyecto con todo lo demás completo **sí** cierra y con un ítem de AL_INICIO pendiente **no** cierra | Sin verificar |
 | A5 | `editor-checklist.tsx`: no ofrece los ítems de fase `CIERRE` (lista de catálogo y `agregarCatalogo`); el badge «Cierre» deja de ser visible. `checklist/route.ts` solo si hace falta filtrar en servidor. | `tsc` + build + captura | Sin verificar |
 | A6 | `documentos/[documentoId]` (POST): rechaza la subida a ítems de `grupo_accion='PANTALLA'` con 400 y mensaje claro, siguiendo el patrón ya existente para `ESTRUCTURADO` (líneas 62–71). | Smoke con fallo 400 + `tsc` | Sin verificar |
-| A7 | Comprobación de datos: consulta de **solo lectura** para ver si hay ítems del Grupo B con `archivo_ruta` no nula (archivos ya subidos que quedarían sin acceso desde la lista). Si los hay, se consulta a Victor antes de ocultarlos. | Salida de la consulta | Sin verificar |
+| A7 | Comprobación de datos: consulta de **solo lectura** para ver si hay ítems del Grupo B con `archivo_ruta` no nula (archivos ya subidos que quedarían sin acceso desde la lista). Si los hay, **se reportan y los elimina Victor** (Gate 1, Q2); el Worker no borra nada. | Salida de la consulta | Sin verificar |
 | A8 | `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` verdes en el carril. | Salida de comandos | Sin verificar |
 
 ### Worker 2 — Cronograma (O6)
@@ -179,39 +179,52 @@ Además de los cuatro bloques estándar de más abajo, el Planner deja estas con
 | Q3 | ¿Quién aplica la `089` en Supabase (Victor, como en el Lote 1, o el Worker con las credenciales ya autorizadas)? | Sin ella, A1/A3 no tienen efecto |
 | Q4 | Si se aprueba la fila 3 de la tabla de flujos: ¿quién actualiza el artefacto «Matriz de permisos» (solo Victor puede editarlo)? | Política de AGENTS.md: artefacto y flujo 14 se actualizan en la misma tarea |
 
-## Gate 1 — preguntas de Victor (pendientes)
+## Gate 1 — respuestas de Victor (2026-10-02)
+
+**Aprobación general:** plan + Punch List + decisiones D1–D5 **aprobados**; implementación autorizada sin aprobaciones intermedias hasta el Gate 2.
 
 ### (i) Datos de prueba
 
-- Confirmación de los archivos de cronograma: `docs/06-material-de-apoyo/Informacion para pruebas/CRON-PROMCOSER-AESA-001.pdf` y `Cron-prueba N°01.xlsx` (los aprobados en el Lote 1).
-- Respuesta a Q1 (proyecto de prueba para O5/O7 y para el smoke de O6, sin Plan Maestro aprobado).
-- **Deuda del Lote 1:** `docs/06-material-de-apoyo/Informacion para pruebas/PPTO-prueba N°01.xlsx` está modificado y sin commitear: ¿commitear o revertir?
+- Archivos de cronograma confirmados: `CRON-PROMCOSER-AESA-001.pdf` y `Cron-prueba N°01.xlsx` (los del Lote 1). Confirmados además `PPTO-prueba N°01.xlsx` (adjuntado por Victor).
+- **Q1 (proyecto de prueba):** se usa el proyecto existente señalado por Victor — **`PS-0006` — «PRUEBA-F5B Servicio de verificacion»** — para capturas de O5/O7 y el smoke de O6.
+- **Deuda del Lote 1:** `PPTO-prueba N°01.xlsx` → **commitear** (decisión de Victor).
 
-### (ii) Pre-autorizaciones
+### (ii) Pre-autorizaciones — **autorizadas en bloque**
 
-- `npm run dev` local (en los worktrees y en el repo raíz para el smoke) con `.env.local`; copiar `.env.local` al worktree si falta (autorización reiterada del 2026-09-27).
-- Ejecutar `npm test`, `npx tsc --noEmit`, `npm run lint` y `npm run build` en los dos carriles.
+- `npm run dev` local (worktrees y repo raíz) con `.env.local` (copiar al worktree si falta).
+- `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` en los dos carriles.
 - Credenciales de prueba para el login del smoke, sin mostrar ni copiar ningún secreto.
-- Script nuevo `scripts/smoke-cronograma.mjs` en el repo de código (fuera de `src/`, para no romper `modulos-huerfanos.test.ts`).
+- Script nuevo `scripts/smoke-cronograma.mjs` (fuera de `src/`).
 - Consulta de solo lectura a la base para A7.
-- Playwright **no** se usa en este plan; si llegara a hacer falta, se pide autorización aparte.
+- Playwright **no** se usa (si hiciera falta, se pide aparte).
 
-### (iii) Tabla de reglas escritas que cambian (qué dice hoy / qué pasaría a decir / documento afectado)
+### (iii) Tabla de reglas escritas — **aprobada en su totalidad** (filas 1–5)
+
+- Fila 3 (`14-accesos-y-restricciones.md` + artefacto «Matriz de permisos»): **aprobada**. El Documentador actualiza el flujo 14; **el artefacto «Matriz de permisos» lo edita solo Victor** (solo él puede).
 
 | # | Documento | Qué dice hoy | Qué pasaría a decir | Quién lo edita |
 |---|---|---|---|---|
 | 1 | `04-flujos-de-negocio/12-checklist.md` (línea 29, decisión D5 del Lote 1) | «El "Acta de conformidad" (CIERRE) se mantiene fuera de este catálogo y no se modifica.» | «La "Acta de conformidad" no figura en la lista del checklist del proyecto: los documentos de fase CIERRE se ocultan de la lista y del editor y no cuentan para el checklist completo.» — **deroga D5** | Documentador (D2) |
 | 2 | `12-checklist.md` (tabla de 13 ítems y línea 5) | La tabla no declara qué acción muestra cada fila; «Subir un documento del catálogo lo puede además el rol responsable…» | Nueva columna «Grupo / acción»: «Seleccionar archivo» solo en Alcance, Presupuesto, Listado de personal nuevo y Listado de pets; «Crear / Ver» en los 9 de pantalla propia; **subir aplica solo a esos 4 más los personalizados** | Documentador (D2) |
-| 3 | `14-accesos-y-restricciones.md` (fila «Subir documento del proyecto (catálogo AL_INICIO/CIERRE)», nota 4) | La acción «Subir documento» cubre el catálogo AL_INICIO/CIERRE completo | La acción cubre solo los ítems del Grupo A y los personalizados; el servidor rechaza subir a ítems del Grupo B y el acta sale del alcance → **¿afecta el artefacto «Matriz de permisos»?** (Q4) | Documentador, solo si Victor aprueba (D2) |
+| 3 | `14-accesos-y-restricciones.md` (fila «Subir documento del proyecto (catálogo AL_INICIO/CIERRE)», nota 4) | La acción «Subir documento» cubre el catálogo AL_INICIO/CIERRE completo | La acción cubre solo los ítems del Grupo A y los personalizados; el servidor rechaza subir a ítems del Grupo B y el acta sale del alcance → **aprobada por Victor (Q4)** | Documentador (D2); artefacto «Matriz de permisos»: Victor |
 | 4 | `08-programa-portafolio-proyecto.md` (línea 11) | «la transición en sí solo valida en servidor el Plan Maestro `APROBADO` y el checklist completo» | «…y el checklist completo (los documentos de fase CIERRE no cuentan desde O7)». **Sin este cambio, ningún proyecto podría cerrarse**: el acta siempre quedaría pendiente | Documentador (D2) |
 | 5 | `04-flujos-de-negocio/15-cronograma.md` | No dice nada sobre el mensaje de error de importación (solo informe de extracción y niveles) | Regla nueva: «si la importación falla, la pantalla muestra el motivo específico (sin mensaje genérico) y el error queda logueado en servidor con formato, nombre del archivo y mensaje» | Documentador (D2) |
 | 6 | `04-flujos-de-negocio/16-paneles.md` (línea 62) | Define el chip inerte con título «Sin pantalla todavía» | **No cambia:** ese mismo patrón se reutiliza para los botones muertos de OT, Recursos del servicio y 3WLA en el checklist (fila informativa, sin edición) | — |
 
-### (iv) Ramas y worktrees
+### (iv) Ramas y worktrees — **autorizado**
 
-- Autorizar reutilizar `local-worker-1` y `local-worker-2` (existentes, limpias) y **hacer fast-forward de `local-worker-2` a `main`** antes de arrancar la Fase B.
+- Reutilizar `local-worker-1` y `local-worker-2` (existentes, limpias) y **hacer fast-forward de `local-worker-2` a `main`** antes de arrancar la Fase B.
 - No se crea, borra ni renombra ninguna rama ni worktree; `local-worker-3`/`local-worker-4` quedan como están.
 - Merge a `main` solo tras el Gate 2.
+
+### (v) Consultas Q1–Q4 — resueltas
+
+| # | Respuesta de Victor |
+|---|---|
+| Q1 | Proyecto existente: **`PS-0006` — «PRUEBA-F5B Servicio de verificacion»** |
+| Q2 | Si A7 encuentra archivos ya subidos a ítems del Grupo B: **los elimina Victor él mismo** («elimino todo lo que exista para que no haya confusión»). El Worker **solo consulta y reporta**; no borra nada. |
+| Q3 | La `089` **la aplica el Worker con las credenciales autorizadas** (protocolo de migraciones). |
+| Q4 | Cubierta por la aprobación de la fila 3: Documentador edita el flujo 14; el artefacto «Matriz de permisos» lo edita Victor. |
 
 ## Registro de decisiones
 
@@ -224,6 +237,12 @@ Además de los cuatro bloques estándar de más abajo, el Planner deja estas con
 | 2026-10-02 | D1: O5 se implementa con columnas en `catalogo_documentos` (migración `089`) | Planner (delegado por el Spec) |
 | 2026-10-02 | D2: O7 se implementa por **ocultado** (lista + editor + gate de cierre), sin migración destructiva y sin tocar el bootstrap | Planner (delegado por el Spec) |
 | 2026-10-02 | D3–D5: regla de render, `?proyectoId=` en los enlaces y gateo por permiso de cada pantalla | Planner |
+| 2026-10-02 | **Gate 1 aprobado:** plan, Punch List, tabla de reglas (filas 1–5), pre-autorizaciones (bloque completo) y ramas con fast-forward de `local-worker-2` | Victor |
+| 2026-10-02 | Proyecto de prueba: **PS-0006 «PRUEBA-F5B Servicio de verificacion»** (existente) | Victor |
+| 2026-10-02 | Archivos subidos a ítems del Grupo B (si A7 los encuentra): **los elimina Victor**; el Worker solo consulta y reporta | Victor |
+| 2026-10-02 | La migración `089` **la aplica el Worker** con las credenciales autorizadas (protocolo de migraciones) | Victor |
+| 2026-10-02 | Deuda del Lote 1: **commitear** `PPTO-prueba N°01.xlsx` | Victor |
+| 2026-10-02 | Fila 3 (flujo 14 + artefacto «Matriz de permisos»): cambio aprobado; el artefacto lo edita Victor | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
 

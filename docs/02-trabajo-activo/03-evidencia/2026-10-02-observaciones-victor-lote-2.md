@@ -56,6 +56,45 @@ Estados tomados de `briefs/resultados/A.md` (tanda A) y `briefs/resultados/B.md`
 - Evidencia SSR/API **sin navegador** (patrón password grant + cookie Supabase) para A3, A5 y A6.
 - Verificador de referencias (tanda D4): `python scripts/verificar-referencias.py` → **0 huérfanos / 0 enlaces rotos, exit 0** (44 archivos del núcleo); mismos 0/0 en el alcance del Lote 2 (plan + briefs + homónimos) y en `docs/03-aprendizaje-continuo`.
 
+## Verificación en PRODUCCIÓN (2026-10-02, tras el despliegue)
+
+La evidencia de arriba es de smokes **locales** (`npm run dev`). Victor probó después en la app desplegada (`py-control-proyectos-web.vercel.app`, proyecto real PS-0008, PDF `CRON-PROMCOSER-AESA-001.pdf`) y reportó que **seguía sin importar** («El servidor respondió sin JSON (HTTP 500)») → observación **O8** en el Spec. El riesgo R6 («Smoke local ≠ Vercel») se materializó: el parser estaba sano pero la **ruta entera** crasgaba al cargar el módulo en la función serverless.
+
+### Diagnóstico en producción (sin navegador, mismo mecanismo MB2)
+
+- Con credencial de prueba, `GET https://…/api/cronograma?proyectoId=<uuid>` → **HTTP 500, `content-length: 0`, sin `content-type`** (no es el `error` JSON de la ruta: la ruta no llegó a ejecutarse).
+- `GET …/api/cronograma/plantilla` (solo `exceljs`, **sin** `pdf-parse`) → **200** con el .xlsx. El único importador que distingue a la ruta rota es `import { PDFParse } from 'pdf-parse'`.
+- Conclusión: fallo **al cargar el módulo**, no al leer el archivo. Por eso afectaba igual a Excel y a PDF, y al GET de lectura.
+
+### Cadena de causa raíz
+
+`pdf-parse@2.4.5` → `pdfjs-dist/legacy/build/pdf.mjs`: para polifillar `globalThis.DOMMatrix` hace `createRequire(import.meta.url)("@napi-rs/canvas")`. `@napi-rs/canvas` carga su binario nativo por plataforma con `require` **dinámico** (`js-binding.js` → `@napi-rs/canvas-linux-x64-gnu`, ~31 MB). El trazador de archivos de Vercel no ve ese `require` dinámico → el binario queda **fuera** de la función → el polifill no carga → `pdf.mjs` ejecuta `new DOMMatrix()` **sin guarda a nivel de módulo** → `ReferenceError: DOMMatrix is not defined` al importar. Con `pdf-parse` importado arriba del todo, esto mataba la ruta completa (GET + Excel + PDF). Idéntico patrón al de `pdfkit` (`.afm`), ya comentado en `next.config.ts`.
+
+### Corrección (Worker, 2026-10-02, autorizada por Victor para llegar a producción)
+
+| Commit | Qué | Evidencia |
+|---|---|---|
+| `00a161b` | `await import('pdf-parse')` **perezoso** dentro de la rama PDF (fuera del import estático de cabecera). Aísla el fallo: deja vivos GET y Excel, y si el import volviera a fallar cae en el `catch` y devuelve **400 con motivo** (RB4) en vez de un 500 vacío. | `src/app/api/cronograma/route.ts:378` |
+| `35ac5dd` | `outputFileTracingIncludes` para `pdf-parse` (cjs+esm, sin `.map`), `pdfjs-dist/legacy/build/pdf.mjs`+`pdf.worker.mjs` y **`@napi-rs/canvas*`** (los paquetes por plataforma son `optionalDependencies`: en el build de Vercel solo existe el `-linux-x64-gnu`). | `next.config.ts:22-45` |
+| — | `scripts/smoke-cronograma.mjs`: opción `--base` (poder golpear la URL desplegada) y volcado del cuerpo crudo cuando la respuesta no es JSON. | salida abajo |
+
+### Verificación tras el despliegue automático de Vercel
+
+Comandos contra `--base https://py-control-proyectos-web.vercel.app`:
+
+| Prueba | Resultado |
+|---|---|
+| `GET /api/cronograma?proyectoId=<PS-0008>` | **200** `application/json` (antes 500 vacío) |
+| PDF `CRON-PROMCOSER-AESA-001.pdf`, `soloAnalizar` (PS-0008, real, **sin guardar**) | **200** · propuesta 3 niveles / 74 filas de encabezado |
+| XLSX `Cron-prueba N°01.xlsx`, `soloAnalizar` (PS-0008, real, sin guardar) | **200** · propuesta 2 niveles / 13 filas |
+| Guardado real XLSX (PS-0007 «PRUEBA-CRONO», servicio de prueba) | **200** · informe `totalActividades=14 tareas=10 resumenes=4 hitos=0` |
+| Lectura devuelta PS-0007 | «Cron-prueba_N_01.xlsx (excel), 14 actividades» — persistencia confirmada |
+| PDF `CRON-PROMCOSER-AESA-001.pdf`, `soloAnalizar` (PS-0007, prueba) | **200** · propuesta 3 niveles / 74 filas, servicio mostrado «PRUEBA-CRONO Importacion de cronograma» |
+
+**Cero escrituras en servicios reales** (PS-0008 solo con `soloAnalizar=true`); las escrituras de prueba van a PS-0007 (servicio dedicado `PRUEBA-CRONO`, igual que la tanda B). Suite verde local: `npm test` **101 / 1047 OK**, `tsc` exit 0, build exit 0; `eslint` exit 0 en los archivos tocados.
+
+> **Regla que deja O8 (para el traslado):** un smoke local **no** valida una función serverless de Vercel cuando hay dependencias con `require` dinámico o binarios por plataforma (`@napi-rs/canvas`, `pdfkit`, `pdfjs-dist`). Antes de cerrar cualquier cosa que toque parser/binario, hay que (a) ejecutar el smoke contra `--base` **desplegado** y (b) confirmar el trazado con `outputFileTracingIncludes` o `npx vercel build`. La verificación de Victor en la app desplegada pasa a ser **obligatoria**, no un "pendiente de R6".
+
 ## Regresiones verificadas
 
 - Gate de cierre probado en **ambos sentidos** (no cierra con ítem de AL_INICIO pendiente; cierra con todo lo demás completo), sin ejecutar transición real.

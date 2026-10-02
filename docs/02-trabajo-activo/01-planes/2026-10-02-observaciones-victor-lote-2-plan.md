@@ -257,6 +257,7 @@ Además de los cuatro bloques estándar de más abajo, el Planner deja estas con
 | 2026-10-02 | **A-H1**, el `??` muerto en dos formularios y la excepción `/api/*` del middleware: enviados a planes futuros (ninguno bloquea el cierre) | Victor (autorización de cierre) |
 | 2026-10-02 | **Skills MB1/MB2** (propuestos por el Auditor): no se crean en este plan | Victor (autorización de cierre) |
 | 2026-10-02 | **Auditoría emitida:** [`04-auditoria/2026-10-02-observaciones-victor-lote-2.md`](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md), `Listo para Gate 2` tras el merge | Auditor |
+| 2026-10-02 | **O8 (parche de producción tras el cierre):** Victor reporta que el importador seguía caído en Vercel (el riesgo R6 se materializó). Worker investiga con autonomía de Victor: causa raíz = `@napi-rs/canvas` (polifill `DOMMatrix` de pdfjs) no quedaba trazado en la función serverless → la ruta moría al cargar el módulo. Fix `00a161b` (import perezoso) + `35ac5dd` (trazado `pdf-parse`/`pdfjs-dist`/`@napi-rs/canvas*`), verificado en producción con el smoke (`--base`): PDF y XLSX 200, guardado completo en PS-0007. Detalle en la fila O8 del Spec y en `03-evidencia/2026-10-02-observaciones-victor-lote-2.md` § «Verificación en PRODUCCIÓN» | Victor (autonomía) / Worker |
 
 ## Enlaces a progreso y evidencia homónimos
 

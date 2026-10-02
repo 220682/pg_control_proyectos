@@ -10,7 +10,7 @@ Puertas:
 - Gate Spec (Lote 1): `aprobado por Victor (2026-10-02)`
 - Gate 1 (Lote 1): `aprobado por Victor (2026-10-02)` — ver [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md)
 - Gate 2 (Lote 1): `aprobado por Victor (2026-10-02)` — merge `ce5623e`, ver el plan
-- **Lote 2 (O5, O6):** `registrado 2026-10-02` — Gate Spec **pendiente** (grupos de O5 decididos por Victor; queda la nota OT / Recursos del servicio / 3WLA)
+- **Lote 2 (O5, O6, O7):** `registrado 2026-10-02` — Gate Spec **pendiente** (grupos de O5 decididos por Victor; queda la nota OT / Recursos del servicio / 3WLA)
 
 ## Registro de observaciones de Victor
 
@@ -21,13 +21,14 @@ Puertas:
 | O3 | 2026-10-02 | "Reordenar el checklist con esta lista definitiva; los no mencionados de AL_INICIO se eliminan; **todos los ítems llevan casilla y todos llevan responsable**; completar se marca por check." | Ver sección «Catálogo definitivo del checklist». | `Registrada` | 1 |
 | O4 | 2026-10-02 | "El importador de cronograma falla (salió error después de intentar leer el archivo, Excel o PDF); antes mostraba qué tipo de error era y ahora solo dice 'error'. Quiero que se **documente/loguee el error** (por si vuelve a fallar) **y se arregle**." | Triple alcance: (a) regresión en la superficie del error (`FormularioCronograma.tsx` → `traducirErrorApi` / `respuestaErrorInesperado` de `api/cronograma/route.ts`); (b) **loguear el error en servidor** con detalle (mensaje, archivo, formato) para trazabilidad futura; (c) corregir el error subyacente de lectura/parseo (Excel y PDF). Causa raíz a diagnosticar al iniciar el Plan (ver riesgo R1). | `Registrada` | 1 |
 | O5 | 2026-10-02 | "En checklist debemos diferenciar qué acción requiere cada documento: al igual que DP y PR (Crear DP, Ver DP, Crear PR, Ver PR) o como presupuesto («Seleccionar archivo»). No podemos poner «Seleccionar archivo» al paquete de trabajo, cuando el paquete se crea en la interfaz, y lo mismo sucede con otros documentos. Revisar e indicar cómo se arregla, mostrando las listas de los grupos a los que pertenecerá." | Ver sección «Grupos de acción del checklist (O5)». Verificado en `page.tsx` (proyecto): hoy solo `tipo_captura = 'ESTRUCTURADO'` (claves `dp`/`pr`) muestra enlace con etiqueta propia; **el resto — incluidos `cronograma`, `paquete_trabajo`, `plan_maestro` y `requerimiento`— muestra el input de archivo («Seleccionar archivo»)**, aunque esos documentos se crean/importan en pantallas propias de la app. | `Registrada` | 2 |
-| O6 | 2026-10-02 | "El cronograma sigue mostrando el mensaje solo de 'ERROR', no indica el motivo de la falla, y no llega a importar el cronograma ni en formato Excel ni en PDF como base." | **Reabre O4.** Victor probó en la **app desplegada** (2026-10-02): verificar si ese despliegue incluye `ce5623e` — si no, puede estar corriendo código anterior al fix. Verificado en el repo: `main` = `origin/main` = `ce5623e` (incluye `9ad0640`), pero ese commit solo añadió detección de formato por extensión, `console.error` en servidor y devolución del mensaje; **los parsers no cambiaron y el éxito end-to-end nunca se verificó** — el informe del Auditor lo dejó como APLICAR AHORA («Confirmar O4 con smoke real») y sigue sin evidencia (no existen `02-progreso/` ni `03-evidencia/` de ese plan). Mecanismo verificado que oculta el motivo en pantalla: `src/lib/errores/traducir-error.ts` devuelve el fallback genérico cuando el mensaje empieza con `identificador:` (p. ej. `Error: …`), y en `FormularioCronograma.tsx` el `?? 'No se pudo leer el cronograma'` nunca llega a aplicarse. Causa raíz del fallo de lectura (Excel y PDF): a diagnosticar reproduciendo con los archivos de prueba. | `Registrada` | 2 |
+| O6 | 2026-10-02 | "El cronograma sigue mostrando el mensaje solo de 'ERROR', no indica el motivo de la falla, y no llega a importar el cronograma ni en formato Excel ni en PDF como base." | **Reabre O4.** Victor probó en la **app desplegada** y confirmó que Vercel **se despliega sola con cada push a main**: la prueba corre sobre el código vigente (`ce5623e`), no sobre una versión anterior. Verificado en el repo: ese commit incluye `9ad0640`, que solo añadió detección de formato por extensión, `console.error` en servidor y devolución del mensaje; **los parsers no cambiaron y el éxito end-to-end nunca se verificó** — el informe del Auditor lo dejó como APLICAR AHORA («Confirmar O4 con smoke real») y sigue sin evidencia (no existen `02-progreso/` ni `03-evidencia/` de ese plan). Mecanismo verificado que oculta el motivo en pantalla: `src/lib/errores/traducir-error.ts` devuelve el fallback genérico cuando el mensaje empieza con `identificador:` (p. ej. `Error: …`), y en `FormularioCronograma.tsx` el `?? 'No se pudo leer el cronograma'` nunca llega a aplicarse. Causa raíz del fallo de lectura (Excel y PDF): a diagnosticar reproduciendo con los archivos de prueba. | `Registrada` | 2 |
+| O7 | 2026-10-02 | "Vi en la web que «Acta de conformidad» figuraba en la lista; esta no va." | El ítem existe en `catalogo_documentos` (fase CIERRE) y sus filas aparecen en la lista del checklist del proyecto (`page.tsx` lista todos los `proyecto_documentos`). **Contradice la decisión D5 del Lote 1** («el Acta de conformidad se mantiene»): Victor decide ahora que **no va** en la lista. Lote 2: quitarla de la lista del checklist y actualizar la regla en `04-flujos-de-negocio/12-checklist.md` y en todo documento que la cite como parte del checklist. El mecanismo (ocultar vs. eliminar con migración que preserve las filas existentes) lo define el Planner. | `Registrada` | 2 |
 
 Estados: `Registrada` → `Trasladada` · `Descartada` · `Pendiente de decisión`.
 
 ## Catálogo definitivo del checklist (O3)
 
-Orden y nombres exactos pedidos por Victor. **Los ítems de AL_INICIO no listados se eliminan** (D5: el "Acta de conformidad" de CIERRE se mantiene).
+Orden y nombres exactos pedidos por Victor. **Los ítems de AL_INICIO no listados se eliminan** (D5: el "Acta de conformidad" de CIERRE se mantiene — **esta decisión fue derogada por O7**: Victor decide que no va en la lista; ver fila O7 y «Resultado esperado (Lote 2)»).
 
 | # | Nombre definitivo | Clave (actual o nueva) | Completar | Responsable |
 |---|---|---|---|---|
@@ -93,18 +94,19 @@ Victor navega la app y detecta defectos puntuales. Este Spec los registra y defi
 
 - **O5:** cada fila del checklist muestra la acción de su grupo (sección «Grupos de acción del checklist»): «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace **Crear / Ver** a la pantalla del módulo en los 9 del Grupo B, con sus etiquetas. Queda pendiente de decisión de Victor la nota de OT / Recursos del servicio / 3WLA (sin pantalla hoy).
 - **O6:** la importación de cronograma **funciona de punta a punta** con los archivos de prueba (plantilla Excel y PDF de MS Project); cuando falla, la pantalla muestra el motivo específico (sin mensaje genérico) y el error queda logueado en servidor con formato, nombre de archivo y mensaje. Se cierra solo con evidencia de smoke — lo que faltó en el Lote 1.
+- **O7:** «Acta de conformidad» ya **no figura** en la lista del checklist del proyecto, y la regla del flujo 12 queda actualizada (deroga la decisión D5).
 
 ## Alcance
 
 - Lote 1: O1, O2, O3 y O4 (cerrado).
-- Lote 2: O5 y O6 (Gate Spec pendiente).
+- Lote 2: O5, O6 y O7 (Gate Spec pendiente).
 
 ## No alcance
 
 - Generación automática de "Recursos del servicio" desde los datos del DP (plan futuro).
 - Fusión de chips (solo se renombran).
 - Cualquier observación futura que Victor agregue después de aprobar esta Spec: se registra como fila nueva y se agenda en un lote posterior.
-- El "Acta de conformidad" (CIERRE) no se modifica.
+- ~~El "Acta de conformidad" (CIERRE) no se modifica~~ — **derogado por O7** (Lote 2: quitarla de la lista del checklist).
 
 ## Usuarios / roles afectados
 

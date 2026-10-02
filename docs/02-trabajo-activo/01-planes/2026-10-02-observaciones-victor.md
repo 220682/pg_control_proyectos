@@ -10,7 +10,7 @@ Puertas:
 - Gate Spec (Lote 1): `aprobado por Victor (2026-10-02)`
 - Gate 1 (Lote 1): `aprobado por Victor (2026-10-02)` — ver [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md)
 - Gate 2 (Lote 1): `aprobado por Victor (2026-10-02)` — merge `ce5623e`, ver el plan
-- **Lote 2 (O5, O6, O7):** `registrado 2026-10-02` — Gate Spec **pendiente** (grupos de O5 decididos por Victor; queda la nota OT / Recursos del servicio / 3WLA)
+- **Lote 2 (O5, O6, O7):** `registrado 2026-10-02` — **Gate Spec: `aprobado por Victor (2026-10-02)`**. Grupos de O5 decididos; ítems sin pantalla quedan con botones muertos (decisión anotada en la sección de grupos).
 
 ## Registro de observaciones de Victor
 
@@ -74,7 +74,7 @@ Orden y nombres exactos pedidos por Victor. **Los ítems de AL_INICIO no listado
 - **Grupo A (Archivo) — 4 ítems:** 2 Alcance, 3 Presupuesto, 12 Listado de personal nuevo, 13 Listado de pets. Se sube el documento como hasta ahora.
 - **Grupo B (Pantalla propia) — 9 ítems:** 1, 4, 5, 6, 7, 8, 9, 10, 11. Mismas acciones **Crear / Ver** para todos, en la pantalla de su módulo; la fila del checklist **no** ofrece subir archivo, solo el enlace. DP y PR conservan sus etiquetas actuales.
 
-**Pendiente de decisión de Victor (no bloquea el resto):** 1 OT, 5 Recursos del servicio y 10 3WLA están en Pantalla propia pero **hoy no tienen pantalla** (chips inertes en `registro-accesos.ts`; el 3WLA ni está construido y "Recursos del servicio" se generará desde el DP — ver «No alcance»). Definir si hasta que exista su pantalla se quedan con «Seleccionar archivo» o si el Lote 2 incluye crearlas.
+**Decisión de Victor (2026-10-02) sobre los ítems sin pantalla:** 1 OT, 5 Recursos del servicio y 10 3WLA **se quedan en el Grupo B (Pantalla propia)** con sus botones Crear/Ver; **hoy quedan muertos** (sin ruta, igual que los chips inertes actuales). Las pantallas de esos tres las construirá Victor **después, en otro plan** — fuera del alcance del Lote 2.
 
 **Cómo se arregla (dirección, lo concreta el Planner en el plan):** `page.tsx` hoy solo decide entre enlace (ESTRUCTURADO, solo DP/PR) e input de archivo para todo lo demás. Hace falta que cada ítem del catálogo declare su grupo: (i) columna nueva en `catalogo_documentos` (grupo + ruta/etiquetas) vía migración — recomendada: es la fuente de verdad y mover un ítem de grupo no toca código — o (ii) mapa por `clave` en el código. Cualquier opción debe conservar la casilla de check y el responsable de todos los ítems (O3/D2) y respetar permisos por pantalla (flujo 14).
 
@@ -92,14 +92,14 @@ Victor navega la app y detecta defectos puntuales. Este Spec los registra y defi
 
 ## Resultado esperado (Lote 2)
 
-- **O5:** cada fila del checklist muestra la acción de su grupo (sección «Grupos de acción del checklist»): «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace **Crear / Ver** a la pantalla del módulo en los 9 del Grupo B, con sus etiquetas. Queda pendiente de decisión de Victor la nota de OT / Recursos del servicio / 3WLA (sin pantalla hoy).
+- **O5:** cada fila del checklist muestra la acción de su grupo (sección «Grupos de acción del checklist»): «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace **Crear / Ver** a la pantalla del módulo en los 9 del Grupo B, con sus etiquetas. OT, Recursos del servicio y 3WLA quedan con sus botones **muertos** hasta que Victor construya esas pantallas en otro plan.
 - **O6:** la importación de cronograma **funciona de punta a punta** con los archivos de prueba (plantilla Excel y PDF de MS Project); cuando falla, la pantalla muestra el motivo específico (sin mensaje genérico) y el error queda logueado en servidor con formato, nombre de archivo y mensaje. Se cierra solo con evidencia de smoke — lo que faltó en el Lote 1.
 - **O7:** «Acta de conformidad» ya **no figura** en la lista del checklist del proyecto, y la regla del flujo 12 queda actualizada (deroga la decisión D5).
 
 ## Alcance
 
 - Lote 1: O1, O2, O3 y O4 (cerrado).
-- Lote 2: O5, O6 y O7 (Gate Spec pendiente).
+- Lote 2: O5, O6 y O7 — Gate Spec aprobado por Victor (2026-10-02).
 
 ## No alcance
 

@@ -16,6 +16,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 |---|---|
 | [`2026-10-02-observaciones-victor-lote-2-plan.md`](2026-10-02-observaciones-victor-lote-2-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — acciones del checklist (O5), importación de cronograma (O6) y acta de conformidad (O7) |
 | [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — checklist, área Jefatura y error de cronograma |
+| [`2026-10-01-dashboard-economia-y-curva-s.md`](2026-10-01-dashboard-economia-y-curva-s.md) | En ejecución — tandas A–D cerradas (2026-10-02; `local-worker-5`); Fase E (Documentador) trasladando el libro de hallazgos; falta la tanda T2 (F12/F13) y el Worker de código de P03; Gate 2 pendiente |
 | [`2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md`](2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md) | En ejecución (Worker, Fases 2–9 del plan) |
 | [`2026-09-23-paquetes-de-trabajo.md`](2026-09-23-paquetes-de-trabajo.md) | Abierta — Fase 1 terminada; progreso y evidencia se crean al retomarla (D9, Gate 1 del 2026-09-27) |
 | [`2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md`](2026-09-22-plan-unico-orquestador-sesiones-worktrees-Claude-y-local.md) | Ejecutado; pendiente de cierre 100% |
@@ -41,7 +42,6 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-10-01-dashboard-economia-y-curva-s.md`](2026-10-01-dashboard-economia-y-curva-s.md) | **Gate 1 aprobado (2026-10-02)** — plan, Punch List (40 ítems, fases A–E + T) y consultas aprobados; arranque de la Fase A a la espera del cierre de `2026-09-30-niveles-paquetes-plan-maestro-rdt` (Q4) |
 | [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |

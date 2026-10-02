@@ -6,13 +6,13 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Planificando** (Spec `Propuesto`, a la espera del Gate Spec).
+- Estado: **Spec aprobado (Gate Spec, 2026-10-02)** — pendiente: Plan + Punch List del Planner (Gate 1).
 
 ## Spec / SDD
 
 ### Estado
 
-`Propuesto`.
+`Aprobado` — Gate Spec aprobado por Victor el 2026-10-02, con las decisiones D1 a D5 según sus propuestas (ver Registro de decisiones).
 
 ### Problema y contexto
 
@@ -112,7 +112,7 @@ Tabla de cambios (se aprueba en el Gate 1 junto con el plan; aquí se anticipan 
 
 ### Aprobación (Gate Spec)
 
-- [ ] Victor aprueba este Spec, incluidas las decisiones D1 a D5.
+- [x] Victor aprueba este Spec, incluidas las decisiones D1 a D5. — 2026-10-02 («dale»); D1 según recomendación, D2–D5 según sus propuestas.
 
 ## Entorno, repositorios, ramas y worktrees
 
@@ -133,6 +133,12 @@ Tabla de cambios (se aprueba en el Gate 1 junto con el plan; aquí se anticipan 
 | Fecha | Decisión | Quién |
 |---|---|---|
 | 2026-10-01 | La Curva S física (no económica) se dibuja como dos series en %: planificado (PV/BAC) y real (EV/BAC); el dinero solo pondera internamente. | Victor |
+| 2026-10-02 | **Gate Spec aprobado** (Spec completo con D1–D5). | Victor |
+| 2026-10-02 | **D1:** el chip «Curva S» se habilita para los 13 roles; dentro de la pantalla, el selector restringe la curva económica a los 5 roles con economía. | Victor |
+| 2026-10-02 | **D2:** «Costo real de recursos» = Personal (HH) + Equipos (HM); el balde `costo_legacy_sin_partida_acum` como fila/nota aparte; materiales y subcontratos fuera; vista solo por recurso (no por partida). | Victor |
+| 2026-10-02 | **D3:** los roles sin economía ven el Dashboard fijo en Parcial, con el interruptor visible pero deshabilitado. | Victor |
+| 2026-10-02 | **D4:** el Dashboard Parcial gana enlace a Curva S y lo abre en modo «Avance físico (%)» para quien no tiene economía. | Victor |
+| 2026-10-02 | **D5:** sin Plan Maestro aprobado, la serie % planificado (PV/BAC) muestra «Pendiente»; el % real (EV/BAC) se dibuja con los RDT validados existentes. | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
 

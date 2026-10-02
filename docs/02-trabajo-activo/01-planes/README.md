@@ -39,6 +39,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
+| [`2026-10-01-dashboard-economia-y-curva-s.md`](2026-10-01-dashboard-economia-y-curva-s.md) | Spec aprobado (Gate Spec 2026-10-02, D1–D5); pendiente Plan + Punch List (Gate 1). Implementación condicionada a que cierre `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |

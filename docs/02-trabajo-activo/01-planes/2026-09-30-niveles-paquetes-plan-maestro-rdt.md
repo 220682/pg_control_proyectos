@@ -6,8 +6,9 @@
 
 - Tema: rediseño de la cadena Cronograma → Paquetes de Trabajo → Plan Maestro → RDT, con niveles de presupuesto y cronograma confirmados al importar.
 - Fecha: 2026-09-30.
-- Estado: **Implementando** — **Gate 1 aprobado por Victor** (2026-09-30). Ola 1 lanzada el 2026-09-30 (F0-A, F1-A, F2-A, F3-A).
+- Estado: **Cerrada** — **Gate 2 aprobado por Victor** (2026-10-02). Código de los cuatro carriles integrado y pusheado a `main` de la app (`5e8420b`); documentación de flujos aplicada (F5-D); informe de Auditoría emitido. Ver «Mensaje de cierre».
 - Gate 1: **aprobado por Victor** (respuestas en «Gate 1 — respuestas de Victor» y en el Registro de decisiones). Las migraciones las aplican los Workers de cada carril, según `…-briefs/00-protocolo-migraciones.md` (escrito por el Orquestador el 2026-09-30, con la autorización de Victor).
+- Gate 2: **aprobado por Victor** (2026-10-02) — cierre del plan por decisión directa de Victor; los pendientes del informe de Auditoría quedan registrados en el «Mensaje de cierre», no bloquean el cierre.
 
 ## Referencia al Spec aprobado
 
@@ -465,11 +466,40 @@ Las de los tres Specs (ver sus apartados) se trasladan a su flujo al cerrar, por
 
 ## Informe de Auditoría
 
-Se guarda como archivo propio (política nueva del 2026-09-30): `docs/02-trabajo-activo/04-auditoria/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`. Este plan solo enlaza a él; el informe no se escribe aquí. Pendiente.
+Informe emitido como archivo propio (política nueva del 2026-09-30): [`../../04-auditoria/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`](../../04-auditoria/2026-09-30-niveles-paquetes-plan-maestro-rdt.md). Veredicto del primer chequeo: `Requiere corrección` (F5-C pendiente en ese momento y decisiones abiertas de Victor). **Nota del cierre:** el informe se emitió antes de que corrieran las tandas `F5-C` y `F5-E` a `F5-H` (que ya existen en `…-briefs/resultados/`); el cierre lo aprueba Victor con esas decisiones pendientes registradas abajo, sin reauditoría completa.
 
 ## Mensaje de cierre
 
-Pendiente. **No se declara cerrado el plan** hasta cumplir, en este orden (política vigente, pasos 13 y 16–18 del flujo y memoria `cierre-de-plan-completo`): informe del Auditor **con clasificación** emitido; Gate 2 con la **autorización del push de la app** pedida a Victor; merge de la rama integrada a `main` de la app; mejoras de política y Skills agnósticos aprobados aplicados en el mismo cierre; `git rev-list --left-right --count origin/main...main` en **ambos** repositorios sin commits pendientes; y recién entonces el mensaje de cierre, sin códigos internos.
+Cerrado por **decisión directa de Victor** el **2026-10-02** (Gate 2). El plan se declara cerrado con el código ya integrado y pusheado y con los pendientes del informe de Auditoría registrados como deuda, para no dejar nada suelto.
+
+**Alcance completado:**
+- Los tres Specs: niveles de presupuesto/cronograma, paquetes y Plan Maestro (lienzo), RDT desde el Plan Maestro.
+- Fases A a D (4 carriles) y diseño F0; integración (F5-A); verificación en vivo (F5-B, F5-B2, F5-C); correcciones (F5-E a F5-H); documentación de flujos (F5-D1 a F5-D3) y artefacto «Matriz de permisos».
+- Código en `main` de `py_control_proyectos_web`, pusheado (`5e8420b` = `origin/main`). Migraciones `073` a `086` aplicadas.
+
+**Alcance no completado (deuda registrada):**
+- **F5-C quedó `Observado`/parcial** (ver `resultados/F5-C.md`): no se cerró la verificación en vivo completa de RDT para partida repartida/paquete por avance (bloqueada por el orden entre el snapshot del Plan Maestro y los paquetes creados, H1) ni los estados vacío/carga/error uno a uno. `F5C-5` (limpieza de datos de prueba) quedó sin autorización de Victor.
+- Decisiones de Victor aún abiertas del informe de Auditoría: H5 (aviso de recarga inexacto), bloquear «Declarar»/«Crear paquete» con Plan Maestro aprobado, selector «control directo / por paquetes / mixto» del flujo 19, «Paquetes atrasados» del flujo 18, y volver a marcar «Aprobada» la matriz del artefacto.
+
+**Estado final de la Punch List:** los estados por ítem viven en `…-briefs/resultados/*.md` (Conforme/Observado); la tabla embebida del plan no se consolidó ítem por ítem (deuda).
+
+**Evidencia:** `resultados/*.md` (32+) y capturas en `03-evidencia/capturas/niveles-paquetes-plan-maestro-rdt/` (`F5B-*`, `F5B2-*`, `F5C-*`). No se creó el archivo markdown de evidencia homónimo (deuda documental, no bloqueante).
+
+**Auditoría y decisiones del Gate 2:** informe emitido en `04-auditoria/`; Gate 2 y cierre aprobados por Victor el 2026-10-02; los puntos `APLICAR AHORA` (constancia de migraciones 085/086 y consolidación de Punch List/progreso), las propuestas `PROPONER A RESPONSABLE` y `PROPONER SKILL` quedan para decisión de Victor (los dos Skills propuestos: variante «sin navegador» de `verificar-permisos-por-rol` y Skill de migración idempotente).
+
+**Consumo total del plan:** medido en el progreso (`## Medición de Workers`); varias tandas superaron la meta de contexto (F0-R 245k, Orquestador sesión 1 259k, F4-C 251k).
+
+**Hallazgos trasladados:** mejoras de trabajo → cinco archivos en `03-aprendizaje-continuo/`; reglas de negocio → integradas en los flujos 06, 08, 09, 10, 11, 14, 15, 16, 18, 19, 20 y 21; huérfanos → reportados en `resultados/F5-D3.md`, sin borrar nada.
+
+**Documentos promovidos / aprendizajes:** ver `03-aprendizaje-continuo/` y los índices de flujos.
+
+**Pendientes enviados a planes futuros:** los de «Elementos postergados propuestos para planes futuros» (3WLA, retiro de tablas en desuso, nombre del rol extra para más de 5 niveles).
+
+**Merge / fuentes de verdad / Skill:** merge del código a `main` autorizado y ejecutado por Victor; fuentes de verdad (flujos) actualizadas en F5-D; Skills propuestos pendientes de Gate 2 (no creados).
+
+**Confirmación de 100% pusheado:** `py_control_proyectos_web` `main` = `origin/main` (`5e8420b`), `pg_control_proyectos` `main` = `origin/main` (`9cca0d1`); `git rev-list --left-right --count origin/main...main` = `0 0` en ambos.
+
+**Autorización de cierre:** Victor, 2026-10-02.
 
 ## Elementos postergados propuestos para planes futuros
 

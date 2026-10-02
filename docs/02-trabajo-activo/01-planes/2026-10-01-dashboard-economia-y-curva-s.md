@@ -6,7 +6,7 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Gate 1 aprobado (2026-10-02)** — plan + Punch List (40 ítems) aprobados; consultas (i)(ii)(iii) y Q1–Q6 resueltas (ver «Gate 1 — respuestas de Victor»). Precondición de arranque de la Fase A: cierre del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` (Q4).
+- Estado: **Gate 1 aprobado (2026-10-02)** — plan + Punch List (40 ítems) aprobados; consultas (i)(ii)(iii) y Q1–Q6 resueltas (ver «Gate 1 — respuestas de Victor»). Precondición de arranque de la Fase A: cierre del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` (Q4) — **cumplida el 2026-10-02** (aquel plan quedó Cerrado); Victor autorizó proceder con la implementación.
 
 Puertas:
 
@@ -102,7 +102,7 @@ Tabla de cambios (se aprueba en el Gate 1 junto con el plan; aquí se anticipan 
 - **D4. Enlace a Curva S desde Parcial.** Confirmar que el Dashboard Parcial gana el botón/enlace a Curva S (hoy solo lo tiene el Completo), y que abre la Curva S en el modo % para quien no tiene economía.
 - **D5. Sin Plan Maestro aprobado.** La serie "% planificado" (PV/BAC) muestra «Pendiente» sin Plan Maestro aprobado (mismo patrón que hoy, flujo 21 regla 3); el "% real" (EV/BAC) se sigue dibujando con los RDT validados que existan.
 
-**Coordinación:** el plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` sigue reescribiendo los flujos 14, 16 y 21. Se implementa este Spec recién cuando ese plan cierre (o se coordinan los archivos compartidos), para no pisar cambios.
+**Coordinación:** el plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` **cerró el 2026-10-02** y sus flujos 14, 16 y 21 quedaron aplicados. Este Spec se implementa desde ese estado; el solape documental se resuelve en la Fase E.
 
 ### Criterios de aceptación
 
@@ -138,7 +138,7 @@ Tabla de cambios (se aprueba en el Gate 1 junto con el plan; aquí se anticipan 
 - Modo: local. Documentación en `pg_control_proyectos` (`main`, directo). Código en `py_control_proyectos_web`.
 - **Verificado (2026-10-02):** docs: `main` = `origin/main` (`10ceded`), 0/0 al empezar la sesión. Código: `main` = `origin/main` = `ce5623e`, árbol limpio; worktrees existentes `.worktrees/local-worker-1..4` (ramas `local-worker-N`) usados por el plan `2026-09-30-niveles-paquetes-plan-maestro-rdt`. Comandos de `package.json`: `npm test` (`vitest run`), `npm run lint`, `npm run build` (`next build`; en worktree con `node_modules` enlazado usar `npx next build --webpack`), `npx tsc --noEmit`. Sin carpeta de Skills en el repo de la app.
 - **Rama y worktree de este plan:** se definen en el Gate 1 (ii); no se crea rama ni worktree sin autorización. Propuesta: carril nuevo `local-worker-5` desde `main` + `.worktrees/local-worker-5` (puerto 3115), tras el cierre del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt`.
-- **Coordinación (precondición):** ese plan (Estado `Implementando`, Gate 1 aprobado) reescribe hoy los flujos 14, 16 y 21 y toca `permisos.ts`, `registro-accesos.ts` y sus pruebas. Este plan arranca después de que cierre, salvo que Victor autorice coordinar los archivos compartidos (Gate 1, ii).
+- **Coordinación (precondición):** cumplida — el plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` quedó **Cerrado** el 2026-10-02; su código ya está en `main` de la app y sus flujos 14/16/21 quedaron aplicados. La Fase A arranca desde ese `main`; el solape documental de los flujos 14/16/21 se resuelve en la Fase E (Victor autorizó proceder).
 - Sin migraciones nuevas previstas (la serie física se calcula sobre datos existentes: `curva_s_proyecto`, `pr_partidas`, `plan_maestro_asignaciones`, RDT validado). Si durante la implementación aparece una, se detiene y se consulta antes de ejecutarla (protocolo de migraciones, `…-briefs/00-protocolo-migraciones.md`).
 
 ## Skills aplicables
@@ -306,7 +306,7 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 
 | # | Riesgo | Mitigación |
 |---|---|---|
-| R1 | El plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` sigue `Implementando` y su F5-D está editando hoy los flujos 14 y 16 y la matriz de permisos; también toca `permisos.ts`, `registro-accesos.ts` y sus pruebas | Precondición de arranque: su cierre; el Gate 1 (ii) y Q4 confirman la secuencia; si Victor autoriza coordinar, las fases se limitan a las filas de este plan y R04 verifica la coherencia |
+| R1 | **Cerrado el riesgo base:** el plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` quedó Cerrado (2026-10-02) y su código está en `main`. Resta la coordinación documental de los flujos 14/16/21 en la Fase E | El plan niveles ya no edita esos flujos; la Fase E parte de su versión final y R04 verifica la coherencia |
 | R2 | `permisos.test.ts` lee el flujo 14 por ruta absoluta y compara fila por fila (7 filas × 13 roles, con `skipIf(existsSync)`): cambiar el doc sin cambiar el test rompe `npm test` en la máquina de Victor | La Fase A actualiza el mapa de filas y la Fase E edita el flujo 14 en la misma ventana; P03 se verifica con ambos ya cambiados |
 | R3 | `pr_recursos` puede traer filas con `descripcion` NULL o horas huérfanas (deuda de `db/055`): `Σ filas < AC` | Fila «Sin resolver» = `AC − Σ` con explicación; nunca se fuerza a cero ni se inventa data |
 | R4 | La respuesta de `modo=fisica` filtra USD por un componente reutilizado | Contrato PD2 (`bac` fuera de la respuesta) + V02 |
@@ -410,6 +410,7 @@ Nota de sesión: esta sesión del Orquestador llega hasta el cierre del plan; la
 | 2026-10-02 | **PD5:** lista cerrada de ocultados en Parcial (cabecera USD, resumen ejecutivo, semáforo, dona, desempeño por partida, columnas de costo, orden por desviación). | Planner (delegado por el Spec) |
 | 2026-10-02 | **PD6:** Bloque E (PPC + Pareto) y enlace a Curva S visibles en ambos dashboards; el enlace lleva `?modo=fisica` sin economía. | Planner (delegado por el Spec) |
 | 2026-10-02 | **Gate 1 aprobado:** plan, Punch List (40 ítems), tabla de 12 cambios a flujos y pre-autorizaciones en bloque; consultas 1–6 resueltas (Fase T nueva: proyecto de prueba de extremo a extremo hasta 50 % de avance; PD5 y PD6 confirmadas; espera de cierre del plan niveles; `local-worker-5`; matriz actualizada en el flujo + artefacto por Victor). | Victor |
+| 2026-10-02 | **Modelo de los Workers:** todos los Workers del plan corren con **DeepSeek V4.1 Flash** (`opencode-go/deepseek-v4.1-flash`, corregido el 2026-10-02: el config tenía `opencode/deepseek-v4.1-flash`, proveedor inexistente), fijado en la config de opencode (`~/.config/opencode/opencode.jsonc`, agentes `general` y `explore`). La tabla «Modelos por rol» de `09-medicion-y-modelos.md` se actualiza al cierre (Fase E / paso 16b). | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
 

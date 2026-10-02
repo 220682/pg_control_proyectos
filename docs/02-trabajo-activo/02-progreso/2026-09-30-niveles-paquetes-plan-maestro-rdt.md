@@ -9,10 +9,12 @@
 
 ## Estado general y fase actual
 
+- **Estado: Cerrada** (Gate 2 aprobado por Victor, 2026-10-02). El detalle está en el «Mensaje de cierre» del plan. Código en `main` de la app (`5e8420b` = `origin/main`); migraciones `073` a `086` aplicadas.
 - Gate Spec: aprobado por Victor (2026-09-30), los tres Specs.
 - Gate 1: aprobado por Victor (2026-09-30): plan, tabla de cambios a flujos en bloque, carpetas de trabajo, migraciones aplicadas por los Workers.
 - Carpetas de trabajo creadas (2026-09-30, autorizadas por Victor).
-- **Ola 1 lanzada (2026-09-30):** F0-A (maquetas), F1-A (carril 1, puerto 3101), F3-A (carril 2, puerto 3102) y F2-A (carril 3, puerto 3103, con las migraciones 079 a 081). Estado del plan: «Implementando». Skills revisados por el Orquestador: `seguir-flujo-de-planes`. Pendiente: medir cada sesión y consolidar sus resúmenes aquí al llegar.
+- **Ola 1 lanzada (2026-09-30):** F0-A (maquetas), F1-A (carril 1, puerto 3101), F3-A (carril 2, puerto 3102) y F2-A (carril 3, puerto 3103, con las migraciones 079 a 081). Skills revisados por el Orquestador: `seguir-flujo-de-planes`. Pendiente histórico: medir cada sesión y consolidar sus resúmenes aquí al llegar.
+- **Cierre (2026-10-02):** las tandas `F5-C` y `F5-E` a `F5-H` corrieron después del primer informe de Auditoría; cierre por decisión directa de Victor, con la deuda del informe registrada (F5-C parcial y decisiones abiertas). Merge/push ya ejecutados por Victor.
 
 ## Tabla de roles / Workers y estado
 
@@ -185,7 +187,7 @@ Tandas de código (todas sin push ni merge, sin navegador; lo visual queda **Obs
 
 ## Última actualización y responsable
 
-2026-10-01, Orquestador.
+2026-10-02, Orquestador (cierre).
 
 ## Handoffs
 

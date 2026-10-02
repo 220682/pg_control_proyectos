@@ -35,6 +35,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 | [`2026-09-21-curva-s-fase-3-agente-d.md`](2026-09-21-curva-s-fase-3-agente-d.md) | CERRADO (Punch List 20/20, PR #16 mergeado) — misma evidencia externa que Dashboard Fase 3 |
 | [`2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md`](2026-09-23-reordenamiento-y-actualizacion-fuentes-de-verdad.md) | Ejecutado |
 | [`2026-09-27-paneles-servicio-persistente.md`](2026-09-27-paneles-servicio-persistente.md) | Cerrada (Gate 2 aprobado por Victor, 2026-09-30) — Punch List 181 ítems: 173 Conforme, 7 Observado por causas externas o pasos de Victor, 1 No aplica; código mergeado a `main` de la app (`45c9e0a`); Informe de Auditoría «Apto para Gate 2» |
+| [`2026-09-30-niveles-paquetes-plan-maestro-rdt.md`](2026-09-30-niveles-paquetes-plan-maestro-rdt.md) | Cerrada (Gate 2 aprobado por Victor, 2026-10-02) — plan conjunto de los tres Specs (niveles, paquetes/Plan Maestro, RDT); código de los 4 carriles integrado y pusheado a `main` de la app (`5e8420b`); migraciones `073`–`086`; documentación de flujos aplicada; cierre con deuda registrada (F5-C parcial y decisiones abiertas del informe de Auditoría). Progreso: [`../02-progreso/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`](../02-progreso/2026-09-30-niveles-paquetes-plan-maestro-rdt.md) |
 
 ### En preparación
 
@@ -44,7 +45,6 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 | [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
-| [`2026-09-30-niveles-paquetes-plan-maestro-rdt.md`](2026-09-30-niveles-paquetes-plan-maestro-rdt.md) | **Implementando** (Gate 1 aprobado por Victor, 2026-09-30) — plan conjunto de los tres Specs (19 tandas, 4 carriles, 109 ítems). Código de los cuatro carriles hecho e integrado (F5-A); falta la verificación en vivo (F5-B, F5-C), la documentación (F5-D, en curso: flujos 14 y 16 y matriz de permisos con este cierre) y la auditoría. Progreso: [`../02-progreso/2026-09-30-niveles-paquetes-plan-maestro-rdt.md`](../02-progreso/2026-09-30-niveles-paquetes-plan-maestro-rdt.md) |
 
 Ver [`planes-futuros.md`](planes-futuros.md) para ideas pendientes de Spec/SDD.
 

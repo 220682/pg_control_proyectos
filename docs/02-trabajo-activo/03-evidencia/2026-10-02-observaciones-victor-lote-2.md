@@ -1,6 +1,6 @@
 # Evidencia — Observaciones de Victor (Lote 2: acciones del checklist O5, cronograma O6 y acta de conformidad O7)
 
-> **Archivo en actualización** (creado el 2026-10-02 en la Tanda D del Lote 2, ítems D1/D2/D3). Recoge la evidencia real disponible hasta hoy; los ítems de la tanda B se completarán al reanudarla.
+> **Archivo final** (creado el 2026-10-02 en la Tanda D del Lote 2, ítems D1/D2/D3; completado al cierre con la tanda B y C1). Recoge la evidencia real de las tandas A, B y D.
 
 ## Referencia al plan
 
@@ -31,18 +31,18 @@ Estados tomados de `briefs/resultados/A.md` (tanda A) y `briefs/resultados/B.md`
 | A6 | POST `documentos/[documentoId]` rechaza `grupo_accion='PANTALLA'` con 400 | Smoke con sesión sin navegador (script fuera del repo) | Subida a `cronograma` → **400** «Este documento se completa en la pantalla de su módulo, no subiendo un archivo»; `ot` (botón muerto) → **400** mismo mensaje; **control** Grupo ARCHIVO sin archivo → 400 «Falta el archivo» (el corte no bloquea el Grupo A) | Conforme | Salida en `briefs/resultados/A.md` § estados | Worker 1 |
 | A7 | Consulta de solo lectura: ítems del Grupo B con `archivo_ruta` no nula | SQL de solo lectura | **0 filas** → nada que Victor elimine (Q2); no se borró nada | Conforme | Salida en `briefs/resultados/A.md` § estados | Worker 1 |
 | A8 | `npm test`, `tsc`, `lint`, build verdes | Ejecución en el carril | **100 archivos / 1043 tests OK · `tsc` exit 0 · lint 27 (9E/18W) = baseline de `main` · `npx next build --webpack` exit 0** (el `next build` con Turbopack falla por entorno: hallazgo MB1) | Conforme | `briefs/resultados/A.md` § traspaso | Worker 1 |
-| B1 | Reproducir el fallo con `scripts/smoke-cronograma.mjs` y `soloAnalizar=true` en los dos archivos | Ejecución real contra `npm run dev -- --webpack -p 3112` | Script creado, lint OK y ejecutado; **ambas llamadas devuelven 409 antes del parser** (Plan Maestro aprobado): `bloqueadoPorPlanAprobado: true`, `perderia: {vinculos: 48, paquetes: 4, planMaestroBorrador: true}`. Cero escrituras | **Observado** | `briefs/resultados/B.md` (salida completa del 409) | Worker 2 |
-| B2 | Aislar la causa raíz con `exceljs` y `PDFParse` sobre los archivos reales | — | No alcanzado: el 409 corta antes del parser | Pendiente (bloqueado por R7) | `briefs/resultados/B.md` § estados | Worker 2 |
-| B3 | Corregir la causa raíz | — | Sin cambio de código (sin causa raíz diagnosticada). Incluye el 500 crudo de `POST /api/cronograma` sin `esIdProyectoValido`, **autorizado** por el Orquestador | Pendiente | Plan § Registro de decisiones | Worker 2 |
-| B4 | Loguear **todos** los caminos de fallo con formato, nombre y mensaje | — | Hoy solo el `console.error` de lectura (`route.ts:314`) | Pendiente | `briefs/resultados/B.md` | Worker 2 |
-| B5 | `traducir-error.ts` sin fallback genérico + fallback real en `FormularioCronograma.tsx:133,164` + test | — | `traducir-error.ts:23` sigue devolviendo el fallback para mensajes con prefijo técnico; `??` muerto en las dos líneas; no existe `traducir-error.test.ts` | Pendiente | `briefs/resultados/B.md` | Worker 2 |
-| B6 | Smoke de éxito de punta a punta + smoke de fallo con motivo en pantalla y log | — | **Imposible sobre PS-0006/PS-0004** (PM aprobado): ambos servicios vigentes bloqueados; los archivados responden «OT no vigente». Pendiente sobre el servicio de prueba nuevo (R7) | **Observado** | `briefs/resultados/B.md` § «Qué se importó» (nada; cero escrituras) | Worker 2 |
-| B7 | `npm test` / `tsc` / `lint` / build verdes en el carril 2 | — | Solo `npx eslint scripts/smoke-cronograma.mjs` → OK; corrida completa al reanudar | Pendiente | `briefs/resultados/B.md` | Worker 2 |
-| C1 | `db/README.md` con la fila `089`; ramas integradas; `git status` limpio | Diff + git | **`db/README.md` aún sin la fila `089`**; merge pendiente (solo tras Gate 2) | Sin verificar | — | Integración (Orquestador) |
+| B1 | Reproducir el fallo con `scripts/smoke-cronograma.mjs` y `soloAnalizar=true` en los dos archivos | Ejecución real contra `npm run dev -- --webpack -p 3112` sobre PS-0007 | Los dos archivos reales devuelven **HTTP 200** con propuesta completa (PDF: 3 niveles/74 filas; XLSX: 2 niveles/13 filas); las variantes inválidas imprimen la pantalla real con `traducirErrorApi` | Conforme | `briefs/resultados/B.md` § «Evidencia de smokes» | Worker 2 |
+| B2 | Aislar la causa raíz con `exceljs` y `PDFParse` sobre los archivos reales | Diagnóstico escrito (formato, fase y mensaje) | Parsers **sanos** (XLSX 14 act., PDF 78 act., 0 incompletas); el fallo estaba en 3 fases ajenas al parser: sesión caducada (HTML sin `error`), prefijo técnico en `traducir-error` y 500 por uuid inválido | Conforme | `briefs/resultados/B.md` § «Diagnóstico de causa raíz» | Worker 2 |
+| B3 | Corregir la causa raíz | Diff + `tsc` | `esIdProyectoValido` en el POST → 400 «El N° OT del servicio no es válido» (antes 500 crudo de Postgres); prefijo técnico quitado en `traducir-error.ts`; detección de respuesta no JSON en el formulario | Conforme | `briefs/resultados/B.md` §§ B3/B5 | Worker 2 |
+| B4 | Loguear **todos** los caminos de fallo con formato, nombre y mensaje | Salida del log en la prueba de fallo | `logFalloImportacion` en **17 caminos** del POST + `catch` de lectura y global, con etapa + formato + nombre de archivo + mensaje; salida real del `dev-3112.log` | Conforme | `briefs/resultados/B.md` § «log en servidor» | Worker 2 |
+| B5 | `traducir-error.ts` sin fallback genérico + fallback real en `FormularioCronograma.tsx` + test | `npm test` + smoke de fallo | `traducir-error.ts:26-27` quita el prefijo técnico y conserva el motivo; `FormularioCronograma.tsx:151,186` con fallback real; test nuevo `traducir-error.test.ts` 4/4 | Conforme | `briefs/resultados/B.md` § B5 | Worker 2 |
+| B6 | Smoke de éxito de punta a punta + smoke de fallo con motivo en pantalla y log | Salidas de ambos smokes | Sobre **PS-0007** (creado con R7): éxito XLSX 14 act. y PDF 78 act. con `extraccionCompleta: true` y persistencia verificada; 6 fallos con motivo específico y log; **PS-0004/PS-0006 sin escrituras** | Conforme | `briefs/resultados/B.md` §§ «Evidencia de smokes» y B4 | Worker 2 |
+| B7 | `npm test` / `tsc` / `lint` / build verdes en el carril 2 | Ejecución en el carril | **100 archivos / 1030 tests OK · `tsc` exit 0 · lint 27 (9E/18W) = baseline, 0 en archivos propios · `npx next build --webpack` exit 0** | Conforme | `briefs/resultados/B.md` § B7 | Worker 2 |
+| C1 | `db/README.md` con la fila `089`; ramas integradas; `git status` limpio | Diff + git | Fila `089` en `db/README.md` (commit `3a393d5`, carril 1); ambos carriles mergeados a `main` tras el Gate 2; `git status` limpio y `main` = `origin/main` (`0/0`) | Conforme | Mensaje de cierre del plan | Integración (Orquestador) |
 | D1 | Fila del Lote 2 («En ejecución») en `01-planes/README.md` | Diff | Fila añadida arriba de la del Lote 1, en la tabla «En ejecución» | Conforme | Commit de esta tanda | Documentador |
 | D2 | Flujos 12, 08, 15 (+14 aprobado) e índices según la tabla del Gate 1 | Diff + casilla «aplicado» | Escritos: `12-checklist.md` (columna «Grupo / acción», sección «Grupos de acción (O5)», RB1–RB3, acta fuera de la lista), `08-…` (CIERRE no cuenta), `15-cronograma.md` (RB4), `14-…` (fila 74, nota 4, actualización Gate 1; **artefacto «Matriz de permisos»: lo edita Victor**), índice `04-flujos-de-negocio/README.md`. La casilla «aplicado» del plan se marca al cerrar D2/D4 | Conforme (edición hecha; casilla del plan pendiente de marcar) | Diff de esta tanda | Documentador |
 | D3 | Progreso y evidencia del Lote 1 con su contenido real + nota del smoke de O4 | Dos archivos nuevos | `02-progreso/2026-10-02-observaciones-victor.md` y `03-evidencia/2026-10-02-observaciones-victor.md` creados: estado Cerrada, commits, SQL aplicados por Victor, decisiones, y la nota de que **el smoke de O4 nunca se hizo** (su evidencia vive en la homónima del Lote 2) | Conforme | Los dos archivos nuevos | Documentador |
-| D4 | Trasladar el libro de hallazgos + `verificar-referencias.py` sin rotos | — | **Fuera de esta tanda** (no ejecutado) | Sin verificar | — | Documentador (D4) |
+| D4 | Trasladar el libro de hallazgos + `verificar-referencias.py` sin rotos | Traslado por filas (Skill `trasladar-hallazgos`) + ejecución del verificador | **MB1–MB3** → archivo nuevo [`03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) (3 secciones, una por hallazgo, con origen y fecha) + fila en el índice de `03-aprendizaje-continuo/README.md`, commit `903033e`. **RB1–RB4** → `Trasladada` con enlace y commit `7100179`, texto **verificado abriendo el destino**: `12-checklist.md` (columna «Grupo / acción», Grupos de acción, «Ítems sin pantalla todavía (RB2)», acta fuera de la lista), `08-programa-portafolio-proyecto.md` (CIERRE no cuenta), `15-cronograma.md` (regla RB4). **OP1–OP5 sin tocar** (`Registrada`, las clasifica el Auditor); huérfanos: ninguno. Verificador: por defecto **44 archivos, 0 huérfanos, 0 enlaces rotos, exit 0**; alcance Lote 2 (plan + briefs + homónimos) **0/0 exit 0**; alcance `03-aprendizaje-continuo` **0/0**. Punch D4 → `Conforme` | Conforme | Archivo de aprendizaje + índice; estados en el plan; salidas del verificador (recogidas en el plan D4 y en el handoff del progreso) | Documentador (tanda D4) |
 
 ## Enlace al artifact de checklist visual
 
@@ -51,9 +51,10 @@ Estados tomados de `briefs/resultados/A.md` (tanda A) y `briefs/resultados/B.md`
 ## Resultados de pruebas técnicas
 
 - Carril 1 (`local-worker-1`): `npm test` **100 / 1043 OK** · `npx tsc --noEmit` **exit 0** · `npm run lint` **27 (9E/18W) = baseline** · `npx next build --webpack` **exit 0**.
-- Carril 2 (`local-worker-2`): pendiente de corrida completa (B7); solo `npx eslint scripts/smoke-cronograma.mjs` → OK.
+- Carril 2 (`local-worker-2`): `npm test` **100 / 1030 OK** · `npx tsc --noEmit` **exit 0** · `npm run lint` **27 (9E/18W)**, 0 en archivos propios · `npx next build --webpack` **exit 0**.
 - Migración `089`: aplicada y verificada con conteos antes/después (A1).
 - Evidencia SSR/API **sin navegador** (patrón password grant + cookie Supabase) para A3, A5 y A6.
+- Verificador de referencias (tanda D4): `python scripts/verificar-referencias.py` → **0 huérfanos / 0 enlaces rotos, exit 0** (44 archivos del núcleo); mismos 0/0 en el alcance del Lote 2 (plan + briefs + homónimos) y en `docs/03-aprendizaje-continuo`.
 
 ## Regresiones verificadas
 
@@ -64,8 +65,7 @@ Estados tomados de `briefs/resultados/A.md` (tanda A) y `briefs/resultados/B.md`
 
 ## Limitaciones o casos no verificables
 
-1. **Tanda B incompleta:** no existe salida de smoke de éxito ni de fallo (B1/B6 `Observado`, B2–B5/B7 `Pendiente`); bloqueo 409 documentado, mitigación R7 aprobada pero aún no ejecutada.
-2. La transición real de fase (A4) no se ejecutó en PS-0006 (solo prueba de ambos sentidos en test).
-3. El build con Turbopack (por defecto) no funciona en worktrees (MB1); se usó `--webpack`.
-4. El merge a `main`, `db/README.md` (089) y la verificación final en la app desplegada (R6) quedan para el cierre.
-5. `resultados/B.md` aún registra «DETENIDA» con la pregunta de PS-0006: no refleja todavía la decisión R7 del Orquestador (se actualizará al reanudar la tanda).
+1. La transición real de fase (A4) no se ejecutó en ningún proyecto (solo prueba de ambos sentidos en test).
+2. El build con Turbopack (por defecto) no funciona en worktrees (MB1); se usó `--webpack`.
+3. La verificación final en la app desplegada (R6) queda a cargo de Victor tras el push del merge.
+6. **Reportado sin tocar (tanda D4):** corrido sobre el alcance completo `docs/02-trabajo-activo` (163 archivos), el verificador devuelve 15 huérfanos y 20 enlaces rotos **preexistentes** de planes antiguos (2026-09-20/21, rutas `../Flujos de trabajo/…` de antes de la reestructuración documental) más 194 menciones sin archivo — ninguno pertenece a este plan; no se modificó ningún archivo ajeno.

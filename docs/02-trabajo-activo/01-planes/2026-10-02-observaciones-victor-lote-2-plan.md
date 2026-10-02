@@ -6,13 +6,13 @@
 
 - Tema: Lote 2 de observaciones de Victor — (O5) acción por grupo en cada fila del checklist, (O6) importación de cronograma de punta a punta con mensaje de error específico, (O7) «Acta de conformidad» fuera de la lista.
 - Fecha: 2026-10-02.
-- Estado: **En ejecución** — Gate 1 aprobado; fases A y B lanzadas (2026-10-02).
+- Estado: **Cerrada** — fases A, B, C y D completas; Gate 2 aprobado; merge a `main` y push hechos (2026-10-02).
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-02)`
 - Gate 1: `aprobado por Victor (2026-10-02)` — respuestas completas abajo
-- Gate 2: `pendiente`
+- Gate 2: `aprobado por Victor (2026-10-02)` — autoriza el merge de ambos carriles, el mensaje de cierre y la actualización de índices
 
 ## Referencia al Spec aprobado
 
@@ -150,11 +150,11 @@ Formato `05-punch-list.md`. Estados: `Sin verificar` / `Conforme` / `Observado` 
 
 | ID | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|
-| C1 | `db/README.md` con la fila `089`; ramas integradas sin conflictos; `git status` limpio. | Diff + git status | Sin verificar |
-| D1 | Índice de `01-planes/README.md`: fila del Lote 2 («En ejecución») y, al cerrar, su estado final. | Diff | Sin verificar |
-| D2 | Flujos `12-checklist.md` (grupos de acción + acta fuera de la lista + «subir» solo Grupo A), `15-cronograma.md` (regla de mensaje específico y log) y `08-programa-portafolio-proyecto.md` (qué es «checklist completo» para cerrar) según la tabla del Gate 1; índices actualizados. `14-accesos-y-restricciones.md` + artefacto «Matriz de permisos» **solo** si Victor lo aprueba. | Diff + casilla «aplicado» | Sin verificar |
-| D3 | **Deuda documental del Lote 1:** crear `02-progreso/2026-10-02-observaciones-victor.md` y `03-evidencia/2026-10-02-observaciones-victor.md` con su contenido real (estado, commits, SQL aplicados por Victor, decisiones) y la nota de que el smoke de O4 nunca se hizo y su evidencia vive ahora en la homónima del Lote 2. | Dos archivos nuevos + diff | Sin verificar |
-| D4 | Trasladar el libro de hallazgos a su destino; `python scripts/verificar-referencias.py` sin referencias rotas (incluidos los enlaces a los homónimos del Lote 1 y al mapa de briefs). | Salida del verificador | Sin verificar |
+| C1 | `db/README.md` con la fila `089`; ramas integradas sin conflictos; `git status` limpio. | Diff + git status | Conforme (fila `089` en `db/README.md`; `local-worker-1` mergeada con `b9d0e2b` y `local-worker-2` con `5e8420b`; `main` = `origin/main` = `5e8420b`, `0/0`, árbol limpio) |
+| D1 | Índice de `01-planes/README.md`: fila del Lote 2 («En ejecución») y, al cerrar, su estado final. | Diff | Conforme (fila del Lote 2 en `7100179`; estado final «Cerrada» y fila del Lote 1 corregida en la tanda de cierre) |
+| D2 | Flujos `12-checklist.md` (grupos de acción + acta fuera de la lista + «subir» solo Grupo A), `15-cronograma.md` (regla de mensaje específico y log) y `08-programa-portafolio-proyecto.md` (qué es «checklist completo» para cerrar) según la tabla del Gate 1; índices actualizados. `14-accesos-y-restricciones.md` + artefacto «Matriz de permisos» **solo** si Victor lo aprueba. | Diff + casilla «aplicado» | Conforme (flujos 12, 08, 15 y 14 + índice, commit `7100179`; el artefacto «Matriz de permisos» lo edita Victor) |
+| D3 | **Deuda documental del Lote 1:** crear `02-progreso/2026-10-02-observaciones-victor.md` y `03-evidencia/2026-10-02-observaciones-victor.md` con su contenido real (estado, commits, SQL aplicados por Victor, decisiones) y la nota de que el smoke de O4 nunca se hizo y su evidencia vive ahora en la homónima del Lote 2. | Dos archivos nuevos + diff | Conforme (dos archivos creados con contenido real, commit `7100179`) |
+| D4 | Trasladar el libro de hallazgos a su destino; `python scripts/verificar-referencias.py` sin referencias rotas (incluidos los enlaces a los homónimos del Lote 1 y al mapa de briefs). | Salida del verificador | Conforme (MB1–MB3 → [`2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) + fila en su índice, commit `903033e`; RB1–RB4 → flujos 12/08/15, commit `7100179`; verificador por defecto: 44 archivos, 0 huérfanos, 0 enlaces rotos, exit 0; alcance Lote 2 (plan + briefs + homónimos): 0/0, exit 0; alcance `03-aprendizaje-continuo`: 0/0) |
 
 ## Riesgos y bloqueos
 
@@ -253,6 +253,10 @@ Además de los cuatro bloques estándar de más abajo, el Planner deja estas con
 | 2026-10-02 | **C1 parcial:** `db/README.md` actualizado con la fila `089` en `local-worker-1` (commit `3a393d5`, pusheado); el merge a `main` sigue **postergado al Gate 2** (iv) | Orquestador (Fase C) |
 | 2026-10-02 | **Pendiente de decisión para el Gate 2:** el mismo `??` muerto (`traducirErrorApi(x) ?? '…'`) está en `FormularioSubirRdt.tsx:55` y `FormularioPlanMaestro.tsx:244,269` (carriles ajenos; no se tocaron) — corregirlos ahora u otro plan | Victor (Gate 2) |
 | 2026-10-02 | **Pendiente de decisión para el Gate 2:** `middleware.ts:33-37` redirige también las rutas `/api/*` a `/login` HTML (sesión caducada → mensaje genérico); la mitigación ya está en el formulario, pero corregirlo en origen exige tocar autenticación — excepción `/api/*` con 401 JSON ahora, o dejarlo así | Victor (Gate 2) |
+| 2026-10-02 | **Gate 2 aprobado:** merge de `local-worker-1` (`b9d0e2b`) y `local-worker-2` (`5e8420b`) a `main`, push, mensaje de cierre e índices | Victor |
+| 2026-10-02 | **A-H1**, el `??` muerto en dos formularios y la excepción `/api/*` del middleware: enviados a planes futuros (ninguno bloquea el cierre) | Victor (autorización de cierre) |
+| 2026-10-02 | **Skills MB1/MB2** (propuestos por el Auditor): no se crean en este plan | Victor (autorización de cierre) |
+| 2026-10-02 | **Auditoría emitida:** [`04-auditoria/2026-10-02-observaciones-victor-lote-2.md`](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md), `Listo para Gate 2` tras el merge | Auditor |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -268,28 +272,28 @@ Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto 
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| MB1 | 2026-10-02 | Worker 1 (tanda A, A-H2) | En worktrees, `next build` (Turbopack) falla por symlink de `node_modules` fuera del worktree; usar `npx next build --webpack` | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
-| MB2 | 2026-10-02 | Worker 1 (A-H3) y Worker 2 (B, hallazgo 1) | Evidenciar SSR/API **sin navegador**: password grant de Supabase → cookie `sb-<ref>-auth-token` (`base64-` troceada a 3180, verificada en `@supabase/ssr`); script temporal fuera del repo | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
-| MB3 | 2026-10-02 | Worker 2 (B, hallazgo 2) | En Windows PowerShell 5.1, `Get-Content -Raw` + `Set-Content` corrompe UTF-8 con acentos; usar la herramienta de edición de archivos | `03-aprendizaje-continuo/` (archivo nuevo) | `Registrada` | — |
+| MB1 | 2026-10-02 | Worker 1 (tanda A, A-H2) | En worktrees, `next build` (Turbopack) falla por symlink de `node_modules` fuera del worktree; usar `npx next build --webpack` | `03-aprendizaje-continuo/` (archivo nuevo) | `Trasladada` | [`2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) § 1 (commit `903033e`) |
+| MB2 | 2026-10-02 | Worker 1 (A-H3) y Worker 2 (B, hallazgo 1) | Evidenciar SSR/API **sin navegador**: password grant de Supabase → cookie `sb-<ref>-auth-token` (`base64-` troceada a 3180, verificada en `@supabase/ssr`); script temporal fuera del repo | `03-aprendizaje-continuo/` (archivo nuevo) | `Trasladada` | [`2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) § 2 (commit `903033e`) |
+| MB3 | 2026-10-02 | Worker 2 (B, hallazgo 2) | En Windows PowerShell 5.1, `Get-Content -Raw` + `Set-Content` corrompe UTF-8 con acentos; usar la herramienta de edición de archivos | `03-aprendizaje-continuo/` (archivo nuevo) | `Trasladada` | [`2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) § 3 (commit `903033e`) |
 
 ## Reglas de negocio acordadas en esta tarea
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| RB1 | 2026-10-02 | Victor (Spec) | Cada fila del checklist muestra la acción de su grupo: «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace «Crear / Ver» a la pantalla propia en los 9 del Grupo B; sin subida en el Grupo B | `04-flujos-de-negocio/12-checklist.md` | `Registrada` | — |
-| RB2 | 2026-10-02 | Victor (Spec) | OT, Recursos del servicio y 3WLA quedan con botón muerto (título «Sin pantalla todavía») hasta que exista su pantalla | `04-flujos-de-negocio/12-checklist.md` | `Registrada` | — |
-| RB3 | 2026-10-02 | Victor (Spec) | «Acta de conformidad» no figura en la lista del checklist; los documentos de fase CIERRE no cuentan para el checklist completo (deroga D5) | `04-flujos-de-negocio/12-checklist.md` + `08-programa-portafolio-proyecto.md` | `Registrada` | — |
-| RB4 | 2026-10-02 | Victor (Spec) | Si la importación de cronograma falla, la pantalla muestra el motivo específico y el error queda logueado en servidor con formato, nombre de archivo y mensaje | `04-flujos-de-negocio/15-cronograma.md` | `Registrada` | — |
+| RB1 | 2026-10-02 | Victor (Spec) | Cada fila del checklist muestra la acción de su grupo: «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace «Crear / Ver» a la pantalla propia en los 9 del Grupo B; sin subida en el Grupo B | `04-flujos-de-negocio/12-checklist.md` | `Trasladada` | [`12-checklist.md`](../../04-flujos-de-negocio/12-checklist.md) (columna «Grupo / acción» + «Grupos de acción», commit `7100179`) |
+| RB2 | 2026-10-02 | Victor (Spec) | OT, Recursos del servicio y 3WLA quedan con botón muerto (título «Sin pantalla todavía») hasta que exista su pantalla | `04-flujos-de-negocio/12-checklist.md` | `Trasladada` | [`12-checklist.md`](../../04-flujos-de-negocio/12-checklist.md) («Ítems sin pantalla todavía (RB2)», commit `7100179`) |
+| RB3 | 2026-10-02 | Victor (Spec) | «Acta de conformidad» no figura en la lista del checklist; los documentos de fase CIERRE no cuentan para el checklist completo (deroga D5) | `04-flujos-de-negocio/12-checklist.md` + `08-programa-portafolio-proyecto.md` | `Trasladada` | [`12-checklist.md`](../../04-flujos-de-negocio/12-checklist.md) (acta fuera de la lista) + [`08-programa-portafolio-proyecto.md`](../../04-flujos-de-negocio/08-programa-portafolio-proyecto.md) (CIERRE no cuenta), commit `7100179` |
+| RB4 | 2026-10-02 | Victor (Spec) | Si la importación de cronograma falla, la pantalla muestra el motivo específico y el error queda logueado en servidor con formato, nombre de archivo y mensaje | `04-flujos-de-negocio/15-cronograma.md` | `Trasladada` | [`15-cronograma.md`](../../04-flujos-de-negocio/15-cronograma.md) (regla RB4 de fallo de importación, commit `7100179`) |
 
 ## Observaciones sobre la política
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| OP1 | 2026-10-02 | Planner | El plan del Lote 1 enlaza `02-progreso/`, `03-evidencia/` y una carpeta `-briefs/` que **no existen**: un plan puede quedar «Cerrada» sin sus homónimos y con enlaces rotos. En este plan se cierra la deuda (D3) | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
-| OP2 | 2026-10-02 | Planner | O6 **reabre O4**: se aprobó y cerró O4 (Gate 2 del Lote 1) sin evidencia de smoke, pese a que el informe del Auditor lo dejó como «APLICAR AHORA». El flujo permitió cerrar una corrección sin la evidencia mínima que su propia evidencia pedía | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
-| OP3 | 2026-10-02 | Planner | La plantilla `02-plan.md` presenta los cuatro apartados del libro de hallazgos como secciones de nivel 2, mientras el plan aprobado del Lote 1 los usa como nivel 3; el lector/verificador puede buscarlos en el nivel equivocado | Auditor y `06-plantillas/02-plan.md` | `Registrada` | — |
-| OP4 | 2026-10-02 | Worker 2 (tanda B) | El brief fija PS-0006 para el smoke **sin chequear antes** si el servicio está bloqueado por Plan Maestro aprobado (409 previo al parser): el chequeo previo (llamada de análisis sin escribir) debería ser un paso del brief o del Gate 1 para no gastar la tanda | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
-| OP5 | 2026-10-02 | Worker 2 (tanda B) | `src/middleware.ts:33-37` redirige a `/login` (HTML) también para rutas `/api/*` con sesión caducada: la API no puede devolver un `error` JSON y cualquier forma pinta «Ocurrió un error»; la mitigación quedó en `FormularioCronograma` pero el patrón afecta a **todas** las APIs | Clasificación del Auditor; Victor decide en el Gate 2 (toca autenticación) | `Registrada` | — |
+| OP1 | 2026-10-02 | Planner | El plan del Lote 1 enlaza `02-progreso/`, `03-evidencia/` y una carpeta `-briefs/` que **no existen**: un plan puede quedar «Cerrada» sin sus homónimos y con enlaces rotos. En este plan se cierra la deuda (D3) | Clasificación del Auditor; Victor decide en el Gate 2 | `Trasladada` | [Informe de Auditoría Lote 2](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) (clasificada `PROPONER A RESPONSABLE`) |
+| OP2 | 2026-10-02 | Planner | O6 **reabre O4**: se aprobó y cerró O4 (Gate 2 del Lote 1) sin evidencia de smoke, pese a que el informe del Auditor lo dejó como «APLICAR AHORA». El flujo permitió cerrar una corrección sin la evidencia mínima que su propia evidencia pedía | Clasificación del Auditor; Victor decide en el Gate 2 | `Trasladada` | [Informe de Auditoría Lote 2](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) (clasificada `PROPONER A RESPONSABLE`) |
+| OP3 | 2026-10-02 | Planner | La plantilla `02-plan.md` presenta los cuatro apartados del libro de hallazgos como secciones de nivel 2, mientras el plan aprobado del Lote 1 los usa como nivel 3; el lector/verificador puede buscarlos en el nivel equivocado | Auditor y `06-plantillas/02-plan.md` | `Trasladada` | [Informe de Auditoría Lote 2](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) (clasificada `PROPONER A RESPONSABLE`) |
+| OP4 | 2026-10-02 | Worker 2 (tanda B) | El brief fija PS-0006 para el smoke **sin chequear antes** si el servicio está bloqueado por Plan Maestro aprobado (409 previo al parser): el chequeo previo (llamada de análisis sin escribir) debería ser un paso del brief o del Gate 1 para no gastar la tanda | Clasificación del Auditor; Victor decide en el Gate 2 | `Trasladada` | [Informe de Auditoría Lote 2](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) (clasificada `PROPONER A RESPONSABLE`) |
+| OP5 | 2026-10-02 | Worker 2 (tanda B) | `src/middleware.ts:33-37` redirige a `/login` (HTML) también para rutas `/api/*` con sesión caducada: la API no puede devolver un `error` JSON y cualquier forma pinta «Ocurrió un error»; la mitigación quedó en `FormularioCronograma` pero el patrón afecta a **todas** las APIs | Clasificación del Auditor; Victor decide en el Gate 2 (toca autenticación) | `Trasladada` | [Informe de Auditoría Lote 2](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) (clasificada `PROPONER A RESPONSABLE`) |
 
 ## Carpetas/archivos huérfanos
 
@@ -297,14 +301,71 @@ Ninguno detectado en la revisión de inicio ni en las tandas A y B (A-H4 y halla
 
 ## Informe de Auditoría
 
-Pendente: `docs/02-trabajo-activo/04-auditoria/2026-10-02-observaciones-victor-lote-2.md` (formato `06-informe-auditoria.md`; se escribe al terminar la Fase D, fuera de este plan).
+[`2026-10-02-observaciones-victor-lote-2.md`](../04-auditoria/2026-10-02-observaciones-victor-lote-2.md) — recomendación **`Listo para Gate 2`** (informe emitido antes del Gate 2 y actualizado tras el merge autorizado). Clasificación: `APLICAR AHORA` ninguno; `PROPONER A RESPONSABLE` OP1–OP5; `NO PROMOVER` ninguno; `PROPONER SKILL` MB1 y MB2 (no creados en este plan). Pendientes técnicos para decisión futura: A-H1, el `??` muerto en dos formularios y la excepción `/api/*` del middleware.
 
 ## Mensaje de cierre
 
-Pendente (formato `09-cierre.md`): merge a `main`, fuentes de verdad actualizadas, hallazgos trasladados, verificación del Auditor, Gate 2 de Victor y confirmación del smoke real de cronograma — con la verificación final de Victor en la app desplegada.
+### Alcance completado y no completado
+
+- **Completado:** O5 (migración `089` + acción por grupo en cada fila del checklist), O7 (acta de conformidad fuera de la lista, del editor y del gate de cierre, derogando D5 del Lote 1) y O6 (importación de cronograma de punta a punta: causa raíz en tres sitios ajenos al parser, validación de uuid, `logFalloImportacion` en 17 caminos, `traducir-error` sin fallback genérico y smokes reales de éxito y fallo), más toda la Fase D (flujos 12/08/15/14, deuda documental del Lote 1 y traslado del libro de hallazgos).
+- **No completado (fuera de alcance, a planes futuros):** pantallas de OT, Recursos del servicio y 3WLA (hoy con botones muertos); A-H1 (expresión no nulo-safe en `page.tsx`, inalcanzable); el `??` muerto en `FormularioSubirRdt.tsx:55` y `FormularioPlanMaestro.tsx:244,269`; la excepción `/api/*` (401 JSON) en `middleware.ts:33-37`; los Skills MB1/MB2 propuestos.
+
+### Estado final de la Punch List
+
+A1–A8 `Conforme` · B1–B7 `Conforme` · C1 `Conforme` · D1–D4 `Conforme`.
+
+### Evidencia
+
+[`03-evidencia/2026-10-02-observaciones-victor-lote-2.md`](../03-evidencia/2026-10-02-observaciones-victor-lote-2.md), con `resultados/A.md` y `resultados/B.md`. Smoke real sobre PS-0007: XLSX 14 act. y PDF 78 act. con persistencia verificada; 6 fallos con motivo específico en pantalla y log en servidor. Comandos: carril 1 **100/1043 tests**, carril 2 **100/1030 tests**, `tsc` 0, lint 27 = baseline, `next build --webpack` 0.
+
+### Auditoría y decisiones del Gate 2
+
+Informe `Listo para Gate 2`. Victor aprobó el Gate 2 (2026-10-02) y autorizó el merge. A-H1, el `??` muerto y la excepción `/api/*` del middleware quedan enviados a planes futuros (ninguno bloquea el cierre). Los Skills propuestos (MB1, MB2) no se crean en este plan.
+
+### Consumo total del plan
+
+`python scripts/medir.py` **no encontró las sesiones del 2026-10-02**: los registros locales de Claude Code que lee el script no contienen esas sesiones (la sesión de este cierre corre en otro harness). **No se estiman cifras**; la fila queda pendiente de medir con el script cuando las sesiones estén disponibles.
+
+| Rol o Worker | Sesiones | Llamadas | Entrada | Caché creada | Caché leída | Salida |
+|---|---|---|---|---|---|---|
+| **Total del plan** | pendiente | — | — | — | — | — |
+
+### Hallazgos trasladados
+
+MB1–MB3 → aprendizaje nuevo; RB1–RB4 → flujos 12/08/15; OP1–OP5 → informe de Auditoría (clasificadas `PROPONER A RESPONSABLE`). **Ninguna fila queda `Registrada`.** Verificador de referencias: **0 huérfanos / 0 enlaces rotos** (exit 0) en el núcleo de 44 archivos; alcance del Lote 2, 0/0.
+
+### Documentos promovidos
+
+Flujos `12-checklist.md`, `08-programa-portafolio-proyecto.md`, `15-cronograma.md` y `14-accesos-y-restricciones.md`; índices `01-planes/README.md` y `04-flujos-de-negocio/README.md`. Aprendizaje nuevo `03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md`.
+
+### Aprendizajes registrados
+
+MB1 (build `--webpack` en worktrees), MB2 (evidencia SSR/API sin navegador), MB3 (UTF-8 en PowerShell 5.1).
+
+### Pendientes enviados a planes futuros
+
+Ver «Elementos postergados propuestos para planes futuros» al final.
+
+### Merge / fuentes de verdad / Skill
+
+- **16a Merge:** `local-worker-1` → `main` (`b9d0e2b`) y `local-worker-2` → `main` (`5e8420b`); `main` = `origin/main` = `5e8420b`.
+- **16b Fuentes de verdad:** actualizadas en la Fase D (commits `7100179`, `903033e`); índices actualizados en la tanda de cierre.
+- **16c Skill:** no aplica (MB1/MB2 propuestos por el Auditor y no aprobados para crear en este plan).
+
+### Confirmación de 100% pusheado
+
+`pg_control_proyectos`: `main` = `origin/main`, `git rev-list --left-right --count` = `0 0`, sin cambios propios pendientes (el árbol conserva cambios de otros planes activos, ajenos a este). `py_control_proyectos_web`: `main` = `origin/main` = `5e8420b`, `0 0`, árbol limpio.
+
+### Autorización de cierre
+
+Gate 2 aprobado y cierre autorizado por Victor (2026-10-02). Queda la verificación final de Victor en la app desplegada (riesgo R6).
 
 ## Elementos postergados propuestos para planes futuros
 
 - Pantallas de OT, Recursos del servicio y 3WLA (hoy con botones muertos).
 - Generación automática de «Recursos del servicio» desde los datos del DP.
 - Limpieza de ramas/worktrees `local-worker-3` y `local-worker-4` (atrás de `main`).
+- **A-H1:** expresión no nulo-safe en `page.tsx:163` (`catalogo?.roles.clave`); inalcanzable hoy.
+- **`??` muerto** en `FormularioSubirRdt.tsx:55` y `FormularioPlanMaestro.tsx:244,269` (pasar el fallback como 2.º argumento).
+- **Excepción `/api/*` en `middleware.ts:33-37`** (401 JSON en vez de redirección a `/login` HTML); toca autenticación.
+- **Skills MB1/MB2** propuestos por el Auditor (build en worktrees; evidencia sin navegador), no creados.

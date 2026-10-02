@@ -6,8 +6,9 @@
 
 - Tema: Lote 1 de observaciones de Victor — (O1) responsable en checklist, (O2) área PR→JF, (O3) catálogo definitivo del checklist, (O4) error de importación de cronograma (loguear + corregir).
 - Fecha: 2026-10-02.
-- Estado: **Implementando** — **Gate 1 aprobado por Victor** (2026-10-02).
+- Estado: **Cerrada** — Gate 1 y Gate 2 aprobados por Victor (2026-10-02).
 - Gate 1: `aprobado por Victor (2026-10-02)` — 2 Workers; datos de prueba OK; pre-autorizaciones OK; tabla de flujos OK.
+- Gate 2: `aprobado por Victor (2026-10-02)` — SQL aplicados y verificados por Victor; merge a `main` (`ce5623e`) y push hechos.
 
 ## Referencia al Spec aprobado
 
@@ -181,11 +182,15 @@ Ninguna.
 
 ## Informe de Auditoría
 
-Enlace al archivo homónimo en `04-auditoria/` (se crea al auditar).
+[`2026-10-02-observaciones-victor.md`](../04-auditoria/2026-10-02-observaciones-victor.md) — recomendación inicial "requiere corrección"; resueltos el flujo 14 (nota 4 reescrita, commit `9573dd2`) y la evidencia (SQL aplicados y verificados por Victor).
 
 ## Mensaje de cierre
 
-Formato `09-cierre.md` (se escribe tras el Gate 2).
+- 16a Merge: `local-worker-1` (`ce5623e`) → `main`, push hecho. Verificado `origin/main...main` = `0 0` y árbol limpio.
+- 16b Fuentes de verdad: flujos `12-checklist.md`, `02-usuarios.md`, `14-accesos-y-restricciones.md` actualizados (commits `5f1ed31`, `cd3465b`, `9573dd2`).
+- 16c Skill: no aplica (el Auditor no propuso ninguno que Victor aprobara).
+- Migraciones `087`/`088` aplicadas por Victor en Supabase (2026-10-02).
+- Todo pusheado. Plan = 100%.
 
 ## Elementos postergados propuestos para planes futuros
 

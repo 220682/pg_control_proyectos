@@ -1,4 +1,6 @@
 # 12 — Checklist editable
+> Lee si: la tarea toca el checklist editable, su catálogo definitivo o los grupos de acción.
+
 
 Ítems de catálogo y ad-hoc por proyecto. Spec `2026-08-18-checklist-editable`.
 

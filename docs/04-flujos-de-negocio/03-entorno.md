@@ -1,4 +1,6 @@
 # 03 — Entorno por rol
+> Lee si: la tarea toca «Mi entorno», sus chips o las herramientas disponibles por rol.
+
 
 Ruta: `/mi-entorno`. El grupo se elige por el rol de mayor prioridad (`slugEntornoDesdeRoles`) y solo decide el título y los accesos de Notificaciones; **no decide qué chips salen**.
 

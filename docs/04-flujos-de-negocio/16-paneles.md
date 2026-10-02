@@ -1,4 +1,6 @@
 # 16 — Paneles, navegación y alcance del servicio
+> Lee si: la tarea toca la navegación, los tres paneles, qué muestra el panel izquierdo con y sin servicio, los chips deshabilitados o el asistente del shell.
+
 
 ## Objetivo
 

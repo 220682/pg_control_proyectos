@@ -1,4 +1,6 @@
 # 21 — Curva S
+> Lee si: la tarea toca la Curva S: sus reglas fijas, granularidad, endpoint, o por qué tiene pantalla propia y no es el Bloque G del Dashboard.
+
 
 ## Objetivo
 

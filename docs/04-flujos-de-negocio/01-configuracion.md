@@ -1,4 +1,6 @@
 # 01 — Configuración
+> Lee si: la tarea toca el shell, el login, la adaptación móvil o el apartado Proyectos del panel izquierdo. **Su alcance real está sin definir con Victor** (antes se llamaba Interfaz/workspace).
+
 
 > **Pendiente de definir/implementar.** Este flujo se llamaba "Interfaz / workspace"; se renombró a "Configuración" pero su contenido específico como flujo de configuración todavía no se ha escrito. Lo que sigue abajo es el contenido original (interfaz/workspace), conservado como referencia hasta que se defina el alcance real de "Configuración" con Victor.
 

@@ -1,4 +1,6 @@
 # 10 — Generación PR
+> Lee si: la tarea toca la generación del PR, sus tres bloques, cuándo se recalcula cada uno, o su relación con el Dashboard.
+
 
 Independiente de importar DP (usa datos del DP, pero es otro flujo). Spec `2026-08-16-pr`, ampliado en PR Fase 1 ([2026-09-21-pr-fase-1-pipeline-rdt.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-1-pipeline-rdt.md)) y PR Fase 2 ([2026-09-21-pr-fase-2-pipeline-linea-base.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-2-pipeline-linea-base.md)).
 

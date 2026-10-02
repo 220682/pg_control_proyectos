@@ -23,7 +23,7 @@ El primer mensaje (el brief) debe contener solo:
 - Restricciones.
 - Skills que debe usar, si el Orquestador los nombra (ver `04-flujo-sdd-y-planes.md`).
 
-**Skills, antes de empezar.** Todo agente, antes de empezar la tarea, lista el contenido de `.claude/skills/` del repositorio de documentación y del repositorio de código en el que va a trabajar. Usa el Skill que aplique, o anota en el progreso del plan «Skills revisados: ninguno aplica» con una frase de motivo.
+**Skills, antes de empezar.** El brief **nombra** los Skills de la tanda (ver `04-flujo-sdd-y-planes.md`, paso 8) y el agente abre el `SKILL.md` de esos. **No vuelve a listar el contenido de `.claude/skills/`**: la herramienta ya publica en su bloque de Skills la lista disponible, y repetirla son dos llamadas y una lista duplicada por agente, sin valor. Si entre los Skills disponibles hay uno que aplica y el brief no nombró, el agente lo usa y lo anota. Si ninguno aplica, anota en el progreso del plan «Skills revisados: ninguno aplica» con una frase de motivo. Ese es todo el trabajo de Skills que se pide antes de empezar.
 
 ## Cierre de cada sesión
 

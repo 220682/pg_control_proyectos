@@ -1,4 +1,6 @@
 # 14 — Accesos y restricciones
+> Lee si: **cualquier** interfaz, permiso, acción o acceso nuevo, modificado o eliminado, en cualquier parte del sistema. Este flujo es la base de los accesos y manda sobre los demás.
+
 
 Tabla visual con **columnas = roles** y **filas = accesos**. Pedido por Victor el 2026-09-16; construida el 2026-09-20 como paso previo al Sub-lote 2 (alcance por servicio): "primero definir qué puede hacer cada rol". Rehecha y **aprobada por Victor el 2026-09-28** con el artefacto «Matriz de permisos».
 

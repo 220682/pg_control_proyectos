@@ -1,4 +1,6 @@
 # 09 — Importar DP
+> Lee si: la tarea toca la importación del DP, sus tres fases de validación, la confirmación de niveles o los tres informes que genera.
+
 
 Independiente de la generación PR. Excel DP → `proyecto_dp`. Spec `2026-08-16-dp-import`.
 

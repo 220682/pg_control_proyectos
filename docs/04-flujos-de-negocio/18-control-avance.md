@@ -1,4 +1,6 @@
 
+> Lee si: la tarea toca el control de avance: los tres universos, la estructura longitudinal del Plan Maestro, sus cálculos o el flujo de datos RDT → Plan Maestro.
+
 # 18 — Control de avance — versión mejorada
 
 ## Objetivo

@@ -1,4 +1,6 @@
 # 11 — Dashboard
+> Lee si: la tarea toca el Dashboard: sus dos versiones, ubicación, filtros, indicadores, diagnóstico o la paleta de series compartida con la Curva S.
+
 
 Vista ejecutiva derivada del PR. No calcula: lee. Si un número está mal, se
 arregla en el pipeline (PR / motor RDT → PR), nunca en la pantalla. Esto es

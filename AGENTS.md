@@ -95,7 +95,7 @@ No se encontraron pruebas ejecutables en este repositorio. Por tanto:
 
 Hay dos frases de activación distintas — no se mezclan:
 
-- **"inicia sesión en control de proyectos"** (o equivalente claro): flujo normal. No preguntar de cero. Leer [docs/README.md](docs/README.md) — ese archivo es el orquestador de `docs/` y dice exactamente qué leer (los archivos de `docs/02-trabajo-activo/01-planes/` que sigan abiertos para saber en qué quedó el proyecto, y todos los archivos de `docs/04-flujos-de-negocio/` para el contexto general). Responder con los pendientes de esas sesiones abiertas y el contexto general del sistema.
+- **"inicia sesión en control de proyectos"** (o equivalente claro): flujo normal. No preguntar de cero. Leer [docs/README.md](docs/README.md) — ese archivo es el orquestador de `docs/` y dice exactamente qué leer (los archivos de `docs/02-trabajo-activo/01-planes/` que sigan abiertos para saber en qué quedó el proyecto, y el **índice** de `docs/04-flujos-de-negocio/`). Un flujo concreto se abre solo cuando la tarea lo nombre; para decidir si aplica, basta su línea `Lee si:`. Responder con los pendientes de esas sesiones abiertas y el contexto general del sistema.
 - **"vamos a trabajar en un plan con agente orquestador"** (o equivalente claro): flujo de Orquestador. Ver [Flujo con Orquestador](#flujo-con-orquestador) más abajo.
 
 ## Frase de cierre de sesión

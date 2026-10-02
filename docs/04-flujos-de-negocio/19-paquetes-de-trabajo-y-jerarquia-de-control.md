@@ -1,4 +1,6 @@
 19 — Paquetes de trabajo y jerarquía de control
+> Lee si: la tarea agrupa partes de la estructura del servicio en paquetes de trabajo, o toca la jerarquía de control, el modo de medición o la capa operativa de paquetes.
+
 Objetivo
 Permitir que el usuario agrupe partes de la estructura del servicio en paquetes de trabajo controlables, sin modificar la base contractual. La partida continúa siendo la unidad de trazabilidad y reportabilidad; el paquete es una capa operativa de agrupación.
 

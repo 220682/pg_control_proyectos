@@ -1,4 +1,6 @@
 # 15 — Cronograma
+> Lee si: la tarea toca el cronograma, sus hitos o su relación con los Paquetes de Trabajo.
+
 
 **Fase 1 implementada (en main, 2026-09-16/17).** Importa Excel (plantilla WBS de programación, rotulada EDT si así viene del origen/Nombre de tarea/Duración/Comienzo/Fin/Predecesoras/Sucesoras) o PDF exportado de MS Project, y genera un **informe de extracción** (cuántas actividades se leyeron, cuántas quedaron completas, cuántas se enlazaron al DP). No lee `.mpp` nativo.
 

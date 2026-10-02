@@ -1,4 +1,6 @@
 # 20 — Plan Maestro
+> Lee si: la tarea toca el Plan Maestro: sus fuentes de verdad, el flujo implementado, sus permisos o qué queda pendiente de fase 2.
+
 
 ## Objetivo
 

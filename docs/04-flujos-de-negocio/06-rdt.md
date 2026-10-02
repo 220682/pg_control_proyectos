@@ -1,4 +1,6 @@
 # 06 — RDT (Registro diario de trabajo)
+> Lee si: la tarea toca el RDT, sus pantallas, o crear un RDT desde el Plan Maestro. No lo confundas con la OT (flujo 13).
+
 
 Archivo (foto/PDF) ligado a una OT vigente. Fecha Lima `dd-mm-yyyy HH:mm`.
 

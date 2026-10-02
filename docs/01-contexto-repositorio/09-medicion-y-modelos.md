@@ -21,6 +21,7 @@ El Auditor no baja a Haiku: es quien detecta lo que se les escapa a los demás. 
 ## Medición
 
 - Script: `scripts/medir.py` (`python scripts/medir.py 8` lista las 8 sesiones más recientes). Lee los registros locales de sesión de Claude Code en `%USERPROFILE%\.claude\projects`, en las carpetas de este repositorio y de la app. Probado el 2026-10-01. Para sesiones de Cursor: por confirmar.
+- Script del arranque: `scripts/arranque.py` (`python scripts/arranque.py 15`, y `--bloques` para ver de qué herramienta vino el contexto). Mide el contexto de la **primera llamada** de cada sesión —la línea base— y cuánto crece por su cuenta. Complementa a `medir.py`, que mide costo y calidad. Creado el 2026-10-02.
 - Las sesiones de subagentes quedan dentro de la carpeta de la sesión del Orquestador, en `subagents/`, con un archivo `.meta.json` que trae la descripción.
 
 ## Ahorro de tokens
@@ -33,7 +34,9 @@ El Auditor no baja a Haiku: es quien detecta lo que se les escapa a los demás. 
 | Límite de pensamiento (`MAX_THINKING_TOKENS`) | **No sirve con Sonnet 5.5**: usa razonamiento adaptativo y ignora ese presupuesto (verificado 2026-10-01). Se regula con el nivel de esfuerzo (`/effort`): bajo para Workers mecánicos, nunca bajar en Planner ni Auditor |
 | Compactación automática por ventana y hooks alrededor de la compactación | Verificados en la documentación oficial (2026-10-01); ver «Contexto y compactación» abajo |
 | `AGENTS.md` por debajo de 200 líneas | Hecho el 2026-10-01 (324 a 180). El contenido movido está en `08-arquitectura-funcional-y-datos.md` |
-| Lectura de flujos de negocio | El Orquestador lee el índice y los flujos afectados; el Planner y el Auditor leen todos |
+| Lectura de flujos de negocio | **Cambiado el 2026-10-02.** Antes: el Planner y el Auditor leen todos los flujos. Ahora: los cuatro roles leen el índice de flujos y solo los que el Spec o el plan declara afectados, elegidos por su línea `Lee si:`. La lista completa solo con las dos excepciones de D10. Ahorro estimado ~28k tokens por agente, dos veces por plan |
+| Tope de salida de herramientas en los briefs | **Promovido a regla del estándar el 2026-10-02** (estaba aquí como nota y no se cumplía). Ver `08-medicion-y-relevo.md` § Tope de salida de herramientas en los briefs |
+| Línea base de arranque por sesión | **Medida el 2026-10-02.** `scripts/arranque.py`. Subagentes: 40k tokens de contexto en la primera llamada, muy estable (min 40k, max 41k). Sesión principal del Orquestador: 52k. De esos 40k, ~32k son el prompt del sistema y las herramientas —no los controla este repositorio—, 5.1k `AGENTS.md` y 3.0k el bloque de Skills. El ahorro posible está en el **crecimiento** de la sesión, no en el arranque |
 
 ## Git rutinario
 

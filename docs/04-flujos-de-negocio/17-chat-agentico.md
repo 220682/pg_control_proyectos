@@ -1,4 +1,6 @@
 # 17 — Chat agéntico
+> Lee si: la tarea menciona un agente conversacional o el chat agéntico. **Hoy está deshabilitado y sin diseño técnico**; el asistente que se ve en el shell es otra cosa (flujo 16).
+
 
 **No habilitado. Sin diseño técnico.** Pedido por Victor el 2026-09-16, dentro de la conversación del flujo 15 (Cronograma) pero **no exclusivo de Cronograma** — es un agente del sistema.
 

@@ -4,7 +4,22 @@ Documento agnóstico: el script concreto, las rutas de los registros de sesión 
 
 ## Qué se mide
 
-De cada sesión (la del Orquestador y la de cada subagente Worker): llamadas, herramientas usadas, **contexto máximo**, tokens leídos de caché y modelo. Lo hace un script del repositorio que el Orquestador ejecuta; es local, no usa red y no cuesta tokens.
+De cada sesión (la del Orquestador y la de cada subagente Worker): llamadas, herramientas usadas, **contexto máximo**, **contexto de la primera llamada**, tokens leídos de caché y modelo. Lo hace un script del repositorio que el Orquestador ejecuta; es local, no usa red y no cuesta tokens.
+
+**El contexto de la primera llamada** es la línea base del agente: lo que trae antes de hacer nada (prompt del sistema, el archivo de normas raíz del repositorio, el bloque de Skills y su brief). Ningún brief puede bajarla, porque no depende de lo que el plan escriba; depende del tamaño de la norma raíz y de cuántos Skills se publiquen. Por eso se mide aparte del contexto máximo, y **se revisa cada vez que cambian la norma raíz o el conjunto de Skills**: si sube, el problema no está en los briefs. La línea base y el crecimiento por separado son los dos números que dicen dónde está la fuga; medidos juntos, no se distinguen.
+
+## Tope de salida de herramientas en los briefs
+
+El contexto de una sesión crece casi todo por **resultados de herramienta**, no por política de lectura. Un bloque de `Read` sin tope, una consola sin filtro o un artefacto abierto completo se llevan decenas de miles de tokens de una vez, y el efecto se multiplica por cada llamada siguiente de la sesión, que vuelve a pagar ese bloque. Por eso los briefs llevan esta regla, y el Orquestador la nombra en cada tanda:
+
+| Qué | Regla |
+|---|---|
+| Consola y comandos | Siempre con tope de salida: `| head -c 2000`, `Select-Object -First 30`, `grep` acotado. Un `cat` o un `Get-Content` sin filtro de un archivo grande está prohibido en un brief. |
+| Lectura de archivos | Ningún archivo de más de 8 KB se lee entero. Se lee el fragmento (líneas, sección) o se busca por `Grep` primero. Los archivos quegrow con cada tanda —progreso, plan— se leen por sección, nunca completos. |
+| Artefactos y páginas | Se abren por sección, no completos. |
+| Evidencia y logs | Se recortan en el brief, pero **la evidencia guarda el resultado real, no el recortado**: lo que se archiva tiene que servir para reproducir. |
+
+Si una tanda se pasa de la meta por esto, la causa es «qué se leyó o repitió» y el ajuste va en el brief de la tanda siguiente, no en una nota.
 
 ## Cuándo se mide
 

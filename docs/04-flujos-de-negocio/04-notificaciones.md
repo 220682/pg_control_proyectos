@@ -1,4 +1,6 @@
 # 04 — Notificaciones
+> Lee si: la tarea toca la bandeja `/notificaciones`, los chips de aviso, o a quién se notifica y a quién no (por ejemplo, al aprobar un RQ).
+
 
 Bandeja `/notificaciones` y chips en Mi entorno.
 

@@ -1,4 +1,6 @@
 # 02 — Usuarios
+> Lee si: la tarea crea, edita o borra usuarios, roles, cargos o área, o toca `/admin/usuarios`. No lo abras solo para asignar alguien a un proyecto: eso vive en el flujo 08.
+
 
 `/admin/usuarios`: crear (contraseña + invite), roles, cargo, área, borrar. Solo admin o jefe de proyectos.
 

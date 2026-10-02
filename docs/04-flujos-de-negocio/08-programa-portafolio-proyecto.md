@@ -1,4 +1,6 @@
 # 08 — Programa / portafolio / proyecto
+> Lee si: la tarea crea, adjudica, archiva o elimina un proyecto, programa o portafolio. Quién puede cada acción está en el flujo 14, tabla 2; no se repite aquí.
+
 
 Ciclo de vida de contenedores. Spec `2026-08-16-programa-portafolio-proyecto`. Quién puede cada acción: tabla 2 del [flujo 14](14-accesos-y-restricciones.md) (no se repite aquí).
 

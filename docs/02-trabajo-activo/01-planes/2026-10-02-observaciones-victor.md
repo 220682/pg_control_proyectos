@@ -4,12 +4,13 @@
 
 ## Estado
 
-`Aprobado (Gate Spec)`.
+`Aprobado (Gate Spec)` — Lote 1 (O1–O4), cerrado.
 
 Puertas:
-- Gate Spec: `aprobado por Victor (2026-10-02)`
-- Gate 1: `pendiente`
-- Gate 2: `pendiente`
+- Gate Spec (Lote 1): `aprobado por Victor (2026-10-02)`
+- Gate 1 (Lote 1): `aprobado por Victor (2026-10-02)` — ver [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md)
+- Gate 2 (Lote 1): `aprobado por Victor (2026-10-02)` — merge `ce5623e`, ver el plan
+- **Lote 2 (O5, O6):** `registrado 2026-10-02` — Gate Spec **pendiente** (grupos de O5 decididos por Victor; queda la nota OT / Recursos del servicio / 3WLA)
 
 ## Registro de observaciones de Victor
 
@@ -19,6 +20,8 @@ Puertas:
 | O2 | 2026-10-02 | "Encontré un rol con iniciales PR; hay que eliminarlo si no existe o cambiarlo por JF, indicando rol para jefatura." | **No es rol, es el área** código `PR` = "Proyecto" (tabla `areas`, `db/014`). **Resolución:** renombrarla a **`JF` = "Jefatura"**, como área para asignar a los jefes. | `Registrada` | 1 |
 | O3 | 2026-10-02 | "Reordenar el checklist con esta lista definitiva; los no mencionados de AL_INICIO se eliminan; **todos los ítems llevan casilla y todos llevan responsable**; completar se marca por check." | Ver sección «Catálogo definitivo del checklist». | `Registrada` | 1 |
 | O4 | 2026-10-02 | "El importador de cronograma falla (salió error después de intentar leer el archivo, Excel o PDF); antes mostraba qué tipo de error era y ahora solo dice 'error'. Quiero que se **documente/loguee el error** (por si vuelve a fallar) **y se arregle**." | Triple alcance: (a) regresión en la superficie del error (`FormularioCronograma.tsx` → `traducirErrorApi` / `respuestaErrorInesperado` de `api/cronograma/route.ts`); (b) **loguear el error en servidor** con detalle (mensaje, archivo, formato) para trazabilidad futura; (c) corregir el error subyacente de lectura/parseo (Excel y PDF). Causa raíz a diagnosticar al iniciar el Plan (ver riesgo R1). | `Registrada` | 1 |
+| O5 | 2026-10-02 | "En checklist debemos diferenciar qué acción requiere cada documento: al igual que DP y PR (Crear DP, Ver DP, Crear PR, Ver PR) o como presupuesto («Seleccionar archivo»). No podemos poner «Seleccionar archivo» al paquete de trabajo, cuando el paquete se crea en la interfaz, y lo mismo sucede con otros documentos. Revisar e indicar cómo se arregla, mostrando las listas de los grupos a los que pertenecerá." | Ver sección «Grupos de acción del checklist (O5)». Verificado en `page.tsx` (proyecto): hoy solo `tipo_captura = 'ESTRUCTURADO'` (claves `dp`/`pr`) muestra enlace con etiqueta propia; **el resto — incluidos `cronograma`, `paquete_trabajo`, `plan_maestro` y `requerimiento`— muestra el input de archivo («Seleccionar archivo»)**, aunque esos documentos se crean/importan en pantallas propias de la app. | `Registrada` | 2 |
+| O6 | 2026-10-02 | "El cronograma sigue mostrando el mensaje solo de 'ERROR', no indica el motivo de la falla, y no llega a importar el cronograma ni en formato Excel ni en PDF como base." | **Reabre O4.** Victor probó en la **app desplegada** (2026-10-02): verificar si ese despliegue incluye `ce5623e` — si no, puede estar corriendo código anterior al fix. Verificado en el repo: `main` = `origin/main` = `ce5623e` (incluye `9ad0640`), pero ese commit solo añadió detección de formato por extensión, `console.error` en servidor y devolución del mensaje; **los parsers no cambiaron y el éxito end-to-end nunca se verificó** — el informe del Auditor lo dejó como APLICAR AHORA («Confirmar O4 con smoke real») y sigue sin evidencia (no existen `02-progreso/` ni `03-evidencia/` de ese plan). Mecanismo verificado que oculta el motivo en pantalla: `src/lib/errores/traducir-error.ts` devuelve el fallback genérico cuando el mensaje empieza con `identificador:` (p. ej. `Error: …`), y en `FormularioCronograma.tsx` el `?? 'No se pudo leer el cronograma'` nunca llega a aplicarse. Causa raíz del fallo de lectura (Excel y PDF): a diagnosticar reproduciendo con los archivos de prueba. | `Registrada` | 2 |
 
 Estados: `Registrada` → `Trasladada` · `Descartada` · `Pendiente de decisión`.
 
@@ -47,6 +50,34 @@ Orden y nombres exactos pedidos por Victor. **Los ítems de AL_INICIO no listado
 - **Completar = marca por check** (manual) para todos los ítems, incluidos DP y PR (cambio respecto al auto-completado actual por `proyectoTieneDp`).
 - **Chips renombrados (tenerlo en cuenta):** "Listado de personal nuevo" y "Listado de pets". El ítem de navegación "Personal NUEVO" (`src/lib/config/registro-accesos.ts`) se alinea a "Listado de personal nuevo".
 
+## Grupos de acción del checklist (O5)
+
+**Decidido por Victor (2026-10-02): dos grupos.** Cada ítem del catálogo queda en un grupo de acción, y la fila del checklist muestra la acción de su grupo (hoy muestra «Seleccionar archivo» en todos salvo DP/PR):
+
+| # | Ítem | Grupo | Acción que mostraría |
+|---|---|---|---|
+| 1 | Orden de trabajo (OT) | B — Pantalla propia | Crear / Ver (ver nota pendiente abajo) |
+| 2 | Alcance | A — Archivo | Seleccionar archivo |
+| 3 | Presupuesto | A — Archivo | Seleccionar archivo |
+| 4 | Cronograma | B — Pantalla propia | Crear / Ver → `/cronograma` |
+| 5 | Recursos del servicio | B — Pantalla propia | Crear / Ver (ver nota pendiente abajo) |
+| 6 | DP (Datos del proyecto) | B — Pantalla propia | Crear DP / Ver DP (ya existe) |
+| 7 | Paquetes de trabajo | B — Pantalla propia | Crear / Ver → `/paquetes-trabajo` |
+| 8 | Plan maestro | B — Pantalla propia | Crear / Ver → `/plan-maestro?proyectoId=` |
+| 9 | PR (Reporte del proyecto) | B — Pantalla propia | Crear / Ver PR (ya existe) |
+| 10 | 3WLA | B — Pantalla propia | Crear / Ver (ver nota pendiente abajo) |
+| 11 | Requerimientos del servicio | B — Pantalla propia | Crear / Ver → `/requerimientos?proyectoId=` |
+| 12 | Listado de personal nuevo | A — Archivo | Seleccionar archivo |
+| 13 | Listado de pets | A — Archivo | Seleccionar archivo |
+
+- **Grupo A (Archivo) — 4 ítems:** 2 Alcance, 3 Presupuesto, 12 Listado de personal nuevo, 13 Listado de pets. Se sube el documento como hasta ahora.
+- **Grupo B (Pantalla propia) — 9 ítems:** 1, 4, 5, 6, 7, 8, 9, 10, 11. Mismas acciones **Crear / Ver** para todos, en la pantalla de su módulo; la fila del checklist **no** ofrece subir archivo, solo el enlace. DP y PR conservan sus etiquetas actuales.
+
+**Pendiente de decisión de Victor (no bloquea el resto):** 1 OT, 5 Recursos del servicio y 10 3WLA están en Pantalla propia pero **hoy no tienen pantalla** (chips inertes en `registro-accesos.ts`; el 3WLA ni está construido y "Recursos del servicio" se generará desde el DP — ver «No alcance»). Definir si hasta que exista su pantalla se quedan con «Seleccionar archivo» o si el Lote 2 incluye crearlas.
+
+**Cómo se arregla (dirección, lo concreta el Planner en el plan):** `page.tsx` hoy solo decide entre enlace (ESTRUCTURADO, solo DP/PR) e input de archivo para todo lo demás. Hace falta que cada ítem del catálogo declare su grupo: (i) columna nueva en `catalogo_documentos` (grupo + ruta/etiquetas) vía migración — recomendada: es la fuente de verdad y mover un ítem de grupo no toca código — o (ii) mapa por `clave` en el código. Cualquier opción debe conservar la casilla de check y el responsable de todos los ítems (O3/D2) y respetar permisos por pantalla (flujo 14).
+
+
 ## Problema y contexto
 
 Victor navega la app y detecta defectos puntuales. Este Spec los registra y define el **lote inicial (Lote 1)** para atacar ya; el resto queda anotado para lotes futuros.
@@ -58,9 +89,15 @@ Victor navega la app y detecta defectos puntuales. Este Spec los registra y defi
 - **O3:** El checklist queda con el **catálogo definitivo** de arriba: orden exacto, tres ítems nuevos, tres renombres y eliminación de los AL_INICIO no mencionados; **todos marcables y todos con responsable**; completar se marca por check.
 - **O4:** Se **corrige el error subyacente** de lectura/parseo de la importación de cronograma; el error queda **logueado en servidor** con su detalle (mensaje, archivo, formato) para trazabilidad futura; y la pantalla vuelve a mostrar el **mensaje de error específico** (el motivo), no uno genérico.
 
+## Resultado esperado (Lote 2)
+
+- **O5:** cada fila del checklist muestra la acción de su grupo (sección «Grupos de acción del checklist»): «Seleccionar archivo» solo en los 4 ítems del Grupo A; enlace **Crear / Ver** a la pantalla del módulo en los 9 del Grupo B, con sus etiquetas. Queda pendiente de decisión de Victor la nota de OT / Recursos del servicio / 3WLA (sin pantalla hoy).
+- **O6:** la importación de cronograma **funciona de punta a punta** con los archivos de prueba (plantilla Excel y PDF de MS Project); cuando falla, la pantalla muestra el motivo específico (sin mensaje genérico) y el error queda logueado en servidor con formato, nombre de archivo y mensaje. Se cierra solo con evidencia de smoke — lo que faltó en el Lote 1.
+
 ## Alcance
 
-- Lote 1: O1, O2, O3 y O4.
+- Lote 1: O1, O2, O3 y O4 (cerrado).
+- Lote 2: O5 y O6 (Gate Spec pendiente).
 
 ## No alcance
 

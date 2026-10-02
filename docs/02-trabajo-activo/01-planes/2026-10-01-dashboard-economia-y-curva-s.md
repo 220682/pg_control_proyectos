@@ -6,7 +6,7 @@
 
 - Tema: separar de verdad los datos económicos del Dashboard según el rol, dar a la Curva S dos modos (económica y % avance físico) y exponer el costo real desagregado por recurso en el Dashboard Completo.
 - Fecha: 2026-10-01.
-- Estado: **Gate 1 aprobado (2026-10-02)** — plan + Punch List (40 ítems) aprobados; consultas (i)(ii)(iii) y Q1–Q6 resueltas (ver «Gate 1 — respuestas de Victor»). Precondición de arranque de la Fase A: cierre del plan `2026-09-30-niveles-paquetes-plan-maestro-rdt` (Q4) — **cumplida el 2026-10-02** (aquel plan quedó Cerrado); Victor autorizó proceder con la implementación.
+- Estado: **Implementación — tandas A, B, C y D cerradas (2026-10-02)**; ítems pendientes: F12/F13 (tanda T2), P03/P05/R06 (Fase E), V03/V04 parciales (se intentan en T2). Sesión anterior del Orquestador congelada: se retomó el 2026-10-02, se abortó un merge en progreso en `main` de la app sin Gate 2 (ver OP6). Gate 2: pendiente.
 
 Puertas:
 
@@ -229,78 +229,78 @@ Gate 1: **aprobado** por Victor el 2026-10-02 — plan, Punch List (40 ítems), 
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| F01 | A | El chip «Dashboard» queda habilitado para los 13 roles (`puedeVerDashboard` + `registro-accesos`), con alcance por OT; sin permiso queda deshabilitado con título y sin enlace | Tests + captura del chip por rol | Sin verificar |
-| F02 | A | El chip «Curva S» queda habilitado para los 13 roles; `puedeVerCurvaSEconomica` devuelve true solo a los 5 con economía | Tests + captura del chip por rol | Sin verificar |
-| F03 | A/B | Con BD en `COMPLETO`, un rol sin economía abre **Parcial** (el servidor lo fuerza); con rol con economía se respeta la BD | Prueba con BD en COMPLETO y rol sin economía | Sin verificar |
-| F04 | B | Parcial no muestra ningún dato monetario (lista cerrada de la PD5), incluso con BD en COMPLETO | Captura + inspección ítem por ítem | Sin verificar |
-| F05 | B | Parcial conserva filtros, % avance físico, matriz de partidas sin costo, diagnóstico, PPC/Pareto (Bloque E) y enlace a Curva S | Captura | Sin verificar |
-| F06 | B | El interruptor Parcial/Completo se ve en ambos casos; deshabilitado con `title` (D3) para rol sin economía; con economía alterna sin recargar (`router.refresh()`) | Captura + prueba de alternancia | Sin verificar |
-| F07 | B | Ambos dashboards enlazan a Curva S; desde Parcial con rol sin economía la URL lleva `?modo=fisica`; desde Completo abre el modo económico | Captura + URL | Sin verificar |
-| F08 | B | Bloque «Costo real de recursos» solo en Completo: filas por recurso, fila «Sin resolver» cuando corresponde, nota del legacy y Total = AC | Captura + suma manual | Sin verificar |
-| F09 | C | El selector de dos modos se ve siempre; «Económica (USD)» deshabilitada con `title` para rol sin economía; los dos activos para rol con economía | Captura por rol | Sin verificar |
-| F10 | C | La curva física dibuja % planificado (PV/BAC) y % real (EV/BAC) con unidad rotulada, sin USD en eje, tooltips, tarjetas ni tabla | Captura | Sin verificar |
-| F11 | C | Sin Plan Maestro aprobado: % planificado «Pendiente» (D5); % real dibujado con los RDT validados existentes | Captura en servicio sin PM | Sin verificar |
-| F12 | T | Proyecto de prueba creado de extremo a extremo: creación del servicio → PM → partidas y asignaciones → HH/HM con costo → RDTs validados hasta ~50 % de avance del servicio (datos marcados y desactivables) | Proyecto de prueba existente con su trayectoria | Sin verificar |
-| F13 | T | Con ese proyecto se ve toda la estructura funcionando: Dashboard (Parcial y Completo), Curva S (los dos modos), bloque «Costo real de recursos» y accesos por rol | Capturas de cada pantalla con el proyecto de prueba | Sin verificar |
+| F01 | A | El chip «Dashboard» queda habilitado para los 13 roles (`puedeVerDashboard` + `registro-accesos`), con alcance por OT; sin permiso queda deshabilitado con título y sin enlace | Tests + captura del chip por rol | Conforme (A: tests; D: barrido 13 roles R03 + R05 sin chips rotos) |
+| F02 | A | El chip «Curva S» queda habilitado para los 13 roles; `puedeVerCurvaSEconomica` devuelve true solo a los 5 con economía | Tests + captura del chip por rol | Conforme (A: tests; D: barrido 13 roles R03/R05) |
+| F03 | A/B | Con BD en `COMPLETO`, un rol sin economía abre **Parcial** (el servidor lo fuerza); con rol con economía se respeta la BD | Prueba con BD en COMPLETO y rol sin economía | Conforme (D: PS-0008 COMPLETO + `supervisor_operativo` → Parcial sin USD) |
+| F04 | B | Parcial no muestra ningún dato monetario (lista cerrada de la PD5), incluso con BD en COMPLETO | Captura + inspección ítem por ítem | Conforme (D: barrido DOM, 8 roles sin economía → sin `US$` ni «Costo directo») |
+| F05 | B | Parcial conserva filtros, % avance físico, matriz de partidas sin costo, diagnóstico, PPC/Pareto (Bloque E) y enlace a Curva S | Captura | Conforme (D: captura `F03-F04-F05-U05-*`) |
+| F06 | B | El interruptor Parcial/Completo se ve en ambos casos; deshabilitado con `title` (D3) para rol sin economía; con economía alterna sin recargar (`router.refresh()`) | Captura + prueba de alternancia | Conforme (D: `disabled`+`title` sin economía; admin alterna sin recargar) |
+| F07 | B | Ambos dashboards enlazan a Curva S; desde Parcial con rol sin economía la URL lleva `?modo=fisica`; desde Completo abre el modo económico | Captura + URL | Conforme (D: DOM `hrefCurvaS` = `/curva-s?modo=fisica` en Parcial) |
+| F08 | B | Bloque «Costo real de recursos» solo en Completo: filas por recurso, fila «Sin resolver» cuando corresponde, nota del legacy y Total = AC | Captura + suma manual | Conforme (B: tests D02; D: captura `U03-F08-F13-*`) |
+| F09 | C | El selector de dos modos se ve siempre; «Económica (USD)» deshabilitada con `title` para rol sin economía; los dos activos para rol con economía | Captura por rol | Conforme (D: `aria-disabled="true"`+`title` sin economía; ambos activos con admin — matiz (a) confirmado) |
+| F10 | C | La curva física dibuja % planificado (PV/BAC) y % real (EV/BAC) con unidad rotulada, sin USD en eje, tooltips, tarjetas ni tabla | Captura | Conforme (D: PS-0004 EV real 12.3 %, eje «Avance físico (%)», sin USD) |
+| F11 | C | Sin Plan Maestro aprobado: % planificado «Pendiente» (D5); % real dibujado con los RDT validados existentes | Captura en servicio sin PM | Conforme con nota (D: PS-0007 banner «Pendiente»; % real con RDT visto en PS-0004; no existe proyecto sin-PM-con-RDT en los datos) |
+| F12 | T | Proyecto de prueba creado de extremo a extremo: creación del servicio → PM → partidas y asignaciones → HH/HM con costo → RDTs validados hasta ~50 % de avance del servicio (datos marcados y desactivables) | Proyecto de prueba existente con su trayectoria | Observado — no creado en D por presupuesto; pendiente tanda T2 |
+| F13 | T | Con ese proyecto se ve toda la estructura funcionando: Dashboard (Parcial y Completo), Curva S (los dos modos), bloque «Costo real de recursos» y accesos por rol | Capturas de cada pantalla con el proyecto de prueba | Observado (sustancia verificada en D con PS-0004/0007/0008; se re-verifica en T2 con el `PRUEBA-DASH`) |
 
 ### Datos y cálculos
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| D01 | B | La query del Dashboard añade `descripcion` a `pr_recursos` (hoy falta) y el bloque la usa | Diff + salida de la consulta | Sin verificar |
-| D02 | B | Función de reconciliación con tests: `Σ filas + (AC − Σ) = AC`; con legacy; sin legacy; filas sin resolver ≠ 0; diferencia = 0 (no se muestra la fila) | `npm test` | Sin verificar |
-| D03 | C | Serie física en lógica pura con tests: PV/BAC y EV/BAC, BAC = 0 → sin serie, recorte al corte conservado, agrupación semanal intacta | `npm test` | Sin verificar |
-| D04 | B/C | Dashboard y Curva S siguen leyendo, no recalculando: sin cambios en `evm.ts`, `dashboard.ts` ni funciones SQL | Diff | Sin verificar |
-| D05 | B | El Total del bloque es el mismo AC que imprime el KPI AC (misma fuente del PR) | Captura comparando Total y KPI | Sin verificar |
+| D01 | B | La query del Dashboard añade `descripcion` a `pr_recursos` (hoy falta) y el bloque la usa | Diff + salida de la consulta | Conforme (B: commit `94a5f79`) |
+| D02 | B | Función de reconciliación con tests: `Σ filas + (AC − Σ) = AC`; con legacy; sin legacy; filas sin resolver ≠ 0; diferencia = 0 (no se muestra la fila) | `npm test` | Conforme (B: `costo-recursos.test.ts` 6 pruebas) |
+| D03 | C | Serie física en lógica pura con tests: PV/BAC y EV/BAC, BAC = 0 → sin serie, recorte al corte conservado, agrupación semanal intacta | `npm test` | Conforme (C: `curva-s.test.ts` 18/18) |
+| D04 | B/C | Dashboard y Curva S siguen leyendo, no recalculando: sin cambios en `evm.ts`, `dashboard.ts` ni funciones SQL | Diff | Conforme (B/C: diff verificado) |
+| D05 | B | El Total del bloque es el mismo AC que imprime el KPI AC (misma fuente del PR) | Captura comparando Total y KPI | Conforme (B: misma fuente; D: captura `U03-F08-F13-*`) |
 
 ### Permisos
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| P01 | A | `permisos.ts`: `puedeVerDashboard` y `puedeVerCurvaS` a los 13 roles; nuevo `puedeVerCurvaSEconomica` = 5; sin rol conocido → false; `puedeVerEconomia` intacto | `npm test` (`permisos.test.ts`) | Sin verificar |
-| P02 | A | `registro-accesos.ts` y `matriz-base-flujo14.ts` coherentes: matriz derivada vs base con 0 diferencias | `matriz-accesos.test.ts` | Sin verificar |
-| P03 | A/E | Las pruebas que leen la tabla 1 del flujo 14 por ruta absoluta (`permisos.test.ts`, mapeo de filas × 13 roles) se actualizan en la misma ventana que el flujo 14 (Fase E); si no, `npm test` local queda rojo | `npm test` con el flujo 14 ya editado | Sin verificar |
-| P04 | A | Alcance por OT intacto en Dashboard y Curva S (pantalla y API), con bypass del administrador como hoy | Prueba con OT ajena y con admin | Sin verificar |
-| P05 | E | Artefacto «Matriz de permisos» actualizado con las filas nuevas, por Victor | Confirmación de Victor | Sin verificar |
+| P01 | A | `permisos.ts`: `puedeVerDashboard` y `puedeVerCurvaS` a los 13 roles; nuevo `puedeVerCurvaSEconomica` = 5; sin rol conocido → false; `puedeVerEconomia` intacto | `npm test` (`permisos.test.ts`) | Conforme (A: commit `d40cd74`) |
+| P02 | A | `registro-accesos.ts` y `matriz-base-flujo14.ts` coherentes: matriz derivada vs base con 0 diferencias | `matriz-accesos.test.ts` | Conforme (A: 0 diferencias) |
+| P03 | A/E | Las pruebas que leen la tabla 1 del flujo 14 por ruta absoluta (`permisos.test.ts`, mapeo de filas × 13 roles) se actualizan en la misma ventana que el flujo 14 (Fase E); si no, `npm test` local queda rojo | `npm test` con el flujo 14 ya editado | Observado — cierra en E (editar flujo 14 + Worker de código restaura filas del mapa) |
+| P04 | A | Alcance por OT intacto en Dashboard y Curva S (pantalla y API), con bypass del administrador como hoy | Prueba con OT ajena y con admin | Conforme (A: tests OT ajena/propia/admin; D: guard sin cambios; prueba en vivo OT ajena se intenta en T2) |
+| P05 | E | Artefacto «Matriz de permisos» actualizado con las filas nuevas, por Victor | Confirmación de Victor | Pendiente (Victor, Fase E) |
 
 ### UI / responsive / accesibilidad
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| U01 | C | Selector con `role="group"` y `aria-label`; opción no permitida accesible por teclado con `title` (no oculta, `aria-disabled`) | Inspección del DOM | Sin verificar |
-| U02 | A/B | Interruptor Parcial/Completo y opciones de modo: deshabilitados **visibles** con `title` que explica el permiso | Captura por rol | Sin verificar |
-| U03 | B | Bloque de recursos con tabla con scroll horizontal, encabezado fijo y `scope` en los `th`; sin `max-w-*` en el contenedor de página; paleta de `design.md` | Captura escritorio y móvil | Sin verificar |
-| U04 | C | Un solo eje Y por modo con unidad rotulada; nunca % y USD en el mismo eje | Captura de ambos modos | Sin verificar |
-| U05 | B | El ocultado en Parcial no deja huecos de layout ni secciones vacías | Captura móvil y escritorio | Sin verificar |
+| U01 | C | Selector con `role="group"` y `aria-label`; opción no permitida accesible por teclado con `title` (no oculta, `aria-disabled`) | Inspección del DOM | Conforme (C: inspección; D: confirmado en vivo) |
+| U02 | A/B | Interruptor Parcial/Completo y opciones de modo: deshabilitados **visibles** con `title` que explica el permiso | Captura por rol | Conforme (D: DOM, opciones visibles `disabled`+`title`) |
+| U03 | B | Bloque de recursos con tabla con scroll horizontal, encabezado fijo y `scope` en los `th`; sin `max-w-*` en el contenedor de página; paleta de `design.md` | Captura escritorio y móvil | Conforme (D: DOM + capturas escritorio y móvil) |
+| U04 | C | Un solo eje Y por modo con unidad rotulada; nunca % y USD en el mismo eje | Captura de ambos modos | Conforme (D: «US$ acumulado (CD)» vs «Avance físico (%)») |
+| U05 | B | El ocultado en Parcial no deja huecos de layout ni secciones vacías | Captura móvil y escritorio | Conforme (D: 0 secciones vacías, escritorio y 390 px) |
 
 ### Estados vacío / carga / error
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| E01 | C | Sin PM aprobado: «Pendiente» en % planificado, sin curva PV inventada; sin RDT validados: serie real vacía con su nota | Captura en servicio sin PM y sin RDT | Sin verificar |
-| E02 | B | Bloque de recursos sin filas: estado vacío; diferencia = 0: no aparece la fila «Sin resolver» | Captura | Sin verificar |
-| E03 | B/C | Carga atenuada sin salto de layout; error de API con mensaje claro (patrón existente) | Captura o forzado de error | Sin verificar |
-| E04 | C | `modo=economica` sin permiso vía URL/API → 403 con mensaje; la interfaz nunca ofrece el modo | Llamada directa | Sin verificar |
+| E01 | C | Sin PM aprobado: «Pendiente» en % planificado, sin curva PV inventada; sin RDT validados: serie real vacía con su nota | Captura en servicio sin PM y sin RDT | Conforme (D: PS-0007 sin PM «Pendiente»; PS-0008 sin RDT nota serie vacía — matiz (b) confirmado; aclaración RB7: con BAC=0 el mensaje es otro) |
+| E02 | B | Bloque de recursos sin filas: estado vacío; diferencia = 0: no aparece la fila «Sin resolver» | Captura | Conforme (B: tests D02; estado vacío no visto en vivo — los datos de prueba tienen recursos) |
+| E03 | B/C | Carga atenuada sin salto de layout; error de API con mensaje claro (patrón existente) | Captura o forzado de error | Conforme (D: 500 forzado → mensaje del cuerpo + carga atenuada `opacity-50`) |
+| E04 | C | `modo=economica` sin permiso vía URL/API → 403 con mensaje; la interfaz nunca ofrece el modo | Llamada directa | Conforme (D: 403 «No tienes acceso a la Curva S económica»; botón `aria-disabled`) |
 
 ### Validación en servidor / API
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| V01 | C | `GET /api/curva-s?modo=economica` con rol sin economía → 403 aunque se fuerce (criterio 6); sin `modo` la respuesta es determinista por permiso | Llamada directa con las dos cuentas | Sin verificar |
-| V02 | C | La respuesta de `modo=fisica` no incluye montos USD ni `bac` (cuerpo de respuesta revisado) | Cuerpo JSON de la respuesta | Sin verificar |
-| V03 | A | La página del Dashboard valida rol y alcance en servidor; el PATCH de `tipo-dashboard` sigue exigiendo `puedeVerEconomia` (sin cambio) | Prueba de rol sin economía forzando la ruta + revisión del PATCH | Sin verificar |
-| V04 | A | Sin sesión o sin alcance: rechazo igual que antes (los guards no se debilitan) | Prueba sin sesión y con OT ajena | Sin verificar |
+| V01 | C | `GET /api/curva-s?modo=economica` con rol sin economía → 403 aunque se fuerce (criterio 6); sin `modo` la respuesta es determinista por permiso | Llamada directa con las dos cuentas | Conforme (D: 403 forzado; sin `modo` → `fisica` sin dinero; admin → 200) |
+| V02 | C | La respuesta de `modo=fisica` no incluye montos USD ni `bac` (cuerpo de respuesta revisado) | Cuerpo JSON de la respuesta | Conforme (C: cuerpo revisado; D: claves sin `ac` confirmado en vivo) |
+| V03 | A | La página del Dashboard valida rol y alcance en servidor; el PATCH de `tipo-dashboard` sigue exigiendo `puedeVerEconomia` (sin cambio) | Prueba de rol sin economía forzando la ruta + revisión del PATCH | Conforme parcial (D: F03 fuerza Parcial en servidor; PATCH sin cambio por revisión de código; 403 del PATCH en vivo se intenta en T2) |
+| V04 | A | Sin sesión o sin alcance: rechazo igual que antes (los guards no se debilitan) | Prueba sin sesión y con OT ajena | Conforme sin sesión (D: 307 → `/login`); Observado OT ajena (guard sin cambios; se intenta en T2 si hay cuenta con alcance ajeno) |
 
 ### Regresión
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| R01 | D | `npm test`, `npx tsc --noEmit`, `npm run lint` (comparado con `main`) y `npm run build` verdes en el carril | Salida de los comandos | Sin verificar |
-| R02 | D | Los 5 roles con economía ven idéntico al de hoy en Completo (mismos KPIs, mismo PR, misma curva económica) más el bloque nuevo | Antes/después con capturas | Sin verificar |
-| R03 | D | Los 13 roles entran a Parcial y a Curva S sin perder alcance por OT; el Dashboard del portafolio y el resto de interfaces de economía sin cambios | `verificar-permisos-por-rol` completo | Sin verificar |
-| R04 | D | Las pruebas del plan coordinado `2026-09-30-niveles-paquetes-plan-maestro-rdt` siguen verdes tras integrar (en especial `integracion-permisos.test.ts`) | Suite completa | Sin verificar |
-| R05 | D | Verificación en vivo con login real (móvil y escritorio): sin chips rotos, sin enlaces muertos, paneles coherentes (flujo 16) | Capturas | Sin verificar |
-| R06 | E | `python scripts/verificar-referencias.py` sin referencias rotas; índice de `01-planes/README.md` actualizado | Salida del verificador | Sin verificar |
+| R01 | D | `npm test`, `npx tsc --noEmit`, `npm run lint` (comparado con `main`) y `npm run build` verdes en el carril | Salida de los comandos | Conforme (D: 1063 tests, tsc 0, lint 27=baseline, build 0) |
+| R02 | D | Los 5 roles con economía ven idéntico al de hoy en Completo (mismos KPIs, mismo PR, misma curva económica) más el bloque nuevo | Antes/después con capturas | Conforme (D: barrido DOM de los 5 roles) |
+| R03 | D | Los 13 roles entran a Parcial y a Curva S sin perder alcance por OT; el Dashboard del portafolio y el resto de interfaces de economía sin cambios | `verificar-permisos-por-rol` completo | Conforme (D: barrido 13 roles — 8 Parcial, 5 Completo; portafolio admin OK) |
+| R04 | D | Las pruebas del plan coordinado `2026-09-30-niveles-paquetes-plan-maestro-rdt` siguen verdes tras integrar (en especial `integracion-permisos.test.ts`) | Suite completa | Conforme (D: `integracion-permisos` 5 OK; suite completa verde) |
+| R05 | D | Verificación en vivo con login real (móvil y escritorio): sin chips rotos, sin enlaces muertos, paneles coherentes (flujo 16) | Capturas | Conforme (D: 1440 y 390 px vía CDP; capturas `R05-*`) |
+| R06 | E | `python scripts/verificar-referencias.py` sin referencias rotas; índice de `01-planes/README.md` actualizado | Salida del verificador | Pendiente (E) |
 
 ## Riesgos y bloqueos
 
@@ -411,6 +411,10 @@ Nota de sesión: esta sesión del Orquestador llega hasta el cierre del plan; la
 | 2026-10-02 | **PD6:** Bloque E (PPC + Pareto) y enlace a Curva S visibles en ambos dashboards; el enlace lleva `?modo=fisica` sin economía. | Planner (delegado por el Spec) |
 | 2026-10-02 | **Gate 1 aprobado:** plan, Punch List (40 ítems), tabla de 12 cambios a flujos y pre-autorizaciones en bloque; consultas 1–6 resueltas (Fase T nueva: proyecto de prueba de extremo a extremo hasta 50 % de avance; PD5 y PD6 confirmadas; espera de cierre del plan niveles; `local-worker-5`; matriz actualizada en el flujo + artefacto por Victor). | Victor |
 | 2026-10-02 | **Modelo de los Workers:** todos los Workers del plan corren con **DeepSeek V4.1 Flash** (`opencode-go/deepseek-v4.1-flash`, corregido el 2026-10-02: el config tenía `opencode/deepseek-v4.1-flash`, proveedor inexistente), fijado en la config de opencode (`~/.config/opencode/opencode.jsonc`, agentes `general` y `explore`). La tabla «Modelos por rol» de `09-medicion-y-modelos.md` se actualiza al cierre (Fase E / paso 16b). | Victor |
+| 2026-10-02 | **Tandas A, B y C cerradas** (commits `d40cd74`, `94a5f79`, `5e773c7` en `local-worker-5`). Sesión del Orquestador congelada tras lanzar C; la ejecución continuó en sesión nueva. | Orquestador |
+| 2026-10-02 | **OP6:** al retomar, se encontró y abortó un merge en progreso `local-worker-5` → `main` de la app sin Gate 2 (política violada); `main` restaurado a `35ac5dd`, 0/0 con origin. | Orquestador |
+| 2026-10-02 | **Tanda D cerrada** (~108 llamadas): 21 ítems Conforme (F03–F11, U02–U05, E01/E03/E04, V01, R01–R05); F12/F13 Observado (proyecto `PRUEBA-DASH` no creado por presupuesto); V03/V04 parciales. Sin cambios de código. Matices (a) y (b) de C confirmados. | Worker 1 · D |
+| 2026-10-02 | Se lanzan en paralelo la **tanda T2** (F12: proyecto de prueba de extremo a extremo + F13 + pendiente V03/V04 en vivo) y el **Documentador (Fase E)**; tras E, Worker de código corto para P03 (restaurar filas del flujo 14 en `permisos.test.ts`). | Orquestador |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -424,7 +428,11 @@ Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto 
 
 ## Mejoras (de trabajo)
 
-Ninguna.
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| M1 | 2026-10-02 | Worker 1 (A) | A-H1: `permisos.test.ts` compara la tabla 1 del flujo 14 por ruta absoluta; mover permisos antes que el doc rompe la prueba. Se desacopló (mapa 7→5 filas + pruebas explícitas de los dos modos); Fase E re-añade las filas. | `03-aprendizaje-continuo/` | Registrada | — |
+| M2 | 2026-10-02 | Worker 1 (D) | Con 22+ ítems con navegador, «una captura por ítem» no cabe en ~80 llamadas: conviene agrupar capturas por pantalla desde el brief. | `03-aprendizaje-continuo/` | Registrada | — |
+| M3 | 2026-10-02 | Worker 1 (D) | `browser_resize` no aplicaba el viewport (seguía 1440); para móvil 390 px hubo que usar CDP `Emulation.setDeviceMetricsOverride`. | `03-aprendizaje-continuo/` | Registrada | — |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -436,14 +444,24 @@ Se trasladan a su flujo al cerrar, previa consulta de cada contradicción a Vict
 | RB2 | 2026-10-02 | Victor (Spec, resultado 1) | Dashboard Parcial sin ningún dato monetario para los 13 roles; Completo con todo más el bloque «Costo real de recursos»; ambos enlazan la Curva S | `04-flujos-de-negocio/11-dashboard.md` | `Registrada` | — |
 | RB3 | 2026-10-02 | Victor (Spec, resultado 5 + D1) | Accesos: Parcial y curva física para los 13 roles; Completo y curva económica para los 5 con economía; el servidor fuerza Parcial y rechaza con 403 el modo económico sin permiso | `04-flujos-de-negocio/14-accesos-y-restricciones.md` (+ artefacto «Matriz de permisos», Victor) | `Registrada` | — |
 | RB4 | 2026-10-02 | Victor (Spec, D2) | «Costo real de recursos» = Personal (HH) + Equipos (HM); balde `costo_legacy_sin_partida_acum` como nota aparte no sumable; materiales y subcontratos fuera; Total = AC; vista solo por recurso | `04-flujos-de-negocio/11-dashboard.md` | `Registrada` | — |
+| RB5 | 2026-10-02 | Worker 1 (B) | B-H1: en Parcial, el orden «mayor desviación de costo» se fuerza a `WBS` en el servidor aunque la URL traiga otro orden (es dinero derivado); la matriz igual llega en orden contractual | `04-flujos-de-negocio/11-dashboard.md` | `Registrada` | — |
+| RB6 | 2026-10-02 | Worker 1 (C) | C-H2: el modo físico necesita el BAC = `Σ pr_partidas.bac` (flujo 21 §8), leído en servidor y **no** devuelto en la respuesta de `modo=fisica` | `04-flujos-de-negocio/21-curva-s.md` | `Registrada` | — |
+| RB7 | 2026-10-02 | Worker 1 (D) | Aclaración de E01: la nota «serie real vacía» solo aparece cuando hay BAC (>0) y todas las EV del rango son 0; con `BAC=0` el mensaje es «Este servicio no tiene BAC…» y no se dibuja gráfico (D03) | `04-flujos-de-negocio/21-curva-s.md` | `Registrada` | — |
 
 ## Observaciones sobre la política
 
-Ninguna.
+| ID | Fecha | Quién (rol, tanda) | Qué | Estado |
+|---|---|---|---|---|
+| OP1 | 2026-10-02 | Worker 1 (A) | A-H2: R2/P03 anticipan un carril con `npm test` rojo entre A y E mientras las `00-reglas` exigen tests verdes; la tensión se resolvió ajustando el mapa de la prueba en A sin tocar el flujo | Registrada — clasifica el Auditor, decide Victor en Gate 2 |
+| OP2 | 2026-10-02 | Worker 1 (B) | B-H3: el prompt de auditoría del plan dice que PD5 oculta «los 10 KPI» pero la lista cerrada oculta 6 KPI; el brief manda y se implementó la lista del brief | Registrada — clasifica el Auditor, decide Victor en Gate 2 |
+| OP3 | 2026-10-02 | Worker 1 (C) | C-H1: PD4 dice «opción no permitida con `disabled` + `title`» pero U01 y `design.md` §254 piden `aria-disabled` accesible por teclado; se implementó `aria-disabled` (confirmado en vivo en D). Proponer PD4 como `aria-disabled` | Registrada — clasifica el Auditor, decide Victor en Gate 2 |
+| OP4 | 2026-10-02 | Worker 1 (C→D) | C-H3: la interpretación de E01 (todas las EV=0 → no dibujar la serie real + nota; tabla con «—») quedó confirmada en la tanda D | Resuelta en D — el Auditor verifica la clasificación |
+| OP5 | 2026-10-02 | Worker 1 (D) | El presupuesto de ~80 llamadas está subestimado para una tanda con Fase T + 22 ítems de Fase D con navegador y capturas (se usaron ~108); F12 quedó sin ejecutar y requiere la tanda T2 | Registrada — clasifica el Auditor, decide Victor en Gate 2 |
+| OP6 | 2026-10-02 | Orquestador | Al retomar la sesión congelada se encontró en el repo de la app un **merge en progreso `local-worker-5` → `main` sin Gate 2** (17 archivos staged, sin conflictos), contrario a la política (el merge es solo tras Gate 2). Se abortó con `git merge --abort`; `main` restaurado a `35ac5dd` (0/0 con origin). Se desconoce qué sesión lo inició | Registrada — clasifica el Auditor, decide Victor en Gate 2 |
 
 ## Carpetas/archivos huérfanos
 
-Ninguno detectado en la revisión de inicio. Si durante las fases o la auditoría aparece alguno, se reporta aquí sin borrar nada.
+Ninguno detectado (tandas A, B, C y D). Si durante las fases o la auditoría aparece alguno, se reporta aquí sin borrar nada.
 
 ## Informe de Auditoría
 

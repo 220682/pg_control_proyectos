@@ -15,17 +15,19 @@
 - **Tanda A cerrada (2026-10-02):** commit `d40cd74` en `local-worker-5` (padre `5e8420b`), árbol limpio. `P01`, `P02`, `P04` Conforme; `F01`, `F02`, `V03`, `V04` y la parte A de `F06`/`U02` Observado (verificación en vivo pendiente de la Fase D); `P03` Observado (el flujo 14 se edita en E). Detalle en `…-briefs/resultados/tanda-A.md`.
 - **Tanda B cerrada (2026-10-02):** commit `94a5f79`. Parcial sin datos económicos (PD5), Bloque E y enlace a Curva S en ambos (PD6), bloque «Costo real de recursos» con reconciliación = AC (PD1), `descripcion` en la query de `pr_recursos`. 14 ítems: los de lógica/diff Conforme; los visuales Observado por D. Detalle en `…-briefs/resultados/tanda-B.md`.
 - **Tanda C cerrada (2026-10-02):** commit `5e773c7`. Selector de dos modos, serie física PV/BAC y EV/BAC, contrato `GET /api/curva-s?modo=` con 403 (PD2/PD4/D03). `D03`, `D04`, `U01`, `V02` Conforme; el resto Observado por D. Dos matices devueltos (PD4 `aria-disabled`; semántica de E01) para confirmar en D. Detalle en `…-briefs/resultados/tanda-C.md`.
+- **Sesión congelada y retomada (2026-10-02):** la sesión anterior del Orquestador quedó congelada tras C. Al retomar se encontró un **merge en progreso `local-worker-5` → `main` en la app sin Gate 2** (17 archivos staged); se abortó (`git merge --abort`), `main` restaurado a `35ac5dd` (0/0 con origin). Registrado como OP6 en el libro de hallazgos del plan.
+- **Tanda D cerrada (2026-10-02, ~108 llamadas):** verificación en vivo con admin + «Ver como» (Chrome, Playwright), escritorio y móvil 390 px. 21 ítems **Conforme** (F03–F11, U02–U05, E01/E03/E04, V01, R01–R05); matices (a) y (b) de C confirmados. **F12/F13 Observado**: el proyecto `PRUEBA-DASH` no se creó (presupuesto); la sustancia se verificó con PS-0004/0007/0008. V03/V04 parciales (PATCH 403 y OT ajena en vivo pendientes). Sin cambios de código (HEAD sigue `5e773c7`). 9 capturas en `03-evidencia/capturas/dashboard-economia-y-curva-s/`. Detalle en `…-briefs/resultados/tanda-D.md`.
 
 ## Tabla de roles / Workers y estado
 
 | Rol | Estado |
 |---|---|
-| Orquestador | Activo (esta sesión) |
+| Orquestador | Activo (sesión retomada 2026-10-02) |
 | Planner | Plan entregado (2026-10-02) |
-| Worker 1 (código, DeepSeek V4.1 Flash) | Tanda A en curso |
-| Documentador | Pendiente (tanda E) |
+| Worker 1 (código, DeepSeek V4.1 Flash) | Tandas A–D cerradas; tanda T2 en lanzamiento (F12/F13) |
+| Documentador | En lanzamiento (tanda E) |
 | Worker git | Pendiente (merge tras Gate 2) |
-| Auditor | Pendiente (tras E) |
+| Auditor | Pendiente (tras E y T2) |
 
 ## Skills revisados
 
@@ -40,12 +42,14 @@ Skills de `.claude/skills/` de `pg_control_proyectos`: `cerrar-tanda`, `verifica
 
 ## Trabajo actual
 
-Tandas A, B y C cerradas. Siguiente: Fase T (proyecto de prueba de extremo a extremo) + Fase D (verificación en vivo con navegador, 13 roles, dos caras, móvil).
+Tandas A–D cerradas. En paralelo: **tanda T2** (crear el proyecto `PRUEBA-DASH` de extremo a extremo, F12/F13 + pendientes V03/V04 en vivo) y **Documentador (Fase E)** (flujos 11/14/16/21, traslados, índices). Tras E: Worker de código corto para P03 (restaurar filas del flujo 14 en `permisos.test.ts`). Después: Auditoría → Gate 2.
 
 ## Pendientes
 
-1. Tanda A: resultados y commit en `local-worker-5`.
-2. T, B, C, D, E, Auditoría y Gate 2.
+1. T2: F12 (proyecto de prueba), F13 (re-verificar con él), V03 (PATCH 403 en vivo), V04 (OT ajena en vivo si hay cuenta).
+2. E: flujos 11/14/16/21, índice de planes, `planes-futuros.md`, traslado del libro de hallazgos, `verificar-referencias.py` (R06), P05 (artefacto — Victor).
+3. P03: tras E, actualizar `permisos.test.ts` en `local-worker-5` y correr `npm test`.
+4. Auditoría, Gate 2, merge y mensaje de cierre.
 
 ## Commits, ramas y worktrees usados
 
@@ -61,7 +65,9 @@ Una fila por sesión medida (plantilla `10-medicion-y-eficiencia.md`).
 | A | `ses_f029eed31ffeWFI3pCwQvfa79V` | ~52 | no medido directo por opencode (entrada total 107k, caché leída 4,52M) | Sí | commit `d40cd74`; modelo `opencode-go/deepseek-v4.1-flash` |
 | B | `ses_f028df363ffeuHsUgvXJJMEeJx` | ~58 | no medido directo por opencode | Sí | commit `94a5f79`; 14/14 ítems |
 | C | `ses_f02830508ffern02eppm9wuhSI` | ~42 | no medido directo por opencode | Sí | commit `5e773c7`; dos matices para D |
-| Orquestador (A–C) | `ses_f02cf10c6ffe84DXAbOkjj4uBZ` | — | — | — | sesión en curso |
+| Orquestador (A–C) | `ses_f02cf10c6ffe84DXAbOkjj4uBZ` | — | — | — | sesión congelada tras C; dejó un merge en progreso abortado al retomar (OP6) |
+| D (con Fase T parcial) | `ses_f01caf7f8ffeIW1ELNrFcYbzq1` | ~108 | no medido directo por opencode | No (excede ~80; OP5) | 21 ítems Conforme; F12 pendiente T2; sin código tocado |
+| Orquestador (retoma, D→cierre) | sesión actual | — | — | — | consolidación A–D, lanzamiento T2 y E |
 
 ## Operaciones de git
 
@@ -69,7 +75,7 @@ Pendientes (Worker git tras Gate 2).
 
 ## Hallazgos y preguntas de negocio
 
-Sin preguntas devueltas todavía. El libro de hallazgos vive en el plan.
+Libro de hallazgos del plan consolidado por el Orquestador (2026-10-02): mejoras M1–M3, reglas RB1–RB7, observaciones sobre la política OP1–OP6 (incluye el merge abortado), huérfanos ninguno. Sin conflictos de negocio sin resolver; los matices (a) y (b) de C quedaron confirmados en D.
 
 ## Bloqueos, riesgos y decisiones requeridas
 
@@ -78,11 +84,11 @@ Sin preguntas devueltas todavía. El libro de hallazgos vive en el plan.
 
 ## Próximo paso verificable
 
-Consolidar el resultado de la tanda A, medir la sesión y, si A cierra, lanzar T y B.
+Cerrar T2 (F12/F13) y E (flujos + traslados); luego P03 (Worker de código), Auditoría y Gate 2.
 
 ## Última actualización y responsable
 
-2026-10-02, Orquestador.
+2026-10-02, Orquestador (sesión retomada).
 
 ## Handoffs
 

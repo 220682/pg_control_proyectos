@@ -131,6 +131,46 @@
 - `npx vitest run src/lib/plan-maestro/`: 115 tests verdes
 - `npx next build --webpack`: exit 0
 
+## Continuation del plan (2026-10-02 — Orquestador nuevo)
+
+**Deuda del orquestador anterior (registrada, no ocultada):** implementó F0–F4 y F6 él mismo (sin Workers ni tandas), sin informe de Auditor, sin progreso/evidencia homónimos, solo 1 brief suelto, sin fila en el índice, y dejó 10 commits de docs sin pushear y un cambio sucio en el repo raíz de código.
+
+**Decisiones de Victor (2026-10-02, continuación):**
+1. Completar todo el alcance pendiente con Workers antes del Gate 2 (no postergar F5/Lienzo).
+2. Descartar el cambio sucio de `FormularioPlanMaestro.tsx` en el árbol de `main` (reintroducía `pr-[60px]` ya corregido en `bd75f48`) — **hecho**.
+3. Las migraciones `091` y `092` las aplica **Victor** (SQL Editor de Supabase, orden 090→091→092).
+4. Asignación por complejidad según `docs/00-estandar-agentes/09-orquestacion-y-modelos.md` (Flash para simples; no usar Plus en todo).
+5. Push de docs: sin autorización expresa → se hace en el cierre, tras el Gate 2.
+
+**Tandas pendientes (carril único `local-worker-4` de código, secuenciales; merge solo tras Gate 2):**
+
+| Tanda | Qué | Worker | Modelo | Esfuerzo | Depende de |
+|---|---|---|---|---|---|
+| G | Integrar modal `NotificacionImpacto` en la pantalla del Cronograma + verificar en vivo el botón "Recalcular PR" (commits previos `d985d33`, `7f755df`) | Worker 1 | `qwen3.8-flash` (simple, bien especificada, sin riesgo) | Medio | — | **Cerrada (2026-10-02)** |
+| E | UI del Lienzo del Plan Maestro: celdas editables verdes para `esDeclaracionPaquete`, indicador rojo de fechas fuera del rango visible | Worker 2 | `qwen3.8-plus` (multi-archivo, depende de migración) | Medio | Victor aplica `091` |
+| F | F5 restante: declaración por paquete en RDT (WBS `PQ-001`, partidas directas) + libertad de WBS para C/NC y equipos + plegable de 8 disciplinas | Worker 3 | `qwen3.8-plus` (lógica nueva, depende de migraciones) | Medio | Victor aplica `090`+`092` |
+
+Después: **Auditor** (informe propio en `04-auditoria/`, clasifica hallazgos), **Documentador** (progreso/evidencia homónimos, briefs, libro de hallazgos, índice), luego **Gate 2** de Victor (merge `local-worker-4` → `main`, push de ambos repos). Ningún uso de Max ni esfuerzo alto.
+
+### Cierre de la Tanda G (Worker 1, flash) — 2026-10-02
+
+- `871b238`: `NotificacionImpacto` integrado en la pantalla del Cronograma (columna «Editar» solo con `puedeEditarActividadCronograma` + PM aprobado; campo nuevo `planMaestroAprobado` en el GET; formulario nuevo `EditarActividadCronograma.tsx` → PATCH existente, re-validado en servidor).
+- `b59a82b`: **fix obligatorio** — los endpoints F2-B/F2-C ya marcados «Conforme» por el orquestador anterior fallaban 100 % contra la base real (`GET impacto` consultaba una columna inexistente; `PATCH` escribía con cliente de usuario sobre tabla con RLS de solo lectura). Corregidos con el patrón admin+validación del repo. Evidencia: la F2-C real exigía esta corrección — «Conforme» sin llamada viva no era cierre (G-O1).
+- Ítem 2 (Recalcular PR): wiring ya completo (`7f755df`) — verificado en vivo, sin cambios.
+- Validación: `tsc` exit 0 · vitest 174/174 (12 archivos) · verificación en vivo 12/12 + cadena de impacto contada a mano en PS-0009. Detalle en [`briefs/resultados/G.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/G.md).
+- **Pendiente que pasa a la Tanda F:** el aviso anticipa el reposicionamiento automático de RDT (regla confirmada 4) y el PATCH hoy no lo implementa.
+
+## Libro de hallazgos (continuación)
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| G-M1 | 2026-10-02 | Worker 1 (G) | Fijar en el brief la ruta de la memoria de cuentas y el puerto del carril para no re-buscarlos al usar evidencia sin navegador | `03-aprendizaje-continuo/` | `Registrada` | — |
+| G-M2 | 2026-10-02 | Worker 1 (G) | Antes de integrar endpoints ajenos ya commiteados, una llamada viva mínima (GET/PATCH neutro) — tsc/vitest con mock de Supabase no ven errores de esquema | `03-aprendizaje-continuo/` | `Registrada` | — |
+| G-R1 | 2026-10-02 | Worker 1 (G) | Impacto de editar actividad = nº de partes RDT distintos vía `cronograma_actividad_partidas`/`dp_partida_id` → `rdt_actividad_partidas` → `parte_id`; hoy cuentan borradores y validados — **pregunta abierta a Victor**: ¿limitar el aviso a VALIDADOS? | `04-flujos-de-negocio/15-cronograma.md` | `Pendiente de decisión` (Victor) | — |
+| G-R2 | 2026-10-02 | Worker 1 (G) | Edición individual: UI solo con permiso + PM APROBADO; servidor re-valida (403/409/404); aviso de impacto antes de editar; anotar en flujo 15 el campo `planMaestroAprobado` y el conteo G-R1 | `04-flujos-de-negocio/15-cronograma.md` | `Registrada` | — |
+| G-O1 | 2026-10-02 | Worker 1 (G) | «Conforme» declarado sin ninguna llamada real a endpoints (fallaban 100 %); el criterio de cierre de un endpoint debería exigir al menos una llamada viva | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
+| G-O2 | 2026-10-02 | Worker 1 (G) | `crearClienteServidor` escribe sobre tablas con RLS de solo lectura y PostgREST devuelve `message` vacío (difícil de diagnosticar) | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
+
 ## Mensaje de cierre
 
 ### Alcance completado y no completado

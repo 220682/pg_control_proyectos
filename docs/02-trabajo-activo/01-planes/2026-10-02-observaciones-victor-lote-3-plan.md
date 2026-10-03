@@ -1,13 +1,18 @@
 # 2026-10-02 — Plan: Observaciones Victor Lote 3
 
-> Tarea con flujo de Orquestador. Estándar: `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md`. Plan del **Planner**, sobre las 13 observaciones de Victor (2026-10-02). **4 Workers** en paralelo.
+> Tarea con flujo de Orquestador. Estándar: `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md`. Plan del **Planner**, sobre las 13 observaciones de Victor (2026-10-02).
+>
+> **Corrección de alcance (2026-10-03, Orquestador):** el plan se escribió para 4 Workers en paralelo, pero la realidad es **un solo carril** (`local-worker-4`, worktree `.worktrees/local-worker-4`) con tandas **secuenciales**, porque F0–F4 y F6 los implementó el Orquestador anterior sin Workers y las fases que quedan (E y F) comparten worktree y migraciones. La tabla de carriles de § «Entorno» describe el diseño original, no el estado real.
 
 ## Identificación y estado
 
 - Tema: Mejoras de interfaz y lógica en DP, PR, Cronograma, Paquetes, Plan Maestro y RDT
 - Fecha: 2026-10-02
-- Estado: **Aprobado** (Gate 1)
-- Gate 1: **Aprobado por Victor** (2026-10-02)
+- Estado: **Implementando**
+- Puertas (las lee `scripts/verificar.ps1`):
+  - Gate Spec: no consta — el Lote 3 no tiene Spec/SDD propio; el Gate 1 se aprobó sobre este mismo plan, que contiene las 13 observaciones y las 10 reglas confirmadas. Queda registrado como observación sobre la política (OP2) para el Auditor: no se inventa un Spec retroactivo.
+  - Gate 1: aprobado por Victor (2026-10-02)
+  - Gate 2: pendiente
 
 ## Reglas confirmadas
 
@@ -142,15 +147,19 @@
 4. Asignación por complejidad según `docs/00-estandar-agentes/09-orquestacion-y-modelos.md` (Flash para simples; no usar Plus en todo).
 5. Push de docs: sin autorización expresa → se hace en el cierre, tras el Gate 2.
 
-**Tandas pendientes (carril único `local-worker-4` de código, secuenciales; merge solo tras Gate 2):**
+## Tandas pendientes (carril único `local-worker-4` de código, secuenciales; merge solo tras Gate 2)
 
-| Tanda | Qué | Worker | Modelo | Esfuerzo | Depende de |
-|---|---|---|---|---|---|
-| G | Integrar modal `NotificacionImpacto` en la pantalla del Cronograma + verificar en vivo el botón "Recalcular PR" (commits previos `d985d33`, `7f755df`) | Worker 1 | `qwen3.8-flash` (simple, bien especificada, sin riesgo) | Medio | — | **Cerrada (2026-10-02)** |
-| E | UI del Lienzo del Plan Maestro: celdas editables verdes para `esDeclaracionPaquete`, indicador rojo de fechas fuera del rango visible | Worker 2 | `qwen3.8-plus` (multi-archivo, depende de migración) | Medio | Victor aplica `091` |
-| F | F5 restante: declaración por paquete en RDT (WBS `PQ-001`, partidas directas) + libertad de WBS para C/NC y equipos + plegable de 8 disciplinas | Worker 3 | `qwen3.8-plus` (lógica nueva, depende de migraciones) | Medio | Victor aplica `090`+`092` |
+| Tanda | Qué | Worker | Modelo | Esfuerzo | Depende de | Estado |
+|---|---|---|---|---|---|---|
+| G | Integrar modal `NotificacionImpacto` en la pantalla del Cronograma + verificar en vivo el botón "Recalcular PR" (commits previos `d985d33`, `7f755df`) | Worker 1 | `qwen3.8-flash` | Medio | — | **Cerrada (2026-10-02)** |
+| V | Corregir los dos defectos de `scripts/verificar.ps1` que impiden el Gate 2: (a) la ruta del informe espera el nombre del plan **con** `-plan` y la convención lo usa **sin**; (b) el conteo de filas `Registrada` no reconoce los acentos graves con que las escribe el libro de hallazgos. Documentación, `main`, sin código de la app | Worker flash | por confirmar (benchmark) | Medio | — | **Pendiente** |
+| M | Aplicar las migraciones `090` → `091` → `092` con el protocolo de migraciones (candado, transacción, conteos antes/después, verificación en `information_schema`); hasta esta corrección las aplicaba cada Worker en su propia tanda | Worker flash | por confirmar | Medio | — | **Pendiente** |
+| E | UI del Lienzo del Plan Maestro: celdas editables verdes para `esDeclaracionPaquete`, indicador rojo de fechas fuera del rango visible. **Trabajo a medias sin commitear en el worktree** (5 archivos) | Worker plus | por confirmar | Medio | Tanda M aplica `091` | **Pendiente** |
+| F | F5 restante: declaración por paquete en RDT (WBS `PQ-001`, partidas directas) + libertad de WBS para C/NC y equipos + plegable de 8 disciplinas + ítem 6 (impacto solo validados) + reposicionamiento automático de RDT. **Trabajo a medias sin commitear en el worktree** (8 archivos) | Worker plus | por confirmar | Medio | Tanda M aplica `090`+`092`; cierra E | **Pendiente** |
 
-Después: **Auditor** (informe propio en `04-auditoria/`, clasifica hallazgos), **Documentador** (progreso/evidencia homónimos, briefs, libro de hallazgos, índice), luego **Gate 2** de Victor (merge `local-worker-4` → `main`, push de ambos repos). Ningún uso de Max ni esfuerzo alto.
+Después: **Documentador** (progreso/evidencia homónimos, briefs, libro de hallazgos, índice) → **Auditor** (informe propio en `04-auditoria/`, clasifica hallazgos) → **Gate 2** de Victor (merge `local-worker-4` → `main`, push de ambos repos). Ningún uso de Max ni esfuerzo alto.
+
+> **Corrección (2026-10-03, Orquestador):** esta línea decía «Auditor → Documentador», al revés de lo que manda el estándar (`02-roles-y-delegacion.md` § Documentador: el Documentador **termina antes de la auditoría**; `04-flujo-sdd-y-planes.md` paso 11). Orden correcto: Documentador → Auditor.
 
 ### Cierre de la Tanda G (Worker 1, flash) — 2026-10-02
 
@@ -164,27 +173,80 @@ Después: **Auditor** (informe propio en `04-auditoria/`, clasifica hallazgos), 
 
 - Victor: «continúa hasta cerrar» (2026-10-02) — autoriza seguir E, F, Auditor, Documentador y cierre sin aprobaciones intermedias, salvo Gate 2 (merge) y lo que bloquea la política (Max, esfuerzo alto, destructivos).
 - **Modelos:** `qwen3.8-plus` **no existe en opencode** (solo `qwen3.7-plus`, `qwen3.8-flash`, `qwen3.8-max`; verificado al intentar lanzar el Worker G — error del harness, mismo que frenó al orquestador anterior). Los Workers de E y F correrán en **`qwen3.8-flash`** (default de Worker en la política). No se usa Max (requiere aprobación y Victor no la pidió). Si flash no basta en alguna tanda, el Orquestador suspende y escala.
-- **Migraciones `090`/`091`/`092`:** las aplican los Workers de sus tandas con el protocolo de migraciones autorizado por Victor (2026-09-30) — E aplica `091`; F aplica `090`→`092`. (Antes de este registro estaba previsto que las aplicara Victor; no las había aplicado al retomar.)
+- **Migraciones `090`/`091`/`092`:** las aplica un Worker con el protocolo de migraciones autorizado por Victor (2026-09-30), en una sola tanda previa (**M**, orden `090`→`091`→`092`) para que E y F no compitan por el candado ni arranquen sin su precondición. (Antes de este registro estaba previsto que las aplicara Victor; no las había aplicado al retomar.)
 - Briefs actualizados: `briefs/E.md`, `briefs/F.md`.
 
-## Libro de hallazgos (continuación)
+## Libro de hallazgos
+
+Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |`. Estados: `Registrada` → `Trasladada` (con enlace y commit) · `Descartada` (con motivo) · `Pendiente de decisión` (con quién decide). Los Workers de código no editan este archivo: dejan sus hallazgos en su resumen de cierre y el Orquestador los pasa aquí, fila por fila.
+
+### Mejoras (de trabajo)
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| G-M1 | 2026-10-02 | Worker 1 (G) | Fijar en el brief la ruta de la memoria de cuentas y el puerto del carril para no re-buscarlos al usar evidencia sin navegador | `03-aprendizaje-continuo/` | `Registrada` | — |
-| G-M2 | 2026-10-02 | Worker 1 (G) | Antes de integrar endpoints ajenos ya commiteados, una llamada viva mínima (GET/PATCH neutro) — tsc/vitest con mock de Supabase no ven errores de esquema | `03-aprendizaje-continuo/` | `Registrada` | — |
-| G-R1 | 2026-10-02 | Worker 1 (G) | Impacto de editar actividad = nº de partes RDT distintos vía `cronograma_actividad_partidas`/`dp_partida_id` → `rdt_actividad_partidas` → `parte_id`; hoy cuentan borradores y validados — **pregunta abierta a Victor**: ¿limitar el aviso a VALIDADOS? | `04-flujos-de-negocio/15-cronograma.md` | `Pendiente de decisión` (Victor) | — |
-| G-R2 | 2026-10-02 | Worker 1 (G) | Edición individual: UI solo con permiso + PM APROBADO; servidor re-valida (403/409/404); aviso de impacto antes de editar; anotar en flujo 15 el campo `planMaestroAprobado` y el conteo G-R1 | `04-flujos-de-negocio/15-cronograma.md` | `Registrada` | — |
-| G-O1 | 2026-10-02 | Worker 1 (G) | «Conforme» declarado sin ninguna llamada real a endpoints (fallaban 100 %); el criterio de cierre de un endpoint debería exigir al menos una llamada viva | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
-| G-O2 | 2026-10-02 | Worker 1 (G) | `crearClienteServidor` escribe sobre tablas con RLS de solo lectura y PostgREST devuelve `message` vacío (difícil de diagnosticar) | Clasificación del Auditor; Victor decide en el Gate 2 | `Registrada` | — |
+| G-M1 | 2026-10-02 | Worker 1 (G) | Fijar en el brief la ruta de la memoria de cuentas y el puerto del carril para no re-buscarlos al usar evidencia sin navegador | `03-aprendizaje-continuo/` | Registrada | — |
+| G-M2 | 2026-10-02 | Worker 1 (G) | Antes de integrar endpoints ajenos ya commiteados, una llamada viva mínima (GET/PATCH neutro) — tsc/vitest con mock de Supabase no ven errores de esquema | `03-aprendizaje-continuo/` | Registrada | — |
+| V-M1 | 2026-10-03 | Orquestador (Fase 0) | Con `PLAN_ACTIVO`, `scripts/verificar.ps1` decide el cierre con dos defectos que lo dejaban pasar siempre: nombre del informe de Auditoría con sufijo `-plan` (la convención no lo lleva) y regex de `Registrada` que no reconoce los acentos graves con que las escribe el libro de hallazgos. Un control que no vigila es peor que no tenerlo | `03-aprendizaje-continuo/` | Registrada | — |
+| V-M2 | 2026-10-03 | Orquestador (Fase 0) | Benchmark de modelos con tarea de resultado conocido (10 modelos, 11 corridas): los 10 acertaron las 4 preguntas, así que la calidad no discriminó; decidirse por costo y latencia. La latencia tiene varianza alta (18,3 s y 61,8 s para el mismo modelo en dos corridas) → con n=1 no se puede ordenar por latencia. Instrumento reutilizable | `03-aprendizaje-continuo/` | Registrada | — |
+
+### Reglas de negocio acordadas en esta tarea
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| G-R1 | 2026-10-02 | Worker 1 (G) | Impacto de editar actividad = nº de partes RDT distintos vía `cronograma_actividad_partidas`/`dp_partida_id` → `rdt_actividad_partidas` → `parte_id` | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
+| G-R2 | 2026-10-02 | Worker 1 (G) | Edición individual: UI solo con permiso + PM APROBADO; servidor re-valida (403/409/404); aviso de impacto antes de editar; anotar en flujo 15 el campo `planMaestroAprobado` | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
+| V-R1 | 2026-10-03 | **Victor** (decisión del Orquestador) | El aviso de impacto de editar una actividad del cronograma cuenta **solo partes de RDT validados**; los borradores no se cuentan. Antes (G-R1) contaba ambos | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
+
+### Observaciones sobre la política
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| G-O1 | 2026-10-02 | Worker 1 (G) | «Conforme» declarado sin ninguna llamada real a endpoints (fallaban 100 %); el criterio de cierre de un endpoint debería exigir al menos una llamada viva | Clasificación del Auditor; Victor decide en el Gate 2 | Registrada | — |
+| G-O2 | 2026-10-02 | Worker 1 (G) | `crearClienteServidor` escribe sobre tablas con RLS de solo lectura y PostgREST devuelve `message` vacío (difícil de diagnosticar) | Clasificación del Auditor; Victor decide en el Gate 2 | Registrada | — |
+| OP1 | 2026-10-03 | Orquestador (Fase 0) | `.opencode/config.json` commiteado apunta **6 roles** a `opencode-go/qwen3.8-plus`, que **no existe** en el proveedor (verificado con `opencode models`: 28 modelos). Eso impidió lanzar al Worker 4 del Lote 3. El estándar `09-orquestacion-y-modelos.md` publica esa misma tabla de modelos, así que el error está en dos sitios | `docs/00-estandar-agentes/09-orquestacion-y-modelos.md` + `.opencode/config.json` | Registrada | — |
+| OP2 | 2026-10-03 | Orquestador (Fase 0) | El Lote 3 se implementó sin Spec/SDD ni Gate Spec (el flujo los exige en los pasos 3 y 4) y con un «Mensaje de cierre» escrito antes del Auditor y del Gate 2. El estándar no dice qué hacer con un plan ya aprobado sin Spec: no se inventó un Spec retroactivo | Clasificación del Auditor | Registrada | — |
+| OP3 | 2026-10-03 | Orquestador (Fase 0) | El merge a `main` del código (paso 16a) tiene dueño ambiguo en el estándar: `04-flujo-sdd-y-planes.md:76` lo asigna al Orquestador, `02-roles-y-delegacion.md:66` se lo prohíbe al Orquestador y `:172` se lo da al Worker git, y `09-orquestacion-y-modelos.md:187` lo declara sin aprobación de Victor | Clasificación del Auditor | Registrada | — |
+| OP4 | 2026-10-03 | Orquestador (Fase 0) | `09-orquestacion-y-modelos.md` trata al verificador como control obligatorio de acciones críticas, mientras `07-verificador-de-acciones.md` dice que sin el hook registrado la regla no es obligatoria | Clasificación del Auditor | Registrada | — |
+
+### Carpetas/archivos huérfanos
+
+Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borrar nada.
+
+## Registro de decisiones
+
+| Fecha | Decisión | Quién |
+|---|---|---|
+| 2026-10-02 | Gate 1 aprobado: las 13 observaciones, las 10 reglas confirmadas, 4 carriles, 3 migraciones | Victor |
+| 2026-10-02 | F0, F1, F2, F3, F4 y F6 implementados por el Orquestador anterior, sin Workers ni verificación viva — **deuda registrada** (OP2) | Orquestador (deuda) |
+| 2026-10-02 | «Continúa hasta cerrar»: seguir E, F, Documentador, Auditor y cierre sin aprobaciones intermedias, salvo Gate 2 | Victor |
+| 2026-10-02 | Push de docs solo en el cierre, tras el Gate 2 | Victor |
+| 2026-10-03 | **Se continúa el Lote 3** (el Lote 2 está cerrado) y el trabajo a medias del worktree **lo termina y verifica un Worker**, no se descarta ni se rehace | Victor |
+| 2026-10-03 | F0–F4 y F6 quedan como **deuda registrada**: el Auditor la clasifica, no se reimplementa | Victor |
+| 2026-10-03 | **V-R1:** el aviso de impacto cuenta **solo partes de RDT validados** | Victor |
+| 2026-10-03 | Se agrega la **Tanda V** (arreglar `scripts/verificar.ps1`) porque sus dos defectos bloquean el Gate 2, y la **Tanda M** (migraciones `090`→`091`→`092`) como precondición común de E y F | Orquestador |
+| 2026-10-03 | Cambio de modelos **pendiente de evidencia**: el benchmark de 10 modelos no diferenció calidad; la Tanda V se usa como benchmark real (agéntico) antes de tocar `.opencode/config.json` | Orquestador |
+
+## Enlaces a progreso y evidencia homónimos
+
+- Progreso: `docs/02-trabajo-activo/02-progreso/2026-10-02-observaciones-victor-lote-3.md` (lo crea el Documentador)
+- Evidencia: `docs/02-trabajo-activo/03-evidencia/2026-10-02-observaciones-victor-lote-3.md` (lo crea el Documentador)
+- Auditoría: `docs/02-trabajo-activo/04-auditoria/2026-10-02-observaciones-victor-lote-3.md` (la emite el Auditor; **sin** sufijo `-plan`, que es la convención)
 
 ## Mensaje de cierre
+
+> ⚠️ **BORRADOR ANTICIPADO — NO ES EL CIERRE.** Este bloque se escribió el 2026-10-02, antes de que existiera Informe de Auditoría y antes del Gate 2, y describe un cierre que **no ocurrió** (F5 quedó parcial y las celdas editables del Lienzo nunca se hicieron). Se conserva íntegro por trazabilidad. El cierre real se escribe en el paso 17, después del Gate 2, y lo reemplaza.
 
 ### Alcance completado y no completado
 
 - **Completado:** F0 (maqueta), F1-A/B/C (botones Cargar/Recalcular + terminología), F2-A/B/C (edición cronograma con impacto), F3 (paquetes mejorado), F4-A/B/C/D (rediseño Plan Maestro), F6 (documentación de flujos).
 - **Parcial:** F5 (RDT mejorado) — migración 090 existe (8 disciplinas); libertad WBS para C/NC y equipos pendiente.
 - **No completado (pendiente de migración 091 en Supabase):** indicador visual de celdas editables (verde) y fechas fuera de rango (rojo) en el Lienzo del Plan Maestro.
+
+### Pendientes de la continuación (2026-10-03, estado real verificado)
+
+- **Tandas V y M creadas; E y F pendientes**, con trabajo a medias **sin commitear** en el worktree `local-worker-4` (13 archivos modificados + 1 nuevo).
+- El **Documentador y el Auditor no se han ejecutado**; el **Gate 2 no se ha pedido**.
+- `main` del repo de código tiene **11 commits del carril sin mergear** (`local-worker-4` = `871b238`) y `local-worker-4` **nunca se pusheó** (no existe `origin/local-worker-4`).
 
 ### Estado final de la Punch List
 

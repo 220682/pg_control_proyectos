@@ -42,6 +42,9 @@
 | **U3** | **Aprobado** el Plan Maestro, **lo único editable es el Plan Maestro** (mediante versión nueva con motivo obligatorio). Quedan **congelados** DP, PR, cronogramas y paquetes. Lo **administrativo** (checklist, notificaciones y datos del servicio) sigue funcionando normal |
 | **U4** | El **reposicionamiento** de los RDT en **fechas y metrados** ocurre **solo** al aprobar un Plan Maestro nuevo, y alcanza a **todos** los RDT, **incluidos los validados** |
 | **U5** | El Plan Maestro **no puede dejar de contemplar ninguna partida**: al modificarlo solo se **mueven partidas** y se **crean o desagrupan paquetes**. Nunca se elimina una partida del plan — por eso no puede quedar un RDT sin partida |
+| **U6** | Al aprobar un Plan Maestro nuevo, **antes** de confirmar se muestra **qué RDT van a cambiar** (cuántos, y con qué fechas y metrados). Es el aviso de impacto que R1 retira del cronograma, trasladado al momento correcto |
+| **U7** | El reposicionamiento **deja rastro**: cada RDT afectado registra en su historial que se movió, por qué, a qué fecha y a qué metrado, y quién aprobó el Plan Maestro. U4 modifica datos validados, así que sin historial sería un cambio invisible |
+| **U8** | El orden al aprobar es **Plan Maestro → reposicionamiento de RDT → recálculo del PR**, y es **todo o nada**: si algo falla, no queda aprobado nada |
 
 ### Qué deroga
 
@@ -70,13 +73,15 @@
 | E1-R2 | Congelar paquetes puede romper un flujo de trabajo si algún rol los usaba después de aprobar | Se valida en **servidor** con mensaje claro, igual que el DP y el cronograma; verificar en vivo que el bloqueo es solo de escritura |
 | E1-R3 | Quitar R1 deja código muerto o referencias colgantes en la pantalla del cronograma | `tsc` + suite completa en verde y `grep` de los símbolos eliminados antes de commitear |
 
-### Preguntas del Gate 1 Complementario
+### Preguntas del Gate 1 Complementario — **respondidas por Victor (2026-10-03)**
 
-| # | Pregunta | Recomendación |
-|---|---|---|
-| E1-Q1 | ¿Al aprobar un Plan Maestro nuevo se muestra **qué RDT van a cambiar** (fechas y metrados) antes de confirmar? | **Sí.** Es el equivalente del aviso de impacto que se quita en R1, trasladado al momento correcto |
-| E1-Q2 | ¿El reposicionamiento queda **registrado en el historial del RDT**? | **Sí.** Sin eso, U4 modifica datos validados sin dejar rastro |
-| E1-Q3 | ¿El PR se recalcula dentro de la misma aprobación? | **Sí**, es el comportamiento que ya describe el flujo 10 al aprobar una versión nueva |
+| # | Pregunta | Respuesta | Queda como |
+|---|---|---|---|
+| E1-Q1 | ¿Aviso de impacto antes de aprobar? | **Sí, mostrar el impacto** | U6 |
+| E1-Q2 | ¿Rastro del reposicionamiento? | **Sí, con historial** | U7 |
+| E1-Q3 | ¿Orden al aprobar? | **PM → RDT → PR, todo o nada** | U8 |
+
+**Gate 1 Complementario aprobado por Victor (2026-10-03):** las reglas U1–U8 y el trabajo R1–R5 quedan autorizados para implementación, sin aprobaciones intermedias hasta el Gate 2.
 
 ## Objetivo, alcance y no alcance
 
@@ -291,6 +296,12 @@ Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borra
 | 2026-10-03 | **V-R1:** el aviso de impacto cuenta **solo partes de RDT validados** | Victor |
 | 2026-10-03 | Se agrega la **Tanda V** (arreglar `scripts/verificar.ps1`) porque sus dos defectos bloquean el Gate 2, y la **Tanda M** (migraciones `090`→`091`→`092`) como precondición común de E y F | Orquestador |
 | 2026-10-03 | Cambio de modelos **pendiente de evidencia**: el benchmark de 10 modelos no diferenció calidad; la Tanda V se usa como benchmark real (agéntico) antes de tocar `.opencode/config.json` | Orquestador |
+| 2026-10-03 | **Enmienda E1 (reglas del umbral):** Victor fija que el Plan Maestro es el umbral del servicio (U1–U5) y **deroga** O3, las reglas confirmadas 1-3, G-R1/V-R1 y la fila de la matriz del flujo 14. Trabajo autorizado: **R1–R5** | Victor |
+| 2026-10-03 | **Gate 1 Complementario aprobado:** aviso de impacto antes de aprobar (U6), reposicionamiento con historial (U7) y orden **PM → RDT → PR, todo o nada** (U8). Implementación autorizada sin aprobaciones intermedias hasta el Gate 2 | Victor |
+| 2026-10-03 | **Tanda V cerrada** (arreglo del verificador, `53dbee9`) y **Tanda C cerrada** (config del repo alineada al global, `ba7e371`) | Orquestador (consolidación) |
+| 2026-10-03 | **Tanda M cerrada:** migraciones `090`/`091`/`092` aplicadas y verificadas por un Worker con las credenciales de la **ruta nueva** (`D:\1 Nueva carpeta\todo\DIARIO`) | Orquestador (consolidación) |
+| 2026-10-03 | **Tandas E y F cerradas** (`39408cb`, `abe1ebd`); el ítem 5 quedó detenido por OP8 y quedó resuelto por la Enmienda E1 (R4) | Orquestador (consolidación) |
+| 2026-10-03 | **Tanda N bloqueada:** no se pudo crear el servicio de prueba con Plan Maestro en BORRADOR por un bloqueo de sesión en la UI; el PATCH del Plan Maestro sigue sin verificar en vivo (OP9). El Worker dejó opciones por escrito | Orquestador |
 
 ## Enlaces a progreso y evidencia homónimos
 

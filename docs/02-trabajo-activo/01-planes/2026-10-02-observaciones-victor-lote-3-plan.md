@@ -100,19 +100,27 @@
 
 | Fase | Ítem | Estado | Commit | Observaciones |
 |---|---|---|---|---|
-| F4-A | Selector OT compacto + icono flotante | **Conforme** | `6fbd953` | `max-w-[200px]` en el contenedor, `max-w-[110px]` en el select, `pr-[60px]` en el lienzo |
-| F4-B | Plegables individuales por grupo de medida | **Conforme** | `5f67006` | Reemplaza `acumuladas` por `medVis: { fisico, economico, hh }`; 3 toggles independientes; 115 tests verdes |
-| F4-C | Metrados por paquete (no por partida) | **Conforme** | `8b33cdd` | Tipo `LineaPlanMaestro` con `esDeclaracionPaquete`/`metradoPaquete`/`fechaInicio`/`fechaFin`; API actualizada (SELECT con columnas 091); función `distribuirMetradoPaquete` |
-| F4-D | Fechas editables con indicador fuera de rango | **Conforme** | `8b33cdd` | Columnas `fecha_inicio`/`fecha_fin` en tipo y API; indicador visual pendiente en el Lienzo (requiere migración 091 aplicada en Supabase) |
+| F0 | Maqueta Plan Maestro | **Conforme** | `f77b8dc` | `docs/05-diseno-y-referencias/mockups/plan-maestro-rediseño.html` |
+| F1-A | Botón "Cargar" + barra de progreso en DP | **Conforme** | `f82fd7f` | Etiqueta "Cargar DP" + `<progress>` durante análisis e importación |
+| F1-B | Botón "Cargar" + barra de progreso en PR | **Pendiente** | — | El PR es server component (solo lectura); requiere componente cliente nuevo |
+| F1-C | Terminología "Actividad" (no "Actividad resumen") | **Conforme** | `f82fd7f` | Etiqueta en `pantalla-niveles.ts` |
+| F2 | Edición de cronograma con PM aprobado | **Pendiente** | — | Permiso nuevo `puedeEditarActividadCronograma` + endpoint PATCH + notificación de impacto |
+| F3 | Paquetes mejorado | **Pendiente** | — | "Declarar partida", botón niveles, "Guardar cambios" global |
+| F4-A | Selector OT compacto + icono flotante | **Conforme** | `6fbd953` | `max-w-[200px]` contenedor, `max-w-[110px]` select, `pr-[60px]` lienzo |
+| F4-B | Plegables individuales por grupo de medida | **Conforme** | `5f67006` | `medVis: { fisico, economico, hh }` reemplaza `acumuladas`; 3 toggles independientes |
+| F4-C | Metrados por paquete (no por partida) | **Conforme** | `8b33cdd` | Tipo `LineaPlanMaestro` con `esDeclaracionPaquete`/`metradoPaquete`; API actualizada; `distribuirMetradoPaquete` |
+| F4-D | Fechas editables con indicador fuera de rango | **Conforme** | `8b33cdd` | Columnas `fecha_inicio`/`fecha_fin` en tipo y API; indicador visual en Lienzo pendiente de migración 091 |
+| F5 | RDT mejorado | **Pendiente** | — | Disciplinas ampliadas (8), declaración por paquete, libertad WBS para C/NC y equipos |
+| F6 | Integración y documentación | **Pendiente** | — | db/README, flujos actualizados, verificación cruzada |
 
-**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F4 implementado directamente por el Orquestador (qwen3.7-plus).
+**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0 y F4 implementados directamente por el Orquestador (qwen3.7-plus).
 
-**Pendiente para completar F4-C/D en la UI:**
+**Pendiente para completar F4-C/D en la UI real:**
 - Aplicar migración 091 en Supabase (`db/091_plan_maestro_declaracion_paquete.sql`)
 - Modificar el Lienzo para mostrar celdas editables (verde) en filas con `esDeclaracionPaquete = true`
 - Añadir indicador rojo en fechas fuera del rango visible
 
-**Verificación:**
+**Verificación (F4):**
 - `npx tsc --noEmit`: exit 0
 - `npx vitest run src/lib/plan-maestro/`: 115 tests verdes
 - `npx next build --webpack`: exit 0

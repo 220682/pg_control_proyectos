@@ -108,7 +108,7 @@
 | F2-B | Endpoint PATCH `/api/cronograma/actividades/[id]` | **Conforme** | `77c3ab2` | Valida PM aprobado, permiso, alcance; actualiza nombre/duración/fechas |
 | F2-C | Notificación de impacto antes de editar | **Pendiente** | — | Requiere UI en el componente del cronograma (mostrar RDT que se reposicionan) |
 | F3 | Paquetes mejorado | **Pendiente** | — | "Declarar partida", botón niveles, "Guardar cambios" global |
-| F4-A | Selector OT compacto + icono flotante | **Conforme** | `6fbd953` | `max-w-[200px]` contenedor, `max-w-[110px]` select, `pr-[60px]` lienzo |
+| F4-A | Selector OT compacto + icono flotante | **Conforme** | `bd75f48` | `max-w-[200px]` contenedor, `max-w-[110px]` select; icono IA `position:fixed` sin reservar espacio |
 | F4-B | Plegables individuales por grupo de medida | **Conforme** | `5f67006` | `medVis: { fisico, economico, hh }` reemplaza `acumuladas`; 3 toggles independientes |
 | F4-C | Metrados por paquete (no por partida) | **Conforme** | `8b33cdd` | Tipo `LineaPlanMaestro` con `esDeclaracionPaquete`/`metradoPaquete`; API actualizada; `distribuirMetradoPaquete` |
 | F4-D | Fechas editables con indicador fuera de rango | **Conforme** | `8b33cdd` | Columnas `fecha_inicio`/`fecha_fin` en tipo y API; indicador visual en Lienzo pendiente de migración 091 |
@@ -116,6 +116,10 @@
 | F6 | Integración y documentación | **Pendiente** | — | db/README, flujos actualizados, verificación cruzada |
 
 **Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0, F1-A/C, F2-A/B y F4 implementados directamente por el Orquestador (qwen3.7-plus).
+
+**Correcciones de Victor (2026-10-02):**
+1. **Metrados contractuales fijos**: las partidas muestran el metrado contractual como texto plano (no editable). Solo los metrados de paquete son editables (celdas verdes). ✓ Ya correcto en la maqueta.
+2. **Icono IA flotante sin reservar espacio**: el icono debe flotar sobre el contenido sin `padding-right`. Corregido en `bd75f48` (quita `pr-[60px]` del lienzo).
 
 **Pendiente para completar F4-C/D en la UI real:**
 - Aplicar migración 091 en Supabase (`db/091_plan_maestro_declaracion_paquete.sql`)

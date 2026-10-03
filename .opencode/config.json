@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "$comment": "Fuente de verdad de los modelos por rol: ~/.config/opencode/opencode.jsonc (decision de Victor, 2026-10-03). Este archivo no define modelos.",
   "mcp": {
     "playwright": {
       "type": "local",
@@ -13,40 +14,27 @@
       "note": "Todos los agentes arrancan en medio. Alto solo si el plan lo autoriza por fase.",
       "requires_approval": "high"
     },
-    "general": { "model": "opencode-go/qwen3.8-plus", "effort": "medium" },
-    "explore": { "model": "opencode-go/qwen3.8-flash", "effort": "medium" },
+    "general": { "effort": "medium" },
+    "explore": { "effort": "medium" },
     "orchestrator": {
-      "model": "opencode-go/qwen3.8-plus",
       "effort": "medium",
       "note": "Victor elige Max o Plus al iniciar sesión"
     },
     "roles": {
-      "architect": {
-        "default": "opencode-go/qwen3.8-max",
-        "effort": "medium",
-        "alternatives": ["opencode-go/qwen3.8-plus"]
-      },
-      "planner": {
-        "default": "opencode-go/qwen3.8-plus",
-        "effort": "medium",
-        "alternatives": ["opencode-go/qwen3.8-flash"]
-      },
+      "architect": { "effort": "medium" },
+      "planner": { "effort": "medium" },
       "worker": {
-        "default": "opencode-go/qwen3.8-flash",
         "effort": "medium",
         "levels": {
           "flash": {
-            "model": "opencode-go/qwen3.8-flash",
             "effort": "medium",
             "criteria": "Simple, bien especificada, sin ambigüedad, sin dependencias, sin riesgo"
           },
           "plus": {
-            "model": "opencode-go/qwen3.8-plus",
             "effort": "medium",
             "criteria": "Requiere análisis, tiene dependencias, o afecta múltiples archivos/flujos"
           },
           "max": {
-            "model": "opencode-go/qwen3.8-max",
             "effort": "medium",
             "criteria": "Razonamiento profundo, remota, o riesgo alto",
             "requires_approval": true,
@@ -54,23 +42,11 @@
           }
         }
       },
-      "documenter": {
-        "default": "opencode-go/qwen3.8-flash",
-        "effort": "medium",
-        "alternatives": ["opencode-go/qwen3.8-plus"]
-      },
-      "auditor": {
-        "default": "opencode-go/qwen3.8-plus",
-        "effort": "medium",
-        "alternatives": ["opencode-go/qwen3.8-max"]
-      },
-      "git": {
-        "default": "opencode-go/qwen3.8-flash",
-        "effort": "medium"
-      }
+      "documenter": { "effort": "medium" },
+      "auditor": { "effort": "medium" },
+      "git": { "effort": "medium" }
     },
     "jev": {
-      "model": "typesafe/jev-1.13",
       "endpoint": "https://openrouter.ai/api/alpha/decisions",
       "use_for": ["merge", "push", "delete", "migrate", "branch", "close"],
       "thresholds": { "continue": 0.9, "block": 0.1, "escalate": 0.5 }

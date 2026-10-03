@@ -16,16 +16,67 @@
 
 ## Reglas confirmadas
 
-1. **Editar vs Reemplazar:** Editar = modificar actividades individuales; Reemplazar = subir documento nuevo
-2. **Cronograma con Plan Maestro aprobado:** Solo Admin y Jefe de Proyectos pueden **editar** actividades individuales (no reemplazar)
-3. **Notificación de impacto:** Deben ver qué se pierde antes de editar
-4. **RDT preservados:** Los RDT declarados se reposicionan automáticamente en las nuevas fechas/metrados al aprobar el nuevo Plan Maestro
+> **Enmienda E1 (Victor, 2026-10-03):** las reglas **2**, **3** y **4** de esta lista quedaron **derogadas** y reemplazadas por las reglas del **umbral** (ver § Enmienda E1). La regla 4 era correcta en el fondo pero decía el disparador equivocado: el reposicionamiento ocurre **al aprobar un Plan Maestro nuevo**, no al editar una actividad.
+
+1. **Editar vs Reemplazar:** Editar = modificar actividades individuales; Reemplazar = subir documento nuevo — **regla derogada por E1** (con Plan Maestro aprobado no se edita el cronograma en absoluto).
+2. ~~**Cronograma con Plan Maestro aprobado:** Solo Admin y Jefe de Productos pueden editar actividades individuales~~ — **DEROGADA (E1)**, con su regla 3.
+3. ~~**Notificación de impacto:** Deben ver qué se pierde antes de editar~~ — **DEROGADA (E1)**: el endpoint de impacto se elimina.
+4. ~~**RDT preservados: se reposicionan al aprobar el nuevo Plan Maestro**~~ — **SUSTITUIDA (E1) por la regla del umbral U4**, que además alcanza a los RDT **validados**.
 5. **Declaración de metrados en Plan Maestro:** Por paquete (no por partida individual)
 6. **Declaración en RDT:** Paquete completo (WBS="PQ-001"), excepto partidas directas
 7. **Disciplinas:** 8 total (Civil, Mecánica, Eléctrica, Instrumentación, Tuberías, Preliminares, Cierre, Subcontratos)
 8. **Distribución del metrado del paquete:** Por partida guía (modo `AVANCE_PAQUETE`)
 9. **Fechas en Plan Maestro:** Editables, no restringen el reparto, se ponen en rojo si están fuera del rango visible
 10. **RDT y paquetes:** Se calcula automáticamente cuando se declara un paquete
+
+## Enmienda E1 — «El Plan Maestro es el umbral» (Victor, 2026-10-03)
+
+> Redactada por el **Orquestador**: en este harness no hay subagente `Planner`, y las reglas las dictó Victor en conversación, no en un Spec previo. Se presenta como **Gate 1 Complementario** antes de implementar. Contexto: el ítem 5 de la Tanda F quedó detenido (OP8) porque el reposicionamiento aparecía con dos disparadores; al confirmar el de Victor, la falta de coherencia resultó ser más ancha que ese ítem.
+
+### Las cinco reglas del umbral
+
+| ID | Regla |
+|---|---|
+| **U1** | El RDT se genera **solo** cuando el Plan Maestro está **aprobado** y el servicio está en **Ejecución**. Las dos condiciones, no una |
+| **U2** | **Antes** de aprobar el Plan Maestro se pueden editar: DP, PR, cronogramas, paquetes y el propio Plan Maestro |
+| **U3** | **Aprobado** el Plan Maestro, **lo único editable es el Plan Maestro** (mediante versión nueva con motivo obligatorio). Quedan **congelados** DP, PR, cronogramas y paquetes. Lo **administrativo** (checklist, notificaciones y datos del servicio) sigue funcionando normal |
+| **U4** | El **reposicionamiento** de los RDT en **fechas y metrados** ocurre **solo** al aprobar un Plan Maestro nuevo, y alcanza a **todos** los RDT, **incluidos los validados** |
+| **U5** | El Plan Maestro **no puede dejar de contemplar ninguna partida**: al modificarlo solo se **mueven partidas** y se **crean o desagrupan paquetes**. Nunca se elimina una partida del plan — por eso no puede quedar un RDT sin partida |
+
+### Qué deroga
+
+| ID | Deroga |
+|---|---|
+| **E1-D1** | La observación **O3** del Lote 3, en su parte de «editar actividades individuales del cronograma con Plan Maestro aprobado» |
+| **E1-D2** | Las **reglas confirmadas 1, 2 y 3** de este plan (editar con PM aprobado · solo Admin y JP · aviso de impacto previo) |
+| **E1-D3** | **G-R1** y **V-R1** (conteo de partes por el endpoint de impacto): el endpoint desaparece con la función |
+| **E1-D4** | La fila de la matriz del **flujo 14** + su nota 11 + el permiso `puedeEditarActividadCronograma` |
+
+### Trabajo pendiente (R1–R5), mismo carril `local-worker-4`
+
+| ID | Qué | Archivos (verificados en el carril) |
+|---|---|---|
+| **R1** | **Quitar** la edición de actividades del cronograma con PM aprobado | borrar `src/app/api/cronograma/actividades/[id]/route.ts` y `.../impacto/route.ts`, `src/components/cronograma/EditarActividadCronograma.tsx`, `NotificacionImpacto.tsx`; quitar `puedeEditarActividadCronograma` de `src/lib/permisos/permisos.ts` y de sus tests; quitar el uso en `src/app/(workspace)/cronograma/page.tsx`, `FormularioCronograma.tsx` (columna «Editar», modal, `planMaestroAprobado`) y el campo en `src/app/api/cronograma/route.ts` |
+| **R2** | **Congelar paquetes** con PM aprobado (DP y cronograma ya están congelados por los flujos 09 y 15) | `src/app/api/paquetes-trabajo/route.ts`, `.../vinculos/route.ts`, su test y la pantalla |
+| **R3** | **RDT exige PM aprobado + servicio `EJECUCION`**, validado en servidor | `src/app/api/rdts/route.ts`, `src/app/api/rdts/partes/route.ts`, `src/components/ui/FormularioCrearRdt.tsx` |
+| **R4** | **Reposicionar** los RDT (fechas + metrados) al aprobar un Plan Maestro nuevo, todos, incluidos los validados | `src/app/api/plan-maestro/route.ts` (acción de aprobación) y lógica nueva en `src/lib/rdts/` con su test |
+| **R5** | **Flujos** | `06-rdt.md` (U1), `14-accesos-y-restricciones.md` (E1-D4), `15-cronograma.md` (U2/U3), `19-paquetes…md` (U3), `20-plan-maestro.md` (U3/U4/U5) + índice |
+
+### Riesgos
+
+| # | Riesgo | Mitigación |
+|---|---|---|
+| E1-R1 | **R4 toca RDT validados**, y de ellos sale el «Real» del Dashboard y de la Curva S | Registrar el reposicionamiento en el **historial del RDT** (append-only) para que sea auditable y reversible; el PR se recalcula después, en el mismo paso de aprobación |
+| E1-R2 | Congelar paquetes puede romper un flujo de trabajo si algún rol los usaba después de aprobar | Se valida en **servidor** con mensaje claro, igual que el DP y el cronograma; verificar en vivo que el bloqueo es solo de escritura |
+| E1-R3 | Quitar R1 deja código muerto o referencias colgantes en la pantalla del cronograma | `tsc` + suite completa en verde y `grep` de los símbolos eliminados antes de commitear |
+
+### Preguntas del Gate 1 Complementario
+
+| # | Pregunta | Recomendación |
+|---|---|---|
+| E1-Q1 | ¿Al aprobar un Plan Maestro nuevo se muestra **qué RDT van a cambiar** (fechas y metrados) antes de confirmar? | **Sí.** Es el equivalente del aviso de impacto que se quita en R1, trasladado al momento correcto |
+| E1-Q2 | ¿El reposicionamiento queda **registrado en el historial del RDT**? | **Sí.** Sin eso, U4 modifica datos validados sin dejar rastro |
+| E1-Q3 | ¿El PR se recalcula dentro de la misma aprobación? | **Sí**, es el comportamiento que ya describe el flujo 10 al aprobar una versión nueva |
 
 ## Objetivo, alcance y no alcance
 

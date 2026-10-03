@@ -79,14 +79,21 @@ if ($Plan -and (Test-Path $Plan)) {
   $planTxt = Get-Content -Raw -Encoding UTF8 $Plan
   $hechos.gate_1 = Gate $planTxt '1'
   $hechos.gate_2 = Gate $planTxt '2'
-  $informe = Join-Path (Split-Path (Split-Path $Plan -Parent) -Parent) ('04-auditoria\' + (Split-Path $Plan -Leaf))
-  if (Test-Path $informe) {
+  # Arreglo (Tanda V): por convención el informe del Auditor usa el nombre base del plan
+  # sin el sufijo `-plan`; se aceptan ambos nombres (con y sin `-plan`) para no bloquear el Gate 2.
+  $leaf = Split-Path $Plan -Leaf
+  $auditoriaDir = Join-Path (Split-Path (Split-Path $Plan -Parent) -Parent) '04-auditoria'
+  $candidatos = @((Join-Path $auditoriaDir ($leaf -replace '-plan\.md$', '.md')), (Join-Path $auditoriaDir $leaf))
+  $informe = $candidatos | Where-Object { Test-Path $_ } | Select-Object -First 1
+  if ($informe) {
     $it = Get-Content -Raw -Encoding UTF8 $informe
     $hechos.informe_de_auditoria = if ($it -match 'APLICAR AHORA' -and $it -match 'PROPONER A (RESPONSABLE|VICTOR)') { 'emitido con clasificación' } else { 'emitido sin clasificación' }
   } else {
     $hechos.informe_de_auditoria = 'no existe'
   }
-  $hechos.filas_de_hallazgos_sin_trasladar = ([regex]::Matches($planTxt, '\|\s*Registrada\s*\|')).Count
+  # Arreglo (Tanda V): el libro de hallazgos escribe el estado entre acentos graves
+  # (`Registrada`); el patrón ahora acepta el estado con o sin acentos graves para contar las filas.
+  $hechos.filas_de_hallazgos_sin_trasladar = ([regex]::Matches($planTxt, '\|\s*`?Registrada`?\s*\|')).Count
 } else {
   $hechos.plan = 'no se indicó o no existe'
 }

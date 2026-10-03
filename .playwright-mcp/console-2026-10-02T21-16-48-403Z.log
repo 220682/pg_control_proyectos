@@ -1,0 +1,10 @@
+[     638ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    2430ms] [LOG] [Fast Refresh] done in 1793ms @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    6856ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    6928ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    7994ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    8778ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    9187ms] [LOG] [Fast Refresh] done in 408ms @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[   11098ms] [LOG] [Fast Refresh] done in 2319ms @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[   22639ms] [WARNING] The resource http://localhost:3115/_next/static/css/app/layout.css?v=1790975817859 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3115/proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/curva-s:0
+[   27664ms] [WARNING] The resource http://localhost:3115/_next/static/css/app/layout.css?v=1790975817859 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3115/proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/curva-s:0

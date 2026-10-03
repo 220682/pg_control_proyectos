@@ -1,0 +1,146 @@
+- generic [active] [ref=f1e1]:
+  - button "Open Next.js Dev Tools" [ref=f1e7] [cursor=pointer]:
+    - generic [ref=f1e10]:
+      - text: Rendering
+      - generic [ref=f1e11]:
+        - generic [ref=f1e12]: .
+        - generic [ref=f1e13]: .
+        - generic [ref=f1e14]: .
+  - alert [ref=f1e15]: Control de Proyectos
+  - generic [ref=f1e16]:
+    - complementary [ref=f1e17]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f1e18]
+      - generic [ref=f1e22]:
+        - link "Control de Proyectos" [ref=f1e23] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f1e32]:
+          - link [ref=f1e33] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - navigation [ref=f1e40]:
+            - heading [level=2] [ref=f1e41]:
+              - button "Recursos de empresa" [expanded] [ref=f1e42]
+            - list [ref=f1e45]:
+              - listitem [ref=f1e46]:
+                - link [ref=f1e47] [cursor=pointer]:
+                  - /url: /recursos/personal
+              - listitem [ref=f1e54]:
+                - link [ref=f1e55] [cursor=pointer]:
+                  - /url: /recursos/cargos
+              - listitem [ref=f1e60]:
+                - link [ref=f1e61] [cursor=pointer]:
+                  - /url: /recursos/equipos
+              - listitem [ref=f1e68]:
+                - link [ref=f1e69] [cursor=pointer]:
+                  - /url: /recursos/causas-cnc
+        - generic [ref=f1e73]:
+          - generic [ref=f1e74]:
+            - link "Usuarios" [ref=f1e75] [cursor=pointer]:
+              - /url: /admin/usuarios
+            - link "16" [ref=f1e81] [cursor=pointer]:
+              - /url: /notificaciones
+            - link "Configuraciones" [ref=f1e86] [cursor=pointer]:
+              - /url: /configuraciones
+            - button "Cerrar sesión" [ref=f1e91]
+          - generic [ref=f1e95]:
+            - generic [ref=f1e96]: Ver como
+            - combobox [ref=f1e100]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=f1e101] [cursor=pointer]:
+            - /url: /mi-entorno
+            - generic [ref=f1e102]: VP
+            - generic [ref=f1e103]:
+              - generic [ref=f1e104]: Victor Perez Contreras
+              - generic [ref=f1e105]: Administrador
+    - main [ref=f1e106]:
+      - generic [ref=f1e107]:
+        - generic [ref=f1e109]:
+          - navigation [ref=f1e111]:
+            - link "Programas" [ref=f1e113] [cursor=pointer]:
+              - /url: /programas
+            - link "Servicios Marcobre" [ref=f1e117] [cursor=pointer]:
+              - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+            - generic [ref=f1e118]: Adjudicar servicio
+          - heading "Adjudicar servicio" [level=1] [ref=f1e122]
+          - generic [ref=f1e124]:
+            - generic [ref=f1e125]:
+              - generic [ref=f1e126]: N° OT *
+              - textbox [ref=f1e127]: PS-0001
+              - paragraph [ref=f1e128]: Correlativo automático. Sin N° OT válido no se pueden crear requerimientos.
+            - textbox "N° OC/OS (orden del cliente)" [ref=f1e129]
+            - textbox "Nombre del servicio" [ref=f1e130]
+            - textbox "Cliente" [ref=f1e131]
+            - textbox "Área" [ref=f1e132]
+            - generic [ref=f1e133]:
+              - text: Fecha de adjudicación
+              - textbox "Fecha de adjudicación" [ref=f1e134]
+            - generic [ref=f1e135]:
+              - text: Fecha estimada de inicio
+              - textbox "Fecha estimada de inicio" [ref=f1e136]
+            - generic [ref=f1e137]:
+              - text: Fecha estimada de fin
+              - textbox "Fecha estimada de fin" [ref=f1e138]
+            - generic [ref=f1e139]:
+              - text: Supervisor operativo a cargo
+              - combobox "Supervisor operativo a cargo Puede quedar sin asignar y definirse después desde Editar servicio." [ref=f1e140]:
+                - option "Sin asignar…" [selected]
+              - paragraph [ref=f1e141]: Puede quedar sin asignar y definirse después desde Editar servicio.
+            - group "Documentos requeridos para este servicio" [ref=f1e142]
+            - button "Marcar como Adjudicado" [ref=f1e144]
+        - button "Asistente" [ref=f1e145]
+    - complementary [ref=f1e148]:
+      - button "Ocultar panel derecho" [expanded] [ref=f1e149]
+      - generic [ref=f1e153]:
+        - generic [ref=f1e154]:
+          - paragraph [ref=f1e155]: Accesos rápidos
+          - generic [ref=f1e156]:
+            - generic "Sin pantalla todavía" [ref=f1e157]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f1e161]: Pets
+            - generic "Sin pantalla todavía" [ref=f1e165]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f1e170]: Status de servicios
+            - link "Requerimiento" [ref=f1e173] [cursor=pointer]:
+              - /url: /requerimientos
+            - link "Consolidado RQ" [ref=f1e180] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq
+            - link "Subir RDTs Acción" [ref=f1e184] [cursor=pointer]:
+              - /url: /mi-entorno?accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f1e189]: Acción
+        - paragraph [ref=f1e190]: Grupos del servicio
+        - paragraph [ref=f1e191]: Selecciona un servicio para habilitar las herramientas del panel.
+        - generic [ref=f1e192]:
+          - generic [ref=f1e193]:
+            - button "Planificación" [expanded] [ref=f1e194]
+            - generic [ref=f1e197]:
+              - link [ref=f1e198] [cursor=pointer]:
+                - /url: /notificaciones
+              - generic "Elige un servicio para abrir esta pantalla" [ref=f1e205]: Cronograma
+              - generic "Elige un servicio para abrir esta pantalla" [ref=f1e209]: Paquetes de Trabajo
+              - link [ref=f1e215] [cursor=pointer]:
+                - /url: /plan-maestro
+              - generic "Sin pantalla todavía" [ref=f1e219]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f1e223]: Programación diaria
+              - generic "Elige un servicio para abrir esta pantalla" [ref=f1e227]: PR (Reporte del proyecto)
+              - generic "Elige un servicio para abrir esta pantalla" [ref=f1e232]: Dashboard
+              - generic "Elige un servicio para abrir esta pantalla" [ref=f1e239]: Curva S
+              - generic "Sin pantalla todavía" [ref=f1e244]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f1e249]: Programación de capacitaciones
+          - button "Costos" [ref=f1e255]
+          - button "Supervisión operativa" [ref=f1e259]
+          - button "Logística" [ref=f1e263]
+          - button "Oficina Técnica" [ref=f1e267]
+          - button "Administración" [ref=f1e271]
+          - button "SSOMA" [ref=f1e275]

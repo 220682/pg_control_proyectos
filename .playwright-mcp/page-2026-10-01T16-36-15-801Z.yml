@@ -1,0 +1,317 @@
+- generic [active] [ref=f13e1]:
+  - generic [ref=f13e2]:
+    - complementary [ref=f13e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f13e4]
+      - generic [ref=f13e8]:
+        - link "Control de Proyectos" [ref=f13e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f13e18]:
+          - link [ref=f13e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f13e26]:
+            - paragraph [ref=f13e27]: Servicio actual
+            - paragraph [ref=f13e28]: PS-0006
+            - paragraph [ref=f13e29]: PRUEBA-F5B Servicio de verificacion
+          - navigation [ref=f13e30]:
+            - heading [level=2] [ref=f13e31]:
+              - button "Recursos de empresa" [ref=f13e32]
+          - generic [ref=f13e35]:
+            - generic [ref=f13e36]:
+              - paragraph [ref=f13e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f13e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f13e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f13e49]: Presupuesto
+              - link [ref=f13e54] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dp
+              - link [ref=f13e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f13e65]:
+              - paragraph [ref=f13e66]: Planificación
+              - link [ref=f13e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e71] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f13e75]:
+              - paragraph [ref=f13e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f13e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f13e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f13e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f13e100]: Personal NUEVO
+            - generic [ref=f13e105]:
+              - paragraph [ref=f13e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f13e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f13e115]: PETS
+            - generic [ref=f13e120]:
+              - paragraph [ref=f13e121]: Reportes
+              - link [ref=f13e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e135] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/pr
+              - link [ref=f13e140] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dashboard
+              - link [ref=f13e147] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/curva-s
+              - link [ref=f13e152] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/registro-costos
+              - generic "Sin pantalla todavía" [ref=f13e157]: Consolidado de servicio
+            - generic [ref=f13e162]:
+              - paragraph [ref=f13e163]: Acciones
+              - generic [ref=f13e164]:
+                - link [ref=f13e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear-rq
+                - link [ref=f13e170] [cursor=pointer]:
+                  - /url: /rdts/crear?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - link [ref=f13e175] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=subir-rdt
+                - link [ref=f13e181] [cursor=pointer]:
+                  - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear
+            - generic [ref=f13e187]:
+              - paragraph [ref=f13e188]: Servicio
+              - link [ref=f13e189] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic [ref=f13e193]:
+                - paragraph [ref=f13e194]: Acciones
+                - link [ref=f13e195] [cursor=pointer]:
+                  - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/editar
+                - link [ref=f13e200] [cursor=pointer]:
+                  - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/checklist/editar
+        - generic [ref=f13e205]:
+          - generic [ref=f13e206]:
+            - link "Usuarios" [ref=f13e207] [cursor=pointer]:
+              - /url: /admin/usuarios?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "17" [ref=f13e402] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Configuraciones" [ref=f13e217] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - button "Cerrar sesión" [ref=f13e222]
+          - generic [ref=f13e226]:
+            - generic [ref=f13e227]: Ver como
+            - combobox [ref=f13e231]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=f13e232] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f13e233]: VP
+            - generic [ref=f13e234]:
+              - generic [ref=f13e235]: Victor Perez Contreras
+              - generic [ref=f13e236]: Administrador
+    - main [ref=f13e237]:
+      - generic [ref=f13e238]:
+        - generic [ref=f13e241]:
+          - generic [ref=f13e242]:
+            - navigation [ref=f13e244]:
+              - link "PS-0006 — PRUEBA-F5B Servicio de verificacion" [ref=f13e246] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic [ref=f13e247]: Curva S
+            - heading "Curva S" [level=1] [ref=f13e251]
+            - paragraph [ref=f13e252]: Valor acumulado · Costo directo (regla 9) · USD (regla 11) · fecha de corte 01-10-2026
+          - generic [ref=f13e253]:
+            - generic [ref=f13e254]:
+              - text: Rango
+              - combobox "Rango" [ref=f13e255]:
+                - option "Todo el servicio" [selected]
+                - option "Últimas 4 semanas"
+                - option "Últimas 8 semanas"
+                - option "Personalizado…"
+            - generic [ref=f13e256]:
+              - text: Granularidad
+              - combobox "Granularidad" [ref=f13e257]:
+                - option "Semanal (sáb–vie)" [selected]
+                - option "Diaria"
+            - generic [ref=f13e258]: Los filtros aplican al gráfico, la lectura y la tabla
+          - generic [ref=f13e404]:
+            - generic [ref=f13e405]:
+              - generic [ref=f13e406]:
+                - paragraph [ref=f13e407]: Valor acumulado en el tiempo
+                - paragraph [ref=f13e408]: "Un solo eje: los tres son US$ acumulados de costo directo"
+              - generic [ref=f13e409]:
+                - generic [ref=f13e410]:
+                  - generic [ref=f13e411]: PV — planificado
+                  - generic [ref=f13e414]: EV — valor ganado
+                  - generic [ref=f13e417]: AC — costo real
+                - 'img "Curva S. Punto seleccionado: 21-11-2026, PV 123,807.94, EV 0.00, AC 0.00" [ref=f13e420]':
+                  - generic [ref=f13e421]: "0"
+                  - generic [ref=f13e423]: 50k
+                  - generic [ref=f13e425]: 100k
+                  - generic [ref=f13e427]: 150k
+                  - generic [ref=f13e429]: US$ acumulado (CD)
+                  - generic [ref=f13e430]:
+                    - generic [ref=f13e431]: S1
+                    - generic [ref=f13e432]: 02-10-2026
+                  - generic [ref=f13e433]:
+                    - generic [ref=f13e434]: S3
+                    - generic [ref=f13e435]: 16-10-2026
+                  - generic [ref=f13e436]:
+                    - generic [ref=f13e437]: S5
+                    - generic [ref=f13e438]: 30-10-2026
+                  - generic [ref=f13e439]:
+                    - generic [ref=f13e440]: S7
+                    - generic [ref=f13e441]: 13-11-2026
+                  - generic [ref=f13e442]:
+                    - generic [ref=f13e443]: S9
+                    - generic [ref=f13e444]: 21-11-2026
+                  - generic [ref=f13e447]: PV
+                  - generic [ref=f13e449]:
+                    - generic [ref=f13e451]: Semana 9 · 21-11-2026
+                    - generic [ref=f13e452]: PV
+                    - generic [ref=f13e453]: 123,807.94
+                    - generic [ref=f13e454]: EV
+                    - generic [ref=f13e455]: "0.00"
+                    - generic [ref=f13e456]: AC
+                    - generic [ref=f13e457]: "0.00"
+              - paragraph [ref=f13e458]: El AC cubre solo HH y HM con tarifa congelada al validar el RDT (regla 1). Materiales y subcontratos se miden por % de avance económico (regla 5).
+            - generic [ref=f13e459]:
+              - paragraph [ref=f13e460]: Lectura al 02-10-2026 · punto seleccionado en el gráfico
+              - generic [ref=f13e461]:
+                - generic [ref=f13e462]:
+                  - paragraph [ref=f13e463]: PV · planificado
+                  - paragraph [ref=f13e464]: US$ 0.00
+                - generic [ref=f13e465]:
+                  - paragraph [ref=f13e466]: EV · valor ganado
+                  - paragraph [ref=f13e467]: US$ 0.00
+                - generic [ref=f13e468]:
+                  - paragraph [ref=f13e469]: AC · costo real
+                  - paragraph [ref=f13e470]: US$ 0.00
+                - generic [ref=f13e471]:
+                  - paragraph [ref=f13e472]: SV = EV − PV
+                  - paragraph [ref=f13e473]: US$ 0.00
+                - generic [ref=f13e474]:
+                  - paragraph [ref=f13e475]: CV = EV − AC
+                  - paragraph [ref=f13e476]: US$ 0.00
+                - generic [ref=f13e477]:
+                  - paragraph [ref=f13e478]: SPI = EV/PV
+                  - paragraph [ref=f13e479]: Pendiente
+                - generic [ref=f13e480]:
+                  - paragraph [ref=f13e481]: CPI = EV/AC
+                  - paragraph [ref=f13e482]: Pendiente
+            - generic [ref=f13e483]:
+              - paragraph [ref=f13e484]: Serie · el mismo dato del gráfico, en números
+              - table [ref=f13e486]:
+                - rowgroup [ref=f13e487]:
+                  - row [ref=f13e488]:
+                    - columnheader "Semana" [ref=f13e489]
+                    - columnheader "Cierre" [ref=f13e490]
+                    - columnheader "PV acum." [ref=f13e491]
+                    - columnheader "EV acum." [ref=f13e492]
+                    - columnheader "AC acum." [ref=f13e493]
+                    - columnheader "SV" [ref=f13e494]
+                    - columnheader "CV" [ref=f13e495]
+                    - columnheader "SPI" [ref=f13e496]
+                    - columnheader "CPI" [ref=f13e497]
+                - rowgroup [ref=f13e498]:
+                  - row [ref=f13e499]:
+                    - cell "S1" [ref=f13e500]
+                    - cell "02-10-2026" [ref=f13e501]
+                    - cell "US$ 0.00" [ref=f13e502]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e503]
+                  - row [ref=f13e504]:
+                    - cell "S2" [ref=f13e505]
+                    - cell "09-10-2026" [ref=f13e506]
+                    - cell "US$ 17,361.88" [ref=f13e507]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e508]
+                  - row [ref=f13e509]:
+                    - cell "S3" [ref=f13e510]
+                    - cell "16-10-2026" [ref=f13e511]
+                    - cell "US$ 21,633.25" [ref=f13e512]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e513]
+                  - row [ref=f13e514]:
+                    - cell "S4" [ref=f13e515]
+                    - cell "23-10-2026" [ref=f13e516]
+                    - cell "US$ 43,500.70" [ref=f13e517]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e518]
+                  - row [ref=f13e519]:
+                    - cell "S5" [ref=f13e520]
+                    - cell "30-10-2026" [ref=f13e521]
+                    - cell "US$ 51,533.95" [ref=f13e522]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e523]
+                  - row [ref=f13e524]:
+                    - cell "S6" [ref=f13e525]
+                    - cell "06-11-2026" [ref=f13e526]
+                    - cell "US$ 59,212.52" [ref=f13e527]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e528]
+                  - row [ref=f13e529]:
+                    - cell "S7" [ref=f13e530]
+                    - cell "13-11-2026" [ref=f13e531]
+                    - cell "US$ 84,345.46" [ref=f13e532]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e533]
+                  - row [ref=f13e534]:
+                    - cell "S8" [ref=f13e535]
+                    - cell "20-11-2026" [ref=f13e536]
+                    - cell "US$ 114,528.16" [ref=f13e537]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e538]
+                  - row [ref=f13e539]:
+                    - cell "S9" [ref=f13e540]
+                    - cell "21-11-2026" [ref=f13e541]
+                    - cell "US$ 123,807.94" [ref=f13e542]
+                    - cell "posterior a la fecha de corte — sin ejecución registrada" [ref=f13e543]
+        - button "Asistente" [ref=f13e261]
+    - complementary [ref=f13e264]:
+      - button "Ocultar panel derecho" [expanded] [ref=f13e265]
+      - generic [ref=f13e269]:
+        - generic [ref=f13e270]:
+          - paragraph [ref=f13e271]: Accesos rápidos
+          - generic [ref=f13e272]:
+            - generic "Sin pantalla todavía" [ref=f13e273]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f13e277]: Pets
+            - generic "Sin pantalla todavía" [ref=f13e281]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f13e286]: Status de servicios
+            - link "Requerimiento" [ref=f13e289] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Consolidado RQ" [ref=f13e296] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Subir RDTs Acción" [ref=f13e300] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f13e305]: Acción
+        - paragraph [ref=f13e306]: Grupos del servicio
+        - generic [ref=f13e307]:
+          - generic [ref=f13e308]:
+            - button "Planificación" [expanded] [ref=f13e309]
+            - generic [ref=f13e312]:
+              - link [ref=f13e313] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e320] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e324] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f13e330] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic "Sin pantalla todavía" [ref=f13e334]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f13e338]: Programación diaria
+              - link [ref=f13e342] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/pr
+              - link [ref=f13e347] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dashboard
+              - link [ref=f13e354] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/curva-s
+              - generic "Sin pantalla todavía" [ref=f13e359]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f13e364]: Programación de capacitaciones
+          - button "Costos" [ref=f13e370]
+          - button "Supervisión operativa" [ref=f13e374]
+          - button "Logística" [ref=f13e378]
+          - button "Oficina Técnica" [ref=f13e382]
+          - button "Administración" [ref=f13e386]
+          - button "SSOMA" [ref=f13e390]
+  - button "Open Next.js Dev Tools" [ref=f13e544] [cursor=pointer]:
+    - generic [ref=f13e547]:
+      - text: Rendering
+      - generic [ref=f13e548]:
+        - generic [ref=f13e549]: .
+        - generic [ref=f13e550]: .
+        - generic [ref=f13e551]: .
+  - alert [ref=f13e552]

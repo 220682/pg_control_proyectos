@@ -1,0 +1,186 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - complementary [ref=f7e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f7e4]
+      - generic [ref=f7e8]:
+        - link "Control de Proyectos" [ref=f7e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f7e18]:
+          - link [ref=f7e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f7e26]:
+            - paragraph [ref=f7e27]: Servicio actual
+            - paragraph [ref=f7e28]: PS-0004
+            - paragraph [ref=f7e29]: Movimiento de tierra, e instalacion de bancoductos
+          - navigation [ref=f7e30]:
+            - heading [level=2] [ref=f7e31]:
+              - button "Recursos de empresa" [ref=f7e32]
+          - generic [ref=f7e35]:
+            - generic [ref=f7e36]:
+              - paragraph [ref=f7e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f7e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f7e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f7e49]: Presupuesto
+              - link [ref=f7e54] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/dp
+              - link [ref=f7e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f7e65]:
+              - paragraph [ref=f7e66]: Planificación
+              - link [ref=f7e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e71] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f7e75]:
+              - paragraph [ref=f7e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f7e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f7e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f7e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f7e100]: Personal NUEVO
+            - generic [ref=f7e105]:
+              - paragraph [ref=f7e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f7e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f7e115]: PETS
+            - generic [ref=f7e120]:
+              - paragraph [ref=f7e121]: Reportes
+              - link [ref=f7e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e135] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/pr
+              - link [ref=f7e140] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/dashboard
+              - link [ref=f7e147] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s
+              - link [ref=f7e152] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/registro-costos
+              - generic "Sin pantalla todavía" [ref=f7e157]: Consolidado de servicio
+            - generic [ref=f7e162]:
+              - paragraph [ref=f7e163]: Acciones
+              - generic [ref=f7e164]:
+                - link [ref=f7e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&accion=crear-rq
+                - link [ref=f7e170] [cursor=pointer]:
+                  - /url: /rdts/crear?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+                - link [ref=f7e175] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&accion=subir-rdt
+                - link [ref=f7e181] [cursor=pointer]:
+                  - /url: /paquetes-trabajo?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&accion=crear
+            - generic [ref=f7e187]:
+              - paragraph [ref=f7e188]: Servicio
+              - link [ref=f7e189] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic [ref=f7e193]:
+                - paragraph [ref=f7e194]: Acciones
+                - link [ref=f7e195] [cursor=pointer]:
+                  - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/editar
+                - link [ref=f7e200] [cursor=pointer]:
+                  - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/checklist/editar
+        - generic [ref=f7e205]:
+          - generic [ref=f7e206]:
+            - link "Usuarios" [ref=f7e207] [cursor=pointer]:
+              - /url: /admin/usuarios?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Notificaciones" [ref=f7e213] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Configuraciones" [ref=f7e217] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - button "Cerrar sesión" [ref=f7e222]
+          - generic [ref=f7e226]:
+            - generic [ref=f7e227]: Ver como
+            - combobox [ref=f7e231]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=f7e232] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f7e233]: VP
+            - generic [ref=f7e234]:
+              - generic [ref=f7e235]: Victor Perez Contreras
+              - generic [ref=f7e236]: Administrador
+    - main [ref=f7e237]:
+      - generic [ref=f7e238]:
+        - generic [ref=f7e241]:
+          - generic [ref=f7e242]:
+            - navigation [ref=f7e244]:
+              - link "PS-0004 — Movimiento de tierra, e instalacion de bancoductos" [ref=f7e246] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic [ref=f7e247]: Curva S
+            - heading "Curva S" [level=1] [ref=f7e251]
+            - paragraph [ref=f7e252]: Valor acumulado · Costo directo (regla 9) · USD (regla 11)
+          - generic [ref=f7e253]:
+            - generic [ref=f7e254]:
+              - text: Rango
+              - combobox "Rango" [ref=f7e255]:
+                - option "Todo el servicio" [selected]
+                - option "Últimas 4 semanas"
+                - option "Últimas 8 semanas"
+                - option "Personalizado…"
+            - generic [ref=f7e256]:
+              - text: Granularidad
+              - combobox "Granularidad" [ref=f7e257]:
+                - option "Semanal (sáb–vie)" [selected]
+                - option "Diaria"
+            - generic [ref=f7e258]: Los filtros aplican al gráfico, la lectura y la tabla
+          - paragraph [ref=f7e260]: Cargando…
+        - button "Asistente" [ref=f7e261]
+    - complementary [ref=f7e264]:
+      - button "Ocultar panel derecho" [expanded] [ref=f7e265]
+      - generic [ref=f7e269]:
+        - generic [ref=f7e270]:
+          - paragraph [ref=f7e271]: Accesos rápidos
+          - generic [ref=f7e272]:
+            - generic "Sin pantalla todavía" [ref=f7e273]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f7e277]: Pets
+            - generic "Sin pantalla todavía" [ref=f7e281]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f7e286]: Status de servicios
+            - link "Requerimiento" [ref=f7e289] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Consolidado RQ" [ref=f7e296] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Subir RDTs Acción" [ref=f7e300] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f7e305]: Acción
+        - paragraph [ref=f7e306]: Grupos del servicio
+        - generic [ref=f7e307]:
+          - generic [ref=f7e308]:
+            - button "Planificación" [expanded] [ref=f7e309]
+            - generic [ref=f7e312]:
+              - link [ref=f7e313] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e320] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e324] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e330] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic "Sin pantalla todavía" [ref=f7e334]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f7e338]: Programación diaria
+              - link [ref=f7e342] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/pr
+              - link [ref=f7e347] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/dashboard
+              - link [ref=f7e354] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s
+              - generic "Sin pantalla todavía" [ref=f7e359]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f7e364]: Programación de capacitaciones
+          - button "Costos" [ref=f7e370]
+          - button "Supervisión operativa" [ref=f7e374]
+          - button "Logística" [ref=f7e378]
+          - button "Oficina Técnica" [ref=f7e382]
+          - button "Administración" [ref=f7e386]
+          - button "SSOMA" [ref=f7e390]
+  - button "Open Next.js Dev Tools" [ref=f7e398] [cursor=pointer]

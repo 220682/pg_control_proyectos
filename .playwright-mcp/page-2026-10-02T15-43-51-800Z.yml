@@ -1,0 +1,20 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - link "Control de Proyectos" [ref=f1e4] [cursor=pointer]:
+        - /url: /programas
+      - generic [ref=f1e5]:
+        - link "Usuarios" [ref=f1e6] [cursor=pointer]:
+          - /url: /admin/usuarios
+        - link "Notificaciones" [ref=f1e13] [cursor=pointer]:
+          - /url: /notificaciones
+        - button "Cerrar sesión" [ref=f1e19]
+    - main [ref=f1e24]:
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]: Control de Proyectos
+        - heading "Inicia sesión" [level=1] [ref=f1e32]
+        - generic [ref=f1e33]:
+          - textbox "Correo" [ref=f1e34]: victorperez.nj@gmail.com
+          - textbox "Contraseña" [ref=f1e35]: Soldador22
+          - button "Entrar" [ref=f1e36]
+  - alert [ref=f1e37]

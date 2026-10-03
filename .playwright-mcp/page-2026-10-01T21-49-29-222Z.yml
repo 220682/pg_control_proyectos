@@ -1,0 +1,65 @@
+- generic [active] [ref=f14e1]:
+  - main [ref=f14e3]:
+    - generic [ref=f14e4]:
+      - button "Abrir menú" [ref=f14e5]
+      - link "Control de Proyectos" [ref=f14e7] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - button "Abrir herramientas" [ref=f14e8]
+    - generic [ref=f14e11]:
+      - generic [ref=f14e13]:
+        - heading "Mi entorno" [level=1] [ref=f14e14]
+        - paragraph [ref=f14e15]: "Grupo: Costos"
+        - paragraph [ref=f14e17]: Cargando perfil…
+        - generic [ref=f14e18]:
+          - generic [ref=f14e19]:
+            - generic [ref=f14e20]:
+              - paragraph [ref=f14e21]: Notificaciones
+              - generic [ref=f14e22]:
+                - button "Enviar mensaje Acción" [ref=f14e23]:
+                  - text: Enviar mensaje
+                  - generic [ref=f14e27]: Acción
+                - link "Ver todas" [ref=f14e28] [cursor=pointer]:
+                  - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f14e29]:
+              - paragraph [ref=f14e30]: Requerimientos (RQ)
+              - generic [ref=f14e31]:
+                - link "Crear RQ Acción" [ref=f14e32] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear-rq
+                  - text: Crear RQ
+                  - generic [ref=f14e33]: Acción
+                - link "Status RQ" [ref=f14e34] [cursor=pointer]:
+                  - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - link "Consolidado RQ" [ref=f14e35] [cursor=pointer]:
+                  - /url: /logistica/consolidado-rq?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f14e36]:
+              - paragraph [ref=f14e37]: Planificación
+              - generic [ref=f14e38]:
+                - link "Cronograma" [ref=f14e39] [cursor=pointer]:
+                  - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - link "Plan Maestro" [ref=f14e40] [cursor=pointer]:
+                  - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f14e41]:
+              - paragraph [ref=f14e42]: RDTs
+              - generic [ref=f14e43]:
+                - link "Status de RDTs" [ref=f14e44] [cursor=pointer]:
+                  - /url: /rdts/status?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - link "Consolidado RDTs" [ref=f14e45] [cursor=pointer]:
+                  - /url: /rdts/consolidado?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - generic "Solo Supervisión operativa, Jefe de Proyectos, Jefe de Oficina Técnica o Geren" [ref=f14e46]:
+                  - text: Crear RDTs
+                  - generic [ref=f14e47]: Acción
+                - generic "Solo Supervisión operativa o Geren" [ref=f14e48]:
+                  - text: Subir RDTs
+                  - generic [ref=f14e49]: Acción
+          - generic [ref=f14e50]:
+            - paragraph [ref=f14e51]: Bandeja (0)
+            - paragraph [ref=f14e53]: No hay notificaciones.
+      - button "Asistente" [ref=f14e54]
+  - button "Open Next.js Dev Tools" [ref=f14e62] [cursor=pointer]:
+    - generic [ref=f14e65]:
+      - text: Compiling
+      - generic [ref=f14e66]:
+        - generic [ref=f14e67]: .
+        - generic [ref=f14e68]: .
+        - generic [ref=f14e69]: .
+  - alert [ref=f14e70]

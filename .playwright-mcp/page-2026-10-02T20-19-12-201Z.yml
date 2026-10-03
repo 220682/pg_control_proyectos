@@ -1,0 +1,627 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - complementary [ref=f7e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f7e4]
+      - generic [ref=f7e8]:
+        - link "Control de Proyectos" [ref=f7e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f7e18]:
+          - link [ref=f7e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f7e26]:
+            - paragraph [ref=f7e27]: Servicio actual
+            - paragraph [ref=f7e28]: PS-0004
+            - paragraph [ref=f7e29]: Movimiento de tierra, e instalacion de bancoductos
+          - navigation [ref=f7e30]:
+            - heading [level=2] [ref=f7e31]:
+              - button "Recursos de empresa" [ref=f7e32]
+          - generic [ref=f7e35]:
+            - generic [ref=f7e36]:
+              - paragraph [ref=f7e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f7e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f7e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f7e49]: Presupuesto
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f7e54]: DP (Datos del proyecto)
+              - link [ref=f7e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f7e65]:
+              - paragraph [ref=f7e66]: Planificación
+              - link [ref=f7e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic "Solo roles con datos económicos y Planner ven el Plan Maestro" [ref=f7e71]: Plan Maestro
+            - generic [ref=f7e75]:
+              - paragraph [ref=f7e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f7e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f7e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f7e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f7e100]: Listado de personal nuevo
+            - generic [ref=f7e105]:
+              - paragraph [ref=f7e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f7e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f7e115]: PETS
+            - generic [ref=f7e120]:
+              - paragraph [ref=f7e121]: Reportes
+              - link [ref=f7e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f7e135]: PR (Reporte del proyecto)
+              - link [ref=f7e140] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/dashboard
+              - link [ref=f7e147] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f7e152]: Registro de costos
+              - generic "Sin pantalla todavía" [ref=f7e157]: Consolidado de servicio
+            - generic [ref=f7e162]:
+              - paragraph [ref=f7e163]: Acciones
+              - generic [ref=f7e164]:
+                - link [ref=f7e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&accion=crear-rq
+                - generic "Solo Supervisión operativa, Jefe de Proyectos, Jefe de Oficina Técnica o Geren" [ref=f7e170]: Crear RDT
+                - generic "Solo Supervisión operativa o Geren" [ref=f7e175]: Subir RDT
+                - generic "Solo administrador, Jefe de proyectos o Planner crean paquetes" [ref=f7e181]: Crear paquete
+            - generic [ref=f7e187]:
+              - paragraph [ref=f7e188]: Servicio
+              - link [ref=f7e189] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic [ref=f7e193]:
+                - paragraph [ref=f7e194]: Acciones
+                - generic "Solo administrador o Jefe de proyectos editan el servicio" [ref=f7e195]: Editar servicio
+                - generic "Solo administrador o Jefe de proyectos editan el checklist" [ref=f7e200]: Editar checklist
+        - generic [ref=f7e205]:
+          - generic [ref=f7e206]:
+            - link "Notificaciones" [ref=f7e207] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Configuraciones" [ref=f7e211] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - button "Cerrar sesión" [ref=f7e216]
+          - generic [ref=f7e220]:
+            - generic [ref=f7e221]: Ver como
+            - combobox [ref=f7e225]:
+              - option "Mi rol (Administrador)"
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente" [selected]
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Asistente" [ref=f7e226] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f7e227]: VP
+            - generic [ref=f7e228]:
+              - generic [ref=f7e229]: Victor Perez Contreras
+              - generic [ref=f7e230]: Asistente
+    - main [ref=f7e231]:
+      - generic [ref=f7e232]:
+        - generic [ref=f7e234]:
+          - generic [ref=f7e235]:
+            - generic [ref=f7e236]:
+              - navigation [ref=f7e238]:
+                - link "PS-0004" [ref=f7e240] [cursor=pointer]:
+                  - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+                - generic [ref=f7e241]: Dashboard
+              - heading "PS-0004" [level=1] [ref=f7e245]
+              - paragraph [ref=f7e246]: Movimiento de tierra, e instalacion de bancoductos · Aesa · fecha de corte 02-10-2026
+            - group "Tipo de Dashboard" [ref=f7e249]:
+              - button "Parcial" [disabled] [pressed] [ref=f7e250]
+              - button "Completo" [disabled] [ref=f7e251]
+          - generic [ref=f7e252]:
+            - generic [ref=f7e253]:
+              - generic [ref=f7e254]:
+                - generic [ref=f7e255]: Fecha de corte
+                - combobox "Fecha de corte" [ref=f7e256]:
+                  - option "Hoy" [selected]
+                  - option "Ayer"
+                  - option "Hace 7 días"
+                  - option "Fecha personalizada"
+              - generic [ref=f7e257]:
+                - generic [ref=f7e258]: Orden de la matriz
+                - combobox "Orden de la matriz" [ref=f7e259]:
+                  - option "Por WBS" [selected]
+                  - option "Sobre-ejecutadas primero"
+            - generic [ref=f7e261]:
+              - generic [ref=f7e263]:
+                - paragraph [ref=f7e264]: "% avance físico"
+                - paragraph [ref=f7e265]: 13%
+                - paragraph [ref=f7e266]: EV / BAC — avance físico ejecutado
+              - generic [ref=f7e267]:
+                - heading "Matriz de partidas" [level=2] [ref=f7e268]
+                - table [ref=f7e270]:
+                  - rowgroup [ref=f7e271]:
+                    - row [ref=f7e272]:
+                      - columnheader "WBS" [ref=f7e273]
+                      - columnheader "Partida" [ref=f7e274]
+                      - columnheader "Unid." [ref=f7e275]
+                      - columnheader "Metrado contract." [ref=f7e276]
+                      - columnheader "Metrado acum." [ref=f7e277]
+                      - columnheader "% avance" [ref=f7e278]
+                      - columnheader "Metrado restante" [ref=f7e279]
+                  - rowgroup [ref=f7e280]:
+                    - row [ref=f7e281]:
+                      - cell "1.1" [ref=f7e282]
+                      - cell "MOVILIZACIÓN Y DESMOVILIZACION DE PERSONAL" [ref=f7e283]
+                      - cell "MES" [ref=f7e284]
+                      - cell "1.50" [ref=f7e285]
+                      - cell "0.00" [ref=f7e286]
+                      - cell "0%" [ref=f7e287]
+                      - cell "1.50" [ref=f7e288]
+                    - row [ref=f7e290]:
+                      - cell "1.2" [ref=f7e291]
+                      - cell "MOVILIZACION Y DESMOVILIZACION DE EQUIPOS, HERRAMIENTAS Y MATERIALES" [ref=f7e292]
+                      - cell "VJE" [ref=f7e293]
+                      - cell "4.00" [ref=f7e294]
+                      - cell "0.00" [ref=f7e295]
+                      - cell "0%" [ref=f7e296]
+                      - cell "4.00" [ref=f7e297]
+                    - row [ref=f7e299]:
+                      - cell "1.3" [ref=f7e300]
+                      - cell "SEGURIDAD Y SEÑALIZACION DE PROYECTO" [ref=f7e301]
+                      - cell "MES" [ref=f7e302]
+                      - cell "1.50" [ref=f7e303]
+                      - cell "6.00" [ref=f7e304]
+                      - cell "400%" [ref=f7e305]
+                      - cell "-4.50 Sobre-ejecutada" [ref=f7e306]:
+                        - generic [ref=f7e307]: "-4.50"
+                        - generic [ref=f7e310]: Sobre-ejecutada
+                    - row [ref=f7e311]:
+                      - cell "2.1.1" [ref=f7e312]
+                      - cell "EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.6 X 1.00M" [ref=f7e313]
+                      - cell "M3" [ref=f7e314]
+                      - cell "11.52" [ref=f7e315]
+                      - cell "10.00" [ref=f7e316]
+                      - cell "87%" [ref=f7e317]
+                      - cell "1.52" [ref=f7e318]
+                    - row [ref=f7e320]:
+                      - cell "2.1.2" [ref=f7e321]
+                      - cell "PERFILADO Y NIVELACION DE TERRENO" [ref=f7e322]
+                      - cell "ML" [ref=f7e323]
+                      - cell "24.00" [ref=f7e324]
+                      - cell "0.00" [ref=f7e325]
+                      - cell "0%" [ref=f7e326]
+                      - cell "24.00" [ref=f7e327]
+                    - row [ref=f7e329]:
+                      - cell "2.1.3" [ref=f7e330]
+                      - cell "COLOCACION DE CAMA DE ARENA E=0.20" [ref=f7e331]
+                      - cell "ML" [ref=f7e332]
+                      - cell "24.00" [ref=f7e333]
+                      - cell "0.00" [ref=f7e334]
+                      - cell "0%" [ref=f7e335]
+                      - cell "24.00" [ref=f7e336]
+                    - row [ref=f7e338]:
+                      - cell "2.1.4" [ref=f7e339]
+                      - cell "FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f7e340]
+                      - cell "UND" [ref=f7e341]
+                      - cell "24.00" [ref=f7e342]
+                      - cell "0.00" [ref=f7e343]
+                      - cell "0%" [ref=f7e344]
+                      - cell "24.00" [ref=f7e345]
+                    - row [ref=f7e347]:
+                      - cell "2.1.5" [ref=f7e348]
+                      - cell "INSTALACIÓN DE BANCODUCTOS" [ref=f7e349]
+                      - cell "UND" [ref=f7e350]
+                      - cell "24.00" [ref=f7e351]
+                      - cell "132.00" [ref=f7e352]
+                      - cell "550%" [ref=f7e353]
+                      - cell "-108.00 Sobre-ejecutada" [ref=f7e354]:
+                        - generic [ref=f7e355]: "-108.00"
+                        - generic [ref=f7e358]: Sobre-ejecutada
+                    - row [ref=f7e359]:
+                      - cell "2.1.6" [ref=f7e360]
+                      - cell "SUMINISTRO DE AFIRMADO" [ref=f7e361]
+                      - cell "M3" [ref=f7e362]
+                      - cell "5.76" [ref=f7e363]
+                      - cell "12.00" [ref=f7e364]
+                      - cell "208%" [ref=f7e365]
+                      - cell "-6.24 Sobre-ejecutada" [ref=f7e366]:
+                        - generic [ref=f7e367]: "-6.24"
+                        - generic [ref=f7e370]: Sobre-ejecutada
+                    - row [ref=f7e371]:
+                      - cell "2.1.7" [ref=f7e372]
+                      - cell "RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f7e373]
+                      - cell "M3" [ref=f7e374]
+                      - cell "11.52" [ref=f7e375]
+                      - cell "5.00" [ref=f7e376]
+                      - cell "43%" [ref=f7e377]
+                      - cell "6.52" [ref=f7e378]
+                    - row [ref=f7e380]:
+                      - cell "2.1.8" [ref=f7e381]
+                      - cell "ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f7e382]
+                      - cell "M3" [ref=f7e383]
+                      - cell "11.52" [ref=f7e384]
+                      - cell "0.00" [ref=f7e385]
+                      - cell "0%" [ref=f7e386]
+                      - cell "11.52" [ref=f7e387]
+                    - row [ref=f7e389]:
+                      - cell "2.2.1" [ref=f7e390]
+                      - cell "EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M" [ref=f7e391]
+                      - cell "M3" [ref=f7e392]
+                      - cell "76.80" [ref=f7e393]
+                      - cell "36.00" [ref=f7e394]
+                      - cell "47%" [ref=f7e395]
+                      - cell "40.80" [ref=f7e396]
+                    - row [ref=f7e398]:
+                      - cell "2.2.2" [ref=f7e399]
+                      - cell "PERFILADO Y NIVELACION DE TERRENO" [ref=f7e400]
+                      - cell "ML" [ref=f7e401]
+                      - cell "160.00" [ref=f7e402]
+                      - cell "0.00" [ref=f7e403]
+                      - cell "0%" [ref=f7e404]
+                      - cell "160.00" [ref=f7e405]
+                    - row [ref=f7e407]:
+                      - cell "2.2.3" [ref=f7e408]
+                      - cell "COLOCACION DE CAMA DE ARENA E=0.20" [ref=f7e409]
+                      - cell "ML" [ref=f7e410]
+                      - cell "160.00" [ref=f7e411]
+                      - cell "0.00" [ref=f7e412]
+                      - cell "0%" [ref=f7e413]
+                      - cell "160.00" [ref=f7e414]
+                    - row [ref=f7e416]:
+                      - cell "2.2.4" [ref=f7e417]
+                      - cell "FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f7e418]
+                      - cell "UND" [ref=f7e419]
+                      - cell "160.00" [ref=f7e420]
+                      - cell "0.00" [ref=f7e421]
+                      - cell "0%" [ref=f7e422]
+                      - cell "160.00" [ref=f7e423]
+                    - row [ref=f7e425]:
+                      - cell "2.2.5" [ref=f7e426]
+                      - cell "INSTALACIÓN DE BANCODUCTOS" [ref=f7e427]
+                      - cell "UND" [ref=f7e428]
+                      - cell "160.00" [ref=f7e429]
+                      - cell "0.00" [ref=f7e430]
+                      - cell "0%" [ref=f7e431]
+                      - cell "160.00" [ref=f7e432]
+                    - row [ref=f7e434]:
+                      - cell "2.2.6" [ref=f7e435]
+                      - cell "SUMINISTRO DE AFIRMADO" [ref=f7e436]
+                      - cell "M3" [ref=f7e437]
+                      - cell "38.40" [ref=f7e438]
+                      - cell "0.00" [ref=f7e439]
+                      - cell "0%" [ref=f7e440]
+                      - cell "38.40" [ref=f7e441]
+                    - row [ref=f7e443]:
+                      - cell "2.2.7" [ref=f7e444]
+                      - cell "RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f7e445]
+                      - cell "M3" [ref=f7e446]
+                      - cell "76.80" [ref=f7e447]
+                      - cell "0.00" [ref=f7e448]
+                      - cell "0%" [ref=f7e449]
+                      - cell "76.80" [ref=f7e450]
+                    - row [ref=f7e452]:
+                      - cell "2.2.8" [ref=f7e453]
+                      - cell "ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f7e454]
+                      - cell "M3" [ref=f7e455]
+                      - cell "76.80" [ref=f7e456]
+                      - cell "44.00" [ref=f7e457]
+                      - cell "57%" [ref=f7e458]
+                      - cell "32.80" [ref=f7e459]
+                    - row [ref=f7e461]:
+                      - cell "2.3.1" [ref=f7e462]
+                      - cell "SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M" [ref=f7e463]
+                      - cell "UND" [ref=f7e464]
+                      - cell "8.00" [ref=f7e465]
+                      - cell "0.00" [ref=f7e466]
+                      - cell "0%" [ref=f7e467]
+                      - cell "8.00" [ref=f7e468]
+                    - row [ref=f7e470]:
+                      - cell "2.3.2" [ref=f7e471]
+                      - cell "INSTALACIÓN DE BUZON DE PASO" [ref=f7e472]
+                      - cell "UND" [ref=f7e473]
+                      - cell "8.00" [ref=f7e474]
+                      - cell "2.00" [ref=f7e475]
+                      - cell "25%" [ref=f7e476]
+                      - cell "6.00" [ref=f7e477]
+                    - row [ref=f7e479]:
+                      - cell "2.4.1" [ref=f7e480]
+                      - cell "SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS" [ref=f7e481]
+                      - cell "GLB" [ref=f7e482]
+                      - cell "1.00" [ref=f7e483]
+                      - cell "0.00" [ref=f7e484]
+                      - cell "0%" [ref=f7e485]
+                      - cell "1.00" [ref=f7e486]
+                    - row [ref=f7e488]:
+                      - cell "2.4.2" [ref=f7e489]
+                      - cell "INSTALACIÓN DE TUBERIA FLEXIBLE" [ref=f7e490]
+                      - cell "ML" [ref=f7e491]
+                      - cell "165.00" [ref=f7e492]
+                      - cell "0.00" [ref=f7e493]
+                      - cell "0%" [ref=f7e494]
+                      - cell "165.00" [ref=f7e495]
+                    - row [ref=f7e497]:
+                      - cell "3.1.1" [ref=f7e498]
+                      - cell "EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 1.00M" [ref=f7e499]
+                      - cell "M3" [ref=f7e500]
+                      - cell "14.40" [ref=f7e501]
+                      - cell "0.00" [ref=f7e502]
+                      - cell "0%" [ref=f7e503]
+                      - cell "14.40" [ref=f7e504]
+                    - row [ref=f7e506]:
+                      - cell "3.1.2" [ref=f7e507]
+                      - cell "PERFILADO Y NIVELACION DE TERRENO" [ref=f7e508]
+                      - cell "ML" [ref=f7e509]
+                      - cell "24.00" [ref=f7e510]
+                      - cell "0.00" [ref=f7e511]
+                      - cell "0%" [ref=f7e512]
+                      - cell "24.00" [ref=f7e513]
+                    - row [ref=f7e515]:
+                      - cell "3.1.3" [ref=f7e516]
+                      - cell "COLOCACION DE CAMA DE ARENA E=0.20" [ref=f7e517]
+                      - cell "ML" [ref=f7e518]
+                      - cell "24.00" [ref=f7e519]
+                      - cell "0.00" [ref=f7e520]
+                      - cell "0%" [ref=f7e521]
+                      - cell "24.00" [ref=f7e522]
+                    - row [ref=f7e524]:
+                      - cell "3.1.4" [ref=f7e525]
+                      - cell "FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f7e526]
+                      - cell "UND" [ref=f7e527]
+                      - cell "24.00" [ref=f7e528]
+                      - cell "0.00" [ref=f7e529]
+                      - cell "0%" [ref=f7e530]
+                      - cell "24.00" [ref=f7e531]
+                    - row [ref=f7e533]:
+                      - cell "3.1.5" [ref=f7e534]
+                      - cell "INSTALACIÓN DE BANCODUCTOS" [ref=f7e535]
+                      - cell "UND" [ref=f7e536]
+                      - cell "24.00" [ref=f7e537]
+                      - cell "0.00" [ref=f7e538]
+                      - cell "0%" [ref=f7e539]
+                      - cell "24.00" [ref=f7e540]
+                    - row [ref=f7e542]:
+                      - cell "3.1.6" [ref=f7e543]
+                      - cell "SUMINISTRO DE AFIRMADO" [ref=f7e544]
+                      - cell "M3" [ref=f7e545]
+                      - cell "7.20" [ref=f7e546]
+                      - cell "0.00" [ref=f7e547]
+                      - cell "0%" [ref=f7e548]
+                      - cell "7.20" [ref=f7e549]
+                    - row [ref=f7e551]:
+                      - cell "3.1.7" [ref=f7e552]
+                      - cell "RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f7e553]
+                      - cell "M3" [ref=f7e554]
+                      - cell "14.40" [ref=f7e555]
+                      - cell "0.00" [ref=f7e556]
+                      - cell "0%" [ref=f7e557]
+                      - cell "14.40" [ref=f7e558]
+                    - row [ref=f7e560]:
+                      - cell "3.1.8" [ref=f7e561]
+                      - cell "ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f7e562]
+                      - cell "M3" [ref=f7e563]
+                      - cell "14.40" [ref=f7e564]
+                      - cell "0.00" [ref=f7e565]
+                      - cell "0%" [ref=f7e566]
+                      - cell "14.40" [ref=f7e567]
+                    - row [ref=f7e569]:
+                      - cell "3.2.1" [ref=f7e570]
+                      - cell "EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M" [ref=f7e571]
+                      - cell "M3" [ref=f7e572]
+                      - cell "92.16" [ref=f7e573]
+                      - cell "0.00" [ref=f7e574]
+                      - cell "0%" [ref=f7e575]
+                      - cell "92.16" [ref=f7e576]
+                    - row [ref=f7e578]:
+                      - cell "3.2.2" [ref=f7e579]
+                      - cell "PERFILADO Y NIVELACION DE TERRENO" [ref=f7e580]
+                      - cell "ML" [ref=f7e581]
+                      - cell "192.00" [ref=f7e582]
+                      - cell "0.00" [ref=f7e583]
+                      - cell "0%" [ref=f7e584]
+                      - cell "192.00" [ref=f7e585]
+                    - row [ref=f7e587]:
+                      - cell "3.2.3" [ref=f7e588]
+                      - cell "COLOCACION DE CAMA DE ARENA E=0.20" [ref=f7e589]
+                      - cell "ML" [ref=f7e590]
+                      - cell "192.00" [ref=f7e591]
+                      - cell "0.00" [ref=f7e592]
+                      - cell "0%" [ref=f7e593]
+                      - cell "192.00" [ref=f7e594]
+                    - row [ref=f7e596]:
+                      - cell "3.2.4" [ref=f7e597]
+                      - cell "FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f7e598]
+                      - cell "UND" [ref=f7e599]
+                      - cell "192.00" [ref=f7e600]
+                      - cell "0.00" [ref=f7e601]
+                      - cell "0%" [ref=f7e602]
+                      - cell "192.00" [ref=f7e603]
+                    - row [ref=f7e605]:
+                      - cell "3.2.5" [ref=f7e606]
+                      - cell "INSTALACIÓN DE BANCODUCTOS" [ref=f7e607]
+                      - cell "UND" [ref=f7e608]
+                      - cell "192.00" [ref=f7e609]
+                      - cell "0.00" [ref=f7e610]
+                      - cell "0%" [ref=f7e611]
+                      - cell "192.00" [ref=f7e612]
+                    - row [ref=f7e614]:
+                      - cell "3.2.6" [ref=f7e615]
+                      - cell "SUMINISTRO DE AFIRMADO" [ref=f7e616]
+                      - cell "M3" [ref=f7e617]
+                      - cell "46.08" [ref=f7e618]
+                      - cell "0.00" [ref=f7e619]
+                      - cell "0%" [ref=f7e620]
+                      - cell "46.08" [ref=f7e621]
+                    - row [ref=f7e623]:
+                      - cell "3.2.7" [ref=f7e624]
+                      - cell "RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f7e625]
+                      - cell "M3" [ref=f7e626]
+                      - cell "92.16" [ref=f7e627]
+                      - cell "0.00" [ref=f7e628]
+                      - cell "0%" [ref=f7e629]
+                      - cell "92.16" [ref=f7e630]
+                    - row [ref=f7e632]:
+                      - cell "3.2.8" [ref=f7e633]
+                      - cell "ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f7e634]
+                      - cell "M3" [ref=f7e635]
+                      - cell "92.16" [ref=f7e636]
+                      - cell "0.00" [ref=f7e637]
+                      - cell "0%" [ref=f7e638]
+                      - cell "92.16" [ref=f7e639]
+                    - row [ref=f7e641]:
+                      - cell "3.3.1" [ref=f7e642]
+                      - cell "SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M" [ref=f7e643]
+                      - cell "UND" [ref=f7e644]
+                      - cell "8.00" [ref=f7e645]
+                      - cell "0.00" [ref=f7e646]
+                      - cell "0%" [ref=f7e647]
+                      - cell "8.00" [ref=f7e648]
+                    - row [ref=f7e650]:
+                      - cell "3.3.2" [ref=f7e651]
+                      - cell "INSTALACIÓN DE BUZON DE PASO" [ref=f7e652]
+                      - cell "UND" [ref=f7e653]
+                      - cell "8.00" [ref=f7e654]
+                      - cell "0.00" [ref=f7e655]
+                      - cell "0%" [ref=f7e656]
+                      - cell "8.00" [ref=f7e657]
+                    - row [ref=f7e659]:
+                      - cell "3.4.1" [ref=f7e660]
+                      - cell "SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS" [ref=f7e661]
+                      - cell "GLB" [ref=f7e662]
+                      - cell "1.00" [ref=f7e663]
+                      - cell "0.00" [ref=f7e664]
+                      - cell "0%" [ref=f7e665]
+                      - cell "1.00" [ref=f7e666]
+                    - row [ref=f7e668]:
+                      - cell "3.4.2" [ref=f7e669]
+                      - cell "INSTALACIÓN DE TUBERIA FLEXIBLE" [ref=f7e670]
+                      - cell "ML" [ref=f7e671]
+                      - cell "170.00" [ref=f7e672]
+                      - cell "0.00" [ref=f7e673]
+                      - cell "0%" [ref=f7e674]
+                      - cell "170.00" [ref=f7e675]
+                    - row [ref=f7e677]:
+                      - cell "4.1" [ref=f7e678]
+                      - cell "TENDIDO DE CABLE COAXIAL" [ref=f7e679]
+                      - cell "ML" [ref=f7e680]
+                      - cell "765.00" [ref=f7e681]
+                      - cell "0.00" [ref=f7e682]
+                      - cell "0%" [ref=f7e683]
+                      - cell "765.00" [ref=f7e684]
+                    - row [ref=f7e686]:
+                      - cell "5.1" [ref=f7e687]
+                      - cell "MOVILIZACIÓN Y DESCARGA DE BANCO DUCTOS" [ref=f7e688]
+                      - cell "VJE" [ref=f7e689]
+                      - cell "8.00" [ref=f7e690]
+                      - cell "0.00" [ref=f7e691]
+                      - cell "0%" [ref=f7e692]
+                      - cell "8.00" [ref=f7e693]
+                    - row [ref=f7e695]:
+                      - cell "6.1" [ref=f7e696]
+                      - cell "DESCARGA / ACARREO DE BANCODUCTOS CON MINICARGADOR (INCL. OPERADOR Y VIGIA)" [ref=f7e697]
+                      - cell "DIA" [ref=f7e698]
+                      - cell "45.00" [ref=f7e699]
+                      - cell "0.00" [ref=f7e700]
+                      - cell "0%" [ref=f7e701]
+                      - cell "45.00" [ref=f7e702]
+                    - row [ref=f7e704]:
+                      - cell "7.1" [ref=f7e705]
+                      - cell "SUMINISTRO DE PARIHUELAS PARA ALMACENAMIENTO" [ref=f7e706]
+                      - cell "UND" [ref=f7e707]
+                      - cell "45.00" [ref=f7e708]
+                      - cell "0.00" [ref=f7e709]
+                      - cell "0%" [ref=f7e710]
+                      - cell "45.00" [ref=f7e711]
+                    - row [ref=f7e713]:
+                      - cell "8.1" [ref=f7e714]
+                      - cell "TRAZO Y REPLANTEO CON ESTACIÓN TOTAL" [ref=f7e715]
+                      - cell "MES" [ref=f7e716]
+                      - cell "1.50" [ref=f7e717]
+                      - cell "0.00" [ref=f7e718]
+                      - cell "0%" [ref=f7e719]
+                      - cell "1.50" [ref=f7e720]
+              - generic [ref=f7e722]:
+                - heading "Diagnóstico" [level=2] [ref=f7e723]
+                - generic [ref=f7e724]:
+                  - generic [ref=f7e725]:
+                    - paragraph [ref=f7e729]: Partidas sobre-ejecutadas
+                    - paragraph [ref=f7e730]: "3"
+                    - paragraph [ref=f7e731]: Metrado restante negativo
+                    - link "Revisar RDT en Status de RDTs →" [ref=f7e732] [cursor=pointer]:
+                      - /url: /rdts/status
+                  - generic [ref=f7e733]:
+                    - paragraph [ref=f7e737]: Partidas sin actividad
+                    - paragraph [ref=f7e738]: "40"
+                    - paragraph [ref=f7e739]: Sin RDT validado registrado todavía
+                    - link "Revisar RDT en Status de RDTs →" [ref=f7e740] [cursor=pointer]:
+                      - /url: /rdts/status
+                  - generic [ref=f7e741]:
+                    - paragraph [ref=f7e746]: Recursos sin tarifa
+                    - paragraph [ref=f7e747]: "9"
+                    - paragraph [ref=f7e748]: 6 de mano de obra · 3 de equipos
+                    - link "Asignar tarifa en Recursos →" [ref=f7e749] [cursor=pointer]:
+                      - /url: /recursos/personal
+                  - generic [ref=f7e750]:
+                    - paragraph [ref=f7e755]: HH de MOI acumuladas
+                    - paragraph [ref=f7e756]: "38.0"
+                    - paragraph [ref=f7e757]: Horas, sin costo por diseño (regla 10) — no se valorizan
+              - generic [ref=f7e758]:
+                - heading "Bloque E — PPC y Pareto de CNC" [level=2] [ref=f7e759]
+                - generic [ref=f7e760]:
+                  - generic [ref=f7e761]:
+                    - paragraph [ref=f7e762]: PPC — Percent Plan Complete
+                    - paragraph [ref=f7e763]: 45.2%
+                    - paragraph [ref=f7e764]: (actividades − actividades con CNC) / actividades
+                    - paragraph [ref=f7e765]: Indicador LPS, no EVM — no se mezcla con SPI
+                  - generic [ref=f7e766]:
+                    - generic [ref=f7e767]:
+                      - paragraph [ref=f7e768]: Pareto de causas de no cumplimiento (CNC)
+                      - paragraph [ref=f7e769]: 1 actividades con CNC
+                    - img "Gráfico de barras horizontales" [ref=f7e770]:
+                      - 'img "Condiciones climáticas adversas.: 1 actividades — 100% del total, 100% acumulado" [ref=f7e771]':
+                        - generic [ref=f7e773]: Condiciones climáticas ad…
+                        - generic [ref=f7e776]: 1 (100%, acum. 100%)
+                - link "Ver Curva S" [ref=f7e777] [cursor=pointer]:
+                  - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s?modo=fisica
+        - button "Asistente" [ref=f7e780]
+    - complementary [ref=f7e783]:
+      - button "Ocultar panel derecho" [expanded] [ref=f7e784]
+      - generic [ref=f7e788]:
+        - generic [ref=f7e789]:
+          - paragraph [ref=f7e790]: Accesos rápidos
+          - generic [ref=f7e791]:
+            - generic "Sin pantalla todavía" [ref=f7e792]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f7e796]: Pets
+            - generic "Sin pantalla todavía" [ref=f7e800]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f7e805]: Status de servicios
+            - link "Requerimiento" [ref=f7e808] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - link "Consolidado RQ" [ref=f7e815] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic "Solo Supervisión operativa o Geren" [ref=f7e819]:
+              - text: Subir RDTs
+              - generic [ref=f7e824]: Acción
+        - paragraph [ref=f7e825]: Grupos del servicio
+        - generic [ref=f7e826]:
+          - generic [ref=f7e827]:
+            - button "Planificación" [expanded] [ref=f7e828]
+            - generic [ref=f7e831]:
+              - link [ref=f7e832] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e839] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - link [ref=f7e843] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702
+              - generic "Solo roles con datos económicos y Planner ven el Plan Maestro" [ref=f7e849]: Plan Maestro
+              - generic "Sin pantalla todavía" [ref=f7e853]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f7e857]: Programación diaria
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f7e861]: PR (Reporte del proyecto)
+              - link [ref=f7e866] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/dashboard
+              - link [ref=f7e873] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s
+              - generic "Sin pantalla todavía" [ref=f7e878]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f7e883]: Programación de capacitaciones
+          - button "Costos" [ref=f7e889]
+          - button "Supervisión operativa" [ref=f7e893]
+          - button "Logística" [ref=f7e897]
+          - button "Oficina Técnica" [ref=f7e901]
+          - button "Administración" [ref=f7e905]
+          - button "SSOMA" [ref=f7e909]
+  - button "Open Next.js Dev Tools" [ref=f7e917] [cursor=pointer]
+  - alert [ref=f7e921]

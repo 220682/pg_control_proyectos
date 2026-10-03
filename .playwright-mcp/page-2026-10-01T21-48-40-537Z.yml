@@ -1,0 +1,24 @@
+- generic [active] [ref=f11e1]:
+  - main [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - button "Abrir menú" [ref=f11e5]
+      - link "Control de Proyectos" [ref=f11e7] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - button "Abrir herramientas" [ref=f11e8]
+    - generic [ref=f11e11]:
+      - generic [ref=f11e13]:
+        - generic [ref=f11e14]:
+          - link "Salir a Mi entorno" [ref=f11e15] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+          - heading "Plan Maestro" [level=1] [ref=f11e16]
+          - paragraph [ref=f11e17]: "Línea base temporal del servicio: lienzo por día desde las partidas de Paquetes de trabajo"
+        - generic [ref=f11e19]:
+          - generic [ref=f11e22]:
+            - generic [ref=f11e23]: N° OT vigente
+            - combobox [ref=f11e24]:
+              - option "Seleccione…" [selected]
+          - generic [ref=f11e25]:
+            - strong [ref=f11e26]: Este servicio aún no tiene un Plan Maestro
+            - paragraph [ref=f11e27]: "El lienzo se arma con las partidas declaradas en Paquetes de trabajo (en paquetes o directas): actividad, partida y metrado."
+      - button "Asistente" [ref=f11e28]
+  - button "Open Next.js Dev Tools" [ref=f11e36] [cursor=pointer]

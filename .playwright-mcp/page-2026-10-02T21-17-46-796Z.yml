@@ -1,0 +1,304 @@
+- generic [active] [ref=f16e1]:
+  - generic [ref=f16e2]:
+    - complementary [ref=f16e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f16e4]
+      - generic [ref=f16e8]:
+        - link "Control de Proyectos" [ref=f16e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f16e18]:
+          - link [ref=f16e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f16e26]:
+            - paragraph [ref=f16e27]: Servicio actual
+            - paragraph [ref=f16e28]: PS-0009
+            - paragraph [ref=f16e29]: PRUEBA-DASH Servicio T2
+          - navigation [ref=f16e30]:
+            - heading [level=2] [ref=f16e31]:
+              - button "Recursos de empresa" [ref=f16e32]
+          - generic [ref=f16e35]:
+            - generic [ref=f16e36]:
+              - paragraph [ref=f16e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f16e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f16e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f16e49]: Presupuesto
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f16e54]: DP (Datos del proyecto)
+              - link [ref=f16e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - generic [ref=f16e65]:
+              - paragraph [ref=f16e66]: Planificación
+              - link [ref=f16e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - generic "Solo roles con datos económicos y Planner ven el Plan Maestro" [ref=f16e71]: Plan Maestro
+            - generic [ref=f16e75]:
+              - paragraph [ref=f16e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f16e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f16e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f16e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f16e100]: Listado de personal nuevo
+            - generic [ref=f16e105]:
+              - paragraph [ref=f16e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f16e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f16e115]: PETS
+            - generic [ref=f16e120]:
+              - paragraph [ref=f16e121]: Reportes
+              - link [ref=f16e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - link [ref=f16e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f16e135]: PR (Reporte del proyecto)
+              - link [ref=f16e140] [cursor=pointer]:
+                - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/dashboard
+              - link [ref=f16e147] [cursor=pointer]:
+                - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/curva-s
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f16e152]: Registro de costos
+              - generic "Sin pantalla todavía" [ref=f16e157]: Consolidado de servicio
+            - generic [ref=f16e162]:
+              - paragraph [ref=f16e163]: Acciones
+              - generic [ref=f16e164]:
+                - link [ref=f16e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d&accion=crear-rq
+                - link [ref=f16e170] [cursor=pointer]:
+                  - /url: /rdts/crear?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+                - link [ref=f16e175] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d&accion=subir-rdt
+                - generic "Solo administrador, Jefe de proyectos o Planner crean paquetes" [ref=f16e181]: Crear paquete
+            - generic [ref=f16e187]:
+              - paragraph [ref=f16e188]: Servicio
+              - link [ref=f16e189] [cursor=pointer]:
+                - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - generic [ref=f16e193]:
+                - paragraph [ref=f16e194]: Acciones
+                - generic "Solo administrador o Jefe de proyectos editan el servicio" [ref=f16e195]: Editar servicio
+                - generic "Solo administrador o Jefe de proyectos editan el checklist" [ref=f16e200]: Editar checklist
+        - generic [ref=f16e205]:
+          - generic [ref=f16e206]:
+            - link "Notificaciones" [ref=f16e207] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - link "Configuraciones" [ref=f16e211] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - button "Cerrar sesión" [ref=f16e216]
+          - generic [ref=f16e220]:
+            - generic [ref=f16e221]: Ver como
+            - combobox [ref=f16e225]:
+              - option "Mi rol (Administrador)"
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo" [selected]
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Supervisor Operativo" [ref=f16e226] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - generic [ref=f16e227]: VP
+            - generic [ref=f16e228]:
+              - generic [ref=f16e229]: Victor Perez Contreras
+              - generic [ref=f16e230]: Supervisor Operativo
+    - main [ref=f16e231]:
+      - generic [ref=f16e232]:
+        - generic [ref=f16e234]:
+          - generic [ref=f16e235]:
+            - generic [ref=f16e236]:
+              - navigation [ref=f16e238]:
+                - link "PS-0009" [ref=f16e240] [cursor=pointer]:
+                  - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+                - generic [ref=f16e241]: Dashboard
+              - heading "PS-0009" [level=1] [ref=f16e245]
+              - paragraph [ref=f16e246]: PRUEBA-DASH Servicio T2 · Cliente PRUEBA-DASH · fecha de corte 02-10-2026
+            - group "Tipo de Dashboard" [ref=f16e249]:
+              - button "Parcial" [disabled] [pressed] [ref=f16e250]
+              - button "Completo" [disabled] [ref=f16e251]
+          - generic [ref=f16e252]:
+            - generic [ref=f16e253]:
+              - generic [ref=f16e254]:
+                - generic [ref=f16e255]: Fecha de corte
+                - combobox "Fecha de corte" [ref=f16e256]:
+                  - option "Hoy" [selected]
+                  - option "Ayer"
+                  - option "Hace 7 días"
+                  - option "Fecha personalizada"
+              - generic [ref=f16e257]:
+                - generic [ref=f16e258]: Orden de la matriz
+                - combobox "Orden de la matriz" [ref=f16e259]:
+                  - option "Por WBS" [selected]
+                  - option "Sobre-ejecutadas primero"
+            - generic [ref=f16e261]:
+              - generic [ref=f16e263]:
+                - paragraph [ref=f16e264]: "% avance físico"
+                - paragraph [ref=f16e265]: 50%
+                - paragraph [ref=f16e266]: EV / BAC — avance físico ejecutado
+              - generic [ref=f16e267]:
+                - heading "Matriz de partidas" [level=2] [ref=f16e268]
+                - table [ref=f16e270]:
+                  - rowgroup [ref=f16e271]:
+                    - row [ref=f16e272]:
+                      - columnheader "WBS" [ref=f16e273]
+                      - columnheader "Partida" [ref=f16e274]
+                      - columnheader "Unid." [ref=f16e275]
+                      - columnheader "Metrado contract." [ref=f16e276]
+                      - columnheader "Metrado acum." [ref=f16e277]
+                      - columnheader "% avance" [ref=f16e278]
+                      - columnheader "Metrado restante" [ref=f16e279]
+                  - rowgroup [ref=f16e280]:
+                    - row [ref=f16e281]:
+                      - cell "01.01" [ref=f16e282]
+                      - cell "MOVILIZACION DE TUBERIA HDPE Y ACCESORIOS" [ref=f16e283]
+                      - cell "VJE" [ref=f16e284]
+                      - cell "1.00" [ref=f16e285]
+                      - cell "0.50" [ref=f16e286]
+                      - cell "50%" [ref=f16e287]
+                      - cell "0.50" [ref=f16e288]
+                    - row [ref=f16e290]:
+                      - cell "02.01" [ref=f16e291]
+                      - cell "TIE-IN A RED EXISTENTE (LOTOTO) Y ARMADO DE CARRETE DE DESMONTAJE" [ref=f16e292]
+                      - cell "GLB" [ref=f16e293]
+                      - cell "1.00" [ref=f16e294]
+                      - cell "0.50" [ref=f16e295]
+                      - cell "50%" [ref=f16e296]
+                      - cell "0.50" [ref=f16e297]
+                    - row [ref=f16e299]:
+                      - cell "02.02" [ref=f16e300]
+                      - cell "TENDIDO DE TUBERIA HDPE DENTRO DE ZANJA PREPARADA POR COPREFA" [ref=f16e301]
+                      - cell "ML" [ref=f16e302]
+                      - cell "33.75" [ref=f16e303]
+                      - cell "16.88" [ref=f16e304]
+                      - cell "50%" [ref=f16e305]
+                      - cell "16.88" [ref=f16e306]
+                    - row [ref=f16e308]:
+                      - cell "02.03" [ref=f16e309]
+                      - cell "TERMOFUSION DE JUNTAS HDPE (TRABAJO EN CALIENTE)" [ref=f16e310]
+                      - cell "UND" [ref=f16e311]
+                      - cell "13.00" [ref=f16e312]
+                      - cell "6.50" [ref=f16e313]
+                      - cell "50%" [ref=f16e314]
+                      - cell "6.50" [ref=f16e315]
+                    - row [ref=f16e317]:
+                      - cell "02.04" [ref=f16e318]
+                      - 'cell "FABRICACION DE RISER DE ACERO: CORTE, ESMERILADO Y SOLDADURA" [ref=f16e319]'
+                      - cell "GLB" [ref=f16e320]
+                      - cell "1.00" [ref=f16e321]
+                      - cell "0.50" [ref=f16e322]
+                      - cell "50%" [ref=f16e323]
+                      - cell "0.50" [ref=f16e324]
+                    - row [ref=f16e326]:
+                      - cell "02.05" [ref=f16e327]
+                      - cell "MONTAJE DE VALVULA COMPUERTA Y TRANSICIONES (ARMADO DE JUNTAS BRIDADAS)" [ref=f16e328]
+                      - cell "UND" [ref=f16e329]
+                      - cell "1.00" [ref=f16e330]
+                      - cell "0.50" [ref=f16e331]
+                      - cell "50%" [ref=f16e332]
+                      - cell "0.50" [ref=f16e333]
+                    - row [ref=f16e335]:
+                      - cell "02.06" [ref=f16e336]
+                      - cell "CONEXION FINAL DE LA TUBERIA AL GABINETE CONTRAINCENDIOS (GCI) EXISTENTE" [ref=f16e337]
+                      - cell "UND" [ref=f16e338]
+                      - cell "1.00" [ref=f16e339]
+                      - cell "0.50" [ref=f16e340]
+                      - cell "50%" [ref=f16e341]
+                      - cell "0.50" [ref=f16e342]
+                    - row [ref=f16e344]:
+                      - cell "03.01" [ref=f16e345]
+                      - cell "PRUEBA HIDROSTATICA SEGUN NFPA 24 - SUBCONTRATADO" [ref=f16e346]
+                      - cell "GLB" [ref=f16e347]
+                      - cell "1.00" [ref=f16e348]
+                      - cell "0.50" [ref=f16e349]
+                      - cell "50%" [ref=f16e350]
+                      - cell "0.50" [ref=f16e351]
+                    - row [ref=f16e353]:
+                      - cell "04.01" [ref=f16e354]
+                      - cell "COMISIONAMIENTO (APERTURA DE VALVULAS, PURGA DE AIRE, VERIFICACION DE PRESION)" [ref=f16e355]
+                      - cell "GLB" [ref=f16e356]
+                      - cell "1.00" [ref=f16e357]
+                      - cell "0.50" [ref=f16e358]
+                      - cell "50%" [ref=f16e359]
+                      - cell "0.50" [ref=f16e360]
+              - generic [ref=f16e362]:
+                - heading "Diagnóstico" [level=2] [ref=f16e363]
+                - generic [ref=f16e364]:
+                  - generic [ref=f16e365]:
+                    - paragraph [ref=f16e369]: Partidas sobre-ejecutadas
+                    - paragraph [ref=f16e370]: "0"
+                    - paragraph [ref=f16e371]: Metrado restante negativo
+                  - generic [ref=f16e372]:
+                    - paragraph [ref=f16e376]: Partidas sin actividad
+                    - paragraph [ref=f16e377]: "0"
+                    - paragraph [ref=f16e378]: Sin RDT validado registrado todavía
+                  - generic [ref=f16e379]:
+                    - paragraph [ref=f16e384]: Recursos sin tarifa
+                    - paragraph [ref=f16e385]: "2"
+                    - paragraph [ref=f16e386]: 2 de mano de obra · 0 de equipos
+                    - link "Asignar tarifa en Recursos →" [ref=f16e387] [cursor=pointer]:
+                      - /url: /recursos/personal
+                  - generic [ref=f16e388]:
+                    - paragraph [ref=f16e393]: HH de MOI acumuladas
+                    - paragraph [ref=f16e394]: "0.0"
+                    - paragraph [ref=f16e395]: Horas, sin costo por diseño (regla 10) — no se valorizan
+              - generic [ref=f16e396]:
+                - heading "Bloque E — PPC y Pareto de CNC" [level=2] [ref=f16e397]
+                - generic [ref=f16e398]:
+                  - generic [ref=f16e399]:
+                    - paragraph [ref=f16e400]: PPC — Percent Plan Complete
+                    - paragraph [ref=f16e401]: 100.0%
+                    - paragraph [ref=f16e402]: (actividades − actividades con CNC) / actividades
+                    - paragraph [ref=f16e403]: Indicador LPS, no EVM — no se mezcla con SPI
+                  - generic [ref=f16e404]:
+                    - generic [ref=f16e405]:
+                      - paragraph [ref=f16e406]: Pareto de causas de no cumplimiento (CNC)
+                      - paragraph [ref=f16e407]: 0 actividades con CNC
+                    - paragraph [ref=f16e408]: Sin CNC registradas en RDT validados para este servicio.
+                - link "Ver Curva S" [ref=f16e409] [cursor=pointer]:
+                  - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/curva-s?modo=fisica
+        - button "Asistente" [ref=f16e412]
+    - complementary [ref=f16e415]:
+      - button "Ocultar panel derecho" [expanded] [ref=f16e416]
+      - generic [ref=f16e420]:
+        - generic [ref=f16e421]:
+          - paragraph [ref=f16e422]: Accesos rápidos
+          - generic [ref=f16e423]:
+            - generic "Sin pantalla todavía" [ref=f16e424]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f16e428]: Pets
+            - generic "Sin pantalla todavía" [ref=f16e432]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f16e437]: Status de servicios
+            - link "Requerimiento" [ref=f16e440] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - link "Consolidado RQ" [ref=f16e447] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+            - link "Subir RDTs Acción" [ref=f16e451] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d&accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f16e456]: Acción
+        - paragraph [ref=f16e457]: Grupos del servicio
+        - generic [ref=f16e458]:
+          - generic [ref=f16e459]:
+            - button "Planificación" [expanded] [ref=f16e460]
+            - generic [ref=f16e463]:
+              - link [ref=f16e464] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - link [ref=f16e471] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - link [ref=f16e475] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=da33f1fa-0d2c-4cf6-adf3-2d723390b44d
+              - generic "Solo roles con datos económicos y Planner ven el Plan Maestro" [ref=f16e481]: Plan Maestro
+              - generic "Sin pantalla todavía" [ref=f16e485]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f16e489]: Programación diaria
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f16e493]: PR (Reporte del proyecto)
+              - link [ref=f16e498] [cursor=pointer]:
+                - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/dashboard
+              - link [ref=f16e505] [cursor=pointer]:
+                - /url: /proyectos/da33f1fa-0d2c-4cf6-adf3-2d723390b44d/curva-s
+              - generic "Sin pantalla todavía" [ref=f16e510]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f16e515]: Programación de capacitaciones
+          - button "Costos" [ref=f16e521]
+          - button "Supervisión operativa" [ref=f16e525]
+          - button "Logística" [ref=f16e529]
+          - button "Oficina Técnica" [ref=f16e533]
+          - button "Administración" [ref=f16e537]
+          - button "SSOMA" [ref=f16e541]
+  - button "Open Next.js Dev Tools" [ref=f16e549] [cursor=pointer]

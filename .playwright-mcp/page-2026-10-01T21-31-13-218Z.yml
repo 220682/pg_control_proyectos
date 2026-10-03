@@ -1,0 +1,183 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e61] [cursor=pointer]:
+    - generic [ref=e64]:
+      - text: Compiling
+      - generic [ref=e65]:
+        - generic [ref=e66]: .
+        - generic [ref=e67]: .
+        - generic [ref=e68]: .
+  - alert [ref=e46]
+  - generic [ref=e69]:
+    - complementary [ref=e70]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=e71]
+      - generic [ref=e75]:
+        - link "Control de Proyectos" [ref=e76] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=e85]:
+          - link [ref=e86] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - navigation [ref=e93]:
+            - heading [level=2] [ref=e94]:
+              - button "Recursos de empresa" [expanded] [ref=e95]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - link [ref=e100] [cursor=pointer]:
+                  - /url: /recursos/personal
+              - listitem [ref=e107]:
+                - link [ref=e108] [cursor=pointer]:
+                  - /url: /recursos/cargos
+              - listitem [ref=e113]:
+                - link [ref=e114] [cursor=pointer]:
+                  - /url: /recursos/equipos
+              - listitem [ref=e121]:
+                - link [ref=e122] [cursor=pointer]:
+                  - /url: /recursos/causas-cnc
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - link "Usuarios" [ref=e128] [cursor=pointer]:
+              - /url: /admin/usuarios
+            - link "Notificaciones" [ref=e134] [cursor=pointer]:
+              - /url: /notificaciones
+            - link "Configuraciones" [ref=e138] [cursor=pointer]:
+              - /url: /configuraciones
+            - button "Cerrar sesión" [ref=e143]
+          - generic [ref=e147]:
+            - generic [ref=e148]: Ver como
+            - combobox [ref=e152]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=e153] [cursor=pointer]:
+            - /url: /mi-entorno
+            - generic [ref=e154]: VP
+            - generic [ref=e155]:
+              - generic [ref=e156]: Victor Perez Contreras
+              - generic [ref=e157]: Administrador
+    - main [ref=e158]:
+      - generic [ref=e159]:
+        - generic [ref=e161]:
+          - link "Promcoser Servicios Marcobre" [ref=e162] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b
+            - generic [ref=e163]:
+              - generic [ref=e164]: Promcoser
+              - generic [ref=e165]: Servicios Marcobre
+          - generic [ref=e168]:
+            - heading "Servicios Marcobre" [level=1] [ref=e169]
+            - generic [ref=e170]:
+              - link "Ver Dashboard" [ref=e171] [cursor=pointer]:
+                - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/dashboard
+              - link "Proyectos archivados" [ref=e172] [cursor=pointer]:
+                - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/archivados
+              - link "Adjudicar servicio" [ref=e173] [cursor=pointer]:
+                - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/proyectos/nuevo
+          - generic [ref=e175]:
+            - paragraph [ref=e176]: Proyectos — Servicios Marcobre
+            - generic [ref=e177]:
+              - link "PRUEBA-F5B2 Servicio solo borrador HH contractual 5312,077 Duración 48 días Avance físico 0%" [ref=e178] [cursor=pointer]:
+                - /url: /proyectos/85750ef0-b443-4211-bbbe-aae374be5756
+                - generic [ref=e179]:
+                  - paragraph [ref=e186]: PRUEBA-F5B2 Servicio solo borrador
+                  - generic [ref=e187]:
+                    - generic [ref=e188]: HH contractual
+                    - generic [ref=e189]: 5312,077
+                  - generic [ref=e190]:
+                    - generic [ref=e191]: Duración
+                    - generic [ref=e192]: 48 días
+                  - generic [ref=e193]:
+                    - generic [ref=e194]: Avance físico
+                    - generic [ref=e195]: 0%
+              - link "PRUEBA-F5B Servicio de verificacion HH contractual 5312,077 Duración 48 días Avance físico 0%" [ref=e196] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - generic [ref=e197]:
+                  - paragraph [ref=e204]: PRUEBA-F5B Servicio de verificacion
+                  - generic [ref=e205]:
+                    - generic [ref=e206]: HH contractual
+                    - generic [ref=e207]: 5312,077
+                  - generic [ref=e208]:
+                    - generic [ref=e209]: Duración
+                    - generic [ref=e210]: 48 días
+                  - generic [ref=e211]:
+                    - generic [ref=e212]: Avance físico
+                    - generic [ref=e213]: 0%
+              - link "TIE - IN HH contractual 176,004 Duración Pendiente Avance físico 0%" [ref=e214] [cursor=pointer]:
+                - /url: /proyectos/3b869b75-4042-415f-b476-1d8f1d775d1e
+                - generic [ref=e215]:
+                  - paragraph [ref=e222]: TIE - IN
+                  - generic [ref=e223]:
+                    - generic [ref=e224]: HH contractual
+                    - generic [ref=e225]: 176,004
+                  - generic [ref=e226]:
+                    - generic [ref=e227]: Duración
+                    - generic [ref=e228]: Pendiente
+                  - generic [ref=e229]:
+                    - generic [ref=e230]: Avance físico
+                    - generic [ref=e231]: 0%
+              - link "Movimiento de tierra, e instalacion de bancoductos HH contractual 5312,077 Duración 52 días Avance físico 13%" [ref=e232] [cursor=pointer]:
+                - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+                - generic [ref=e233]:
+                  - paragraph [ref=e240]: Movimiento de tierra, e instalacion de bancoductos
+                  - generic [ref=e241]:
+                    - generic [ref=e242]: HH contractual
+                    - generic [ref=e243]: 5312,077
+                  - generic [ref=e244]:
+                    - generic [ref=e245]: Duración
+                    - generic [ref=e246]: 52 días
+                  - generic [ref=e247]:
+                    - generic [ref=e248]: Avance físico
+                    - generic [ref=e249]: 13%
+        - button "Asistente" [ref=e250]
+    - complementary [ref=e253]:
+      - button "Ocultar panel derecho" [expanded] [ref=e254]
+      - generic [ref=e258]:
+        - generic [ref=e259]:
+          - paragraph [ref=e260]: Accesos rápidos
+          - generic [ref=e261]:
+            - generic "Sin pantalla todavía" [ref=e262]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=e266]: Pets
+            - generic "Sin pantalla todavía" [ref=e270]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=e275]: Status de servicios
+            - link "Requerimiento" [ref=e278] [cursor=pointer]:
+              - /url: /requerimientos
+            - link "Consolidado RQ" [ref=e285] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq
+            - link "Subir RDTs Acción" [ref=e289] [cursor=pointer]:
+              - /url: /mi-entorno?accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=e294]: Acción
+        - paragraph [ref=e295]: Grupos del servicio
+        - paragraph [ref=e296]: Selecciona un servicio para habilitar las herramientas del panel.
+        - generic [ref=e297]:
+          - generic [ref=e298]:
+            - button "Planificación" [expanded] [ref=e299]
+            - generic [ref=e302]:
+              - link [ref=e303] [cursor=pointer]:
+                - /url: /notificaciones
+              - generic "Elige un servicio para abrir esta pantalla" [ref=e310]: Cronograma
+              - generic "Elige un servicio para abrir esta pantalla" [ref=e314]: Paquetes de Trabajo
+              - link [ref=e320] [cursor=pointer]:
+                - /url: /plan-maestro
+              - generic "Sin pantalla todavía" [ref=e324]: 3WLA
+              - generic "Sin pantalla todavía" [ref=e328]: Programación diaria
+              - generic "Elige un servicio para abrir esta pantalla" [ref=e332]: PR (Reporte del proyecto)
+              - generic "Elige un servicio para abrir esta pantalla" [ref=e337]: Dashboard
+              - generic "Elige un servicio para abrir esta pantalla" [ref=e344]: Curva S
+              - generic "Sin pantalla todavía" [ref=e349]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=e354]: Programación de capacitaciones
+          - button "Costos" [ref=e360]
+          - button "Supervisión operativa" [ref=e364]
+          - button "Logística" [ref=e368]
+          - button "Oficina Técnica" [ref=e372]
+          - button "Administración" [ref=e376]
+          - button "SSOMA" [ref=e380]

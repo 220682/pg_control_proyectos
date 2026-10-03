@@ -1,0 +1,2 @@
+[    1043ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://py-control-proyectos-web.vercel.app/login:0
+[  170507ms] Minified React error #441; visit https://react.dev/errors/441 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.

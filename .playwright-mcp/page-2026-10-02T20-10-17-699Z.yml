@@ -1,0 +1,516 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - complementary [ref=f1e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f1e4]
+      - generic [ref=f1e8]:
+        - link "Control de Proyectos" [ref=f1e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f1e18]:
+          - link [ref=f1e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f1e26]:
+            - paragraph [ref=f1e27]: Servicio actual
+            - paragraph [ref=f1e28]: PS-0008
+            - paragraph [ref=f1e29]: TIE - IN
+          - navigation [ref=f1e30]:
+            - heading [level=2] [ref=f1e31]:
+              - button "Recursos de empresa" [ref=f1e32]
+          - generic [ref=f1e35]:
+            - generic [ref=f1e36]:
+              - paragraph [ref=f1e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f1e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f1e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f1e49]: Presupuesto
+              - link [ref=f1e54] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/dp
+              - link [ref=f1e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - generic [ref=f1e65]:
+              - paragraph [ref=f1e66]: Planificación
+              - link [ref=f1e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e71] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - generic [ref=f1e75]:
+              - paragraph [ref=f1e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f1e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f1e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f1e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f1e100]: Listado de personal nuevo
+            - generic [ref=f1e105]:
+              - paragraph [ref=f1e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f1e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f1e115]: PETS
+            - generic [ref=f1e120]:
+              - paragraph [ref=f1e121]: Reportes
+              - link [ref=f1e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e135] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/pr
+              - link [ref=f1e140] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/dashboard
+              - link [ref=f1e147] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/curva-s
+              - link [ref=f1e152] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/registro-costos
+              - generic "Sin pantalla todavía" [ref=f1e157]: Consolidado de servicio
+            - generic [ref=f1e162]:
+              - paragraph [ref=f1e163]: Acciones
+              - generic [ref=f1e164]:
+                - link [ref=f1e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e&accion=crear-rq
+                - link [ref=f1e170] [cursor=pointer]:
+                  - /url: /rdts/crear?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+                - link [ref=f1e175] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e&accion=subir-rdt
+                - link [ref=f1e181] [cursor=pointer]:
+                  - /url: /paquetes-trabajo?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e&accion=crear
+            - generic [ref=f1e187]:
+              - paragraph [ref=f1e188]: Servicio
+              - link [ref=f1e189] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - generic [ref=f1e193]:
+                - paragraph [ref=f1e194]: Acciones
+                - link [ref=f1e195] [cursor=pointer]:
+                  - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/editar
+                - link [ref=f1e200] [cursor=pointer]:
+                  - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/checklist/editar
+        - generic [ref=f1e205]:
+          - generic [ref=f1e206]:
+            - link "Usuarios" [ref=f1e207] [cursor=pointer]:
+              - /url: /admin/usuarios?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - link "Notificaciones" [ref=f1e213] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - link "Configuraciones" [ref=f1e217] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - button "Cerrar sesión" [ref=f1e222]
+          - generic [ref=f1e226]:
+            - generic [ref=f1e227]: Ver como
+            - combobox [ref=f1e231]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=f1e232] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - generic [ref=f1e233]: VP
+            - generic [ref=f1e234]:
+              - generic [ref=f1e235]: Victor Perez Contreras
+              - generic [ref=f1e236]: Administrador
+    - main [ref=f1e237]:
+      - generic [ref=f1e238]:
+        - generic [ref=f1e240]:
+          - generic [ref=f1e241]:
+            - generic [ref=f1e242]:
+              - navigation [ref=f1e244]:
+                - link "PS-0008" [ref=f1e246] [cursor=pointer]:
+                  - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e
+                - generic [ref=f1e247]: Dashboard
+              - heading "PS-0008" [level=1] [ref=f1e251]
+              - paragraph [ref=f1e252]: TIE - IN · MCB · Costo directo (US$) · fecha de corte 02-10-2026
+            - generic [ref=f1e253]:
+              - generic [ref=f1e254]: PENDIENTE
+              - group "Tipo de Dashboard" [ref=f1e256]:
+                - button "Parcial" [pressed] [ref=f1e257]
+                - button "Completo" [ref=f1e258]
+          - generic [ref=f1e259]:
+            - generic [ref=f1e260]:
+              - generic [ref=f1e261]:
+                - generic [ref=f1e262]: Fecha de corte
+                - combobox "Fecha de corte" [ref=f1e263]:
+                  - option "Hoy" [selected]
+                  - option "Ayer"
+                  - option "Hace 7 días"
+                  - option "Fecha personalizada"
+              - generic [ref=f1e264]:
+                - generic [ref=f1e265]: Orden de la matriz
+                - combobox "Orden de la matriz" [ref=f1e266]:
+                  - option "Por WBS" [selected]
+                  - option "Mayor desviación primero"
+                  - option "Sobre-ejecutadas primero"
+            - generic [ref=f1e268]:
+              - generic [ref=f1e269]:
+                - generic [ref=f1e270]:
+                  - paragraph [ref=f1e271]: "% avance físico"
+                  - paragraph [ref=f1e272]: 0%
+                  - paragraph [ref=f1e273]: EV / BAC — avance físico ejecutado
+                - generic [ref=f1e274]:
+                  - paragraph [ref=f1e275]: BAC
+                  - paragraph [ref=f1e276]: US$ 4,482.54
+                  - paragraph [ref=f1e277]: Presupuesto contractual (US$, CD)
+                - generic [ref=f1e278]:
+                  - paragraph [ref=f1e279]: PV al corte
+                  - paragraph [ref=f1e280]: US$ 4,482.54
+                  - paragraph [ref=f1e281]: Planificado al 02-10-2026
+                - generic [ref=f1e282]:
+                  - paragraph [ref=f1e283]: EV
+                  - paragraph [ref=f1e284]: US$ 0.00
+                  - paragraph [ref=f1e285]: Valor ganado al 02-10-2026
+                  - paragraph [ref=f1e286]: US$ -4,482.54 vs. plan (SV)
+                - generic [ref=f1e290]:
+                  - paragraph [ref=f1e291]: AC
+                  - paragraph [ref=f1e292]: US$ 0.00
+                  - paragraph [ref=f1e293]: Costo real acumulado (US$, CD)
+                  - paragraph [ref=f1e294]: +US$ 0.00 vs. EV (CV)
+                - generic [ref=f1e298]:
+                  - paragraph [ref=f1e299]: SPI
+                  - paragraph [ref=f1e300]: "0.00"
+                  - paragraph [ref=f1e301]: Índice de Desempeño de Cronograma (EV/PV)
+                  - paragraph [ref=f1e302]: "-100% vs. plan"
+                - generic [ref=f1e306]:
+                  - paragraph [ref=f1e307]: CPI
+                  - paragraph [ref=f1e308]: Pendiente
+                  - paragraph [ref=f1e309]: Índice de Desempeño de Costo (EV/AC)
+              - generic [ref=f1e310]:
+                - generic [ref=f1e311]:
+                  - heading "Composición del costo (contractual)" [level=2] [ref=f1e312]
+                  - generic [ref=f1e313]:
+                    - img "Composición del costo" [ref=f1e314]:
+                      - generic [ref=f1e315]:
+                        - 'generic "Mano de obra: US$ 2,401.98 (54%)" [ref=f1e316]'
+                        - 'generic "Equipos: US$ 1,220.57 (27%)" [ref=f1e317]'
+                        - 'generic "Materiales: US$ 60.00 (1%)" [ref=f1e318]'
+                        - 'generic "Subcontratos: US$ 800.00 (18%)" [ref=f1e319]'
+                    - list [ref=f1e320]:
+                      - listitem [ref=f1e321]:
+                        - generic [ref=f1e323]: Mano de obra
+                        - generic [ref=f1e324]: US$ 2,401.98
+                        - generic [ref=f1e325]: (54%)
+                      - listitem [ref=f1e326]:
+                        - generic [ref=f1e328]: Equipos
+                        - generic [ref=f1e329]: US$ 1,220.57
+                        - generic [ref=f1e330]: (27%)
+                      - listitem [ref=f1e331]:
+                        - generic [ref=f1e333]: Materiales
+                        - generic [ref=f1e334]: US$ 60.00
+                        - generic [ref=f1e335]: (1%)
+                      - listitem [ref=f1e336]:
+                        - generic [ref=f1e338]: Subcontratos
+                        - generic [ref=f1e339]: US$ 800.00
+                        - generic [ref=f1e340]: (18%)
+                - generic [ref=f1e341]:
+                  - heading "Desempeño por partida — mayor desviación de costo (CV)" [level=2] [ref=f1e342]
+                  - img "Gráfico de barras horizontales" [ref=f1e343]:
+                    - 'img "01.01 — MOVILIZACION DE TUBERIA HDPE Y ACCESORIOS: ahorro de US$ 0.00" [ref=f1e344]':
+                      - generic [ref=f1e346]: 01.01 — MOVILIZACION DE T…
+                      - generic [ref=f1e348]: +US$ 0.00
+                    - 'img "02.01 — TIE-IN A RED EXISTENTE (LOTOTO) Y ARMADO DE CARRETE DE DESMONTAJE: ahorro de US$ 0.00" [ref=f1e349]':
+                      - generic [ref=f1e351]: 02.01 — TIE-IN A RED EXIS…
+                      - generic [ref=f1e353]: +US$ 0.00
+                    - 'img "02.02 — TENDIDO DE TUBERIA HDPE DENTRO DE ZANJA PREPARADA POR COPREFA: ahorro de US$ 0.00" [ref=f1e354]':
+                      - generic [ref=f1e356]: 02.02 — TENDIDO DE TUBERI…
+                      - generic [ref=f1e358]: +US$ 0.00
+                    - 'img "02.03 — TERMOFUSION DE JUNTAS HDPE (TRABAJO EN CALIENTE): ahorro de US$ 0.00" [ref=f1e359]':
+                      - generic [ref=f1e361]: 02.03 — TERMOFUSION DE JU…
+                      - generic [ref=f1e363]: +US$ 0.00
+                    - 'img "02.04 — FABRICACION DE RISER DE ACERO: CORTE, ESMERILADO Y SOLDADURA: ahorro de US$ 0.00" [ref=f1e364]':
+                      - generic [ref=f1e366]: 02.04 — FABRICACION DE RI…
+                      - generic [ref=f1e368]: +US$ 0.00
+                    - 'img "02.05 — MONTAJE DE VALVULA COMPUERTA Y TRANSICIONES (ARMADO DE JUNTAS BRIDADAS): ahorro de US$ 0.00" [ref=f1e369]':
+                      - generic [ref=f1e371]: 02.05 — MONTAJE DE VALVUL…
+                      - generic [ref=f1e373]: +US$ 0.00
+                    - 'img "02.06 — CONEXION FINAL DE LA TUBERIA AL GABINETE CONTRAINCENDIOS (GCI) EXISTENTE: ahorro de US$ 0.00" [ref=f1e374]':
+                      - generic [ref=f1e376]: 02.06 — CONEXION FINAL DE…
+                      - generic [ref=f1e378]: +US$ 0.00
+                    - 'img "03.01 — PRUEBA HIDROSTATICA SEGUN NFPA 24 - SUBCONTRATADO: ahorro de US$ 0.00" [ref=f1e379]':
+                      - generic [ref=f1e381]: 03.01 — PRUEBA HIDROSTATI…
+                      - generic [ref=f1e383]: +US$ 0.00
+              - generic [ref=f1e384]:
+                - heading "Matriz de partidas" [level=2] [ref=f1e385]
+                - table [ref=f1e387]:
+                  - rowgroup [ref=f1e388]:
+                    - row [ref=f1e389]:
+                      - columnheader "WBS" [ref=f1e390]
+                      - columnheader "Partida" [ref=f1e391]
+                      - columnheader "Unid." [ref=f1e392]
+                      - columnheader "Metrado contract." [ref=f1e393]
+                      - columnheader "Metrado acum." [ref=f1e394]
+                      - columnheader "% avance" [ref=f1e395]
+                      - columnheader "PV (US$)" [ref=f1e396]
+                      - columnheader "EV (US$)" [ref=f1e397]
+                      - columnheader "AC (US$, CD)" [ref=f1e398]
+                      - columnheader "SPI" [ref=f1e399]
+                      - columnheader "CPI" [ref=f1e400]
+                      - columnheader "Metrado restante" [ref=f1e401]
+                  - rowgroup [ref=f1e402]:
+                    - row [ref=f1e403]:
+                      - cell "01.01" [ref=f1e404]
+                      - cell "MOVILIZACION DE TUBERIA HDPE Y ACCESORIOS" [ref=f1e405]
+                      - cell "VJE" [ref=f1e406]
+                      - cell "1.00" [ref=f1e407]
+                      - cell "0.00" [ref=f1e408]
+                      - cell "0%" [ref=f1e409]
+                      - cell "US$ 433.13" [ref=f1e410]
+                      - cell "US$ 0.00" [ref=f1e411]
+                      - cell "US$ 0.00" [ref=f1e412]
+                      - cell "0.00" [ref=f1e413]
+                      - cell "Pendiente" [ref=f1e414]
+                      - cell "1.00" [ref=f1e415]
+                    - row [ref=f1e417]:
+                      - cell "02.01" [ref=f1e418]
+                      - cell "TIE-IN A RED EXISTENTE (LOTOTO) Y ARMADO DE CARRETE DE DESMONTAJE" [ref=f1e419]
+                      - cell "GLB" [ref=f1e420]
+                      - cell "1.00" [ref=f1e421]
+                      - cell "0.00" [ref=f1e422]
+                      - cell "0%" [ref=f1e423]
+                      - cell "US$ 802.59" [ref=f1e424]
+                      - cell "US$ 0.00" [ref=f1e425]
+                      - cell "US$ 0.00" [ref=f1e426]
+                      - cell "0.00" [ref=f1e427]
+                      - cell "Pendiente" [ref=f1e428]
+                      - cell "1.00" [ref=f1e429]
+                    - row [ref=f1e431]:
+                      - cell "02.02" [ref=f1e432]
+                      - cell "TENDIDO DE TUBERIA HDPE DENTRO DE ZANJA PREPARADA POR COPREFA" [ref=f1e433]
+                      - cell "ML" [ref=f1e434]
+                      - cell "33.75" [ref=f1e435]
+                      - cell "0.00" [ref=f1e436]
+                      - cell "0%" [ref=f1e437]
+                      - cell "US$ 501.74" [ref=f1e438]
+                      - cell "US$ 0.00" [ref=f1e439]
+                      - cell "US$ 0.00" [ref=f1e440]
+                      - cell "0.00" [ref=f1e441]
+                      - cell "Pendiente" [ref=f1e442]
+                      - cell "33.75" [ref=f1e443]
+                    - row [ref=f1e445]:
+                      - cell "02.03" [ref=f1e446]
+                      - cell "TERMOFUSION DE JUNTAS HDPE (TRABAJO EN CALIENTE)" [ref=f1e447]
+                      - cell "UND" [ref=f1e448]
+                      - cell "13.00" [ref=f1e449]
+                      - cell "0.00" [ref=f1e450]
+                      - cell "0%" [ref=f1e451]
+                      - cell "US$ 1,304.21" [ref=f1e452]
+                      - cell "US$ 0.00" [ref=f1e453]
+                      - cell "US$ 0.00" [ref=f1e454]
+                      - cell "0.00" [ref=f1e455]
+                      - cell "Pendiente" [ref=f1e456]
+                      - cell "13.00" [ref=f1e457]
+                    - row [ref=f1e459]:
+                      - cell "02.04" [ref=f1e460]
+                      - 'cell "FABRICACION DE RISER DE ACERO: CORTE, ESMERILADO Y SOLDADURA" [ref=f1e461]'
+                      - cell "GLB" [ref=f1e462]
+                      - cell "1.00" [ref=f1e463]
+                      - cell "0.00" [ref=f1e464]
+                      - cell "0%" [ref=f1e465]
+                      - cell "US$ 343.64" [ref=f1e466]
+                      - cell "US$ 0.00" [ref=f1e467]
+                      - cell "US$ 0.00" [ref=f1e468]
+                      - cell "0.00" [ref=f1e469]
+                      - cell "Pendiente" [ref=f1e470]
+                      - cell "1.00" [ref=f1e471]
+                    - row [ref=f1e473]:
+                      - cell "02.05" [ref=f1e474]
+                      - cell "MONTAJE DE VALVULA COMPUERTA Y TRANSICIONES (ARMADO DE JUNTAS BRIDADAS)" [ref=f1e475]
+                      - cell "UND" [ref=f1e476]
+                      - cell "1.00" [ref=f1e477]
+                      - cell "0.00" [ref=f1e478]
+                      - cell "0%" [ref=f1e479]
+                      - cell "US$ 89.17" [ref=f1e480]
+                      - cell "US$ 0.00" [ref=f1e481]
+                      - cell "US$ 0.00" [ref=f1e482]
+                      - cell "0.00" [ref=f1e483]
+                      - cell "Pendiente" [ref=f1e484]
+                      - cell "1.00" [ref=f1e485]
+                    - row [ref=f1e487]:
+                      - cell "02.06" [ref=f1e488]
+                      - cell "CONEXION FINAL DE LA TUBERIA AL GABINETE CONTRAINCENDIOS (GCI) EXISTENTE" [ref=f1e489]
+                      - cell "UND" [ref=f1e490]
+                      - cell "1.00" [ref=f1e491]
+                      - cell "0.00" [ref=f1e492]
+                      - cell "0%" [ref=f1e493]
+                      - cell "US$ 89.17" [ref=f1e494]
+                      - cell "US$ 0.00" [ref=f1e495]
+                      - cell "US$ 0.00" [ref=f1e496]
+                      - cell "0.00" [ref=f1e497]
+                      - cell "Pendiente" [ref=f1e498]
+                      - cell "1.00" [ref=f1e499]
+                    - row [ref=f1e501]:
+                      - cell "03.01" [ref=f1e502]
+                      - cell "PRUEBA HIDROSTATICA SEGUN NFPA 24 - SUBCONTRATADO" [ref=f1e503]
+                      - cell "GLB" [ref=f1e504]
+                      - cell "1.00" [ref=f1e505]
+                      - cell "0.00" [ref=f1e506]
+                      - cell "0%" [ref=f1e507]
+                      - cell "US$ 800.00" [ref=f1e508]
+                      - cell "US$ 0.00" [ref=f1e509]
+                      - cell "US$ 0.00" [ref=f1e510]
+                      - cell "0.00" [ref=f1e511]
+                      - cell "Pendiente" [ref=f1e512]
+                      - cell "1.00" [ref=f1e513]
+                    - row [ref=f1e515]:
+                      - cell "04.01" [ref=f1e516]
+                      - cell "COMISIONAMIENTO (APERTURA DE VALVULAS, PURGA DE AIRE, VERIFICACION DE PRESION)" [ref=f1e517]
+                      - cell "GLB" [ref=f1e518]
+                      - cell "1.00" [ref=f1e519]
+                      - cell "0.00" [ref=f1e520]
+                      - cell "0%" [ref=f1e521]
+                      - cell "US$ 118.90" [ref=f1e522]
+                      - cell "US$ 0.00" [ref=f1e523]
+                      - cell "US$ 0.00" [ref=f1e524]
+                      - cell "0.00" [ref=f1e525]
+                      - cell "Pendiente" [ref=f1e526]
+                      - cell "1.00" [ref=f1e527]
+              - generic [ref=f1e529]:
+                - heading "Diagnóstico" [level=2] [ref=f1e530]
+                - generic [ref=f1e531]:
+                  - generic [ref=f1e532]:
+                    - paragraph [ref=f1e536]: Partidas sobre-ejecutadas
+                    - paragraph [ref=f1e537]: "0"
+                    - paragraph [ref=f1e538]: Metrado restante negativo
+                  - generic [ref=f1e539]:
+                    - paragraph [ref=f1e543]: Partidas sin actividad
+                    - paragraph [ref=f1e544]: "9"
+                    - paragraph [ref=f1e545]: Sin RDT validado registrado todavía
+                    - link "Revisar RDT en Status de RDTs →" [ref=f1e546] [cursor=pointer]:
+                      - /url: /rdts/status
+                  - generic [ref=f1e547]:
+                    - paragraph [ref=f1e552]: Recursos sin tarifa
+                    - paragraph [ref=f1e553]: "0"
+                  - generic [ref=f1e554]:
+                    - paragraph [ref=f1e559]: HH de MOI acumuladas
+                    - paragraph [ref=f1e560]: "0.0"
+                    - paragraph [ref=f1e561]: Horas, sin costo por diseño (regla 10) — no se valorizan
+              - generic [ref=f1e562]:
+                - heading "Costo real de recursos (MO · personal, HM · equipos)" [level=2] [ref=f1e563]
+                - table [ref=f1e565]:
+                  - rowgroup [ref=f1e566]:
+                    - row [ref=f1e567]:
+                      - columnheader "Recurso" [ref=f1e568]
+                      - columnheader "Tipo" [ref=f1e569]
+                      - columnheader "Costo real (US$)" [ref=f1e570]
+                  - rowgroup [ref=f1e571]:
+                    - row [ref=f1e572]:
+                      - cell "CAMION BARANDA" [ref=f1e573]
+                      - cell "HM" [ref=f1e574]
+                      - cell "US$ 0.00" [ref=f1e575]
+                    - row [ref=f1e576]:
+                      - cell "CAPATAZ" [ref=f1e577]
+                      - cell "MO" [ref=f1e578]
+                      - cell "US$ 0.00" [ref=f1e579]
+                    - row [ref=f1e580]:
+                      - cell "ESMERIL ANGULAR 4 1/2\"" [ref=f1e581]
+                      - cell "HM" [ref=f1e582]
+                      - cell "US$ 0.00" [ref=f1e583]
+                    - row [ref=f1e584]:
+                      - cell "ESMERIL ANGULAR 7\"" [ref=f1e585]
+                      - cell "HM" [ref=f1e586]
+                      - cell "US$ 0.00" [ref=f1e587]
+                    - row [ref=f1e588]:
+                      - cell "HERRAMIENTAS MANUALES" [ref=f1e589]
+                      - cell "HM" [ref=f1e590]
+                      - cell "US$ 0.00" [ref=f1e591]
+                    - row [ref=f1e592]:
+                      - cell "MAQUINA DE SOLDAR" [ref=f1e593]
+                      - cell "HM" [ref=f1e594]
+                      - cell "US$ 0.00" [ref=f1e595]
+                    - row [ref=f1e596]:
+                      - cell "MAQUINA DE TERMOFUSION HDPE (ALQUILER)" [ref=f1e597]
+                      - cell "HM" [ref=f1e598]
+                      - cell "US$ 0.00" [ref=f1e599]
+                    - row [ref=f1e600]:
+                      - cell "OFICIAL MECANICO" [ref=f1e601]
+                      - cell "MO" [ref=f1e602]
+                      - cell "US$ 0.00" [ref=f1e603]
+                    - row [ref=f1e604]:
+                      - cell "OPERARIO ARMADOR" [ref=f1e605]
+                      - cell "MO" [ref=f1e606]
+                      - cell "US$ 0.00" [ref=f1e607]
+                    - row [ref=f1e608]:
+                      - cell "OPERARIO MECANICO" [ref=f1e609]
+                      - cell "MO" [ref=f1e610]
+                      - cell "US$ 0.00" [ref=f1e611]
+                    - row [ref=f1e612]:
+                      - cell "OPERARIO SOLDADOR" [ref=f1e613]
+                      - cell "MO" [ref=f1e614]
+                      - cell "US$ 0.00" [ref=f1e615]
+                    - row [ref=f1e616]:
+                      - cell "OPERARIO TERMOFUSIONISTA HDPE" [ref=f1e617]
+                      - cell "MO" [ref=f1e618]
+                      - cell "US$ 0.00" [ref=f1e619]
+                  - rowgroup [ref=f1e620]:
+                    - row [ref=f1e621]:
+                      - cell "Total (AC)" [ref=f1e622]
+                      - cell [ref=f1e623]
+                      - cell "US$ 0.00" [ref=f1e624]
+                - paragraph [ref=f1e625]: "Σ recursos MO+HM: US$ 0.00. El balde legacy sin partida está en cero."
+              - generic [ref=f1e626]:
+                - heading "Bloque E — PPC y Pareto de CNC" [level=2] [ref=f1e627]
+                - generic [ref=f1e628]:
+                  - generic [ref=f1e629]:
+                    - paragraph [ref=f1e630]: PPC — Percent Plan Complete
+                    - paragraph [ref=f1e631]: Pendiente
+                    - paragraph [ref=f1e632]: (actividades − actividades con CNC) / actividades
+                    - paragraph [ref=f1e633]: Indicador LPS, no EVM — no se mezcla con SPI
+                  - generic [ref=f1e634]:
+                    - generic [ref=f1e635]:
+                      - paragraph [ref=f1e636]: Pareto de causas de no cumplimiento (CNC)
+                      - paragraph [ref=f1e637]: 0 actividades con CNC
+                    - paragraph [ref=f1e638]: Sin CNC registradas en RDT validados para este servicio.
+                - link "Ver Curva S" [ref=f1e639] [cursor=pointer]:
+                  - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/curva-s
+              - generic [ref=f1e642]:
+                - heading "Resumen ejecutivo" [level=2] [ref=f1e643]
+                - paragraph [ref=f1e644]: El servicio está con atraso crítico (SPI 0.00) y costo pendiente de datos reales.
+                - paragraph [ref=f1e645]: Sin desviaciones de costo relevantes al corte.
+        - button "Asistente" [ref=f1e646]
+    - complementary [ref=f1e649]:
+      - button "Ocultar panel derecho" [expanded] [ref=f1e650]
+      - generic [ref=f1e654]:
+        - generic [ref=f1e655]:
+          - paragraph [ref=f1e656]: Accesos rápidos
+          - generic [ref=f1e657]:
+            - generic "Sin pantalla todavía" [ref=f1e658]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f1e662]: Pets
+            - generic "Sin pantalla todavía" [ref=f1e666]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f1e671]: Status de servicios
+            - link "Requerimiento" [ref=f1e674] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - link "Consolidado RQ" [ref=f1e681] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+            - link "Subir RDTs Acción" [ref=f1e685] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e&accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f1e690]: Acción
+        - paragraph [ref=f1e691]: Grupos del servicio
+        - generic [ref=f1e692]:
+          - generic [ref=f1e693]:
+            - button "Planificación" [expanded] [ref=f1e694]
+            - generic [ref=f1e697]:
+              - link [ref=f1e698] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e705] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e709] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - link [ref=f1e715] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=a4141bdd-09d8-41ba-b8a2-6b648049064e
+              - generic "Sin pantalla todavía" [ref=f1e719]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f1e723]: Programación diaria
+              - link [ref=f1e727] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/pr
+              - link [ref=f1e732] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/dashboard
+              - link [ref=f1e739] [cursor=pointer]:
+                - /url: /proyectos/a4141bdd-09d8-41ba-b8a2-6b648049064e/curva-s
+              - generic "Sin pantalla todavía" [ref=f1e744]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f1e749]: Programación de capacitaciones
+          - button "Costos" [ref=f1e755]
+          - button "Supervisión operativa" [ref=f1e759]
+          - button "Logística" [ref=f1e763]
+          - button "Oficina Técnica" [ref=f1e767]
+          - button "Administración" [ref=f1e771]
+          - button "SSOMA" [ref=f1e775]
+  - button "Open Next.js Dev Tools" [ref=f1e783] [cursor=pointer]

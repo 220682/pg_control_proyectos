@@ -1,0 +1,16 @@
+[    5035ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[    5171ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[   37963ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[   38128ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:44
+[   38972ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3115/api/curva-s?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&modo=economica:0
+[   38980ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3115/api/curva-s?proyectoId=dc850536-b3ed-4353-bffb-53b5f6fc4702&modo=economica:0
+[   82152ms] [ERROR] WebSocket connection to 'ws://localhost:3115/_next/hmr?id=GwGCi_A8IdJPth3nTu3QE' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/dev/hot-reloader/app/web-socket.js:55
+[   83170ms] [ERROR] WebSocket connection to 'ws://localhost:3115/_next/hmr?id=GwGCi_A8IdJPth3nTu3QE' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/dev/hot-reloader/app/web-socket.js:55
+[   83946ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3115/api/notificaciones/count:0
+[   83949ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3115/proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s?_rsc=pY69ApcJCYGXqAe-:0
+[   83954ms] [ERROR] Failed to fetch RSC payload for http://localhost:3115/proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702/curva-s. Falling back to browser navigation. TypeError: Failed to fetch
+    at fetchInternal (webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/components/segment-cache/fetch.js:28:12)
+    at createFetch (webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/components/router-reducer/fetch-server-response.js:402:38)
+    at async fetchServerResponse (webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/components/router-reducer/fetch-server-response.js:99:21)
+    at async fetchMissingDynamicData (webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/client/components/router-reducer/ppr-navigations.js:1085:24) @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:57
+[   84080ms] [ERROR] WebSocket is already in CLOSING or CLOSED state. @ webpack-internal:///(app-pages-browser)/../../node_modules/next/dist/next-devtools/userspace/app/forward-logs.js:93

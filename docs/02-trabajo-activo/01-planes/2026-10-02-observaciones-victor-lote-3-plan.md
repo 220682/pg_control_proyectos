@@ -96,6 +96,17 @@
 | 3 | Icono flotante tapa contenido | Reserva de espacio en todos los lienzos |
 | 4 | Declaración de metrados por paquete (no por partida) | Lógica nueva + pruebas unitarias + migración de datos existentes |
 
+## Estado de implementación
+
+| Fase | Ítem | Estado | Commit | Observaciones |
+|---|---|---|---|---|
+| F4-A | Selector OT compacto + icono flotante | **Conforme** | `6fbd953` | `max-w-[200px]` en el contenedor, `max-w-[110px]` en el select, `pr-[60px]` en el lienzo |
+| F4-B | Plegables individuales por grupo de medida | **Pendiente** | — | Requiere cambiar `acumuladas` por 3 estados independientes (`medVis.fisico/economico/hh`) y modificar `LienzoPlanMaestro` |
+| F4-C | Metrados por paquete (no por partida) | **Pendiente** | — | Requiere que la API devuelva `es_declaracion_paquete` y `metrado_paquete`; lógica de distribución proporcional; celdas editables solo en filas de paquete |
+| F4-D | Fechas editables con indicador fuera de rango | **Pendiente** | — | Requiere añadir columnas `fecha_inicio`/`fecha_fin` en API y Lienzo; validación de rango visual (rojo) |
+
+**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F4-A implementado directamente por el Orquestador. F4-B/C/D requieren trabajo adicional en una sesión futura.
+
 ## Mensaje de cierre
 
 (Pendiente de completar al finalizar el plan)

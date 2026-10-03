@@ -1,0 +1,38 @@
+- generic [active] [ref=f9e1]:
+  - main [ref=f9e3]:
+    - generic [ref=f9e4]:
+      - button "Abrir menú" [ref=f9e5]
+      - link "Control de Proyectos" [ref=f9e7] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - button "Abrir herramientas" [ref=f9e8]
+    - generic [ref=f9e11]:
+      - generic [ref=f9e14]:
+        - generic [ref=f9e15]:
+          - navigation [ref=f9e17]:
+            - link "PS-0004 — Movimiento de tierra, e instalacion de bancoductos" [ref=f9e19] [cursor=pointer]:
+              - /url: /proyectos/dc850536-b3ed-4353-bffb-53b5f6fc4702
+            - generic [ref=f9e20]: Curva S
+          - heading "Curva S" [level=1] [ref=f9e24]
+          - paragraph [ref=f9e25]: Avance físico acumulado · % (PV/BAC y EV/BAC)
+        - generic [ref=f9e26]:
+          - generic [ref=f9e27]:
+            - generic [ref=f9e28]: Modo
+            - group "Modo de la Curva S" [ref=f9e29]:
+              - button "Económica (USD)" [disabled] [ref=f9e30]
+              - button "Avance físico (%)" [pressed] [ref=f9e31]
+          - generic [ref=f9e32]:
+            - text: Rango
+            - combobox "Rango" [ref=f9e33]:
+              - option "Todo el servicio" [selected]
+              - option "Últimas 4 semanas"
+              - option "Últimas 8 semanas"
+              - option "Personalizado…"
+          - generic [ref=f9e34]:
+            - text: Granularidad
+            - combobox "Granularidad" [ref=f9e35]:
+              - option "Semanal (sáb–vie)" [selected]
+              - option "Diaria"
+          - generic [ref=f9e36]: Los filtros aplican al gráfico, la lectura y la tabla
+        - paragraph [ref=f9e38]: Cargando…
+      - button "Asistente" [ref=f9e39]
+  - button "Open Next.js Dev Tools" [ref=f9e47] [cursor=pointer]

@@ -1,0 +1,171 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - complementary [ref=f10e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f10e4]
+      - generic [ref=f10e8]:
+        - link "Control de Proyectos" [ref=f10e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f10e18]:
+          - link [ref=f10e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f10e26]:
+            - paragraph [ref=f10e27]: Servicio actual
+            - paragraph [ref=f10e28]: PS-0006
+            - paragraph [ref=f10e29]: PRUEBA-F5B Servicio de verificacion
+          - navigation [ref=f10e30]:
+            - heading [level=2] [ref=f10e31]:
+              - button "Recursos de empresa" [ref=f10e32]
+          - generic [ref=f10e35]:
+            - generic [ref=f10e36]:
+              - paragraph [ref=f10e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f10e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f10e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f10e49]: Presupuesto
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e54]: DP (Datos del proyecto)
+              - link [ref=f10e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f10e65]:
+              - paragraph [ref=f10e66]: Planificación
+              - link [ref=f10e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f10e71] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f10e75]:
+              - paragraph [ref=f10e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f10e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f10e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f10e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f10e100]: Personal NUEVO
+            - generic [ref=f10e105]:
+              - paragraph [ref=f10e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f10e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f10e115]: PETS
+            - generic [ref=f10e120]:
+              - paragraph [ref=f10e121]: Reportes
+              - link [ref=f10e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f10e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e135]: PR (Reporte del proyecto)
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e140]: Dashboard
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e147]: Curva S
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e152]: Registro de costos
+              - generic "Sin pantalla todavía" [ref=f10e157]: Consolidado de servicio
+            - generic [ref=f10e162]:
+              - paragraph [ref=f10e163]: Acciones
+              - generic [ref=f10e164]:
+                - link [ref=f10e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear-rq
+                - generic "Solo Supervisión operativa, Jefe de Proyectos, Jefe de Oficina Técnica o Geren" [ref=f10e170]: Crear RDT
+                - generic "Solo Supervisión operativa o Geren" [ref=f10e175]: Subir RDT
+                - link [ref=f10e181] [cursor=pointer]:
+                  - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear
+            - generic [ref=f10e187]:
+              - paragraph [ref=f10e188]: Servicio
+              - link [ref=f10e189] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic [ref=f10e193]:
+                - paragraph [ref=f10e194]: Acciones
+                - generic "Solo administrador o Jefe de proyectos editan el servicio" [ref=f10e195]: Editar servicio
+                - generic "Solo administrador o Jefe de proyectos editan el checklist" [ref=f10e200]: Editar checklist
+        - generic [ref=f10e205]:
+          - generic [ref=f10e206]:
+            - link "Notificaciones" [ref=f10e207] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Configuraciones" [ref=f10e211] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - button "Cerrar sesión" [ref=f10e216]
+          - generic [ref=f10e220]:
+            - generic [ref=f10e221]: Ver como
+            - combobox [ref=f10e225]:
+              - option "Mi rol (Administrador)"
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner" [selected]
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Planner" [ref=f10e226] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f10e227]: VP
+            - generic [ref=f10e228]:
+              - generic [ref=f10e229]: Victor Perez Contreras
+              - generic [ref=f10e230]: Planner
+    - main [ref=f10e231]:
+      - generic [ref=f10e232]:
+        - generic [ref=f10e234]:
+          - generic [ref=f10e235]:
+            - link "Salir a Mi entorno" [ref=f10e236] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - heading "Plan Maestro" [level=1] [ref=f10e237]
+            - paragraph [ref=f10e238]: "Línea base temporal del servicio: lienzo por día desde las partidas de Paquetes de trabajo"
+          - generic [ref=f10e240]:
+            - generic [ref=f10e243]:
+              - generic [ref=f10e244]: N° OT vigente
+              - combobox [ref=f10e245]:
+                - option "Seleccione…" [selected]
+            - generic [ref=f10e246]:
+              - strong [ref=f10e247]: Este servicio aún no tiene un Plan Maestro
+              - paragraph [ref=f10e248]: "El lienzo se arma con las partidas declaradas en Paquetes de trabajo (en paquetes o directas): actividad, partida y metrado."
+              - paragraph [ref=f10e249]:
+                - button "Crear borrador del Plan Maestro" [ref=f10e250]
+        - button "Asistente" [ref=f10e251]
+    - complementary [ref=f10e254]:
+      - button "Ocultar panel derecho" [expanded] [ref=f10e255]
+      - generic [ref=f10e259]:
+        - generic [ref=f10e260]:
+          - paragraph [ref=f10e261]: Accesos rápidos
+          - generic [ref=f10e262]:
+            - generic "Sin pantalla todavía" [ref=f10e263]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f10e267]: Pets
+            - generic "Sin pantalla todavía" [ref=f10e271]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f10e276]: Status de servicios
+            - link "Requerimiento" [ref=f10e279] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Consolidado RQ" [ref=f10e286] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic "Solo Supervisión operativa o Geren" [ref=f10e290]:
+              - text: Subir RDTs
+              - generic [ref=f10e295]: Acción
+        - paragraph [ref=f10e296]: Grupos del servicio
+        - generic [ref=f10e297]:
+          - generic [ref=f10e298]:
+            - button "Planificación" [expanded] [ref=f10e299]
+            - generic [ref=f10e302]:
+              - link [ref=f10e303] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f10e310] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f10e314] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f10e320] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic "Sin pantalla todavía" [ref=f10e324]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f10e328]: Programación diaria
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e332]: PR (Reporte del proyecto)
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e337]: Dashboard
+              - generic "Tu rol no tiene acceso a esta pantalla" [ref=f10e344]: Curva S
+              - generic "Sin pantalla todavía" [ref=f10e349]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f10e354]: Programación de capacitaciones
+          - button "Costos" [ref=f10e360]
+          - button "Supervisión operativa" [ref=f10e364]
+          - button "Logística" [ref=f10e368]
+          - button "Oficina Técnica" [ref=f10e372]
+          - button "Administración" [ref=f10e376]
+          - button "SSOMA" [ref=f10e380]
+  - button "Open Next.js Dev Tools" [ref=f10e392] [cursor=pointer]:
+    - generic [ref=f10e395]:
+      - text: Rendering
+      - generic [ref=f10e396]:
+        - generic [ref=f10e397]: .
+        - generic [ref=f10e398]: .
+        - generic [ref=f10e399]: .
+  - alert [ref=f10e400]

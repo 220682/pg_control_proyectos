@@ -1,0 +1,93 @@
+- generic [active] [ref=f13e1]:
+  - main [ref=f13e2]:
+    - generic [ref=f13e3]:
+      - link "← Volver al portafolio" [ref=f13e4] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - generic [ref=f13e5]:
+        - generic [ref=f13e6]:
+          - heading "Servicios Marcobre" [level=1] [ref=f13e7]
+          - paragraph [ref=f13e8]: 2 servicios
+          - paragraph [ref=f13e9]: 2 de octubre de 2026
+        - generic [ref=f13e10]: VERDE
+      - generic [ref=f13e11]:
+        - link "Dashboard 1 (Simple)" [ref=f13e12] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/dashboard
+        - link "Dashboard 2 (Completo)" [ref=f13e13] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973/dashboard?vista=completo
+      - generic [ref=f13e14]:
+        - heading "Resumen ejecutivo" [level=2] [ref=f13e15]
+        - paragraph [ref=f13e16]: Al día de hoy, el portafolio presenta un avance físico ejecutado del 12% sobre el metrado total de las partidas. En términos de Valor Ganado, el trabajo realmente ejecutado representa $15992.07 USD de un presupuesto total de $128291.84 USD. A la fecha se ha gastado $231.96 USD en mano de obra, equipos, materiales y subcontratos. En mano de obra, la cuadrilla ha trabajado 8.0 horas frente a las 892.1 horas que ese avance debería haber tomado, lo que da un Índice de Productividad de Mano de Obra (IP) de 11151%. Aún no se cuenta con la programación valorizada, por lo que no es posible comparar el avance contra lo planificado en el tiempo.
+      - generic [ref=f13e17]:
+        - generic [ref=f13e18]:
+          - paragraph [ref=f13e19]: "% Avance físico"
+          - paragraph [ref=f13e20]: 12%
+        - generic [ref=f13e21]:
+          - paragraph [ref=f13e22]: CPI
+          - paragraph [ref=f13e23]: "68.94"
+        - generic [ref=f13e24]:
+          - paragraph [ref=f13e25]: EAC
+          - paragraph [ref=f13e26]: $1860.83
+        - generic [ref=f13e27]:
+          - paragraph [ref=f13e28]: IP de MO
+          - paragraph [ref=f13e29]: 11151%
+      - generic [ref=f13e30]:
+        - heading "Tabla EVM" [level=2] [ref=f13e31]
+        - table [ref=f13e32]:
+          - rowgroup [ref=f13e33]:
+            - row [ref=f13e34]:
+              - cell "BAC" [ref=f13e35]
+              - cell "$128291.84" [ref=f13e36]
+            - row [ref=f13e37]:
+              - cell "PV" [ref=f13e38]
+              - cell "Pendiente" [ref=f13e39]
+            - row [ref=f13e40]:
+              - cell "EV" [ref=f13e41]
+              - cell "$15992.07" [ref=f13e42]
+            - row [ref=f13e43]:
+              - cell "AC" [ref=f13e44]
+              - cell "$231.96" [ref=f13e45]
+            - row [ref=f13e46]:
+              - cell "SV (EV-PV)" [ref=f13e47]
+              - cell "Pendiente" [ref=f13e48]
+            - row [ref=f13e49]:
+              - cell "CV (EV-AC)" [ref=f13e50]
+              - cell "$15760.11" [ref=f13e51]
+            - row [ref=f13e52]:
+              - cell "SPI (EV/PV)" [ref=f13e53]
+              - cell "Pendiente" [ref=f13e54]
+            - row [ref=f13e55]:
+              - cell "CPI (EV/AC)" [ref=f13e56]
+              - cell "68.94" [ref=f13e57]
+            - row [ref=f13e58]:
+              - cell "EAC (BAC/CPI)" [ref=f13e59]
+              - cell "$1860.83" [ref=f13e60]
+            - row [ref=f13e61]:
+              - cell "VAC (BAC-EAC)" [ref=f13e62]
+              - cell "$126431.00" [ref=f13e63]
+      - generic [ref=f13e64]:
+        - heading "Desglose de costo (contractual)" [level=2] [ref=f13e65]
+        - generic [ref=f13e66]:
+          - img "Composición del costo" [ref=f13e67]:
+            - generic [ref=f13e68]:
+              - 'generic "Mano de obra: US$ 50,824.60 (40%)" [ref=f13e69]'
+              - 'generic "Equipos: US$ 32,458.67 (25%)" [ref=f13e70]'
+              - 'generic "Materiales: US$ 39,779.92 (31%)" [ref=f13e71]'
+              - 'generic "Subcontratos: US$ 5,228.65 (4%)" [ref=f13e72]'
+          - list [ref=f13e73]:
+            - listitem [ref=f13e74]:
+              - generic [ref=f13e76]: Mano de obra
+              - generic [ref=f13e77]: US$ 50,824.60
+              - generic [ref=f13e78]: (40%)
+            - listitem [ref=f13e79]:
+              - generic [ref=f13e81]: Equipos
+              - generic [ref=f13e82]: US$ 32,458.67
+              - generic [ref=f13e83]: (25%)
+            - listitem [ref=f13e84]:
+              - generic [ref=f13e86]: Materiales
+              - generic [ref=f13e87]: US$ 39,779.92
+              - generic [ref=f13e88]: (31%)
+            - listitem [ref=f13e89]:
+              - generic [ref=f13e91]: Subcontratos
+              - generic [ref=f13e92]: US$ 5,228.65
+              - generic [ref=f13e93]: (4%)
+  - button "Open Next.js Dev Tools" [ref=f13e99] [cursor=pointer]

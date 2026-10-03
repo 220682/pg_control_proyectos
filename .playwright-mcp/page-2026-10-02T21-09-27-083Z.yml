@@ -1,0 +1,25 @@
+- generic [ref=f11e1]:
+  - generic [ref=f11e2]:
+    - banner [ref=f11e3]:
+      - link "Control de Proyectos" [ref=f11e4] [cursor=pointer]:
+        - /url: /programas
+      - generic [ref=f11e5]:
+        - link "Notificaciones" [ref=f11e6] [cursor=pointer]:
+          - /url: /notificaciones
+        - button "Cerrar sesión" [ref=f11e12]
+    - main [ref=f11e17]:
+      - generic [ref=f11e19]:
+        - generic [ref=f11e20]: Control de Proyectos
+        - heading "Inicia sesión" [level=1] [ref=f11e25]
+        - generic [ref=f11e26]:
+          - textbox "Correo" [ref=f11e27]: victorperez.nj@gmail.com
+          - textbox "Contraseña" [ref=f11e28]: Soldador22
+          - button "Entrar" [active] [ref=f11e29]
+  - button "Open Next.js Dev Tools" [ref=f11e40] [cursor=pointer]:
+    - generic [ref=f11e43]:
+      - text: Rendering
+      - generic [ref=f11e44]:
+        - generic [ref=f11e45]: .
+        - generic [ref=f11e46]: .
+        - generic [ref=f11e47]: .
+  - alert [ref=f11e39]

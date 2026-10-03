@@ -1,0 +1,39 @@
+- generic [active] [ref=f12e1]:
+  - main [ref=f12e3]:
+    - generic [ref=f12e4]:
+      - button "Abrir menú" [ref=f12e5]
+      - link "Control de Proyectos" [ref=f12e7] [cursor=pointer]:
+        - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+      - button "Abrir herramientas" [ref=f12e8]
+    - generic [ref=f12e11]:
+      - generic [ref=f12e13]:
+        - generic [ref=f12e14]:
+          - link "Salir a Mi entorno" [ref=f12e15] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+          - heading "Paquetes de Trabajo" [level=1] [ref=f12e16]
+          - paragraph [ref=f12e17]: "Declara partida y metrado por actividad del cronograma y agrúpalos en paquetes (sin fechas: la programación vive en el Plan Maestro)"
+        - generic [ref=f12e18]:
+          - generic [ref=f12e20]:
+            - generic [ref=f12e21]:
+              - generic [ref=f12e22]: N° OT vigente
+              - combobox "N° OT vigente" [ref=f12e23]:
+                - option "Seleccione…"
+                - option "PS-0004 Movimiento de tierra, e instalacion de bancoductos"
+                - option "PS-0005 TIE - IN"
+                - option "PS-0006 PRUEBA-F5B Servicio de verificacion" [selected]
+                - option "PS-0007 PRUEBA-F5B2 Servicio solo borrador"
+            - list "Pasos de Paquetes de trabajo" [ref=f12e24]:
+              - listitem [ref=f12e25]:
+                - button "Declarar" [ref=f12e26]
+              - listitem [ref=f12e27]:
+                - button "Agrupar" [ref=f12e28]
+          - paragraph [ref=f12e29]: Seleccione un N° OT vigente para ver sus paquetes.
+      - button "Asistente" [ref=f12e30]
+  - button "Open Next.js Dev Tools" [ref=f12e42] [cursor=pointer]:
+    - generic [ref=f12e45]:
+      - text: Rendering
+      - generic [ref=f12e46]:
+        - generic [ref=f12e47]: .
+        - generic [ref=f12e48]: .
+        - generic [ref=f12e49]: .
+  - alert [ref=f12e50]

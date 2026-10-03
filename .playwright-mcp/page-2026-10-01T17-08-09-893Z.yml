@@ -1,0 +1,752 @@
+- generic [ref=f43e1]:
+  - generic [ref=f43e2]:
+    - complementary [ref=f43e3]:
+      - button "Ocultar panel izquierdo" [expanded] [ref=f43e4]
+      - generic [ref=f43e8]:
+        - link "Control de Proyectos" [ref=f43e9] [cursor=pointer]:
+          - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+        - navigation "Navegación principal" [ref=f43e18]:
+          - link [ref=f43e19] [cursor=pointer]:
+            - /url: /programas/2cc56c7d-6273-4ac3-82e2-46121e37092b/portafolios/31598abb-e89a-4a8a-98af-bdbbe413d973
+          - generic [ref=f43e26]:
+            - paragraph [ref=f43e27]: Servicio actual
+            - paragraph [ref=f43e28]: PS-0006
+            - paragraph [ref=f43e29]: PRUEBA-F5B Servicio de verificacion
+          - navigation [ref=f43e30]:
+            - heading [level=2] [ref=f43e31]:
+              - button "Recursos de empresa" [ref=f43e32]
+          - generic [ref=f43e35]:
+            - generic [ref=f43e36]:
+              - paragraph [ref=f43e37]: Alcance y presupuesto
+              - generic "Sin pantalla todavía" [ref=f43e38]: (OT) Orden de trabajo
+              - generic "Sin pantalla todavía" [ref=f43e43]: Alcance
+              - generic "Sin pantalla todavía" [ref=f43e49]: Presupuesto
+              - link [ref=f43e54] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dp
+              - link [ref=f43e59] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f43e65]:
+              - paragraph [ref=f43e66]: Planificación
+              - link [ref=f43e67] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e71] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f43e75]:
+              - paragraph [ref=f43e76]: Recursos del servicio
+              - generic "Sin pantalla todavía" [ref=f43e77]: Cargos (HH)
+              - generic "Sin pantalla todavía" [ref=f43e84]: Equipos (HM)
+              - generic "Sin pantalla todavía" [ref=f43e88]: Materiales (c/c)
+              - generic "Sin pantalla todavía" [ref=f43e100]: Personal NUEVO
+            - generic [ref=f43e105]:
+              - paragraph [ref=f43e106]: Documentación
+              - generic "Sin pantalla todavía" [ref=f43e107]: Planos
+              - generic "Sin pantalla todavía" [ref=f43e115]: PETS
+            - generic [ref=f43e120]:
+              - paragraph [ref=f43e121]: Reportes
+              - link [ref=f43e122] [cursor=pointer]:
+                - /url: /rdts/consolidado?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e127] [cursor=pointer]:
+                - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e135] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/pr
+              - link [ref=f43e140] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dashboard
+              - link [ref=f43e147] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/curva-s
+              - link [ref=f43e152] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/registro-costos
+              - generic "Sin pantalla todavía" [ref=f43e157]: Consolidado de servicio
+            - generic [ref=f43e162]:
+              - paragraph [ref=f43e163]: Acciones
+              - generic [ref=f43e164]:
+                - link [ref=f43e165] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear-rq
+                - link [ref=f43e170] [cursor=pointer]:
+                  - /url: /rdts/crear?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+                - link [ref=f43e175] [cursor=pointer]:
+                  - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=subir-rdt
+                - link [ref=f43e181] [cursor=pointer]:
+                  - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=crear
+            - generic [ref=f43e187]:
+              - paragraph [ref=f43e188]: Servicio
+              - link [ref=f43e189] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic [ref=f43e193]:
+                - paragraph [ref=f43e194]: Acciones
+                - link [ref=f43e195] [cursor=pointer]:
+                  - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/editar
+                - link [ref=f43e200] [cursor=pointer]:
+                  - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/checklist/editar
+        - generic [ref=f43e205]:
+          - generic [ref=f43e206]:
+            - link "Usuarios" [ref=f43e207] [cursor=pointer]:
+              - /url: /admin/usuarios?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "18" [ref=f43e593] [cursor=pointer]:
+              - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Configuraciones" [ref=f43e217] [cursor=pointer]:
+              - /url: /configuraciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - button "Cerrar sesión" [ref=f43e222]
+          - generic [ref=f43e226]:
+            - generic [ref=f43e227]: Ver como
+            - combobox [ref=f43e231]:
+              - option "Mi rol (Administrador)" [selected]
+              - option "Jefe de Proyectos"
+              - option "Jefe de Oficina Técnica"
+              - option "Supervisor de Oficina Técnica"
+              - option "Planner"
+              - option "Supervisor de Costos"
+              - option "Jefe de Costos"
+              - option "Supervisor Operativo"
+              - option "Supervisor de Logística"
+              - option "Supervisor de Administración"
+              - option "Supervisor SSOMA"
+              - option "Asistente"
+              - option "RRHH"
+              - option "Esteban Garcia Alvarez"
+              - option "Lopez Caceres Loayza"
+          - link "VP Victor Perez Contreras Administrador" [ref=f43e232] [cursor=pointer]:
+            - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - generic [ref=f43e233]: VP
+            - generic [ref=f43e234]:
+              - generic [ref=f43e235]: Victor Perez Contreras
+              - generic [ref=f43e236]: Administrador
+    - main [ref=f43e237]:
+      - generic [ref=f43e238]:
+        - generic [ref=f43e241]:
+          - generic [ref=f43e242]:
+            - link "Salir a Mi entorno" [ref=f43e243] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - heading "Crear RDT" [level=1] [ref=f43e244]
+            - paragraph [ref=f43e245]: Reporte diario de trabajo · PROM-GP-002
+          - group [ref=f43e246]:
+            - generic [ref=f43e247]:
+              - button "Guardar plantilla" [ref=f43e248]
+              - button "Cargar RDT al sistema" [ref=f43e253]
+            - paragraph [ref=f43e263]: 1.0 Identificación
+            - generic [ref=f43e264]:
+              - generic [ref=f43e265]:
+                - generic [ref=f43e266]: N° OT vigente
+                - combobox "N° OT vigente" [ref=f43e267]:
+                  - option "Elige el servicio…"
+                  - option "PS-0004 — Movimiento de tierra, e instalacion de bancoductos"
+                  - option "PS-0005 — TIE - IN"
+                  - option "PS-0006 — PRUEBA-F5B Servicio de verificacion" [selected]
+                  - option "PS-0007 — PRUEBA-F5B2 Servicio solo borrador"
+              - generic [ref=f43e268]:
+                - generic [ref=f43e269]: Cliente
+                - paragraph [ref=f43e270]: PRUEBA
+              - generic [ref=f43e271]:
+                - generic [ref=f43e272]: Fecha
+                - textbox "Fecha" [ref=f43e273]: 2026-10-01
+              - generic [ref=f43e274]:
+                - generic [ref=f43e275]: Turno
+                - combobox "Turno" [ref=f43e276]:
+                  - option "Día" [selected]
+                  - option "Noche"
+              - generic [ref=f43e277]:
+                - generic [ref=f43e278]: Especialidad
+                - textbox "Especialidad" [ref=f43e279]:
+                  - /placeholder: Civil, mecánica…
+              - generic [ref=f43e280]:
+                - generic [ref=f43e281]: Ubicación / área
+                - textbox "Ubicación / área" [ref=f43e282]
+              - generic [ref=f43e283]:
+                - generic [ref=f43e284]: Semana N°
+                - textbox "Semana N°" [ref=f43e285]
+              - generic [ref=f43e286]:
+                - generic [ref=f43e287]: Partidas del DP
+                - paragraph [ref=f43e288]: 48 disponibles
+              - generic [ref=f43e289]:
+                - generic [ref=f43e290]: Jornada laboral (h)
+                - textbox "Jornada laboral (h)" [ref=f43e291]: "8"
+            - generic [ref=f43e298]:
+              - paragraph [ref=f43e299]: 2.0 Reporte de avance
+              - button "Actividad" [ref=f43e300]
+            - table [ref=f43e303]:
+              - rowgroup [ref=f43e304]:
+                - row [ref=f43e305]:
+                  - columnheader "Ítem" [ref=f43e306]
+                  - columnheader "Partida del DP" [ref=f43e307]
+                  - columnheader "Descripción de la actividad" [ref=f43e308]
+                  - columnheader "WBS" [ref=f43e309]
+                  - columnheader "TA" [ref=f43e310]
+                  - columnheader "Unid." [ref=f43e311]
+                  - columnheader "Met. acum." [ref=f43e312]
+                  - columnheader "Avance real (%)" [ref=f43e313]
+                  - columnheader "Met. prog." [ref=f43e314]
+                  - columnheader "Met. ejec." [ref=f43e315]
+                  - columnheader "Restricciones" [ref=f43e316]
+                  - columnheader "CNC" [ref=f43e317]
+                  - columnheader "Quitar" [ref=f43e318]
+              - rowgroup [ref=f43e320]:
+                - row [ref=f43e321]:
+                  - cell "T1" [ref=f43e322]
+                  - cell [ref=f43e323]:
+                    - button "Elegir la actividad del Plan Maestro para T1" [ref=f43e324]:
+                      - generic [ref=f43e325]: — sin partida —
+                  - cell [ref=f43e326]:
+                    - textbox "Qué se hizo" [ref=f43e327]
+                  - cell "—" [ref=f43e328]
+                  - cell "D · Directo" [ref=f43e329]
+                  - cell "—" [ref=f43e330]
+                  - cell "—" [ref=f43e331]
+                  - cell "—" [ref=f43e332]
+                  - cell [ref=f43e333]:
+                    - textbox "Metrado programado de T1" [ref=f43e334]
+                  - cell [ref=f43e335]:
+                    - textbox "Metrado ejecutado de T1" [ref=f43e336]
+                  - cell [ref=f43e337]:
+                    - textbox "Restricciones de T1" [ref=f43e338]
+                  - cell "—" [ref=f43e339]:
+                    - combobox "CNC de T1" [ref=f43e340]:
+                      - option "—" [selected]
+                      - option "Falta de capacitación específica."
+                      - option "Falta de movilidad"
+                      - option "Planificación y programación inadecuadas."
+                      - option "Falta de suministro oportuno de materiales."
+                      - option "Cambios en el diseño o alcance del proyecto."
+                      - option "Condiciones climáticas adversas."
+                      - option "Mano de obra insuficiente."
+                      - option "Mano de obra no calificada"
+                      - option "Uso de materiales inadecuados o de baja calidad."
+                      - option "Mala comunicación y coordinación entre equipos."
+                      - option "Demoras en permisos y aprobaciones legales."
+                      - option "Falta de equipos y herramientas"
+                  - cell [ref=f43e341]:
+                    - button "Quitar la actividad T1" [ref=f43e342]
+            - generic [ref=f43e346]:
+              - paragraph [ref=f43e347]: 3.0 Tareo de personal · HH por actividad
+              - button "Persona" [ref=f43e348]
+            - table [ref=f43e351]:
+              - rowgroup [ref=f43e352]:
+                - row [ref=f43e353]:
+                  - columnheader "#" [ref=f43e354]
+                  - columnheader "Persona" [ref=f43e355]
+                  - columnheader "DNI" [ref=f43e356]
+                  - columnheader "Apellidos y nombres" [ref=f43e357]
+                  - columnheader "Cargo" [ref=f43e358]
+                  - columnheader "Especialidad" [ref=f43e359]
+                  - columnheader "T1" [ref=f43e360]
+                  - columnheader "Total" [ref=f43e361]
+                  - columnheader [ref=f43e362]
+              - rowgroup [ref=f43e363]:
+                - row [ref=f43e364]:
+                  - cell "1" [ref=f43e365]
+                  - cell "Elige la persona…" [ref=f43e366]:
+                    - combobox [ref=f43e367]:
+                      - option "Elige la persona…" [selected]
+                      - option "ABRAN CASTRO LEON"
+                      - option "BRAULIO HUAMAN DIAZ"
+                      - option "CAYO GUTIERREZ JUAN WILFREDO"
+                      - option "CIRO ALEXANDER CALACHIHUA HUAYCHAY"
+                      - option "HECTOR GALVEZ RAVINES"
+                      - option "JOSE ALFREDO COTRINA ALTAMIRANO"
+                      - option "JOSHUA MANUEL HUMBERTO FARIAS ULFE"
+                      - option "MOISES JUAN ALVAREZ CRESPO"
+                      - option "PEREZ CONTRERA VICTOR RAUL"
+                      - option "PORFIRIO JOSE ROMUCHO HUAMAN"
+                      - option "RICHARD FELIX GARRIAZO OSCO"
+                      - option "RONALD MARTIN ALVARADO AGREDA"
+                      - option "SANDRO LUIS BARDALES TRUJILLO"
+                      - option "ZOILA JEAN PACAYA"
+                      - option "+ Agregar trabajador no listado"
+                  - cell [ref=f43e368]:
+                    - textbox [ref=f43e369]
+                  - cell [ref=f43e370]:
+                    - textbox [ref=f43e371]
+                  - cell [ref=f43e372]:
+                    - combobox [ref=f43e373]
+                  - cell [ref=f43e374]:
+                    - textbox "Civil, SSOMA… (opcional)" [ref=f43e375]
+                  - cell [ref=f43e376]:
+                    - textbox [ref=f43e377]
+                  - cell "0" [ref=f43e378]
+                  - cell [ref=f43e379]:
+                    - button "Quitar persona" [ref=f43e380]
+                - row [ref=f43e384]:
+                  - cell "Total HH" [ref=f43e385]
+                  - cell "0" [ref=f43e386]
+                  - cell "0" [ref=f43e387]
+                  - cell [ref=f43e388]
+            - generic [ref=f43e389]:
+              - generic [ref=f43e390]:
+                - generic [ref=f43e391]:
+                  - paragraph [ref=f43e392]: Equipos · HM del día
+                  - button "Equipo" [ref=f43e393]
+                - table [ref=f43e396]:
+                  - rowgroup [ref=f43e397]:
+                    - row [ref=f43e398]:
+                      - columnheader "Equipo" [ref=f43e399]
+                      - columnheader "WBS" [ref=f43e400]
+                      - columnheader "HM" [ref=f43e401]
+                      - columnheader [ref=f43e402]
+                  - rowgroup [ref=f43e403]:
+                    - row [ref=f43e404]:
+                      - cell "Elige el equipo…" [ref=f43e405]:
+                        - combobox [ref=f43e406]:
+                          - option "Elige el equipo…" [selected]
+                          - option "CAMION BARANDA"
+                          - option "CAMION VOLQUETE DE 15 M3"
+                          - option "ESCALERA CON PLATAFORMA"
+                          - option "GRUPO ELECTROGENO 11KW"
+                          - option "MEZCLADOR PARA PINTURA"
+                          - option "MINICARGADOR 70 HP 0.5 YD3"
+                          - option "ROTOMARTILLO"
+                          - option "TALADRO INALAMBRICO"
+                          - option "VIBRO APISONADOR"
+                          - option "ESMERIL ANGULAR 4 1/2\""
+                          - option "ESMERIL ANGULAR 7\""
+                          - option "MAQUINA DE SOLDAR"
+                          - option "MAQUINA DE TERMOFUSION HDPE (ALQUILER)"
+                          - option "+ Agregar equipo no listado (solo este RDT)"
+                      - cell [ref=f43e407]:
+                        - button "Elegir la partida (WBS) del equipo" [ref=f43e408]: —
+                      - cell [ref=f43e409]:
+                        - textbox [ref=f43e410]
+                      - cell [ref=f43e411]:
+                        - button "Quitar equipo" [ref=f43e412]
+                    - row [ref=f43e416]:
+                      - cell "Total HM" [ref=f43e417]
+                      - cell "0" [ref=f43e418]
+                      - cell [ref=f43e419]
+              - generic [ref=f43e420]:
+                - generic [ref=f43e421]:
+                  - paragraph [ref=f43e422]: Materiales · informativo
+                  - button "Material" [ref=f43e423]
+                - paragraph [ref=f43e425]: No se cuantifica ni se suma a ningún acumulado, es solo para tener el dato a mano.
+                - table [ref=f43e427]:
+                  - rowgroup [ref=f43e428]:
+                    - row [ref=f43e429]:
+                      - columnheader "Descripción" [ref=f43e430]
+                      - columnheader "WBS" [ref=f43e431]
+                      - columnheader "Und." [ref=f43e432]
+                      - columnheader "Cantidad" [ref=f43e433]
+                      - columnheader [ref=f43e434]
+                  - rowgroup [ref=f43e435]:
+                    - row [ref=f43e436]:
+                      - cell [ref=f43e437]:
+                        - textbox "Qué material" [ref=f43e438]
+                      - cell [ref=f43e439]:
+                        - button "Elegir la partida (WBS) del material" [ref=f43e440]: —
+                      - cell [ref=f43e441]:
+                        - textbox [ref=f43e442]
+                      - cell [ref=f43e443]:
+                        - textbox [ref=f43e444]
+                      - cell [ref=f43e445]:
+                        - button "Quitar material" [ref=f43e446]
+                - paragraph [ref=f43e450]: Observaciones
+                - textbox [ref=f43e451]
+          - dialog [ref=f43e596]:
+            - generic [ref=f43e597]:
+              - heading "Elegir actividad del Plan Maestro" [level=2] [ref=f43e598]
+              - button "Cerrar el selector" [ref=f43e599]
+            - generic [ref=f43e603]:
+              - generic [ref=f43e604]:
+                - generic [ref=f43e605]: Buscar partida o paquete
+                - searchbox "Buscar partida o paquete" [active] [ref=f43e606]
+                - button "Plegar todo" [ref=f43e607]
+                - button "Expandir todo" [ref=f43e608]
+              - paragraph [ref=f43e609]: "Avance real acumulado: 0 % sin ejecutar (texto normal) · en curso (mayor que 0 y menor que 100 %) · ✓ 100 % completada. El número siempre va escrito."
+              - generic [ref=f43e610]:
+                - generic [ref=f43e611]: Sin partida del Plan Maestro horas que no suman avance
+                - generic [ref=f43e612]:
+                  - generic [ref=f43e613]: "Actividad contributoria (C): se carga a una partida declarada hoy"
+                  - button "Contributoria" [ref=f43e614]
+                - generic [ref=f43e615]:
+                  - generic [ref=f43e616]: Actividad no contributoria (NC)
+                  - button "No contributoria" [ref=f43e617]
+              - generic [ref=f43e618]:
+                - generic [ref=f43e619]:
+                  - button "Plegar el paquete PRUEBA-sonda" [expanded] [ref=f43e620]
+                  - generic [ref=f43e623]: Paquete
+                  - generic [ref=f43e624]: PT-001 · PRUEBA-sonda por partidas
+                  - generic [ref=f43e625]: Avance del paquete
+                  - generic [ref=f43e626]: 0 %
+                - generic [ref=f43e627]:
+                  - generic [ref=f43e628]: 1.1.1
+                  - generic [ref=f43e629]: MOVILIZACIÓN Y DESMOVILIZACION DE PERSONAL
+                  - generic [ref=f43e630]: MES · 1.5
+                  - 'progressbar "Avance real acumulado de MOVILIZACIÓN Y DESMOVILIZACION DE PERSONAL: 0 %" [ref=f43e631]'
+                  - generic [ref=f43e632]: 0 %
+                  - button "Elegir la partida MOVILIZACIÓN Y DESMOVILIZACION DE PERSONAL" [ref=f43e633]: Elegir
+              - generic [ref=f43e634]:
+                - generic [ref=f43e635]: Partidas directas sin paquete
+                - generic [ref=f43e636]:
+                  - generic [ref=f43e637]: 1.1.2
+                  - generic [ref=f43e638]: MOVILIZACION Y DESMOVILIZACION DE EQUIPOS, HERRAMIENTAS Y MATERIALES
+                  - generic [ref=f43e639]: VJE · 4
+                  - 'progressbar "Avance real acumulado de MOVILIZACION Y DESMOVILIZACION DE EQUIPOS, HERRAMIENTAS Y MATERIALES: 0 %" [ref=f43e640]'
+                  - generic [ref=f43e641]: 0 %
+                  - button "Elegir la partida MOVILIZACION Y DESMOVILIZACION DE EQUIPOS, HERRAMIENTAS Y MATERIALES" [ref=f43e642]: Elegir
+                - generic [ref=f43e643]:
+                  - generic [ref=f43e644]: 1.1.3
+                  - generic [ref=f43e645]: SEGURIDAD Y SEÑALIZACION DE PROYECTO
+                  - generic [ref=f43e646]: MES · 1.5
+                  - 'progressbar "Avance real acumulado de SEGURIDAD Y SEÑALIZACION DE PROYECTO: 0 %" [ref=f43e647]'
+                  - generic [ref=f43e648]: 0 %
+                  - button "Elegir la partida SEGURIDAD Y SEÑALIZACION DE PROYECTO" [ref=f43e649]: Elegir
+                - generic [ref=f43e650]:
+                  - generic [ref=f43e651]: 1.2.1.1
+                  - generic [ref=f43e652]: EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.6 X 1.00M
+                  - generic [ref=f43e653]: M3 · 11.52
+                  - 'progressbar "Avance real acumulado de EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.6 X 1.00M: 0 %" [ref=f43e654]'
+                  - generic [ref=f43e655]: 0 %
+                  - button "Elegir la partida EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.6 X 1.00M" [ref=f43e656]: Elegir
+                - generic [ref=f43e657]:
+                  - generic [ref=f43e658]: 1.2.1.2
+                  - generic [ref=f43e659]: PERFILADO Y NIVELACION DE TERRENO
+                  - generic [ref=f43e660]: ML · 24
+                  - 'progressbar "Avance real acumulado de PERFILADO Y NIVELACION DE TERRENO: 0 %" [ref=f43e661]'
+                  - generic [ref=f43e662]: 0 %
+                  - button "Elegir la partida PERFILADO Y NIVELACION DE TERRENO" [ref=f43e663]: Elegir
+                - generic [ref=f43e664]:
+                  - generic [ref=f43e665]: 1.2.1.3
+                  - generic [ref=f43e666]: COLOCACION DE CAMA DE ARENA E=0.20
+                  - generic [ref=f43e667]: ML · 24
+                  - 'progressbar "Avance real acumulado de COLOCACION DE CAMA DE ARENA E=0.20: 0 %" [ref=f43e668]'
+                  - generic [ref=f43e669]: 0 %
+                  - button "Elegir la partida COLOCACION DE CAMA DE ARENA E=0.20" [ref=f43e670]: Elegir
+                - generic [ref=f43e671]:
+                  - generic [ref=f43e672]: 1.2.1.4
+                  - generic [ref=f43e673]: FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M
+                  - generic [ref=f43e674]: UND · 24
+                  - 'progressbar "Avance real acumulado de FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M: 0 %" [ref=f43e675]'
+                  - generic [ref=f43e676]: 0 %
+                  - button "Elegir la partida FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f43e677]: Elegir
+                - generic [ref=f43e678]:
+                  - generic [ref=f43e679]: 1.2.1.5
+                  - generic [ref=f43e680]: INSTALACIÓN DE BANCODUCTOS
+                  - generic [ref=f43e681]: UND · 24
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BANCODUCTOS: 0 %" [ref=f43e682]'
+                  - generic [ref=f43e683]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BANCODUCTOS" [ref=f43e684]: Elegir
+                - generic [ref=f43e685]:
+                  - generic [ref=f43e686]: 1.2.1.6
+                  - generic [ref=f43e687]: SUMINISTRO DE AFIRMADO
+                  - generic [ref=f43e688]: M3 · 5.76
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE AFIRMADO: 0 %" [ref=f43e689]'
+                  - generic [ref=f43e690]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE AFIRMADO" [ref=f43e691]: Elegir
+                - generic [ref=f43e692]:
+                  - generic [ref=f43e693]: 1.2.1.7
+                  - generic [ref=f43e694]: RELLENO Y COMPACTACION EN CAPAS DE 200MM
+                  - generic [ref=f43e695]: M3 · 11.52
+                  - 'progressbar "Avance real acumulado de RELLENO Y COMPACTACION EN CAPAS DE 200MM: 0 %" [ref=f43e696]'
+                  - generic [ref=f43e697]: 0 %
+                  - button "Elegir la partida RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f43e698]: Elegir
+                - generic [ref=f43e699]:
+                  - generic [ref=f43e700]: 1.2.1.8
+                  - generic [ref=f43e701]: ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM
+                  - generic [ref=f43e702]: M3 · 11.52
+                  - 'progressbar "Avance real acumulado de ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM: 0 %" [ref=f43e703]'
+                  - generic [ref=f43e704]: 0 %
+                  - button "Elegir la partida ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f43e705]: Elegir
+                - generic [ref=f43e706]:
+                  - generic [ref=f43e707]: 1.2.2.1
+                  - generic [ref=f43e708]: EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M
+                  - generic [ref=f43e709]: M3 · 76.8
+                  - 'progressbar "Avance real acumulado de EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M: 0 %" [ref=f43e710]'
+                  - generic [ref=f43e711]: 0 %
+                  - button "Elegir la partida EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M" [ref=f43e712]: Elegir
+                - generic [ref=f43e713]:
+                  - generic [ref=f43e714]: 1.2.2.2
+                  - generic [ref=f43e715]: PERFILADO Y NIVELACION DE TERRENO
+                  - generic [ref=f43e716]: ML · 160
+                  - 'progressbar "Avance real acumulado de PERFILADO Y NIVELACION DE TERRENO: 0 %" [ref=f43e717]'
+                  - generic [ref=f43e718]: 0 %
+                  - button "Elegir la partida PERFILADO Y NIVELACION DE TERRENO" [ref=f43e719]: Elegir
+                - generic [ref=f43e720]:
+                  - generic [ref=f43e721]: 1.2.2.3
+                  - generic [ref=f43e722]: COLOCACION DE CAMA DE ARENA E=0.20
+                  - generic [ref=f43e723]: ML · 160
+                  - 'progressbar "Avance real acumulado de COLOCACION DE CAMA DE ARENA E=0.20: 0 %" [ref=f43e724]'
+                  - generic [ref=f43e725]: 0 %
+                  - button "Elegir la partida COLOCACION DE CAMA DE ARENA E=0.20" [ref=f43e726]: Elegir
+                - generic [ref=f43e727]:
+                  - generic [ref=f43e728]: 1.2.2.4
+                  - generic [ref=f43e729]: FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M
+                  - generic [ref=f43e730]: UND · 160
+                  - 'progressbar "Avance real acumulado de FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M: 0 %" [ref=f43e731]'
+                  - generic [ref=f43e732]: 0 %
+                  - button "Elegir la partida FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f43e733]: Elegir
+                - generic [ref=f43e734]:
+                  - generic [ref=f43e735]: 1.2.2.5
+                  - generic [ref=f43e736]: INSTALACIÓN DE BANCODUCTOS
+                  - generic [ref=f43e737]: UND · 160
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BANCODUCTOS: 0 %" [ref=f43e738]'
+                  - generic [ref=f43e739]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BANCODUCTOS" [ref=f43e740]: Elegir
+                - generic [ref=f43e741]:
+                  - generic [ref=f43e742]: 1.2.2.6
+                  - generic [ref=f43e743]: SUMINISTRO DE AFIRMADO
+                  - generic [ref=f43e744]: M3 · 38.4
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE AFIRMADO: 0 %" [ref=f43e745]'
+                  - generic [ref=f43e746]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE AFIRMADO" [ref=f43e747]: Elegir
+                - generic [ref=f43e748]:
+                  - generic [ref=f43e749]: 1.2.2.7
+                  - generic [ref=f43e750]: RELLENO Y COMPACTACION EN CAPAS DE 200MM
+                  - generic [ref=f43e751]: M3 · 76.8
+                  - 'progressbar "Avance real acumulado de RELLENO Y COMPACTACION EN CAPAS DE 200MM: 0 %" [ref=f43e752]'
+                  - generic [ref=f43e753]: 0 %
+                  - button "Elegir la partida RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f43e754]: Elegir
+                - generic [ref=f43e755]:
+                  - generic [ref=f43e756]: 1.2.2.8
+                  - generic [ref=f43e757]: ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM
+                  - generic [ref=f43e758]: M3 · 76.8
+                  - 'progressbar "Avance real acumulado de ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM: 0 %" [ref=f43e759]'
+                  - generic [ref=f43e760]: 0 %
+                  - button "Elegir la partida ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f43e761]: Elegir
+                - generic [ref=f43e762]:
+                  - generic [ref=f43e763]: 1.2.3.1
+                  - generic [ref=f43e764]: SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M
+                  - generic [ref=f43e765]: UND · 8
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M: 0 %" [ref=f43e766]'
+                  - generic [ref=f43e767]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M" [ref=f43e768]: Elegir
+                - generic [ref=f43e769]:
+                  - generic [ref=f43e770]: 1.2.3.2
+                  - generic [ref=f43e771]: INSTALACIÓN DE BUZON DE PASO
+                  - generic [ref=f43e772]: UND · 8
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BUZON DE PASO: 0 %" [ref=f43e773]'
+                  - generic [ref=f43e774]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BUZON DE PASO" [ref=f43e775]: Elegir
+                - generic [ref=f43e776]:
+                  - generic [ref=f43e777]: 1.2.4.1
+                  - generic [ref=f43e778]: SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS
+                  - generic [ref=f43e779]: GLB · 1
+                  - 'progressbar "Avance real acumulado de SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS: 0 %" [ref=f43e780]'
+                  - generic [ref=f43e781]: 0 %
+                  - button "Elegir la partida SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS" [ref=f43e782]: Elegir
+                - generic [ref=f43e783]:
+                  - generic [ref=f43e784]: 1.2.4.2
+                  - generic [ref=f43e785]: INSTALACIÓN DE TUBERIA FLEXIBLE
+                  - generic [ref=f43e786]: ML · 165
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE TUBERIA FLEXIBLE: 0 %" [ref=f43e787]'
+                  - generic [ref=f43e788]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE TUBERIA FLEXIBLE" [ref=f43e789]: Elegir
+                - generic [ref=f43e790]:
+                  - generic [ref=f43e791]: 1.3.1.1
+                  - generic [ref=f43e792]: EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 1.00M
+                  - generic [ref=f43e793]: M3 · 14.4
+                  - 'progressbar "Avance real acumulado de EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 1.00M: 0 %" [ref=f43e794]'
+                  - generic [ref=f43e795]: 0 %
+                  - button "Elegir la partida EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 1.00M" [ref=f43e796]: Elegir
+                - generic [ref=f43e797]:
+                  - generic [ref=f43e798]: 1.3.1.2
+                  - generic [ref=f43e799]: PERFILADO Y NIVELACION DE TERRENO
+                  - generic [ref=f43e800]: ML · 24
+                  - 'progressbar "Avance real acumulado de PERFILADO Y NIVELACION DE TERRENO: 0 %" [ref=f43e801]'
+                  - generic [ref=f43e802]: 0 %
+                  - button "Elegir la partida PERFILADO Y NIVELACION DE TERRENO" [ref=f43e803]: Elegir
+                - generic [ref=f43e804]:
+                  - generic [ref=f43e805]: 1.3.1.3
+                  - generic [ref=f43e806]: COLOCACION DE CAMA DE ARENA E=0.20
+                  - generic [ref=f43e807]: ML · 24
+                  - 'progressbar "Avance real acumulado de COLOCACION DE CAMA DE ARENA E=0.20: 0 %" [ref=f43e808]'
+                  - generic [ref=f43e809]: 0 %
+                  - button "Elegir la partida COLOCACION DE CAMA DE ARENA E=0.20" [ref=f43e810]: Elegir
+                - generic [ref=f43e811]:
+                  - generic [ref=f43e812]: 1.3.1.4
+                  - generic [ref=f43e813]: FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M
+                  - generic [ref=f43e814]: UND · 24
+                  - 'progressbar "Avance real acumulado de FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M: 0 %" [ref=f43e815]'
+                  - generic [ref=f43e816]: 0 %
+                  - button "Elegir la partida FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f43e817]: Elegir
+                - generic [ref=f43e818]:
+                  - generic [ref=f43e819]: 1.3.1.5
+                  - generic [ref=f43e820]: INSTALACIÓN DE BANCODUCTOS
+                  - generic [ref=f43e821]: UND · 24
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BANCODUCTOS: 0 %" [ref=f43e822]'
+                  - generic [ref=f43e823]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BANCODUCTOS" [ref=f43e824]: Elegir
+                - generic [ref=f43e825]:
+                  - generic [ref=f43e826]: 1.3.1.6
+                  - generic [ref=f43e827]: SUMINISTRO DE AFIRMADO
+                  - generic [ref=f43e828]: M3 · 7.2
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE AFIRMADO: 0 %" [ref=f43e829]'
+                  - generic [ref=f43e830]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE AFIRMADO" [ref=f43e831]: Elegir
+                - generic [ref=f43e832]:
+                  - generic [ref=f43e833]: 1.3.1.7
+                  - generic [ref=f43e834]: RELLENO Y COMPACTACION EN CAPAS DE 200MM
+                  - generic [ref=f43e835]: M3 · 14.4
+                  - 'progressbar "Avance real acumulado de RELLENO Y COMPACTACION EN CAPAS DE 200MM: 0 %" [ref=f43e836]'
+                  - generic [ref=f43e837]: 0 %
+                  - button "Elegir la partida RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f43e838]: Elegir
+                - generic [ref=f43e839]:
+                  - generic [ref=f43e840]: 1.3.1.8
+                  - generic [ref=f43e841]: ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM
+                  - generic [ref=f43e842]: M3 · 14.4
+                  - 'progressbar "Avance real acumulado de ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM: 0 %" [ref=f43e843]'
+                  - generic [ref=f43e844]: 0 %
+                  - button "Elegir la partida ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f43e845]: Elegir
+                - generic [ref=f43e846]:
+                  - generic [ref=f43e847]: 1.3.2.1
+                  - generic [ref=f43e848]: EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M
+                  - generic [ref=f43e849]: M3 · 92.16
+                  - 'progressbar "Avance real acumulado de EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M: 0 %" [ref=f43e850]'
+                  - generic [ref=f43e851]: 0 %
+                  - button "Elegir la partida EXCAVACIÓN DE ZANJA CON RETROEXCAVADORA 0.60 X 0.80M" [ref=f43e852]: Elegir
+                - generic [ref=f43e853]:
+                  - generic [ref=f43e854]: 1.3.2.2
+                  - generic [ref=f43e855]: PERFILADO Y NIVELACION DE TERRENO
+                  - generic [ref=f43e856]: ML · 192
+                  - 'progressbar "Avance real acumulado de PERFILADO Y NIVELACION DE TERRENO: 0 %" [ref=f43e857]'
+                  - generic [ref=f43e858]: 0 %
+                  - button "Elegir la partida PERFILADO Y NIVELACION DE TERRENO" [ref=f43e859]: Elegir
+                - generic [ref=f43e860]:
+                  - generic [ref=f43e861]: 1.3.2.3
+                  - generic [ref=f43e862]: COLOCACION DE CAMA DE ARENA E=0.20
+                  - generic [ref=f43e863]: ML · 192
+                  - 'progressbar "Avance real acumulado de COLOCACION DE CAMA DE ARENA E=0.20: 0 %" [ref=f43e864]'
+                  - generic [ref=f43e865]: 0 %
+                  - button "Elegir la partida COLOCACION DE CAMA DE ARENA E=0.20" [ref=f43e866]: Elegir
+                - generic [ref=f43e867]:
+                  - generic [ref=f43e868]: 1.3.2.4
+                  - generic [ref=f43e869]: FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M
+                  - generic [ref=f43e870]: UND · 192
+                  - 'progressbar "Avance real acumulado de FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M: 0 %" [ref=f43e871]'
+                  - generic [ref=f43e872]: 0 %
+                  - button "Elegir la partida FABRICACIÓN DE BANCO DUCTOS 0.20 X 0.20 X 1.00M" [ref=f43e873]: Elegir
+                - generic [ref=f43e874]:
+                  - generic [ref=f43e875]: 1.3.2.5
+                  - generic [ref=f43e876]: INSTALACIÓN DE BANCODUCTOS
+                  - generic [ref=f43e877]: UND · 192
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BANCODUCTOS: 0 %" [ref=f43e878]'
+                  - generic [ref=f43e879]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BANCODUCTOS" [ref=f43e880]: Elegir
+                - generic [ref=f43e881]:
+                  - generic [ref=f43e882]: 1.3.2.6
+                  - generic [ref=f43e883]: SUMINISTRO DE AFIRMADO
+                  - generic [ref=f43e884]: M3 · 46.08
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE AFIRMADO: 0 %" [ref=f43e885]'
+                  - generic [ref=f43e886]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE AFIRMADO" [ref=f43e887]: Elegir
+                - generic [ref=f43e888]:
+                  - generic [ref=f43e889]: 1.3.2.7
+                  - generic [ref=f43e890]: RELLENO Y COMPACTACION EN CAPAS DE 200MM
+                  - generic [ref=f43e891]: M3 · 92.16
+                  - 'progressbar "Avance real acumulado de RELLENO Y COMPACTACION EN CAPAS DE 200MM: 0 %" [ref=f43e892]'
+                  - generic [ref=f43e893]: 0 %
+                  - button "Elegir la partida RELLENO Y COMPACTACION EN CAPAS DE 200MM" [ref=f43e894]: Elegir
+                - generic [ref=f43e895]:
+                  - generic [ref=f43e896]: 1.3.2.8
+                  - generic [ref=f43e897]: ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM
+                  - generic [ref=f43e898]: M3 · 92.16
+                  - 'progressbar "Avance real acumulado de ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM: 0 %" [ref=f43e899]'
+                  - generic [ref=f43e900]: 0 %
+                  - button "Elegir la partida ELIMINACION DE MATERIAL EXCEDENTE D= 5 KM" [ref=f43e901]: Elegir
+                - generic [ref=f43e902]:
+                  - generic [ref=f43e903]: 1.3.3.1
+                  - generic [ref=f43e904]: SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M
+                  - generic [ref=f43e905]: UND · 8
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M: 0 %" [ref=f43e906]'
+                  - generic [ref=f43e907]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE BUZON DE PASO 0.60 X 0.60 X 0.80M" [ref=f43e908]: Elegir
+                - generic [ref=f43e909]:
+                  - generic [ref=f43e910]: 1.3.3.2
+                  - generic [ref=f43e911]: INSTALACIÓN DE BUZON DE PASO
+                  - generic [ref=f43e912]: UND · 8
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE BUZON DE PASO: 0 %" [ref=f43e913]'
+                  - generic [ref=f43e914]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE BUZON DE PASO" [ref=f43e915]: Elegir
+                - generic [ref=f43e916]:
+                  - generic [ref=f43e917]: 1.3.4.1
+                  - generic [ref=f43e918]: SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS
+                  - generic [ref=f43e919]: GLB · 1
+                  - 'progressbar "Avance real acumulado de SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS: 0 %" [ref=f43e920]'
+                  - generic [ref=f43e921]: 0 %
+                  - button "Elegir la partida SUMINISTRO TUBERÍA CONDUIT FLEXIBLE CON FORRO DE PVC LIQUID TIGHT 2″ Y ACCESORIOS" [ref=f43e922]: Elegir
+                - generic [ref=f43e923]:
+                  - generic [ref=f43e924]: 1.3.4.2
+                  - generic [ref=f43e925]: INSTALACIÓN DE TUBERIA FLEXIBLE
+                  - generic [ref=f43e926]: ML · 170
+                  - 'progressbar "Avance real acumulado de INSTALACIÓN DE TUBERIA FLEXIBLE: 0 %" [ref=f43e927]'
+                  - generic [ref=f43e928]: 0 %
+                  - button "Elegir la partida INSTALACIÓN DE TUBERIA FLEXIBLE" [ref=f43e929]: Elegir
+                - generic [ref=f43e930]:
+                  - generic [ref=f43e931]: 1.4.1
+                  - generic [ref=f43e932]: TENDIDO DE CABLE COAXIAL
+                  - generic [ref=f43e933]: ML · 765
+                  - 'progressbar "Avance real acumulado de TENDIDO DE CABLE COAXIAL: 0 %" [ref=f43e934]'
+                  - generic [ref=f43e935]: 0 %
+                  - button "Elegir la partida TENDIDO DE CABLE COAXIAL" [ref=f43e936]: Elegir
+                - generic [ref=f43e937]:
+                  - generic [ref=f43e938]: 1.5.1
+                  - generic [ref=f43e939]: MOVILIZACIÓN Y DESCARGA DE BANCO DUCTOS
+                  - generic [ref=f43e940]: VJE · 8
+                  - 'progressbar "Avance real acumulado de MOVILIZACIÓN Y DESCARGA DE BANCO DUCTOS: 0 %" [ref=f43e941]'
+                  - generic [ref=f43e942]: 0 %
+                  - button "Elegir la partida MOVILIZACIÓN Y DESCARGA DE BANCO DUCTOS" [ref=f43e943]: Elegir
+                - generic [ref=f43e944]:
+                  - generic [ref=f43e945]: 1.6.1
+                  - generic [ref=f43e946]: DESCARGA / ACARREO DE BANCODUCTOS CON MINICARGADOR (INCL. OPERADOR Y VIGIA)
+                  - generic [ref=f43e947]: DIA · 45
+                  - 'progressbar "Avance real acumulado de DESCARGA / ACARREO DE BANCODUCTOS CON MINICARGADOR (INCL. OPERADOR Y VIGIA): 0 %" [ref=f43e948]'
+                  - generic [ref=f43e949]: 0 %
+                  - button "Elegir la partida DESCARGA / ACARREO DE BANCODUCTOS CON MINICARGADOR (INCL. OPERADOR Y VIGIA)" [ref=f43e950]: Elegir
+                - generic [ref=f43e951]:
+                  - generic [ref=f43e952]: 1.7.1
+                  - generic [ref=f43e953]: SUMINISTRO DE PARIHUELAS PARA ALMACENAMIENTO
+                  - generic [ref=f43e954]: UND · 45
+                  - 'progressbar "Avance real acumulado de SUMINISTRO DE PARIHUELAS PARA ALMACENAMIENTO: 0 %" [ref=f43e955]'
+                  - generic [ref=f43e956]: 0 %
+                  - button "Elegir la partida SUMINISTRO DE PARIHUELAS PARA ALMACENAMIENTO" [ref=f43e957]: Elegir
+                - generic [ref=f43e958]:
+                  - generic [ref=f43e959]: 1.8.1
+                  - generic [ref=f43e960]: TRAZO Y REPLANTEO CON ESTACIÓN TOTAL
+                  - generic [ref=f43e961]: MES · 1.5
+                  - 'progressbar "Avance real acumulado de TRAZO Y REPLANTEO CON ESTACIÓN TOTAL: 0 %" [ref=f43e962]'
+                  - generic [ref=f43e963]: 0 %
+                  - button "Elegir la partida TRAZO Y REPLANTEO CON ESTACIÓN TOTAL" [ref=f43e964]: Elegir
+        - button "Asistente" [ref=f43e452]
+    - complementary [ref=f43e455]:
+      - button "Ocultar panel derecho" [expanded] [ref=f43e456]
+      - generic [ref=f43e460]:
+        - generic [ref=f43e461]:
+          - paragraph [ref=f43e462]: Accesos rápidos
+          - generic [ref=f43e463]:
+            - generic "Sin pantalla todavía" [ref=f43e464]: Tareo MOI
+            - generic "Sin pantalla todavía" [ref=f43e468]: Pets
+            - generic "Sin pantalla todavía" [ref=f43e472]: Acta de conformidad
+            - generic "Sin pantalla todavía" [ref=f43e477]: Status de servicios
+            - link "Requerimiento" [ref=f43e480] [cursor=pointer]:
+              - /url: /requerimientos?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Consolidado RQ" [ref=f43e487] [cursor=pointer]:
+              - /url: /logistica/consolidado-rq?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+            - link "Subir RDTs Acción" [ref=f43e491] [cursor=pointer]:
+              - /url: /mi-entorno?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c&accion=subir-rdt
+              - text: Subir RDTs
+              - generic [ref=f43e496]: Acción
+        - paragraph [ref=f43e497]: Grupos del servicio
+        - generic [ref=f43e498]:
+          - generic [ref=f43e499]:
+            - button "Planificación" [expanded] [ref=f43e500]
+            - generic [ref=f43e503]:
+              - link [ref=f43e504] [cursor=pointer]:
+                - /url: /notificaciones?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e511] [cursor=pointer]:
+                - /url: /cronograma?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e515] [cursor=pointer]:
+                - /url: /paquetes-trabajo?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - link [ref=f43e521] [cursor=pointer]:
+                - /url: /plan-maestro?proyectoId=51f5905b-6198-46b3-a3d3-abd4793c0e7c
+              - generic "Sin pantalla todavía" [ref=f43e525]: 3WLA
+              - generic "Sin pantalla todavía" [ref=f43e529]: Programación diaria
+              - link [ref=f43e533] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/pr
+              - link [ref=f43e538] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/dashboard
+              - link [ref=f43e545] [cursor=pointer]:
+                - /url: /proyectos/51f5905b-6198-46b3-a3d3-abd4793c0e7c/curva-s
+              - generic "Sin pantalla todavía" [ref=f43e550]: Status de capacitaciones
+              - generic "Sin pantalla todavía" [ref=f43e555]: Programación de capacitaciones
+          - button "Costos" [ref=f43e561]
+          - button "Supervisión operativa" [ref=f43e565]
+          - button "Logística" [ref=f43e569]
+          - button "Oficina Técnica" [ref=f43e573]
+          - button "Administración" [ref=f43e577]
+          - button "SSOMA" [ref=f43e581]
+  - button "Open Next.js Dev Tools" [ref=f43e589] [cursor=pointer]
+  - alert [ref=f43e965]

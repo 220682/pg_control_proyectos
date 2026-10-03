@@ -160,6 +160,13 @@ Después: **Auditor** (informe propio en `04-auditoria/`, clasifica hallazgos), 
 - Validación: `tsc` exit 0 · vitest 174/174 (12 archivos) · verificación en vivo 12/12 + cadena de impacto contada a mano en PS-0009. Detalle en [`briefs/resultados/G.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/G.md).
 - **Pendiente que pasa a la Tanda F:** el aviso anticipa el reposicionamiento automático de RDT (regla confirmada 4) y el PATCH hoy no lo implementa.
 
+### Ajustes operativos de la continuación (registro de política/modelos)
+
+- Victor: «continúa hasta cerrar» (2026-10-02) — autoriza seguir E, F, Auditor, Documentador y cierre sin aprobaciones intermedias, salvo Gate 2 (merge) y lo que bloquea la política (Max, esfuerzo alto, destructivos).
+- **Modelos:** `qwen3.8-plus` **no existe en opencode** (solo `qwen3.7-plus`, `qwen3.8-flash`, `qwen3.8-max`; verificado al intentar lanzar el Worker G — error del harness, mismo que frenó al orquestador anterior). Los Workers de E y F correrán en **`qwen3.8-flash`** (default de Worker en la política). No se usa Max (requiere aprobación y Victor no la pidió). Si flash no basta en alguna tanda, el Orquestador suspende y escala.
+- **Migraciones `090`/`091`/`092`:** las aplican los Workers de sus tandas con el protocolo de migraciones autorizado por Victor (2026-09-30) — E aplica `091`; F aplica `090`→`092`. (Antes de este registro estaba previsto que las aplicara Victor; no las había aplicado al retomar.)
+- Briefs actualizados: `briefs/E.md`, `briefs/F.md`.
+
 ## Libro de hallazgos (continuación)
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |

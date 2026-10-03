@@ -28,7 +28,8 @@ Varios Workers pueden terminar a la vez. Antes de aplicar, crea el archivo `resu
 
 ## Cómo aplicar (sin exponer credenciales)
 
-- Fuente: la carpeta `C:\Users\BRANDY\Downloads\DIARIO`, archivo `entorno_variable.txt`. Nombres de variable: `PR_DB_URL` (conexión directa) y `SUPABASE_ACCESS_TOKEN` (API de administración). El `.env.local` de la app **no sirve**: solo trae URL y llaves REST, que no crean tablas.
+- Fuente: la carpeta **`D:\1 Nueva carpeta\todo\DIARIO`**, archivo `enterno_variable.txt`. Nombres de variable: `PR_DB_URL` (conexión directa) y `SUPABASE_ACCESS_TOKEN` (API de administración). El `.env.local` de la app **no sirve**: solo trae URL y llaves REST, que no crean tablas.
+- **Ruta movida el 2026-10-03 (Victor).** Antes era `C:\Users\BRANDY\Downloads\DIARIO`, que ya no existe: un Worker que la use se detiene y avisa, no busca la credencial por su cuenta. La carpeta antigua contiene además `Git_rapido_commit_pull_push.md` y `Guia_variables_entorno_Supabase.md`.
 - Un script de un solo uso, **con nombre `migrar_<tanda>.py`** (para que la regla de permiso de Victor lo reconozca y sea estrecha), Python con `psycopg2` (ya instalado en esta máquina), guardado **fuera del repositorio** (carpeta temporal de la sesión) y **borrado al terminar**. Lee el valor de la variable dentro del proceso; **no lo imprime, no lo pasa como argumento de línea de comandos** y limpia los mensajes de error antes de mostrarlos.
 - **Nunca abras, muestres ni copies** `entorno_variable.txt`: ni `cat`, ni `grep` con valores, ni lo pegues en un resultado, brief, log, captura o commit. Solo se usan los nombres.
 - Cada archivo va **dentro de una transacción**: si falla, se revierte solo.

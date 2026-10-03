@@ -4,6 +4,8 @@
 
 Archivo (foto/PDF) ligado a una OT vigente. Fecha Lima `dd-mm-yyyy HH:mm`.
 
+**Catálogo de disciplinas (O10, Victor 2026-10-02):** ampliado de 5 a 8 disciplinas (migración `090`): Civil, Mecánica, Eléctrica, Instrumentación, Tuberías, **Preliminares**, **Cierre**, **Subcontratos**.
+
 **Quién puede qué** (fuente única: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); no se repiten aquí):
 
 * **Ver** Status de RDTs, Archivo de RDTs subidos y Consolidado RDTs: los 13 roles (no llevan datos económicos). Sin alcance por OT al leer (R30): el servicio de la URL solo preselecciona el filtro N° OT.

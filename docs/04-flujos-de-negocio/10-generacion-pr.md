@@ -4,6 +4,8 @@
 
 Independiente de importar DP (usa datos del DP, pero es otro flujo). Spec `2026-08-16-pr`, ampliado en PR Fase 1 ([2026-09-21-pr-fase-1-pipeline-rdt.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-1-pipeline-rdt.md)) y PR Fase 2 ([2026-09-21-pr-fase-2-pipeline-linea-base.md](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-2-pipeline-linea-base.md)).
 
+**Botón "Recalcular PR" + barra de progreso (O1, Victor 2026-10-02):** la pantalla muestra un botón "Recalcular PR" (solo para Admin y Jefe Proyectos) con una barra de progreso (`<progress>`) durante el recálculo. El PR se recalcula automáticamente al validar RDT, pero este botón permite forzar el recálculo manual (útil después de cambios o para actualizar). Endpoint: `POST /api/proyectos/[id]/pr/recalcular`. Permiso: `puedeGestionarPr` (solo Admin y Jefe Proyectos).
+
 ## Qué es el PR
 
 El PR es la tabla que consolida todo lo que alimenta al Dashboard: una sola fila por partida (`pr_partidas`), más una cabecera por proyecto (`proyecto_pr`). No es la fuente original del alcance ni del cronograma — es la capa de consolidación entre plan y real.

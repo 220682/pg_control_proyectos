@@ -1,6 +1,11 @@
 19 — Paquetes de trabajo y jerarquía de control
 > Lee si: la tarea agrupa partes de la estructura del servicio en paquetes de trabajo, o toca la jerarquía de control, el modo de medición o la capa operativa de paquetes.
 
+**Cambios del Lote 3 (Victor 2026-10-02):**
+- **Terminología:** "Declarar partida" (antes "Elegir partida").
+- **Badge de niveles:** el encabezado del cronograma muestra cuántos niveles tiene el servicio (ej: "3 niveles").
+- **Botón "Guardar cambios":** unificado en la pantalla de declaración (antes "Guardar declaración").
+
 Objetivo
 Permitir que el usuario agrupe partes de la estructura del servicio en paquetes de trabajo controlables, sin modificar la base contractual. La partida continúa siendo la unidad de trazabilidad y reportabilidad; el paquete es una capa operativa de agrupación.
 

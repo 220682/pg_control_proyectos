@@ -37,6 +37,11 @@ Reglas:
 - Una nueva version aprobada reemplaza la version vigente como linea base, pero conserva la version anterior.
 - **Una partida se puede repetir en el Plan Maestro** (repartida en varios paquetes y/o como directa): se relajó la restricción de WBS único (migración `076`, autorizada por Victor). El PV, el planificado del PR y la Curva S **suman todas las líneas de la partida**.
 - **El detalle diario de `plan_maestro_asignaciones` (fecha + metrado planificado) alcanza para alimentar series temporales por agregación en el momento de lectura — no hace falta una tabla de snapshots ni un historial semanal materializado.** El spec original del Dashboard (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo `py_control_proyectos_web`) daba por necesario ese snapshot para la Curva S; quedó obsoleto al construirla en Fase 3 (2026-09-22) — ver [21-curva-s.md](21-curva-s.md).
+- **Declaración de metrados por paquete (no por partida)**: el usuario declara el metrado total del paquete (celda editable en verde); las partidas dentro del paquete reciben su proporción automáticamente según la partida guía (migración `091`). Las partidas muestran su metrado contractual fijo (no editable).
+- **Fechas editables por paquete**: las columnas `fecha_inicio` y `fecha_fin` son opcionales y editables en las filas de paquete; se pintan en rojo si están fuera del rango visible del lienzo (migración `091`).
+- **Plegables individuales por grupo de medida**: Físico, Económico y HH se pliegan independientemente (cada uno oculta sus 2 columnas: semanal y acumulado).
+- **Selector OT compacto**: el selector de servicio tiene `max-width: 200px` y el select interno `max-width: 110px`.
+- **Icono de asistente flotante**: el icono IA flota con `position: fixed` sobre el contenido sin reservar espacio en el layout (sin `padding-right`).
 
 ## Flujo implementado
 

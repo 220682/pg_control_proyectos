@@ -104,7 +104,9 @@
 | F1-A | Botón "Cargar" + barra de progreso en DP | **Conforme** | `f82fd7f` | Etiqueta "Cargar DP" + `<progress>` durante análisis e importación |
 | F1-B | Botón "Cargar" + barra de progreso en PR | **Pendiente** | — | El PR es server component (solo lectura); requiere componente cliente nuevo |
 | F1-C | Terminología "Actividad" (no "Actividad resumen") | **Conforme** | `f82fd7f` | Etiqueta en `pantalla-niveles.ts` |
-| F2 | Edición de cronograma con PM aprobado | **Pendiente** | — | Permiso nuevo `puedeEditarActividadCronograma` + endpoint PATCH + notificación de impacto |
+| F2-A | Permiso `puedeEditarActividadCronograma` | **Conforme** | `77c3ab2` | Solo Admin y Jefe Proyectos (no Planner) |
+| F2-B | Endpoint PATCH `/api/cronograma/actividades/[id]` | **Conforme** | `77c3ab2` | Valida PM aprobado, permiso, alcance; actualiza nombre/duración/fechas |
+| F2-C | Notificación de impacto antes de editar | **Pendiente** | — | Requiere UI en el componente del cronograma (mostrar RDT que se reposicionan) |
 | F3 | Paquetes mejorado | **Pendiente** | — | "Declarar partida", botón niveles, "Guardar cambios" global |
 | F4-A | Selector OT compacto + icono flotante | **Conforme** | `6fbd953` | `max-w-[200px]` contenedor, `max-w-[110px]` select, `pr-[60px]` lienzo |
 | F4-B | Plegables individuales por grupo de medida | **Conforme** | `5f67006` | `medVis: { fisico, economico, hh }` reemplaza `acumuladas`; 3 toggles independientes |
@@ -113,7 +115,7 @@
 | F5 | RDT mejorado | **Pendiente** | — | Disciplinas ampliadas (8), declaración por paquete, libertad WBS para C/NC y equipos |
 | F6 | Integración y documentación | **Pendiente** | — | db/README, flujos actualizados, verificación cruzada |
 
-**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0 y F4 implementados directamente por el Orquestador (qwen3.7-plus).
+**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0, F1-A/C, F2-A/B y F4 implementados directamente por el Orquestador (qwen3.7-plus).
 
 **Pendiente para completar F4-C/D en la UI real:**
 - Aplicar migración 091 en Supabase (`db/091_plan_maestro_declaracion_paquete.sql`)

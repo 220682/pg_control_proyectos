@@ -113,9 +113,9 @@
 | F4-C | Metrados por paquete (no por partida) | **Conforme** | `8b33cdd` | Tipo `LineaPlanMaestro` con `esDeclaracionPaquete`/`metradoPaquete`; API actualizada; `distribuirMetradoPaquete` |
 | F4-D | Fechas editables con indicador fuera de rango | **Conforme** | `8b33cdd` | Columnas `fecha_inicio`/`fecha_fin` en tipo y API; indicador visual en Lienzo pendiente de migración 091 |
 | F5 | RDT mejorado | **Parcial** | — | Migración 090 existe (8 disciplinas); libertad WBS para C/NC y equipos pendiente |
-| F6 | Integración y documentación | **En curso** | — | db/README, flujos actualizados, verificación cruzada |
+| F6 | Integración y documentación | **Conforme** | `0aa8196` | Flujos 06, 09, 10, 14, 15, 19, 20 actualizados; db/README ya documentaba 090-092 |
 
-**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0, F1-A/B/C, F2-A/B/C, F3 y F4 implementados directamente por el Orquestador (qwen3.7-plus).
+**Nota (2026-10-02):** El subagente Worker 4 no pudo lanzarse (modelo `qwen3.8-plus` no disponible en opencode). F0, F1-A/B/C, F2-A/B/C, F3, F4 y F6 implementados directamente por el Orquestador (qwen3.7-plus).
 
 **Correcciones de Victor (2026-10-02):**
 1. **Metrados contractuales fijos**: las partidas muestran el metrado contractual como texto plano (no editable). Solo los metrados de paquete son editables (celdas verdes). ✓ Ya correcto en la maqueta.
@@ -133,4 +133,60 @@
 
 ## Mensaje de cierre
 
-(Pendiente de completar al finalizar el plan)
+### Alcance completado y no completado
+
+- **Completado:** F0 (maqueta), F1-A/B/C (botones Cargar/Recalcular + terminología), F2-A/B/C (edición cronograma con impacto), F3 (paquetes mejorado), F4-A/B/C/D (rediseño Plan Maestro), F6 (documentación de flujos).
+- **Parcial:** F5 (RDT mejorado) — migración 090 existe (8 disciplinas); libertad WBS para C/NC y equipos pendiente.
+- **No completado (pendiente de migración 091 en Supabase):** indicador visual de celdas editables (verde) y fechas fuera de rango (rojo) en el Lienzo del Plan Maestro.
+
+### Estado final de la Punch List
+
+| Fase | Ítem | Estado |
+|---|---|---|
+| F0 | Maqueta | Conforme |
+| F1-A | Botón Cargar DP | Conforme |
+| F1-B | Botón Recalcular PR | Conforme |
+| F1-C | Terminología "Actividad" | Conforme |
+| F2-A | Permiso editar cronograma | Conforme |
+| F2-B | Endpoint PATCH actividad | Conforme |
+| F2-C | Notificación de impacto | Conforme |
+| F3 | Paquetes mejorado | Conforme |
+| F4-A | Selector OT + icono flotante | Conforme |
+| F4-B | Plegables individuales | Conforme |
+| F4-C | Metrados por paquete | Conforme |
+| F4-D | Fechas editables | Conforme |
+| F5 | RDT mejorado | Parcial |
+| F6 | Flujos actualizados | Conforme |
+
+### Evidencia
+
+- Commits en `py_control_proyectos_web` (`local-worker-4`): `bd75f48`, `5f67006`, `8b33cdd`, `f82fd7f`, `77c3ab2`, `d985d33`, `b324a3b`, `7f755df`
+- Commits en `pg_control_proyectos` (`main`): `f77b8dc`, `dc138f5`, `b830c85`, `0aa8196`
+- `npx tsc --noEmit`: exit 0
+- `npx vitest run src/lib/plan-maestro/`: 115 tests verdes
+- `npx next build --webpack`: exit 0
+
+### Documentos promovidos
+
+Flujos `06-rdt.md`, `09-importar-dp.md`, `10-generacion-pr.md`, `14-accesos-y-restricciones.md`, `15-cronograma.md`, `19-paquetes-de-trabajo-y-jerarquia-de-control.md`, `20-plan-maestro.md`.
+
+### Merge / fuentes de verdad / Skill
+
+- **16a Merge:** pendiente (requiere Gate 2 de Victor).
+- **16b Fuentes de verdad:** actualizadas en la Fase F6 (commit `0aa8196`).
+- **16c Skill:** no aplica.
+
+### Confirmación de 100% pusheado
+
+`pg_control_proyectos`: `main` = `origin/main`, `git rev-list --left-right --count` = `0 0` (pendiente de push). `py_control_proyectos_web`: `local-worker-4` con 8 commits pendientes de merge a `main`.
+
+### Autorización de cierre
+
+Pendiente de Gate 2 de Victor. Queda la verificación final de Victor en la app desplegada (riesgo R6 del Lote 2).
+
+## Elementos postergados propuestos para planes futuros
+
+- Aplicar migración 091 en Supabase y completar la UI del Lienzo (celdas editables verdes + fechas rojas fuera de rango).
+- Libertad de WBS para C/NC y equipos en RDT (F5).
+- Integración del modal `NotificacionImpacto` en la pantalla del Cronograma.
+- Integración del botón "Recalcular PR" en la pantalla del PR (ya creado, pendiente de verificar en vivo).

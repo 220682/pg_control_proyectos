@@ -8,13 +8,15 @@
 
 Un cronograma por servicio (`proyecto_cronograma`, `proyecto_id` como llave — volver a subir lo reemplaza completo, salvo la «Recarga bloqueada» de más abajo). Actividades en `cronograma_actividades`, tipo TAREA/HITO/RESUMEN.
 
-**Terminología:** EDT y WBS son la misma estructura de descomposición. Para evitar ambigüedad, este flujo llama **WBS de programación** al código de la actividad del cronograma, aunque MS Project o el PDF lo rotule como `EDT`; llama **WBS presupuestal** al código contractual de la partida en DP. Pueden coincidir literalmente, pero no se reescriben para forzarlo.
+**Terminología:** EDT y WBS son la misma estructura de descomposición. Para evitar ambigüedad, este flujo llama **WBS de programación** al código de la actividad del cronograma, aunque MS Project o el PDF lo rotule como `EDT`; llama **WBS presupuestal** al código contractual de la partida en DP. Pueden coincidir literalmente, pero no se reescriben para forzarlo. **Tipos de actividad:** TAREA, HITO y ACTIVIDAD (antes "RESUMEN" o "Actividad resumen"; unificado en observación O2 de Victor, 2026-10-02).
 
 **Enlace de trazabilidad: SOLO contra DP.** El cronograma relaciona cada tarea con la partida `dp_partidas` que ejecuta (WBS presupuestal), **nunca contra PR**. Si WBS de programación y WBS presupuestal coinciden, el enlace se propone automáticamente; si difieren, se registra un vínculo explícito sin cambiar ninguno de los dos códigos.
 
 Predecesoras/sucesoras son informativas: su ausencia no marca la fila como incompleta.
 
 **El cronograma solo carga y muestra.** Desde el plan niveles-paquetes-plan-maestro-rdt (2026-09-30) la pantalla del Cronograma ya no edita vínculos con metrado, ni la regla del 100 % por partida, ni hitos, ni lista «partidas incompletas»: la carga, el informe de extracción y la vista de actividades quedan; el **metrado exacto por vínculo y los hitos se declaran en Paquetes** ([flujo 19](19-paquetes-de-trabajo-y-jerarquia-de-control.md)). Se conserva el vínculo simple tarea ↔ partida y el enlace automático por EDT.
+
+**Editar vs Reemplazar (observación O3 de Victor, 2026-10-02):** **Editar** = modificar actividades individuales del cronograma (nombre, fecha, duración, EDT de una actividad específica); **Reemplazar** = subir un documento completamente nuevo que reemplaza todo. Con Plan Maestro aprobado: solo Admin y Jefe de Proyectos pueden **editar** actividades individuales (no reemplazar). Deben notificar qué se pierde antes de editar. Los RDT declarados NO se pierden: se reposicionan automáticamente en las nuevas fechas/metrados al aprobar el nuevo Plan Maestro. **Reemplazar** (subir documento nuevo) sigue bloqueado con Plan Maestro aprobado. Endpoint: `PATCH /api/cronograma/actividades/[id]`.
 
 **Mapa de niveles.** Igual que el DP ([flujo 09](09-importar-dp.md)), la carga tiene un paso de **confirmación de niveles** antes de guardar: roles propios del cronograma (Servicio, Área, Fase, Actividad resumen, Tarea), un rol por nivel, fila de muestra por grupo de hermanas, columna Duración y filas «para revisar» que **bloquean «Aprobar niveles»** hasta confirmarse. Se guarda en `servicio_niveles` y `servicio_encabezados` con origen `CRONOGRAMA`, y se resume en el informe de extracción.
 

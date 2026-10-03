@@ -103,6 +103,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Eliminar RDT (borrado definitivo; cubre archivo y parte estructurado, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
 | Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| Editar actividad individual del cronograma con Plan Maestro aprobado ¹¹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; solo crear el borrador, aprobarlo es «Gestionar Plan Maestro») ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar paquetes de trabajo (crear, editar, mover partidas, archivar, declarar vínculos con metrado y hitos; la disciplina es obligatoria) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
@@ -140,6 +141,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ⁹ **Decidido por Victor (Gate 1, 2026-09-30; aprobar el borrador, 2026-10-01).** Con un Plan Maestro aprobado, **crear** una versión nueva (el borrador, con motivo obligatorio) lo hacen solo el administrador y el jefe de proyectos; el planner conserva programar y crear la primera versión. **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo hacen los tres roles de «Gestionar Plan Maestro» (administrador, jefe de proyectos y planner), igual que la primera aprobación. Implementado: crear el borrador usa `puedeCrearVersionPlanMaestro` (`POST`) y aprobar usa `puedeGestionarPlanMaestro` (`PATCH`), de modo que el código coincide con el flujo.
 
 ¹⁰ **Decidido por Victor (2026-09-30).** Reasignar un RDT de paquete mientras no esté `VALIDADO` lo hace quien valida (mismos roles que «Validar / rechazar RDT»); el supervisor que crea el RDT no reasigna, corrige reemplazando el parte ([06](06-rdt.md)). Vive en la ruta de validar del RDT (`puedeValidarRdt`); no es un permiso nuevo en el código. «Crear paquete» (acción rápida del panel) sigue la fila «Gestionar paquetes de trabajo»: administrador, jefe de proyectos y planner.
+
+¹¹ **Editar vs Reemplazar (observación O3 de Victor, 2026-10-02).** **Editar** = modificar actividades individuales del cronograma (nombre, fecha, duración, EDT de una actividad específica); **Reemplazar** = subir un documento completamente nuevo que reemplaza todo. Con Plan Maestro aprobado: solo Admin y Jefe de Proyectos pueden **editar** actividades individuales (no reemplazar). Deben notificar qué se pierde antes de editar. Los RDT declarados NO se pierden: se reposicionan automáticamente en las nuevas fechas/metrados al aprobar el nuevo Plan Maestro. **Reemplazar** (subir documento nuevo) sigue bloqueado con Plan Maestro aprobado (nota 8). Endpoint: `PATCH /api/cronograma/actividades/[id]` ([flujo 15](15-cronograma.md)).
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

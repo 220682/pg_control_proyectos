@@ -67,8 +67,11 @@ El borrador nace sin repartir: una línea por vínculo con metrado (actividad ×
 
 El lienzo se llena en `BORRADOR` y se **guarda parcial**: se puede dejar a medias y retomar. Se lee de izquierda a derecha:
 
+- **Selector OT compacto:** 200px máximo, no ocupa todo el ancho del panel central. Etiqueta "N° OT" + select con el número.
 - **Columnas fijas:** WBS, descripción, Und., Met. (metrado de la línea), costo unitario y HH por unidad, más «Falta repartir» y una línea divisoria. En móvil solo WBS y descripción quedan fijas.
-- **Columnas opcionales** con el botón «Personalizar campos» (el mismo componente y `campos-visibles` que usan otras pantallas; no hay otro selector): hoy **Costo total ($)** (BAC de la línea), **HH totales** y **Disciplina** (apagadas por defecto). Tiempo no va.
+- **Columnas opcionales** con el botón «Personalizar campos» (el mismo componente y `campos-visibles` que usan otras pantallas; no hay otro selector): hoy **Costo total ($)** (BAC de la línea), **HH totales**, **Disciplina** (apagadas por defecto), **Fecha inicio** y **Fecha fin** (nuevas, apagadas por defecto; son las fechas del cronograma por defecto, editables, se ponen en rojo si están fuera del rango visible del lienzo). Tiempo no va.
+- **Declaración de metrados por paquete:** el metrado se declara en la fila del **paquete** (resaltada con color), no en las partidas individuales. Las partidas del paquete muestran el metrado calculado (distribuido proporcionalmente al contractual) en solo lectura. Las partidas directas (sin paquete) mantienen input editable.
+- **Plegables individuales de columnas de medida:** botones separados para **Físico**, **Económico** y **HH** que ocultan/muestran las columnas de ese grupo (semanal + acumulado). Similar al plegado de semanas.
 - **Semanas** de sábado a viernes, dinámicas según el rango real; cada semana trae sus columnas diarias de metrado y **seis columnas de cierre** (físico, económico y HH, cada uno semanal y acumulado, rotulados «nombre (unidad)» para no mezclarlos; «Acumuladas: sí/no» deja solo las tres semanales). Las semanas se pliegan (plegada = solo sus totales); «+ 7 días antes/después» amplía el rango.
 - **Estructura:** filas de nivel (con subtotal y plegado propio), grupos por paquete y partidas directas, con subtotales; una partida repetida aparece en cada paquete con su porción.
 - **Subfilas:** «Prog.» (lo programado, editable en BORRADOR) y «Real» (RDT validado, solo lectura, con interruptor «Real: sí/no»). Lo real nunca sobrescribe lo programado.
@@ -77,9 +80,12 @@ El lienzo se llena en `BORRADOR` y se **guarda parcial**: se puede dejar a media
 - **Color del avance real:** solo en «Físico acum. (%)» de las filas «Real»: 0 % sin color (blanco), en curso amarillo, 100 % verde con ✓; nunca en lo programado (flujo 18).
 - **Falta repartir:** por línea (completa, falta, excede), por grupo («n partidas por ajustar») y global.
 - **Real de versión anterior:** si hay real validado de una clave que ya no tiene línea en esta versión, se muestra al final con insignia amarilla; sus metrado y HH se ven, su físico y económico salen «—» y **no suman** al total.
+- **Icono del agente con reserva de espacio:** el centro tiene padding-right de 56px para que el icono flotante (48px) no tape columnas. Convención del sistema.
 - Con servicios grandes la lista de filas se virtualiza (ventana vertical, desde 60 filas); columnas fijas y encabezados no se tocan. Los paneles laterales se pueden ocultar para dar ancho (flujo 16).
 
 El **real se identifica por clave** `paquete|DIRECTA : partida` y no por el id de la línea, así sobrevive a las versiones nuevas del Plan Maestro.
+
+**Maqueta del rediseño:** `docs/05-diseno-y-referencias/mockups/plan-maestro-rediseño.html` (F0-A, Observaciones Victor Lote 3, 2026-10-02).
 
 ### 3. Crear (aprobar) el Plan Maestro
 

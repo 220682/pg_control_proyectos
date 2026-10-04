@@ -58,6 +58,12 @@ Las salidas están íntegras en `briefs/resultados/R6a.md`, `R6b.md`, `R4a.md`, 
 - **`recalcular_pr_planificado(p_proyecto_id uuid)`** existe en la base (desde `db/061`), así que U8 cabe dentro de la misma transacción.
 - **Commit** de la base de datos: `COMMIT ok`. Sin cambios de datos.
 
+## 3b. Migración `094`: aplicada y verificada (2026-10-04, tarde)
+
+- **Quién:** el responsable humano, por el SQL Editor de Supabase, en los **dos proyectos** (control y control web). El Orquestador no pudo: el archivo de credenciales quedó inalcanzable.
+- **Verificación:** consulta sobre `pg_proc` que devuelve `es_la_094 = true`. El cuerpo con `actividadesAmbiguas` es el de la `094`, que además lleva el guard `having count(distinct` en los dos `update`: **el reposicionamiento es determinista**.
+- **Efecto:** `rdt_actividades.paquete_trabajo_id` ya no se puede quedar con un paquete arbitrario cuando una actividad tiene varios vínculos; en ese caso no se escribe y la actividad sale en `actividadesAmbiguas`.
+
 ## 4. Verificación en vivo: la que NO hay
 
 - **R4 (reposicionamiento): sin verificación en vivo.** No existe un servicio de prueba con Plan Maestro en BORRADOR (OP9). Lo verificado es `tsc`, la suite completa, la prueba de la función pura y la migración aplicada.

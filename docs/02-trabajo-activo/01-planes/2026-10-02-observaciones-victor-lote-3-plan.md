@@ -481,7 +481,7 @@ Cuatro archivos temporales que el Orquestador movió a `resultados/` y borró de
 
 | # | Salvedad | Por qué |
 |---|---|---|
-| 1 | **La migración `094` está escrita y validada, pero NO aplicada** | El archivo de credenciales quedó inalcanzable (lo lista el sistema de archivos y ninguna API lo abre). Funcionó a las 08:41 para la `093`. Protocolo: detenerse, no buscar otra vía. **La base tiene la `093`, que no es determinista** |
+| 1 | ~~La `094` sin aplicar~~ **CERRADA**: aplicada por el responsable humano el 2026-10-04 en los dos proyectos (control y control web) y verificada en la base (`es_la_094 = true`, que en el mismo cuerpo lleva el guard `having count(distinct`, o sea determinista) | El Orquestador no pudo aplicarla porque el archivo de credenciales quedó inalcanzable; la aplicó el responsable humano por el SQL Editor |
 | 2 | **El reposicionamiento no se probó en vivo** | Ningún servicio de prueba tiene Plan Maestro en BORRADOR (OP9) |
 | 3 | **U6 sin verificación en vivo** | El Worker se agotó antes; validado por `tsc` y por 1136 tests |
 
@@ -517,8 +517,8 @@ Las **13 observaciones** del Lote 3, con la Enmienda E1 («el Plan Maestro es el
 
 ### Lo que NO quedó hecho, y por qué
 
-1. **La migración `094` no se aplicó.** El archivo de credenciales quedó inalcanzable durante la tanda (el sistema de archivos lo lista y ninguna API lo abre; funcionó a las 08:41 para la `093`). El protocolo obliga a detenerse y no buscar otra vía. **La base tiene la `093`, que no es determinista**: un RDT con varios vínculos que el plan nuevo reparte en paquetes distintos podría quedar descolocado. **Se aplica con el SQL Editor de Supabase** (es `create or replace`, aditiva e idempotente) o con un Worker cuando la credencial vuelva a leerse.
-2. **El reposicionamiento y el aviso U6 no se probaron en vivo** (OP9): ningún servicio de prueba tiene Plan Maestro en BORRADOR.
+1. **La migración `094` quedó aplicada y verificada el 2026-10-04**, en los dos proyectos (control y control web). El Orquestador no pudo aplicarla porque el archivo de credenciales quedó inalcanzable; la aplicó el responsable humano por el SQL Editor, y la verificación en la base dio `es_la_094 = true`, que en el mismo cuerpo de la función lleva el guard `having count(distinct`: **el reposicionamiento es determinista**.
+2. **El reposicionamiento y el aviso U6 no se probaron en vivo** (OP9): ningún servicio de prueba tiene Plan Maestro en BORRADOR. Es lo único que queda abierto de este plan, y no es un defecto: es una prueba que no se pudo hacer.
 3. **F5 quedó parcial**: la libertad de WBS para actividades C y NC, equipos y materiales quedó fuera.
 
 ### Reglas que quedan pendientes de decisión

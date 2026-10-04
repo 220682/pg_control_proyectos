@@ -45,6 +45,7 @@
 | **U6** | Al aprobar un Plan Maestro nuevo, **antes** de confirmar se muestra **qué RDT van a cambiar** (cuántos, y con qué fechas y metrados). Es el aviso de impacto que R1 retira del cronograma, trasladado al momento correcto |
 | **U7** | El reposicionamiento **deja rastro**: cada RDT afectado registra en su historial que se movió, por qué, a qué fecha y a qué metrado, y quién aprobó el Plan Maestro. U4 modifica datos validados, así que sin historial sería un cambio invisible |
 | **U8** | El orden al aprobar es **Plan Maestro → reposicionamiento de RDT → recálculo del PR**, y es **todo o nada**: si algo falla, no queda aprobado nada |
+| **U9** | U3 congela los datos de **planeación** (DP, PR, cronogramas, paquetes, Plan Maestro), **no el registro de ejecución**. Por tanto: **cualquier vía de creación de un RDT** —incluida la carga por archivo— exige las dos condiciones de U1, y **mover un RDT ya registrado** (cambiarle la actividad o las fechas) **se permite**, exigiendo también las dos condiciones de U1 |
 
 ### Qué deroga
 
@@ -64,6 +65,7 @@
 | **R3** | **RDT exige PM aprobado + servicio `EJECUCION`**, validado en servidor | `src/app/api/rdts/route.ts`, `src/app/api/rdts/partes/route.ts`, `src/components/ui/FormularioCrearRdt.tsx` |
 | **R4** | **Reposicionar** los RDT (fechas + metrados) al aprobar un Plan Maestro nuevo, todos, incluidos los validados | `src/app/api/plan-maestro/route.ts` (acción de aprobación) y lógica nueva en `src/lib/rdts/` con su test |
 | **R5** | **Flujos** | `06-rdt.md` (U1), `14-accesos-y-restricciones.md` (E1-D4), `15-cronograma.md` (U2/U3), `19-paquetes…md` (U3), `20-plan-maestro.md` (U3/U4/U5) + índice |
+| **R6** | **Guardia de U1 en las otras dos vías de ejecución** (hueco detectado por el Worker de R2-R3): carga de RDT **por archivo** y acción **MOVER** | `src/app/api/rdts/route.ts` y la ruta/acción que implemente MOVER, con sus tests |
 
 ### Riesgos
 

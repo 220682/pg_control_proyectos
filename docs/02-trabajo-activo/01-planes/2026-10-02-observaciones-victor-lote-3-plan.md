@@ -8,11 +8,11 @@
 
 - Tema: Mejoras de interfaz y lógica en DP, PR, Cronograma, Paquetes, Plan Maestro y RDT
 - Fecha: 2026-10-02
-- Estado: **Implementando**
+- Estado: **CERRADO** (Gate 2 de Victor, 2026-10-04)
 - Puertas (las lee `scripts/verificar.ps1`):
   - Gate Spec: no consta — el Lote 3 no tiene Spec/SDD propio; el Gate 1 se aprobó sobre este mismo plan, que contiene las 13 observaciones y las 10 reglas confirmadas. Queda registrado como observación sobre la política (OP2) para el Auditor: no se inventa un Spec retroactivo.
   - Gate 1: aprobado por Victor (2026-10-02)
-  - Gate 2: pendiente
+  - Gate 2: **aprobado por Victor (2026-10-04)**
 
 ## Reglas confirmadas
 
@@ -43,9 +43,17 @@
 | **U4** | El **reposicionamiento** de los RDT en **fechas y metrados** ocurre **solo** al aprobar un Plan Maestro nuevo, y alcanza a **todos** los RDT, **incluidos los validados** |
 | **U5** | El Plan Maestro **no puede dejar de contemplar ninguna partida**: al modificarlo solo se **mueven partidas** y se **crean o desagrupan paquetes**. Nunca se elimina una partida del plan — por eso no puede quedar un RDT sin partida |
 | **U6** | Al aprobar un Plan Maestro nuevo, **antes** de confirmar se muestra **qué RDT van a cambiar** (cuántos, y con qué fechas y metrados). Es el aviso de impacto que R1 retira del cronograma, trasladado al momento correcto |
-| **U7** | El reposicionamiento **deja rastro**: cada RDT afectado registra en su historial que se movió, por qué, a qué fecha y a qué metrado, y quién aprobó el Plan Maestro. U4 modifica datos validados, así que sin historial sería un cambio invisible |
+| **U7** | El reposicionamiento **deja rastro**: cada RDT afectado registra en su historial el plan anterior, el plan nuevo y su versión, el diff de claves y quién aprobó el Plan Maestro. **La fecha y el metrado no se guardan** (precisión del 2026-10-04): el `snapshot` no los tiene como dato consultable. U4 modifica datos validados, así que sin historial sería un cambio invisible |
 | **U8** | El orden al aprobar es **Plan Maestro → reposicionamiento de RDT → recálculo del PR**, y es **todo o nada**: si algo falla, no queda aprobado nada |
-| **U9** | U3 congela los datos de **planeación** (DP, PR, cronogramas, paquetes, Plan Maestro), **no el registro de ejecución**. Por tanto: **cualquier vía de creación de un RDT** —incluida la carga por archivo— exige las dos condiciones de U1, y **mover un RDT ya registrado** (cambiarle la actividad o las fechas) **se permite**, exigiendo también las dos condiciones de U1 |
+| **U9** | U3 congela los datos de **planeación** (DP, PR, cronogramas, paquetes, Plan Maestro), **no el registro de ejecución**. Por tanto: **cualquier vía de creación de un RDT** —incluida la carga por archivo— exige las dos condiciones de U1. Una vez que el RDT **existe**, las acciones sobre él —reasignarle el paquete, corregirlo, validarlo o rechazarlo— siguen exigiendo **solo Plan Maestro aprobado** (precisión del 2026-10-04): la segunda condición, servicio en Ejecución, es de **creación**, no de operación |
+| **U10** | El congelamiento de U3 alcanza también **reordenar** paquetes (`MOVER`): con Plan Maestro aprobado no se crean, editan, archivan **ni reordenan** paquetes, ni se declaran vínculos. Deroga la lectura de que `MOVER` era solo orden de presentación (decisión de Victor, 2026-10-04) |
+
+### Aclaración de U4 (Victor, 2026-10-04)
+
+> «Cargo los datos que se extrajeron del RDT para reposicionarlos en el nuevo Plan Maestro. Pero lo que no se está entendiendo hasta ahora es que, aunque se cambie el Plan Maestro, **el PR sigue conservando los datos de todos los RDTs porque estos no se han cambiado**. Lo que se cambia es **la forma en que se muestran en el Plan Maestro**; no cambia la forma en que están declarados en el PR (consolidado).»
+
+Consecuencia implementable: el reposicionamiento **re-vincula** cada RDT a las líneas del plan vigente por la clave de reporte `paquete × partida`. **Lo que no cambia:** el `metrado_ejecutado`, los metrados derivados, las horas, el estado de validación, los archivos y el historial de ejecución (el reposicionamiento solo **agrega** su fila), y **las cifras del PR consolidado**. **Lo que sí cambia es la asociación de paquete** del RDT (`rdt_actividades.paquete_trabajo_id` y `rdt_actividad_partidas.paquete_trabajo_id`), que es justamente la clave de reporte: por eso un RDT ya registrado puede verse con otro paquete en su propio formulario y en la pantalla Status, no solo en el Plan Maestro (corrección del Auditor, 2026-10-04: la frase anterior —«no cambia los datos del RDT»— era más fuerte que lo que el código garantiza).
+
 
 ### Qué deroga
 
@@ -66,6 +74,30 @@
 | **R4** | **Reposicionar** los RDT (fechas + metrados) al aprobar un Plan Maestro nuevo, todos, incluidos los validados | `src/app/api/plan-maestro/route.ts` (acción de aprobación) y lógica nueva en `src/lib/rdts/` con su test |
 | **R5** | **Flujos** | `06-rdt.md` (U1), `14-accesos-y-restricciones.md` (E1-D4), `15-cronograma.md` (U2/U3), `19-paquetes…md` (U3), `20-plan-maestro.md` (U3/U4/U5) + índice |
 | **R6** | **Guardia de U1 en las otras dos vías de ejecución** (hueco detectado por el Worker de R2-R3): carga de RDT **por archivo** y acción **MOVER** | `src/app/api/rdts/route.ts` y la ruta/acción que implemente MOVER, con sus tests |
+
+| Tanda posterior | Qué | Estado | Commit / evidencia |
+|---|---|---|---|
+| **R4c** | Determinismo del reposicionamiento, `sinLinea` en la respuesta, aviso de dependencia de la `093` | **Cerrada** | `ae476f1` · tsc 0 · **1115 tests** · [`resultados/R4c.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/R4c.md) |
+| **U6** | Aviso de impacto antes de aprobar | **Cerrada** | `f19c801` · tsc 0 · **1136 tests** · [`resultados/U6.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/U6.md) |
+| **DOCS-L3** | Olas 1, 2 y 4: los 7 puntos de «APLICAR AHORA», las tres decisiones y el libro de hallazgos (39 → **56 filas**) | **Cerrada** | [`resultados/DOCS-L3.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/DOCS-L3.md) · verificador 0/0 exit 0 |
+
+### Estado real de las tareas de la Enmienda E1 (2026-10-04)
+
+| Tanda | Qué | Estado | Commit / evidencia |
+|---|---|---|---|
+| R1 | Quitar la edición de actividades del cronograma con PM aprobado | **Cerrada** | `ceb269e` (8 archivos, +4/−608) |
+| R2 | Congelar paquetes con PM aprobado | **Cerrada** | `d916716` |
+| R3 | RDT exige PM aprobado + servicio `EJECUCION` | **Cerrada** | `74734d7` |
+| R4a | Código, módulo, pruebas y migración `093` del reposicionamiento | **Cerrada** | `11804b6`, `56c66e0`, `d7d96fd` · tsc 0 · **106 archivos / 1094 tests** |
+| R4b | Aplicar la migración `093` con el protocolo | **Cerrada** | Aplicada 2026-10-04 08:41, vía directa; conteos idénticos en 8 tablas; CHECK con `REPOSICIONAMIENTO`; función `aprobar_plan_maestro_con_reposicionamiento` creada |
+| R5 | Escribir U1–U8 en los flujos 06, 14, 15, 19, 20 y índice | **Cerrada** | `resultados/R5.md` |
+| R5b | Precisiones de las tres respuestas de Victor (U4 aclarada, U10, U9, U8 transaccional) | **Cerrada** | U10 quedó escrita **solo en el flujo 19** (no en el 06 ni en el 20, como decía esta fila); el §6 del flujo 20 se completó después, en la Ola 1 del 2026-10-04. U4, U9 y U8 sí quedaron en los flujos 06, 19 y 20. Verificador 0/0 exit 0 |
+| R6a | Guardia de U1 en la **carga de RDT por archivo** | **Cerrada** | `26288bf` · tsc 0 · 1082 tests |
+| R6b | Congelar **MOVER** con PM aprobado (U10) | **Cerrada** | `9d033e3` · 2 archivos, +17/−12 |
+| R4c | Reposicionamiento **determinista**: migración `094`, `sinLinea` que vuelve en la respuesta y aviso de dependencia de la `093` | **Cerrada en código** | `ae476f1` · tsc 0 · 107 archivos / 1115 tests · `resultados/R4c.md`. **La `094` no se aplicó**: la base sigue con la `093`, que es la versión no determinista |
+
+**Sin verificar:** el reposicionamiento y el aviso U6 **no se han probado en vivo** (ningún servicio de prueba sirve para una aprobación real; antecedente OP9). Lo verificado es `tsc`, la suite completa y la aplicación verificada de la migración.
+
 
 ### Riesgos
 
@@ -235,8 +267,98 @@ Después: **Documentador** (progreso/evidencia homónimos, briefs, libro de hall
 - Briefs actualizados: `briefs/E.md`, `briefs/F.md`.
 
 ## Libro de hallazgos
+## Plan de las tandas que faltan (2026-10-04, escrito tras el informe del Auditor)
+
+El Auditor recomendó **requiere corrección mayor**. Lo que sigue son seis olas, con el nivel de cada una. Ninguna cuesta un nivel alto salvo la Ola 3, y esa depends de una decisión tuya que ya está escrita en el plan (U6).
+
+| Ola | Tarea | Nivel | Quién | Depende de |
+|---|---|---|---|---|
+| **0** | **Terminar R4c**: el Worker escribió la migración `094` y sus pruebas y se cortó sin commit, sin validación y sin resultado | **1** | Worker `n1` | — |
+| **0b** | Aplicar la `094` con el protocolo de migraciones | — | Orquestador | Ola 0 |
+| **1** | Los **7 puntos de «APLICAR AHORA»** del informe: todos de documentación, ninguno con decisión de negocio | **0** | `n0` | Ola 0b |
+| **2** | Las **tres decisiones de negocio** (U6, U7, segunda mitad de U9), escritas en los flujos | **0** | `n0` | Ola 1 |
+| **3** | **U6 en código**: el aviso de qué RDT van a cambiar, antes de aprobar | **3** | Worker `n3` | Ola 2 |
+| **4** | **Libro de hallazgos**: pasar las 12 filas que faltaron y aplicar la clasificación del Auditor a las 39 — **hecha el 2026-10-04**: 16 filas nuevas (12 + las 4 de R4c) y clasificación de las 39 | **0** | `n0` | Ola 1 |
+| **5** | **Verificación en vivo**: crear un servicio de prueba con Plan Maestro en BORRADOR (desbloquea OP9) y probar la aprobación de punta a punta | **1** + Orquestador | `n1` | Ola 3 |
+| **6** | **Gate 2 y cierre**: las 4 reglas de R4a, OP1, OP3, OP4, el artefacto «Matriz de permisos», merge, push y mensaje de cierre | — | Victor + Orquestador | Olas 1 a 5 |
+
+**Estado de las olas (2026-10-04):** la **0** está **cerrada** (`ae476f1`, resultado en [`resultados/R4c.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/R4c.md)); la **0b** sigue **pendiente** (la `094` no se aplicó). Las olas **1**, **2** y **4** —las tres de documentación— están **cerradas** ([`resultados/DOCS-L3.md`](2026-10-02-observaciones-victor-lote-3-briefs/resultados/DOCS-L3.md)). La **3** corre en paralelo. Las **5** y **6** quedan para después.
+
+### Ola 0 — Cerrar R4c (lo que quedó a medias) — **cerrada el 2026-10-04**
+
+El Worker de R4c **escribió** `db/094_aprobar_plan_maestro_reposicion_determinista.sql`, `src/lib/rdts/reposicionamiento-sql-094.test.ts` y modificó `reposicionamiento.ts`, `reposicionamiento-servidor.ts`, `api/plan-maestro/route.ts`, `plan-maestro-api.test.ts` y `db/README.md`. Se cortó antes de validar y de commitear. Lo que faltaba, en orden:
+
+1. `n1` revisa el diff de los seis archivos, corrige lo que esté mal, corre `npx tsc --noEmit` y `npx vitest run`, y commitea con mensaje `R4c:`. Escribe `resultados/R4c.md`. → **Hecho**: `ae476f1`, `tsc` 0, 107 archivos y 1115 tests en verde.
+2. El Orquestador aplica la `094` con el protocolo (candado, una transacción, conteos antes/después, verificación en `information_schema`) y borra script y candado. → **Pendiente (Ola 0b)**: el archivo de credenciales quedó inalcanzable durante la tanda y no se buscó otra vía. **La base tiene la `093`, que es la versión no determinista.**
+3. Se comprueba en la base que la función viva es la `094` y que `db/README.md` tiene su fila. → **Pendiente**, depende del punto 2.
+
+### Ola 1 — Los 7 puntos de «APLICAR AHORA» (nivel 0)
+
+| # | Qué |
+|---|---|
+| 1 | Corregir el lenguaje de U4 en el flujo 20, el flujo 06 y el progreso: lo que **no** cambia es el metrado ejecutado, los derivados, las horas y el estado de validación; lo que **sí** cambia es la **asociación de paquete** del RDT, que se ve en su propio formulario y en Status |
+| 2 | Eliminar la fila duplicada malformada que rompó la tabla del libro de hallazgos |
+| 3 | Corregir la fila de R5b: U10 quedó en el flujo 19, no en 06, 19 y 20 |
+| 4 | Añadir el congelamiento de `MOVER` al §6 del flujo 20 |
+| 5 | Añadir la advertencia de dependencia de la `093` en `db/README.md` y en la cabecera de `db/093`: **la acción de aprobación falla por completo si la `093` no está aplicada** en ese entorno |
+| 6 | Registrar el riesgo de la actualización no determinista de `rdt_actividades` en el libro **y en el código**, como comentario junto a la sentencia |
+| 7 | **`sinLinea`**: se calculaba y se descartaba en silencio. **Resuelto en R4c** (`ae476f1`): la función SQL lo devuelve en su `jsonb` y la ruta lo expone en la respuesta de la aprobación, así que se muestra **como aviso al aprobar**. Lo que **no** se hizo (de las tres salidas que daba el Auditor) es registrarlo en el historial del RDT: esos vínculos no se reasocian ni se tocan |
+
+> **Olas 1, 2 y 4 ejecutadas el 2026-10-04** (las tres son solo documentación; ninguna toca el repositorio de código). Lo que dice cada una está en `briefs/resultados/DOCS-L3.md`, con los archivos tocados y la salida del verificador. La Ola 3 (U6 en código) corre en paralelo.
+
+### Ola 2 — Las tres decisiones de negocio, por escrito (nivel 0)
+
+| Regla | Se asume | Alternatives que dejó abiertas |
+|---|---|---|
+| **U6** (aviso de impacto antes de aprobar) | **Se implementa** (Ola 3), porque está aprobada y escrita como vigente | Si no la quieres: se borra el texto del flujo 20 y la regla queda como trabajo futuro |
+| **U7** (historial con fecha y metrado) | **Se corrige el flujo 06** para que prometa solo lo que el historial guarda: plan, versión, diff de claves y quién aprobó | La otra vía es ampliar el `snapshot` con fecha y metrado nuevo de cada línea |
+| **U9**, segunda mitad | **Se deja como está**: la segunda condición (servicio en Ejecución) aplica a la **creación** del RDT; registrar, reasignar, validar y rechazar siguen exigiendo solo Plan Maestro aprobado | Añadir la segunda condición en `rdts/partes/[id]` sería una tanda nueva |
+
+### Ola 3 — U6 en código (nivel 3, la única que sube de nivel)
+
+Endpoint de consulta del impacto **antes** de confirmar la aprobación (cuántos RDT, con qué fechas y metrados), el modal que lo muestra en la pantalla del Plan Maestro, y el aviso de los que quedan `sinLinea`. Valida: `tsc` 0, suite en verde, y una llamada en vivo que cuente los RDT afectados de un servicio de prueba.
+
+### Ola 5 — Verificación en vivo (desbloquea OP9)
+
+Hoy no hay ningún servicio de prueba con Plan Maestro en BORRADOR, y por eso el reposicionamiento está verificado por pruebas y por la migración, **nunca en la app**. La tanda crea ese servicio de prueba (con su `.env.local` si hace falta, según `03-entorno-git-y-worktrees.md`) y aprueba un plan de verdad, comprobando tres cosas: que **las cifras del PR no cambian**, que el historial tiene la fila, y que un RDT con varios vínculos en paquetes distintos **no** queda descolocado.
+
+### Ola 6 — Gate 2
+
+Cierra con: las cuatro reglas de R4a (un RDT sin línea, partida en dos líneas, filas derivadas, porcentaje viejo), OP1 y OP3/OP4 (estándar), el artefacto «Matriz de permisos» (que solo editas tú), el merge de `local-worker-4` a `main`, el push de los dos repositorios y el mensaje de cierre que sustituye al borrador anticipado.
+
+**Costo esperado:** las olas 0, 1, 2, 4 y 5 en nivel 0 o 1 (centavos de dólar). Solo la Ola 3 es nivel 3.
+
+## Niveles de modelos y benchmark (2026-10-04)
+
+Aplica `docs/00-estandar-agentes/10-niveles-de-modelos.md` (política aprobada por Victor el 2026-10-04). Las tareas de hoy se asignaron por **nivel de consumo medido**, no por nombre de modelo.
+
+### Benchmark de R4 (tarea con resultado conocido: diseño del reposicionamiento)
+
+| Nivel | Modelo | USD de la corrida | Tokens | Min | Resultado |
+|---|---|---|---|---|---|
+| **1** | `deepseek-v4.1-flash` | **0,0369** | 1 467 458 | 2,8 | 8/8 — el más completo: detectó el CHECK del historial, el snapshot en `jsonb`, el riesgo de `metrado_ejecutado` |
+| **2** | `deepseek-v4-pro` (variante `high`) | 0,0858 | 809 909 | 2,2 | 7/8 — correcto; dice que el metrado ejecutado no se toca |
+| **3** | `qwen3.7-plus` | 0,0477 | 325 972 | 2,3 | 7/8 — correcto; añade la regla de resolución de mapeo |
+
+Los tres diseños coincidieron en lo importante: hoy la aprobación son llamadas HTTP sueltas a Supabase y **no es una transacción**; por eso hace falta la función SQL. **El nivel 1 salió bien y más barato: 2,3 veces más barato que el nivel 3 y 4,4 veces que el nivel 2.** Es la regla de seguridad de la política en práctica: el precio por token no predice el costo por tarea.
+
+### Asignación por nivel de las tareas de hoy
+
+| Tanda | Tipo de tarea | Nivel | Quién la ejecutó | Modelo |
+|---|---|---|---|---|
+| R5 (flujos) | Documentación acotada | 1 | Worker | `deepseek-v4.1-flash` |
+| R6a (carga por archivo) | Código con brief cerrado: un archivo + test | 1 | Worker | `deepseek-v4.1-flash` |
+| R6b (congelar MOVER) | Código con brief cerrado: un archivo + test | 1 | Worker | `deepseek-v4.1-flash` |
+| R4a (reposicionamiento) | Tanda con análisis y varios archivos | 1, justificado por el benchmark | Worker | `deepseek-v4.1-flash` |
+| R4b (migración `093`) | Migración con candado sobre datos reales | — | **Orquestador** | — |
+| R5b (precisiones) | Cuatro frases en tres flujos | 1 | **Orquestador** (el Worker se cayó por un comando suyo) | — |
+
+**Cómo se lanzó:** `opencode run --agent build --model opencode-go/deepseek-v4.1-flash --dir <worktree>`, sin tocar ningún archivo de configuración (hecho 4 de la política). El Worker 4 del Lote 3 quedó bloqueado antes por el motivo opuesto, y la Tanda R4 original se detuvo en el mismo permiso cuando intentó leer las credenciales.
+
 
 Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |`. Estados: `Registrada` → `Trasladada` (con enlace y commit) · `Descartada` (con motivo) · `Pendiente de decisión` (con quién decide). Los Workers de código no editan este archivo: dejan sus hallazgos en su resumen de cierre y el Orquestador los pasa aquí, fila por fila.
+
+> **Clasificación aplicada el 2026-10-04 (Ola 4):** el estado de las 39 filas que ya existían es el del [informe del Auditor](../04-auditoria/2026-10-02-observaciones-victor-lote-3.md) § «Clasificación de hallazgos», resumido fila por fila. Además entraron las **12 filas** que nunca se habían pasado (R1-M1, R1-M2, R2-R3-M1, R4a-M4, R5-M1, R4a-O1, R4a-O2, R5-R2, R5-R3, R5-O1, R5-O2, R6a-R1) y las **4 de R4c**. El libro queda con **24 mejoras, 13 reglas y 19 observaciones** (56 filas): las 39 del Auditor más 17 nuevas.
 
 ### Mejoras (de trabajo)
 
@@ -245,45 +367,75 @@ Formato de fila: `| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto 
 | G-M1 | 2026-10-02 | Worker 1 (G) | Fijar en el brief la ruta de la memoria de cuentas y el puerto del carril para no re-buscarlos al usar evidencia sin navegador | `03-aprendizaje-continuo/` | Registrada | — |
 | G-M2 | 2026-10-02 | Worker 1 (G) | Antes de integrar endpoints ajenos ya commiteados, una llamada viva mínima (GET/PATCH neutro) — tsc/vitest con mock de Supabase no ven errores de esquema | `03-aprendizaje-continuo/` | Registrada | — |
 | V-M1 | 2026-10-03 | Orquestador (Fase 0) | Con `PLAN_ACTIVO`, `scripts/verificar.ps1` decide el cierre con dos defectos que lo dejaban pasar siempre: nombre del informe de Auditoría con sufijo `-plan` (la convención no lo lleva) y regex de `Registrada` que no reconoce los acentos graves con que las escribe el libro de hallazgos. Un control que no vigila es peor que no tenerlo | `03-aprendizaje-continuo/` | Registrada | — |
-| V-M2 | 2026-10-03 | Orquestador (Fase 0) | Benchmark de modelos con tarea de resultado conocido (10 modelos, 11 corridas): los 10 acertaron las 4 preguntas, así que la calidad no discriminó; decidirse por costo y latencia. La latencia tiene varianza alta (18,3 s y 61,8 s para el mismo modelo en dos corridas) → con n=1 no se puede ordenar por latencia. Instrumento reutilizable | `03-aprendizaje-continuo/` | Registrada | — |
+| V-M2 | 2026-10-03 | Orquestador (Fase 0) | Benchmark de modelos con tarea de resultado conocido (10 modelos, 11 corridas): los 10 acertaron las 4 preguntas, así que la calidad no discriminó; decidirse por costo y latencia. La latencia tiene varianza alta (18,3 s y 61,8 s para el mismo modelo en dos corridas) → con n=1 no se puede ordenar por latencia. Instrumento reutilizable | `03-aprendizaje-continuo/` | **Trasladada** | [2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md](../../03-aprendizaje-continuo/2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md) §5, con la conclusión de que con n=1 no se ordena por latencia |
 | V-M3 | 2026-10-03 | Worker flash (V) | Para probar el verificador con fixtures, la carpeta de prueba debe replicar la **derivación exacta** de rutas del script (dos `Split-Path -Parent` desde el archivo de plan), no la ruta visible del repo | `03-aprendizaje-continuo/` | Registrada | — |
 | V-M4 | 2026-10-03 | Worker flash (V) | En PowerShell 5.1 el acento grave es carácter de escape: para escribir `` `Registrada` `` en un fixture hay que usar cadena de comilla simple | `03-aprendizaje-continuo/` (se une a `2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md` § 3) | Registrada | — |
-| V-M5 | 2026-10-03 | Orquestador | El almacén de sesiones de opencode (`%USERPROFILE%\.local\share\opencode\opencode.db`, tabla `session`) trae costo y tokens por sesión, incluidos los subagentes: es la fuente real para medir, y funciona donde `scripts/medir.py` no ve (opencode no escribe en `~/.claude/projects`) | `scripts/medir.py` (extender) o nuevo script | Registrada | — |
+| V-M5 | 2026-10-03 | Orquestador | El almacén de sesiones de opencode (`%USERPROFILE%\.local\share\opencode\opencode.db`, tabla `session`) trae costo y tokens por sesión, incluidos los subagentes: es la fuente real para medir, y funciona donde `scripts/medir.py` no ve (opencode no escribe en `~/.claude/projects`) | `scripts/medir.py` (extender) o nuevo script | **Trasladada** | [niveles-modelos.py](../../../scripts/niveles-modelos.py) y [10-niveles-de-modelos.md](../../00-estandar-agentes/10-niveles-de-modelos.md). Falta en el destino la ruta y el nombre de la tabla, que solo están en la evidencia |
 | M-M1 | 2026-10-03 | Worker (M) | El nombre real de la tabla es `disciplinas` (creada en la migración `085`), no `catalogo_disciplinas`: un brief que la llame así hace dudar al Worker. Los briefs deben copiar el nombre real de la tabla, no el del README | `03-aprendizaje-continuo/` | Registrada | — |
 | E-M1 | 2026-10-03 | Worker (E) | El login sin navegador funciona si el propio `@supabase/ssr` construye la cookie (`createServerClient` + `cookieStore` tipo `Map` con `getAll`/`setAll`, `signInWithPassword`) y se reutilizan las cookies que devuelve: serializa la **sesión completa** en base64url con prefijo `base64-` y trocea a 3180. Construirla a mano con solo `{access_token, refresh_token}` hace que el middleware devuelva HTML | `03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md` § 2 (ampliar) | Registrada | — |
 | E-M2 | 2026-10-03 | Worker (E) | En un worktree el dev server solo levanta con `npm run dev -- --webpack -p <puerto>`; y hay que arrancar **el propio**, no reutilizar el de otra sesión de opencode, que puede estar sirviendo otro código | `03-aprendizaje-continuo/` | Registrada | — |
-| E-M3 | 2026-10-03 | Worker (E) | Una llamada que devuelve HTML en vez de JSON es **fallo de sesión**, no del endpoint: contarla como resultado del endpoint produce un falso negativo | `03-aprendizaje-continuo/` | Registrada | — |
+| E-M3 | 2026-10-03 | Worker (E) | Una llamada que devuelve HTML en vez de JSON es **fallo de sesión**, no del endpoint: contarla como resultado del endpoint produce un falso negativo | `03-aprendizaje-continuo/` | **Trasladada** | [2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md](../../03-aprendizaje-continuo/2026-10-02-entorno-windows-worktrees-y-evidencia-sin-navegador.md) §2, párrafo «Trampa». El Auditor anota que el texto es anterior a este hallazgo: la fila se cerró por duplicado, no por aporte nuevo |
 | F-M1 | 2026-10-03 | Worker (F) | El patrón de login sin navegador no estaba documentado en aprendizaje continuo, así que cada Worker lo redescubre: el hallazgo E-M1 debe promoverse **antes** de la siguiente tanda que necesite verificación en vivo | `03-aprendizaje-continuo/` | Registrada | — |
+| R4a-M1 | 2026-10-04 | Worker (R4a) | El reposicionamiento re-vincula por **clave de reporte** `paquete × partida` porque no existe FK entre RDT y línea del plan; quien lo lea esperará una tabla de unión y no la hay | `03-aprendizaje-continuo/` | **Trasladada** | No llegó al destino propuesto, pero el contenido está donde un lector lo encuentra: cabecera de `db/093` (código), `reposicionamiento.ts` y los flujos [06](../../04-flujos-de-negocio/06-rdt.md) y [20](../../04-flujos-de-negocio/20-plan-maestro.md) |
+| R4a-M2 | 2026-10-04 | Worker (R4a) | El cálculo del diff está en TS y la aplicación en SQL: la regla vive en dos sitios, con el payload jsonb de unión | `03-aprendizaje-continuo/` | **Trasladada** | Cabecera de `db/093` y `reposicionamiento-servidor.ts` (código). Mismo matiz: no llegó a `03-aprendizaje-continuo/` |
+| R4a-M3 | 2026-10-04 | Worker (R4a) | `FilaHistorialRdt.accion` en TS no incluye `BORRADO`, que sí existe en el CHECK de la base: unión desalineada | Deuda técnica (tipos) | Registrada | El Auditor lo verificó y lo clasificó **NO PROMOVER**: deuda técnica de tipos, va al backlog del código, no a la política |
+| R6a-M1 | 2026-10-04 | Worker (R6a) | El brief citaba `src/app/api/rdts/partes/partes-paquetes.test.ts`, que no existe; la suite real está en `src/lib/rdts/partes-paquetes.test.ts` | Corregir el brief (Documentador) | Registrada | El Auditor verificó que `briefs/R6a.md` **sigue citando** la ruta que no existe: corrección de una línea, pendiente |
+| R6a-M2 | 2026-10-04 | Worker (R6a) | Dos helpers comprueban lo mismo con distinta forma: `planMaestroAprobado` (booleano) y `cargarPlanAprobado` (aprobado + líneas) | Backlog de refactor menor | Registrada | Los dos siguen existiendo y duplicando el criterio; no hay nota que diga cuál usar |
+| R1-M1 | 2026-10-04 | Worker (R1) | Para confirmar que una columna o un botón **desapareció** de una tabla que se arma en el cliente, el SSR no basta: la tabla se construye tras el `fetch` en `useEffect`. Hace falta API + SSR + **Playwright** con la sesión ya iniciada | `03-aprendizaje-continuo/` | Registrada | — |
+| R1-M2 | 2026-10-04 | Worker (R1) | `planMaestroAprobado` es **subcadena** de `hayPlanMaestroAprobado`: un grep por el primero da falsos positivos sobre un símbolo ajeno a la tarea. Buscar por símbolo exacto o delimitar | `03-aprendizaje-continuo/` | Registrada | — |
+| R2-R3-M1 | 2026-10-04 | Worker (R2-R3) | El criterio «Plan Maestro aprobado» ya vivía en **tres** módulos distintos; conviene un único helper compartido para que el criterio no se abra en un cuarto | `03-aprendizaje-continuo/` | Registrada | — |
+| R4a-M4 | 2026-10-04 | Worker (R4a) | En cada aprobación el servidor **relee todos los RDT del servicio** (lotes de 200) solo para calcular el diff: el costo crece con el historial del servicio. Conviene mover el cálculo a la función SQL o filtrar por vínculos. **El Auditor lo llamó «R4a-M1 (rendimiento)», pero ese ID ya lo tenía el hallazgo de la clave de reporte**; se numera M4 para no pisarlo | Plan de mejoras / rendimiento del código | Registrada | — |
+| R5-M1 | 2026-10-04 | Worker (R5) | Buscar una regla derogada por **palabra suelta** (`impacto`) produce falsos positivos en cuanto la regla sucesora reutiliza el término —U6 se llama «aviso de impacto»—. El patrón de búsqueda debe ser por **símbolo o ruta** (endpoint, componente, permiso) | `03-aprendizaje-continuo/` | Registrada | — |
+| R4c-M1 | 2026-10-04 | Worker (R4c) | Una tanda que **aplica una migración** no puede ejecutarse en un Worker lanzado con `opencode run` (permiso de directorio externo), y además depende de un archivo de credenciales que puede quedar inalcanzable sin aviso. El brief debería abrir con «verifica que la credencial se lee, antes de escribir una línea de código» | `03-aprendizaje-continuo/` | Registrada | — |
+| R4c-M2 | 2026-10-04 | Worker (R4c) | Un corte del Worker a mitad de tanda no deja ni commit ni archivo de resultado: el brief debería exigir el **commit y el resultado antes** que cualquier refinamiento opcional | `03-aprendizaje-continuo/` | Registrada | — |
 
 ### Reglas de negocio acordadas en esta tarea
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| G-R1 | 2026-10-02 | Worker 1 (G) | Impacto de editar actividad = nº de partes RDT distintos vía `cronograma_actividad_partidas`/`dp_partida_id` → `rdt_actividad_partidas` → `parte_id` | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
-| G-R2 | 2026-10-02 | Worker 1 (G) | Edición individual: UI solo con permiso + PM APROBADO; servidor re-valida (403/409/404); aviso de impacto antes de editar; anotar en flujo 15 el campo `planMaestroAprobado` | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
-| V-R1 | 2026-10-03 | **Victor** (decisión del Orquestador) | El aviso de impacto de editar una actividad del cronograma cuenta **solo partes de RDT validados**; los borradores no se cuentan. Antes (G-R1) contaba ambos | `04-flujos-de-negocio/15-cronograma.md` | Registrada | — |
-| F-R1 | 2026-10-03 | Victor (reglas confirmadas 6 y 13 del plan, 2026-10-02) | Al declarar en el RDT, el **paquete completo** figura como `WBS="PQ-001"` y las partidas directas sueltas; las actividades **C y NC, los equipos y los materiales** tienen **libertad de WBS** (pueden elegir cualquier partida del Plan Maestro sin depender de una actividad D previa del mismo día) | `04-flujos-de-negocio/06-rdt.md` | Registrada | — |
-| F-R2 | 2026-10-03 | Worker (F) | El catálogo de disciplinas queda en **8**: Civil, Mecánica, Eléctrica, Instrumentación, Tuberías, Preliminares, Cierre y Subcontratos | `04-flujos-de-negocio/06-rdt.md` | Registrada | — |
+| G-R1 | 2026-10-02 | Worker 1 (G) | Impacto de editar actividad = nº de partes RDT distintos vía `cronograma_actividad_partidas`/`dp_partida_id` → `rdt_actividad_partidas` → `parte_id` | `04-flujos-de-negocio/15-cronograma.md` | **Descartada** | E1-D3: el conteo desaparece con la función; el endpoint está borrado del código (verificado por el Auditor) |
+| R4a-R1 | 2026-10-04 | Worker (R4a) | Un RDT que apunta a una `dp_partida` que ya no está en el plan queda **sin línea** y no se reasocia por WBS | `06-rdt.md` / `20-plan-maestro.md` | **Pendiente de decisión (Victor)** | Verificado en código, sin regla escrita. Desde R4c el caso vuelve en la respuesta de la aprobación como aviso |
+| R4a-R2 | 2026-10-04 | Worker (R4a) | Una partida presente en dos líneas del plan con paquetes distintos es **ambigua**: no se reposiciona y falta el desempate | `20-plan-maestro.md` | **Pendiente de decisión (Victor)** | Verificado; falta el desempate |
+| R4a-R3 | 2026-10-04 | Worker (R4a) | Las filas derivadas cambian de paquete pero no recalculan su metrado (recalcularlo cambiaría el PR): si el plan reagrupa partidas, el conjunto derivado puede quedar inconsistente | `19-paquetes-de-trabajo-y-jerarquia-de-control.md` | **Pendiente de decisión (Victor)** | Verificado: no hay código que recalcule el metrado derivado |
+| R4a-R4 | 2026-10-04 | Worker (R4a) | El porcentaje de avance de una partida pudo quedar calculado sobre el plan viejo | `20-plan-maestro.md` | **Pendiente de decisión (Victor)** | Verificado: ningún punto del código lo recalcula tras reposicionar |
+| G-R2 | 2026-10-02 | Worker 1 (G) | Edición individual: UI solo con permiso + PM APROBADO; servidor re-valida (403/409/404); aviso de impacto antes de editar; anotar en flujo 15 el campo `planMaestroAprobado` | `04-flujos-de-negocio/15-cronograma.md` | **Descartada** | Superada por U2/U3: la acción ya no existe en el código (verificado) |
+| V-R1 | 2026-10-03 | **Victor** (decisión del Orquestador) | El aviso de impacto de editar una actividad del cronograma cuenta **solo partes de RDT validados**; los borradores no se cuentan. Antes (G-R1) contaba ambos | `04-flujos-de-negocio/15-cronograma.md` | **Descartada** | Mismo motivo que G-R1 (E1-D3): el aviso que contar solo los validados ya no existe |
+| F-R1 | 2026-10-03 | Victor (reglas confirmadas 6 y 13 del plan, 2026-10-02) | Al declarar en el RDT, el **paquete completo** figura como `WBS="PQ-001"` y las partidas directas sueltas; las actividades **C y NC, los equipos y los materiales** tienen **libertad de WBS** (pueden elegir cualquier partida del Plan Maestro sin depender de una actividad D previa del mismo día) | `04-flujos-de-negocio/06-rdt.md` | **Trasladada** | [06-rdt.md](../../04-flujos-de-negocio/06-rdt.md) § «Crear RDT con el Plan Maestro», párrafo «Qué elige el supervisor». La fila nunca se cerró |
+| F-R2 | 2026-10-03 | Worker (F) | El catálogo de disciplinas queda en **8**: Civil, Mecánica, Eléctrica, Instrumentación, Tuberías, Preliminares, Cierre y Subcontratos | `04-flujos-de-negocio/06-rdt.md` | **Trasladada** | [06-rdt.md](../../04-flujos-de-negocio/06-rdt.md) § «Disciplinas», con la referencia a la migración `090`. Fila nunca cerrada |
+| R5-R2 | 2026-10-04 | Worker (R5) | **G-R2 y V-R1 quedan superadas por U2/U3 y deben pasar a «Descartada»**: con Plan Maestro aprobado el cronograma no se edita, así que no corresponde trasladarlas al flujo 15 | Libro de hallazgos de este plan | **Trasladada** | Aplicada el 2026-10-04: G-R2 y V-R1 de esta tabla quedaron en **Descartada**, con su motivo |
+| R5-R3 | 2026-10-04 | Worker (R5) | **U9 no estaba en el mapeo de R5**: la carga de RDT por archivo —vía de creación que el flujo 06 no mencionaba— y la acción `MOVER` | `04-flujos-de-negocio/06-rdt.md` | **Trasladada** | [06-rdt.md](../../04-flujos-de-negocio/06-rdt.md) nombra las vías de creación (el RDT estructurado, la carga por archivo y las que se creen después) y precisa que las dos condiciones son de **creación**. `MOVER` quedó en el flujo 19 (U10) y en el §6 del flujo 20 |
+| R6a-R1 | 2026-10-04 | Worker (R6a) | Los **RDT ya existentes por archivo** en servicios que están fuera de `EJECUCION` no se migran ni se ocultan: la guarda de U1 es de creación y no borra ni esconde nada de lo anterior | `04-flujos-de-negocio/06-rdt.md` (nota de datos) | Registrada | Destino sin escribir: es regla de negocio y el flujo 06 todavía no la dice |
+| R4c-R1 | 2026-10-04 | Worker (R4c) | Una actividad con **varios vínculos** que el plan nuevo reparte en paquetes distintos **no se reposiciona**, y se reporta en `actividadesAmbiguas` con los paquetes en conflicto. El código ya lo aplica (migración `094`) y no está escrito en ningún flujo | `06-rdt.md` / `20-plan-maestro.md` | **Pendiente de decisión (Victor)** | Decidir si se documenta como regla o si se cambia el comportamiento. No se escribe en los flujos mientras Victor no decida |
 
 ### Observaciones sobre la política
 
 | ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
 |---|---|---|---|---|---|---|
-| G-O1 | 2026-10-02 | Worker 1 (G) | «Conforme» declarado sin ninguna llamada real a endpoints (fallaban 100 %); el criterio de cierre de un endpoint debería exigir al menos una llamada viva | Clasificación del Auditor; Victor decide en el Gate 2 | Registrada | — |
-| G-O2 | 2026-10-02 | Worker 1 (G) | `crearClienteServidor` escribe sobre tablas con RLS de solo lectura y PostgREST devuelve `message` vacío (difícil de diagnosticar) | Clasificación del Auditor; Victor decide en el Gate 2 | Registrada | — |
-| OP1 | 2026-10-03 | Orquestador (Fase 0) | `.opencode/config.json` commiteado apunta **6 roles** a `opencode-go/qwen3.8-plus`, que **no existe** en el proveedor (verificado con `opencode models`: 28 modelos). Eso impidió lanzar al Worker 4 del Lote 3. El estándar `09-orquestacion-y-modelos.md` publica esa misma tabla de modelos, así que el error está en dos sitios | `docs/00-estandar-agentes/09-orquestacion-y-modelos.md` + `.opencode/config.json` | Registrada | — |
-| OP2 | 2026-10-03 | Orquestador (Fase 0) | El Lote 3 se implementó sin Spec/SDD ni Gate Spec (el flujo los exige en los pasos 3 y 4) y con un «Mensaje de cierre» escrito antes del Auditor y del Gate 2. El estándar no dice qué hacer con un plan ya aprobado sin Spec: no se inventó un Spec retroactivo | Clasificación del Auditor | Registrada | — |
-| OP3 | 2026-10-03 | Orquestador (Fase 0) | El merge a `main` del código (paso 16a) tiene dueño ambiguo en el estándar: `04-flujo-sdd-y-planes.md:76` lo asigna al Orquestador, `02-roles-y-delegacion.md:66` se lo prohíbe al Orquestador y `:172` se lo da al Worker git, y `09-orquestacion-y-modelos.md:187` lo declara sin aprobación de Victor | Clasificación del Auditor | Registrada | — |
-| OP4 | 2026-10-03 | Orquestador (Fase 0) | `09-orquestacion-y-modelos.md` trata al verificador como control obligatorio de acciones críticas, mientras `07-verificador-de-acciones.md` dice que sin el hook registrado la regla no es obligatoria | Clasificación del Auditor | Registrada | — |
-| OP5 | 2026-10-03 | Worker flash (V) | El estándar nombra el informe del Auditor «el mismo nombre base sin `-plan`» y el script nació contradiciéndolo: la política no exige probar con un fixture las rutinas que leen el árbol de `docs/` cuando se escribe un script nuevo de `scripts/` | Clasificación del Auditor | Registrada | — |
-| OP6 | 2026-10-03 | Worker flash (V) | `verificar.ps1` deriva `04-auditoria/` con dos `Split-Path -Parent` sin validar que el plan viva bajo `01-planes/`: un plan fuera de esa estructura produce el fallback `no existe` en silencio | Clasificación del Auditor | Registrada | — |
-| OP7 | 2026-10-03 | Orquestador | Hay **tres** fuentes de verdad para el modelo de cada rol y no coinciden: el config global `~/.config/opencode/opencode.jsonc` (modificado el 2026-10-03 00:00, ya con `worker-flash` = `glm-5.3-flash` y su nota de benchmark), el `.opencode/config.json` del repo (6 roles apuntan a `qwen3.8-plus`, que no existe) y el harness que realmente lanza los subagentes (en la Tanda V ejecutó `qwen3.8-flash`). Con más de un proceso opencode vivo, un cambio de config puede no aplicarse a las sesiones ya abiertas | Clasificación del Auditor; Victor decide | **Resuelta (2026-10-03)** — manda el config global; el del repo ya no define modelos (`ba7e371`) |
-| OP8 | 2026-10-03 | Worker (F) | El ítem «reposicionamiento automático de los RDT» aparece en **dos sitios con disparadores distintos**: la regla 4 del plan dice «al aprobar el nuevo Plan Maestro» y el brief de la tanda G lo puso «al confirmar la edición de una actividad». Sin mecanismo especificado no se implementa: el plan debe fixarlo antes | Clasificación del Auditor; **Victor decide el diseño** | Registrada | — |
-| OP9 | 2026-10-03 | Worker (E, F) | El brief exige «una llamada viva» pero el repositorio **no tiene un servicio de prueba con Plan Maestro en BORRADOR**, y el estado que exige el PATCH es justo ese: la verificación en vivo del guardado queda bloqueada por datos, no por código | Clasificación del Auditor; Victor decide | Registrada | — |
+| G-O1 | 2026-10-02 | Worker 1 (G) | «Conforme» declarado sin ninguna llamada real a endpoints (fallaban 100 %); el criterio de cierre de un endpoint debería exigir al menos una llamada viva | Clasificación del Auditor; Victor decide en el Gate 2 | **Pendiente de decisión (Victor, Gate 2)** | El Auditor: se repetiría —R4a, R6a y R6b se cerraron sin verificación en vivo; la regla solo se aplicó a R1 y R3. Recomienda que el criterio sea explícito en el estándar |
+| R4b-O1 | 2026-10-04 | Orquestador | Una Tanda que solo escribe en un worktree puede ir por `opencode run`; una que necesita credenciales, no: el permiso se rechaza sin humano. El brief de R4 debió prever el corte desde el inicio | `10-niveles-de-modelos.md` § Política 3 | **Trasladada** | [2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md](../../03-aprendizaje-continuo/2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md) §4, con el workaround del brief y la regla de que las credenciales las aplica el Orquestador. Falta recogerlo en `10-niveles-de-modelos.md` § Política 3 (destino propuesto) |
+| R5b-O1 | 2026-10-04 | Worker (R5b) | El Worker de R5b se cayó por un comando propio (`rg`, que no existe en esta máquina) y no dejó nada: la tarea la hizo el Orquestador. Un Worker que falla en el primer comando debe reportar, no desaparecer | Clasificación del Auditor | Registrada | No hay ninguna regla escrita sobre qué hacer cuando un Worker falla en su primer comando |
+| G-O2 | 2026-10-02 | Worker 1 (G) | `crearClienteServidor` escribe sobre tablas con RLS de solo lectura y PostgREST devuelve `message` vacío (difícil de diagnosticar) | Clasificación del Auditor; Victor decide en el Gate 2 | Registrada | El Auditor lo clasifica **NO PROMOVER**: es útil pero no es una regla de política; basta una línea en el checklist de endpoints de escritura |
+| OP1 | 2026-10-03 | Orquestador (Fase 0) | `.opencode/config.json` commiteado apunta **6 roles** a `opencode-go/qwen3.8-plus`, que **no existe** en el proveedor (verificado con `opencode models`: 28 modelos). Eso impidió lanzar al Worker 4 del Lote 3. El estándar `09-orquestacion-y-modelos.md` publica esa misma tabla de modelos, así que el error está en dos sitios | `docs/00-estandar-agentes/09-orquestacion-y-modelos.md` + `.opencode/config.json` | **Pendiente de decisión (Victor)** | El Auditor verificó que `qwen3.8-plus` **sigue** en `09-orquestacion-y-modelos.md`, `10-niveles-de-modelos.md` y `01-contexto-repositorio/09-medicion-y-modelos.md`: son tres sitios y el propio plan dice que no los edita un agente |
+| OP2 | 2026-10-03 | Orquestador (Fase 0) | El Lote 3 se implementó sin Spec/SDD ni Gate Spec (el flujo los exige en los pasos 3 y 4) y con un «Mensaje de cierre» escrito antes del Auditor y del Gate 2. El estándar no dice qué hacer con un plan ya aprobado sin Spec: no se inventó un Spec retroactivo | Clasificación del Auditor | **Pendiente de decisión (Victor, Gate 2)** | El plan ya marca el mensaje de cierre como borrador anticipado; el estándar sigue sin decir qué hacer con un plan aprobado sin Spec |
+| OP3 | 2026-10-03 | Orquestador (Fase 0) | El merge a `main` del código (paso 16a) tiene dueño ambiguo en el estándar: `04-flujo-sdd-y-planes.md:76` lo asigna al Orquestador, `02-roles-y-delegacion.md:66` se lo prohíbe al Orquestador y `:172` se lo da al Worker git, y `09-orquestacion-y-modelos.md:187` lo declara sin aprobación de Victor | Clasificación del Auditor | **Pendiente de decisión (Victor, Gate 2)** | El Auditor verificó que el conflicto sigue: cuatro enunciados, tres dueños |
+| OP4 | 2026-10-03 | Orquestador (Fase 0) | `09-orquestacion-y-modelos.md` trata al verificador como control obligatorio de acciones críticas, mientras `07-verificador-de-acciones.md` dice que sin el hook registrado la regla no es obligatoria | Clasificación del Auditor | Registrada | La contradicción sigue |
+| OP5 | 2026-10-03 | Worker flash (V) | El estándar nombra el informe del Auditor «el mismo nombre base sin `-plan`» y el script nació contradiciéndolo: la política no exige probar con un fixture las rutinas que leen el árbol de `docs/` cuando se escribe un script nuevo de `scripts/` | Clasificación del Auditor | Registrada | Agrupar con V-M3 y resolver en el mismo Gate |
+| OP6 | 2026-10-03 | Worker flash (V) | `verificar.ps1` deriva `04-auditoria/` con dos `Split-Path -Parent` sin validar que el plan viva bajo `01-planes/`: un plan fuera de esa estructura produce el fallback `no existe` en silencio | Clasificación del Auditor | Registrada | El Auditor verificó que no se corrigió en la Tanda V (que corrigió otros dos defectos) |
+| OP7 | 2026-10-03 | Orquestador | Hay **tres** fuentes de verdad para el modelo de cada rol y no coinciden: el config global `~/.config/opencode/opencode.jsonc` (modificado el 2026-10-03 00:00, ya con `worker-flash` = `glm-5.3-flash` y su nota de benchmark), el `.opencode/config.json` del repo (6 roles apuntan a `qwen3.8-plus`, que no existe) y el harness que realmente lanza los subagentes (en la Tanda V ejecutó `qwen3.8-flash`). Con más de un proceso opencode vivo, un cambio de config puede no aplicarse a las sesiones ya abiertas | Clasificación del Auditor; Victor decide | Registrada (la fila decía «Resuelta» y no del todo) | El Auditor verificó que el config del repo ya no define modelos (esa mitad está resuelta), pero las tablas del estándar y el pendiente 5 del progreso lo siguen nombrando. **Corregido el estado de la fila** (2026-10-04): no es Resuelta |
+| OP8 | 2026-10-03 | Worker (F) | El ítem «reposicionamiento automático de los RDT» aparece en **dos sitios con disparadores distintos**: la regla 4 del plan dice «al aprobar el nuevo Plan Maestro» y el brief de la tanda G lo puso «al confirmar la edición de una actividad». Sin mecanismo especificado no se implementa: el plan debe fixarlo antes | Clasificación del Auditor; **Victor decide el diseño** | **Descartada** | Resuelta por la Enmienda E1: el disparador único es la aprobación de un Plan Maestro nuevo (U4), escrito en el plan, en el flujo 06 y en el flujo 20 |
+| OP9 | 2026-10-03 | Worker (E, F) | El brief exige «una llamada viva» pero el repositorio **no tiene un servicio de prueba con Plan Maestro en BORRADOR**, y el estado que exige el PATCH es justo ese: la verificación en vivo del guardado queda bloqueada por datos, no por código | Clasificación del Auditor; Victor decide | Registrada | Sigue vigente: es la razón de que el reposicionamiento no se haya probado en vivo. **No la resuelve este plan** (la resuelve la Ola 5) |
+| R4a-O1 | 2026-10-04 | Worker (R4a) | El protocolo de migraciones dice que el Worker aplica las migraciones de su rango y el brief de R4a se lo prohíbe: **el protocolo y el brief se contradicen** | Protocolo de migraciones / checklist de revisión | Registrada | — |
+| R4a-O2 | 2026-10-04 | Worker (R4a) | U8 exige «todo o nada» y la aprobación **no era** transaccional: conviene un ítem de revisión que prohíba llamadas sueltas en flujos de aprobación | Checklist de revisión (repositorio de código) | Registrada | — |
+| R4a-O3 | 2026-10-04 | Orquestador (tras el Auditor) | Un `UPDATE` alimentado por un payload **una fila por vínculo** no es determinista cuando una actividad tiene varios vínculos y el plan nuevo los reparte en paquetes distintos: PostgreSQL elige una fila arbitrariamente y el RDT queda con un paquete arbitrario (la `093`, tal como se aplicó). Lo detectó la revisión, no el brief: **un brief que escribe SQL debe exigir comprobar el determinismo de todo `UPDATE` alimentado por un payload por fila**, y el checklist de revisión debe incluirlo. El código ya lo corrige con la `094` (`ae476f1`) | Checklist de revisión de endpoints y funciones SQL / `03-aprendizaje-continuo/` | Registrada | El Auditor lo señala como el riesgo más grave de su punto 1; el código ya está corregido (`094`), lo que queda es el aprendizaje de revisión |
+| R5-O1 | 2026-10-04 | Worker (R5) | La política no dice si un registro histórico de cambio se conserva o se reescribe al derogarse una regla; R5 lo reescribió, por coherencia | Clasificación del Auditor | Registrada | — |
+| R5-O2 | 2026-10-04 | Worker (R5) | El término `impacto` figura como **prohibido** en la verificación del brief y a la vez se conserva en U6 («aviso de impacto»): la política debería distinguir «símbolo derogado» de «concepto vigente con el mismo nombre» | Clasificación del Auditor | Registrada | — |
+| R4c-O1 | 2026-10-04 | Worker (R4c) | Un archivo puede estar **listado** por el sistema de archivos y a la vez ser **inaccesible** a toda API. El protocolo de migraciones asume que la credencial está o no está; falta el caso intermedio | Protocolo de migraciones | Registrada | — |
 
 ### Carpetas/archivos huérfanos
 
-Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borrar nada.
+Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borrar nada.En la revisión de inicio del 2026-10-03: ninguno. En la del 2026-10-04 (tandas R1, R2-R3, R4a, R5, R6a, R6b): **ninguno**. Se reporta sin borrar nada.
+
+Cuatro archivos temporales que el Orquestador movió a `resultados/` y borró del worktree: `R6a-resultado.md`, `R4a-resultado.md`, `R6b-resultado.md` y una copia de `_protocolo-migraciones.md` (para que el Worker no dependiera de un directorio externo). Ninguno quedó en el repositorio de código.
 
 ## Registro de decisiones
 
@@ -303,6 +455,11 @@ Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borra
 | 2026-10-03 | **Tanda V cerrada** (arreglo del verificador, `53dbee9`) y **Tanda C cerrada** (config del repo alineada al global, `ba7e371`) | Orquestador (consolidación) |
 | 2026-10-03 | **Tanda M cerrada:** migraciones `090`/`091`/`092` aplicadas y verificadas por un Worker con las credenciales de la **ruta nueva** (`D:\1 Nueva carpeta\todo\DIARIO`) | Orquestador (consolidación) |
 | 2026-10-03 | **Tandas E y F cerradas** (`39408cb`, `abe1ebd`); el ítem 5 quedó detenido por OP8 y quedó resuelto por la Enmienda E1 (R4) | Orquestador (consolidación) |
+| 2026-10-04 | **U4 aclarada:** el reposicionamiento re-vincula el RDT a las líneas del plan vigente; **no** toca `metrado_ejecutado` **ni las cifras del PR consolidado** | Victor |
+| 2026-10-04 | **Atomicidad de U8:** función SQL nueva (migración `093`), aplicada por un Worker con el protocolo de migraciones | Victor |
+| 2026-10-04 | **U10:** con Plan Maestro aprobado también se congela **MOVER** (reordenar paquetes); deroga la lectura R2-R3-R1 | Victor |
+| 2026-10-04 | **R4 se parte en dos:** R4a (código y pruebas, sin base) la hace un Worker; R4b (aplicar la `093`) la hace el Orquestador, porque el Worker se detuvo en el permiso de credenciales | Orquestador |
+| 2026-10-04 | **Niveles de modelos:** cinco niveles por consumo medido, benchmark antes de asignar y `opencode run --model` para no depender de la configuración. Política en `docs/00-estandar-agentes/10-niveles-de-modelos.md`; las tareas de hoy salen todas en **nivel 1** | Victor (política) / Orquestador (asignación) |
 | 2026-10-03 | **Tanda N bloqueada:** no se pudo crear el servicio de prueba con Plan Maestro en BORRADOR por un bloqueo de sesión en la UI; el PATCH del Plan Maestro sigue sin verificar en vivo (OP9). El Worker dejó opciones por escrito | Orquestador |
 
 ## Enlaces a progreso y evidencia homónimos
@@ -311,66 +468,74 @@ Ninguno detectado en la revisión de inicio del 2026-10-03. Se reporta sin borra
 - Evidencia: `docs/02-trabajo-activo/03-evidencia/2026-10-02-observaciones-victor-lote-3.md` (lo crea el Documentador)
 - Auditoría: `docs/02-trabajo-activo/04-auditoria/2026-10-02-observaciones-victor-lote-3.md` (la emite el Auditor; **sin** sufijo `-plan`, que es la convención)
 
+## Gate 2 — aprobado por Victor (2026-10-04)
+
+**Estado: las tres olas del Auditor están cerradas.** C commits en `local-worker-4`, **sin mergear**: `ceb269e`, `d916716`, `74734d7`, `26288bf`, `9d033e3`, `11804b6`, `56c66e0`, `d7d96fd` (R4), `ae476f1` (R4c), `f19c801` (U6).
+
+### Lo que se pide
+
+1. **Aprobar el cierre** de las 13 observaciones del Lote 3 con la Enmienda E1 (U1 a U10) y las tres decisiones de hoy.
+2. **Autorizar el merge** de `local-worker-4` → `main` en el repositorio de código y el **push de los dos repositorios**.
+
+### Lo que queda dentro, con una salvedad
+
+| # | Salvedad | Por qué |
+|---|---|---|
+| 1 | **La migración `094` está escrita y validada, pero NO aplicada** | El archivo de credenciales quedó inalcanzable (lo lista el sistema de archivos y ninguna API lo abre). Funcionó a las 08:41 para la `093`. Protocolo: detenerse, no buscar otra vía. **La base tiene la `093`, que no es determinista** |
+| 2 | **El reposicionamiento no se probó en vivo** | Ningún servicio de prueba tiene Plan Maestro en BORRADOR (OP9) |
+| 3 | **U6 sin verificación en vivo** | El Worker se agotó antes; validado por `tsc` y por 1136 tests |
+
+### Las cuatro reglas de R4a y las demás que no bloquean el cierre
+
+`R4a-R1` (RDT cuya partida ya no está en el plan), `R4a-R2` (partida en dos líneas con paquetes distintos), `R4a-R3` (filas derivadas que cambian de paquete sin recalcular metrado), `R4a-R4` (porcentaje de avance sobre el plan viejo), `R4c-R1` (actividad con vínculos en paquetes distintos: no se reposiciona y se reporta), `U6-R1` (si el impacto no se puede calcular, se avisa y se deja aprobar), más OP1, OP3 y OP4. **Ninguna impide el cierre**: quedan written en el libro de hallazgos con su estado y se resuelven en un plan siguiente o en estándar. El artefacto «Matriz de permisos» lo editas tú.
+
+### Lo que este plan deja escrito para el siguiente
+
+La Enmienda E1, el orden de las olas, los niveles de modelo por tipo de tarea y el mecanismo de lanzar un Worker por invocación. El aprendizaje nuevo está en `docs/03-aprendizaje-continuo/2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md` y la política en `docs/00-estandar-agentes/10-niveles-de-modelos.md`.
+
 ## Mensaje de cierre
 
-> ⚠️ **BORRADOR ANTICIPADO — NO ES EL CIERRE.** Este bloque se escribió el 2026-10-02, antes de que existiera Informe de Auditoría y antes del Gate 2, y describe un cierre que **no ocurrió** (F5 quedó parcial y las celdas editables del Lienzo nunca se hicieron). Se conserva íntegro por trazabilidad. El cierre real se escribe en el paso 17, después del Gate 2, y lo reemplaza.
+> **Este es el cierre real** (paso 17 del estándar), escrito después del informe del Auditor y del Gate 2 de Victor del 2026-10-04. Sustituye al borrador anticipado que estaba antes en este lugar, que se conservó solo por trazabilidad.
 
-### Alcance completado y no completado
+### Lo que se completó
 
-- **Completado:** F0 (maqueta), F1-A/B/C (botones Cargar/Recalcular + terminología), F2-A/B/C (edición cronograma con impacto), F3 (paquetes mejorado), F4-A/B/C/D (rediseño Plan Maestro), F6 (documentación de flujos).
-- **Parcial:** F5 (RDT mejorado) — migración 090 existe (8 disciplinas); libertad WBS para C/NC y equipos pendiente.
-- **No completado (pendiente de migración 091 en Supabase):** indicador visual de celdas editables (verde) y fechas fuera de rango (rojo) en el Lienzo del Plan Maestro.
+Las **13 observaciones** del Lote 3, con la Enmienda E1 («el Plan Maestro es el umbral del servicio», reglas U1 a U10) y las tres decisiones que tomó el responsable humano el 2026-10-04.
 
-### Pendientes de la continuación (2026-10-03, estado real verificado)
-
-- **Tandas V y M creadas; E y F pendientes**, con trabajo a medias **sin commitear** en el worktree `local-worker-4` (13 archivos modificados + 1 nuevo).
-- El **Documentador y el Auditor no se han ejecutado**; el **Gate 2 no se ha pedido**.
-- `main` del repo de código tiene **11 commits del carril sin mergear** (`local-worker-4` = `871b238`) y `local-worker-4` **nunca se pusheó** (no existe `origin/local-worker-4`).
-
-### Estado final de la Punch List
-
-| Fase | Ítem | Estado |
-|---|---|---|
-| F0 | Maqueta | Conforme |
-| F1-A | Botón Cargar DP | Conforme |
-| F1-B | Botón Recalcular PR | Conforme |
-| F1-C | Terminología "Actividad" | Conforme |
-| F2-A | Permiso editar cronograma | Conforme |
-| F2-B | Endpoint PATCH actividad | Conforme |
-| F2-C | Notificación de impacto | Conforme |
-| F3 | Paquetes mejorado | Conforme |
-| F4-A | Selector OT + icono flotante | Conforme |
-| F4-B | Plegables individuales | Conforme |
-| F4-C | Metrados por paquete | Conforme |
-| F4-D | Fechas editables | Conforme |
-| F5 | RDT mejorado | Parcial |
-| F6 | Flujos actualizados | Conforme |
+- **El Plan Maestro es el umbral.** Aprobado, lo único editable es el Plan Maestro; DP, PR, cronogramas y paquetes quedan congelados, incluido **reordenar** paquetes (U10). El registro de ejecución sigue funcionando: el congelamiento es de la planeación.
+- **Ninguna vía de creación de un RDT se salta las dos condiciones** (U1, U9): Plan Maestro aprobado **y** servicio en Ejecución, en las tres vías (RDT estructurado, carga por archivo y las posteriores), validadas en servidor.
+- **El reposicionamiento de los RDT al aprobar un plan nuevo** (U4), con **rastro en el historial** (U7) y **todo o nada** (U8) en una sola transacción. No reescribe el metrado ejecutado, los derivados, las horas ni el estado de validación, y **las cifras del PR consolidado no cambian**: lo que cambia es la asociación de paquete del RDT, que es la clave de reporte.
+- **El aviso de impacto antes de aprobar** (U6): cuántos RDT cambian, con qué fecha y qué metrado.
+- **Correcciones de las 7 observaciones anteriores** (F1 a F4) y de la Tanda F: botones con barra de progreso, terminología, permisos por rol, mejora de Paquetes y del Plan Maestro, declaración por paquete en RDT y el plegable de 8 disciplinas.
 
 ### Evidencia
 
-- Commits en `py_control_proyectos_web` (`local-worker-4`): `bd75f48`, `5f67006`, `8b33cdd`, `f82fd7f`, `77c3ab2`, `d985d33`, `b324a3b`, `7f755df`
-- Commits en `pg_control_proyectos` (`main`): `f77b8dc`, `dc138f5`, `b830c85`, `0aa8196`
-- `npx tsc --noEmit`: exit 0
-- `npx vitest run src/lib/plan-maestro/`: 115 tests verdes
-- `npx next build --webpack`: exit 0
+- **Código:** 10 commits de la Enmienda E1 en `main` (`ceb269e` a `f19c801`), **mergeado y pusheado**: `main` = `origin/main` = `f19c801`.
+- **Validación final:** `npx tsc --noEmit` exit 0 y `npx vitest run` **109 archivos / 1136 tests en verde**.
+- **Migraciones:** `093` aplicada y verificada (conteos idénticos en 8 tablas). `094` escrita y validada, **pendiente de aplicar**.
+- **Documentación:** flujos 06, 09, 10, 14, 15, 19 y 20actualizados; verificador de referencias **0 huérfanos, 0 enlaces rotos, exit 0**.
+- **Auditoría:** informe propio en `04-auditoria/2026-10-02-observaciones-victor-lote-3.md`, recomendación **requiere corrección mayor**; sus tres hallazgo se cerraron con las olas R4c, U6 y DOCS-L3.
 
-### Documentos promovidos
+### Lo que NO quedó hecho, y por qué
 
-Flujos `06-rdt.md`, `09-importar-dp.md`, `10-generacion-pr.md`, `14-accesos-y-restricciones.md`, `15-cronograma.md`, `19-paquetes-de-trabajo-y-jerarquia-de-control.md`, `20-plan-maestro.md`.
+1. **La migración `094` no se aplicó.** El archivo de credenciales quedó inalcanzable durante la tanda (el sistema de archivos lo lista y ninguna API lo abre; funcionó a las 08:41 para la `093`). El protocolo obliga a detenerse y no buscar otra vía. **La base tiene la `093`, que no es determinista**: un RDT con varios vínculos que el plan nuevo reparte en paquetes distintos podría quedar descolocado. **Se aplica con el SQL Editor de Supabase** (es `create or replace`, aditiva e idempotente) o con un Worker cuando la credencial vuelva a leerse.
+2. **El reposicionamiento y el aviso U6 no se probaron en vivo** (OP9): ningún servicio de prueba tiene Plan Maestro en BORRADOR.
+3. **F5 quedó parcial**: la libertad de WBS para actividades C y NC, equipos y materiales quedó fuera.
 
-### Merge / fuentes de verdad / Skill
+### Reglas que quedan pendientes de decisión
 
-- **16a Merge:** pendiente (requiere Gate 2 de Victor).
-- **16b Fuentes de verdad:** actualizadas en la Fase F6 (commit `0aa8196`).
-- **16c Skill:** no aplica.
+`R4a-R1` a `R4a-R4`, `R4c-R1`, `U6-R1`, más OP1, OP3 y OP4: están en el libro de hallazgos con su estado y van a un plan siguiente. El artefacto «Matriz de permisos» lo edita el responsable humano.
 
-### Confirmación de 100% pusheado
+### Lo que este plan deja instalado para los siguientes
 
-`pg_control_proyectos`: `main` = `origin/main`, `git rev-list --left-right --count` = `0 0` (pendiente de push). `py_control_proyectos_web`: `local-worker-4` con 8 commits pendientes de merge a `main`.
+- **Política de niveles de modelo** (`docs/00-estandar-agentes/10-niveles-de-modelos.md`) con seis agentes (`n0` a `n5`) en el `opencode.json` de la raíz, que no pisan el config global, y el instrumento `scripts/niveles-modelos.py`.
+- **Aprendizaje nuevo** en `docs/03-aprendizaje-continuo/2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md`: lanzar cualquier modelo por invocación, dónde sí manda un override, y el corte del permiso de directorio externo.
+- **El orden de las olas** que funciona: dos carriles en paralelo (código y documentación, con archivos separados), brief copiado dentro del worktree, y **commit antes que refinamiento**.
 
-### Autorización de cierre
+### Git
 
-Pendiente de Gate 2 de Victor. Queda la verificación final de Victor en la app desplegada (riesgo R6 del Lote 2).
+- `py_control_proyectos_web`: merge `--ff-only` de `local-worker-4` a `main`, `cd10882..f19c801`, **pusheado**. `main` = `origin/main`, `0/0`.
+- `pg_control_proyectos`: commit de cierre en `main` y push.
+- Las dos Policies y el aprendizaje viven en este repositorio; el código, en el hermano.
 
 ## Elementos postergados propuestos para planes futuros
 

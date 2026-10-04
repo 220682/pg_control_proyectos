@@ -1,6 +1,10 @@
 # Orquestación y modelos
 
-> **Estado: propuesto por Victor el 2026-10-02. Implementado en `.opencode/config.json` y `.claude/settings.local.json`.**
+> **Estado: propuesto por Victor el 2026-10-02. Configurado y verificado el 2026-10-04.**
+>
+> Este archivo es la fuente de verdad de **roles, esfuerzo y Jev**. El **nivel de consumo de cada modelo** (los cinco niveles) está en [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md), con la tabla medida y la vía para ejecutar un modelo sin depender de la configuración.
+>
+> **Dónde vive la configuración de verdad:** los modelos por rol están en el archivo **global** `~/.config/opencode/opencode.jsonc` (decisión de Victor del 2026-10-03, hallazgo OP7 del Lote 3). El `.opencode/config.json` de este repositorio **no define modelos**: aporta las claves que no son de modelo (umbrales de contexto, verificador, criterios de nivel) y se fusiona con el global. Un override por proyecto se pone en un `opencode.json` **en la raíz** del proyecto, que sí pisa al global (verificado el 2026-10-04).
 
 ## Principio
 
@@ -8,15 +12,27 @@ El Orquestador asigna modelos a los agentes según la complejidad de la tarea, o
 
 ## Modelos y niveles de esfuerzo por rol
 
-| Rol | Modelo base | Esfuerzo | Alternativas |
-|-----|-------------|----------|--------------|
-| Orquestador | `qwen3.8-plus` | Medio | `qwen3.8-max` (Victor elige al iniciar sesión) |
-| Arquitecto | `qwen3.8-max` | Medio | `qwen3.8-plus` |
-| Planificador | `qwen3.8-plus` | Medio | `qwen3.8-flash` |
-| Worker | `qwen3.8-flash` | Medio | Ver niveles abajo |
-| Documentador | `qwen3.8-flash` | Medio | `qwen3.8-plus` |
-| Auditor | `qwen3.8-plus` | Medio | `qwen3.8-max` |
-| Git | `qwen3.8-flash` | Medio | — |
+Verificado el 2026-10-04 con `opencode debug config` (configuración resuelta) y `opencode agent list`. Esta tabla **no se inventa**: es lo que el harness tiene registrado.
+
+| Rol (agente real del harness) | Modelo | Variante | Esfuerzo | Nivel de consumo |
+|-----|-------------|----------|----------|------------------|
+| Orquestador (`orchestrator`) | `opencode-go/qwen3.7-plus` | default | Medio | 3 |
+| Worker base (`worker-plus`) | `opencode-go/deepseek-v4-pro` | **high** | Medio | 2 |
+| Worker económico (`worker-flash`) | `opencode-go/deepseek-v4.1-flash` | default | Medio | 1 |
+| Documentador (agente `general`) | `opencode-go/space-bunny-free` | default | Medio | 1 |
+| Auditor (`auditor`) | `opencode-go/space-bunny-free` | default | Medio | 1 |
+| Exploración (`explore`) | `opencode-go/qwen3.8-flash` | default | Medio | 2 |
+| Verificador Jev (`jev`) | `typesafe/jev-1.13` | — | — | — |
+
+La columna de nivel viene de [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md) y se recalcula con `python scripts/niveles-modelos.py`.
+
+**Además de los roles, este repositorio define un agente por nivel de consumo** (`n0` a `n5`) en el `opencode.json` de la raíz del proyecto. Se eligen por nivel, no por nombre de modelo, y no tocan el config global. La tabla, las medidas y cómo se lanzan están en [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md).
+
+**Dos advertencias verificadas el 2026-10-04, para que nadie las vuelva a descubrir:**
+
+- **No existe un agente `planner`, ni `documenter`, ni `git`, ni `architect`.** `opencode debug agent planner` responde «Agent planner not found». Los modelos de esos roles no se pueden lanzar como subagentes: el Planner y el Documentador los hace el Orquestador o el agente `general`.
+- **El bloque `agent.roles` de los dos archivos de configuración no lo lee nadie.** Sigue nombrando `qwen3.8-plus` y `qwen3.8-max` —`qwen3.8-plus` no existe en el proveedor—, y fue la causa del bloqueo del Worker 4 del Lote 3 (OP1). Está pendiente de que Victor lo retire: es configuración global y no la edita un agente por su cuenta.
+
 
 ### Política de esfuerzo
 
@@ -45,13 +61,14 @@ El esfuerzo **alto** no es automático: se solicita y autoriza de manera puntual
 
 ## Niveles de Worker
 
-El Orquestador clasifica automáticamente cada tarea:
+El Orquestador clasifica automáticamente cada tarea. Los nombres de abajo son los históricos; el nivel de consumo que hoy se asigna a cada uno está en [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md) y se anota junto al nombre en el plan.
 
-| Nivel | Criterios | Modelo | Esfuerzo | Aprobación |
-|-------|-----------|--------|----------|------------|
-| **Flash** | Simple, bien especificada, sin ambigüedad, sin dependencias, sin riesgo | `qwen3.8-flash` | Medio | No requiere |
-| **Plus** | Requiere análisis, tiene dependencias, o afecta múltiples archivos/flujos | `qwen3.8-plus` | Medio | No requiere |
-| **Max** | Razonamiento profundo, remota, o riesgo alto | `qwen3.8-max` | Medio (Alto si el plan lo autoriza) | **Requiere aprobación de Victor** |
+| Nivel | Criterios | Modelo configurado | Nivel de consumo | Esfuerzo | Aprobación |
+|-------|-----------|--------|----------|----------|------------|
+| **Flash** | Simple, bien especificada, sin ambigüedad, sin dependencias, sin riesgo | `worker-flash` → `deepseek-v4.1-flash` | 1 | Medio | No requiere |
+| **Plus** | Requiere análisis, tiene dependencias, o afecta múltiples archivos/flujos | `worker-plus` → `deepseek-v4-pro` (variante `high`) | 2 | Medio | No requiere |
+| **Max** | Razonamiento profundo, remoto, o riesgo alto | Sin agente propio: se lanza con `opencode run --model` (ver `10-niveles-de-modelos.md`) | 4 – 5 | Medio (Alto si el plan lo autoriza) | **Requiere aprobación de Victor** |
+
 
 ## Asignación dinámica de Workers durante el plan
 
@@ -113,11 +130,11 @@ Todo uso de Max o esfuerzo alto se registra en el plan (con o sin aprobación de
 
 Al cerrar el plan, el Orquestador incluye en el reporte final una tabla con los esfuerzos reales usados por fase:
 
-| Fase | Modelo asignado | Esfuerzo default | Esfuerzo usado | Cambio autorizado |
-|------|-----------------|------------------|----------------|-------------------|
-| Fase 1 | `qwen3.8-flash` | Medio | Medio | No |
-| Fase 2 | `qwen3.8-max` | Medio | Alto | Sí (Victor, 2026-10-02 14:30) |
-| Fase 3 | `qwen3.8-plus` | Medio | Medio | No |
+| Fase | Modelo asignado | Nivel de consumo | Esfuerzo default | Esfuerzo usado | Cambio autorizado |
+|------|-----------------|------------------|------------------|----------------|-------------------|
+| Fase 1 | `opencode-go/deepseek-v4.1-flash` | 1 | Medio | Medio | No |
+| Fase 2 | `opencode-go/deepseek-v4-pro` (high) | 2 | Medio | Medio | No |
+| Fase 3 | `opencode-go/qwen3.7-plus` | 3 | Medio | Medio | No |
 
 ## Acciones críticas (Jev)
 
@@ -173,7 +190,7 @@ Credenciales, claves, tokens, rutas de archivos de secretos, valores de variable
 
 ## Agente Git
 
-El agente Git ejecuta comandos mecánicos con `qwen3.8-flash`:
+El agente Git ejecuta comandos mecánicos con el Worker económico (`worker-flash`, nivel 1):
 - `git status`, `git branch`, `git log`, `git diff`
 - `git add`, `git commit` (con mensaje del Orquestador)
 - `git push` a rama de trabajo
@@ -188,7 +205,8 @@ El agente Git ejecuta comandos mecánicos con `qwen3.8-flash`:
 
 ## Referencias
 
-- Configuración: `.opencode/config.json`, `.claude/settings.local.json`
+- Configuración: **global** `~/.config/opencode/opencode.jsonc` (modelos por rol) y, por proyecto, el `opencode.json` de la raíz (agentes por nivel `n0` a `n5` y overrides). `.opencode/config.json`: claves que no son de modelo.
+- Niveles de modelos, benchmark por nivel y ejecución sin bloqueo de configuración: [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md)
 - Verificador de acciones: `07-verificador-de-acciones.md`
 - Jev (detalles técnicos): `../01-contexto-repositorio/07-jev-verificador.md`
 - Medición y modelos: `08-medicion-y-relevo.md`, `../01-contexto-repositorio/09-medicion-y-modelos.md`

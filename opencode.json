@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "$comment": "Agentes por nivel de consumo de tokens. Política y datos medidos: docs/00-estandar-agentes/10-niveles-de-modelos.md. Este archivo es del proyecto y solo define claves nuevas: NO toca el config global (~/.config/opencode/opencode.jsonc), que sigue siendo la fuente de verdad de los roles. Un opencode.json en la raíz sí pisa al global (verificado 2026-10-04), así que cambiar un nivel aquí no afecta a otro proyecto ni a otro plan.",
+  "agent": {
+    "n1": {
+      "model": "opencode-go/deepseek-v4.1-flash",
+      "effort": "medium",
+      "mode": "subagent",
+      "description": "Nivel 1. Tarea simple, mecánica o de documentación acotada; sin decisiones de diseño. Medido: 0,0128 USD por millón de tokens; 0,0369 USD en el benchmark del 2026-10-04, el más barato de tres y el más completo (8/8).",
+      "note": "Es el nivel por defecto de este repositorio. En el Lote 3 resolvió R5, R6a, R6b y R4a."
+    },
+    "n2": {
+      "model": "opencode-go/deepseek-v4-pro",
+      "variant": "high",
+      "effort": "medium",
+      "mode": "subagent",
+      "description": "Nivel 2. Tanda con análisis o varios archivos, sin regla de negocio nueva. Medido: 0,0563 USD por millón con la variante high; la variante default costaba 0,597, diez veces más.",
+      "note": "OJO: la variante es lo que abarata este nivel. Sin `variant: high` el mismo modelo cae a nivel 4."
+    },
+    "n3": {
+      "model": "opencode-go/qwen3.7-plus",
+      "effort": "medium",
+      "mode": "subagent",
+      "description": "Nivel 3. Razonamiento que toca una regla de negocio o varios flujos; también el nivel del Orquestador de un plan.",
+      "note": "Es el modelo del propio Orquestador en la configuración global: 0,1442 USD por millón, 31 sesiones medidas. Acertó 7/8 en el benchmark del 2026-10-04."
+    },
+    "n4": {
+      "model": "opencode-go/qwen3.8-max",
+      "variant": "medium",
+      "effort": "medium",
+      "mode": "subagent",
+      "description": "Nivel 4. Razonamiento profundo con riesgo real: migración con candado sobre datos de producción, o decisión de diseño sobre datos que no se pueden deshacer.",
+      "note": "Medido con una sola sesión (3,0610 USD en 267 min): el nivel es provisional hasta tener más datos. Para una migración, el nivel 2 con variante high es más barato y ya lo aplicó un Worker sin incidentes (Tanda M)."
+    },
+    "n5": {
+      "model": "opencode-go/qwen3.8-max",
+      "effort": "high",
+      "mode": "subagent",
+      "requires_approval": true,
+      "log_always": true,
+      "description": "Nivel 5. Solo con aprobación de Victor: ambigüedad que una Spec no resuelve o riesgo sobre datos validados.",
+      "note": "Medido: 1,9526 USD por millón, el más caro de los medidos. Un solo uso justificado ya lo cuesta más que cuatro semanas de nivel 1."
+    },
+    "n0": {
+      "model": "opencode-go/space-bunny-free",
+      "effort": "medium",
+      "mode": "subagent",
+      "description": "Nivel 0 (fuera de la escala, costo 0). Documentación, redacción, revisión de solo lectura, y cualquier tarea que no toque código. Medido: 0 USD; es el modelo del Auditor y del Documentador en la configuración global.",
+      "note": "Úsalo cuando el nivel 1 ya no alcance por calidad y el trabajo no toque código. Con código, sube a n1."
+    }
+  }
+}

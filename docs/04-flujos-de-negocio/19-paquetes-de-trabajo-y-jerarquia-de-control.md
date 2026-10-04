@@ -84,6 +84,15 @@ text
 Servicio → Paquete → Partida → Actividad → RDT validado → PR → Dashboard
 La partida sigue siendo la unidad base para presupuesto, valorización, avance validado, costo y auditoría. El paquete no se convierte en una nueva partida.
 
+## Congelamiento con Plan Maestro aprobado (U3, Enmienda E1 2026-10-03)
+
+El Plan Maestro es el **umbral** del servicio. Aprobado el Plan Maestro, los paquetes quedan **congelados** porque son datos de planeación:
+
+- No se pueden **crear**, **editar**, **archivar** ni **reordenar** paquetes (`MOVER`). Reordenar también queda congelado: decidió Victor el 2026-10-04, y queda derogada la lectura anterior de que `MOVER` era solo orden de presentación y por eso seguía permitido.
+- No se pueden **declarar vínculos** actividad × partida con metrado ni marcar hitos.
+
+La restricción se valida en **servidor** con un mensaje claro, en el mismo tono que el bloqueo de recarga del DP y del cronograma; no cambia quién puede la acción, solo si se puede (como la transición `EN_PLANEACION` → `EJECUCION`). Antes de aprobar el Plan Maestro, los paquetes se gestionan con normalidad; y lo **administrativo** del servicio (checklist, notificaciones y datos del servicio) sigue funcionando.
+
 ## Modo de medición (Fase 1 — implementado 2026-09-23)
 
 El paquete tiene un modo de medición, definido en la columna `paquetes_trabajo.modo_medicion` (migración `072`):

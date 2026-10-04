@@ -23,6 +23,7 @@ Rehecho en la Fase 5 de la reestructuración documental (2026-09-27), una fila p
 | `sesiones/chat` | [`2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md`](2026-09-23-sendmessage-no-alcanza-sesiones-create-session.md) | Promovido a `00-estandar-agentes/03-sesiones-contexto-y-handoff.md` |
 | `entorno/infra` | [`2026-09-21-acceso-postgres-sin-ipv6.md`](2026-09-21-acceso-postgres-sin-ipv6.md) | Histórico (excepción cerrada) |
 | `entorno/infra` | [`2026-09-23-red-bloqueada-impide-autonomia-real.md`](2026-09-23-red-bloqueada-impide-autonomia-real.md) | Pendiente de promoción — ver `pendientes-de-promocion.md` |
+| `modelos/config` | [`2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md`](2026-10-04-opencode-run-modelo-por-invocacion-y-niveles.md) | Promovido a `00-estandar-agentes/10-niveles-de-modelos.md` |
 | `migraciones-sql` | [`2026-09-21-migraciones-sql-sobrecargas-huerfanas.md`](2026-09-21-migraciones-sql-sobrecargas-huerfanas.md) | No promovido — se queda como aprendizaje |
 | `playwright` | [`2026-09-21-verificacion-playwright-falsos-negativos.md`](2026-09-21-verificacion-playwright-falsos-negativos.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
 | `lint` | [`2026-09-23-eslint-baseline-vs-cero.md`](2026-09-23-eslint-baseline-vs-cero.md) | Promovido a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |

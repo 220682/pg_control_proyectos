@@ -31,10 +31,12 @@ Reglas:
 
 - **El Plan Maestro define el PV del servicio desde el inicio y es restrictivo: sin uno en estado `APROBADO`, el servicio no puede pasar de `EN_PLANEACION` a `EJECUCION`.** Validado en servidor (`POST /api/proyectos/[id]/confirmar-transicion`), no solo en la interfaz — una transición intentada por URL directa queda igual de bloqueada. Los servicios que ya estaban en `EJECUCION` antes de esta regla no se tocan; el bloqueo aplica solo a la transición (ver [PR Fase 2](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-2-pipeline-linea-base.md), tarea B4).
 - El RDT validado alimenta `Real`; nunca sobrescribe `Programado` ni el PV aprobado.
-- **El RDT usa los paquetes y partidas del Plan Maestro aprobado** (o una partida directa); sin Plan Maestro aprobado no se puede crear RDT. Al validarlo, el sistema registra el vinculo actividad RDT - partida DP (con su paquete).
+- **El RDT usa los paquetes y partidas del Plan Maestro aprobado** (o una partida directa); sin Plan Maestro aprobado **y** servicio en Ejecución no se puede crear RDT ([flujo 06](06-rdt.md), U1). Al validarlo, el sistema registra el vinculo actividad RDT - partida DP (con su paquete).
 - No se suman unidades fisicas incompatibles entre partidas.
 - El 3WLA es una capa operativa separada y no modifica automaticamente la linea base.
 - Una nueva version aprobada reemplaza la version vigente como linea base, pero conserva la version anterior.
+- **El Plan Maestro es el umbral del servicio (U3, Enmienda E1 2026-10-03).** Aprobado el Plan Maestro, **lo único editable es el propio Plan Maestro** (versión nueva con motivo obligatorio); quedan **congelados** el DP, el PR, los cronogramas y los paquetes. Lo **administrativo** (checklist, notificaciones y datos del servicio) sigue funcionando normal. Antes de aprobarlo, todos esos datos de planeación son editables.
+- **El Plan Maestro no puede dejar de contemplar ninguna partida (U5).** Al modificarlo solo se **mueven partidas** y se **crean o desagrupan paquetes**; nunca se elimina una partida del plan. Por eso no puede quedar un RDT sin partida.
 - **Una partida se puede repetir en el Plan Maestro** (repartida en varios paquetes y/o como directa): se relajó la restricción de WBS único (migración `076`, autorizada por Victor). El PV, el planificado del PR y la Curva S **suman todas las líneas de la partida**.
 - **El detalle diario de `plan_maestro_asignaciones` (fecha + metrado planificado) alcanza para alimentar series temporales por agregación en el momento de lectura — no hace falta una tabla de snapshots ni un historial semanal materializado.** El spec original del Dashboard (`docs/superpowers/specs/2026-08-16-dashboard-parcial-design.md` §2, repo `py_control_proyectos_web`) daba por necesario ese snapshot para la Curva S; quedó obsoleto al construirla en Fase 3 (2026-09-22) — ver [21-curva-s.md](21-curva-s.md).
 - **Declaración de metrados por paquete (no por partida)**: el usuario declara el metrado total del paquete (celda editable en verde); las partidas dentro del paquete reciben su proporción automáticamente según la partida guía (migración `091`). Las partidas muestran su metrado contractual fijo (no editable).
@@ -102,11 +104,22 @@ El **real se identifica por clave** `paquete|DIRECTA : partida` y no por el id d
 - La suma de las líneas de cada **partida** debe ser exactamente igual a su metrado contractual (el 100 %; las partidas del DP sin línea se señalan).
 - **Toda partida directa debe tener su disciplina** (ver más abajo).
 
-Al crear, el sistema guarda y aprueba; el estado pasa a `APROBADO` (solo lectura para todo rol). Si ya había una aprobada, esta pasa a `REEMPLAZADO` y en el mismo paso se recalcula `pr_partidas.metrado_planificado_acum` (bloque A' del PR) desde las asignaciones del plan recién aprobado — **sumado por partida** aunque esté repartida en varios paquetes, sin rastro del plan reemplazado.
+Al crear, el sistema guarda y aprueba; el estado pasa a `APROBADO` (solo lectura para todo rol). Si ya había una aprobada, esta pasa a `REEMPLAZADO`. La aprobación se ejecuta en un solo paso, en este orden, y es **todo o nada** (U8): **Plan Maestro → reposicionamiento de los RDT → recálculo del PR**. Los tres ocurren **en una sola transacción**: si algo falla —también si el reposicionamiento o el recálculo fallan— no queda aprobado nada, ni el Plan Maestro en `APROBADO`, ni los RDT reposicionados, ni el PR recalculado.
+
+**Qué ocurre al aprobar:**
+
+- **Aviso de impacto antes de confirmar (U6).** Aprobar no es un solo paso: primero **se pide el aviso** y se muestra **qué RDT van a cambiar** (cuántos, y con qué fechas y metrados); **solo después se confirma**. Es la confirmación la que aplica el reposicionamiento y el recálculo, así que sin el aviso a la vista no hay nada que confirmar.
+- **Reposicionamiento de los RDT (U4).** Cada RDT se vuelve a asociar a las líneas del plan vigente, por la clave de reporte `paquete × partida`, para que el Plan Maestro lo muestre en las fechas y metrados de la nueva línea base. Alcanza a **todos** los RDT del servicio, **incluidos los validados** (Enmienda E1, 2026-10-03).
+  - **Lo que NO cambia:** ni el metrado ejecutado, ni los metrados derivados, ni las horas, ni el estado de validación. Y **las cifras del PR consolidado tampoco cambian**: el PR sigue declarando los RDT igual (aclaración de Victor, 2026-10-04).
+  - **Lo que SÍ cambia es la asociación de paquete del RDT** (`rdt_actividades.paquete_trabajo_id` y `rdt_actividad_partidas.paquete_trabajo_id`), que es justamente la clave de reporte `paquete × partida`. Por eso un RDT ya registrado puede **verse con otro paquete en su propio formulario y en la pantalla Status**, además de cambiar de sitio en el Plan Maestro. No es una tabla de unión: entre el RDT y la línea del plan no hay FK, y la asociación de paquete **es** el vínculo (corrección del Auditor, 2026-10-04).
+- **Rastro en el historial del RDT (U7).** Cada RDT afectado deja una fila de historial con la acción `REPOSICIONAMIENTO`. Su campo `snapshot` guarda **el plan anterior, el plan nuevo y su versión, el diff de claves** (de qué clave `paquete × partida` pasó a cuál) **y quién aprobó el Plan Maestro**. **No guarda fecha ni metrado como dato consultable**: qué se movió se lee en el diff de claves (flujo 06).
+- **Recálculo del PR (bloque A' del PR).** `pr_partidas.metrado_planificado_acum` se recalcula desde las asignaciones del plan recién aprobado — **sumado por partida** aunque esté repartida en varios paquetes, sin arrastrar el reparto del plan reemplazado.
+
+El Plan Maestro **no puede dejar de contemplar ninguna partida** (U5): al modificarlo solo se **mueven partidas** y se **crean o desagrupan paquetes**; nunca se elimina una partida del plan. Por eso ningún RDT queda sin partida.
 
 ### 4. Versión nueva
 
-Con un Plan Maestro `APROBADO`, el botón «Crear versión nueva» pide un **motivo obligatorio** (máximo 500 caracteres) y crea un borrador que **parte de las asignaciones y de las disciplinas de la aprobada** (misma actividad y WBS). **Solo administrador y jefe de proyectos** pueden crear una versión nueva (fila propia en la tabla 2 del [flujo 14](14-accesos-y-restricciones.md)). **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo pueden hacer los tres roles que gestionan el Plan Maestro (administrador, jefe de proyectos y planner), igual que la primera aprobación. El motivo se muestra en la versión aprobada. La versión nueva es la vía para cambiar el DP o el cronograma, cuya recarga está bloqueada mientras haya una aprobada.
+Con un Plan Maestro `APROBADO`, el botón «Crear versión nueva» pide un **motivo obligatorio** (máximo 500 caracteres) y crea un borrador que **parte de las asignaciones y de las disciplinas de la aprobada** (misma actividad y WBS). **Solo administrador y jefe de proyectos** pueden crear una versión nueva (fila propia en la tabla 2 del [flujo 14](14-accesos-y-restricciones.md)). **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo pueden hacer los tres roles que gestionan el Plan Maestro (administrador, jefe de proyectos y planner), igual que la primera aprobación. El motivo se muestra en la versión aprobada. Al aprobarla rigen las mismas consecuencias de arriba: aviso de impacto (U6), reposicionamiento de los RDT (U4), rastro en el historial (U7) y recálculo del PR (U8). La versión nueva es la vía para cambiar el DP, el cronograma o los paquetes, cuya edición está bloqueada mientras haya una aprobada (U3).
 
 ### 5. Disciplina
 
@@ -115,9 +128,15 @@ Con un Plan Maestro `APROBADO`, el botón «Crear versión nueva» pide un **mot
 - **La partida dentro de un paquete hereda la del paquete** (se muestra «Hereda: X», no se edita aquí; se define en Paquetes, flujo 19).
 - Las líneas anteriores a este plan quedan **sin disciplina** («Sin disciplina»); una línea de paquete cuyo paquete es anterior no bloquea la aprobación.
 
-### 6. Recarga bloqueada
+### 6. Umbral: planeación congelada con el Plan Maestro aprobado (U3)
 
-Con un Plan Maestro `APROBADO` **no se puede recargar el DP ni el cronograma** (flujos 09 y 15). Sin plan aprobado, la recarga avisa lo que se perdería (vínculos, paquetes, borrador) y pide confirmación.
+Con un Plan Maestro `APROBADO` **lo único editable es el propio Plan Maestro** (crear una versión nueva con motivo obligatorio). Quedan **congelados** los datos de planeación:
+
+- El **DP** y el **cronograma**: no se recargan ni se reemplazan (flujos 09 y 15).
+- El **PR**: no se edita a mano; se recalcula desde sus fuentes (flujo 10) y dentro de la aprobación (U8).
+- Los **paquetes de trabajo**: no se crean, editan ni archivan, **ni se reordenan** (`MOVER`), ni se declaran vínculos con metrado o hitos (flujo 19; el congelamiento de `MOVER` es U10, decided el 2026-10-04).
+
+Lo **administrativo** (checklist, notificaciones y datos del servicio) sigue funcionando normal. Sin Plan Maestro aprobado, la recarga avisa lo que se perdería (vínculos, paquetes, borrador) y pide confirmación.
 
 ### 7. RDT a ejecucion real
 

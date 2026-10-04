@@ -42,6 +42,8 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 
 **Plan de observaciones de Victor, Lote 2 (cerrado, 2026-10-02):** [`observaciones-victor-lote-2`](../02-trabajo-activo/01-planes/2026-10-02-observaciones-victor-lote-2-plan.md) actualiza los flujos 08 (el checklist completo para cerrar no cuenta los documentos de fase CIERRE), 12 (grupos de acción por fila, subida solo en el Grupo A y «Acta de conformidad» fuera de la lista), 14 (acción «Subir documento» acotada al Grupo A y a los personalizados) y 15 (mensaje específico y log en servidor al fallar la importación del cronograma).
 
+**Plan de observaciones de Victor, Lote 3 (cerrado, Enmienda E1; Gate 2 el 2026-10-04):** [`observaciones-victor-lote-3`](../02-trabajo-activo/01-planes/2026-10-02-observaciones-victor-lote-3-plan.md) fija el Plan Maestro como **umbral** del servicio: con el Plan Maestro aprobado lo único editable es el propio Plan Maestro (versión nueva con motivo) y quedan congelados DP, PR, cronograma y paquetes; el RDT exige Plan Maestro aprobado **y** servicio en Ejecución; y al aprobar un Plan Maestro nuevo los RDT (validados incluidos) se reposicionan con rastro en su historial. Actualiza los flujos 06, 14, 15, 19 y 20.
+
 ## Qué no vive acá
 
 Bitácoras de sesión, estado de planes o procedimientos de agentes — eso vive en `../00-estandar-agentes/` y `../02-trabajo-activo/`.

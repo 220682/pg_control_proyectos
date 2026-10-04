@@ -14,7 +14,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-10-02-observaciones-victor-lote-3-plan.md`](2026-10-02-observaciones-victor-lote-3-plan.md) | Implementando (Gate 1 aprobado por Victor, 2026-10-02) — 13 observaciones en DP, PR, Cronograma, Paquetes, Plan Maestro y RDT; single carril `local-worker-4`; pendientes las tandas V (verificador), M (migraciones 090-092), E (Lienzo) y F (RDT), luego Documentador, Auditor y Gate 2; 11 commits sin mergear |
+| [`2026-10-02-observaciones-victor-lote-3-plan.md`](2026-10-02-observaciones-victor-lote-3-plan.md) | **Gate 2 pendiente** (2026-10-04) — 13 observaciones con la Enmienda E1 (el Plan Maestro es el umbral, U1 a U10); todo el código commiteado en `local-worker-4` (10 commits, sin mergear) y la documentación escrita; pendientes: aplicar la `094`, verificar en vivo y las cuatro reglas de R4a |
 | [`2026-10-02-observaciones-victor-lote-2-plan.md`](2026-10-02-observaciones-victor-lote-2-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — acciones del checklist (O5), importación de cronograma (O6) y acta de conformidad (O7) |
 | [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — checklist, área Jefatura y error de cronograma |
 | [`2026-10-01-dashboard-economia-y-curva-s.md`](2026-10-01-dashboard-economia-y-curva-s.md) | En ejecución — tandas A–D cerradas (2026-10-02; `local-worker-5`); Fase E (Documentador) trasladando el libro de hallazgos; falta la tanda T2 (F12/F13) y el Worker de código de P03; Gate 2 pendiente |

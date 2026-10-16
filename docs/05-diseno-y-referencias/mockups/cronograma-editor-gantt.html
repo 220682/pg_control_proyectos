@@ -7,21 +7,28 @@
 <link rel="icon" href="data:," />
 <link rel="stylesheet" href="marco-tres-paneles.css" />
 <style>
-:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;}
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;--hover:#0f1726;--sel:#13233d;--surf-2:#0e1424;}
+body,h1,h2,h3,p,ul,ol,dl,dd{margin:0}
+ul,ol{padding:0}
 body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-button{cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:4px 10px;font:inherit;font-size:11px;white-space:nowrap}
-button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:4px 10px;font:inherit;font-size:11px;white-space:nowrap;transition:background-color .12s,border-color .12s,color .12s}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:rgba(34,211,238,.07)}
+button:active:not(:disabled){background:rgba(34,211,238,.16)}
 button:disabled{opacity:.45;cursor:not-allowed}
 button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
-button.primary:hover:not(:disabled){color:var(--bg-base);filter:brightness(1.1)}
+button.primary:hover:not(:disabled){background:var(--accent);color:var(--bg-base);filter:brightness(1.1)}
 button[aria-pressed=true],button[aria-selected=true]{border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.15);color:var(--accent)}
+button[aria-pressed=true]:hover:not(:disabled){background:rgba(34,211,238,.24)}
 input,select{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font:inherit;font-size:11px;color:var(--text);color-scheme:dark}
+select{cursor:pointer}
+select:hover:not(:disabled),input:hover:not(:disabled){border-color:rgba(34,211,238,.6)}
 input:disabled{opacity:.6}
 input[type=checkbox],input[type=radio]{accent-color:var(--accent);width:14px;height:14px;padding:0}
 dialog{background:var(--bg-elevated);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px 16px;max-width:min(580px,92vw);font-size:12px;box-shadow:0 20px 50px rgba(0,0,0,.7)}
 dialog::backdrop{background:rgba(0,0,0,.6)}
 dialog h2{font-size:14px;margin-bottom:6px}
+dialog p{margin-bottom:8px;line-height:1.45}
 dialog .acc{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 dialog table{width:100%}
 dialog th,dialog td{height:auto;line-height:1.4;padding:4px 6px;box-shadow:inset 0 -1px 0 var(--line)}
@@ -39,27 +46,50 @@ dialog thead th{position:static;height:auto;padding:4px 6px}
 .pantalla>section{display:none;flex:1;min-height:0;flex-direction:column}
 .pantalla[data-estado=datos]>[data-st=datos],.pantalla[data-estado=vacio]>[data-st=vacio],.pantalla[data-estado=carga]>[data-st=carga],.pantalla[data-estado=error]>[data-st=error]{display:flex}
 .miga{font-size:10px;color:var(--text-2);margin-bottom:2px}
-.cab{flex:0 0 auto;margin-bottom:6px}
-.cab h1{font-size:15px;font-weight:600}
+.cab{flex:0 0 auto;margin-bottom:8px}
+.cab-f{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px}
+.cab h1{font-size:17px;font-weight:600;letter-spacing:-.01em}
 .cab p{font-size:11px;color:var(--text-2);margin-top:2px;line-height:1.45}
+.ctx{display:flex;flex-wrap:wrap;gap:4px 6px;list-style:none;font-size:11px;color:var(--text-2)}
+.ctx li{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:1px 10px;background:rgba(255,255,255,.025);line-height:18px;white-space:nowrap}
+.ctx .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:0 0 auto}
+.ctx .dot.neu{background:var(--accent-2)}
+.ctx .dot.sim{background:var(--warn)}
 .muted{color:var(--text-2)}
-.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:6px;flex:0 0 auto}
-.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 10px;color:var(--text-2)}
-.tabs button[aria-selected=true]{background:none;border-bottom-color:var(--accent);color:var(--accent)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:8px;flex:0 0 auto}
+.tabs button{border:0;border-bottom:2px solid transparent;border-radius:6px 6px 0 0;padding:7px 14px;color:var(--text-2);font-size:12px;font-weight:500;margin-bottom:-1px}
+.tabs button:hover:not(:disabled){background:rgba(255,255,255,.04);color:var(--text);border-bottom-color:rgba(255,255,255,.25)}
+.tabs button[aria-selected=true]{background:rgba(34,211,238,.06);border-bottom-color:var(--accent);color:var(--accent)}
+.tabs button[aria-selected=true]:hover:not(:disabled){background:rgba(34,211,238,.1);color:var(--accent);border-bottom-color:var(--accent)}
 .tab-p{flex:1;min-height:0;display:flex;flex-direction:column}
 .tab-p[hidden]{display:none}
-.bar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;flex:0 0 auto;margin-bottom:6px;font-size:11px}
-.bar label{display:inline-flex;gap:5px;align-items:center;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.bar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;flex:0 0 auto;margin-bottom:8px;font-size:11px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.bar label{display:inline-flex;gap:6px;align-items:center;color:var(--text-2);font-size:11px}
+.bar label small{font-size:10px;color:var(--text-2);opacity:.85}
 .bar .sp{flex:1}
+.bar .fgrp{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:nowrap}
 .lbl{color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.sgm{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.sgm button{border:0;border-radius:0;padding:4px 11px}
+.sgm button+button{border-left:1px solid var(--line)}
+.sgm button:hover:not(:disabled){background:rgba(34,211,238,.1)}
 .rel{position:relative;display:inline-block}
-.pop{position:absolute;z-index:20;top:30px;left:0;width:300px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:8px;padding:10px;box-shadow:0 10px 25px rgba(0,0,0,.6);font-size:11px}
+.pop{position:absolute;z-index:20;top:32px;left:0;width:300px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:0 14px 34px rgba(0,0,0,.65);font-size:11px}
 .pop[hidden]{display:none}
 .pop fieldset{border:0;margin-bottom:8px;display:flex;flex-direction:column;gap:4px}
 .pop legend{font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
 .pop label{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .pop p{font-size:10px;color:var(--text-2);margin-top:4px}
-.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:11px;flex:0 0 auto;line-height:1.45}
+.pop.que{left:auto;right:0;width:560px;max-height:calc(100vh - 170px);overflow:auto}
+.que h2{font-size:12px;font-weight:600;margin:0 0 6px}
+.que h2:not(:first-child){margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.que dl{display:grid;grid-template-columns:44px 1fr;gap:7px 10px;align-items:start}
+.que dt{display:flex;align-items:center;justify-content:center;min-height:18px}
+.que dt svg{width:40px;height:16px}
+.que dd{margin:0;color:var(--text-2);font-size:11px;line-height:1.45}
+.que dd b{color:var(--text);font-weight:600}
+.que .kx{display:inline-block;border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:10px;color:var(--text);line-height:16px;white-space:nowrap}
+.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:8px;font-size:11px;flex:0 0 auto;line-height:1.45}
 .msg.info{border-color:var(--accent-2)}
 .msg.warn{border-color:var(--warn)}
 .msg.warn strong{color:var(--warn)}
@@ -70,10 +100,19 @@ dialog thead th{position:static;height:auto;padding:4px 6px}
 .tag.acc{border-color:var(--accent);color:var(--accent)}
 .tag.warn{border-color:var(--warn);color:var(--warn)}
 
+/* ayuda al pasar el cursor (un solo globo para toda la pantalla) */
+.gtip{position:fixed;z-index:100;max-width:340px;background:var(--bg-base);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;font-size:11px;line-height:1.5;pointer-events:none;box-shadow:0 8px 22px rgba(0,0,0,.65);color:var(--text)}
+.gtip[hidden]{display:none}
+.gtip b{font-weight:600}
+.gtip .tm{color:var(--text-2);font-size:10px;display:inline-block;margin-top:2px}
+[data-tip]{cursor:help}
+button[data-tip],select[data-tip],label[data-tip],.tbox [data-tip],.hit,.gz{cursor:pointer}
+.tbox th[data-tip]{cursor:help}
+
 /* detalle de la actividad seleccionada */
-.det{flex:0 0 auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);padding:6px 10px;margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:11px}
-.det .nom{font-weight:600;flex:1 1 240px;min-width:0}
-.det .seg{display:flex;gap:4px;align-items:center}
+.det{flex:0 0 auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);padding:7px 12px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:11px}
+.det .nom{font-weight:600;flex:1 1 240px;min-width:0;font-size:12px}
+.det .seg{display:flex;gap:8px;align-items:center}
 .det .campos{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .det .campos label{display:inline-flex;gap:4px;align-items:center;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
 .det .campos input[type=date]{width:124px}
@@ -81,24 +120,34 @@ dialog thead th{position:static;height:auto;padding:4px 6px}
 .det .ayuda{flex:1 1 100%;font-size:10px;color:var(--text-2);line-height:1.4}
 
 /* editor: tabla a la izquierda, Gantt a la derecha, desplazamiento vertical sincronizado */
-.editor{flex:1;min-height:0;display:flex;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);overflow:hidden}
-.col-t{flex:0 0 58%;min-width:0;overflow:auto;border-right:1px solid var(--line);position:relative}
+.editor{flex:1;min-height:0;display:flex;border:1px solid var(--line);border-radius:10px;background:var(--bg-elevated);overflow:hidden}
+.col-t{flex:0 0 clamp(524px,56%,900px);min-width:0;overflow:auto;position:relative}
+.split{flex:0 0 6px;cursor:col-resize;position:relative;background:var(--bg-base);touch-action:none}
+.split::after{content:"";position:absolute;left:2px;top:0;bottom:0;width:2px;border-radius:2px;background:var(--line);transition:background-color .12s}
+.split:hover::after,.split:focus-visible::after,.split.drag::after{background:var(--accent)}
+.split:focus-visible{outline:none}
 .col-g{flex:1 1 0;min-width:0;overflow:auto;position:relative}
-table{border-collapse:separate;border-spacing:0;font-size:11px}
-th,td{padding:0 5px;white-space:nowrap;background:var(--bg-elevated);height:26px;line-height:26px;box-shadow:inset 0 -1px 0 var(--line);text-align:left;font-weight:400}
-thead th{position:sticky;top:0;z-index:3;height:40px;line-height:14px;padding:0 5px 6px;vertical-align:bottom;color:var(--text-2);font-weight:600;font-size:10px}
+table{border-collapse:separate;border-spacing:0;font-size:11px;table-layout:fixed}
+th,td{padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--bg-elevated);height:26px;line-height:26px;box-shadow:inset 0 -1px 0 var(--line);text-align:left;font-weight:400}
+thead th{position:sticky;top:0;z-index:3;height:33px;line-height:14px;padding:7px 6px 0;vertical-align:top;color:var(--text-2);font-weight:600;font-size:10px;box-shadow:inset 0 -1px 0 rgba(255,255,255,.2)}
+thead th .u{display:block;font-weight:400;font-size:10px;color:var(--text-2);opacity:.85}
 th.r,td.r{text-align:right}
 td.r{font-variant-numeric:tabular-nums}
-.c-id{position:sticky;left:0;z-index:2;width:34px;min-width:34px;max-width:34px}
-.c-edt{position:sticky;left:34px;z-index:2;width:56px;min-width:56px;max-width:56px}
-.c-nom{position:sticky;left:90px;z-index:2;width:300px;min-width:300px;max-width:300px}
+.c-id{position:sticky;left:0;z-index:2}
+.c-edt{position:sticky;left:28px;z-index:2}
+.c-nom{position:sticky;left:84px;z-index:2;box-shadow:inset 0 -1px 0 var(--line),inset -1px 0 0 var(--line)}
 thead .c-id,thead .c-edt,thead .c-nom{z-index:5}
+thead .c-nom{box-shadow:inset 0 -1px 0 rgba(255,255,255,.2),inset -1px 0 0 var(--line)}
 tbody tr{cursor:pointer}
-tbody tr:hover td{background:#0f1726}
-tbody tr.sel td{background:#13233d}
+tbody tr.sumr td{background:var(--surf-2)}
+tbody tr:hover td,tbody tr.hov td{background:var(--hover)}
+tbody tr.sel td,tbody tr.sel:hover td{background:var(--sel)}
+tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 -1px 0 var(--line)}
 tr:focus-visible{outline:none}
-tr:focus-visible td:first-child{box-shadow:inset 2px 0 0 var(--accent),inset 0 -1px 0 var(--line)}
-.nom-in{display:flex;align-items:center;padding-left:calc(var(--lvl) * 14px);overflow:hidden}
+tr:focus-visible td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 -1px 0 var(--line)}
+.nom-in{display:flex;align-items:center;min-width:0;padding-left:calc(var(--lvl) * 14px)}
+.nom-in .nm{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1 1 auto}
+.nom-in .tag{flex:0 0 auto}
 .gl16{flex:0 0 16px;width:16px;text-align:center;color:var(--text-2);display:inline-block}
 .pleg{width:16px;height:18px;padding:0;border:0;font-size:10px;line-height:18px;color:var(--text-2);background:none;flex:0 0 16px}
 .pleg:hover{color:var(--accent);background:none}
@@ -109,45 +158,63 @@ tr:focus-visible td:first-child{box-shadow:inset 2px 0 0 var(--accent),inset 0 -
 .o-tipo,.o-part{display:none}
 .col-t.show-tipo .o-tipo,.col-t.show-part .o-part{display:table-cell}
 .gbox{position:relative}
-.gh{position:sticky;top:0;z-index:4;background:var(--bg-elevated);height:40px;box-shadow:inset 0 -1px 0 var(--line)}
+.gh{position:sticky;top:0;z-index:4;background:var(--bg-elevated);height:40px;box-shadow:inset 0 -1px 0 rgba(255,255,255,.2)}
 .gh svg,.gbox>svg{display:block}
 svg text{font-family:"Segoe UI",system-ui,sans-serif}
 .hd1{font-size:10px;font-weight:600;fill:var(--text)}
-.hd2{font-size:9px;fill:var(--text-2)}
-.lbl-seg{font-size:9px;fill:var(--text-2)}
-.hoy{font-size:9px;font-weight:600;fill:var(--text)}
+.hd2{font-size:10px;fill:var(--text-2)}
+.lbl-seg{font-size:10px;fill:var(--text-2)}
+.hoy{font-size:10px;font-weight:600;fill:var(--text)}
 .gl{stroke:var(--line);stroke-width:1;fill:none}
 .gl2{stroke:rgba(255,255,255,.3);stroke-width:1;fill:none}
-.ax{font-size:9px;fill:var(--text-2)}
-.pk{font-size:10px;font-weight:600;fill:var(--text)}
+.ax{font-size:10px;fill:var(--text-2)}
+.axt{font-size:10px;font-weight:600;fill:var(--text)}
+.pk{font-size:11px;font-weight:600;fill:var(--text)}
 .hit{cursor:pointer;fill:transparent}
+.hit:hover{fill:rgba(255,255,255,.06)}
 .hit:focus{outline:none;stroke:var(--accent);stroke-width:1.5}
+.gz{fill:transparent;cursor:pointer}
+.rhit{fill:transparent;cursor:pointer}
 .dep{fill:none;stroke:#94a3b8;stroke-width:1}
+.dephit{fill:none;stroke:transparent;stroke-width:9;pointer-events:stroke;cursor:help}
+.dephit:hover{stroke:rgba(34,211,238,.35)}
+.rowhov{fill:rgba(255,255,255,.05);opacity:0;pointer-events:none}
+.rowhov.on{opacity:1}
 
 /* leyenda siempre visible */
-.leyenda{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:6px 0 0 0;font-size:10px;color:var(--text-2);list-style:none}
-.leyenda li{display:inline-flex;gap:5px;align-items:center}
-.leyenda svg{width:22px;height:12px;flex:0 0 auto}
+.leyenda{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 72px 6px 12px;margin:8px 0 0 0;font-size:11px;color:var(--text-2);list-style:none;background:var(--bg-elevated)}
+.leyenda li{display:inline-flex;gap:6px;align-items:center}
+.leyenda li.lt{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--text);font-weight:600}
+.leyenda svg{width:24px;height:14px;flex:0 0 auto}
 
 /* histogramas */
-.hist{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:4px}
-.hcard{border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);padding:8px 10px;position:relative;flex:0 0 auto}
-.hcard h3{font-size:12px;font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:2px}
-.hcard p{font-size:10px;color:var(--text-2);line-height:1.4}
-.hcard .pico{font-size:11px;color:var(--text);margin:2px 0 4px}
-.hcard svg{width:100%;height:auto;display:block}
-.hcard .acc-t{font-size:9px;color:var(--text-2);margin:2px 0 0 0}
-.hleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10px;color:var(--text-2);margin-top:6px;list-style:none}
+.hist{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,640px),1fr));grid-auto-rows:minmax(290px,1fr);gap:8px}
+.hcard{display:flex;flex-direction:column;min-height:0;min-width:0;border:1px solid var(--line);border-radius:10px;background:var(--bg-elevated);padding:8px 12px;position:relative}
+.hc-top{display:flex;gap:4px 10px;align-items:center;flex-wrap:wrap;flex:0 0 auto}
+.hc-top h3{font-size:13px;font-weight:600}
+.hc-top .tag{margin-left:0}
+.hc-pico{margin-left:auto;font-size:11px;color:var(--text)}
+.hc-leg{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;margin-top:6px;font-size:11px;color:var(--text-2)}
+.most{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 10px;line-height:20px;color:var(--text-2);background:rgba(255,255,255,.03)}
+.most b{color:var(--text);font-weight:600;display:inline-flex;gap:5px;align-items:center}
+.hleg{display:flex;flex-wrap:wrap;gap:3px 12px;list-style:none;color:var(--text-2)}
 .hleg li{display:inline-flex;gap:5px;align-items:center}
-.hleg i{width:10px;height:10px;border-radius:2px;display:inline-block}
-.hleg b{width:16px;height:0;border-top:2px solid var(--text);display:inline-block}
-.tip{position:absolute;z-index:6;pointer-events:none;background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:10px;line-height:1.5;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.5);top:34px}
+.hleg i{width:11px;height:11px;border-radius:3px;display:inline-block;flex:0 0 auto}
+.hleg b{width:18px;height:0;border-top:2px solid var(--text);display:inline-block;flex:0 0 auto}
+.hleg b.dash{border-top:2px dashed var(--text-2)}
+.hleg li.mut{opacity:.8}
+.hc-exp{flex:0 0 auto;font-size:10px;color:var(--text-2);margin-top:4px;line-height:1.4}
+.hc-body{position:relative;flex:1;min-height:120px;margin-top:4px}
+.hc-body>svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.hc-tab{position:absolute;inset:0;overflow:auto}
+.hc-tab[hidden]{display:none}
+.tip{position:absolute;z-index:6;pointer-events:none;background:var(--bg-base);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;font-size:11px;line-height:1.6;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.6);top:4px}
 .tip[hidden]{display:none}
-details{margin-top:4px}
-details summary{cursor:pointer;color:var(--text-2);font-size:10px}
-table.tv{font-size:10px;margin-top:4px;width:100%}
-table.tv th,table.tv td{height:20px;line-height:20px;padding:0 6px;box-shadow:inset 0 -1px 0 var(--line);background:transparent}
-table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;font-size:10px}
+.tip i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+.tip .tt{color:var(--text-2)}
+table.tv{font-size:11px;width:100%;table-layout:auto}
+table.tv th,table.tv td{height:22px;line-height:22px;padding:0 8px;box-shadow:inset 0 -1px 0 var(--line);background:transparent;overflow:visible}
+table.tv thead th{position:sticky;top:0;height:24px;line-height:24px;padding:0 8px;font-size:10px;background:var(--bg-elevated)}
 
 /* estados */
 .puertas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
@@ -170,7 +237,8 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
 .mlist .meta{font-size:10px;color:var(--text-2);margin-top:2px}
 .mbar{height:6px;border-radius:3px;background:rgba(255,255,255,.1);margin-top:5px;overflow:hidden}
 .mbar i{display:block;height:100%;background:var(--accent)}
-.pantalla[data-vista=movil] .det,.pantalla[data-vista=movil] .leyenda{display:none}
+.pantalla[data-vista=movil] .det,.pantalla[data-vista=movil] .leyenda,.pantalla[data-vista=movil] .tab-p{display:none}
+@media (min-width:1024px){body{height:100vh}}
 @media (max-width:1023px){.puertas{grid-template-columns:1fr}}
 </style>
 </head>
@@ -206,27 +274,35 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
   <section data-st="datos">
     <div class="cab vista-escr">
       <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
-      <h1>Cronograma del servicio</h1>
-      <p>Plan Maestro v3 aprobado el 02/10/26 · Línea base vigente v3 · Seguimiento con RDT validados al 15/10/26 · Datos simulados.</p>
+      <div class="cab-f">
+        <h1>Cronograma del servicio</h1>
+        <ul class="ctx" aria-label="Contexto del cronograma">
+          <li data-tip="El Plan Maestro aprobado es lo que habilita la línea base y el seguimiento con RDT."><i class="dot" aria-hidden="true"></i>Plan Maestro v3 aprobado 02/10/26</li>
+          <li data-tip="Versión de la línea base contra la que se miden las barras grises y la Var. fin. Puede cambiarla en «Línea base»."><i class="dot neu" aria-hidden="true"></i>Línea base v3 vigente</li>
+          <li data-tip="Fecha hasta la que hay RDT validados. El seguimiento en modo RDT se alimenta de ellos."><i class="dot neu" aria-hidden="true"></i>RDT validados al 15/10/26</li>
+          <li data-tip="Esta pantalla es una maqueta: ningún dato es real."><i class="dot sim" aria-hidden="true"></i>Datos simulados</li>
+        </ul>
+      </div>
     </div>
     <div class="tabs vista-escr" role="tablist" aria-label="Vistas del cronograma">
-      <button type="button" role="tab" id="t-crono" data-tab="crono" aria-selected="true" aria-controls="tab-crono">Cronograma</button>
-      <button type="button" role="tab" id="t-hist" data-tab="hist" aria-selected="false" aria-controls="tab-hist">Histogramas</button>
+      <button type="button" role="tab" id="t-crono" data-tab="crono" aria-selected="true" aria-controls="tab-crono" data-tip="Tabla de actividades con su Gantt: fechas, avance y variación contra la línea base.">Cronograma</button>
+      <button type="button" role="tab" id="t-hist" data-tab="hist" aria-selected="false" aria-controls="tab-hist" data-tip="Horas-hombre (HH) y horas-máquina (HM) que se necesitan cada semana, con su acumulado.">Histogramas</button>
     </div>
 
     <div class="tab-p" id="tab-crono" role="tabpanel" aria-labelledby="t-crono">
       <div class="bar vista-escr">
-        <label>Escala <select id="sel-escala"><option value="dias">Días</option><option value="semanas" selected>Semanas (sábado a viernes)</option><option value="meses">Meses</option></select></label>
-        <label>Línea base <select id="sel-base"><option value="v3" selected>v3 · vigente · aprobada 02/10/26</option><option value="v2">v2 · aprobada 18/09/26</option><option value="v1">v1 · aprobada 04/09/26</option></select></label>
-        <button type="button" id="btn-hist">Historial</button>
-        <span class="rel"><button type="button" id="btn-pers" aria-expanded="false" aria-controls="pop-pers">Personalizar campos</button>
+        <label>Escala <select id="sel-escala" data-tip="Ancho de cada columna del Gantt: días, semanas (sábado a viernes) o meses."><option value="dias">Días</option><option value="semanas" selected>Semanas (sáb a vie)</option><option value="meses">Meses</option></select></label>
+        <label>Línea base <select id="sel-base" data-tip="Versión de la línea base que se dibuja en gris y contra la que se calcula la Var. fin. La vigente es la última aprobada del Plan Maestro; las anteriores son solo lectura."><option value="v3" selected>v3 · vigente · 02/10/26</option><option value="v2">v2 · aprobada 18/09/26</option><option value="v1">v1 · aprobada 04/09/26</option></select></label>
+        <button type="button" id="btn-hoy" data-tip="Desplaza el Gantt hasta la línea de hoy (15/10/26).">Ir a hoy</button>
+        <button type="button" id="btn-hist" data-tip="Quién cambió el seguimiento de una actividad, cuándo y a qué valor. Las filas nunca se borran.">Historial</button>
+        <span class="rel"><button type="button" id="btn-pers" aria-expanded="false" aria-controls="pop-pers" data-tip="Elegir qué columnas opcionales se agregan a la tabla.">Personalizar campos</button>
           <div class="pop" id="pop-pers" hidden>
             <fieldset><legend>Columnas opcionales</legend>
               <label><input type="checkbox" id="ck-tipo"> Tipo de actividad</label>
               <label><input type="checkbox" id="ck-part"> Partidas vinculadas</label></fieldset>
             <p>Id, EDT, Nombre, Duración, Comienzo, Fin, Predecesoras, Sucesoras, % avance y Var. fin son fijas.</p>
           </div></span>
-        <span class="rel"><button type="button" id="btn-exp" aria-expanded="false" aria-controls="pop-exp">Exportar &#9662;</button>
+        <span class="rel"><button type="button" id="btn-exp" aria-expanded="false" aria-controls="pop-exp" data-tip="Descargar el cronograma en PDF apaisado o en Excel.">Exportar &#9662;</button>
           <div class="pop" id="pop-exp" hidden style="left:auto;right:0;width:330px">
             <fieldset><legend>PDF apaisado (estilo MS Project)</legend>
               <label><input type="radio" name="pdf-cont" value="base"> Solo línea base</label>
@@ -241,7 +317,41 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
             <p id="exp-msg" aria-live="polite"></p>
           </div></span>
         <span class="sp"></span>
-        <span class="muted">Hoy 15/10/26 · No laborables: 25/09 y 08/10 · Calendario lunes a sábado</span>
+        <span class="rel"><button type="button" id="btn-que" aria-expanded="false" aria-controls="pop-que" data-tip="Explica cada elemento del Gantt y de la tabla: barras, resumen, hito, flechas, línea Hoy y columnas.">&#9432; ¿Qué veo?</button>
+          <div class="pop que" id="pop-que" hidden role="region" aria-label="Cómo leer el cronograma">
+            <h2>Cómo leer el Gantt</h2>
+            <dl>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><rect x="0" y="6" width="40" height="3" fill="#94a3b8" opacity=".8"/></svg></dt>
+              <dd><b>Barra gris fina: línea base.</b> Las fechas aprobadas en el Plan Maestro (la versión elegida en «Línea base»). No cambia con el avance; sirve para medir el atraso.</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><rect x="0" y="4" width="40" height="8" rx="2" fill="#4f7df3" opacity=".9"/></svg></dt>
+              <dd><b>Barra azul: tarea (plan actual).</b> Comienzo y fin que salen de la duración y de las predecesoras.</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><rect x="0" y="4" width="40" height="8" rx="1.5" fill="rgba(255,255,255,.10)" stroke="#94a3b8" stroke-dasharray="3 2"/><rect x="0" y="4" width="22" height="8" rx="1.5" fill="#22d3ee"/></svg></dt>
+              <dd><b>Barra cian bajo la azul: seguimiento.</b> Lo ejecutado. El relleno cian es el % de avance y el número a su derecha lo repite. Con contorno discontinuo y la palabra «manual», los valores los escribió el planner; sin contorno, salen de los RDT validados.</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><rect x="0" y="5" width="40" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/><rect x="0" y="2" width="4" height="12" fill="#94a3b8"/><rect x="36" y="2" width="4" height="12" fill="#94a3b8"/></svg></dt>
+              <dd><b>Barra negra con corchetes: resumen.</b> Agrupa a las actividades de su nivel y abarca desde la primera hasta la última. Su % es el promedio ponderado por duración.</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><polygon points="20,1 27,8 20,15 13,8" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/></svg></dt>
+              <dd><b>Rombo ámbar: hito.</b> Una fecha de control sin duración (0 d), por ejemplo «Fin de trabajos en vía».</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><path d="M2,3 H8 V12 H34" fill="none" stroke="#94a3b8"/><path d="M31,8.5 L36,12 L31,15.5 z" fill="#94a3b8"/></svg></dt>
+              <dd><b>Flecha: dependencia.</b> Va de la predecesora a la sucesora. Al pasar el cursor se ve su tipo: <span class="kx">FC</span> termina y luego comienza, <span class="kx">CC</span> comienza con comienza, <span class="kx">FF</span> termina con termina, <span class="kx">CF</span> comienza y luego termina; con desfase en días (+ espera, − adelanto).</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><line x1="20" y1="0" x2="20" y2="16" stroke="#f8fafc" stroke-dasharray="3 2"/></svg></dt>
+              <dd><b>Línea punteada blanca: hoy.</b> 15/10/26, con su fecha en el encabezado del Gantt. Lo que queda a su izquierda ya pasó.</dd>
+              <dt><svg viewBox="0 0 40 16" aria-hidden="true"><rect x="12" y="0" width="16" height="16" fill="rgba(255,255,255,.12)"/></svg></dt>
+              <dd><b>Franja gris clara: día no laborable.</b> Domingos y los días no laborables del calendario (25/09 y 08/10). No cuentan en la duración ni en la Var. fin. El calendario es de lunes a sábado.</dd>
+            </dl>
+            <h2>Columnas de la tabla</h2>
+            <dl>
+              <dt><span class="kx">d lab.</span></dt>
+              <dd><b>Duración y Var. fin se miden en días laborables</b> (lunes a sábado, sin los no laborables).</dd>
+              <dt><span class="kx v-atr">&#9650; +3</span></dt>
+              <dd><b>Var. fin:</b> días laborables entre el fin actual y el fin de la línea base elegida. <span class="v-atr">&#9650; rojo = atraso</span>, <span class="v-adl">&#9660; verde = adelanto</span>, = 0 igual a la base.</dd>
+              <dt><span class="kx">70 %</span></dt>
+              <dd><b>% avance:</b> el del seguimiento (RDT validados o manual). En una fila resumen es el promedio ponderado de sus hijas.</dd>
+              <dt><span class="tag acc" style="margin:0">Manual</span></dt>
+              <dd>El planner escribe comienzo, fin y % de esa actividad; mientras tanto los RDT nuevos no la cambian.</dd>
+              <dt><span class="tag warn" style="margin:0">Fijada</span></dt>
+              <dd>Fecha tomada del archivo importado que difiere de lo que calcularían sus predecesoras; se respeta.</dd>
+            </dl>
+          </div></span>
       </div>
 
       <div class="msg info vista-escr" id="msg-base" hidden></div>
@@ -250,9 +360,11 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
       <div class="det vista-escr" id="det">
         <div class="nom" id="det-nom">—</div>
         <div class="seg" role="group" aria-label="Modo de seguimiento de la actividad seleccionada">
-          <span class="lbl">Seguimiento</span>
-          <button type="button" id="m-rdt" aria-pressed="true">Modo RDT</button>
-          <button type="button" id="m-man" aria-pressed="false">Manual</button>
+          <span class="lbl" data-tip="De dónde salen el comienzo, el fin y el % de la actividad seleccionada.">Seguimiento</span>
+          <div class="sgm">
+            <button type="button" id="m-rdt" aria-pressed="true" data-tip="Modo RDT: comienzo, fin y % salen de los RDT validados y son de solo lectura.">Modo RDT</button>
+            <button type="button" id="m-man" aria-pressed="false" data-tip="Manual: el planner escribe comienzo, fin y %. Los RDT nuevos dejan de cambiarlos mientras esté en manual.">Manual</button>
+          </div>
         </div>
         <div class="campos">
           <label>Comienzo <input type="date" id="f-ini"></label>
@@ -262,57 +374,40 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
         <p class="ayuda" id="det-ayuda" aria-live="polite"></p>
       </div>
 
-      <div class="editor vista-escr">
+      <div class="editor vista-escr" id="editor">
         <div class="col-t" id="col-t"><div class="tbox"></div></div>
+        <div class="split" id="split" role="separator" aria-orientation="vertical" aria-label="Ajustar el ancho de la tabla" tabindex="0" data-tip="Arrastre para cambiar el ancho de la tabla (o use las flechas izquierda y derecha)."></div>
         <div class="col-g" id="col-g"><div class="gbox"></div></div>
       </div>
 
       <ul class="leyenda vista-escr" aria-label="Leyenda del Gantt">
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="4" width="22" height="3" fill="#94a3b8" opacity=".8"/></svg>Línea base (gris fina)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="2" width="22" height="7" rx="2" fill="#4f7df3" opacity=".9"/></svg>Tarea (plan)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="3" width="22" height="6" rx="1" fill="rgba(255,255,255,.10)" stroke="#94a3b8" stroke-dasharray="3 2"/><rect x="0" y="3" width="11" height="6" rx="1" fill="#22d3ee"/></svg>Seguimiento: relleno = % (discontinuo = manual)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="4" width="22" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/><rect x="0" y="2" width="3" height="10" fill="#94a3b8"/><rect x="19" y="2" width="3" height="10" fill="#94a3b8"/></svg>Resumen (negro con corchetes)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><polygon points="11,0 17,6 11,12 5,6" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/></svg>Hito (rombo)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M1,2 H5 V10 H20" fill="none" stroke="#94a3b8"/><path d="M17,7 L21,10 L17,13" fill="#94a3b8" transform="translate(0,-3)"/></svg>Dependencia (flecha)</li>
-        <li><svg viewBox="0 0 22 12" aria-hidden="true"><line x1="11" y1="0" x2="11" y2="12" stroke="#f8fafc" stroke-dasharray="2 2"/></svg>Hoy (línea punteada con su fecha)</li>
+        <li class="lt">Leyenda</li>
+        <li data-tip="Fechas aprobadas en el Plan Maestro (versión elegida en «Línea base»). No cambian con el avance."><svg viewBox="0 0 24 14" aria-hidden="true"><rect x="0" y="5" width="24" height="3" fill="#94a3b8" opacity=".8"/></svg>Línea base (gris fina)</li>
+        <li data-tip="Fechas del plan actual: salen de la duración y de las predecesoras."><svg viewBox="0 0 24 14" aria-hidden="true"><rect x="0" y="3" width="24" height="7" rx="2" fill="#4f7df3" opacity=".9"/></svg>Tarea (plan actual)</li>
+        <li data-tip="Lo ejecutado. El relleno cian es el % de avance; el contorno discontinuo indica modo manual."><svg viewBox="0 0 24 14" aria-hidden="true"><rect x="0" y="4" width="24" height="6" rx="1" fill="rgba(255,255,255,.10)" stroke="#94a3b8" stroke-dasharray="3 2"/><rect x="0" y="4" width="12" height="6" rx="1" fill="#22d3ee"/></svg>Seguimiento: relleno = %, discontinuo = manual</li>
+        <li data-tip="Agrupa a las actividades hijas; su comienzo, fin y % salen de ellas."><svg viewBox="0 0 24 14" aria-hidden="true"><rect x="0" y="4" width="24" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/><rect x="0" y="2" width="3" height="10" fill="#94a3b8"/><rect x="21" y="2" width="3" height="10" fill="#94a3b8"/></svg>Resumen (negro con corchetes)</li>
+        <li data-tip="Fecha de control sin duración."><svg viewBox="0 0 24 14" aria-hidden="true"><polygon points="12,0 19,7 12,14 5,7" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/></svg>Hito (rombo)</li>
+        <li data-tip="De la predecesora a la sucesora. Pase el cursor sobre una flecha para ver su tipo y su desfase."><svg viewBox="0 0 24 14" aria-hidden="true"><path d="M1,2 H6 V11 H19" fill="none" stroke="#94a3b8"/><path d="M17,8 L22,11 L17,14 z" fill="#94a3b8"/></svg>Dependencia (flecha)</li>
+        <li data-tip="Fecha de hoy: 15/10/26. Su fecha está escrita en el encabezado del Gantt."><svg viewBox="0 0 24 14" aria-hidden="true"><line x1="12" y1="0" x2="12" y2="14" stroke="#f8fafc" stroke-dasharray="2 2"/></svg>Hoy 15/10/26 (punteada)</li>
+        <li data-tip="Domingos y días no laborables (25/09 y 08/10). No cuentan en la duración ni en la Var. fin. Calendario de lunes a sábado."><svg viewBox="0 0 24 14" aria-hidden="true"><rect x="6" y="0" width="12" height="14" fill="rgba(255,255,255,.14)"/></svg>No laborable (franja gris)</li>
       </ul>
     </div>
 
     <div class="tab-p" id="tab-hist" role="tabpanel" aria-labelledby="t-hist" hidden>
       <div class="bar vista-escr">
-        <label>Cargo <select id="fCargo"></select></label>
-        <label>Equipo <select id="fEquipo"></select></label>
-        <span class="sp"></span>
-        <span class="lbl">Fuente</span>
-        <button type="button" id="fte-prog" aria-pressed="true">Programado (Plan Maestro)</button>
-        <button type="button" id="fte-est" aria-pressed="false">Estimado (sin Plan Maestro)</button>
+        <span class="lbl">Filtros</span>
+        <label>Cargo <small>(filtra el gráfico de HH)</small> <select id="fCargo" data-tip="Muestra solo un cargo en el gráfico de horas-hombre (HH). No cambia el gráfico de HM."></select></label>
+        <label>Equipo <small>(filtra el gráfico de HM)</small> <select id="fEquipo" data-tip="Muestra solo un equipo en el gráfico de horas-máquina (HM). No cambia el gráfico de HH."></select></label>
+        <button type="button" id="btn-quitar" disabled data-tip="Vuelve a mostrar todos los cargos y todos los equipos.">Quitar filtros</button>
+        <span class="fgrp">
+          <span class="lbl">Fuente de los datos</span>
+          <div class="sgm" role="group" aria-label="Fuente de los datos">
+            <button type="button" id="fte-prog" aria-pressed="true" data-tip="Programado: metrado programado por día del Plan Maestro aprobado, multiplicado por la tasa de cada partida.">Programado (Plan Maestro)</button>
+            <button type="button" id="fte-est" aria-pressed="false" data-tip="Estimado: sin Plan Maestro aprobado, el metrado de cada partida se reparte parejo sobre sus días laborables.">Estimado (sin Plan Maestro)</button>
+          </div>
+        </span>
       </div>
-      <div class="hist">
-        <div class="hcard" id="card-hh">
-          <h3>HH por semana <span class="tag acc" id="hh-fte"></span></h3>
-          <p id="hh-txt"></p>
-          <p class="pico" id="hh-pico"></p>
-          <svg id="svg-hh" viewBox="0 0 640 200" role="img" aria-label="Barras de HH por semana, apiladas por cargo"></svg>
-          <p class="acc-t">Acumulado de HH (eje propio, 0 a 2 500 HH)</p>
-          <svg id="svg-hh-acc" viewBox="0 0 640 84" role="img" aria-label="Línea de HH acumulado por semana"></svg>
-          <ul class="hleg" id="hh-leg"></ul>
-          <p>La línea «Real» (tareo del RDT) se superpone cuando exista HH validada.</p>
-          <details><summary>Ver tabla de valores</summary><div id="hh-tab"></div></details>
-          <div class="tip" hidden></div>
-        </div>
-        <div class="hcard" id="card-hm">
-          <h3>HM por semana <span class="tag acc" id="hm-fte"></span></h3>
-          <p id="hm-txt"></p>
-          <p class="pico" id="hm-pico"></p>
-          <svg id="svg-hm" viewBox="0 0 640 200" role="img" aria-label="Barras de HM por semana, apiladas por equipo"></svg>
-          <p class="acc-t">Acumulado de HM (eje propio, 0 a 800 HM)</p>
-          <svg id="svg-hm-acc" viewBox="0 0 640 84" role="img" aria-label="Línea de HM acumulado por semana"></svg>
-          <ul class="hleg" id="hm-leg"></ul>
-          <p>La superposición de HM real depende del plan «Informes de supervisión» y se enciende cuando exista ese dato.</p>
-          <details><summary>Ver tabla de valores</summary><div id="hm-tab"></div></details>
-          <div class="tip" hidden></div>
-        </div>
-      </div>
+      <div class="hist vista-escr" id="hist"></div>
     </div>
 
     <div class="movil-ro" id="movil-ro">
@@ -368,6 +463,7 @@ table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;fon
 <aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
 </div>
 <div id="cajones"></div>
+<div id="gtip" class="gtip" role="tooltip" hidden></div>
 
 <dialog id="dlg-rdt" aria-labelledby="rdt-h">
   <h2 id="rdt-h">¿Volver a modo RDT?</h2>
@@ -541,7 +637,30 @@ function visibles(){
   return out;
 }
 
+/* ---------- días laborables (lunes a sábado, sin los no laborables) ---------- */
+function dlab(a,b){
+  var n=0,t,sg=1,x;
+  if(b<a){x=a;a=b;b=x;sg=-1;}
+  for(t=add(a,1);t<=b;t=add(t,1)){if(esLab(t))n++;}
+  return sg*n;
+}
+function vfTxt(vf){return vf>0?'atraso de '+vf+' d lab.':(vf<0?'adelanto de '+(-vf)+' d lab.':'sin variación (0 d lab.)');}
+
 /* ---------- tabla ---------- */
+var ST={tipo:false,part:false};
+var COLW=[28,56,236,64,62,62,100,80,100,96];
+var HDR=[
+  ['c-id','Id','','Id','Número de fila. Las predecesoras y las sucesoras se escriben con este número.'],
+  ['c-edt','EDT','','EDT','Código de la estructura de desglose. Cada par de dígitos baja un nivel: 05.09.15 es de nivel 3.'],
+  ['c-nom','Nombre','','Nombre de la actividad','En negrita: resumen (agrupa a sus hijas). El rombo marca un hito. El triángulo pliega o despliega el grupo.'],
+  ['r','Duración','d lab.','Duración','Días laborables (lunes a sábado, sin los no laborables) entre el comienzo y el fin. Un hito dura 0.'],
+  ['r','Comienzo','','Comienzo','Primer día de la actividad, calculado con sus predecesoras. «Fijada» indica una fecha tomada del archivo.'],
+  ['r','Fin','','Fin','Último día de la actividad, calculado con su duración.'],
+  ['','Predecesoras','','Predecesoras','Id de las actividades de las que depende, con el tipo de vínculo (FC, CC, FF o CF) y el desfase. Ejemplo: 21FC+1 = comienza 1 día después de que termine la 21.'],
+  ['','Sucesoras','','Sucesoras','Id de las actividades que dependen de esta.'],
+  ['r','% avance','','% de avance','Avance del seguimiento: sale de los RDT validados o está escrito a mano (Manual). En un resumen es el promedio ponderado de sus hijas.'],
+  ['r','Var. fin','d lab.','Variación del fin','Días laborables (lunes a sábado) entre el fin actual y el fin de la línea base elegida. Triángulo rojo = atraso; triángulo verde = adelanto; = 0 igual a la base.']
+];
 function tipoTxt(r){return r.sum?'Actividad':(r.hito?'Hito':'Tarea');}
 function nomH(r){
   var h='<div class="nom-in" style="--lvl:'+r.lvl+'">';
@@ -550,114 +669,138 @@ function nomH(r){
     h+='<button type="button" class="pleg" data-pleg="'+r.id+'" aria-expanded="'+ex+'" aria-label="'+(ex?'Plegar ':'Desplegar ')+esc(r.nom)+'" title="'+(ex?'Plegar':'Desplegar')+'">'+(ex?'&#9662;':'&#9656;')+'</button>';
   }else if(r.hito){h+='<span class="gl16" aria-hidden="true">&#9670;</span>';}
   else{h+='<span class="gl16" aria-hidden="true"></span>';}
-  h+='<span class="'+(r.sum?'sum':'')+'">'+esc(r.nom)+'</span></div>';
-  return h;
+  h+='<span class="nm'+(r.sum?' sum':'')+'" data-tip-t="'+esc(r.edt+' · '+tipoTxt(r))+'" data-tip="'+esc(r.nom)+'">'+esc(r.nom)+'</span>';
+  if(r.fijo)h+='<span class="tag warn" data-tip-t="Fecha fijada" data-tip="La fecha viene del archivo importado y difiere de lo que calcularían sus predecesoras. Se respeta.">Fijada</span>';
+  return h+'</div>';
 }
 function filaT(r){
   var s=CUR.S[r.id], f=CUR.F[r.id];
   var ini=WD[s], fin=WD[f];
-  var dur=r.hito?'0 d':(f-s+1)+' d';
-  var vf=ddif(baseF(r),fin);
-  var vTxt=vf>0?'<span class="v-atr">&#9650; +'+vf+' d</span>':(vf<0?'<span class="v-adl">&#9660; &minus;'+(-vf)+' d</span>':'<span class="v-ok">= 0 d</span>');
+  var dur=r.hito?'0':String(f-s+1);
+  var vf=dlab(baseF(r),fin);
+  var vTxt=vf>0?'<span class="v-atr">&#9650; +'+vf+'</span>':(vf<0?'<span class="v-adl">&#9660; &minus;'+(-vf)+'</span>':'<span class="v-ok">= 0</span>');
+  var vTip='Fin '+fmt(fin)+' contra fin de la línea base '+VER+' ('+fmt(baseF(r))+'): '+vfTxt(vf)+'.';
   var p=pctOf(r);
   var pTxt=r.hito?'—':p+' %';
-  var tagM=(!r.sum&&!r.hito&&r.modo==='manual')?' <span class="tag acc">Manual</span>':'';
-  var fij=r.fijo?' <span class="tag warn">Fijada</span>':'';
+  var man=(!r.sum&&!r.hito&&r.modo==='manual');
+  var pTip=r.hito?'Un hito no tiene avance.':(r.sum?'Promedio ponderado por duración de las actividades hijas.':(man?'Escrito a mano por el planner (modo Manual).':'Sale de los RDT validados (modo RDT, solo lectura).'));
+  var tagM=man?' <span class="tag acc">Manual</span>':'';
   var suc=(RSUC[r.id]||[]).join(', ');
-  return '<tr data-id="'+r.id+'" tabindex="0"'+(r.id===SEL?' class="sel"':'')+'>'
+  return '<tr data-id="'+r.id+'" tabindex="0" class="'+(r.sum?'sumr':'')+(r.id===SEL?' sel':'')+'">'
     +'<td class="c-id">'+r.id+'</td>'
     +'<td class="c-edt">'+r.edt+'</td>'
     +'<td class="c-nom">'+nomH(r)+'</td>'
     +'<td class="r">'+dur+'</td>'
-    +'<td class="r">'+fmt(ini)+fij+'</td>'
+    +'<td class="r">'+fmt(ini)+'</td>'
     +'<td class="r">'+fmt(fin)+'</td>'
     +'<td>'+esc(r.pr||'')+'</td>'
     +'<td>'+suc+'</td>'
-    +'<td class="r">'+pTxt+tagM+'</td>'
-    +'<td class="r">'+vTxt+'</td>'
+    +'<td class="r" data-tip="'+esc(pTip)+'">'+pTxt+tagM+'</td>'
+    +'<td class="r" data-tip-t="Variación del fin" data-tip="'+esc(vTip)+'">'+vTxt+'</td>'
     +'<td class="o-tipo">'+tipoTxt(r)+'</td>'
     +'<td class="r o-part">'+(r.part||'—')+'</td>'
     +'</tr>';
 }
 function renderTabla(){
-  var h='<table><caption class="sr">Actividades del cronograma con predecesoras, sucesoras, avance y variación de fin</caption>'
-    +'<thead><tr>'
-    +'<th class="c-id" scope="col">Id</th>'
-    +'<th class="c-edt" scope="col">EDT</th>'
-    +'<th class="c-nom" scope="col">Nombre</th>'
-    +'<th class="r" scope="col">Duración</th>'
-    +'<th class="r" scope="col">Comienzo</th>'
-    +'<th class="r" scope="col">Fin</th>'
-    +'<th scope="col">Predecesoras</th>'
-    +'<th scope="col">Sucesoras</th>'
-    +'<th class="r" scope="col" title="Avance de seguimiento">% avance</th>'
-    +'<th class="r" scope="col" title="Días de calendario entre el fin actual y el fin de la línea base vigente">Var. fin (d)</th>'
-    +'<th class="o-tipo" scope="col">Tipo</th>'
-    +'<th class="r o-part" scope="col">Partidas</th>'
-    +'</tr></thead><tbody>';
+  var w=0,cg='<colgroup>';
+  COLW.forEach(function(c){w+=c;cg+='<col style="width:'+c+'px">';});
+  if(ST.tipo){w+=80;cg+='<col style="width:80px">';}
+  if(ST.part){w+=72;cg+='<col style="width:72px">';}
+  cg+='</colgroup>';
+  var h='<table style="width:'+w+'px"><caption class="sr">Actividades del cronograma con predecesoras, sucesoras, avance y variación de fin</caption>'+cg+'<thead><tr>';
+  HDR.forEach(function(c){
+    h+='<th class="'+c[0]+'" scope="col" data-tip-t="'+esc(c[3])+'" data-tip="'+esc(c[4])+'">'+c[1]+(c[2]?'<span class="u">'+c[2]+'</span>':'')+'</th>';
+  });
+  if(ST.tipo)h+='<th class="o-tipo" scope="col" data-tip-t="Tipo de actividad" data-tip="Actividad (resumen), Tarea o Hito.">Tipo</th>';
+  if(ST.part)h+='<th class="r o-part" scope="col" data-tip-t="Partidas vinculadas" data-tip="Cantidad de partidas del presupuesto enlazadas a la tarea. Sin partidas no hay RDT y solo admite modo Manual.">Partidas</th>';
+  h+='</tr></thead><tbody>';
   VIS.forEach(function(r){h+=filaT(r);});
   h+='</tbody></table>';
   $('.tbox').innerHTML=h;
+  $('#col-t').classList.toggle('show-tipo',ST.tipo);
+  $('#col-t').classList.toggle('show-part',ST.part);
 }
 
 /* ---------- Gantt (SVG a mano) ---------- */
+var GT=[];
+function gt(h){GT.push(h);return GT.length-1;}
+var DEPT={FC:'La sucesora comienza cuando termina la predecesora (fin a comienzo).',CC:'La sucesora comienza cuando comienza la predecesora (comienzo a comienzo).',FF:'La sucesora termina cuando termina la predecesora (fin a fin).',CF:'La sucesora termina cuando comienza la predecesora (comienzo a fin).'};
+function lagTxt(l){return l>0?'Desfase de +'+l+' d (espera).':(l<0?'Desfase de '+l+' d (adelanto).':'Sin desfase.');}
 function ganttHead(W){
   var h='<svg width="'+W+'" height="40" aria-hidden="true" focusable="false">';
-  var k,t;
+  var k,t,nx;
   for(k=0;k<DIAS;k++){
     t=add(ORIGEN,k);
-    if(k===0||t.getDate()===1){h+='<text x="'+(k*PX+3)+'" y="13" class="hd1">'+MES[t.getMonth()]+' '+t.getFullYear()+'</text>';}
+    if(k===0||t.getDate()===1){
+      nx=new Date(t.getFullYear(),t.getMonth()+1,1);
+      h+='<line x1="'+(k*PX)+'" y1="0" x2="'+(k*PX)+'" y2="16" class="gl"/>';
+      if(!(k===0&&ddif(t,nx)*PX<50)){h+='<text x="'+(k*PX+4)+'" y="12" class="hd1">'+MES[t.getMonth()]+' '+t.getFullYear()+'</text>';}
+    }
   }
   for(k=0;k<DIAS;k++){
     t=add(ORIGEN,k);
     if(ESC==='dias'){
       h+='<text x="'+(k*PX+PX/2)+'" y="34" text-anchor="middle" class="hd2">'+t.getDate()+'</text>';
     }else if(ESC==='semanas'){
-      if(t.getDay()===6){h+='<line x1="'+(k*PX)+'" y1="16" x2="'+(k*PX)+'" y2="40" class="gl"/><text x="'+(k*PX+2)+'" y="34" class="hd2">'+fmtS(t)+'</text>';}
+      if(t.getDay()===6){h+='<line x1="'+(k*PX)+'" y1="16" x2="'+(k*PX)+'" y2="40" class="gl"/><text x="'+(k*PX+3)+'" y="34" class="hd2">'+fmtS(t)+'</text>';}
     }else{
-      if(t.getDate()===1){h+='<text x="'+(k*PX+2)+'" y="34" class="hd2">'+MES[t.getMonth()]+'</text>';}
+      if(t.getDate()===1){h+='<text x="'+(k*PX+3)+'" y="34" class="hd2">'+MES[t.getMonth()]+'</text>';}
     }
   }
-  var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX;
-  h+='<text x="'+(xh+3)+'" y="13" class="hoy">Hoy 15/10</text>';
+  var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX, yh=ESC==='meses'?34:12;
+  h+='<rect x="'+(xh+3)+'" y="'+(yh-10)+'" width="58" height="14" rx="3" fill="rgba(248,250,252,.12)" stroke="rgba(248,250,252,.45)"/><text x="'+(xh+8)+'" y="'+yh+'" class="hoy">Hoy 15/10</text>';
+  h+='<line x1="'+xh+'" x2="'+xh+'" y1="'+(yh+5)+'" y2="40" stroke="#f8fafc" stroke-dasharray="3 2"/>';
   h+='<line x1="0" x2="'+W+'" y1="39.5" y2="39.5" class="gl"/></svg>';
   return h;
 }
 function ganttBody(W,H){
+  GT=[];
   var s='<svg width="'+W+'" height="'+H+'" role="img" aria-label="Gantt de las actividades visibles"><defs><marker id="fl" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#94a3b8"/></marker></defs>';
-  var k,t,y0;
+  var k,t,Z='',DH='',RH2='';
   VIS.forEach(function(r,i){
     if(r.id===SEL){s+='<rect x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'" fill="#13233d"/>';}
+    else if(r.sum){s+='<rect x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'" fill="#0e1424"/>';}
+    s+='<rect class="rowhov" data-r="'+r.id+'" x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'"/>';
   });
   for(k=0;k<DIAS;k++){
     t=add(ORIGEN,k);
-    if(!esLab(t)){s+='<rect x="'+(k*PX)+'" y="0" width="'+PX+'" height="'+H+'" fill="rgba(255,255,255,.035)"/>';}
+    if(!esLab(t)){s+='<rect x="'+(k*PX)+'" y="0" width="'+PX+'" height="'+H+'" fill="rgba(255,255,255,.05)"/>';}
     if(t.getDay()===6&&ESC!=='meses'){s+='<line x1="'+(k*PX)+'" y1="0" x2="'+(k*PX)+'" y2="'+H+'" class="gl"/>';}
     if(ESC==='meses'&&t.getDate()===1){s+='<line x1="'+(k*PX)+'" y1="0" x2="'+(k*PX)+'" y2="'+H+'" class="gl"/>';}
   }
+  s+='<rect x="'+xd(HOY_D)+'" y="0" width="'+PX+'" height="'+H+'" fill="rgba(34,211,238,.10)"/>';
   VIS.forEach(function(r,i){s+='<line x1="0" x2="'+W+'" y1="'+((i+1)*RH-.5)+'" y2="'+((i+1)*RH-.5)+'" class="gl"/>';});
-  /* barras */
+  /* barras y zonas de ayuda */
   VIS.forEach(function(r,i){
-    y0=i*RH;
-    var xs=xd(WD[CUR.S[r.id]]), xf=xe(WD[CUR.F[r.id]]);
-    var bs=baseS(r), bf=baseF(r);
+    var y0=i*RH, ini=WD[CUR.S[r.id]], fin=WD[CUR.F[r.id]];
+    var xs=xd(ini), xf=xe(fin), bs=baseS(r), bf=baseF(r), vf=dlab(bf,fin);
+    var nm=esc(r.edt+' · '+r.nom);
+    var cab=function(x){return '<b>'+x+' · '+nm+'</b><br>';};
     if(!r.hito){
-      s+='<rect x="'+xd(bs)+'" y="'+(y0+3)+'" width="'+Math.max(xe(bf)-xd(bs),PX)+'" height="3" fill="#94a3b8" opacity=".8"/>';
+      var bx=xd(bs), bw=Math.max(xe(bf)-bx,PX);
+      s+='<rect x="'+bx+'" y="'+(y0+3)+'" width="'+bw+'" height="3" fill="#94a3b8" opacity=".8"/>';
+      Z+='<rect class="gz" data-id="'+r.id+'" data-gt="'+gt(cab('Línea base '+VER)+'Comienzo '+fmt(bs)+' · Fin '+fmt(bf)+'<br><span class="tm">Lo aprobado en el Plan Maestro. No cambia con el avance; sirve de referencia para la Var. fin.</span>')+'" x="'+bx+'" y="'+y0+'" width="'+bw+'" height="7"/>';
     }
     if(r.hito){
       var cx=xs+PX/2;
       s+='<polygon points="'+cx+','+(y0+6)+' '+(cx+6)+','+(y0+13)+' '+cx+','+(y0+20)+' '+(cx-6)+','+(y0+13)+'" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/>';
+      Z+='<rect class="gz" data-id="'+r.id+'" data-gt="'+gt(cab('Hito')+'Fecha '+fmt(ini)+' (duración 0)<br>Var. fin: '+vfTxt(vf)+' respecto de la línea base '+VER+'.<br><span class="tm">Punto de control sin duración.</span>')+'" x="'+(cx-8)+'" y="'+(y0+4)+'" width="16" height="18"/>';
     }else if(r.sum){
-      s+='<rect x="'+xs+'" y="'+(y0+8)+'" width="'+Math.max(xf-xs,4)+'" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/>';
+      var sw=Math.max(xf-xs,4);
+      s+='<rect x="'+xs+'" y="'+(y0+8)+'" width="'+sw+'" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/>';
       s+='<rect x="'+xs+'" y="'+(y0+5)+'" width="3" height="12" fill="#94a3b8"/><rect x="'+(xf-3)+'" y="'+(y0+5)+'" width="3" height="12" fill="#94a3b8"/>';
+      Z+='<rect class="gz" data-id="'+r.id+'" data-gt="'+gt(cab('Resumen')+'Comienzo '+fmt(ini)+' · Fin '+fmt(fin)+' · '+(CUR.F[r.id]-CUR.S[r.id]+1)+' d lab.<br>Avance ponderado: '+pctOf(r)+' %<br>Var. fin: '+vfTxt(vf)+'.<br><span class="tm">Agrupa a sus actividades hijas; su comienzo, fin y % salen de ellas.</span>')+'" x="'+xs+'" y="'+(y0+7)+'" width="'+sw+'" height="14"/>';
     }else{
-      s+='<rect x="'+xs+'" y="'+(y0+7)+'" width="'+Math.max(xf-xs,PX)+'" height="7" rx="2" fill="#4f7df3" opacity=".9"/>';
+      var pw=Math.max(xf-xs,PX);
+      s+='<rect x="'+xs+'" y="'+(y0+7)+'" width="'+pw+'" height="8" rx="2" fill="#4f7df3" opacity=".9"/>';
+      Z+='<rect class="gz" data-id="'+r.id+'" data-gt="'+gt(cab('Tarea (plan actual)')+'Comienzo '+fmt(ini)+' · Fin '+fmt(fin)+' · '+(CUR.F[r.id]-CUR.S[r.id]+1)+' d lab.<br>Var. fin: '+vfTxt(vf)+' respecto de la línea base '+VER+'.<br><span class="tm">Fechas calculadas con la duración y las predecesoras.</span>')+'" x="'+xs+'" y="'+(y0+7)+'" width="'+pw+'" height="9"/>';
       var g=segOf(r);
       if(g&&g.ini){
-        var sx=xd(g.ini), sw=Math.max(xe(g.fin)-sx,PX);
-        s+='<rect x="'+sx+'" y="'+(y0+16)+'" width="'+sw+'" height="6" rx="1" fill="rgba(255,255,255,.10)" '+(g.man?'stroke="#94a3b8" stroke-dasharray="3 2"':'stroke="none"')+'/>';
-        s+='<rect x="'+sx+'" y="'+(y0+16)+'" width="'+(sw*g.pct/100)+'" height="6" rx="1" fill="#22d3ee"/>';
-        s+='<text x="'+(sx+sw+4)+'" y="'+(y0+22)+'" class="lbl-seg">'+g.pct+' %'+(g.man?' · manual':'')+'</text>';
+        var sx=xd(g.ini), sw2=Math.max(xe(g.fin)-sx,PX);
+        s+='<rect x="'+sx+'" y="'+(y0+17)+'" width="'+sw2+'" height="6" rx="1" fill="rgba(255,255,255,.10)" '+(g.man?'stroke="#94a3b8" stroke-dasharray="3 2"':'stroke="none"')+'/>';
+        s+='<rect x="'+sx+'" y="'+(y0+17)+'" width="'+(sw2*g.pct/100)+'" height="6" rx="1" fill="#22d3ee"/>';
+        s+='<text x="'+(sx+sw2+4)+'" y="'+(y0+23)+'" class="lbl-seg">'+g.pct+' %'+(g.man?' · manual':'')+'</text>';
+        Z+='<rect class="gz" data-id="'+r.id+'" data-gt="'+gt(cab('Seguimiento · '+(g.man?'modo manual':'modo RDT'))+'Comienzo '+fmt(g.ini)+' · Fin '+fmt(g.fin)+' · Avance '+g.pct+' %<br><span class="tm">El relleno cian es el % avanzado. '+(g.man?'Valores escritos a mano por el planner.':'Sale de los RDT validados; solo lectura.')+'</span>')+'" x="'+sx+'" y="'+(y0+16)+'" width="'+sw2+'" height="10"/>';
       }
     }
   });
@@ -671,16 +814,18 @@ function ganttBody(W,H){
       else if(p.t==='CC'){x1=xd(ps);x2=xd(rs);}
       else if(p.t==='FF'){x1=xe(pf);x2=xe(rf);}
       else{x1=xd(ps);x2=xe(rf);}
-      var y1=kp*RH+10, y2=k2*RH+10;
-      s+='<path class="dep" d="M'+x1+','+y1+' H'+(x1+4)+' V'+y2+' H'+x2+'" marker-end="url(#fl)"><title>'+p.t+(p.lag?(p.lag>0?'+':'')+p.lag:'')+' desde '+p.id+'</title></path>';
+      var y1=kp*RH+11, y2=k2*RH+11;
+      var dd='M'+x1+','+y1+' H'+(x1+4)+' V'+y2+' H'+x2;
+      s+='<path class="dep" d="'+dd+'" marker-end="url(#fl)"/>';
+      DH+='<path class="dephit" data-id="'+r.id+'" data-gt="'+gt('<b>Vínculo '+p.t+(p.lag?(p.lag>0?'+':'')+p.lag:'')+'</b><br>De «'+esc(RID[p.id].edt)+'» (id '+p.id+') a «'+esc(r.edt)+'» (id '+r.id+')<br><span class="tm">'+DEPT[p.t]+' '+lagTxt(p.lag)+'</span>')+'" d="'+dd+'"/>';
     });
   });
   /* línea de hoy */
   var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX;
   s+='<line x1="'+xh+'" x2="'+xh+'" y1="0" y2="'+H+'" stroke="#f8fafc" stroke-width="1" stroke-dasharray="4 3"/>';
-  /* zonas de clic por fila */
-  VIS.forEach(function(r,i){s+='<rect class="hit" data-id="'+r.id+'" x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'"/>';});
-  return s+'</svg>';
+  /* zonas de clic por fila, luego flechas, luego barras (la última capa gana) */
+  VIS.forEach(function(r,i){RH2+='<rect class="rhit" data-id="'+r.id+'" x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'"/>';});
+  return s+RH2+DH+Z+'</svg>';
 }
 function renderGantt(){
   var W=DIAS*PX, H=VIS.length*RH;
@@ -734,7 +879,7 @@ function renderMovil(){
   R.forEach(function(r){
     var s=CUR.S[r.id], f=CUR.F[r.id], p=pctOf(r);
     var tagM=(!r.sum&&!r.hito&&r.modo==='manual')?' <span class="tag acc">Manual</span>':'';
-    var meta=r.hito?('Hito · '+fmt(WD[s])):(fmt(WD[s])+' – '+fmt(WD[f])+' · '+(f-s+1)+' d');
+    var meta=r.hito?('Hito · '+fmt(WD[s])):(fmt(WD[s])+' – '+fmt(WD[f])+' · '+(f-s+1)+' d lab.');
     h+='<li style="--lvl:'+r.lvl+'"><div class="r1"><b>'+esc(r.edt+' '+r.nom)+'</b></div>'
       +'<div class="meta">'+meta+(r.hito?'':' · Avance '+p+' %')+tagM+'</div>'
       +(r.hito?'':'<div class="mbar" aria-hidden="true"><i style="width:'+p+'%"></i></div>')+'</li>';
@@ -747,6 +892,8 @@ var NS=12;
 var WEEK=[];
 for(var wi=0;wi<NS;wi++){WEEK.push(add(d('2026-09-12'),7*wi));}
 function lab(i){return fmtS(WEEK[i]);}
+function semTxt(i){return fmtS(WEEK[i])+' al '+fmtS(add(WEEK[i],6));}
+/* paleta de series aprobada por Victor: azul, naranja, verde, ámbar, magenta (el color sigue a la serie, no a su posición) */
 var COL=['#3987e5','#d95926','#199e70','#c98500','#d55181'];
 var HH=[
   {n:'Capataz',v:[18,22,22,26,28,30,30,26,22,18,14,6]},
@@ -761,91 +908,183 @@ var HM=[
   {n:'Compactadora',v:[0,0,0,0,16,24,24,16,8,0,0,0]},
   {n:'Estación total',v:[8,8,0,0,0,0,0,0,0,0,0,0]}
 ];
-var MODO='prog', LAST={};
+var MODO='prog', LAST={}, VW={hh:'graf',hm:'graf'};
 function estV(v){var t=v.reduce(function(a,b){return a+b;},0)/NS;return v.map(function(){return Math.round(t);});}
-function graf(kind){
-  var isH=kind==='hh';
-  var list=isH?HH:HM;
-  var sel=$(isH?'#fCargo':'#fEquipo').value;
-  var cfg=isH?{max:300,ticks:[0,100,200,300],acmax:2500,acT:[0,1000,2000],unit:'HH'}
-             :{max:150,ticks:[0,50,100,150],acmax:800,acT:[0,400,800],unit:'HM'};
-  var ser=list.map(function(s,i){return {n:s.n,c:COL[i],v:MODO==='prog'?s.v:estV(s.v)};});
-  if(sel!=='todos')ser=ser.filter(function(s){return s.n===sel;});
-  var tot=[],acc=[],run=0,i;
-  for(i=0;i<NS;i++){var t=0;ser.forEach(function(s){t+=s.v[i];});tot.push(t);run+=t;acc.push(run);}
-  var pi=0;tot.forEach(function(v,j){if(v>tot[pi])pi=j;});
-  LAST[kind]={ser:ser,tot:tot,acc:acc,cfg:cfg};
-  var W=640,x0=44,x1=634,y0=10,y1=168,cw=(x1-x0)/NS,bw=cw*0.6;
-  var Y=function(v){return y1-(v/cfg.max)*(y1-y0);};
-  var sv='';
-  cfg.ticks.forEach(function(t){sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+Y(t)+'" y2="'+Y(t)+'" class="gl"/><text x="'+(x0-6)+'" y="'+(Y(t)+3)+'" text-anchor="end" class="ax">'+t+'</text>';});
-  sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+y1+'" y2="'+y1+'" class="gl2"/>';
-  for(i=0;i<NS;i++){
-    var a0=0;
-    ser.forEach(function(s){
-      var v=s.v[i];
-      if(v>0){
-        var yt=Y(a0+v), yb=Y(a0);
-        sv+='<rect x="'+(x0+i*cw+(cw-bw)/2)+'" y="'+yt+'" width="'+bw+'" height="'+(yb-yt)+'" fill="'+s.c+'" stroke="#0b0f19" stroke-width="1.5"/>';
-        a0+=v;
-      }
-    });
-    sv+='<text x="'+(x0+i*cw+cw/2)+'" y="'+(200-6)+'" text-anchor="middle" class="ax">'+lab(i)+'</text>';
-    sv+='<rect class="hit" data-i="'+i+'" x="'+(x0+i*cw)+'" y="'+y0+'" width="'+cw+'" height="'+(y1-y0)+'" tabindex="0" aria-label="Semana del '+lab(i)+': '+tot[i]+' '+cfg.unit+'"/>';
+function niceAxis(max,n){
+  var e=Math.floor(Math.log(max/n)/Math.LN10)-1, st=0, a, s, top, t=[], v;
+  while(!st){
+    for(a=0;a<5&&!st;a++){s=[1,2,2.5,5,10][a]*Math.pow(10,e);if(Math.ceil(max/s-1e-9)<=n)st=s;}
+    e++;
   }
-  if(tot[pi]>0){sv+='<text x="'+(x0+pi*cw+cw/2)+'" y="'+(Y(tot[pi])-5)+'" text-anchor="middle" class="pk">'+fn(tot[pi])+'</text>';}
-  $(isH?'#svg-hh':'#svg-hm').innerHTML=sv;
-  /* acumulado: su propio eje */
-  var A0=16,A1=76;
-  var YA=function(v){return A1-(v/cfg.acmax)*(A1-A0);};
-  var sa='';
-  cfg.acT.forEach(function(t){sa+='<line x1="'+x0+'" x2="'+x1+'" y1="'+YA(t)+'" y2="'+YA(t)+'" class="gl"/><text x="'+(x0-6)+'" y="'+(YA(t)+3)+'" text-anchor="end" class="ax">'+fn(t)+'</text>';});
-  sa+='<line x1="'+x0+'" x2="'+x1+'" y1="'+A1+'" y2="'+A1+'" class="gl2"/>';
-  var pts=acc.map(function(v,j){return (x0+j*cw+cw/2)+','+YA(v);}).join(' ');
-  sa+='<polyline points="'+pts+'" fill="none" stroke="#f8fafc" stroke-width="2"/>';
-  acc.forEach(function(v,j){sa+='<circle cx="'+(x0+j*cw+cw/2)+'" cy="'+YA(v)+'" r="2.5" fill="#f8fafc"/>';});
-  sa+='<text x="'+(x1-6)+'" y="'+(YA(acc[NS-1])-7)+'" text-anchor="end" class="pk">Acum. '+fn(acc[NS-1])+' '+cfg.unit+'</text>';
-  $(isH?'#svg-hh-acc':'#svg-hm-acc').innerHTML=sa;
-  /* rótulo de fuente, pico, leyenda y tabla */
-  var prog=MODO==='prog';
-  $(isH?'#hh-fte':'#hm-fte').textContent=prog?'Programado · Plan Maestro v3':'Estimado · sin Plan Maestro';
-  $(isH?'#hh-txt':'#hm-txt').textContent=prog
-    ?'Fuente: histograma programado. Es el metrado programado por día del Plan Maestro aprobado, multiplicado por la tasa de cada partida.'
-    :'Fuente: histograma estimado. Sin Plan Maestro aprobado, el metrado de cada partida se reparte parejo sobre sus días laborables.';
-  $(isH?'#hh-pico':'#hm-pico').textContent=tot[pi]>0?'Pico: '+fn(tot[pi])+' '+cfg.unit+' · semana del '+lab(pi):'Sin datos con este filtro';
-  var lg='';
-  ser.forEach(function(s){lg+='<li><i style="background:'+s.c+'"></i>'+esc(s.n)+'</li>';});
-  lg+='<li><b></b>Acumulado ('+cfg.unit+')</li>';
-  $(isH?'#hh-leg':'#hm-leg').innerHTML=lg;
-  var tb='<table class="tv"><thead><tr><th scope="col">Semana</th>';
+  top=Math.ceil(max/st-1e-9)*st;
+  for(v=0;v<=top+st/1e3;v+=st)t.push(Math.round(v*100)/100);
+  return {max:top,ticks:t};
+}
+function cardHtml(k){
+  var H=k==='hh', u=H?'HH':'HM';
+  return '<article class="hcard" id="card-'+k+'" aria-labelledby="'+k+'-title">'
+    +'<header class="hc-top"><h3 id="'+k+'-title"></h3><span class="tag acc" id="'+k+'-fte"></span><span class="hc-pico" id="'+k+'-pico" data-tip="La semana con más '+u+' programadas, según lo que se está mostrando."></span>'
+    +'<div class="sgm" role="group" aria-label="Forma de ver el gráfico de '+u+'"><button type="button" data-vw="'+k+'" data-v="graf" aria-pressed="true" data-tip="Ver el gráfico de barras.">Gráfico</button><button type="button" data-vw="'+k+'" data-v="tab" aria-pressed="false" data-tip="Ver los mismos valores como tabla, semana por semana.">Tabla</button></div></header>'
+    +'<div class="hc-leg" id="'+k+'-leg"></div>'
+    +'<p class="hc-exp" id="'+k+'-exp"></p>'
+    +'<div class="hc-body" id="'+k+'-body"><svg id="svg-'+k+'" role="img" aria-label="Gráfico de '+u+' por semana"></svg><div class="hc-tab" id="'+k+'-tab" hidden></div><div class="tip" hidden></div></div>'
+    +'</article>';
+}
+function buildHist(){$('#hist').innerHTML=cardHtml('hh')+cardHtml('hm');}
+function graf(kind){
+  var isH=kind==='hh', list=isH?HH:HM, unit=isH?'HH':'HM', what=isH?'cargo':'equipo', whatP=isH?'cargos':'equipos';
+  var sel=$(isH?'#fCargo':'#fEquipo').value, filt=sel!=='todos', prog=MODO==='prog';
+  var ser=list.map(function(s,i){return {n:s.n,c:COL[i],v:prog?s.v:estV(s.v)};});
+  if(filt)ser=ser.filter(function(s){return s.n===sel;});
+  var tot=[],acc=[],run=0,i,pi=0;
+  for(i=0;i<NS;i++){var t=0;ser.forEach(function(s){t+=s.v[i];});tot.push(t);run+=t;acc.push(run);}
+  tot.forEach(function(v,j){if(v>tot[pi])pi=j;});
+  LAST[kind]={ser:ser,tot:tot,acc:acc,unit:unit,pi:pi};
+  var lastN=prog?'programadas':'estimadas';
+  $('#'+kind+'-title').textContent=(isH?'Horas-hombre (HH)':'Horas-máquina (HM)')+' por semana';
+  var tg=$('#'+kind+'-fte');
+  tg.textContent=prog?'Programado · Plan Maestro v3':'Estimado · sin Plan Maestro';
+  tg.setAttribute('data-tip',prog?'Programado: metrado programado por día del Plan Maestro aprobado, multiplicado por la tasa de cada partida.':'Estimado: sin Plan Maestro aprobado, el metrado de cada partida se reparte parejo sobre sus días laborables.');
+  $('#'+kind+'-pico').innerHTML=tot[pi]>0?'Pico: <b>'+fn(tot[pi])+' '+unit+'</b> · semana del '+semTxt(pi):'Sin datos con este filtro';
+  var sw=function(c){return '<i style="background:'+c+'"></i>';};
+  var lg='<span class="most" data-tip="'+(filt?'Hay un filtro activo: solo se dibuja esta serie. Use «Quitar filtros» para volver a ver todas.':'Sin filtro: se dibujan todos los '+whatP+', apilados, cada uno con su color.')+'">Mostrando: <b>'
+    +(filt?sw(ser[0].c)+esc(sel)+' <span class="tt" style="font-weight:400;color:var(--text-2)">(filtro de '+(isH?'Cargo':'Equipo')+')</span>':'todos los '+whatP+' ('+ser.length+')')+'</b></span><ul class="hleg" aria-label="Leyenda">';
+  ser.forEach(function(s){lg+='<li data-tip="'+esc(s.n)+': su parte de las '+unit+' de cada semana, apilada en la barra.">'+sw(s.c)+esc(s.n)+'</li>';});
+  lg+='<li data-tip="La línea blanca del gráfico de abajo suma las '+unit+' semana a semana desde el inicio."><b></b>Acumulado ('+unit+')</li>';
+  lg+='<li class="mut" data-tip="'+(isH?'La línea «Real» (tareo de los RDT) se dibujará aquí cuando existan HH validadas.':'La superposición de HM real depende del plan «Informes de supervisión» y se enciende cuando exista ese dato.')+'"><b class="dash"></b>Real: aún sin datos</li></ul>';
+  $('#'+kind+'-leg').innerHTML=lg;
+  $('#'+kind+'-exp').textContent='Barras: '+unit+' '+lastN+' en cada semana'+(filt?' del '+what+' '+sel:', apiladas por '+what)+' · Línea de abajo: '+unit+' acumuladas semana a semana · Número sobre una barra: semana pico · Raya punteada: hoy';
+  var tb='<table class="tv"><thead><tr><th scope="col">Semana (sáb a vie)</th>';
   ser.forEach(function(s){tb+='<th class="r" scope="col">'+esc(s.n)+'</th>';});
-  tb+='<th class="r" scope="col">Total</th><th class="r" scope="col">Acum.</th></tr></thead><tbody>';
+  tb+='<th class="r" scope="col">Total '+unit+'</th><th class="r" scope="col">Acumulado '+unit+'</th></tr></thead><tbody>';
   for(i=0;i<NS;i++){
-    tb+='<tr><td>'+lab(i)+'</td>';
+    tb+='<tr><td>'+semTxt(i)+'</td>';
     ser.forEach(function(s){tb+='<td class="r">'+fn(s.v[i])+'</td>';});
     tb+='<td class="r">'+fn(tot[i])+'</td><td class="r">'+fn(acc[i])+'</td></tr>';
   }
   tb+='</tbody></table>';
-  $(isH?'#hh-tab':'#hm-tab').innerHTML=tb;
+  $('#'+kind+'-tab').innerHTML=tb;
+  $('#btn-quitar').disabled=($('#fCargo').value==='todos'&&$('#fEquipo').value==='todos');
+  drawSvg(kind);
 }
-function tipOn(card,kind,el){
-  var i=+el.getAttribute('data-i'), L=LAST[kind], tip=card.querySelector('.tip');
-  var h='<b>Semana del '+lab(i)+'</b><br>';
-  L.ser.forEach(function(s){if(s.v[i]>0)h+=esc(s.n)+': '+fn(s.v[i])+' '+L.cfg.unit+'<br>';});
-  h+='Total: '+fn(L.tot[i])+' '+L.cfg.unit+' · Acum.: '+fn(L.acc[i])+' '+L.cfg.unit;
+function barSeg(x,y,w,h,c,r){
+  if(r>0&&h>r*1.5){
+    return '<path d="M'+x+','+(y+h)+'V'+(y+r)+'Q'+x+','+y+' '+(x+r)+','+y+'H'+(x+w-r)+'Q'+(x+w)+','+y+' '+(x+w)+','+(y+r)+'V'+(y+h)+'Z" fill="'+c+'" stroke="#0b0f19" stroke-width="1.5"/>';
+  }
+  return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'" stroke="#0b0f19" stroke-width="1.5"/>';
+}
+function drawSvg(kind){
+  var L=LAST[kind], body=$('#'+kind+'-body'), svg=$('#svg-'+kind);
+  if(!L||!body||$('#tab-hist').hidden)return;
+  var W=body.clientWidth, H=body.clientHeight;
+  if(W<160||H<110)return;
+  /* el botón flotante del asistente cubre la esquina inferior derecha de la pantalla: se deja libre para que no tape fechas */
+  var MR=(document.querySelector('.centro').getBoundingClientRect().right-body.getBoundingClientRect().right<80)?56:14;
+  var ML=64,MT=22,MB=38,GAP=22;
+  var plotH=H-MT-MB-GAP, Hb=Math.round(plotH*0.64), Ha=plotH-Hb;
+  var yb=MT+Hb, ya0=yb+GAP, ya1=ya0+Ha, x0=ML, x1=W-MR, cw=(x1-x0)/NS, bw=Math.min(cw*0.62,60);
+  var unit=L.unit, ser=L.ser, tot=L.tot, acc=L.acc, pi=L.pi, i, sv='';
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.setAttribute('aria-label','Gráfico de '+unit+' por semana: barras apiladas con la '+unit+' de cada semana y, debajo, la línea de '+unit+' acumuladas. Pico de '+fn(tot[pi])+' '+unit+' en la semana del '+semTxt(pi)+'.');
+  L.geo={ML:ML,cw:cw,W:W};
+  if(!(tot[pi]>0)){svg.innerHTML='<text x="'+(W/2)+'" y="'+(H/2)+'" text-anchor="middle" class="ax">Sin datos con este filtro</text>';return;}
+  var AB=niceAxis(tot[pi]*1.18,Math.max(2,Math.min(6,Math.floor(Hb/28))));
+  var AA=niceAxis(acc[NS-1]*1.15,Math.max(2,Math.min(4,Math.floor(Ha/18))));
+  var Y=function(v){return yb-v/AB.max*Hb;}, YA=function(v){return ya1-v/AA.max*Ha;};
+  /* bandas alternas que unen los dos paneles */
+  for(i=0;i<NS;i+=2){sv+='<rect x="'+(x0+i*cw)+'" y="'+MT+'" width="'+cw+'" height="'+(ya1-MT)+'" fill="rgba(255,255,255,.025)"/>';}
+  /* ejes del panel de barras */
+  AB.ticks.forEach(function(t){sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+Y(t)+'" y2="'+Y(t)+'" class="gl"/><text x="'+(x0-8)+'" y="'+(Y(t)+3.5)+'" text-anchor="end" class="ax">'+fn(t)+'</text>';});
+  sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+yb+'" y2="'+yb+'" class="gl2"/>';
+  sv+='<text transform="translate(13,'+(MT+Hb/2)+') rotate(-90)" text-anchor="middle" class="axt">'+(Hb>=84?unit+' por semana':unit+'/sem.')+'</text>';
+  /* barras apiladas con el extremo superior redondeado */
+  for(i=0;i<NS;i++){
+    var a0=0, bx=x0+i*cw+(cw-bw)/2, top=-1;
+    ser.forEach(function(s,j){if(s.v[i]>0)top=j;});
+    ser.forEach(function(s,j){
+      var v=s.v[i]; if(!(v>0))return;
+      var yt=Y(a0+v), yb2=Y(a0);
+      sv+=barSeg(bx,yt,bw,yb2-yt,s.c,j===top?4:0);
+      a0+=v;
+    });
+  }
+  /* semana pico: etiqueta directa */
+  var px=Math.max(x0+24,Math.min(x1-24,x0+pi*cw+cw/2));
+  sv+='<text x="'+px+'" y="'+(Y(tot[pi])-6)+'" text-anchor="middle" class="pk">Pico '+fn(tot[pi])+'</text>';
+  /* panel del acumulado, con su propio eje */
+  AA.ticks.forEach(function(t){sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+YA(t)+'" y2="'+YA(t)+'" class="gl"/><text x="'+(x0-8)+'" y="'+(YA(t)+3.5)+'" text-anchor="end" class="ax">'+fn(t)+'</text>';});
+  sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+ya1+'" y2="'+ya1+'" class="gl2"/>';
+  sv+='<text transform="translate(13,'+(ya0+Ha/2)+') rotate(-90)" text-anchor="middle" class="axt">'+(Ha>=78?unit+' acumuladas':unit+' acum.')+'</text>';
+  if(Ha>=40){sv+='<text x="'+(x0+8)+'" y="'+(ya0+12)+'" class="ax">Suma semana a semana desde el inicio</text>';}
+  var pts=acc.map(function(v,j){return (x0+j*cw+cw/2)+','+YA(v);}).join(' ');
+  sv+='<polyline points="'+pts+'" fill="none" stroke="#f8fafc" stroke-width="2" stroke-linejoin="round"/>';
+  acc.forEach(function(v,j){sv+='<circle cx="'+(x0+j*cw+cw/2)+'" cy="'+YA(v)+'" r="3.5" fill="#f8fafc" stroke="#0b0f19" stroke-width="2"/>';});
+  sv+='<text x="'+(x1-4)+'" y="'+(YA(acc[NS-1])-9)+'" text-anchor="end" class="pk">Acumulado '+fn(acc[NS-1])+' '+unit+'</text>';
+  /* eje horizontal: etiquetas de fecha y título */
+  for(i=0;i<NS;i++){
+    if(cw<34&&i%2)continue;
+    sv+='<text x="'+(x0+i*cw+cw/2)+'" y="'+(ya1+14)+'" text-anchor="middle" class="ax">'+lab(i)+'</text>';
+  }
+  sv+='<text x="'+((x0+x1)/2)+'" y="'+(ya1+33)+'" text-anchor="middle" class="axt">Semana (sábado a viernes) · cada fecha es el sábado en que empieza la semana</text>';
+  /* hoy */
+  var hi=Math.floor(ddif(WEEK[0],HOY_D)/7);
+  if(hi>=0&&hi<NS){
+    var hx=x0+(hi+(ddif(WEEK[hi],HOY_D)+0.5)/7)*cw;
+    sv+='<line x1="'+hx+'" x2="'+hx+'" y1="'+(MT-6)+'" y2="'+ya1+'" stroke="#f8fafc" stroke-width="1" stroke-dasharray="4 3"/>';
+    sv+='<text x="'+(hx-4)+'" y="'+(MT-10)+'" text-anchor="end" class="hoy">Hoy 15/10</text>';
+  }
+  /* zonas de ayuda por semana */
+  for(i=0;i<NS;i++){
+    sv+='<rect class="hit" data-i="'+i+'" x="'+(x0+i*cw)+'" y="'+MT+'" width="'+cw+'" height="'+(ya1-MT)+'" tabindex="0" aria-label="Semana del '+semTxt(i)+': '+fn(tot[i])+' '+unit+', acumulado '+fn(acc[i])+' '+unit+'"/>';
+  }
+  svg.innerHTML=sv;
+}
+function tipOn(kind,el){
+  var i=+el.getAttribute('data-i'), L=LAST[kind], tip=$('#'+kind+'-body .tip'), j, s;
+  var h='<b>Semana del '+semTxt(i)+'</b><br>';
+  for(j=L.ser.length-1;j>=0;j--){s=L.ser[j];if(s.v[i]>0)h+='<i style="background:'+s.c+'"></i>'+esc(s.n)+': <b>'+fn(s.v[i])+'</b> '+L.unit+'<br>';}
+  h+='<span class="tt">Total de la semana: '+fn(L.tot[i])+' '+L.unit+' · Acumulado: '+fn(L.acc[i])+' '+L.unit+'</span>';
   tip.innerHTML=h;
   tip.hidden=false;
-  var svg=card.querySelector('svg');
-  var sr=svg.getBoundingClientRect(), cr=card.getBoundingClientRect();
-  var px=sr.width/640, cwid=(634-44)/NS;
-  var x=(sr.left-cr.left)+(44+i*cwid+cwid/2)*px;
-  var left=Math.max(8,Math.min(x-tip.offsetWidth/2,cr.width-tip.offsetWidth-8));
-  tip.style.left=left+'px';
+  var g=L.geo, x=g.ML+i*g.cw+g.cw/2, w=tip.offsetWidth;
+  var left=(x+g.cw/2+8+w<g.W)?(x+g.cw/2+8):(x-g.cw/2-8-w);
+  tip.style.left=Math.max(4,left)+'px';
 }
-function tipOff(card){card.querySelector('.tip').hidden=true;}
-
+function tipOff(kind){$('#'+kind+'-body .tip').hidden=true;}
+var RQF=0;
+function redrawHist(){
+  if(RQF)return;
+  RQF=requestAnimationFrame(function(){RQF=0;drawSvg('hh');drawSvg('hm');});
+}
+/* ---------- ayuda al pasar el cursor (un solo globo) y vínculo fila de la tabla - fila del Gantt ---------- */
+var GTIP=$('#gtip'), TIPEL=null, HOVID=null;
+function hideTip(){GTIP.hidden=true;TIPEL=null;}
+function tipHtml(el){
+  var g=el.getAttribute('data-gt');
+  if(g!==null)return GT[+g]||'';
+  var tt=el.getAttribute('data-tip-t');
+  return (tt?'<b>'+esc(tt)+'</b><br>':'')+esc(el.getAttribute('data-tip'));
+}
+function tipPos(x,y){
+  var w=GTIP.offsetWidth,h=GTIP.offsetHeight,l=x+14,t=y+18;
+  if(l+w>window.innerWidth-8)l=Math.max(8,x-w-14);
+  if(t+h>window.innerHeight-8)t=Math.max(8,y-h-14);
+  GTIP.style.left=l+'px';GTIP.style.top=t+'px';
+}
+function showTip(el,x,y){TIPEL=el;GTIP.innerHTML=tipHtml(el);GTIP.hidden=false;tipPos(x,y);}
+function hov(id){
+  if(id===HOVID)return;
+  HOVID=id;
+  $$('tr.hov').forEach(function(e){e.classList.remove('hov');});
+  $$('.rowhov.on').forEach(function(e){e.classList.remove('on');});
+  if(id===null)return;
+  var tr=$('tr[data-id="'+id+'"]'), rh=$('.rowhov[data-r="'+id+'"]');
+  if(tr)tr.classList.add('hov');
+  if(rh)rh.classList.add('on');
+}
 /* ---------- render global ---------- */
 function renderAll(){
+  HOVID=null;hideTip();
   VIS=visibles();
   renderTabla();
   renderGantt();
@@ -862,6 +1101,7 @@ function poblar(){
 }
 function init(){
   poblar();
+  buildHist();
   if(window.matchMedia&&window.matchMedia('(max-width:1023px)').matches){$('.pantalla').setAttribute('data-vista','movil');}
   renderAll();
   graf('hh');
@@ -916,11 +1156,27 @@ function init(){
   cg.addEventListener('scroll',function(){if(lock)return;lock=true;ct.scrollTop=cg.scrollTop;lock=false;});
 
   /* escala y línea base */
+  function irHoy(){
+    var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX;
+    cg.scrollLeft=Math.max(0,xh-cg.clientWidth*0.75);
+  }
+  /* el Gantt usa todo el ancho disponible cuando el proyecto cabe; si no, queda a su ancho mínimo y se desplaza */
+  function fitPX(){
+    var w=cg.clientWidth-2, want={dias:13,semanas:6,meses:2}[ESC];
+    if(ESC==='semanas')want=Math.max(want,Math.floor(w/DIAS*10)/10);
+    if(ESC==='meses')want=Math.max(want,Math.floor(w/DIAS/2*10)/10);
+    var ch=Math.abs(want-PX)>0.05;PX=want;return ch;
+  }
+  $('#btn-hoy').addEventListener('click',irHoy);
   $('#sel-escala').addEventListener('change',function(e){
     ESC=e.target.value;
-    PX={dias:13,semanas:6,meses:2}[ESC];
+    fitPX();
     renderGantt();
+    irHoy();
   });
+  if(fitPX())renderGantt();
+  irHoy();
+  if(window.ResizeObserver){new ResizeObserver(function(){if(fitPX())renderGantt();}).observe(cg);}
   $('#sel-base').addEventListener('change',function(e){
     VER=e.target.value;
     $('#msg-base').hidden=VER==='v3';
@@ -947,8 +1203,9 @@ function init(){
   }
   $('#btn-pers').addEventListener('click',function(){togglePop(this,$('#pop-pers'));});
   $('#btn-exp').addEventListener('click',function(){togglePop(this,$('#pop-exp'));});
-  $('#ck-tipo').addEventListener('change',function(e){$('#col-t').classList.toggle('show-tipo',e.target.checked);});
-  $('#ck-part').addEventListener('change',function(e){$('#col-t').classList.toggle('show-part',e.target.checked);});
+  $('#btn-que').addEventListener('click',function(){togglePop(this,$('#pop-que'));});
+  $('#ck-tipo').addEventListener('change',function(e){ST.tipo=e.target.checked;renderTabla();});
+  $('#ck-part').addEventListener('change',function(e){ST.part=e.target.checked;renderTabla();});
   $('#btn-pdf').addEventListener('click',function(){$('#exp-msg').textContent='Maqueta: el PDF se generaría en el servidor con pdfkit.';});
   $('#btn-xls').addEventListener('click',function(){$('#exp-msg').textContent='Maqueta: el Excel se generaría en el servidor con exceljs.';});
 
@@ -987,9 +1244,10 @@ function init(){
   $('#f-fin').addEventListener('change',onMan);
   $('#f-pct').addEventListener('change',onMan);
 
-  /* histogramas: filtros, fuente y puntos de información */
+  /* histogramas: filtros, fuente, vista tabla y puntos de información */
   $('#fCargo').addEventListener('change',function(){graf('hh');});
   $('#fEquipo').addEventListener('change',function(){graf('hm');});
+  $('#btn-quitar').addEventListener('click',function(){$('#fCargo').value='todos';$('#fEquipo').value='todos';graf('hh');graf('hm');});
   function fuente(m){
     MODO=m;
     $('#fte-prog').setAttribute('aria-pressed',String(m==='prog'));
@@ -998,12 +1256,63 @@ function init(){
   }
   $('#fte-prog').addEventListener('click',function(){fuente('prog');});
   $('#fte-est').addEventListener('click',function(){fuente('est');});
+  $('#hist').addEventListener('click',function(e){
+    var b=e.target.closest('[data-vw]'); if(!b)return;
+    var k=b.getAttribute('data-vw'), v=b.getAttribute('data-v');
+    VW[k]=v;
+    $$('[data-vw="'+k+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+    $('#'+k+'-tab').hidden=v!=='tab';
+    $('#svg-'+k).style.display=v==='tab'?'none':'block';
+    tipOff(k);
+    if(v==='graf')drawSvg(k);
+  });
   [['card-hh','hh'],['card-hm','hm']].forEach(function(p){
     var card=$('#'+p[0]), kind=p[1];
-    card.addEventListener('mouseover',function(e){var el=e.target.closest('[data-i]');if(el)tipOn(card,kind,el);});
-    card.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('[data-i]');if(el)tipOn(card,kind,el);});
-    card.addEventListener('mouseleave',function(){tipOff(card);});
-    card.addEventListener('focusout',function(){tipOff(card);});
+    card.addEventListener('mouseover',function(e){var el=e.target.closest('[data-i]');if(el)tipOn(kind,el);else tipOff(kind);});
+    card.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('[data-i]');if(el)tipOn(kind,el);});
+    card.addEventListener('mouseleave',function(){tipOff(kind);});
+    card.addEventListener('focusout',function(){tipOff(kind);});
+  });
+  if(window.ResizeObserver){
+    var ro=new ResizeObserver(redrawHist);
+    $$('.hc-body').forEach(function(b){ro.observe(b);});
+  }
+  window.addEventListener('resize',redrawHist);
+
+  /* ayuda al pasar el cursor, vínculo tabla - Gantt y ancho de la tabla */
+  document.addEventListener('mouseover',function(e){
+    var el=e.target.closest&&e.target.closest('[data-tip],[data-gt]');
+    if(!el){hideTip();return;}
+    if(el!==TIPEL)showTip(el,e.clientX,e.clientY);
+  });
+  document.addEventListener('mousemove',function(e){if(TIPEL)tipPos(e.clientX,e.clientY);});
+  document.addEventListener('focusin',function(e){
+    var el=e.target.closest&&e.target.closest('[data-tip]');
+    if(!el){hideTip();return;}
+    var r=el.getBoundingClientRect();showTip(el,r.left,r.bottom-12);
+  });
+  document.addEventListener('focusout',hideTip);
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    hideTip();
+    $$('.pop').forEach(function(p){p.hidden=true;});
+    $$('[aria-controls^="pop-"]').forEach(function(b){b.setAttribute('aria-expanded','false');});
+  });
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.rel'))return;
+    $$('.pop').forEach(function(p){p.hidden=true;});
+    $$('[aria-controls^="pop-"]').forEach(function(b){b.setAttribute('aria-expanded','false');});
+  });
+  $('.tbox').addEventListener('mouseover',function(e){var tr=e.target.closest('tr[data-id]');hov(tr?+tr.getAttribute('data-id'):null);});
+  $('.gbox').addEventListener('mouseover',function(e){var z=e.target.closest('[data-id]');hov(z?+z.getAttribute('data-id'):null);});
+  $('#editor').addEventListener('mouseleave',function(){hov(null);});
+  var spl=$('#split'), colT=$('#col-t'), ed=$('#editor');
+  function setTW(px){px=Math.max(524,Math.min(px,ed.clientWidth-220));colT.style.flex='0 0 '+px+'px';}
+  spl.addEventListener('pointerdown',function(e){spl.setPointerCapture(e.pointerId);spl.classList.add('drag');});
+  spl.addEventListener('pointermove',function(e){if(spl.classList.contains('drag'))setTW(e.clientX-ed.getBoundingClientRect().left);});
+  spl.addEventListener('pointerup',function(){spl.classList.remove('drag');});
+  spl.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setTW(colT.getBoundingClientRect().width+(e.key==='ArrowLeft'?-24:24));}
   });
 }
 init();

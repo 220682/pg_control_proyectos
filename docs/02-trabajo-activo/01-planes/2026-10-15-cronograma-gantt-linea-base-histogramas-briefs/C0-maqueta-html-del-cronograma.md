@@ -64,6 +64,22 @@ Sin rama ni worktree: esta tanda no toca código de la app. La maqueta vive en e
 
 Los hallazgos van a su resumen, en los cinco grupos (mejoras de trabajo, reglas de negocio, observaciones sobre la política, huérfanos, preguntas). Una pregunta de negocio o un conflicto con un flujo se devuelve al Orquestador en el momento; no sigue con el conflicto sin resolver. Credenciales: nunca leerlas ni mostrarlas.
 
+## Ronda 2 (pedida por Victor el 2026-10-15, tras revisar la primera entrega)
+
+Victor aprobó tres cosas y pidió mejorar el acabado. Aprobado: la paleta de colores de las series de los histogramas (azul, naranja, verde, ámbar, magenta); «Var. fin» en **días laborables** (lunes a sábado, sin los no laborables; rótulo «d lab.»); **Comienzo y Fin siempre visibles** en la tabla a 1440 px (el resto con desplazamiento horizontal).
+
+Su observación: el acabado se ve básico y **no hay leyenda ni nada que diga qué está viendo**. La captura que mandó era la pestaña Histogramas con los paneles «Ambos ocultos», filtro Cargo = Operario y Equipo = Retroexcavadora: un solo color de barras, el eje «300» sin unidad, ningún título de ejes, la leyenda y las etiquetas de semana quedaban **fuera de la pantalla** (debajo del gráfico), sin texto que explique qué significa el color ni qué filtra cada selector.
+
+Qué mejorar (todo dentro del mismo archivo `cronograma-editor-gantt.html`, sin librerías):
+
+1. **Leyenda y explicación siempre a la vista**, arriba del gráfico, no debajo: qué muestran las barras (HH programadas por semana), qué es cada color, qué es la línea (acumulado) y qué es el número sobre la barra (el pico). Con un filtro activo, un rótulo «Mostrando: Operario» y el color de esa serie en la leyenda.
+2. **Ejes con título y unidad**: eje vertical «HH por semana» (y «HM por semana» en el otro gráfico), eje horizontal «Semana (sábado a viernes)» con las etiquetas de fecha legibles en todas las barras.
+3. **Filtros claros**: aclarar que Cargo filtra el gráfico de HH y Equipo el de HM; botón «Quitar filtros».
+4. **Cada gráfico completo cabe en una pantalla de 900 px de alto** (ejes, leyenda y pie sin desplazarse), con los paneles en cualquier combinación y a 1440 y 1920 px de ancho.
+5. **Cronograma**: Comienzo y Fin siempre visibles; «Var. fin» en días laborables; ayuda al pasar el cursor sobre cada barra (base, seguimiento, % y fechas) y sobre cada encabezado de columna; un botón «¿Qué veo?» que abre una explicación breve de cada elemento del Gantt (barra base, barra de seguimiento, resumen, hito, flecha, línea Hoy).
+6. **Acabado general**: jerarquía visual, espaciados, estados al pasar el cursor y activos, coherencia con `design.md`; que no parezca un borrador.
+7. **Verificación**: capturas del histograma y del Gantt a 1440 y a 1873 px de ancho con «Ambos ocultos» y con «Tres abiertos», sin errores de consola; en cada captura se debe leer la leyenda y los ejes sin desplazarse. Una captura por ítem como máximo.
+
 ## Criterios de salida
 
 - Los 5 ítems funcionales hechos y el CG-06 dejado para Victor. Una tanda no se cierra con un ítem a medias.

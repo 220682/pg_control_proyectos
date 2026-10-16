@@ -4,7 +4,7 @@
 
 | Tanda | Título | Ítems | Worker | Rama | Migración | Nivel | Ola | Depende de | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| [C0](C0-maqueta-html-del-cronograma.md) | Maqueta HTML del cronograma | 6 (CG-01…CG-06) | CR-1 | local-worker-4 | — | 2 (n2), Haiku | Ola 0 | Gate 1 | entregada; espera la aprobación de Victor (CG-06) |
+| [C0](C0-maqueta-html-del-cronograma.md) | Maqueta HTML del cronograma | 6 (CG-01…CG-06) | CR-1 | local-worker-4 | — | 2 (n2), Haiku | Ola 0 | Gate 1 | ronda 2 entregada y revisada (2026-10-16); espera la aprobación de Victor (CG-06) y sus 5 dudas |
 | [C1](C1-motor-de-programacion-y-datos.md) | Motor de programación y datos (migración 103) | 7 (CG-10…CG-16) | CR-1 | local-worker-4 | 103 | 3 (n3) | Ola 1 | C0 aprobada | pendiente |
 | [C2](C2-api-de-edicion-y-editor-de-tabla.md) | API de edición y editor de tabla | 7 (CG-20…CG-26) | CR-1 | local-worker-4 | — | 3 (n3) | Ola 2 | C1 | pendiente |
 | [C3](C3-gantt-a-mano-en-svg.md) | Gantt a mano en SVG | 7 (CG-30…CG-36) | CR-1 | local-worker-4 | — | 3 (n3) | Ola 2 | C2 | pendiente |

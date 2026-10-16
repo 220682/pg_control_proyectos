@@ -4,7 +4,7 @@
 
 - Tema: crear y seguir el cronograma dentro del sistema, al estilo MS Project (tabla + barras), con línea base, línea de seguimiento contra el RDT, histogramas de HH y HM, y exportación a PDF y Excel.
 - Fecha de inicio: 2026-10-15.
-- Estado: `Implementando` (Gate 1 aprobado por Victor el 2026-10-15; arranca la ola 0, la maqueta).
+- Estado: `Implementando`, **en pausa por orden de Victor (2026-10-16)** después de la ronda 2 de la maqueta (Gate 1 aprobado el 2026-10-15). Ver «Traspaso a la próxima sesión».
 
 Puertas:
 
@@ -340,12 +340,12 @@ Gate 1: aprobado por Victor el 2026-10-15 (lista de ítems, tabla de contradicci
 
 | ID | Tanda | Qué se verifica y cómo | CA | Estado |
 |---|---|---|---|---|
-| CG-01 | C0 | Maqueta HTML de tres paneles con tabla y Gantt (barra base, barra de seguimiento con %, resumen, hito, flechas, línea «hoy», leyenda); abre sin errores de consola | 10 | Sin verificar |
-| CG-02 | C0 | Maqueta de los cuatro estados (vacío, cargando, error, datos) y de las tres puertas de creación | 10 | Sin verificar |
-| CG-03 | C0 | Maqueta de la pestaña Histogramas (barras HH/HM, acumulado, pico, filtros, rótulo de fuente programado/estimado) | 7 | Sin verificar |
-| CG-04 | C0 | Maqueta del interruptor modo RDT / manual, etiqueta «Manual», historial y selector de línea base | 5 | Sin verificar |
-| CG-05 | C0 | Maqueta de las opciones de exportar y de la vista móvil de solo lectura; enlazada en `mockups/index.html` y `README.md` | 8, 10 | Sin verificar |
-| CG-06 | C0 | **Victor aprueba la maqueta** (puerta intermedia; sin esto no empieza C1) | — | Sin verificar |
+| CG-01 | C0 | Maqueta HTML de tres paneles con tabla y Gantt (barra base, barra de seguimiento con %, resumen, hito, flechas, línea «hoy», leyenda); abre sin errores de consola | 10 | Conforme (Orquestador: revisó en pantalla la versión de la ronda 2 a 1440 y 1873 px, 0 errores de consola; Comienzo y Fin visibles) |
+| CG-02 | C0 | Maqueta de los cuatro estados (vacío, cargando, error, datos) y de las tres puertas de creación | 10 | Conforme (verificado por el Worker por DOM y capturas; el Orquestador no repitió este ítem) |
+| CG-03 | C0 | Maqueta de la pestaña Histogramas (barras HH/HM, acumulado, pico, filtros, rótulo de fuente programado/estimado) | 7 | Conforme (Orquestador: revisó el caso de Victor, Operario + Retroexcavadora a 1873 px con paneles ocultos: leyenda, ejes con unidad, semanas y pico a la vista) |
+| CG-04 | C0 | Maqueta del interruptor modo RDT / manual, etiqueta «Manual», historial y selector de línea base | 5 | Conforme (verificado por el Worker por DOM y capturas; el Orquestador no repitió este ítem) |
+| CG-05 | C0 | Maqueta de las opciones de exportar y de la vista móvil de solo lectura; enlazada en `mockups/index.html` y `README.md` | 8, 10 | Observado (maqueta y vista móvil hechas y verificadas por el Worker; las entradas en `mockups/index.html` y `README.md` existen en el disco pero esos dos archivos tienen cambios sin commit de otros planes, así que no se subieron) |
+| CG-06 | C0 | **Victor aprueba la maqueta** (puerta intermedia; sin esto no empieza C1) | — | Sin verificar (entregada la ronda 2 el 2026-10-16; falta que Victor la abra y responda las dudas de «Preguntas pendientes de la maqueta») |
 | CG-10 | C1 | Migración 103 escrita, aditiva, con reversa documentada y RLS; no se aplica | 1 | Sin verificar |
 | CG-11 | C1 | `calendario.ts`: sumar y restar días laborables de lunes a sábado saltando los no laborables; prueba `vitest` con los 12 días del 6 al 19/08 del PDF de referencia | 1 | Sin verificar |
 | CG-12 | C1 | `predecesoras.ts`: lee `5`, `5FC+2`, `5CC`, `5FF-1`, `5CF` y rechaza lo ilegible con motivo; `vitest` | 1, 3 | Sin verificar |
@@ -467,6 +467,27 @@ Respuestas: **P1** sí («1 ok»); **P2** sí, la maqueta es puerta obligatoria 
 - **P4.** Al crear el cronograma desde el DP por segunda vez, ¿reemplaza todo lo editado (con aviso) o se bloquea si ya hay actividades? Recomendación: reemplaza con aviso, igual que la carga de archivo.
 - **P5.** ¿C5 (reescribe la aprobación del Plan Maestro) se hace en nivel 3 con la prueba de atomicidad, o subes a nivel 4? Recomendación: nivel 3.
 
+## Preguntas pendientes de la maqueta (las responde Victor al aprobarla, CG-06)
+
+Las dejó el Worker de la ronda 2; ninguna bloquea lo ya decidido (paleta, variación en días laborables y Comienzo/Fin visibles). Con la recomendación del Orquestador:
+
+1. **Gantt angosto con los tres paneles abiertos a 1440 px** (unos 372 px de ancho). El divisor arrastrable y ocultar un panel lo resuelven. Recomendación: aceptar.
+2. **Nombre cortado con «…» en los niveles profundos.** `design.md` pide no truncar sin aprobación. Recomendación: aprobar el corte con el texto completo al pasar el cursor.
+3. **HH y HM lado a lado o de uno en uno** (más altura para las barras). Recomendación: lado a lado en pantallas anchas y uno bajo el otro en las angostas.
+4. **Tono nuevo `#0e1424` para las filas de resumen** (`design.md` §4.1 no admite colores nuevos sin aprobación). Recomendación: usar un token existente si hay uno cercano; si no, aprobar este.
+5. **Duración y Var. fin muestran solo el número, con «d lab.» en el encabezado.** Recomendación: aceptar.
+
+## Traspaso a la próxima sesión (pausa pedida por Victor, 2026-10-16)
+
+- **Dónde quedó el plan:** Gate Spec y Gate 1 aprobados. Ninguna tanda en ejecución. Hechas: C7 (APU por partida, cerrada: 3 Conforme y 2 Observado) y C0 (maqueta, ronda 2 entregada y revisada por el Orquestador; CG-06 pendiente de Victor). El resto (C1 a C6, C8 a C12) sigue sin empezar.
+- **Código (repositorio de la app `py_control_proyectos_web`, nada subido a `origin`):** `local-worker-6` tiene 3 commits propios (`ea55445`, `fad38d4`, `5de578e`; migración 107 sin aplicar), árbol limpio. `local-worker-4` está limpia, al día con `main` (`628918a`) y sin commits propios, con `node_modules` reinstalado. El código solo se sube tras el Gate 2.
+- **Siguiente paso, en orden:** (1) Victor abre `docs/05-diseno-y-referencias/mockups/cronograma-editor-gantt.html`, responde las cinco preguntas de arriba y aprueba la maqueta. (2) El Orquestador lanza C1 (Sonnet, `local-worker-4`, puerto de desarrollo sugerido 3014) con el brief `C1-motor-de-programacion-y-datos.md`; Victor aplica la migración 103 antes de C2. (3) C8 espera a C1 y requiere aplicar la 107 antes de verificarse (puerto sugerido 3016 en `local-worker-6`).
+- **Reglas de trabajo vigentes:** Haiku solo para tareas simples (git, documentación, entorno, y C4 con aviso a Victor si no cierra); cualquier subida a Sonnet la aprueba Victor y se anota en la tabla de esfuerzos; el prompt de cada Worker lista archivos y rangos de líneas a leer y lo que no (ver M3); revisar las entregas de interfaz con filtros y al ancho de Victor (~1873 px).
+- **Pendientes de Victor:** aprobar la maqueta; aplicar las migraciones 103 a 107 cuando se las pida (una por una); decidir qué hacer con `.playwright-mcp/` (unas 300 entradas sin seguimiento) y con la carpeta `.worktrees/_node_modules_bloqueado_w4/`; revisar el aviso de la migración 095 (el README la lista, el archivo no existe en `main`).
+- **No verificado:** el estado de los datos de prueba de PS-0000 (RDT validados y presupuesto con APU); la conexión al MCP de base de datos falló durante la sesión.
+- **Reglas de negocio R1 a R10:** siguen «Registrada» en el libro de hallazgos; las traslada el Documentador en C11 (después de C10), con el artefacto «Matriz de permisos» y el flujo 14 en la misma tarea. No se editaron flujos todavía porque describirían funciones sin construir.
+- **Límite de uso:** la sesión llegó una vez al límite de uso (se reinicia a las 3 a. m. hora de Lima) y cortó la ronda 2 de la maqueta; el trabajo se reanudó sin pérdidas porque el archivo no se había tocado.
+
 ## Registro de decisiones
 
 | Fecha | Decisión | Quién |
@@ -491,6 +512,12 @@ Respuestas: **P1** sí («1 ok»); **P2** sí, la maqueta es puerta obligatoria 
 | 2026-10-15 | P2 (la maqueta es puerta obligatoria antes de C1) y P5 (C5 en nivel 3 con prueba de atomicidad) quedan aprobadas por defecto con el Gate 1 | Orquestador (propuso) / Victor (aprobó el Gate 1) |
 | 2026-10-15 | Haiku en C0, C4, C11, Worker git y mecánicos del Orquestador; Sonnet en el resto; si una tanda en Haiku no cierra, se suspende y se pide a Victor aprobar Sonnet | Orquestador (propuso) / Victor (pidió Haiku para tareas simples) |
 | 2026-10-15 | Se agrega el ítem CG-26 (hito del editor visible en Paquetes) a la tanda C2 | Orquestador |
+| 2026-10-16 | Pausa: Victor ordena terminar la ronda 2 de la maqueta, detener la implementación, entregar informe de avance y de consumo, hacer commit y cerrar sesión | Victor |
+| 2026-10-15 | Maqueta, duda 1: se aprueba la paleta de series de los gráficos (azul, naranja, verde, ámbar, magenta); se anota en `design.md` §4.1 como paleta para series de gráficos | Victor |
+| 2026-10-15 | Maqueta, duda 2: la variación del fin se mide en días laborables (lunes a sábado, sin los no laborables), igual que la duración | Victor («2 ok», aceptó la recomendación) |
+| 2026-10-15 | Maqueta, duda 3: Comienzo y Fin quedan siempre visibles en la tabla; el resto con desplazamiento horizontal | Victor («3 ok», aceptó la recomendación) |
+| 2026-10-15 | Ronda 2 de la maqueta con **Sonnet** (cambio de Haiku a Sonnet aprobado por Victor para esta tanda: «utiliza Sonnet, pero haz bien tu trabajo, delega bien, dile qué leer»); el prompt del Worker nombra los archivos y las líneas exactas que debe leer y lo que no | Victor |
+| 2026-10-15 | La maqueta no se aprueba todavía: Victor pide mejorar el acabado (falta leyenda y explicación de lo que se ve, ejes sin título ni unidad); se hace una ronda 2 de la tanda C0 (ver el brief) | Victor |
 | 2026-10-15 | C7: la tabla nueva `dp_partida_recursos` queda con RLS activada y sin política de lectura directa; solo se lee desde el servidor con permisos validados en código (coherente con la dirección de la 095 y la 096 y con «validar siempre en servidor») | Orquestador |
 | 2026-10-15 | C7: el relleno retroactivo de HM por partida desde el archivo guardado (servicios con DP ya aprobado que no pueden recargar) NO se implementa ahora; escribiría datos en servicios reales y exige autorización de Victor. Mientras tanto esos servicios muestran «sin dato» (decisión de Victor, CG-74) | Orquestador |
 
@@ -506,8 +533,9 @@ Formato de cada fila: ID / Fecha / Quién (rol, tanda) / Qué / Destino propuest
 
 | ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
 |---|---|---|---|---|---|---|
-| M2 | 2026-10-15 | Worker CR-1 · C0 | El Playwright del entorno bloquea `file://` y solo guarda capturas dentro del repositorio (o de `.playwright-mcp/`). Solución: servir la carpeta con `python -I -m http.server <puerto> --bind 127.0.0.1`, y al terminar detener el servidor (en Git Bash no hay `pkill`: usar PowerShell con `Stop-Process`) | `docs/03-aprendizaje-continuo/` | Registrada | |
-| M1 | 2026-10-15 | Orquestador (Worker git) | En Windows, `npm ci` falla con EPERM al borrar `node_modules/lightningcss-win32-x64-msvc/lightningcss.win32-x64-msvc.node` cuando algún proceso mantiene abierto ese archivo (no se identificó cuál; el proceso que sospechó el Worker ya no existía). Se comprobó con `File.Open` exclusivo que seguía bloqueado. Solución que funcionó: renombrar la carpeta `node_modules` (el renombre sí se permite) a una carpeta aparte fuera del árbol de git, correr `npm ci` y reportar la carpeta sobrante sin borrarla | `docs/03-aprendizaje-continuo/` | Registrada | |
+| M2 | 2026-10-15 | Worker CR-1 · C0 | El Playwright del entorno bloquea `file://` y solo guarda capturas dentro del repositorio (o de `.playwright-mcp/`). Solución: servir la carpeta con `python -I -m http.server <puerto> --bind 127.0.0.1`, y al terminar detener el servidor (en Git Bash no hay `pkill`: usar PowerShell con `Stop-Process`) | `docs/03-aprendizaje-continuo/` | Trasladada | [`2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md`](../../03-aprendizaje-continuo/2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md) |
+| M1 | 2026-10-15 | Orquestador (Worker git) | En Windows, `npm ci` falla con EPERM al borrar `node_modules/lightningcss-win32-x64-msvc/lightningcss.win32-x64-msvc.node` cuando algún proceso mantiene abierto ese archivo (no se identificó cuál; el proceso que sospechó el Worker ya no existía). Se comprobó con `File.Open` exclusivo que seguía bloqueado. Solución que funcionó: renombrar la carpeta `node_modules` (el renombre sí se permite) a una carpeta aparte fuera del árbol de git, correr `npm ci` y reportar la carpeta sobrante sin borrarla | `docs/03-aprendizaje-continuo/` | Trasladada | [`2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md`](../../03-aprendizaje-continuo/2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md) |
+| M3 | 2026-10-16 | Orquestador (pedido de Victor) | Delegar con lecturas exactas: el prompt de lanzamiento de un Worker lista los archivos con rangos de líneas y dice qué no leer; Haiku solo para tareas simples de brief cerrado, Sonnet cuando hay criterio visual o lógica; al revisar una interfaz, probar el caso con filtros y el ancho real de pantalla de Victor. Nació cuando el Worker Haiku de la maqueta leyó `design.md` completo (308k de contexto) y entregó un acabado básico | `docs/03-aprendizaje-continuo/` y plantilla de brief | Trasladada | [`2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md`](../../03-aprendizaje-continuo/2026-10-16-cronograma-entorno-windows-y-delegacion-a-workers.md) |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -519,6 +547,8 @@ Formato de cada fila: ID / Fecha / Quién (rol, tanda) / Qué / Destino propuest
 | R4 | 2026-10-15 | Orquestador (Spec) | La importación del DP guarda por partida las HH por cargo y las HM por equipo (APU) | Flujo 09 | Registrada | |
 | R5 | 2026-10-15 | Victor (D1) | El avance manual del seguimiento no alimenta PR, Dashboard ni Curva S; se rotula «Manual» | Flujos 15, 18 y 20 | Registrada | |
 | R6 | 2026-10-15 | Victor (Gate 1) | El tipo Hito del editor del cronograma es la fuente del hito; la pantalla de Paquetes lo muestra atenuado, de solo lectura, con «◆ Hito», y ya no se marca desde Paquetes | Flujos 15 y 19 | Registrada | |
+| R9 | 2026-10-15 | Victor (maqueta) | La «variación del fin» contra la línea base se mide en días laborables (lunes a sábado, sin los no laborables) | Flujos 15 y 18 | Registrada | |
+| R10 | 2026-10-15 | Victor (maqueta) | Los gráficos de series (histogramas) usan la paleta validada de cinco colores (azul, naranja, verde, ámbar, magenta) como excepción a «no colores nuevos» | `design.md` §4.1 | Registrada | |
 | R8 | 2026-10-15 | Orquestador (tanda C7) | Solo los equipos con unidad `HM` cuentan como horas-máquina por partida; los de unidad `HE` (aparece solo en un renglón de herramienta de la semilla 097, no en los 3 presupuestos de prueba), `%MO`, `DIA`, `MES` y `UND` no. Decidido por defecto por el Orquestador al no haber dato real que lo contradiga; se reabre si aparece un presupuesto con `HE` como hora-equipo | Flujo 09 | Registrada | |
 | R7 | 2026-10-15 | Victor (Gate 1) | Crear el cronograma desde el DP sobre uno que ya tiene actividades lo reemplaza con aviso de lo que se pierde (incluye lo editado y su seguimiento); queda bloqueado con el Plan Maestro aprobado | Flujos 14 (nota 8) y 15 | Registrada | |
 
@@ -550,6 +580,7 @@ Pendiente.
 |---|---|---|---|---|
 | Worker git (ramas) | Haiku | Medio | Medio | No |
 | C0 maqueta | Haiku | Medio | Medio | No |
+| C0 maqueta, ronda 2 | Sonnet | Medio | Medio | Sí: de Haiku a Sonnet, aprobado por Victor el 2026-10-15 |
 | C7 APU por partida | Sonnet | Medio | Medio | No |
 
 ### Consumo medido por evento (`scripts/medir.py`, 2026-10-15)
@@ -560,8 +591,12 @@ Medido con `python -I scripts/medir.py --resumen --desde 2026-10-15`, que lee lo
 |---|---|---|---|---|---|
 | Planner (plan por tandas) | Sonnet | 13 | 220k | 0,99M | 136k |
 | Worker git · ramas del plan | Haiku | 15 | 62k | 0,76M | 62k |
-| C0 maqueta | Haiku | 33 | 368k | 6,44M | **308k** |
+| Worker git · subir el plan | Haiku | 4 | 51k | 0,14M | 51k |
+| C0 maqueta (ronda 1) | Haiku | 33 | 368k | 6,44M | **308k** |
+| C0 maqueta (ronda 2, con el corte por límite y la reanudación) | Sonnet | 77 | 576k | 17,00M | **317k** |
 | C7 APU por partida | Sonnet | 49 | 201k | 6,71M | 201k |
+| Orquestador (esta sesión, antes y después de la compactación) | Sonnet | 143 | 964k | 27,20M | 313k |
+| **Total identificado de este plan al 2026-10-16** | | **334** | **≈ 2,44M** | **≈ 59,2M** | — |
 
 Lectura: la sesión de C0 (Haiku) llegó a 308k de contexto porque leyó `design.md` completo y varias maquetas; para las tandas de Haiku siguientes, el brief debe nombrar las secciones exactas y prohibir leer el archivo entero.
 

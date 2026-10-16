@@ -69,8 +69,8 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 - **Dato que lo sostiene:** el vínculo actividad ↔ partida con metrado (`cronograma_actividad_partidas.metrado`, `db/071`), que el Spec del 30-sep mueve a la pantalla de Paquetes de Trabajo. Por eso ese dato no se descarta: el avance de una actividad saldría del avance de sus partidas. El flujo 15 lista además como pendientes el candado de checklist "Cronograma" y restringir el reemplazo mientras el servicio siga "En Planeación".
 - **Por qué se pospone:** Victor lo declaró "otro tema, aún no implementado"; primero se resuelve Paquetes de Trabajo y Plan Maestro.
 - **Pospuesto:** 2026-09-30.
-- **Estado:** pendiente, sin promover.
-- **Requiere Spec/SDD:** sí.
+- **Estado:** **promovido (2026-10-15)** al plan [`2026-10-15-cronograma-gantt-linea-base-histogramas.md`](2026-10-15-cronograma-gantt-linea-base-histogramas.md), con Spec aprobado por Victor el mismo día. El plan amplía este ítem: además de la línea base y la línea real, crea el cronograma dentro del sistema y suma histogramas de HH y HM y la exportación a PDF y Excel.
+- **Requiere Spec/SDD:** sí (ya aprobado en el plan nuevo).
 
 ### Acceso directo a Postgres/Supabase para correr SQL
 

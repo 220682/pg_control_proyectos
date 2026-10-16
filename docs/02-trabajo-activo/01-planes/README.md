@@ -43,6 +43,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
+| [`2026-10-15-cronograma-gantt-linea-base-histogramas.md`](2026-10-15-cronograma-gantt-linea-base-histogramas.md) | Spec aprobado (Gate Spec, Victor, 2026-10-15); el Planner arma el plan por tandas para el Gate 1. Cronograma creado en el sistema al estilo MS Project, con línea base, seguimiento contra el RDT, histogramas de HH y HM y exportación a PDF y Excel |
 | [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |

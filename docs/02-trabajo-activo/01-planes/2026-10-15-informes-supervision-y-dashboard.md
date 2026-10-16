@@ -4,7 +4,7 @@
 
 - Tema: informes de supervisión del operativo (diario y semanal, con fotos de campo y descarga en Word, PDF y Excel) y mejoras del Dashboard (responsable operativo, IP y HH, avance por nivel, recursos contractual / acumulado / restante, descarga con la Curva S).
 - Fecha de inicio: 2026-10-15.
-- Estado: `En implementación` — Gate 1 aprobado; tandas ajustadas a la regla de costo real (R20: tandas R y S, migración 102) y revisadas por el Orquestador el 2026-10-15. Ola 0 (W1, tanda A) lanzada.
+- Estado: `En implementación` — 11 de 19 tandas cerradas en sus ramas (A, B, N, O, H, R, I, P, J; C y S esperan incorporar R). Relevo del Orquestador el 2026-10-15 a las 22:55 (ver «Handoff 2»).
 
 Puertas:
 
@@ -739,6 +739,8 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 
 | Fecha | Decisión | Quién |
 |---|---|---|
+| 2026-10-15 | Tanda J cerrada (W2, commit 8e60ced en `local-worker-2`; W2 pasó a `node_modules` propio con `npm ci`). El Orquestador acepta: clic en cada barra de «Desempeño por partida» marca la partida y baja a la matriz; la tarjeta AC lleva a «Costo real de recursos»; el detalle de PPC va dentro del Bloque E. Relevo del Orquestador (contexto 294k). | Orquestador |
+| 2026-10-15 | Tanda P cerrada (W3, commits 2d4b3e8 y 1247100 en `local-worker-3`); P1, P7 y las capturas pasan a la verificación en vivo (L). W3 termina su parte de la Ola 1. | Orquestador |
 | 2026-10-15 | Victor autoriza subir a GitHub los archivos de este plan («sí, sube los archivos del plan»): el plan, la carpeta de briefs y resultados, y las maquetas con su índice, README y marco. Lo hace el Worker git en Haiku (Victor: «utiliza haiku para tareas simples»). | Victor |
 | 2026-10-15 | Tanda I cerrada con su corrección (461a0f9). W2 sigue con J y K antes de S (S y C esperan que se incorpore el cierre de R; el merge en `local-worker-1` quedó bloqueado por el clasificador de permisos y se pidió el visto bueno de Victor). | Orquestador |
 | 2026-10-15 | Tanda I entregada (W2, commits 6a1ed04 y 32334bd en `local-worker-2`); se devuelve con la corrección del modo Parcial (P40). Tanda R cerrada con su corrección de seguridad (34b8bbf). Tanda P lanzada en W3. | Orquestador |
@@ -847,6 +849,9 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 | P41 | (tanda I) Ruta nueva `GET /api/proyectos/[id]/dashboard/recurso-partidas` (`puedeVerDashboard` + alcance, solo horas): lleva fila en el flujo 14 y en la lista para la matriz (Documentador). | Registrada |
 | P42 | El clasificador de permisos de Claude Code bloqueó como «Git Destructive» el `git merge --no-ff 34b8bbf` en `local-worker-1` (incorporar O y R antes de C), aunque el Gate 1 pre-autoriza incorporar ramas entre Workers. El Worker git no lo sorteó; el Orquestador lo escaló a Victor. Para el Analista: las pre-autorizaciones del Gate 1 no llegan al clasificador. | Registrada |
 | P43 | El verificador (`-Clase push`) devolvió BLOQUEAR (sin daño 0,95; autorizada 0,01) para subir los documentos de este plan a `main` del repositorio de documentación, aunque Victor lo autorizó en el chat y la política deja esa documentación al Orquestador. Causa probable: el script toma el «Gate 2 pendiente» del plan como condición de todo push. El Orquestador siguió con la autorización explícita de Victor. Para el Analista: separar en el script el push de documentación del push de código. | Registrada |
+| P44 | Riesgo de coordinación: en `main` del repositorio de documentación apareció otro plan en curso, «cronograma dentro del sistema» (commits 23a8afa y 5c5ea6d: Gate 1 aprobado, 13 tandas, briefs C0-C12, `local-worker-6`). Antes de integrar en `main` de la app (16a) hay que cruzar sus archivos con los de este plan (Dashboard, Curva S, `db/` numeración, `registro-accesos.ts`). Sus briefs «C0-C12» no son la tanda C de este plan. **Verificado:** ese plan usa `local-worker-4` y `local-worker-6`, migraciones desde la 103 y declara fuera de límites `src/lib/rdts/**`, `evm.ts`, `src/lib/dashboard/**`, `src/lib/informes/**` y `db/098` a `db/102`; riesgo bajo, se revisa igual al integrar. | Registrada |
+| P45 | (tanda P) El `node_modules` del repositorio principal de la app quedó a medias (50 entradas, sin `vitest`); `local-worker-1` y `-2` lo usan por enlace simbólico y quedan sin poder probar. Existe `.worktrees/_node_modules_bloqueado_w4` apuntando a él (otro plan). W3 ya tiene `node_modules` propio con `npm ci`; se indica a W2 y W1 lo mismo, sin tocar el principal. Victor debe saberlo: el repositorio principal no corre pruebas hasta reinstalar. | Registrada |
+| P46 | (tanda P) Consolidado: las filas de HM suman operativas + stand-by y las de HH incluyen la extra (R14); el desglose normales/extra y operativas/stand-by va como grupo aparte sin total propio. Aceptado por el Orquestador (ya decidido en R13/R14). Flujos 06 y 18 para el Documentador. | Registrada |
 
 ## Carpetas/archivos huérfanos
 
@@ -872,3 +877,23 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 - **Siguiente:** (1) el Planner ya ajustó las tandas a R20 (tandas R y S, migración 102) y el Orquestador las revisó (pregunta 8 resuelta con el principio de Victor); (2) el Orquestador confirma el Gate 1 con Victor en una línea y lanza la Ola 0 (W1, tanda A) en `local-worker-1`, que hoy está 0 commits adelante de `main` y hay que ponerlo al día con `main` con el Worker git; (3) avisar en el plan «Revisión completa de la app» que no toque los archivos del RDT mientras duren las tandas O y P.
 - **Git:** nada de este plan tiene commit. Archivos propios sin subir: este plan, las cuatro maquetas, `mockups/README.md`, `mockups/index.html` y `mockups/marco-tres-paneles.js` (su diff es solo el gancho `MARCO_AJUSTE` de este plan; `README.md` e `index.html` de mockups ya venían modificados al empezar la sesión: revisar su diff antes de subir). Hay otros archivos modificados de sesiones anteriores (flujos 06, 09, 12, 14, 16, 18, 19, 20, `design.md`, plan del lote 3, `02-trabajo-activo/README.md`) que **no** son de este plan. El commit y el push de los archivos de este plan los autoriza Victor.
 - **Pendiente con Victor:** artefacto «Matriz de permisos» inaccesible desde la cuenta (P12); autorizar commit y push de los archivos de este plan.
+
+
+## Handoff 2 (relevo del Orquestador, 2026-10-15 22:55)
+
+- **Por qué:** contexto del Orquestador en 294k (umbral rojo, 300k), medido con `python scripts/medir.py --resumen --desde 2026-10-15` (sesión e51bd4d1, 101 llamadas).
+- **Hecho (en ramas, sin merge a `main`):**
+  - `local-worker-1` (W1): A (e65dcae, c0dd874, 9ad0de7), B (1fa141d, 3cc7d94, 3ce0a52).
+  - `local-worker-2` (W2): contiene A; N (2879b46, 0e1d8f9), H (dbe1a5e, b196a7a), I (6a1ed04, 32334bd, 461a0f9), J (8e60ced).
+  - `local-worker-3` (W3): contiene A y N; O (3233b93), R (a8f7089, 2bbeb62, 34b8bbf con la corrección de seguridad P37), P (2d4b3e8, 1247100).
+  - Todos con push y árbol limpio. Resúmenes en `2026-10-15-informes-supervision-y-dashboard-briefs/resultados/`.
+- **Bloqueado:** incorporar 34b8bbf (O+R) en `local-worker-1` — el clasificador de permisos bloqueó `git merge --no-ff` (P42). **Pendiente del visto bueno de Victor.** Regla para el conflicto de `db/README.md`: conservar ambas líneas del conflicto, no mover nada fuera, cada migración 098-102 una sola vez, numeración se normaliza en 16a (P34).
+- **Siguiente, en orden:**
+  1. Con el visto bueno: Worker git incorpora 34b8bbf en `local-worker-1` → W1 · C (brief `C.md`) → W1 · D (`D.md`, Skill `verificar-permisos-por-rol` obligatorio, P30) → W1 · G (brief por escribir).
+  2. W2 · K (brief `K.md`, listo) → Worker git incorpora 34b8bbf en `local-worker-2` → W2 · S (brief `S.md`, con los avisos de N al final).
+  3. W3 · E → F → Q → L (briefs por escribir; W3 necesita B, C y D de W1 incorporados antes de E).
+  4. Antes de L: aplicar las migraciones 099, 098, 100, 101, 102 (P33). El servidor `postgresql` no conectó en esta sesión; preguntar a Victor dónde y cómo se aplican y qué base usar para R6/O8 (servicio de prueba PS-0011, Portafolio Practica). Las capturas (P36) necesitan las cuentas de prueba de la memoria y las migraciones aplicadas.
+  5. M (Documentador), Auditor, Gate 2.
+- **Avisos operativos:** `node_modules` del repositorio principal de la app está a medias (P45): W1 debe pasar a `node_modules` propio (`rm` solo del enlace + `npm ci`) antes de C. `npm test` cambia el `.snap` de curva-s por fin de línea (M6): restaurar con `git checkout`. Build con `npx next build --webpack` (M5); lint: 9 errores preexistentes (P25). Victor pidió Haiku para todo lo simple (git, traslados, índices). El verificador escala o bloquea las acciones pre-autorizadas (P26, P43): revisarlo y seguir si consta la autorización.
+- **Pendiente con Victor:** visto bueno del merge bloqueado; matriz de permisos (sin respuesta: se sigue con las tablas del flujo 14); dónde aplicar las migraciones; reporte de consumo al final (pedido por Victor: «quiero al final un reporte del consumo»).
+- **Consumo medido de este Orquestador y sus subagentes (2026-10-15, 19:33 a 22:55):** 510 llamadas; caché creada 2,46 M; caché leída 53,51 M; salida 89 k. Orquestador (Opus) 101 llamadas, 20,13 M leídos, 79 k de salida; Planner 64; W1 65; W2 124; W3 122; Worker git (Haiku) 34.

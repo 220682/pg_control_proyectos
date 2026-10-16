@@ -4,14 +4,14 @@
 
 | Tanda | Título | Ítems | Worker | Rama | Migración | Nivel | Ola | Depende de | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| [C0](C0-maqueta-html-del-cronograma.md) | Maqueta HTML del cronograma | 6 (CG-01…CG-06) | CR-1 | local-worker-4 | — | 2 (n2), Haiku | Ola 0 | Gate 1 | pendiente |
+| [C0](C0-maqueta-html-del-cronograma.md) | Maqueta HTML del cronograma | 6 (CG-01…CG-06) | CR-1 | local-worker-4 | — | 2 (n2), Haiku | Ola 0 | Gate 1 | entregada; espera la aprobación de Victor (CG-06) |
 | [C1](C1-motor-de-programacion-y-datos.md) | Motor de programación y datos (migración 103) | 7 (CG-10…CG-16) | CR-1 | local-worker-4 | 103 | 3 (n3) | Ola 1 | C0 aprobada | pendiente |
 | [C2](C2-api-de-edicion-y-editor-de-tabla.md) | API de edición y editor de tabla | 7 (CG-20…CG-26) | CR-1 | local-worker-4 | — | 3 (n3) | Ola 2 | C1 | pendiente |
 | [C3](C3-gantt-a-mano-en-svg.md) | Gantt a mano en SVG | 7 (CG-30…CG-36) | CR-1 | local-worker-4 | — | 3 (n3) | Ola 2 | C2 | pendiente |
 | [C4](C4-las-tres-puertas-de-creacion.md) | Las tres puertas de creación | 5 (CG-40…CG-44) | CR-1 | local-worker-4 | — | 2 (n2), Haiku | Ola 2 | C3 | pendiente |
 | [C5](C5-linea-base-dentro-de-la-aprobacion-del-p.md) | Línea base dentro de la aprobación del Plan Maestro (104 y 105) | 6 (CG-50…CG-55) | CR-1 | local-worker-4 | 104, 105 | 3 (n3), aprobado por Victor | Ola 3 | C4 | pendiente |
 | [C6](C6-seguimiento-modo-rdt-manual.md) | Seguimiento modo RDT / manual (106) | 7 (CG-60…CG-66) | CR-1 | local-worker-4 | 106 | 3 (n3) | Ola 3 | C5 | pendiente |
-| [C7](C7-apu-por-partida.md) | APU por partida (107) | 5 (CG-70…CG-74) | CR-2 | local-worker-6 | 107 | 3 (n3) | Ola 1 | Gate 1 | pendiente |
+| [C7](C7-apu-por-partida.md) | APU por partida (107) | 5 (CG-70…CG-74) | CR-2 | local-worker-6 | 107 | 3 (n3) | Ola 1 | Gate 1 | cerrada (3 Conforme, 2 Observado; commits ea55445, fad38d4, 5de578e en `local-worker-6`; la 107 espera a Victor) |
 | [C8](C8-histogramas-de-hh-y-hm.md) | Histogramas de HH y HM | 5 (CG-80…CG-84) | CR-2 | local-worker-6 | — | 2 (n2) | Ola 2 | C1, C7 | pendiente |
 | [C9](C9-exportar-pdf-y-excel.md) | Exportar PDF y Excel | 5 (CG-90…CG-94) | CR-1 | local-worker-4 | — | 2 (n2) | Ola 4 | C6, C8 | pendiente |
 | [C10](C10-permisos-y-validacion-final.md) | Permisos y validación final | 4 (CG-100…CG-103) | CR-1 | local-worker-4 | — | 2 (n2) | Ola 4 | C9 | pendiente |

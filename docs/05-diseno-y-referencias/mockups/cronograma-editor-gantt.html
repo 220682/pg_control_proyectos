@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cronograma — editor con Gantt</title>
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="marco-tres-paneles.css" />
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:4px 10px;font:inherit;font-size:11px;white-space:nowrap}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover:not(:disabled){color:var(--bg-base);filter:brightness(1.1)}
+button[aria-pressed=true],button[aria-selected=true]{border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.15);color:var(--accent)}
+input,select{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font:inherit;font-size:11px;color:var(--text);color-scheme:dark}
+input:disabled{opacity:.6}
+input[type=checkbox],input[type=radio]{accent-color:var(--accent);width:14px;height:14px;padding:0}
+dialog{background:var(--bg-elevated);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px 16px;max-width:min(580px,92vw);font-size:12px;box-shadow:0 20px 50px rgba(0,0,0,.7)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{font-size:14px;margin-bottom:6px}
+dialog .acc{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+dialog table{width:100%}
+dialog th,dialog td{height:auto;line-height:1.4;padding:4px 6px;box-shadow:inset 0 -1px 0 var(--line)}
+dialog thead th{position:static;height:auto;padding:4px 6px}
+
+/* barra de controles de la maqueta (no forma parte de la pantalla) */
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button{font-size:10px;padding:2px 8px;border-radius:999px;color:var(--text-2)}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+
+/* pantalla */
+.pantalla{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px 14px 10px;overflow:hidden}
+.pantalla>section{display:none;flex:1;min-height:0;flex-direction:column}
+.pantalla[data-estado=datos]>[data-st=datos],.pantalla[data-estado=vacio]>[data-st=vacio],.pantalla[data-estado=carga]>[data-st=carga],.pantalla[data-estado=error]>[data-st=error]{display:flex}
+.miga{font-size:10px;color:var(--text-2);margin-bottom:2px}
+.cab{flex:0 0 auto;margin-bottom:6px}
+.cab h1{font-size:15px;font-weight:600}
+.cab p{font-size:11px;color:var(--text-2);margin-top:2px;line-height:1.45}
+.muted{color:var(--text-2)}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:6px;flex:0 0 auto}
+.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 10px;color:var(--text-2)}
+.tabs button[aria-selected=true]{background:none;border-bottom-color:var(--accent);color:var(--accent)}
+.tab-p{flex:1;min-height:0;display:flex;flex-direction:column}
+.tab-p[hidden]{display:none}
+.bar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;flex:0 0 auto;margin-bottom:6px;font-size:11px}
+.bar label{display:inline-flex;gap:5px;align-items:center;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.bar .sp{flex:1}
+.lbl{color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.rel{position:relative;display:inline-block}
+.pop{position:absolute;z-index:20;top:30px;left:0;width:300px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:8px;padding:10px;box-shadow:0 10px 25px rgba(0,0,0,.6);font-size:11px}
+.pop[hidden]{display:none}
+.pop fieldset{border:0;margin-bottom:8px;display:flex;flex-direction:column;gap:4px}
+.pop legend{font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.pop label{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pop p{font-size:10px;color:var(--text-2);margin-top:4px}
+.msg{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:11px;flex:0 0 auto;line-height:1.45}
+.msg.info{border-color:var(--accent-2)}
+.msg.warn{border-color:var(--warn)}
+.msg.warn strong{color:var(--warn)}
+.msg.err{border-color:var(--err)}
+.msg.err strong{color:var(--err)}
+.ic2{flex:0 0 auto}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 6px;font-size:10px;color:var(--text-2);white-space:nowrap;line-height:14px;margin-left:4px}
+.tag.acc{border-color:var(--accent);color:var(--accent)}
+.tag.warn{border-color:var(--warn);color:var(--warn)}
+
+/* detalle de la actividad seleccionada */
+.det{flex:0 0 auto;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);padding:6px 10px;margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:11px}
+.det .nom{font-weight:600;flex:1 1 240px;min-width:0}
+.det .seg{display:flex;gap:4px;align-items:center}
+.det .campos{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.det .campos label{display:inline-flex;gap:4px;align-items:center;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.det .campos input[type=date]{width:124px}
+.det .campos input[type=number]{width:56px}
+.det .ayuda{flex:1 1 100%;font-size:10px;color:var(--text-2);line-height:1.4}
+
+/* editor: tabla a la izquierda, Gantt a la derecha, desplazamiento vertical sincronizado */
+.editor{flex:1;min-height:0;display:flex;border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);overflow:hidden}
+.col-t{flex:0 0 58%;min-width:0;overflow:auto;border-right:1px solid var(--line);position:relative}
+.col-g{flex:1 1 0;min-width:0;overflow:auto;position:relative}
+table{border-collapse:separate;border-spacing:0;font-size:11px}
+th,td{padding:0 5px;white-space:nowrap;background:var(--bg-elevated);height:26px;line-height:26px;box-shadow:inset 0 -1px 0 var(--line);text-align:left;font-weight:400}
+thead th{position:sticky;top:0;z-index:3;height:40px;line-height:14px;padding:0 5px 6px;vertical-align:bottom;color:var(--text-2);font-weight:600;font-size:10px}
+th.r,td.r{text-align:right}
+td.r{font-variant-numeric:tabular-nums}
+.c-id{position:sticky;left:0;z-index:2;width:34px;min-width:34px;max-width:34px}
+.c-edt{position:sticky;left:34px;z-index:2;width:56px;min-width:56px;max-width:56px}
+.c-nom{position:sticky;left:90px;z-index:2;width:300px;min-width:300px;max-width:300px}
+thead .c-id,thead .c-edt,thead .c-nom{z-index:5}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:#0f1726}
+tbody tr.sel td{background:#13233d}
+tr:focus-visible{outline:none}
+tr:focus-visible td:first-child{box-shadow:inset 2px 0 0 var(--accent),inset 0 -1px 0 var(--line)}
+.nom-in{display:flex;align-items:center;padding-left:calc(var(--lvl) * 14px);overflow:hidden}
+.gl16{flex:0 0 16px;width:16px;text-align:center;color:var(--text-2);display:inline-block}
+.pleg{width:16px;height:18px;padding:0;border:0;font-size:10px;line-height:18px;color:var(--text-2);background:none;flex:0 0 16px}
+.pleg:hover{color:var(--accent);background:none}
+.sum{font-weight:600}
+.v-atr{color:var(--err)}
+.v-adl{color:var(--ok)}
+.v-ok{color:var(--text-2)}
+.o-tipo,.o-part{display:none}
+.col-t.show-tipo .o-tipo,.col-t.show-part .o-part{display:table-cell}
+.gbox{position:relative}
+.gh{position:sticky;top:0;z-index:4;background:var(--bg-elevated);height:40px;box-shadow:inset 0 -1px 0 var(--line)}
+.gh svg,.gbox>svg{display:block}
+svg text{font-family:"Segoe UI",system-ui,sans-serif}
+.hd1{font-size:10px;font-weight:600;fill:var(--text)}
+.hd2{font-size:9px;fill:var(--text-2)}
+.lbl-seg{font-size:9px;fill:var(--text-2)}
+.hoy{font-size:9px;font-weight:600;fill:var(--text)}
+.gl{stroke:var(--line);stroke-width:1;fill:none}
+.gl2{stroke:rgba(255,255,255,.3);stroke-width:1;fill:none}
+.ax{font-size:9px;fill:var(--text-2)}
+.pk{font-size:10px;font-weight:600;fill:var(--text)}
+.hit{cursor:pointer;fill:transparent}
+.hit:focus{outline:none;stroke:var(--accent);stroke-width:1.5}
+.dep{fill:none;stroke:#94a3b8;stroke-width:1}
+
+/* leyenda siempre visible */
+.leyenda{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:6px 0 0 0;font-size:10px;color:var(--text-2);list-style:none}
+.leyenda li{display:inline-flex;gap:5px;align-items:center}
+.leyenda svg{width:22px;height:12px;flex:0 0 auto}
+
+/* histogramas */
+.hist{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:4px}
+.hcard{border:1px solid var(--line);border-radius:8px;background:var(--bg-elevated);padding:8px 10px;position:relative;flex:0 0 auto}
+.hcard h3{font-size:12px;font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:2px}
+.hcard p{font-size:10px;color:var(--text-2);line-height:1.4}
+.hcard .pico{font-size:11px;color:var(--text);margin:2px 0 4px}
+.hcard svg{width:100%;height:auto;display:block}
+.hcard .acc-t{font-size:9px;color:var(--text-2);margin:2px 0 0 0}
+.hleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10px;color:var(--text-2);margin-top:6px;list-style:none}
+.hleg li{display:inline-flex;gap:5px;align-items:center}
+.hleg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.hleg b{width:16px;height:0;border-top:2px solid var(--text);display:inline-block}
+.tip{position:absolute;z-index:6;pointer-events:none;background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:10px;line-height:1.5;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.5);top:34px}
+.tip[hidden]{display:none}
+details{margin-top:4px}
+details summary{cursor:pointer;color:var(--text-2);font-size:10px}
+table.tv{font-size:10px;margin-top:4px;width:100%}
+table.tv th,table.tv td{height:20px;line-height:20px;padding:0 6px;box-shadow:inset 0 -1px 0 var(--line);background:transparent}
+table.tv thead th{position:static;height:20px;line-height:20px;padding:0 6px;font-size:10px}
+
+/* estados */
+.puertas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.puerta{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;white-space:normal;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg-elevated);color:var(--text);font-size:11px;line-height:1.45;height:auto}
+.puerta b{font-size:13px}
+.puerta small{color:var(--text-2);font-size:10px}
+.puerta .n{width:26px;height:26px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:600}
+.sk{height:14px;border-radius:4px;background:rgba(255,255,255,.07);margin:9px 0}
+.vacio-ayuda{border:1px dashed var(--line);border-radius:10px;padding:14px;color:var(--text-2);font-size:11px;line-height:1.5}
+
+/* vista móvil de solo lectura */
+.movil-ro{display:none;flex:1;min-height:0;overflow:auto}
+.pantalla[data-vista=movil] .movil-ro{display:block}
+.pantalla[data-vista=movil] .vista-escr{display:none!important}
+.movil-ro h2{font-size:14px;font-weight:600;margin-bottom:2px}
+.movil-ro p{font-size:10px;color:var(--text-2);margin-bottom:8px;line-height:1.4}
+.mlist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.mlist li{border:1px solid var(--line);border-radius:8px;padding:6px 8px 6px calc(8px + var(--lvl) * 14px);background:var(--bg-elevated)}
+.mlist .r1 b{font-weight:600;font-size:12px}
+.mlist .meta{font-size:10px;color:var(--text-2);margin-top:2px}
+.mbar{height:6px;border-radius:3px;background:rgba(255,255,255,.1);margin-top:5px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--accent)}
+.pantalla[data-vista=movil] .det,.pantalla[data-vista=movil] .leyenda{display:none}
+@media (max-width:1023px){.puertas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+  <a href="index.html">&larr; Índice de mockups</a>
+  <span>Maqueta · Cronograma · editor con Gantt · datos simulados</span>
+  <div class="grp" role="group" aria-label="Estado de la pantalla"><span>Estado:</span>
+    <button type="button" data-set-estado="datos" aria-pressed="true">Con datos</button>
+    <button type="button" data-set-estado="vacio" aria-pressed="false">Vacío</button>
+    <button type="button" data-set-estado="carga" aria-pressed="false">Cargando</button>
+    <button type="button" data-set-estado="error" aria-pressed="false">Error</button></div>
+  <div class="grp" role="group" aria-label="Vista"><span>Vista:</span>
+    <button type="button" data-set-vista="escritorio" aria-pressed="true">Escritorio</button>
+    <button type="button" data-set-vista="movil" aria-pressed="false">Móvil (solo lectura)</button></div>
+  <div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
+    <button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
+    <button type="button" data-pan="10" aria-pressed="false">Izquierdo oculto</button>
+    <button type="button" data-pan="01" aria-pressed="false">Derecho oculto</button>
+    <button type="button" data-pan="11" aria-pressed="false">Ambos ocultos</button></div>
+</div>
+
+<div class="shell" id="shell">
+<aside class="pnl izq" id="pl-izq" aria-label="Panel izquierdo del servicio"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-controls="in-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><div class="pin" id="in-izq"><div class="ph"><span class="logo" aria-hidden="true">&#9638;</span><span>Control de <em>Proyectos</em></span></div><div class="scroll-izq nav-izq" data-testid="panel-izquierdo-scroll"></div><div class="pie pie-izq"></div></div></aside>
+
+<main class="centro">
+<header class="mhead"><button type="button" id="m-menu" aria-label="Abrir menú" aria-haspopup="dialog">&#9776;</button><span class="mt">Control de <em>Proyectos</em></span><button type="button" id="m-herr" aria-label="Abrir herramientas" aria-haspopup="dialog">&#9707;</button></header>
+
+<div class="pantalla" data-estado="datos" data-vista="escritorio">
+
+  <!-- ESTADO: DATOS -->
+  <section data-st="datos">
+    <div class="cab vista-escr">
+      <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
+      <h1>Cronograma del servicio</h1>
+      <p>Plan Maestro v3 aprobado el 02/10/26 · Línea base vigente v3 · Seguimiento con RDT validados al 15/10/26 · Datos simulados.</p>
+    </div>
+    <div class="tabs vista-escr" role="tablist" aria-label="Vistas del cronograma">
+      <button type="button" role="tab" id="t-crono" data-tab="crono" aria-selected="true" aria-controls="tab-crono">Cronograma</button>
+      <button type="button" role="tab" id="t-hist" data-tab="hist" aria-selected="false" aria-controls="tab-hist">Histogramas</button>
+    </div>
+
+    <div class="tab-p" id="tab-crono" role="tabpanel" aria-labelledby="t-crono">
+      <div class="bar vista-escr">
+        <label>Escala <select id="sel-escala"><option value="dias">Días</option><option value="semanas" selected>Semanas (sábado a viernes)</option><option value="meses">Meses</option></select></label>
+        <label>Línea base <select id="sel-base"><option value="v3" selected>v3 · vigente · aprobada 02/10/26</option><option value="v2">v2 · aprobada 18/09/26</option><option value="v1">v1 · aprobada 04/09/26</option></select></label>
+        <button type="button" id="btn-hist">Historial</button>
+        <span class="rel"><button type="button" id="btn-pers" aria-expanded="false" aria-controls="pop-pers">Personalizar campos</button>
+          <div class="pop" id="pop-pers" hidden>
+            <fieldset><legend>Columnas opcionales</legend>
+              <label><input type="checkbox" id="ck-tipo"> Tipo de actividad</label>
+              <label><input type="checkbox" id="ck-part"> Partidas vinculadas</label></fieldset>
+            <p>Id, EDT, Nombre, Duración, Comienzo, Fin, Predecesoras, Sucesoras, % avance y Var. fin son fijas.</p>
+          </div></span>
+        <span class="rel"><button type="button" id="btn-exp" aria-expanded="false" aria-controls="pop-exp">Exportar &#9662;</button>
+          <div class="pop" id="pop-exp" hidden style="left:auto;right:0;width:330px">
+            <fieldset><legend>PDF apaisado (estilo MS Project)</legend>
+              <label><input type="radio" name="pdf-cont" value="base"> Solo línea base</label>
+              <label><input type="radio" name="pdf-cont" value="seg" checked> Línea base más seguimiento</label>
+              <label>Desde <input type="date" value="2026-09-05"></label>
+              <label>Hasta <input type="date" value="2026-11-30"></label>
+              <label>Escala <select><option>Días</option><option selected>Semanas</option><option>Meses</option></select></label>
+              <button type="button" class="primary" id="btn-pdf">Generar PDF</button></fieldset>
+            <fieldset><legend>Excel</legend>
+              <p>Tres hojas: «Cronograma» (con las columnas de base y seguimiento, para volver a cargarlo), «Gantt» (celdas por semana) e «Histogramas».</p>
+              <button type="button" id="btn-xls">Descargar Excel</button></fieldset>
+            <p id="exp-msg" aria-live="polite"></p>
+          </div></span>
+        <span class="sp"></span>
+        <span class="muted">Hoy 15/10/26 · No laborables: 25/09 y 08/10 · Calendario lunes a sábado</span>
+      </div>
+
+      <div class="msg info vista-escr" id="msg-base" hidden></div>
+      <div class="msg warn vista-escr" id="aviso-fijas"></div>
+
+      <div class="det vista-escr" id="det">
+        <div class="nom" id="det-nom">—</div>
+        <div class="seg" role="group" aria-label="Modo de seguimiento de la actividad seleccionada">
+          <span class="lbl">Seguimiento</span>
+          <button type="button" id="m-rdt" aria-pressed="true">Modo RDT</button>
+          <button type="button" id="m-man" aria-pressed="false">Manual</button>
+        </div>
+        <div class="campos">
+          <label>Comienzo <input type="date" id="f-ini"></label>
+          <label>Fin <input type="date" id="f-fin"></label>
+          <label>% <input type="number" id="f-pct" min="0" max="100" step="1"></label>
+        </div>
+        <p class="ayuda" id="det-ayuda" aria-live="polite"></p>
+      </div>
+
+      <div class="editor vista-escr">
+        <div class="col-t" id="col-t"><div class="tbox"></div></div>
+        <div class="col-g" id="col-g"><div class="gbox"></div></div>
+      </div>
+
+      <ul class="leyenda vista-escr" aria-label="Leyenda del Gantt">
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="4" width="22" height="3" fill="#94a3b8" opacity=".8"/></svg>Línea base (gris fina)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="2" width="22" height="7" rx="2" fill="#4f7df3" opacity=".9"/></svg>Tarea (plan)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="3" width="22" height="6" rx="1" fill="rgba(255,255,255,.10)" stroke="#94a3b8" stroke-dasharray="3 2"/><rect x="0" y="3" width="11" height="6" rx="1" fill="#22d3ee"/></svg>Seguimiento: relleno = % (discontinuo = manual)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><rect x="0" y="4" width="22" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/><rect x="0" y="2" width="3" height="10" fill="#94a3b8"/><rect x="19" y="2" width="3" height="10" fill="#94a3b8"/></svg>Resumen (negro con corchetes)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><polygon points="11,0 17,6 11,12 5,6" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/></svg>Hito (rombo)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><path d="M1,2 H5 V10 H20" fill="none" stroke="#94a3b8"/><path d="M17,7 L21,10 L17,13" fill="#94a3b8" transform="translate(0,-3)"/></svg>Dependencia (flecha)</li>
+        <li><svg viewBox="0 0 22 12" aria-hidden="true"><line x1="11" y1="0" x2="11" y2="12" stroke="#f8fafc" stroke-dasharray="2 2"/></svg>Hoy (línea punteada con su fecha)</li>
+      </ul>
+    </div>
+
+    <div class="tab-p" id="tab-hist" role="tabpanel" aria-labelledby="t-hist" hidden>
+      <div class="bar vista-escr">
+        <label>Cargo <select id="fCargo"></select></label>
+        <label>Equipo <select id="fEquipo"></select></label>
+        <span class="sp"></span>
+        <span class="lbl">Fuente</span>
+        <button type="button" id="fte-prog" aria-pressed="true">Programado (Plan Maestro)</button>
+        <button type="button" id="fte-est" aria-pressed="false">Estimado (sin Plan Maestro)</button>
+      </div>
+      <div class="hist">
+        <div class="hcard" id="card-hh">
+          <h3>HH por semana <span class="tag acc" id="hh-fte"></span></h3>
+          <p id="hh-txt"></p>
+          <p class="pico" id="hh-pico"></p>
+          <svg id="svg-hh" viewBox="0 0 640 200" role="img" aria-label="Barras de HH por semana, apiladas por cargo"></svg>
+          <p class="acc-t">Acumulado de HH (eje propio, 0 a 2 500 HH)</p>
+          <svg id="svg-hh-acc" viewBox="0 0 640 84" role="img" aria-label="Línea de HH acumulado por semana"></svg>
+          <ul class="hleg" id="hh-leg"></ul>
+          <p>La línea «Real» (tareo del RDT) se superpone cuando exista HH validada.</p>
+          <details><summary>Ver tabla de valores</summary><div id="hh-tab"></div></details>
+          <div class="tip" hidden></div>
+        </div>
+        <div class="hcard" id="card-hm">
+          <h3>HM por semana <span class="tag acc" id="hm-fte"></span></h3>
+          <p id="hm-txt"></p>
+          <p class="pico" id="hm-pico"></p>
+          <svg id="svg-hm" viewBox="0 0 640 200" role="img" aria-label="Barras de HM por semana, apiladas por equipo"></svg>
+          <p class="acc-t">Acumulado de HM (eje propio, 0 a 800 HM)</p>
+          <svg id="svg-hm-acc" viewBox="0 0 640 84" role="img" aria-label="Línea de HM acumulado por semana"></svg>
+          <ul class="hleg" id="hm-leg"></ul>
+          <p>La superposición de HM real depende del plan «Informes de supervisión» y se enciende cuando exista ese dato.</p>
+          <details><summary>Ver tabla de valores</summary><div id="hm-tab"></div></details>
+          <div class="tip" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="movil-ro" id="movil-ro">
+      <h2>Cronograma · solo lectura</h2>
+      <p>En móvil el cronograma se consulta. Para crear, editar, cambiar el seguimiento o exportar, use la pantalla de escritorio.</p>
+      <ol class="mlist" id="mlist" aria-label="Actividades del cronograma"></ol>
+    </div>
+  </section>
+
+  <!-- ESTADO: VACÍO (tres puertas de creación) -->
+  <section data-st="vacio">
+    <div class="cab">
+      <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
+      <h1>Cronograma del servicio</h1>
+      <p>Este servicio todavía no tiene cronograma. Elija cómo crearlo: las tres puertas llegan al mismo editor.</p>
+    </div>
+    <div class="puertas">
+      <button type="button" class="puerta"><span class="n" aria-hidden="true">1</span><b>Desde el DP</b><span>Cada nivel pasa a actividad (resumen) y cada partida a una tarea con su enlace por WBS. La duración se escribe después. No exige archivo.</span><small>Requiere: mapa de niveles confirmado en Importar DP.</small></button>
+      <button type="button" class="puerta"><span class="n" aria-hidden="true">2</span><b>Desde archivo</b><span>Excel de la plantilla o PDF de MS Project, con su informe de extracción. Las predecesoras de texto pasan a vínculos con tipo y desfase cuando se pueden leer. Las fechas del archivo se respetan y quedan fijadas.</span><small>Requiere: confirmación de niveles antes de crear.</small></button>
+      <button type="button" class="puerta"><span class="n" aria-hidden="true">3</span><b>A mano</b><span>Tabla vacía. El EDT se numera según la sangría y los niveles se asignan por profundidad; se pueden ajustar después.</span><small>Sin archivo ni DP. Se puede cambiar de puerta mientras no haya datos.</small></button>
+    </div>
+    <div class="vacio-ayuda">Sin Plan Maestro aprobado el cronograma solo se edita: no hay línea base ni seguimiento, y los RDT todavía no lo modifican.</div>
+  </section>
+
+  <!-- ESTADO: CARGANDO -->
+  <section data-st="carga">
+    <div class="cab">
+      <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
+      <h1>Cronograma del servicio</h1>
+    </div>
+    <div class="msg info" role="status"><span class="ic2" aria-hidden="true">&#8635;</span><span>Cargando el cronograma del servicio…</span></div>
+    <div aria-hidden="true">
+      <div class="sk" style="width:92%"></div><div class="sk" style="width:86%"></div><div class="sk" style="width:90%"></div>
+      <div class="sk" style="width:70%"></div><div class="sk" style="width:76%"></div><div class="sk" style="width:64%"></div>
+      <div class="sk" style="width:82%"></div><div class="sk" style="width:58%"></div><div class="sk" style="width:88%"></div>
+    </div>
+  </section>
+
+  <!-- ESTADO: ERROR -->
+  <section data-st="error">
+    <div class="cab">
+      <nav class="miga" aria-label="Migas de pan">Servicio de prueba &rsaquo; Cronograma</nav>
+      <h1>Cronograma del servicio</h1>
+    </div>
+    <div class="msg err" role="alert"><span class="ic2" aria-hidden="true">&#10006;</span><div><strong>No se pudo cargar el cronograma.</strong><br>Revise la conexión e intente de nuevo. El detalle técnico queda en el registro del servidor y no se muestra aquí.</div></div>
+    <div><button type="button" class="primary">Reintentar</button></div>
+  </section>
+</div>
+
+<button type="button" class="asistente" id="btn-asis" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
+</main>
+
+<aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
+</div>
+<div id="cajones"></div>
+
+<dialog id="dlg-rdt" aria-labelledby="rdt-h">
+  <h2 id="rdt-h">¿Volver a modo RDT?</h2>
+  <p id="rdt-txt"></p>
+  <div class="acc">
+    <button type="button" id="rdt-cancel">Cancelar</button>
+    <button type="button" class="primary" id="rdt-ok">Volver a modo RDT</button>
+  </div>
+</dialog>
+
+<dialog id="dlg-hist" aria-labelledby="hist-h">
+  <h2 id="hist-h">Historial de seguimiento</h2>
+  <p>Quién cambió qué y cuándo. Las filas nunca se borran.</p>
+  <div id="hist-tab"></div>
+  <form method="dialog" class="acc"><button class="primary" value="cerrar">Cerrar</button></form>
+</dialog>
+
+<script>window.MARCO_ACTIVO = 'cronograma';</script>
+<script src="marco-tres-paneles.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- utilidades ---------- */
+var $=function(s){return document.querySelector(s);};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+function p2(n){return (n<10?'0':'')+n;}
+function d(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function iso(t){return t.getFullYear()+'-'+p2(t.getMonth()+1)+'-'+p2(t.getDate());}
+function add(t,n){var x=new Date(t.getTime());x.setDate(x.getDate()+n);return x;}
+function ddif(a,b){return Math.round((b-a)/864e5);}
+function fmt(t){return p2(t.getDate())+'/'+p2(t.getMonth()+1)+'/'+String(t.getFullYear()).slice(-2);}
+function fmtS(t){return p2(t.getDate())+'/'+p2(t.getMonth()+1);}
+function fn(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+var MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+/* ---------- calendario: lunes a sábado, con no laborables ---------- */
+var HOY_D=d('2026-10-15');
+var NOLAB={'2026-09-25':1,'2026-10-08':1};
+function esLab(t){return t.getDay()!==0 && !NOLAB[iso(t)];}
+var WD=[];
+(function(){var t=d('2026-09-07');while(WD.length<140){if(esLab(t))WD.push(t);t=add(t,1);}})();
+function wIdx(t){for(var i=0;i<WD.length;i++){if(WD[i]>=t)return i;}return WD.length-1;}
+var ORIGEN=d('2026-08-22');
+var DIAS=ddif(ORIGEN,d('2026-11-30'))+1;
+var PX=6, ESC='semanas', RH=26, HEADH=40;
+function xd(t){return ddif(ORIGEN,t)*PX;}
+function xe(t){return (ddif(ORIGEN,t)+1)*PX;}
+
+/* ---------- datos de ejemplo (actividades del PDF de referencia, fechas del servicio simulado) ---------- */
+var R=[
+{id:1,edt:'0',nom:'Proyecto',lvl:0,sum:1},
+{id:2,edt:'01',nom:'Trabajos preliminares',lvl:1,sum:1},
+{id:3,edt:'01.01',nom:'Elaboración de documentación',lvl:2,dur:6,part:2,pct:100,rdt:1},
+{id:4,edt:'02',nom:'Obras provisionales',lvl:1,sum:1},
+{id:5,edt:'02.01',nom:'Fabricación de bancoductos (zona A)',lvl:2,dur:12,db:10,part:6,pct:100,rdt:1,pr:'3'},
+{id:6,edt:'02.02',nom:'Fabricación de bancoductos (zona norte)',lvl:2,dur:10,part:4,pct:58,rdt:1,pr:'3',modo:'manual',man:{ini:'2026-09-14',fin:'2026-09-28',pct:58}},
+{id:7,edt:'03',nom:'Movilización y seguridad',lvl:1,sum:1},
+{id:8,edt:'03.01',nom:'Movilización de personal',lvl:2,dur:1,part:2,pct:100,rdt:1,pr:'3CC'},
+{id:9,edt:'03.02',nom:'Movilización de equipos',lvl:2,dur:1,part:3,pct:100,rdt:1,pr:'8'},
+{id:10,edt:'03.03',nom:'Seguridad y señalización de obra',lvl:2,dur:2,part:2,pct:100,rdt:1,pr:'9CC'},
+{id:11,edt:'04',nom:'Trazo y replanteo',lvl:1,sum:1},
+{id:12,edt:'04.01',nom:'Trazo y replanteo con estación total',lvl:2,dur:2,part:1,pct:100,rdt:1,pr:'9'},
+{id:13,edt:'05',nom:'Trabajos en rampa zona sur',lvl:1,sum:1},
+{id:14,edt:'05.01',nom:'Movilización de bancoductos zona sur',lvl:2,dur:2,part:2,pct:100,rdt:1,pr:'12'},
+{id:15,edt:'05.02',nom:'Almacenamiento de parihuelas zona sur',lvl:2,dur:2,part:1,pct:100,rdt:1,pr:'14CC'},
+{id:16,edt:'05.03',nom:'Suministro de parihuelas',lvl:2,dur:1,fijo:'2026-09-15',part:1,pct:100,rdt:1,pr:'15'},
+{id:17,edt:'05.09',nom:'Trabajos en bancoducto en vía',lvl:2,sum:1},
+{id:18,edt:'05.09.15',nom:'Excavación de zanja (retroexcavadora)',lvl:3,dur:3,part:3,pct:100,rdt:1,pr:'16'},
+{id:19,edt:'05.09.16',nom:'Perfilado y nivelación',lvl:3,dur:3,part:2,pct:100,rdt:1,pr:'18'},
+{id:20,edt:'05.09.17',nom:'Colocación de cama de arena',lvl:3,dur:3,part:2,pct:100,rdt:1,pr:'19'},
+{id:21,edt:'05.09.18',nom:'Instalación de bancoductos',lvl:3,dur:3,part:3,pct:70,rdt:1,pr:'20'},
+{id:22,edt:'05.09.20',nom:'Relleno y compactación',lvl:3,dur:3,part:2,pct:20,rdt:1,pr:'21FC+1'},
+{id:23,edt:'05.09.21',nom:'Eliminación de material excedente',lvl:3,dur:1,part:1,pct:0,rdt:1,pr:'22'},
+{id:24,edt:'05.09.22',nom:'Fin de trabajos en vía',lvl:3,dur:0,hito:1,pr:'23'},
+{id:25,edt:'05.10',nom:'Trabajos en bancoducto en camino',lvl:2,dur:10,part:4,pct:40,rdt:1,pr:'24'},
+{id:26,edt:'06',nom:'Entrega de obra',lvl:1,dur:0,hito:1,pr:'25'}
+];
+var RID={};
+R.forEach(function(r,i){r.idx=i;RID[r.id]=r;});
+function parsePr(s){
+  if(!s)return [];
+  return s.split(/[;,]/).map(function(x){
+    var m=/^(\d+)(FC|CC|FF|CF)?([+-]\d+)?$/.exec(x.trim());
+    return {id:+m[1],t:m[2]||'FC',lag:m[3]?+m[3]:0};
+  });
+}
+R.forEach(function(r){r.P=parsePr(r.pr);});
+var RSUC={};
+R.forEach(function(r){r.P.forEach(function(p){(RSUC[p.id]=RSUC[p.id]||[]).push(r.id);});});
+
+/* ---------- cálculo: pasada hacia adelante con los cuatro tipos de vínculo ---------- */
+function calc(usaBase){
+  var S={},F={},SC={};
+  R.forEach(function(r){
+    if(r.sum)return;
+    var dd=usaBase?(r.db!=null?r.db:(r.dur||0)):(r.dur||0), s=0;
+    r.P.forEach(function(p){
+      var sp=S[p.id], fp=F[p.id], c;
+      if(p.t==='FC')c=fp+1+p.lag;
+      else if(p.t==='CC')c=sp+p.lag;
+      else if(p.t==='FF')c=fp+p.lag-Math.max(dd-1,0);
+      else c=sp+p.lag-Math.max(dd-1,0);
+      if(c>s)s=c;
+    });
+    SC[r.id]=s;
+    S[r.id]=r.fijo?wIdx(d(r.fijo)):s;
+    F[r.id]=dd>0?S[r.id]+dd-1:S[r.id];
+  });
+  for(var i=R.length-1;i>=0;i--){
+    var r=R[i]; if(!r.sum)continue;
+    var mn=1e9,mx=-1e9;
+    for(var j=i+1;j<R.length&&R[j].lvl>r.lvl;j++){
+      if(!R[j].sum){mn=Math.min(mn,S[R[j].id]);mx=Math.max(mx,F[R[j].id]);}
+    }
+    S[r.id]=mn;F[r.id]=mx;
+  }
+  return {S:S,F:F,SC:SC};
+}
+var CUR=calc(false), BASE=calc(true);
+var VER='v3', SHIFT={v3:0,v2:-5,v1:-12};
+var VERTXT={v3:'v3 · vigente · aprobada 02/10/26',v2:'v2 · aprobada 18/09/26',v1:'v1 · aprobada 04/09/26'};
+function baseS(r){return add(WD[BASE.S[r.id]],SHIFT[VER]);}
+function baseF(r){return add(WD[BASE.F[r.id]],SHIFT[VER]);}
+
+/* seguimiento: RDT (solo lectura) o manual */
+function segOf(r){
+  if(r.hito||!r.part)return null;
+  if(r.modo==='manual'&&r.man){
+    return {ini:d(r.man.ini),fin:d(r.man.fin),pct:+r.man.pct,man:true};
+  }
+  var p=r.pct||0, bf=baseF(r);
+  return {
+    ini:p>0?WD[CUR.S[r.id]]:null,
+    fin:p>=100?WD[CUR.F[r.id]]:(bf>=HOY_D?bf:HOY_D),
+    pct:p,man:false
+  };
+}
+function pctOf(r){
+  if(r.hito)return null;
+  if(!r.sum){return Math.round(segOf(r).pct);}
+  var num=0,den=0;
+  for(var j=r.idx+1;j<R.length&&R[j].lvl>r.lvl;j++){
+    var q=R[j]; if(q.sum||q.hito)continue;
+    var w=CUR.F[q.id]-CUR.S[q.id]+1;
+    num+=w*segOf(q).pct; den+=w;
+  }
+  return den?Math.round(num/den):0;
+}
+
+/* ---------- estado de la vista ---------- */
+var SEL=21, COLP={}, VIS=[], VISIDX={};
+var HIST=[
+  ['02/10/26 09:15','Planner (simulado)','Aprobó el Plan Maestro: se guardó la línea base v3 en la misma transacción','Vigente desde 02/10/26'],
+  ['06/10/26 16:42','Planner (simulado)','Pasó «02.02» a modo manual','Comienzo 14/09 · Fin 28/09 · 58 %'],
+  ['09/10/26 08:30','Jefe de proyectos (simulado)','Editó el Fin de seguimiento de «02.02»','Fin 28/09 → 02/10 · 58 %']
+];
+function histPush(a,v){
+  var r=RID[SEL];
+  HIST.unshift(['15/10/26 10:00','Planner (simulado)',a+' «'+r.edt+'»',v]);
+}
+
+function visibles(){
+  var out=[],skip=null;
+  R.forEach(function(r){
+    if(skip!==null){if(r.lvl>skip)return;skip=null;}
+    out.push(r);
+    if(r.sum&&COLP[r.id])skip=r.lvl;
+  });
+  return out;
+}
+
+/* ---------- tabla ---------- */
+function tipoTxt(r){return r.sum?'Actividad':(r.hito?'Hito':'Tarea');}
+function nomH(r){
+  var h='<div class="nom-in" style="--lvl:'+r.lvl+'">';
+  if(r.sum){
+    var ex=!COLP[r.id];
+    h+='<button type="button" class="pleg" data-pleg="'+r.id+'" aria-expanded="'+ex+'" aria-label="'+(ex?'Plegar ':'Desplegar ')+esc(r.nom)+'" title="'+(ex?'Plegar':'Desplegar')+'">'+(ex?'&#9662;':'&#9656;')+'</button>';
+  }else if(r.hito){h+='<span class="gl16" aria-hidden="true">&#9670;</span>';}
+  else{h+='<span class="gl16" aria-hidden="true"></span>';}
+  h+='<span class="'+(r.sum?'sum':'')+'">'+esc(r.nom)+'</span></div>';
+  return h;
+}
+function filaT(r){
+  var s=CUR.S[r.id], f=CUR.F[r.id];
+  var ini=WD[s], fin=WD[f];
+  var dur=r.hito?'0 d':(f-s+1)+' d';
+  var vf=ddif(baseF(r),fin);
+  var vTxt=vf>0?'<span class="v-atr">&#9650; +'+vf+' d</span>':(vf<0?'<span class="v-adl">&#9660; &minus;'+(-vf)+' d</span>':'<span class="v-ok">= 0 d</span>');
+  var p=pctOf(r);
+  var pTxt=r.hito?'—':p+' %';
+  var tagM=(!r.sum&&!r.hito&&r.modo==='manual')?' <span class="tag acc">Manual</span>':'';
+  var fij=r.fijo?' <span class="tag warn">Fijada</span>':'';
+  var suc=(RSUC[r.id]||[]).join(', ');
+  return '<tr data-id="'+r.id+'" tabindex="0"'+(r.id===SEL?' class="sel"':'')+'>'
+    +'<td class="c-id">'+r.id+'</td>'
+    +'<td class="c-edt">'+r.edt+'</td>'
+    +'<td class="c-nom">'+nomH(r)+'</td>'
+    +'<td class="r">'+dur+'</td>'
+    +'<td class="r">'+fmt(ini)+fij+'</td>'
+    +'<td class="r">'+fmt(fin)+'</td>'
+    +'<td>'+esc(r.pr||'')+'</td>'
+    +'<td>'+suc+'</td>'
+    +'<td class="r">'+pTxt+tagM+'</td>'
+    +'<td class="r">'+vTxt+'</td>'
+    +'<td class="o-tipo">'+tipoTxt(r)+'</td>'
+    +'<td class="r o-part">'+(r.part||'—')+'</td>'
+    +'</tr>';
+}
+function renderTabla(){
+  var h='<table><caption class="sr">Actividades del cronograma con predecesoras, sucesoras, avance y variación de fin</caption>'
+    +'<thead><tr>'
+    +'<th class="c-id" scope="col">Id</th>'
+    +'<th class="c-edt" scope="col">EDT</th>'
+    +'<th class="c-nom" scope="col">Nombre</th>'
+    +'<th class="r" scope="col">Duración</th>'
+    +'<th class="r" scope="col">Comienzo</th>'
+    +'<th class="r" scope="col">Fin</th>'
+    +'<th scope="col">Predecesoras</th>'
+    +'<th scope="col">Sucesoras</th>'
+    +'<th class="r" scope="col" title="Avance de seguimiento">% avance</th>'
+    +'<th class="r" scope="col" title="Días de calendario entre el fin actual y el fin de la línea base vigente">Var. fin (d)</th>'
+    +'<th class="o-tipo" scope="col">Tipo</th>'
+    +'<th class="r o-part" scope="col">Partidas</th>'
+    +'</tr></thead><tbody>';
+  VIS.forEach(function(r){h+=filaT(r);});
+  h+='</tbody></table>';
+  $('.tbox').innerHTML=h;
+}
+
+/* ---------- Gantt (SVG a mano) ---------- */
+function ganttHead(W){
+  var h='<svg width="'+W+'" height="40" aria-hidden="true" focusable="false">';
+  var k,t;
+  for(k=0;k<DIAS;k++){
+    t=add(ORIGEN,k);
+    if(k===0||t.getDate()===1){h+='<text x="'+(k*PX+3)+'" y="13" class="hd1">'+MES[t.getMonth()]+' '+t.getFullYear()+'</text>';}
+  }
+  for(k=0;k<DIAS;k++){
+    t=add(ORIGEN,k);
+    if(ESC==='dias'){
+      h+='<text x="'+(k*PX+PX/2)+'" y="34" text-anchor="middle" class="hd2">'+t.getDate()+'</text>';
+    }else if(ESC==='semanas'){
+      if(t.getDay()===6){h+='<line x1="'+(k*PX)+'" y1="16" x2="'+(k*PX)+'" y2="40" class="gl"/><text x="'+(k*PX+2)+'" y="34" class="hd2">'+fmtS(t)+'</text>';}
+    }else{
+      if(t.getDate()===1){h+='<text x="'+(k*PX+2)+'" y="34" class="hd2">'+MES[t.getMonth()]+'</text>';}
+    }
+  }
+  var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX;
+  h+='<text x="'+(xh+3)+'" y="13" class="hoy">Hoy 15/10</text>';
+  h+='<line x1="0" x2="'+W+'" y1="39.5" y2="39.5" class="gl"/></svg>';
+  return h;
+}
+function ganttBody(W,H){
+  var s='<svg width="'+W+'" height="'+H+'" role="img" aria-label="Gantt de las actividades visibles"><defs><marker id="fl" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#94a3b8"/></marker></defs>';
+  var k,t,y0;
+  VIS.forEach(function(r,i){
+    if(r.id===SEL){s+='<rect x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'" fill="#13233d"/>';}
+  });
+  for(k=0;k<DIAS;k++){
+    t=add(ORIGEN,k);
+    if(!esLab(t)){s+='<rect x="'+(k*PX)+'" y="0" width="'+PX+'" height="'+H+'" fill="rgba(255,255,255,.035)"/>';}
+    if(t.getDay()===6&&ESC!=='meses'){s+='<line x1="'+(k*PX)+'" y1="0" x2="'+(k*PX)+'" y2="'+H+'" class="gl"/>';}
+    if(ESC==='meses'&&t.getDate()===1){s+='<line x1="'+(k*PX)+'" y1="0" x2="'+(k*PX)+'" y2="'+H+'" class="gl"/>';}
+  }
+  VIS.forEach(function(r,i){s+='<line x1="0" x2="'+W+'" y1="'+((i+1)*RH-.5)+'" y2="'+((i+1)*RH-.5)+'" class="gl"/>';});
+  /* barras */
+  VIS.forEach(function(r,i){
+    y0=i*RH;
+    var xs=xd(WD[CUR.S[r.id]]), xf=xe(WD[CUR.F[r.id]]);
+    var bs=baseS(r), bf=baseF(r);
+    if(!r.hito){
+      s+='<rect x="'+xd(bs)+'" y="'+(y0+3)+'" width="'+Math.max(xe(bf)-xd(bs),PX)+'" height="3" fill="#94a3b8" opacity=".8"/>';
+    }
+    if(r.hito){
+      var cx=xs+PX/2;
+      s+='<polygon points="'+cx+','+(y0+6)+' '+(cx+6)+','+(y0+13)+' '+cx+','+(y0+20)+' '+(cx-6)+','+(y0+13)+'" fill="#fbbf24" stroke="#05070d" stroke-width=".8"/>';
+    }else if(r.sum){
+      s+='<rect x="'+xs+'" y="'+(y0+8)+'" width="'+Math.max(xf-xs,4)+'" height="6" fill="#000" stroke="#94a3b8" stroke-width=".8"/>';
+      s+='<rect x="'+xs+'" y="'+(y0+5)+'" width="3" height="12" fill="#94a3b8"/><rect x="'+(xf-3)+'" y="'+(y0+5)+'" width="3" height="12" fill="#94a3b8"/>';
+    }else{
+      s+='<rect x="'+xs+'" y="'+(y0+7)+'" width="'+Math.max(xf-xs,PX)+'" height="7" rx="2" fill="#4f7df3" opacity=".9"/>';
+      var g=segOf(r);
+      if(g&&g.ini){
+        var sx=xd(g.ini), sw=Math.max(xe(g.fin)-sx,PX);
+        s+='<rect x="'+sx+'" y="'+(y0+16)+'" width="'+sw+'" height="6" rx="1" fill="rgba(255,255,255,.10)" '+(g.man?'stroke="#94a3b8" stroke-dasharray="3 2"':'stroke="none"')+'/>';
+        s+='<rect x="'+sx+'" y="'+(y0+16)+'" width="'+(sw*g.pct/100)+'" height="6" rx="1" fill="#22d3ee"/>';
+        s+='<text x="'+(sx+sw+4)+'" y="'+(y0+22)+'" class="lbl-seg">'+g.pct+' %'+(g.man?' · manual':'')+'</text>';
+      }
+    }
+  });
+  /* dependencias: solo entre actividades visibles */
+  VIS.forEach(function(r,k2){
+    r.P.forEach(function(p){
+      var kp=VISIDX[p.id]; if(kp===undefined)return;
+      var ps=WD[CUR.S[p.id]], pf=WD[CUR.F[p.id]], rs=WD[CUR.S[r.id]], rf=WD[CUR.F[r.id]];
+      var x1,x2;
+      if(p.t==='FC'){x1=xe(pf);x2=xd(rs);}
+      else if(p.t==='CC'){x1=xd(ps);x2=xd(rs);}
+      else if(p.t==='FF'){x1=xe(pf);x2=xe(rf);}
+      else{x1=xd(ps);x2=xe(rf);}
+      var y1=kp*RH+10, y2=k2*RH+10;
+      s+='<path class="dep" d="M'+x1+','+y1+' H'+(x1+4)+' V'+y2+' H'+x2+'" marker-end="url(#fl)"><title>'+p.t+(p.lag?(p.lag>0?'+':'')+p.lag:'')+' desde '+p.id+'</title></path>';
+    });
+  });
+  /* línea de hoy */
+  var xh=(ddif(ORIGEN,HOY_D)+0.5)*PX;
+  s+='<line x1="'+xh+'" x2="'+xh+'" y1="0" y2="'+H+'" stroke="#f8fafc" stroke-width="1" stroke-dasharray="4 3"/>';
+  /* zonas de clic por fila */
+  VIS.forEach(function(r,i){s+='<rect class="hit" data-id="'+r.id+'" x="0" y="'+(i*RH)+'" width="'+W+'" height="'+RH+'"/>';});
+  return s+'</svg>';
+}
+function renderGantt(){
+  var W=DIAS*PX, H=VIS.length*RH;
+  VISIDX={};
+  VIS.forEach(function(r,i){VISIDX[r.id]=i;});
+  $('.gbox').style.width=W+'px';
+  $('.gbox').innerHTML='<div class="gh" style="width:'+W+'px">'+ganttHead(W)+'</div>'+ganttBody(W,H);
+}
+
+/* ---------- detalle de la actividad seleccionada ---------- */
+function isoOrEmpty(t){return t?iso(t):'';}
+function updDet(){
+  var r=RID[SEL];
+  $('#det-nom').textContent=r.edt+' · '+r.nom;
+  var mR=$('#m-rdt'), mM=$('#m-man'), fi=$('#f-ini'), ff=$('#f-fin'), fp=$('#f-pct'), ay=$('#det-ayuda');
+  var isMan=r.modo==='manual';
+  var g=(r.sum||r.hito)?null:segOf(r);
+  mR.setAttribute('aria-pressed',String(!isMan&&!r.sum&&!r.hito));
+  mM.setAttribute('aria-pressed',String(isMan||!!r.hito));
+  mR.disabled=!!(r.sum||r.hito);
+  mM.disabled=!!r.sum;
+  var editable=isMan&&!r.hito&&!r.sum;
+  fi.disabled=ff.disabled=fp.disabled=!editable;
+  if(r.sum||r.hito){
+    fi.value=isoOrEmpty(WD[CUR.S[r.id]]);
+    ff.value=isoOrEmpty(WD[CUR.F[r.id]]);
+    fp.value='';
+  }else{
+    fi.value=isoOrEmpty(g.ini);
+    ff.value=isoOrEmpty(g.fin);
+    fp.value=g.pct;
+  }
+  var txt;
+  if(r.sum)txt='Actividad resumen: comienzo, fin y % salen de sus actividades hijas. No tiene modo propio.';
+  else if(r.hito)txt='Sin partidas vinculadas: esta actividad no tiene fuente de RDT y solo admite modo manual. El interruptor de RDT sale deshabilitado con este motivo.';
+  else if(isMan)txt='Modo manual: el planner edita los tres valores. Mientras esté en manual, los RDT nuevos no lo cambian. Volver a Modo RDT descarta lo editado, previa confirmación, y queda en el historial.';
+  else txt='Modo RDT: comienzo, fin y % salen de los RDT validados y son de solo lectura. Pase a Manual para editarlos.';
+  ay.textContent=txt;
+}
+
+/* ---------- aviso de fechas fijadas (importación desde archivo) ---------- */
+function renderAviso(){
+  var r=RID[16];
+  $('#aviso-fijas').innerHTML='<span class="ic2" aria-hidden="true">&#9888;</span><span><strong>1 fecha fijada desde el archivo difiere de lo que calcularían sus predecesoras.</strong> '
+    +esc(r.edt+' '+r.nom)+': el archivo fija el '+fmt(d(r.fijo))+'; sus predecesoras calcularían el '+fmt(WD[CUR.SC[r.id]])+'. Se respeta la fecha del archivo y la fila queda marcada como «Fijada».</span>';
+}
+
+/* ---------- vista móvil (solo lectura) ---------- */
+function renderMovil(){
+  var h='';
+  R.forEach(function(r){
+    var s=CUR.S[r.id], f=CUR.F[r.id], p=pctOf(r);
+    var tagM=(!r.sum&&!r.hito&&r.modo==='manual')?' <span class="tag acc">Manual</span>':'';
+    var meta=r.hito?('Hito · '+fmt(WD[s])):(fmt(WD[s])+' – '+fmt(WD[f])+' · '+(f-s+1)+' d');
+    h+='<li style="--lvl:'+r.lvl+'"><div class="r1"><b>'+esc(r.edt+' '+r.nom)+'</b></div>'
+      +'<div class="meta">'+meta+(r.hito?'':' · Avance '+p+' %')+tagM+'</div>'
+      +(r.hito?'':'<div class="mbar" aria-hidden="true"><i style="width:'+p+'%"></i></div>')+'</li>';
+  });
+  $('#mlist').innerHTML=h;
+}
+
+/* ---------- histogramas ---------- */
+var NS=12;
+var WEEK=[];
+for(var wi=0;wi<NS;wi++){WEEK.push(add(d('2026-09-12'),7*wi));}
+function lab(i){return fmtS(WEEK[i]);}
+var COL=['#3987e5','#d95926','#199e70','#c98500','#d55181'];
+var HH=[
+  {n:'Capataz',v:[18,22,22,26,28,30,30,26,22,18,14,6]},
+  {n:'Oficial',v:[36,44,46,52,58,62,60,54,48,40,30,12]},
+  {n:'Operario',v:[48,60,62,70,78,84,82,74,66,56,42,18]},
+  {n:'Peón',v:[60,74,78,80,96,104,100,88,80,66,50,20]},
+  {n:'Topógrafo',v:[6,8,8,8,8,6,4,4,0,0,0,0]}
+];
+var HM=[
+  {n:'Retroexcavadora 0.6 m³',v:[0,0,40,48,56,60,64,56,48,32,24,8]},
+  {n:'Camión volquete 15 m³',v:[0,0,24,32,32,40,40,32,24,16,8,0]},
+  {n:'Compactadora',v:[0,0,0,0,16,24,24,16,8,0,0,0]},
+  {n:'Estación total',v:[8,8,0,0,0,0,0,0,0,0,0,0]}
+];
+var MODO='prog', LAST={};
+function estV(v){var t=v.reduce(function(a,b){return a+b;},0)/NS;return v.map(function(){return Math.round(t);});}
+function graf(kind){
+  var isH=kind==='hh';
+  var list=isH?HH:HM;
+  var sel=$(isH?'#fCargo':'#fEquipo').value;
+  var cfg=isH?{max:300,ticks:[0,100,200,300],acmax:2500,acT:[0,1000,2000],unit:'HH'}
+             :{max:150,ticks:[0,50,100,150],acmax:800,acT:[0,400,800],unit:'HM'};
+  var ser=list.map(function(s,i){return {n:s.n,c:COL[i],v:MODO==='prog'?s.v:estV(s.v)};});
+  if(sel!=='todos')ser=ser.filter(function(s){return s.n===sel;});
+  var tot=[],acc=[],run=0,i;
+  for(i=0;i<NS;i++){var t=0;ser.forEach(function(s){t+=s.v[i];});tot.push(t);run+=t;acc.push(run);}
+  var pi=0;tot.forEach(function(v,j){if(v>tot[pi])pi=j;});
+  LAST[kind]={ser:ser,tot:tot,acc:acc,cfg:cfg};
+  var W=640,x0=44,x1=634,y0=10,y1=168,cw=(x1-x0)/NS,bw=cw*0.6;
+  var Y=function(v){return y1-(v/cfg.max)*(y1-y0);};
+  var sv='';
+  cfg.ticks.forEach(function(t){sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+Y(t)+'" y2="'+Y(t)+'" class="gl"/><text x="'+(x0-6)+'" y="'+(Y(t)+3)+'" text-anchor="end" class="ax">'+t+'</text>';});
+  sv+='<line x1="'+x0+'" x2="'+x1+'" y1="'+y1+'" y2="'+y1+'" class="gl2"/>';
+  for(i=0;i<NS;i++){
+    var a0=0;
+    ser.forEach(function(s){
+      var v=s.v[i];
+      if(v>0){
+        var yt=Y(a0+v), yb=Y(a0);
+        sv+='<rect x="'+(x0+i*cw+(cw-bw)/2)+'" y="'+yt+'" width="'+bw+'" height="'+(yb-yt)+'" fill="'+s.c+'" stroke="#0b0f19" stroke-width="1.5"/>';
+        a0+=v;
+      }
+    });
+    sv+='<text x="'+(x0+i*cw+cw/2)+'" y="'+(200-6)+'" text-anchor="middle" class="ax">'+lab(i)+'</text>';
+    sv+='<rect class="hit" data-i="'+i+'" x="'+(x0+i*cw)+'" y="'+y0+'" width="'+cw+'" height="'+(y1-y0)+'" tabindex="0" aria-label="Semana del '+lab(i)+': '+tot[i]+' '+cfg.unit+'"/>';
+  }
+  if(tot[pi]>0){sv+='<text x="'+(x0+pi*cw+cw/2)+'" y="'+(Y(tot[pi])-5)+'" text-anchor="middle" class="pk">'+fn(tot[pi])+'</text>';}
+  $(isH?'#svg-hh':'#svg-hm').innerHTML=sv;
+  /* acumulado: su propio eje */
+  var A0=16,A1=76;
+  var YA=function(v){return A1-(v/cfg.acmax)*(A1-A0);};
+  var sa='';
+  cfg.acT.forEach(function(t){sa+='<line x1="'+x0+'" x2="'+x1+'" y1="'+YA(t)+'" y2="'+YA(t)+'" class="gl"/><text x="'+(x0-6)+'" y="'+(YA(t)+3)+'" text-anchor="end" class="ax">'+fn(t)+'</text>';});
+  sa+='<line x1="'+x0+'" x2="'+x1+'" y1="'+A1+'" y2="'+A1+'" class="gl2"/>';
+  var pts=acc.map(function(v,j){return (x0+j*cw+cw/2)+','+YA(v);}).join(' ');
+  sa+='<polyline points="'+pts+'" fill="none" stroke="#f8fafc" stroke-width="2"/>';
+  acc.forEach(function(v,j){sa+='<circle cx="'+(x0+j*cw+cw/2)+'" cy="'+YA(v)+'" r="2.5" fill="#f8fafc"/>';});
+  sa+='<text x="'+(x1-6)+'" y="'+(YA(acc[NS-1])-7)+'" text-anchor="end" class="pk">Acum. '+fn(acc[NS-1])+' '+cfg.unit+'</text>';
+  $(isH?'#svg-hh-acc':'#svg-hm-acc').innerHTML=sa;
+  /* rótulo de fuente, pico, leyenda y tabla */
+  var prog=MODO==='prog';
+  $(isH?'#hh-fte':'#hm-fte').textContent=prog?'Programado · Plan Maestro v3':'Estimado · sin Plan Maestro';
+  $(isH?'#hh-txt':'#hm-txt').textContent=prog
+    ?'Fuente: histograma programado. Es el metrado programado por día del Plan Maestro aprobado, multiplicado por la tasa de cada partida.'
+    :'Fuente: histograma estimado. Sin Plan Maestro aprobado, el metrado de cada partida se reparte parejo sobre sus días laborables.';
+  $(isH?'#hh-pico':'#hm-pico').textContent=tot[pi]>0?'Pico: '+fn(tot[pi])+' '+cfg.unit+' · semana del '+lab(pi):'Sin datos con este filtro';
+  var lg='';
+  ser.forEach(function(s){lg+='<li><i style="background:'+s.c+'"></i>'+esc(s.n)+'</li>';});
+  lg+='<li><b></b>Acumulado ('+cfg.unit+')</li>';
+  $(isH?'#hh-leg':'#hm-leg').innerHTML=lg;
+  var tb='<table class="tv"><thead><tr><th scope="col">Semana</th>';
+  ser.forEach(function(s){tb+='<th class="r" scope="col">'+esc(s.n)+'</th>';});
+  tb+='<th class="r" scope="col">Total</th><th class="r" scope="col">Acum.</th></tr></thead><tbody>';
+  for(i=0;i<NS;i++){
+    tb+='<tr><td>'+lab(i)+'</td>';
+    ser.forEach(function(s){tb+='<td class="r">'+fn(s.v[i])+'</td>';});
+    tb+='<td class="r">'+fn(tot[i])+'</td><td class="r">'+fn(acc[i])+'</td></tr>';
+  }
+  tb+='</tbody></table>';
+  $(isH?'#hh-tab':'#hm-tab').innerHTML=tb;
+}
+function tipOn(card,kind,el){
+  var i=+el.getAttribute('data-i'), L=LAST[kind], tip=card.querySelector('.tip');
+  var h='<b>Semana del '+lab(i)+'</b><br>';
+  L.ser.forEach(function(s){if(s.v[i]>0)h+=esc(s.n)+': '+fn(s.v[i])+' '+L.cfg.unit+'<br>';});
+  h+='Total: '+fn(L.tot[i])+' '+L.cfg.unit+' · Acum.: '+fn(L.acc[i])+' '+L.cfg.unit;
+  tip.innerHTML=h;
+  tip.hidden=false;
+  var svg=card.querySelector('svg');
+  var sr=svg.getBoundingClientRect(), cr=card.getBoundingClientRect();
+  var px=sr.width/640, cwid=(634-44)/NS;
+  var x=(sr.left-cr.left)+(44+i*cwid+cwid/2)*px;
+  var left=Math.max(8,Math.min(x-tip.offsetWidth/2,cr.width-tip.offsetWidth-8));
+  tip.style.left=left+'px';
+}
+function tipOff(card){card.querySelector('.tip').hidden=true;}
+
+/* ---------- render global ---------- */
+function renderAll(){
+  VIS=visibles();
+  renderTabla();
+  renderGantt();
+  updDet();
+  renderMovil();
+  renderAviso();
+}
+
+/* ---------- arranque y eventos ---------- */
+function poblar(){
+  var c=$('#fCargo'), e=$('#fEquipo');
+  c.innerHTML='<option value="todos">Todos los cargos</option>'+HH.map(function(s){return '<option>'+esc(s.n)+'</option>';}).join('');
+  e.innerHTML='<option value="todos">Todos los equipos</option>'+HM.map(function(s){return '<option>'+esc(s.n)+'</option>';}).join('');
+}
+function init(){
+  poblar();
+  if(window.matchMedia&&window.matchMedia('(max-width:1023px)').matches){$('.pantalla').setAttribute('data-vista','movil');}
+  renderAll();
+  graf('hh');
+  graf('hm');
+  $('#m-rdt').disabled=false;
+
+  /* estados y vista */
+  $$('[data-set-estado]').forEach(function(b){
+    b.addEventListener('click',function(){
+      $('.pantalla').setAttribute('data-estado',b.getAttribute('data-set-estado'));
+      $$('[data-set-estado]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+    });
+  });
+  $$('[data-set-vista]').forEach(function(b){
+    b.addEventListener('click',function(){
+      $('.pantalla').setAttribute('data-vista',b.getAttribute('data-set-vista'));
+      $$('[data-set-vista]').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+    });
+  });
+
+  /* pestañas */
+  $$('[data-tab]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-tab');
+      $$('[data-tab]').forEach(function(o){o.setAttribute('aria-selected',o===b?'true':'false');});
+      $('#tab-crono').hidden=k!=='crono';
+      $('#tab-hist').hidden=k!=='hist';
+    });
+  });
+
+  /* tabla: plegar, seleccionar */
+  var tb=$('.tbox');
+  tb.addEventListener('click',function(e){
+    var pl=e.target.closest('[data-pleg]');
+    if(pl){var id=+pl.getAttribute('data-pleg');COLP[id]=!COLP[id];renderAll();return;}
+    var tr=e.target.closest('tr[data-id]');
+    if(tr){SEL=+tr.getAttribute('data-id');renderAll();}
+  });
+  tb.addEventListener('keydown',function(e){
+    if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('tr[data-id]')){
+      e.preventDefault();SEL=+e.target.getAttribute('data-id');renderAll();
+    }
+  });
+  $('.gbox').addEventListener('click',function(e){
+    var h=e.target.closest('[data-id]');
+    if(h){SEL=+h.getAttribute('data-id');renderAll();}
+  });
+
+  /* sincronizar desplazamiento vertical tabla <-> Gantt */
+  var ct=$('#col-t'), cg=$('#col-g'), lock=false;
+  ct.addEventListener('scroll',function(){if(lock)return;lock=true;cg.scrollTop=ct.scrollTop;lock=false;});
+  cg.addEventListener('scroll',function(){if(lock)return;lock=true;ct.scrollTop=cg.scrollTop;lock=false;});
+
+  /* escala y línea base */
+  $('#sel-escala').addEventListener('change',function(e){
+    ESC=e.target.value;
+    PX={dias:13,semanas:6,meses:2}[ESC];
+    renderGantt();
+  });
+  $('#sel-base').addEventListener('change',function(e){
+    VER=e.target.value;
+    $('#msg-base').hidden=VER==='v3';
+    $('#msg-base').innerHTML='<span class="ic2" aria-hidden="true">&#8505;</span><span>Viendo la línea base '+esc(VERTXT[VER])+' (histórica, solo lectura). Las variaciones se miden contra esta línea.</span>';
+    renderAll();
+  });
+
+  /* historial */
+  $('#btn-hist').addEventListener('click',function(){
+    var h='<table class="tv" style="font-size:11px"><thead><tr><th scope="col">Fecha y hora</th><th scope="col">Quién</th><th scope="col">Acción</th><th scope="col">Valores</th></tr></thead><tbody>';
+    HIST.forEach(function(x){h+='<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1])+'</td><td>'+esc(x[2])+'</td><td>'+esc(x[3])+'</td></tr>';});
+    h+='</tbody></table>';
+    $('#hist-tab').innerHTML=h;
+    $('#dlg-hist').showModal();
+  });
+
+  /* popovers */
+  function togglePop(btn,pop){
+    var open=pop.hidden;
+    $$('.pop').forEach(function(p){p.hidden=true;});
+    $$('[aria-controls^="pop-"]').forEach(function(b){b.setAttribute('aria-expanded','false');});
+    pop.hidden=!open;
+    btn.setAttribute('aria-expanded',String(open));
+  }
+  $('#btn-pers').addEventListener('click',function(){togglePop(this,$('#pop-pers'));});
+  $('#btn-exp').addEventListener('click',function(){togglePop(this,$('#pop-exp'));});
+  $('#ck-tipo').addEventListener('change',function(e){$('#col-t').classList.toggle('show-tipo',e.target.checked);});
+  $('#ck-part').addEventListener('change',function(e){$('#col-t').classList.toggle('show-part',e.target.checked);});
+  $('#btn-pdf').addEventListener('click',function(){$('#exp-msg').textContent='Maqueta: el PDF se generaría en el servidor con pdfkit.';});
+  $('#btn-xls').addEventListener('click',function(){$('#exp-msg').textContent='Maqueta: el Excel se generaría en el servidor con exceljs.';});
+
+  /* seguimiento: modo RDT / manual */
+  $('#m-man').addEventListener('click',function(){
+    var r=RID[SEL];
+    if(r.sum||r.hito||r.modo==='manual')return;
+    var g=segOf(r);
+    r.modo='manual';
+    r.man={ini:iso(g.ini||WD[CUR.S[r.id]]),fin:iso(g.fin),pct:g.pct};
+    histPush('Pasó a modo manual',fmt(d(r.man.ini))+' comienzo · '+fmt(d(r.man.fin))+' fin · '+r.man.pct+' %');
+    renderAll();
+  });
+  $('#m-rdt').addEventListener('click',function(){
+    var r=RID[SEL];
+    if(r.sum||r.hito||r.modo!=='manual')return;
+    $('#rdt-txt').textContent='Se descartan los valores editados de «'+r.edt+' '+r.nom+'»: comienzo '+fmt(d(r.man.ini))+', fin '+fmt(d(r.man.fin))+' y '+r.man.pct+' %. El cambio queda en el historial. Los RDT validados volverán a mandar sobre las fechas y el %.';
+    $('#dlg-rdt').showModal();
+  });
+  $('#rdt-cancel').addEventListener('click',function(){$('#dlg-rdt').close();renderAll();});
+  $('#rdt-ok').addEventListener('click',function(){
+    var r=RID[SEL], m=r.man;
+    r.modo='rdt';
+    r.man=null;
+    histPush('Volvió a modo RDT y descartó lo editado',fmt(d(m.ini))+' comienzo · '+fmt(d(m.fin))+' fin · '+m.pct+' % (descartado)');
+    $('#dlg-rdt').close();
+    renderAll();
+  });
+  function onMan(){
+    var r=RID[SEL];
+    if(r.modo!=='manual'||!r.man)return;
+    r.man={ini:$('#f-ini').value,fin:$('#f-fin').value,pct:Math.max(0,Math.min(100,+$('#f-pct').value||0))};
+    renderAll();
+  }
+  $('#f-ini').addEventListener('change',onMan);
+  $('#f-fin').addEventListener('change',onMan);
+  $('#f-pct').addEventListener('change',onMan);
+
+  /* histogramas: filtros, fuente y puntos de información */
+  $('#fCargo').addEventListener('change',function(){graf('hh');});
+  $('#fEquipo').addEventListener('change',function(){graf('hm');});
+  function fuente(m){
+    MODO=m;
+    $('#fte-prog').setAttribute('aria-pressed',String(m==='prog'));
+    $('#fte-est').setAttribute('aria-pressed',String(m==='est'));
+    graf('hh');graf('hm');
+  }
+  $('#fte-prog').addEventListener('click',function(){fuente('prog');});
+  $('#fte-est').addEventListener('click',function(){fuente('est');});
+  [['card-hh','hh'],['card-hm','hm']].forEach(function(p){
+    var card=$('#'+p[0]), kind=p[1];
+    card.addEventListener('mouseover',function(e){var el=e.target.closest('[data-i]');if(el)tipOn(card,kind,el);});
+    card.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('[data-i]');if(el)tipOn(card,kind,el);});
+    card.addEventListener('mouseleave',function(){tipOff(card);});
+    card.addEventListener('focusout',function(){tipOff(card);});
+  });
+}
+init();
+})();
+</script>
+</body>
+</html>

@@ -385,11 +385,11 @@ Gate 1: aprobado por Victor el 2026-10-15 (lista de ítems, tabla de contradicci
 | CG-64 | C6 | La fila «Proyecto» en modo RDT muestra el mismo % físico que la Curva S del mismo corte (prueba cruzada) | 5, 6 | Sin verificar |
 | CG-65 | C6 | PR, Dashboard y Curva S iguales antes y después de editar avance manual | 6 | Sin verificar |
 | CG-66 | C6 | El seguimiento se edita con el Plan Maestro aprobado y el servidor lo valida (rol, servicio) | 5, 9 | Sin verificar |
-| CG-70 | C7 | Migración 107 `dp_partida_recursos` (cargo HH por unidad, equipo HM por unidad); no se aplica | 7 | Sin verificar |
-| CG-71 | C7 | `parser-apu.ts` devuelve por partida el consumo de cada cargo y equipo; la suma de HH por partida = `hh_und_partida` (`vitest` con APU de prueba) | 7 | Sin verificar |
-| CG-72 | C7 | La importación del DP guarda esos datos; sin cambios en el resto de la importación (regresión) | 7 | Sin verificar |
-| CG-73 | C7 | Evaluar volver a leer el APU guardado de un DP aprobado, sin cambiarlo, solo para completar HM; decisión escrita en el resumen (o «no hay archivo guardado») | 7 | Sin verificar |
-| CG-74 | C7 | Servicios sin HM por partida muestran «sin dato» y no cero | 7 | Sin verificar |
+| CG-70 | C7 | Migración 107 `dp_partida_recursos` (cargo HH por unidad, equipo HM por unidad); no se aplica | 7 | Observado (escrita y revisada por el Orquestador; no se ejecutó en ningún motor SQL: la aplica y verifica Victor; commit ea55445 en `local-worker-6`) |
+| CG-71 | C7 | `parser-apu.ts` devuelve por partida el consumo de cada cargo y equipo; la suma de HH por partida = `hh_und_partida` (`vitest` con APU de prueba) | 7 | Conforme (Orquestador: `vitest src/lib/dp` 17 archivos y 125 pruebas en verde, `tsc` sin errores; el Worker cruzó 3 presupuestos reales con diferencia 0; commit fad38d4) |
+| CG-72 | C7 | La importación del DP guarda esos datos; sin cambios en el resto de la importación (regresión) | 7 | Observado (código y pruebas en verde, commit 5de578e; falta la prueba contra la base real, que exige aplicar la 107 y la hace C12 o Victor) |
+| CG-73 | C7 | Evaluar volver a leer el APU guardado de un DP aprobado, sin cambiarlo, solo para completar HM; decisión escrita en el resumen (o «no hay archivo guardado») | 7 | Conforme (decisión escrita en `resultados/C7.md`: es viable releer el archivo guardado; no se implementa, queda como postergado) |
+| CG-74 | C7 | Servicios sin HM por partida muestran «sin dato» y no cero | 7 | Conforme (contrato de lectura listo, devuelve nulo = «sin dato»; la pantalla que lo pinta es de C8) |
 | CG-80 | C8 | Histograma programado: metrado programado por día del Plan Maestro × tasa de la partida; `vitest` | 7 | Sin verificar |
 | CG-81 | C8 | Histograma estimado sin Plan Maestro: metrado vinculado repartido parejo sobre días laborables; rótulo de la fuente | 7 | Sin verificar |
 | CG-82 | C8 | Con el Plan Maestro al 100 %, Σ HH semanales programadas = HH contractual y Σ HM = HM contractual | 7 | Sin verificar |
@@ -491,6 +491,8 @@ Respuestas: **P1** sí («1 ok»); **P2** sí, la maqueta es puerta obligatoria 
 | 2026-10-15 | P2 (la maqueta es puerta obligatoria antes de C1) y P5 (C5 en nivel 3 con prueba de atomicidad) quedan aprobadas por defecto con el Gate 1 | Orquestador (propuso) / Victor (aprobó el Gate 1) |
 | 2026-10-15 | Haiku en C0, C4, C11, Worker git y mecánicos del Orquestador; Sonnet en el resto; si una tanda en Haiku no cierra, se suspende y se pide a Victor aprobar Sonnet | Orquestador (propuso) / Victor (pidió Haiku para tareas simples) |
 | 2026-10-15 | Se agrega el ítem CG-26 (hito del editor visible en Paquetes) a la tanda C2 | Orquestador |
+| 2026-10-15 | C7: la tabla nueva `dp_partida_recursos` queda con RLS activada y sin política de lectura directa; solo se lee desde el servidor con permisos validados en código (coherente con la dirección de la 095 y la 096 y con «validar siempre en servidor») | Orquestador |
+| 2026-10-15 | C7: el relleno retroactivo de HM por partida desde el archivo guardado (servicios con DP ya aprobado que no pueden recargar) NO se implementa ahora; escribiría datos en servicios reales y exige autorización de Victor. Mientras tanto esos servicios muestran «sin dato» (decisión de Victor, CG-74) | Orquestador |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -502,7 +504,10 @@ Formato de cada fila: ID / Fecha / Quién (rol, tanda) / Qué / Destino propuest
 
 ## Mejoras (de trabajo)
 
-Ninguna.
+| ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
+|---|---|---|---|---|---|---|
+| M2 | 2026-10-15 | Worker CR-1 · C0 | El Playwright del entorno bloquea `file://` y solo guarda capturas dentro del repositorio (o de `.playwright-mcp/`). Solución: servir la carpeta con `python -I -m http.server <puerto> --bind 127.0.0.1`, y al terminar detener el servidor (en Git Bash no hay `pkill`: usar PowerShell con `Stop-Process`) | `docs/03-aprendizaje-continuo/` | Registrada | |
+| M1 | 2026-10-15 | Orquestador (Worker git) | En Windows, `npm ci` falla con EPERM al borrar `node_modules/lightningcss-win32-x64-msvc/lightningcss.win32-x64-msvc.node` cuando algún proceso mantiene abierto ese archivo (no se identificó cuál; el proceso que sospechó el Worker ya no existía). Se comprobó con `File.Open` exclusivo que seguía bloqueado. Solución que funcionó: renombrar la carpeta `node_modules` (el renombre sí se permite) a una carpeta aparte fuera del árbol de git, correr `npm ci` y reportar la carpeta sobrante sin borrarla | `docs/03-aprendizaje-continuo/` | Registrada | |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -514,6 +519,7 @@ Ninguna.
 | R4 | 2026-10-15 | Orquestador (Spec) | La importación del DP guarda por partida las HH por cargo y las HM por equipo (APU) | Flujo 09 | Registrada | |
 | R5 | 2026-10-15 | Victor (D1) | El avance manual del seguimiento no alimenta PR, Dashboard ni Curva S; se rotula «Manual» | Flujos 15, 18 y 20 | Registrada | |
 | R6 | 2026-10-15 | Victor (Gate 1) | El tipo Hito del editor del cronograma es la fuente del hito; la pantalla de Paquetes lo muestra atenuado, de solo lectura, con «◆ Hito», y ya no se marca desde Paquetes | Flujos 15 y 19 | Registrada | |
+| R8 | 2026-10-15 | Orquestador (tanda C7) | Solo los equipos con unidad `HM` cuentan como horas-máquina por partida; los de unidad `HE` (aparece solo en un renglón de herramienta de la semilla 097, no en los 3 presupuestos de prueba), `%MO`, `DIA`, `MES` y `UND` no. Decidido por defecto por el Orquestador al no haber dato real que lo contradiga; se reabre si aparece un presupuesto con `HE` como hora-equipo | Flujo 09 | Registrada | |
 | R7 | 2026-10-15 | Victor (Gate 1) | Crear el cronograma desde el DP sobre uno que ya tiene actividades lo reemplaza con aviso de lo que se pierde (incluye lo editado y su seguimiento); queda bloqueado con el Plan Maestro aprobado | Flujos 14 (nota 8) y 15 | Registrada | |
 
 ## Observaciones sobre la política
@@ -521,11 +527,14 @@ Ninguna.
 | ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
 |---|---|---|---|---|---|---|
 | O1 | 2026-10-15 | Orquestador | `AGENTS.md` prohíbe al Orquestador hacer commit o push sin autorización, el paso 3 del flujo manda commit y push del Spec a `main`, y `02-roles-y-delegacion.md` solo lo libera dentro de lo aprobado en el Gate 1. No hay regla para el Spec previo al Gate Spec | Lista del Auditor | Registrada | |
+| O3 | 2026-10-15 | Worker CR-1 · C0 | El Skill `cerrar-tanda` incluye un commit verificado, y los briefs de esta tanda prohíben el commit (lo hace el Orquestador). El estándar no dice qué hace `cerrar-tanda` cuando la tanda no commitea | Lista del Auditor | Registrada | |
 | O2 | 2026-10-15 | Orquestador | El índice de `01-planes/README.md` no lista los planes `2026-10-07-plan-maestro-tres-paneles`, `2026-10-14-revision-completa-app` ni `2026-10-15-informes-supervision-y-dashboard` | Lista del Auditor | Registrada | |
 
 ## Carpetas/archivos huérfanos
 
-Ninguno detectado hasta ahora. `.playwright-mcp/` tiene muchos archivos sin seguimiento de git (registros de consola y un PDF); se reporta a Victor, sin borrar nada.
+- `.playwright-mcp/` (en `pg_control_proyectos`) tiene muchos archivos sin seguimiento de git (registros de consola y un PDF); se reporta a Victor, sin borrar nada.
+- Inconsistencia en la app (reportada por el Worker de C7): `db/README.md` lista la migración 095, pero el archivo `db/095_cerrar_lectura_directa.sql` no existe en `main`. Se reporta a Victor; no se toca.
+- `py_control_proyectos_web/.worktrees/_node_modules_bloqueado_w4/` (ignorada por git): el `node_modules` incompleto de `local-worker-4` que quedó bloqueado por Windows (ver M1). Se puede borrar cuando el archivo se libere (por ejemplo tras reiniciar); no se borra sin aprobación de Victor.
 
 ## Informe de Auditoría
 
@@ -539,9 +548,25 @@ Pendiente.
 
 | Fase | Modelo asignado | Esfuerzo default | Esfuerzo usado | Cambio autorizado |
 |---|---|---|---|---|
-| | | Medio | | |
+| Worker git (ramas) | Haiku | Medio | Medio | No |
+| C0 maqueta | Haiku | Medio | Medio | No |
+| C7 APU por partida | Sonnet | Medio | Medio | No |
+
+### Consumo medido por evento (`scripts/medir.py`, 2026-10-15)
+
+Medido con `python -I scripts/medir.py --resumen --desde 2026-10-15`, que lee los registros de sesión de Claude Code. «Cache leída» es lo que más pesa; «contexto máx.» es el tamaño de la sesión y no se suma. El total de cierre se recalcula con el mismo script sobre las sesiones de este plan.
+
+| Tanda | Modelo | Llamadas | Cache creada | Cache leída | Contexto máx. |
+|---|---|---|---|---|---|
+| Planner (plan por tandas) | Sonnet | 13 | 220k | 0,99M | 136k |
+| Worker git · ramas del plan | Haiku | 15 | 62k | 0,76M | 62k |
+| C0 maqueta | Haiku | 33 | 368k | 6,44M | **308k** |
+| C7 APU por partida | Sonnet | 49 | 201k | 6,71M | 201k |
+
+Lectura: la sesión de C0 (Haiku) llegó a 308k de contexto porque leyó `design.md` completo y varias maquetas; para las tandas de Haiku siguientes, el brief debe nombrar las secciones exactas y prohibir leer el archivo entero.
 
 ## Elementos postergados propuestos para planes futuros
 
+- Relleno retroactivo de HH por cargo y HM por equipo por partida desde el archivo del presupuesto guardado, para los servicios con DP ya aprobado que no pueden recargarlo (CG-73; escribe datos en servicios reales y exige autorización de Victor).
 - Pronóstico en cascada del seguimiento (las actividades siguientes se mueven al atrasarse una).
 - Ruta crítica.

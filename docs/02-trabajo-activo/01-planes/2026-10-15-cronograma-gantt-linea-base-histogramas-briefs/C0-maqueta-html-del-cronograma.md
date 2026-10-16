@@ -17,7 +17,7 @@ Decisiones ya resueltas (no se reabren): D1 avance manual no alimenta PR/Dashboa
 
 ## Rama, worktree y puerto
 
-Rama: local-worker-4 (solo para tocar nada de código; la maqueta vive en el repo documental, directo en main). Worktree: `D:\VICTOR\CLAUDE CODE\py_control_proyectos_web\.worktrees\<rama>`. Puerto: el que fije el Orquestador. Empieza con `git merge main` en tu rama y confirma `git status` limpio. Un solo worktree activo.
+Sin rama ni worktree: esta tanda no toca código de la app. La maqueta vive en el repo documental (`D:\VICTOR\CLAUDE CODE\pg_control_proyectos`), directo en `main`. No crees rama, no hagas commit ni push: deja los archivos sin commit y el Orquestador los sube (hay otros cambios sin commit de otros planes en `mockups/index.html` y `mockups/README.md`: edítalos sin sobrescribir). Si Playwright no abre `file://`, sirve la carpeta con `python -m http.server 8123` desde `mockups/` y detenlo al terminar.
 
 ## Qué leer, y qué no
 
@@ -36,7 +36,7 @@ Rama: local-worker-4 (solo para tocar nada de código; la maqueta vive en el rep
 
 ## Dónde deja su entrega y su evidencia
 
-- Código: su rama.
+- Entrega: `docs/05-diseno-y-referencias/mockups/cronograma-editor-gantt.html` (sin commit).
 - Resumen de cierre: `resultados/C0.md` (plantilla `12-resumen-de-cierre-de-tanda.md`).
 - Evidencia dentro de ese resumen; máximo una captura por ítem.
 

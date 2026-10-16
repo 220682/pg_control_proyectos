@@ -17,7 +17,7 @@ Punto de corte: Q1–Q3 / Q4–Q6.
 
 ## Rama, worktree y puerto
 
-Rama `local-worker-3`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/.worktrees/local-worker-3`, continuando tras F (verifica con `git log --oneline -5` que E y F están; si no, detente y avisa). **W3 parte de `local-worker-3` con `local-worker-1` incorporada (al cerrar D); el Worker git lo hace antes.** Puerto 3013 si levantas la app. Trabaja solo ahí.
+Rama `local-worker-3`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/.worktrees/local-worker-3`, **Esta tanda se entrega en dos mitades (decisión del Orquestador, 2026-10-16, para no dejar a W3 ocioso mientras W1 hace C y D; no cambia el contenido de ningún ítem):** la **primera mitad (Q1–Q3)** se hace ahora, antes de E, porque solo usa `periodo.ts` (tanda B), `puedeVerInasistencias` (tanda A) y archivos nuevos de W3; para ella verifica con `git log --oneline -5` que `local-worker-3` contiene el merge de `local-worker-1` hasta ee80c7a (tanda B) y que existe `src/lib/informes/periodo.ts` (si no, detente y avisa), y **no leas** la pantalla de E ni la maqueta. Su resumen va a `resultados/Q1-Q3.md`. La **segunda mitad (Q4–Q6)** se hace después de F, cuando existe la pantalla de Informes de E (verifica entonces que E y F están; si no, detente y avisa) y cierra `resultados/Q.md`. **W3 parte de `local-worker-3` con `local-worker-1` incorporada; el Worker git lo hace antes.** Puerto 3013 si levantas la app. Trabaja solo ahí.
 
 ## Qué leer, y qué no
 

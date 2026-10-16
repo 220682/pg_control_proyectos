@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PR — Subcontratos: forma de medir</title>
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--card:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
+--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;
+--serie-pv:#3987e5;--serie-ac:#d95926;--serie-ev:#199e70;--resto:rgba(148,163,184,.28)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover{border-color:var(--accent);color:var(--accent)}
+select,input{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:11px}
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{flex:1;min-height:0;padding:10px 16px 40px;overflow:auto}
+.miga{font-size:13px;color:var(--text-2)}.miga b{color:var(--text);font-weight:500}
+h1{font-size:20px;font-weight:700;margin-top:6px}
+.lead{color:var(--text-2);font-size:11px;margin:2px 0 12px;max-width:820px;line-height:1.45}
+.nuevo{outline:1px dashed var(--warn);outline-offset:2px;border-radius:6px;position:relative}
+.nuevo-tag{position:absolute;top:-9px;right:6px;background:var(--warn);color:#05070d;font-size:8px;font-weight:700;padding:0 4px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;z-index:2}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 8px;font-size:10px;color:var(--text-2);white-space:nowrap}
+.tag.ok{border-color:rgba(52,211,153,.5);color:var(--ok);background:rgba(52,211,153,.08)}
+.nota{border:1px solid rgba(34,211,238,.35);background:rgba(34,211,238,.06);color:#a5f3fc;border-radius:8px;padding:7px 10px;font-size:11px;line-height:1.45;margin:10px 0}
+.nota.w{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.07);color:#fde68a}
+.bloq{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:14px}
+.bloq h2{font-size:13px;margin-bottom:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);font-weight:600;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;background:rgba(255,255,255,.04)}
+.mod{display:flex;flex-direction:column;gap:4px;min-width:200px}
+.man{display:flex;gap:4px;align-items:center}
+.man input{width:110px;text-align:right}
+.man input.mal{border-color:var(--err)}
+.msg{font-size:10px;line-height:1.3}.msg.e{color:#fca5a5}.msg.a{color:var(--warn)}.msg.i{color:var(--text-2)}
+.bar{height:6px;background:var(--resto);border-radius:3px;overflow:hidden;margin-top:3px;min-width:80px}
+.bar i{display:block;height:100%;background:var(--serie-ev)}
+.bar i.p{background:var(--err)}
+.vacio{border:1px dashed var(--line);border-radius:10px;padding:30px;text-align:center;color:var(--text-2);line-height:1.5}
+.vacio b{display:block;color:var(--text);font-size:14px;margin-bottom:4px}
+.notas{border-top:1px dashed var(--line);margin-top:20px;padding-top:10px;color:var(--text-2);line-height:1.55;font-size:11px;max-width:900px}
+.notas h2{font-size:12px;color:var(--text);margin-bottom:4px}
+.notas li{margin-left:16px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · PR — Subcontratos · datos simulados</span>
+<div class="grp" role="group" aria-label="Rol de demostración"><span>Rol:</span>
+<button type="button" data-rol="eco" aria-pressed="true">Rol con datos económicos</button>
+<button type="button" data-rol="sup" aria-pressed="false">Supervisor operativo</button></div>
+<span>Lo marcado con <b style="color:var(--warn)">NUEVO</b> es lo que propone este plan.</span>
+</div>
+
+<div class="pantalla" id="pantalla">
+<nav class="miga">PS-0011 &rsaquo; Reporte del proyecto (PR) &rsaquo; <b>Subcontratos</b></nav>
+<h1>Reporte del proyecto · Subcontratos</h1>
+<p class="lead">Servicio PS-0011 · Avance físico del servicio al corte: <b id="av-txt">63 %</b>. Cada subcontrato se mide por avance físico o con un monto que escribe el responsable.</p>
+
+<div class="vacio" id="v-sin" hidden>
+ <b>Esta sección no está disponible para tu rol</b>
+ Los subcontratos muestran montos en dinero. Solo los 5 roles con datos económicos los ven (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos). Si los necesitas, pide el acceso al administrador.
+</div>
+
+<section id="v-con">
+<div class="bloq nuevo"><span class="nuevo-tag">Nuevo</span>
+ <h2>Subcontratos del servicio <span class="tag ok" id="rol-tag">Puedes editar</span></h2>
+ <div class="tw"><table>
+  <thead><tr><th>Descripción</th><th>Unid.</th><th class="n">Contractual (US$)</th><th>Forma de medir</th><th class="n">Acumulado (US$)</th><th class="n">%</th><th class="n">Restante (US$)</th></tr></thead>
+  <tbody id="tb"></tbody>
+  <tfoot><tr class="tot"><td>Total</td><td></td><td class="n" id="t-c"></td><td></td><td class="n" id="t-a"></td><td class="n" id="t-p"></td><td class="n" id="t-r"></td></tr></tfoot>
+ </table></div>
+ <div class="nota w" style="margin-bottom:0">El monto cuenta como avance (valor ganado) del subcontrato, no como costo real.</div>
+</div>
+</section>
+
+<section class="notas" aria-label="Notas de la maqueta">
+<h2>Qué propone esta maqueta <span class="tag" style="color:var(--warn);border-color:rgba(251,191,36,.5)">NUEVO</span></h2>
+<ul>
+<li><b>Forma de medir por subcontrato:</b> un desplegable en cada fila. «Por avance físico» es la opción por defecto: acumulado = contractual × % de avance físico del servicio (aquí 63 %, con la etiqueta «según avance físico del servicio»).</li>
+<li><b>Ingreso manual:</b> aparece un campo para escribir el monto acumulado y el sistema calcula el %. Ejemplo: contractual 200 e ingreso 40 dan 20 %. No acepta montos negativos y avisa si pasan del contractual.</li>
+<li><b>Qué significa el monto:</b> cuenta como avance (valor ganado) del subcontrato, no como costo real.</li>
+<li><b>Quién lo ve:</b> solo los 5 roles con datos económicos. El supervisor operativo no ve la sección y recibe un mensaje que lo explica.</li>
+<li><b>Dashboard:</b> la pestaña Subcontratos de la gráfica de recursos usa el acumulado según la forma de medir de cada subcontrato.</li>
+</ul>
+</section>
+</div>
+
+<script>
+(function(){
+var AV=0.63;
+var D=[
+ {d:'Pintura de estructuras',u:'glb',c:48000,m:'fis',x:0},
+ {d:'Transporte de equipos',u:'glb',c:30000,m:'man',x:12500},
+ {d:'Alquiler de andamios',u:'mes',c:36000,m:'fis',x:0},
+ {d:'Ensayos de laboratorio',u:'glb',c:18000,m:'man',x:21000}
+];
+function nf(v){return v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function pf(v){return (Math.round(v*10)/10).toLocaleString('en-US',{minimumFractionDigits:1})+' %';}
+var tb=document.getElementById('tb'),ROL='eco';
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+function filas(){
+ tb.innerHTML=D.map(function(r,i){return '<tr data-i="'+i+'"><td>'+r.d+'</td><td>'+r.u+'</td><td class="n">'+nf(r.c)+'</td>'
+ +'<td><div class="mod"><select data-m aria-label="Forma de medir: '+r.d+'"><option value="fis"'+(r.m==='fis'?' selected':'')+'>Por avance físico</option><option value="man"'+(r.m==='man'?' selected':'')+'>Ingreso manual</option></select>'
+ +'<div class="man" data-man hidden><input type="text" inputmode="decimal" data-x aria-label="Monto acumulado en US$" value="'+esc(r.x)+'" /><span>US$</span></div>'
+ +'<span class="msg i" data-msg></span></div></td>'
+ +'<td class="n" data-a></td><td class="n" data-p></td><td class="n" data-r></td></tr>';}).join('');
+ D.forEach(function(r,i){calc(i);});totales();
+}
+function calc(i){
+ var r=D[i],tr=tb.children[i],msg=tr.querySelector('[data-msg]'),inp=tr.querySelector('[data-x]'),man=r.m==='man',a;
+ tr.querySelector('[data-man]').hidden=!man;
+ inp.disabled=ROL!=='eco';tr.querySelector('[data-m]').disabled=ROL!=='eco';
+ inp.classList.remove('mal');msg.className='msg i';
+ if(!man){a=r.c*AV;r.a=a;msg.textContent='según avance físico del servicio ('+Math.round(AV*100)+' %)';}
+ else{
+  var raw=String(inp.value).replace(/,/g,'').trim(),v=raw===''?0:Number(raw);
+  if(isNaN(v)){a=0;inp.classList.add('mal');msg.className='msg e';msg.textContent='Escribe solo números.';}
+  else if(v<0){a=0;inp.classList.add('mal');msg.className='msg e';msg.textContent='El monto no puede ser negativo. No se guarda.';}
+  else{a=v;if(v>r.c){msg.className='msg a';msg.textContent='El monto pasa del contractual en US$ '+nf(v-r.c)+'. Revísalo.';}else{msg.textContent='El sistema calcula el % con tu monto.';}}
+  r.a=a;
+ }
+ var p=r.c?a/r.c*100:0;
+ tr.querySelector('[data-a]').textContent=nf(a);
+ tr.querySelector('[data-p]').innerHTML=pf(p)+'<div class="bar"><i class="'+(p>100?'p':'')+'" style="width:'+Math.min(p,100)+'%"></i></div>';
+ tr.querySelector('[data-r]').textContent=nf(Math.max(r.c-a,0));
+}
+function totales(){
+ var c=0,a=0,r=0;D.forEach(function(x){c+=x.c;a+=x.a||0;r+=Math.max(x.c-(x.a||0),0);});
+ document.getElementById('t-c').textContent=nf(c);document.getElementById('t-a').textContent=nf(a);
+ document.getElementById('t-p').textContent=pf(c?a/c*100:0);document.getElementById('t-r').textContent=nf(r);
+}
+tb.addEventListener('change',function(e){var tr=e.target.closest('tr');if(!tr)return;var i=+tr.getAttribute('data-i');
+ if(e.target.matches('[data-m]')){D[i].m=e.target.value;}calc(i);totales();});
+tb.addEventListener('input',function(e){if(!e.target.matches('[data-x]'))return;var i=+e.target.closest('tr').getAttribute('data-i');calc(i);totales();});
+function setRol(r){ROL=r;document.querySelectorAll('[data-rol]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-rol')===r?'true':'false');});
+ document.getElementById('v-con').hidden=r==='sup';document.getElementById('v-sin').hidden=r!=='sup';
+ if(r==='eco'){D.forEach(function(x,i){calc(i);});totales();}}
+document.querySelectorAll('[data-rol]').forEach(function(b){b.addEventListener('click',function(){setRol(b.getAttribute('data-rol'));});});
+filas();
+if(location.hash==='#supervisor')setRol('sup');
+})();
+</script>
+</body>
+</html>

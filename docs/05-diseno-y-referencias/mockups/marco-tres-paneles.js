@@ -35,6 +35,8 @@ var DER=[['Planificación','plan',['notif','cronograma','paquetes-trabajo','plan
  ['SSOMA','sso',['notif','pets']]];
 var RAPIDO=[['tareo-moi'],['pets'],['acta-conformidad'],['status-servicios'],['status-requerimiento','Requerimiento'],['consolidado-rq'],['rdt']];
 var RECURSOS=['Personal','Cargos','Equipos','Causas CNC'];
+/* Opcional: una maqueta puede proponer chips nuevos o activar inertes sin tocar este marco (window.MARCO_AJUSTE). */
+if(typeof window.MARCO_AJUSTE==='function'){window.MARCO_AJUSTE(R,IZQ,DER,RAPIDO);}
 function ico(c,g){return '<span class="ic" style="--c:'+C[c]+'" aria-hidden="true">'+g+'</span>';}
 function fila(def,lado){var id=typeof def==='string'?def:def[0],a=R[id],et=(typeof def==='string'?a[0]:def[1]),sel=(id===ACTIVO);
  var mk=(lado==='der'&&a[4])?' <span class="mk">Acción</span>':'';

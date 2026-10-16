@@ -213,6 +213,17 @@
       font-size: 8px;
       color: #555;
     }
+    main { overflow: auto; flex-direction: column; }
+    .hoja { flex: none; overflow: visible; }
+    th.nu, #tbl-eq th { white-space: normal; text-overflow: clip; }
+    th.nu .nuevo { display:inline-block; margin:1px 0 0; }
+    .nuevo { background:#fbbf24; color:#111; font-size:8px; font-weight:700; border-radius:3px; padding:0 4px; margin-left:3px; }
+    .nu { outline:1px dashed rgba(251,191,36,.8); outline-offset:-2px; }
+    .ex input { text-align:center; }
+    .ya { background:#e5e7eb; color:#374151; font-size:8px; font-weight:700; border-radius:3px; padding:0 4px; margin-left:3px; }
+    .propone { color:#e2e8f0; font-size:12px; line-height:1.5; max-width:920px; margin:14px auto 30px; padding:0 14px; }
+    .propone h2 { font-size:14px; margin-bottom:6px; }
+    .propone li { margin:4px 0 4px 18px; }
     .toast {
       display: none;
       font-size: 11px;
@@ -421,24 +432,27 @@
                 <th class="hh" style="width:28px">T6</th>
                 <th class="hh" style="width:28px">T7</th>
                 <th class="hh" style="width:28px">T8</th>
+                <th class="hh nu" style="width:44px">HH normales <span class="nuevo">NUEVO</span></th>
+                <th class="hh nu" style="width:44px">HH extra <span class="nuevo">NUEVO</span></th>
                 <th class="hh" style="width:36px">Total</th>
               </tr>
             </thead>
             <tbody id="tareo-body">
-              <tr><td class="num">1</td><td>71234567</td><td>RAMOS QUISPE, Jhonny</td><td>Operador excavadora</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">2</td><td>72345678</td><td>HUARANCCA TORRES, Elmer</td><td>Ayudante</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">3</td><td>73456789</td><td>PACHECO LIMA, Rosa</td><td>Vigía</td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">4</td><td>73095782</td><td>BARDALES TRUJILLO, Sandro Luis</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">5</td><td>75715613</td><td>ALVAREZ CRESPO, Moises Juan</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">6</td><td>70521512</td><td>CAYO GUTIERREZ, Juan Wilfredo</td><td>Operario civil</td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">7</td><td>48380481</td><td>GALVEZ RAVINES, Hector</td><td>Operador grúa</td><td class="hh"></td><td class="hh"></td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh tot">10</td></tr>
-              <tr><td class="num">8</td><td>75002233</td><td>QUISPE MAMANI, Edgar</td><td>Oficial</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">9</td><td>47665722</td><td>CALACHIHUA HUAYCHAY, Ciro A.</td><td>Op. mecánico / eléctrico</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
-              <tr><td class="num">10</td><td>72009900</td><td>FLORES ESPINOZA, Walter</td><td>Cond. camión baranda</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">1</td><td>71234567</td><td>RAMOS QUISPE, Jhonny</td><td>Operador excavadora</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="2" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">2</td><td>72345678</td><td>HUARANCCA TORRES, Elmer</td><td>Ayudante</td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">3</td><td>73456789</td><td>PACHECO LIMA, Rosa</td><td>Vigía</td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">4</td><td>73095782</td><td>BARDALES TRUJILLO, Sandro Luis</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">5</td><td>75715613</td><td>ALVAREZ CRESPO, Moises Juan</td><td>Operario civil</td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">6</td><td>70521512</td><td>CAYO GUTIERREZ, Juan Wilfredo</td><td>Operario civil</td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">7</td><td>48380481</td><td>GALVEZ RAVINES, Hector</td><td>Operador grúa</td><td class="hh"></td><td class="hh"></td><td class="hh">8</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">2</td><td class="hh nm nu"></td><td class="hh ex nu"><input value="2" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">8</td><td>75002233</td><td>QUISPE MAMANI, Edgar</td><td>Oficial</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">9</td><td>47665722</td><td>CALACHIHUA HUAYCHAY, Ciro A.</td><td>Op. mecánico / eléctrico</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
+              <tr><td class="num">10</td><td>72009900</td><td>FLORES ESPINOZA, Walter</td><td>Cond. camión baranda</td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh"></td><td class="hh">10</td><td class="hh"></td><td class="hh"></td><td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td><td class="hh tot">10</td></tr>
               <tr class="tot" id="tareo-total">
                 <td></td><td></td><td>TOTAL HH</td><td></td>
                 <td class="hh">28</td><td class="hh">20</td><td class="hh">18</td><td class="hh">10</td>
                 <td class="hh">10</td><td class="hh">10</td><td class="hh">2</td><td class="hh">2</td>
+                <td class="hh nm">0</td><td class="hh ex">0</td>
                 <td class="hh">100</td>
               </tr>
             </tbody>
@@ -458,15 +472,28 @@
           <div class="sec">Equipos</div>
           <table id="tbl-eq">
             <thead>
-              <tr><th>Descripción</th><th style="width:58px">WBS</th><th style="width:36px">Unid.</th><th style="width:40px">hm</th></tr>
+              <tr><th>Descripción</th><th style="width:58px">WBS</th><th style="width:36px">Unid.</th><th style="width:54px">HM operativas</th><th class="nu" style="width:54px">HM stand-by <span class="nuevo">NUEVO</span></th><th class="nu" style="width:92px">Estado <span class="nuevo">NUEVO</span></th></tr>
             </thead>
             <tbody id="eq-body">
-              <tr><td>Excavadora CAT 320</td><td>PART-01</td><td class="un">hm</td><td class="hh">10</td></tr>
-              <tr><td>Grúa 25 t</td><td>PART-03</td><td class="un">hm</td><td class="hh">8</td></tr>
-              <tr><td>Camión baranda</td><td>—</td><td class="un">hm</td><td class="hh">10</td></tr>
+              <tr><td>Excavadora CAT 320</td><td>PART-01</td><td class="un">hm</td><td class="hh">10</td><td class="hh nu"><input value="" /></td><td class="nu"><select><option selected>Operativo</option><option>Stand-by</option><option>Averiado</option><option>En mantenimiento</option></select></td></tr>
+              <tr><td>Grúa 25 t</td><td>PART-03</td><td class="un">hm</td><td class="hh">8</td><td class="hh nu"><input value="2" /></td><td class="nu"><select><option>Operativo</option><option selected>Stand-by</option><option>Averiado</option><option>En mantenimiento</option></select></td></tr>
+              <tr><td>Camión baranda</td><td>—</td><td class="un">hm</td><td class="hh">10</td><td class="hh nu"><input value="" /></td><td class="nu"><select><option selected>Operativo</option><option>Stand-by</option><option>Averiado</option><option>En mantenimiento</option></select></td></tr>
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div class="sec">3.1 INASISTENCIAS <span class="ya">YA EXISTE EN LA APP</span></div>
+      <div class="avance">
+        <table id="tbl-inas">
+          <colgroup><col style="width:4%" /><col style="width:12%" /><col /><col style="width:18%" /><col style="width:34%" /></colgroup>
+          <thead><tr><th>#</th><th>DNI</th><th>Apellido y nombre</th><th>Motivo</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>74123456</td><td>MAMANI CCAMA, Luis</td><td><select><option>Falta</option><option selected>Descanso médico</option><option>Permiso</option><option>Vacaciones</option><option>Otro</option></select></td><td><input value="Certificado CITT adjunto en oficina" /></td></tr>
+            <tr><td class="num">2</td><td>70998877</td><td>SOTO RIVERA, Pedro</td><td><select><option selected>Falta</option><option>Descanso médico</option><option>Permiso</option><option>Vacaciones</option><option>Otro</option></select></td><td><input value="No avisó" /></td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:9px;color:#555;padding:2px 4px">Solo informativas: no suman HH ni costo. Se ven en la pestaña «Inasistencias» de Informes de supervisión.</div>
       </div>
 
       <div class="sec">4.0 APROBACIÓN</div>
@@ -498,6 +525,15 @@
         </div>
       </div>
     </article>
+    <section class="propone">
+      <h2>Qué propone esta maqueta</h2>
+      <ul>
+        <li>Personal: por persona, el supervisor anota cuántas de sus horas del día son <b>HH extra</b> <span class="nuevo">NUEVO</span>. Las normales se calculan (total − extra) y el total no cambia.</li>
+        <li>Equipos: junto a las HM operativas, <b>HM stand-by</b> (parado y disponible) y el <b>Estado</b> del equipo: Operativo, Stand-by, Averiado o En mantenimiento <span class="nuevo">NUEVO</span>.</li>
+        <li>Inasistencias (persona, DNI, motivo, nota): <b>ya existen en la app</b>; se muestran aquí solo para ubicarlas. Son informativas y no suman HH.</li>
+        <li>Regla de costo (no se muestra dinero en el RDT): la HH extra se valoriza a tarifa × 1.25 y las HM stand-by suman al costo real.</li>
+      </ul>
+    </section>
   </main>
 
   <script>
@@ -535,9 +571,9 @@
       const nT = nActividades();
       const filas = personas();
       const col = Array(nT).fill(0);
-      let gran = 0;
+      let gran = 0, sumEx = 0, sumNm = 0;
       filas.forEach((tr) => {
-        const celdas = tr.querySelectorAll("td.hh:not(.tot)");
+        const celdas = tr.querySelectorAll("td.hh:not(.tot):not(.nm):not(.ex)");
         let fila = 0;
         celdas.forEach((td, i) => {
           const v = parseFloat(td.textContent) || 0;
@@ -546,6 +582,11 @@
         });
         const tot = tr.querySelector("td.tot");
         if (tot) tot.textContent = fila || "";
+        const exI = tr.querySelector("td.ex input");
+        const ex = exI ? Math.min(parseFloat(exI.value) || 0, fila) : 0;
+        const nm = tr.querySelector("td.nm");
+        if (nm) nm.textContent = fila ? fila - ex : "";
+        sumEx += ex; sumNm += fila - ex;
         gran += fila;
       });
       const totalTr = document.getElementById("tareo-total");
@@ -554,6 +595,8 @@
         tds[4 + i].textContent = col[i] || "0";
       }
       tds[tds.length - 1].textContent = String(gran);
+      tds[tds.length - 2].textContent = String(sumEx);
+      tds[tds.length - 3].textContent = String(sumNm);
     }
     document.getElementById("btn-p").onclick = function () {
       const n = personas().length + 1;
@@ -567,8 +610,10 @@
         "<td>PERSONA " + n + "</td>" +
         "<td>—</td>" +
         horas +
+        '<td class="hh nm nu"></td><td class="hh ex nu"><input value="" /></td>' +
         '<td class="hh tot">0</td>';
       document.getElementById("tareo-body").insertBefore(tr, document.getElementById("tareo-total"));
+      tr.querySelector("td.ex input").oninput = recalcularTotales;
       recalcularTotales();
     };
     document.getElementById("btn-t").onclick = function () {
@@ -587,17 +632,17 @@
       th.style.width = "28px";
       th.textContent = codigo;
       const head = document.getElementById("tareo-head");
-      head.insertBefore(th, head.lastElementChild);
+      head.insertBefore(th, head.children[head.children.length - 3]);
       personas().forEach((row) => {
         const td = document.createElement("td");
         td.className = "hh";
-        row.insertBefore(td, row.querySelector("td.tot"));
+        row.insertBefore(td, row.querySelector("td.nm"));
       });
       const tot = document.getElementById("tareo-total");
       const tdTot = document.createElement("td");
       tdTot.className = "hh";
       tdTot.textContent = "0";
-      tot.insertBefore(tdTot, tot.lastElementChild);
+      tot.insertBefore(tdTot, tot.children[tot.children.length - 3]);
       recalcularTotales();
     };
     document.getElementById("btn-m").onclick = function () {
@@ -609,9 +654,11 @@
     document.getElementById("btn-e").onclick = function () {
       const n = document.querySelectorAll("#eq-body tr").length + 1;
       const tr = document.createElement("tr");
-      tr.innerHTML = "<td>Equipo " + n + "</td><td>—</td><td class=\"un\">hm</td><td class=\"hh\"></td>";
+      tr.innerHTML = "<td>Equipo " + n + "</td><td>—</td><td class=\"un\">hm</td><td class=\"hh\"></td><td class=\"hh nu\"><input value=\"\" /></td><td class=\"nu\"><select><option>Operativo</option><option>Stand-by</option><option>Averiado</option><option>En mantenimiento</option></select></td>";
       document.getElementById("eq-body").appendChild(tr);
     };
+    document.querySelectorAll("#tareo-body td.ex input").forEach(function (i) { i.oninput = recalcularTotales; });
+    recalcularTotales();
     document.getElementById("btn-guardar").onclick = function () {
       document.getElementById("toast").classList.add("on");
     };

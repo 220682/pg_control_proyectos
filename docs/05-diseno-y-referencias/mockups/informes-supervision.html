@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Informes de supervisión — diario y semanal</title>
+<link rel="stylesheet" href="marco-tres-paneles.css" />
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
+--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;--sup:#c084fc;--serie-pv:#3987e5;--serie-ev:#199e70}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover:not([aria-disabled=true]){border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover{color:var(--bg-base);filter:brightness(1.1)}
+button.sup{border-color:rgba(192,132,252,.6);color:#e9d5ff;background:rgba(192,132,252,.12)}
+button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+select,input[type=text],input[type=date],textarea{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:11px;max-width:100%}
+textarea{width:100%;resize:vertical;line-height:1.45}
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{flex:1;min-height:0;display:flex;flex-direction:column;padding:10px 16px 70px;overflow:auto}
+.vista{display:none}.vista.on{display:block}
+.miga{font-size:13px;color:var(--text-2)}.miga b{color:var(--text);font-weight:500}
+.tit{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+h1{font-size:18px;font-weight:700}
+.lead{color:var(--text-2);font-size:11px;margin-top:2px;line-height:1.45}
+.acc{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 8px;font-size:10px;color:var(--text-2);white-space:nowrap}
+.tag.b{border-color:rgba(251,191,36,.5);color:var(--warn);background:rgba(251,191,36,.08)}
+.tag.e{border-color:rgba(52,211,153,.5);color:var(--ok);background:rgba(52,211,153,.08)}
+.tag.r{border-color:rgba(148,163,184,.4);color:var(--text-2);text-decoration:line-through}
+.tag.auto{border-color:rgba(34,211,238,.45);color:var(--accent)}
+.tag.man{border-color:rgba(192,132,252,.45);color:#d8b4fe}
+.tag.pend{border-color:rgba(251,191,36,.45);color:var(--warn)}
+.barra-f{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:4px 10px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed=true]{background:rgba(79,125,243,.25);color:#fff}
+.tabla{border:1px solid var(--line);border-radius:10px;overflow:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:11px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:left;background:var(--bg-elevated)}
+th{position:sticky;top:0;color:var(--text-2);font-weight:600;font-size:10px;z-index:2}
+td.n{font-variant-numeric:tabular-nums}
+.nuevo{outline:1px dashed var(--warn);outline-offset:2px;border-radius:6px;position:relative}
+.nuevo-tag{position:absolute;top:-9px;right:6px;background:var(--warn);color:#05070d;font-size:8px;font-weight:700;padding:0 4px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;z-index:2}
+/* plantillas */
+.paso{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:14px 0 6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.card{border:1px solid var(--line);background:var(--bg-elevated);border-radius:10px;padding:10px;text-align:left;white-space:normal;display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--text-2)}
+.card b{color:var(--text);font-size:12px}
+.card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:rgba(34,211,238,.05)}
+.mini{background:#e5e7eb;border-radius:4px;height:120px;padding:7px;display:flex;flex-direction:column;gap:4px;overflow:hidden}
+.mini i{display:block;background:#9ca3af;border-radius:2px;height:5px}
+.mini .h{background:#1e3a8a;height:9px}
+.mini .ph{background:#6b7280;height:auto;flex:1;min-height:16px}
+.mini .g2{display:grid;grid-template-columns:1fr 1fr;gap:4px;flex:1}
+.mini .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;flex:1}
+.mini .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.mini .kp i{height:12px;background:#60a5fa}
+.form{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;max-width:900px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:10px;color:var(--text-2)}
+.chk{display:flex;gap:6px;align-items:flex-start;font-size:11px;color:var(--text-2);margin-top:8px;line-height:1.4}
+/* editor */
+.ed-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);background:var(--bg-elevated);border-radius:10px;padding:8px 10px;margin-bottom:10px}
+.ed-bar .gu{font-size:10px;color:var(--text-2)}
+.ed{display:grid;grid-template-columns:230px minmax(0,1fr) 200px;gap:10px;align-items:start}
+.col{border:1px solid var(--line);background:var(--bg-elevated);border-radius:10px;padding:10px;min-width:0}
+.col h2{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin-bottom:8px;font-weight:600}
+.blq{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px 6px;margin-bottom:5px;font-size:11px;background:rgba(255,255,255,.02)}
+.blq .h{cursor:grab;color:var(--text-2);letter-spacing:-2px}
+.blq span.nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blq.off{opacity:.45}
+.add{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.add button{font-size:10px;padding:3px 7px}
+.hoja-w{background:#1f2937;border-radius:10px;padding:14px;overflow:auto;max-height:640px}
+.hoja{background:#fff;color:#111827;width:100%;max-width:760px;margin:0 auto;padding:26px 30px;border-radius:2px;font-size:10px;line-height:1.45;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.hoja .enc{display:grid;grid-template-columns:70px 1fr 120px;gap:8px;border:1px solid #9ca3af;align-items:center}
+.hoja .enc>div{padding:5px 7px}
+.hoja .enc .logo{background:#e5e7eb;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#6b7280;font-size:9px}
+.hoja .enc .t{text-align:center;font-weight:700;font-size:12px;border-left:1px solid #9ca3af;border-right:1px solid #9ca3af}
+.hoja .enc .c{font-size:8.5px;color:#374151}
+.hoja .datos{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid #9ca3af;border-top:0;font-size:9px}
+.hoja .datos div{padding:3px 7px;border-right:1px solid #d1d5db}.hoja .datos b{color:#374151}
+.hoja section{margin-top:12px;position:relative;border:1px dashed transparent;padding:2px;border-radius:3px}
+.hoja section:hover{border-color:#93c5fd}
+.hoja h3{font-size:10.5px;background:#1e3a8a;color:#fff;padding:3px 7px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+.hoja h3 small{font-weight:400;font-size:8px;opacity:.85}
+.hoja table{font-size:9px;width:100%}
+.hoja th,.hoja td{background:#fff;border:1px solid #d1d5db;padding:2px 5px;color:#111827;white-space:normal;position:static;text-align:left}
+.hoja th{background:#f3f4f6;font-weight:600}
+.hoja td.n{text-align:right}
+.hoja .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.hoja .kp div{border:1px solid #d1d5db;padding:4px 6px}
+.hoja .kp b{display:block;font-size:13px;color:#1e3a8a}
+.hoja .fotos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hoja .foto{border:1px solid #d1d5db;padding:4px}
+.hoja .img{height:110px;border-radius:2px;display:flex;align-items:flex-end;padding:4px;color:#fff;font-size:8px}
+.hoja .foto p{font-size:8.5px;margin-top:3px}
+.hoja .vacio{border:1px dashed #9ca3af;color:#6b7280;text-align:center;padding:10px;font-size:9px}
+.hoja .firmas{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:22px;text-align:center;font-size:9px}
+.hoja .firmas div{border-top:1px solid #111827;padding-top:3px}
+.hoja .pend{color:#b45309;font-size:8.5px}
+.ctl{position:absolute;right:4px;top:-1px;display:none;gap:3px}
+.hoja section:hover .ctl{display:flex}
+.ctl span{background:#1f2937;color:#fff;font-size:8px;border-radius:3px;padding:1px 5px}
+.banco{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.th{border-radius:6px;height:64px;position:relative;display:flex;align-items:flex-end;padding:3px;font-size:8.5px;color:#fff;border:1px solid var(--line)}
+.th em{position:absolute;top:3px;right:3px;font-style:normal;background:rgba(0,0,0,.6);border-radius:3px;padding:0 3px;font-size:8px}
+.grad1{background:linear-gradient(135deg,#78350f,#a16207 55%,#57534e)}.grad2{background:linear-gradient(135deg,#1e3a8a,#475569 60%,#94a3b8)}
+.grad3{background:linear-gradient(135deg,#365314,#57534e 60%,#a8a29e)}.grad4{background:linear-gradient(135deg,#7c2d12,#44403c 50%,#f59e0b)}
+.grad5{background:linear-gradient(135deg,#0f172a,#334155 50%,#64748b)}.grad6{background:linear-gradient(135deg,#3f6212,#713f12 60%,#d6d3d1)}
+.menu{position:absolute;right:0;top:calc(100% + 4px);width:300px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;padding:10px;z-index:30;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.menu label{display:flex;gap:6px;align-items:flex-start;padding:4px 2px;font-size:11px;color:var(--text-2);line-height:1.35}
+.menu label b{color:var(--text);font-weight:500}
+.menu h3{font-size:11px;margin:4px 0}
+.dd{position:relative}
+.aviso{border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.07);color:#fde68a;border-radius:8px;padding:7px 10px;font-size:11px;line-height:1.45;margin-bottom:10px}
+.aviso.i{border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.06);color:#a5f3fc}
+/* móvil */
+.tels{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.tel{width:300px;height:600px;border:2px solid #334155;border-radius:30px;overflow:hidden;position:relative;background:var(--bg-base);flex:0 0 auto}
+.tel .bar{height:26px;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:10px;color:var(--text-2)}
+.tel .cont{position:absolute;top:26px;left:0;right:0;bottom:0;overflow:auto;padding:10px 12px}
+.tel h4{font-size:13px;margin-bottom:8px}
+.tel .cap{font-size:10px;color:var(--text-2);margin-bottom:4px}
+.vis{position:absolute;inset:26px 0 0 0;background:linear-gradient(160deg,#57534e,#78350f 45%,#1c1917);display:flex;flex-direction:column;justify-content:space-between}
+.vis .top{display:flex;justify-content:space-between;padding:10px 14px;font-size:10px;color:#fff;background:rgba(0,0,0,.35)}
+.vis .bot{display:flex;justify-content:space-around;align-items:center;padding:18px 0 26px;background:rgba(0,0,0,.45)}
+.disp{width:62px;height:62px;border-radius:50%;border:4px solid #fff;background:rgba(255,255,255,.25)}
+.vis .gal{width:38px;height:38px;border-radius:8px;background:#a8a29e}
+.campo{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;font-size:10px;color:var(--text-2)}
+.campo select,.campo textarea,.campo input{width:100%;font-size:12px;padding:7px 8px}
+.opc{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:7px 8px;margin-bottom:6px;font-size:11px;line-height:1.35}
+.opc[aria-checked=true]{border-color:var(--accent);background:rgba(34,211,238,.06)}
+.big{width:100%;padding:10px;font-size:13px;border-radius:10px}
+.lista-f{display:flex;flex-direction:column;gap:6px}
+.lf{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px}
+.lf .th{width:46px;height:46px;flex:0 0 auto}
+.lf div{font-size:10px;color:var(--text-2);line-height:1.35}.lf b{color:var(--text);font-size:11px;font-weight:500}
+.fab{position:absolute;right:14px;bottom:16px;border-radius:999px;padding:10px 14px;font-size:12px;background:var(--sup);color:#05070d;border:0;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.hoja tr.tot td{background:#eef2ff;font-weight:600}
+.hoja .semaf{margin-top:8px;font-size:9.5px;display:flex;gap:8px;align-items:center}
+.hoja .sm{color:#fff;font-weight:700;font-size:8.5px;padding:2px 7px;border-radius:999px}
+.hoja .sm.am{background:#b45309}.hoja .sm.ro{background:#be123c}
+.hoja .hb div{display:grid;grid-template-columns:120px 1fr 70px;gap:6px;align-items:center;margin:3px 0}
+.hoja .bb{position:relative;height:12px;background:#f3f4f6}
+.hoja .bb i{position:absolute;left:0;height:6px}.hoja .bb i+i{top:6px}
+.hoja .la{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hoja .la>div{border:1px solid #d1d5db;padding:5px}
+.hoja .sem-ley{display:flex;gap:10px;font-size:8.5px;color:#374151;margin-bottom:3px}.hoja .sem-ley i{display:inline-block;width:8px;height:8px;margin-right:3px}
+.hoja .sem-b{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;height:90px;align-items:end;border-bottom:1px solid #9ca3af}
+.hoja .sem-d{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;font-size:8px;color:#374151}
+.hoja .sem-p{display:flex;gap:2px;align-items:flex-end;height:70px}.hoja .sem-p i{display:block;width:9px}
+.hoja .sem-d .v{font-weight:700;color:#065f46}
+.hoja table{table-layout:auto}
+.per{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;max-width:900px;margin-top:10px;padding:10px 12px;border:1px solid rgba(34,211,238,.35);border-radius:8px;background:rgba(34,211,238,.04)}
+.per>.lbl{width:100%;font-size:10px;color:var(--text-2)}
+.per label{display:flex;flex-direction:column;gap:4px;font-size:10px;color:var(--text-2)}
+.per-txt{width:100%;margin:0;font-size:11px;line-height:1.5;color:var(--text-2)}.per-txt.err,.per-err{color:#fca5a5}
+.per-ed{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--text-2);border:1px dashed rgba(251,191,36,.7);border-radius:6px;padding:2px 6px}
+.per-ed input{padding:2px 6px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.que{border:1px solid rgba(34,211,238,.35);background:rgba(34,211,238,.05);border-radius:8px;padding:8px 10px;margin-top:10px;font-size:11px;line-height:1.5;max-width:900px}
+.que b{color:var(--accent)}
+.card[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+.lock{font-size:9px;color:#fda4af;border:1px solid rgba(251,113,133,.45);border-radius:4px;padding:0 4px;align-self:flex-start}
+body[data-rol=sup] tr[data-eco-row]{display:none}
+.notas{border-top:1px dashed var(--line);margin-top:16px;padding-top:10px;color:var(--text-2);line-height:1.55;font-size:11px}
+.notas h2{font-size:12px;color:var(--text);margin-bottom:4px}
+.notas li{margin-left:16px}
+.notas table{margin-top:6px}
+.notas td,.notas th{white-space:normal;vertical-align:top}
+.pest{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 10px}
+.pest button{border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 14px;background:transparent;color:var(--text-2)}
+.pest button[aria-selected=true]{color:#fff;border-bottom-color:var(--accent)}
+.nuevo-et{color:var(--warn);font-weight:700;font-size:9px;margin-left:4px}
+.ina-f{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;padding:10px 12px;border:1px dashed rgba(251,191,36,.8);border-radius:8px;margin-bottom:10px}
+.ina-f label{display:flex;flex-direction:column;gap:4px;font-size:10px;color:var(--text-2)}
+#ia-l-sem{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}#ia-l-sem[hidden]{display:none}
+.ina-res{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.ina-res .tag{font-size:11px;padding:2px 10px}
+.ina-vacio{border:1px dashed var(--line);border-radius:8px;padding:24px;text-align:center;color:var(--text-2);font-size:12px}
+@media (max-width:1250px){.ed{grid-template-columns:220px 1fr}.ed .col.der-ed{grid-column:1/-1}}
+@media (max-width:800px){.ed{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Informes de supervisión (diario y semanal) · datos simulados</span>
+<div class="grp" role="group" aria-label="Vista"><span>Vista:</span>
+<button type="button" data-v="lista" aria-pressed="true">1 · Listado</button>
+<button type="button" data-v="nuevo" aria-pressed="false">2 · Nuevo (plantillas)</button>
+<button type="button" data-v="editor" aria-pressed="false">3 · Editor</button>
+<button type="button" data-v="movil" aria-pressed="false">4 · Celular: foto de campo</button>
+<button type="button" data-v="inasistencias" aria-pressed="false">5 · Inasistencias <b style="color:var(--warn)">NUEVO</b></button></div>
+<div class="grp" role="group" aria-label="Rol"><span>Rol:</span>
+<button type="button" data-rol-demo="sup" aria-pressed="true">Supervisor operativo</button>
+<button type="button" data-rol-demo="eco" aria-pressed="false">Jefe de costos (con economía)</button></div>
+<div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
+<button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
+<button type="button" data-pan="11" aria-pressed="false">Ambos ocultos</button></div>
+<span>Lo marcado con <b style="color:var(--warn)">NUEVO</b> es lo que propone este plan.</span></div>
+
+<div class="shell" id="shell">
+<aside class="pnl izq" id="pl-izq" aria-label="Panel izquierdo del servicio"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-controls="in-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><div class="pin" id="in-izq"><div class="ph"><span class="logo" aria-hidden="true">&#9638;</span><span>Control de <em>Proyectos</em></span></div><div class="scroll-izq nav-izq"></div><div class="pie pie-izq"></div></div></aside>
+<main class="centro">
+<header class="mhead"><button type="button" id="m-menu" aria-label="Abrir menú" aria-haspopup="dialog">&#9776;</button><span class="mt">Control de <em>Proyectos</em></span><button type="button" id="m-herr" aria-label="Abrir herramientas" aria-haspopup="dialog">&#9707;</button></header>
+<div class="pantalla">
+
+<!-- ============ 1 · LISTADO ============ -->
+<section class="vista on" id="v-lista" aria-label="Listado de informes">
+<nav class="miga" aria-label="Migas de pan">PS-0011 &rsaquo; <b>Informes de supervisión</b></nav>
+<div class="pest" role="tablist" aria-label="Secciones"><button type="button" role="tab" data-ir="lista" aria-selected="true">Informes</button><button type="button" role="tab" data-ir="inasistencias" aria-selected="false">Inasistencias <span class="nuevo-et">NUEVO</span></button></div>
+<div class="tit"><div><h1>Informes de supervisión</h1><p class="lead">Informes diarios y semanales del servicio. Los borradores solo los ves tú; al emitirlos, los ve todo el equipo del servicio.</p></div>
+<div class="acc"><button type="button" class="sup" data-ir="movil">&#9673; Foto de campo</button><button type="button" class="primary" data-ir="nuevo">+ Nuevo informe</button></div></div>
+<div class="barra-f">
+ <div class="seg libre" role="group" aria-label="Tipo"><button type="button" aria-pressed="true">Todos</button><button type="button" aria-pressed="false">Diarios</button><button type="button" aria-pressed="false">Semanales</button></div>
+ <select aria-label="Estado"><option>Todos los estados</option><option>Mis borradores</option><option>Emitidos</option><option>Reemplazados</option></select>
+ <select aria-label="Autor"><option>Todos los autores</option><option>Juan Quispe H.</option><option>Rosa Mamani T.</option></select>
+ <input type="date" aria-label="Desde" value="2026-10-01" />
+</div>
+<div class="tabla"><table><caption class="sr">Informes del servicio</caption>
+<thead><tr><th scope="col">Código</th><th scope="col">Tipo</th><th scope="col">Fecha / período</th><th scope="col">Formato</th><th scope="col">Autor</th><th scope="col">Estado</th><th scope="col">Versión</th><th scope="col">Fotos</th><th scope="col">Acciones</th></tr></thead>
+<tbody>
+<tr><td>PS-0011-ID-015</td><td>Diario</td><td class="n">15-10-2026</td><td>Técnico completo</td><td>Juan Quispe H. (tú)</td><td><span class="tag b">Borrador — solo tú</span></td><td class="n">—</td><td class="n">6</td><td><button type="button" data-abrir="tecnico">Continuar</button></td></tr>
+<tr><td>PS-0011-ID-014</td><td>Diario</td><td class="n">14-10-2026</td><td>Técnico completo</td><td>Juan Quispe H.</td><td><span class="tag e">Emitido 14-10 18:42</span></td><td class="n">1</td><td class="n">8</td><td><button type="button">Ver</button> <button type="button">&#8681; Descargar</button></td></tr>
+<tr><td>PS-0011-IS-003</td><td>Semanal</td><td class="n">Sem. 41 · 05 al 11-10</td><td>Semanal acumulado</td><td>Juan Quispe H.</td><td><span class="tag e">Emitido 13-10 09:10</span></td><td class="n">2</td><td class="n">12</td><td><button type="button" data-abrir="semanal">Ver</button> <button type="button">&#8681; Descargar</button></td></tr>
+<tr><td>PS-0011-IS-003</td><td>Semanal</td><td class="n">Sem. 41 · 05 al 11-10</td><td>Semanal acumulado</td><td>Juan Quispe H.</td><td><span class="tag r">Reemplazado por v2</span></td><td class="n">1</td><td class="n">10</td><td><button type="button">Ver</button></td></tr>
+<tr data-eco-row><td>PS-0011-IS-003-C</td><td>Semanal</td><td class="n">Sem. 41 · 05 al 11-10</td><td>Costos <span class="lock">&#128274; economía</span></td><td>Maria Torres V. (jefe de costos)</td><td><span class="tag e">Emitido 13-10 11:30</span></td><td class="n">1</td><td class="n">—</td><td><button type="button" data-abrir="costos">Ver</button> <button type="button">&#8681; Descargar</button></td></tr>
+<tr><td>PS-0011-ID-013</td><td>Diario</td><td class="n">13-10-2026</td><td>Registro fotográfico</td><td>Rosa Mamani T.</td><td><span class="tag e">Emitido 13-10 19:05</span></td><td class="n">1</td><td class="n">14</td><td><button type="button">Ver</button> <button type="button">&#8681; Descargar</button></td></tr>
+</tbody></table></div>
+<div class="aviso i" style="margin-top:10px">Código: <b>{N° OT}-ID-{n}</b> para diarios e <b>{N° OT}-IS-{n}</b> para semanales (mismo patrón que el RQ). Un informe emitido no se edita: se corrige emitiendo una versión nueva, y la anterior queda «Reemplazada» y consultable. El informe de <b>Costos</b> solo aparece en la lista para los 5 roles con datos económicos (cambia el rol arriba para verlo).</div>
+</section>
+
+<!-- ============ 5 · INASISTENCIAS ============ -->
+<section class="vista" id="v-inasistencias" aria-label="Inasistencias">
+<nav class="miga" aria-label="Migas de pan">PS-0011 &rsaquo; Informes de supervisión &rsaquo; <b>Inasistencias</b></nav>
+<div class="pest" role="tablist" aria-label="Secciones"><button type="button" role="tab" data-ir="lista" aria-selected="false">Informes</button><button type="button" role="tab" data-ir="inasistencias" aria-selected="true">Inasistencias <span class="nuevo-et">NUEVO</span></button></div>
+<div class="tit"><div><h1>Inasistencias <span class="nuevo-et">NUEVO</span></h1><p class="lead">Personas que no asistieron, tomadas de los RDT. Solo informan: no suman HH ni costo.</p></div>
+<div class="acc"><button type="button" class="primary" id="ia-pdf">Descargar PDF</button></div></div>
+<div class="aviso i">Las inasistencias no van dentro de los informes de supervisión. Aquí ves las de los servicios que tienes asignados (los 13 roles).</div>
+<div class="ina-f" id="ia-filtros">
+ <label>Ver por<div class="seg" role="group" aria-label="Diario o semanal"><button type="button" data-ia-modo="d" aria-pressed="true">Diario</button><button type="button" data-ia-modo="s" aria-pressed="false">Semanal</button></div></label>
+ <label id="ia-l-dia">Fecha<input type="date" id="ia-dia" /></label>
+ <div id="ia-l-sem" hidden>
+  <label>Período rápido<div class="seg" role="group" aria-label="Período rápido"><button type="button" data-ia-pre="actual" aria-pressed="true">Semana en curso</button><button type="button" data-ia-pre="anterior" aria-pressed="false">Semana anterior</button><button type="button" data-ia-pre="libre" aria-pressed="false">Personalizado</button></div></label>
+  <label>Desde<input type="date" id="ia-desde" /></label>
+  <label>Hasta<input type="date" id="ia-hasta" /></label>
+ </div>
+ <label>Servicio<select id="ia-serv"><option value="">Todos mis servicios</option><option>PS-0011</option><option>PS-0012</option><option>PS-0014</option></select></label>
+</div>
+<p class="per-txt" id="ia-txt" aria-live="polite"></p>
+<div class="ina-res" id="ia-res" aria-label="Resumen por motivo"></div>
+<div class="tabla" id="ia-tabla"><table><caption class="sr">Inasistencias</caption>
+<thead><tr><th scope="col">Fecha</th><th scope="col">Servicio</th><th scope="col">DNI</th><th scope="col">Nombre</th><th scope="col">Cargo</th><th scope="col">Motivo</th><th scope="col">Nota</th><th scope="col">RDT de origen</th></tr></thead>
+<tbody id="ia-body"></tbody></table></div>
+<div class="ina-vacio" id="ia-vacio" hidden>No hay inasistencias con este filtro.</div>
+</section>
+
+<!-- ============ 2 · NUEVO ============ -->
+<section class="vista" id="v-nuevo" aria-label="Nuevo informe">
+<nav class="miga" aria-label="Migas de pan">PS-0011 &rsaquo; Informes de supervisión &rsaquo; <b>Nuevo</b></nav>
+<div class="tit"><div><h1>Nuevo informe</h1><p class="lead">Elige el tipo, el período y un formato. Después puedes quitar, agregar y reordenar bloques: el formato es solo el punto de partida.</p></div></div>
+<p class="paso">1 · Tipo y período</p>
+<div class="form">
+ <label>Tipo<div class="seg" role="group" aria-label="Tipo de informe"><button type="button" data-tipo="diario" aria-pressed="true">Diario</button><button type="button" data-tipo="semanal" aria-pressed="false">Semanal (acumulado)</button></div></label>
+ <label id="f-dia">Fecha<input type="date" value="2026-10-15" max="2026-10-15" /></label>
+ <label>Servicio<select disabled><option>PS-0011 · Servicio prueba Marcobre</option></select></label>
+</div>
+<div class="per" id="f-per" hidden>
+ <span class="lbl">Período del informe (desde – hasta) <b style="color:var(--warn)">NUEVO</b></span>
+ <div class="seg" role="group" aria-label="Período rápido"><button type="button" data-pre="actual" aria-pressed="true">Semana en curso</button><button type="button" data-pre="anterior" aria-pressed="false">Semana anterior</button><button type="button" data-pre="dos" aria-pressed="false">Últimas 2 semanas</button><button type="button" data-pre="mes" aria-pressed="false">Mes anterior</button><button type="button" data-pre="libre" aria-pressed="false">Personalizado</button></div>
+ <label>Desde<input type="date" id="p-desde" /></label>
+ <label>Hasta<input type="date" id="p-hasta" /></label>
+ <p class="per-txt" id="per-txt" aria-live="polite"></p>
+</div>
+<label class="chk"><input type="checkbox" checked /> <span>Traer el texto de «Restricciones y pendientes» y «Próximas actividades» del último informe emitido (ID-014), para no escribirlo de nuevo.</span></label>
+<p class="paso">2 · Formato</p>
+<div class="cards" role="radiogroup" aria-label="Formato del informe">
+ <button type="button" class="card" data-fmt="ejecutivo" role="radio" aria-pressed="false" aria-checked="false"><div class="mini"><i class="h"></i><i style="width:50%;background:#b45309"></i><div class="kp"><i></i><i></i><i></i><i></i></div><i style="width:90%;background:#3987e5"></i><i style="width:60%;background:#199e70"></i><div class="g2"><i class="ph"></i><i class="ph"></i></div></div><b>Ejecutivo</b>1 página: semáforo, indicadores, avance por nivel, logros y alertas, 2 fotos.</button>
+ <button type="button" class="card" data-fmt="tecnico" role="radio" aria-pressed="true" aria-checked="true"><div class="mini"><i class="h"></i><i style="width:60%"></i><i></i><i></i><i style="width:80%"></i><i></i><i></i><i></i><i></i><div class="g2"><i class="ph"></i><i class="ph"></i></div></div><b id="lbl-tec">Técnico completo</b>Actividades del RDT, personal con nombre y HH, equipos con HM y stand-by, incidencias y fotos. En semanal: acumulado.</button>
+ <button type="button" class="card" data-fmt="foto" role="radio" aria-pressed="false" aria-checked="false"><div class="mini"><i class="h"></i><div class="g2" style="grid-template-rows:1fr 1fr 1fr"><i class="ph"></i><i class="ph"></i><i class="ph"></i><i class="ph"></i><i class="ph"></i><i class="ph"></i></div></div><b>Registro fotográfico</b>Solo fotos con hora, partida y descripción; 2, 4 o 6 por página.</button>
+ <button type="button" class="card nuevo" data-fmt="costos" data-eco role="radio" aria-pressed="false" aria-checked="false"><span class="nuevo-tag">Nuevo</span><div class="mini" style="background:#fff1f2"><i class="h" style="background:#be123c"></i><div class="kp"><i style="background:#fb7185"></i><i style="background:#fb7185"></i><i style="background:#fb7185"></i><i style="background:#fb7185"></i></div><i></i><i></i><i></i><i></i><i></i><i></i></div><b>Costos</b><span class="lock">&#128274; solo roles con datos económicos</span>EV, AC, CPI, personal y equipos valorizados, costo por partida.</button>
+ <button type="button" class="card" data-fmt="mio" role="radio" aria-pressed="false" aria-checked="false"><div class="mini" style="background:#ede9fe"><i class="h" style="background:#6d28d9"></i><i style="width:70%"></i><div class="kp"><i></i><i></i></div><i></i><div class="g2"><i class="ph"></i><i class="ph"></i></div></div><b>Mi formato: «Diario Marcobre»</b>Tu propio arreglo de bloques, guardado desde el editor.</button>
+</div>
+<div class="que" aria-live="polite"><b>Qué trae este formato:</b> <span id="que-trae"></span></div>
+<div class="acc" style="margin-top:14px"><button type="button" data-ir="lista">Cancelar</button><button type="button" class="primary" id="b-crear">Crear borrador</button></div>
+</section>
+
+<!-- ============ 3 · EDITOR ============ -->
+<section class="vista" id="v-editor" aria-label="Editor del informe">
+<nav class="miga" aria-label="Migas de pan">PS-0011 &rsaquo; Informes de supervisión &rsaquo; <b>PS-0011-ID-015</b></nav>
+<div class="ed-bar" style="margin-top:8px">
+ <b id="ed-tit">Informe diario · 15-10-2026</b><span class="tag b">Borrador — solo tú</span><span class="tag" id="ed-fmt">Técnico completo</span>
+ <span class="per-ed" id="ed-per" hidden>Período <input type="date" id="e-desde" aria-label="Desde" /> al <input type="date" id="e-hasta" aria-label="Hasta" /><span class="per-err" id="e-err" role="alert"></span></span>
+ <span class="gu" aria-live="polite">&#10003; Guardado automáticamente hace 5 s</span>
+ <span style="flex:1"></span>
+ <button type="button">Guardar borrador</button>
+ <button type="button">Guardar como mi formato</button>
+ <div class="dd"><button type="button" id="b-desc" aria-haspopup="true" aria-expanded="false" aria-controls="m-desc">&#8681; Descargar &#9662;</button>
+  <div class="menu" id="m-desc" hidden>
+   <h3>Formato</h3>
+   <label><input type="radio" name="f" checked /> <span><b>PDF</b> — igual a la vista previa, para imprimir o enviar.</span></label>
+   <label><input type="radio" name="f" /> <span><b>Word (.docx)</b> — editable, con los mismos bloques y fotos.</span></label>
+   <label><input type="radio" name="f" /> <span><b>Excel (.xlsx)</b> — una hoja por tabla (actividades, personal, equipos, avance) y una hoja «Fotos» con miniatura, descripción y partida.</span></label>
+   <h3 style="margin-top:8px">Versión a imprimir</h3>
+   <label><input type="radio" name="vv" checked /> <span>Completa (todos los bloques visibles)</span></label>
+   <label><input type="radio" name="vv" /> <span>Solo resumen e indicadores</span></label>
+   <label><input type="radio" name="vv" /> <span>Solo registro fotográfico</span></label>
+   <p class="lead">Un borrador se descarga con la marca de agua «BORRADOR».</p>
+   <div class="acc" style="justify-content:flex-end;margin-top:6px"><button type="button" data-cierra-menu>Cancelar</button><button type="button" class="primary" data-cierra-menu>Descargar</button></div>
+  </div></div>
+ <button type="button" class="primary">Emitir informe</button>
+</div>
+<div class="barra-f"><span class="lead" style="margin:0">Ver cómo queda cada formato (contenido distinto):</span>
+<div class="seg" role="group" aria-label="Formato de la vista previa"><button type="button" data-hoja="tecnico" aria-pressed="true">Técnico diario</button><button type="button" data-hoja="semanal" aria-pressed="false">Semanal acumulado</button><button type="button" data-hoja="ejecutivo" aria-pressed="false">Ejecutivo</button><button type="button" data-hoja="foto" aria-pressed="false">Registro fotográfico</button><button type="button" data-hoja="costos" data-eco aria-pressed="false">&#128274; Costos</button></div></div>
+<div class="aviso" id="aviso-eco" hidden style="border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.08);color:#fecdd3">Formato con datos económicos: solo lo crean y lo ven administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos. No usa fotos.</div>
+<div class="aviso">El RDT de hoy (15-10) está <b>enviado y pendiente de validación</b>: sus datos entran como «reportado, sin validar». Al emitir, el informe guarda una foto fija de los datos de ese momento.</div>
+<div class="ed">
+ <div class="col"><h2>Bloques del informe</h2>
+  <div id="lista-blq"></div>
+  <p class="lead" style="margin-top:6px">Arrastra &#8942;&#8942; para reordenar. La casilla oculta el bloque sin borrarlo.</p>
+  <h2 style="margin-top:12px">Agregar bloque</h2>
+  <p class="lead">Datos del proyecto (se llenan solos):</p>
+  <div class="add"><button type="button">+ Avance por nivel</button><button type="button">+ Curva S física</button><button type="button">+ HH e IP</button><button type="button">+ PPC y causas</button><button type="button">+ Avance de una partida</button><button type="button">+ Plan Maestro (próx. 7 días)</button></div>
+  <p class="lead" style="margin-top:8px">Libres:</p>
+  <div class="add"><button type="button">+ Texto</button><button type="button">+ Fotos</button><button type="button">+ Tabla</button><button type="button">+ Clima / turno</button><button type="button">+ Firmas</button></div>
+ </div>
+ <div class="hoja-w"><div class="hoja" id="hoja" aria-label="Vista previa del informe (hoja A4)"></div></div>
+ <div class="col der-ed nuevo" id="banco-col"><span class="nuevo-tag">Nuevo</span><h2>Banco de fotos del día</h2>
+  <p class="lead" style="margin-bottom:6px">Las que tomaste con «Foto de campo». Arrástralas a un bloque o usa «Ubicar».</p>
+  <div class="banco">
+   <div class="th grad3">2.3.1 Excavación<em>&#10003; en inf.</em></div><div class="th grad4">Sin partida<em>sin ubicar</em></div>
+   <div class="th grad5">3.1.2 Tendido<em>sin ubicar</em></div><div class="th grad6">2.1.3 Izaje<em>sin ubicar</em></div>
+   <div class="th grad1">2.1.2 Soldadura<em>&#10003; en inf.</em></div><div class="th grad2">3.1.2 Tendido<em>&#10003; en inf.</em></div>
+  </div>
+  <button type="button" style="width:100%;margin-top:8px;white-space:normal">Ubicar las 4 sin ubicar en «Registro fotográfico»</button>
+  <button type="button" class="sup" style="width:100%;margin-top:6px" data-ir="movil">&#9673; Tomar foto</button>
+ </div>
+</div>
+</section>
+
+<!-- ============ 4 · MÓVIL ============ -->
+<section class="vista" id="v-movil" aria-label="Foto de campo desde el celular">
+<nav class="miga" aria-label="Migas de pan">Celular &rsaquo; <b>Foto de campo</b></nav>
+<div class="tit"><div><h1>Foto de campo (celular)</h1><p class="lead">Tres pantallas seguidas. El chip «Foto de campo» abre directo la cámara del celular; lo demás se completa en 10 segundos.</p></div></div>
+<div class="tels">
+ <div class="tel" aria-label="Paso 1: cámara"><div class="bar"><span>9:14</span><span>Paso 1 de 3</span></div>
+  <div class="vis"><div class="top"><span>&#10005;</span><span>PS-0011 · cámara trasera</span><span>&#9889;</span></div><div class="bot"><span class="gal" title="Elegir de la galería"></span><span class="disp" title="Tomar foto"></span><span style="width:38px;color:#fff;font-size:18px;text-align:center">&#8635;</span></div></div></div>
+ <div class="tel" aria-label="Paso 2: datos de la foto"><div class="bar"><span>9:14</span><span>Paso 2 de 3</span></div>
+  <div class="cont"><h4>Datos de la foto</h4>
+   <div class="th grad1" style="height:120px;margin-bottom:8px">15-10-2026 09:14 · GPS -14.98, -70.11<em>&#8635; Repetir</em></div>
+   <label class="campo">Servicio (solo los que tienes asignados)<select><option>PS-0011 · Servicio prueba Marcobre</option><option>PS-0008 · Mantenimiento chancadora</option></select></label>
+   <label class="campo">Actividad o partida (opcional)<select><option>2.1.2 · Armado y soldadura de estructuras</option><option>Paquete P-03 · Montaje eje B</option><option>Sin partida (general)</option></select></label>
+   <label class="campo">Descripción<textarea rows="2">Soldadura de unión viga–columna eje B, tramo 3.</textarea></label>
+   <p class="cap">¿Dónde va?</p>
+   <div role="radiogroup" aria-label="Destino de la foto">
+    <div class="opc" role="radio" aria-checked="true" tabindex="0"><span>&#9673;</span><span><b>Banco de fotos del día</b><br/><span style="color:var(--text-2)">La ubicas después al armar el informe. (Recomendado)</span></span></div>
+    <div class="opc" role="radio" aria-checked="false" tabindex="-1"><span>&#9675;</span><span><b>Mi informe borrador de hoy</b> → <select aria-label="Sección" style="font-size:10px;padding:2px"><option>6. Registro fotográfico</option><option>3. Actividades ejecutadas</option><option>5. Incidencias</option></select></span></div>
+   </div>
+   <button type="button" class="primary big" style="margin-top:6px">Guardar foto</button>
+   <button type="button" class="big" style="margin-top:6px">Guardar y tomar otra</button></div></div>
+ <div class="tel" aria-label="Paso 3: fotos de hoy"><div class="bar"><span>9:15</span><span>Paso 3 de 3</span></div>
+  <div class="cont"><h4>Fotos de hoy · PS-0011</h4>
+   <div class="aviso" style="font-size:10px">Sin señal: 1 foto espera para subirse. Se sube sola al volver la señal; no cierres sesión.</div>
+   <div class="lista-f">
+    <div class="lf"><span class="th grad1"></span><div><b>2.1.2 · Soldadura eje B</b><br/>09:14 · Banco del día · <span style="color:var(--warn)">&#8635; pendiente de subir</span></div></div>
+    <div class="lf"><span class="th grad5"></span><div><b>3.1.2 · Tendido HDPE</b><br/>08:52 · Banco del día · <span style="color:var(--ok)">&#10003; subida</span></div></div>
+    <div class="lf"><span class="th grad3"></span><div><b>2.3.1 · Excavación</b><br/>08:10 · Informe ID-015 › Fotos · <span style="color:var(--ok)">&#10003; subida</span></div></div>
+   </div>
+   <button type="button" class="fab">&#9673; Otra foto</button></div></div>
+</div>
+<div class="aviso i" style="margin-top:12px">Técnica (para el Planner): un campo de archivo con <code>accept="image/*" capture="environment"</code> abre la cámara trasera en Android y iPhone sin instalar nada. La foto se reduce en el celular (lado mayor ~1600 px) antes de subir, y se guarda la hora y el GPS si el usuario lo permite. Guardar sin señal (cola de subida) se propone como fase 2.</div>
+</section>
+
+<section class="notas" aria-label="Notas de la maqueta">
+<h2>Qué propone esta maqueta</h2>
+<ul>
+<li><b>Dónde vive:</b> se activa el chip que ya existe sin pantalla, «Informe de servicio», en Supervisión operativa (panel derecho), con el nombre <b>«Informes de supervisión»</b>. Se suma un chip de acción <b>«Foto de campo»</b> en el mismo grupo y en Accesos rápidos (abre la cámara en el celular).</li>
+<li><b>Borrador → Emitido → (Reemplazado):</b> el borrador solo lo ve su autor y se guarda solo; al emitir lo ven todos los del servicio y queda congelado con los datos de ese momento.</li>
+<li><b>Versátil:</b> tres formatos de partida + «mis formatos» por usuario; bloques que se quitan, agregan y ordenan; bloques de datos del proyecto que se llenan solos.</li>
+<li><b>Cada formato trae contenido distinto</b> (no solo otro estilo): Técnico (detalle del día), Semanal acumulado (día a día + acumulado), Ejecutivo (1 página), Registro fotográfico (solo fotos) y Costos.</li>
+<li><b>Semanal = acumulado:</b> por cada actividad muestra el acumulado anterior, lo de cada día (L a D), el total de la semana y el acumulado a la fecha; igual con HH y HM. Se arma con los diarios emitidos de esa semana.</li>
+<li><b>Período configurable (desde – hasta):</b> al elegir «Semanal» se escoge el período con atajos (semana en curso, semana anterior, últimas 2 semanas, mes anterior) o con fechas libres; también se cambia desde la barra del editor y el informe se rearma solo. Hasta 10 días va por día; más, por semana, y pasa a llamarse «Informe del período». Límites: no antes del inicio de ejecución, no después de hoy, máximo 3 meses. Avisa cuántos días no tienen diario emitido (salen solo del RDT, sin texto ni fotos) y si se cruza con un semanal ya emitido (se permite). Enlace directo: <code>#nuevo-semanal</code>.</li>
+<li><b>Personal y equipos desglosados:</b> personal por nombre, cargo, partida, HH normales y extra; equipos por código, partida, HM operativas, stand-by y estado.</li>
+<li><b>Costos:</b> formato con datos económicos (EV, AC, CPI, personal y equipos valorizados, costo por partida). Solo lo crean y lo ven los 5 roles con datos económicos; al supervisor operativo le sale deshabilitado con título y no le aparece en la lista. Los demás formatos no llevan dinero.</li>
+<li><b>Pestaña «Inasistencias» <span class="nuevo-et">NUEVO</span>:</b> junto al listado de informes, aparte de ellos (las inasistencias no van dentro de los informes). Filtro diario o semanal (desde – hasta), por servicio o «todos mis servicios», resumen por motivo y tabla con RDT de origen; descarga en PDF. La ven los 13 roles dentro de los servicios que tienen asignados. Son informativas: no suman HH ni costo. Ya existen en el RDT (persona, DNI, motivo, nota).</li>
+<li><b>Descargar:</b> PDF, Word y Excel; versión completa, solo resumen o solo fotos.</li>
+</ul>
+<h2 style="margin-top:8px">Qué hacen otras aplicaciones (referencia)</h2>
+<table><thead><tr><th scope="col">Aplicación</th><th scope="col">Idea que tomamos</th></tr></thead><tbody>
+<tr><td>Procore (Daily Log)</td><td>El parte diario se arma por secciones (personal, equipos, clima, notas, fotos) y se completa con lo que ya se registró en el día.</td></tr>
+<tr><td>Raken</td><td>Fotos desde el celular con descripción y etiqueta de actividad; el informe diario sale en PDF con las fotos ordenadas.</td></tr>
+<tr><td>Fieldwire / PlanRadar</td><td>Plantillas de informe configurables por empresa y por usuario; exportación a PDF y Excel.</td></tr>
+<tr><td>Autodesk Build</td><td>Estado borrador / publicado y versión congelada al publicar; trazabilidad de quién emitió y cuándo.</td></tr>
+</tbody></table>
+</section>
+</div>
+<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
+</main>
+<aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
+</div>
+<div id="cajones"></div>
+<script>
+(function(){
+/* ===== Contenido real de cada formato (datos simulados) ===== */
+function enc(t,cod,ver,fec,extra){return '<div class="enc"><div class="logo">LOGO</div><div class="t">'+t+'</div><div class="c">Código: '+cod+'<br/>Versión: '+ver+'<br/>'+fec+'</div></div>'
+ +'<div class="datos"><div><b>Servicio:</b> PS-0011 · Servicio prueba Marcobre</div><div><b>Cliente:</b> Marcobre (Mina Justa)</div><div><b>Supervisor a cargo:</b> Lopez Caceres Loayza</div>'+(extra||'')+'</div>';}
+function sec(n,t,orig,body){return '<section><h3>'+n+'. '+t+' <small>'+orig+'</small></h3>'+body+'<div class="ctl"><span>&#9881;</span><span>&#8593;</span><span>&#8595;</span></div></section>';}
+function tabla(cab,filas,num){return '<table><thead><tr>'+cab.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr></thead><tbody>'+filas.map(function(f){return '<tr'+(f.tot?' class="tot"':'')+'>'+f.c.map(function(c,i){return '<td'+(num.indexOf(i)>=0?' class="n"':'')+'>'+c+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';}
+function F(arr){return arr.map(function(a){return {c:a};});}
+function T(arr){return {c:arr,tot:1};}
+function fotos(lst,cols){return '<div class="fotos" style="grid-template-columns:repeat('+(cols||2)+',1fr)">'+lst.map(function(f){return '<div class="foto"><div class="img '+f[0]+'">'+f[1]+'</div><p><b>'+f[2]+'</b> '+f[3]+'</p></div>';}).join('')+'</div>';}
+var FOT=[['grad1','15-10 09:14 · GPS -14.98, -70.11','2.1.2','Soldadura de unión viga–columna eje B, tramo 3.'],['grad2','15-10 11:40','3.1.2','Tendido de tubería HDPE 8", progresiva 0+420.'],['grad3','15-10 08:10','2.3.1','Excavación de dado D-14, profundidad 1.80 m.'],['grad6','15-10 14:05','2.1.3','Izaje detenido por viento > 40 km/h (CNC: clima).'],['grad4','15-10 15:30','—','Charla de 5 minutos: trabajos en altura.'],['grad5','15-10 16:20','3.1.2','Termofusión de unión N° 38.']];
+var PERS=F([['Lopez Caceres Loayza','Capataz','2.1.2 / 3.1.2','10','—','10'],['Huamán Quispe, Raúl','Op. soldador','2.1.2','10','2','12'],['Ccori Mamani, Edwin','Op. soldador','2.1.2','10','2','12'],['Rojas Tito, Luis','Op. mecánico','2.1.3','10','—','10'],['Flores Apaza, Juan','Oficial','3.1.2','10','—','10'],['Chura Condori, Elmer','Ayudante','3.1.2','10','—','10'],['Quispe Ari, Wilber','Ayudante','2.3.1','10','—','10'],['Mamani Puma, Rosa','Rigger','2.1.3','8.5','—','8.5']]);
+PERS.push(T(['<b>Total 8 personas</b>','','','78.5','4','<b>82.5</b>']));
+var EQ=F([['Grúa 50 t','GR-050','2.1.3','6.5','2','Stand-by'],['Camión grúa','CG-012','2.1.3','8','—','Operativo'],['Excavadora 320','EX-320','2.3.1','9','—','Operativo'],['Máquina de soldar (2)','MS-07/08','2.1.2','20','—','Operativo'],['Termofusionadora','TF-03','3.1.2','8','—','Operativo']]);
+EQ.push(T(['<b>Total 6 equipos</b>','','','51.5','2','']));
+var H={};
+H.tecnico={titulo:'Informe diario · 15-10-2026',etq:'Técnico completo',blq:[['Encabezado y datos','auto'],['1. Resumen del día','man'],['2. Indicadores al corte','auto'],['3. Actividades ejecutadas','auto'],['4. Personal desglosado','auto'],['5. Equipos desglosados','auto'],['6. Incidencias y restricciones','man'],['7. Registro fotográfico','man'],['Firmas','man']],
+ html:enc('INFORME DIARIO DE SUPERVISIÓN','PS-0011-ID-015','borrador','Fecha: 15-10-2026','<div><b>Turno:</b> Día 07:00–17:00</div><div><b>Clima:</b> Soleado, viento fuerte en la tarde</div><div><b>Día de obra:</b> 38 de 90</div>')
+ +sec(1,'Resumen del día','texto libre','<p>Se continuó el armado y soldadura del eje B (tramo 3) y el tendido de tubería HDPE 8" en 120 m. Se paralizó 1.5 h el izaje por viento sobre el límite del plan de izaje.</p>')
+ +sec(2,'Indicadores al corte','dato del sistema · RDT validados al 14-10','<div class="kp"><div>Avance físico<b>63%</b></div><div>Programado<b>72%</b></div><div>IP<b>1.08</b></div><div>HH acum./contr.<b>3,790 / 6,500</b></div></div>')
+ +sec(3,'Actividades ejecutadas','dato del sistema · RDT 15-10',tabla(['WBS','Actividad','Und.','Metrado día','Acum.','%'],F([['2.1.2','Armado y soldadura de estructuras','t','2.40','25.50','61%'],['3.1.2','Tendido de tubería HDPE 8"','m','120.00','540.00','36%'],['2.3.1','Excavación para dados y zapatas','m3','18.00','323.00','85%'],['2.1.3','Izaje y montaje de estructuras','t','0.00','14.20','34%']]),[3,4,5])+'<p class="pend">&#9888; Reportado, pendiente de validación.</p>')
+ +sec(4,'Personal desglosado','dato del sistema · tareo del RDT',tabla(['Nombre','Cargo','Partida(s)','HH norm.','HH extra','HH total'],PERS,[3,4,5]))
+ +sec(5,'Equipos desglosados','dato del sistema · RDT',tabla(['Equipo','Código','Partida','HM oper.','HM stand-by','Estado'],EQ,[3,4]))
+ +sec(6,'Incidencias, restricciones y pendientes','texto libre','<p>• Viento &gt; 40 km/h de 13:30 a 15:00 (CNC: clima). • Falta liberar frente del eje C (cliente). • Pendiente llegada de pernos A325 (RQ PS-0011-RQ-007).</p>')
+ +sec(7,'Registro fotográfico','2 por fila',fotos(FOT.slice(0,2),2)+'<div class="vacio">Arrastra aquí fotos del banco del día (4 sin ubicar).</div>')
+ +'<div class="firmas"><div>Lopez Caceres Loayza<br/>Supervisor operativo</div><div>Recibido por (opcional)<br/>Jefe de proyectos</div></div>'};
+/* ===== Semanal con período configurable (desde–hasta) ===== */
+var HOY=new Date(2026,9,15),INI=new Date(2026,7,3),DSEM=['D','L','M','M','J','V','S'];
+function d2(v){return ('0'+v).slice(-2);}
+function fc(x){return d2(x.getDate())+'-'+d2(x.getMonth()+1)+'-'+x.getFullYear();}
+function corta(x){return d2(x.getDate())+'/'+d2(x.getMonth()+1);}
+function iso(x){return x.getFullYear()+'-'+d2(x.getMonth()+1)+'-'+d2(x.getDate());}
+function deIso(s){var p=(s||'').split('-');return p.length===3?new Date(+p[0],+p[1]-1,+p[2]):null;}
+function mas(x,n){return new Date(x.getFullYear(),x.getMonth(),x.getDate()+n);}
+function ndias(a,b){return Math.round((b-a)/864e5)+1;}
+function lunes(x){return mas(x,-((x.getDay()+6)%7));}
+function semIso(x){var t=mas(x,3-((x.getDay()+6)%7)),e=new Date(t.getFullYear(),0,4);return 1+Math.round((ndias(lunes(e),t)-1-3)/7);}
+/* días sin diario emitido (demostración): un sábado, ayer y hoy (borrador) */
+var NOEMIT={'2026-09-19':1,'2026-10-14':1,'2026-10-15':1};
+function trab(x){return x.getDay()!==0&&x>=INI&&x<=HOY;}
+function emit(x){return trab(x)&&!NOEMIT[iso(x)];}
+function rnd(i,k){var v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);}
+function ix(x){return ndias(INI,x)-1;}
+/* serie diaria desde el inicio de ejecución, armada hacia atrás desde el acumulado al día de hoy */
+function serie(k,acum,tasa,dec,alt){var n=ndias(INI,HOY),s=new Array(n),r=acum,f=Math.pow(10,dec);
+ for(var i=n-1;i>=0;i--){var x=mas(INI,i),v=0;if(trab(x)&&!(alt&&i%2)){v=Math.round(tasa*(0.8+0.4*rnd(i,k))*(x.getDay()===6?0.8:1)*f)/f;if(v>r)v=Math.max(0,Math.round(r*f)/f);}r-=v;s[i]=v;}return s;}
+function sr(s,a,b){var t=0;for(var i=Math.max(0,ix(a));i<=Math.min(s.length-1,ix(b));i++)t+=s[i];return t;}
+function ac(s,x){return x<INI?0:sr(s,INI,x);}
+function nf(v,dec){return dec?v.toFixed(dec):Math.round(v).toLocaleString('en-US');}
+var ACT=[['2.1.2','Armado y soldadura','t',42,30.2,2.0,1,0],['2.3.1','Excavación dados','m3',380,323,16,0,0],['3.1.2','Tendido HDPE 8"','m',1500,540,110,0,0],['2.1.3','Izaje y montaje','t',42,14.4,1.6,1,1]];
+var CAR=[['Capataz',1,520,330,10,0],['Op. soldador',2,1450,980,23,0],['Op. mecánico',1,1100,610,10,0],['Oficial',2,1300,700,20,0],['Ayudante',3,1650,980,29,0],['Rigger',1,480,190,9,1]];
+var EQ=[['Grúa 50 t',220,240,8,1],['Camión grúa',260,170,8,0],['Excavadora 320',300,210,9,0],['Máq. soldar (2)',380,190,19,0]];
+ACT.forEach(function(a,k){a.s=serie(k+1,a[4],a[5],a[6],a[7]);});
+CAR.forEach(function(c,k){c.s=serie(k+11,c[3],c[4],0,c[5]);});
+EQ.forEach(function(e,k){e.s=serie(k+21,e[2],e[3],1,e[4]);});
+var AVR=serie(31,63,1.6,2,0),AVP=serie(32,72,1.85,2,0);
+/* período elegido; por defecto, la semana en curso */
+var PER={d:lunes(HOY),h:HOY};
+var PRE={actual:[lunes(HOY),HOY],anterior:[mas(lunes(HOY),-7),mas(lunes(HOY),-1)],dos:[mas(lunes(HOY),-14),mas(lunes(HOY),-1)],mes:[new Date(2026,8,1),new Date(2026,8,30)]};
+/* semanales ya emitidos (para avisar si el período se cruza) */
+var EMITIDOS=[['PS-0011-IS-003',new Date(2026,9,5),new Date(2026,9,11)],['PS-0011-IS-002',new Date(2026,8,28),new Date(2026,9,4)]];
+function valida(d,h){if(!d||!h||isNaN(d)||isNaN(h))return 'Elige las dos fechas.';if(d>h)return '«Desde» no puede ser posterior a «Hasta».';if(h>HOY)return '«Hasta» no puede pasar de hoy ('+fc(HOY)+').';if(d<INI)return 'El servicio empezó a ejecutarse el '+fc(INI)+'; «Desde» no puede ser anterior.';if(ndias(d,h)>92)return 'Máximo 3 meses por informe.';return '';}
+function cuenta(d,h){var n=ndias(d,h),t=0,e=0,sin=[];for(var i=0;i<n;i++){var x=mas(d,i);if(trab(x)){t++;if(emit(x))e++;else sin.push(corta(x));}}return {n:n,t:t,e:e,sin:sin};}
+function resumenPer(d,h){var er=valida(d,h);if(er)return {err:er};var c=cuenta(d,h),cr=EMITIDOS.filter(function(m){return d<=m[2]&&h>=m[1];});
+ return {txt:c.n+' días ('+fc(d)+' al '+fc(h)+') · '+c.t+' trabajados · '+c.e+' diarios emitidos'+(c.sin.length?' · '+c.sin.length+' sin diario emitido ('+c.sin.join(', ')+'): esos días salen solo del RDT, sin texto ni fotos':'')+' · columnas '+(c.n<=10?'por día':'por semana')+(c.n>7?' · se titula «Informe del período»':'')+(cr.length?' · Se cruza con '+cr.map(function(m){return m[0]+' ('+corta(m[1])+' al '+corta(m[2])+')';}).join(' y ')+', ya emitido: se permite, cada informe guarda su propio período.':'')};}
+function semanal(){
+ var d=PER.d,h=PER.h,c=cuenta(d,h),porDia=c.n<=10,largo=c.n>7,cols=[],i,x;
+ if(porDia){for(i=0;i<c.n;i++){x=mas(d,i);cols.push({l:DSEM[x.getDay()]+' '+d2(x.getDate()),g:DSEM[x.getDay()]+' '+d2(x.getDate()),a:x,b:x});}}
+ else{var a=d;while(a<=h){var b=mas(lunes(a),6);if(b>h)b=h;cols.push({l:'S'+semIso(a)+'<br/>'+corta(a)+'–'+corta(b),g:'S'+semIso(a),a:a,b:b});a=mas(b,1);}}
+ var ant=mas(d,-1),per=fc(d)+' al '+fc(h),pal=largo?'del período':'de la semana',Col=largo?'Período':'Semana',por=porDia?'día':'semana';
+ function celda(s,dec,cl){var v=sr(s,cl.a,cl.b);return (cl.a===cl.b&&!trab(cl.a))||!v?'—':nf(v,dec);}
+ var hhP=CAR.reduce(function(t,r){return t+sr(r.s,d,h);},0),hhA=CAR.reduce(function(t,r){return t+ac(r.s,h);},0);
+ var hmP=EQ.reduce(function(t,r){return t+sr(r.s,d,h);},0),hmA=EQ.reduce(function(t,r){return t+ac(r.s,h);},0);
+ var avR=sr(AVR,d,h),avP=sr(AVP,d,h),ip=(0.97+0.14*rnd(c.n,ix(d))).toFixed(2),comp=c.t*3,cum=Math.round(comp*(0.7+0.15*rnd(c.t,ix(h))));
+ /* gráfico: avance ganado en el período, acumulado columna a columna */
+ var cr=0,cp=0,pts=cols.map(function(cl){cp+=sr(AVP,cl.a,cl.b);cr+=sr(AVR,cl.a,cl.b);return [cp,cr];}),mx=Math.max(cp,0.1)*1.05;
+ var graf='<div class="sem-g"><div class="sem-ley"><span><i style="background:#3987e5"></i>Programado acumulado '+pal+'</span><span><i style="background:#199e70"></i>Real acumulado '+pal+'</span></div><div class="sem-b">'
+  +cols.map(function(cl,k){return '<div class="sem-d"><div class="sem-p"><i style="height:'+(pts[k][0]/mx*100)+'%;background:#3987e5"></i><i style="height:'+(pts[k][1]/mx*100)+'%;background:#199e70"></i></div><span>'+cl.g+'</span><span class="v">'+pts[k][1].toFixed(1)+'</span></div>';}).join('')
+  +'</div><p class="pend" style="color:#374151">Puntos de avance físico ganados '+pal+' (acumulados '+(porDia?'día a día':'semana a semana')+'). Programado +'+avP.toFixed(1)+' · Real +'+avR.toFixed(1)+'.</p></div>';
+ var L=cols.map(function(cl){return cl.l;}),nc=cols.length,numA=[],numP=[],numE=[];for(i=3;i<5+nc+3;i++)numA.push(i);for(i=1;i<2+nc+3;i++)numP.push(i);for(i=1;i<1+nc+4;i++)numE.push(i);
+ var tAct=tabla(['WBS','Actividad','Und.','Contract.','Acum. anterior'].concat(L).concat([Col,'Acum. a la fecha','%']),F(ACT.map(function(r){var p=sr(r.s,d,h),q=ac(r.s,h);return [r[0],r[1],r[2],r[3].toFixed(2),ac(r.s,ant).toFixed(2)].concat(cols.map(function(cl){return celda(r.s,r[6],cl);})).concat(['<b>'+nf(p,r[6]||0)+'</b>','<b>'+q.toFixed(2)+'</b>',Math.round(q/r[3]*100)+'%']);})),numA);
+ var tPer=tabla(['Cargo','Personas'].concat(L).concat([Col,'Acum.','Contract.']),F(CAR.map(function(r){return [r[0],String(r[1])].concat(cols.map(function(cl){return celda(r.s,0,cl);})).concat([nf(sr(r.s,d,h),0),nf(ac(r.s,h),0),nf(r[2],0)]);})).concat([T(['<b>Total</b>','10'].concat(cols.map(function(cl){return (cl.a===cl.b&&!trab(cl.a))?'—':nf(CAR.reduce(function(t,r){return t+sr(r.s,cl.a,cl.b);},0),0);})).concat(['<b>'+nf(hhP,0)+'</b>','<b>'+nf(hhA,0)+'</b>','<b>6,500</b>']))]),numP);
+ var tEq=tabla(['Equipo'].concat(L).concat([Col,'Stand-by','Acum.','Contract.']),F(EQ.map(function(r){var q=ac(r.s,h),sb=r[4]?cols.reduce(function(t,cl){for(var y=cl.a;y<=cl.b;y=mas(y,1)){if(trab(y)&&ix(y)%2)t+=2;}return t;},0):0;return [r[0]].concat(cols.map(function(cl){return celda(r.s,1,cl);})).concat([nf(sr(r.s,d,h),1),sb?nf(sb,0):'—',nf(q,0),nf(r[1],0)+(q>r[1]?' &#9888;':'')]);})),numE);
+ var dia=c.sin.length?' Sin diario emitido: '+c.sin.join(', ')+' — esos días salen solo del RDT (validado o «reportado, pendiente de validación»), sin texto ni fotos.':'';
+ return {titulo:(largo?'Informe del período · ':'Informe semanal · ')+per,
+  blq:[['Encabezado y datos','auto'],['1. Resumen '+pal,'man'],['2. Indicadores: '+(largo?'período':'semana')+' y acumulado','auto'],['3. Avance '+(porDia?'día a día':'semana a semana')+' (gráfico)','auto'],['4. Acumulado por actividad','auto'],['5. Personal: HH por '+por+' y acumulado','auto'],['6. Equipos: HM por '+por+' y acumulado','auto'],['7. Cumplimiento del plan (PPC)','auto'],['8. Restricciones y próximo período','man'],['9. Fotos destacadas','man'],['Diarios incluidos','auto']],
+  html:enc(largo?'INFORME DEL PERÍODO DE SUPERVISIÓN':'INFORME SEMANAL DE SUPERVISIÓN','PS-0011-IS-004','borrador','Del '+per,'<div><b>Días:</b> '+c.n+' ('+c.t+' trabajados)</div><div><b>Arma con:</b> '+c.e+' diarios emitidos</div><div><b>Corte:</b> '+fc(h)+'</div>')
+  +sec(1,'Resumen '+pal,'texto libre','<p>Avance de '+avR.toFixed(1)+' puntos contra '+avP.toFixed(1)+' programados. (Texto del supervisor: logros, frentes abiertos y lo que frenó el trabajo.)</p>')
+  +sec(2,'Indicadores: '+(largo?'período':'semana')+' y acumulado','dato del sistema',tabla(['Indicador',largo?'En el período':'Esta semana','Acumulado al '+corta(h),'Contractual / meta'],F([['Avance físico','+'+avR.toFixed(1)+' pts (prog. +'+avP.toFixed(1)+')',ac(AVR,h).toFixed(1)+'% (prog. '+ac(AVP,h).toFixed(1)+'%)','100%'],['HH mano de obra',nf(hhP,0),nf(hhA,0),'6,500 (restan '+nf(6500-hhA,0)+')'],['HM equipos',nf(hmP,1),nf(hmA,0),'1,160 (restan '+nf(1160-hmA,0)+')'],['IP (HH ganadas / HH reales)',ip,'1.08','≥ 1.00'],['PPC (compromisos cumplidos)',Math.round(cum/Math.max(comp,1)*100)+'% ('+cum+' de '+comp+')','74% promedio','≥ 80%']]),[]))
+  +sec(3,'Avance '+(porDia?'día a día':'semana a semana'),'dato del sistema',graf)
+  +sec(4,'Acumulado por actividad','dato del sistema · RDT validados',tAct)
+  +sec(5,'Personal: HH por '+por+' y acumulado','dato del sistema · tareo',tPer+'<p class="pend" style="color:#374151">Detalle por nombre en el anexo «Personal por día» (Excel).</p>')
+  +sec(6,'Equipos: HM por '+por+' y acumulado','dato del sistema',tEq)
+  +sec(7,'Cumplimiento del plan (PPC)','dato del sistema · 3 causas principales','<p>'+Math.round(cum/Math.max(comp,1)*100)+'% ('+cum+' de '+comp+' compromisos). Causas de no cumplimiento: clima · frente no liberado · material no llegó.</p>')
+  +sec(8,'Restricciones y próximo período','texto libre · traído del semanal anterior','<p>• Liberar frente eje C (cliente, vence 16-10). • Pernos A325 (RQ-007). • Próximo período: izaje eje B, 300 m de HDPE, prueba hidrostática tramo 1.</p>')
+  +sec(9,'Fotos destacadas','elegidas de los diarios del período',fotos([['grad3','08-10','2.3.1','Fin de excavación eje A.'],['grad1','10-10','2.1.2','Pórtico B-3 soldado.'],['grad2','13-10','3.1.2','Tendido HDPE.'],['grad6','09-10','2.1.3','Izaje parado por viento.']],4))
+  +sec('—','Diarios incluidos','dato del sistema','<p>'+c.e+' diarios emitidos de '+c.t+' días trabajados. Domingos sin trabajo.'+dia+'</p>')};}
+H.semanal={etq:'Semanal acumulado',fn:semanal};
+H.ejecutivo={titulo:'Informe diario · 15-10-2026',etq:'Ejecutivo (1 página)',blq:[['Encabezado','auto'],['Semáforo y 4 indicadores','auto'],['Avance por nivel (gráfico)','auto'],['Logros y alertas (3 + 3)','man'],['2 fotos clave','man']],
+ html:enc('RESUMEN EJECUTIVO DE SUPERVISIÓN','PS-0011-ID-015','borrador','Fecha: 15-10-2026')
+ +'<div class="semaf"><span class="sm am">EN RIESGO DE PLAZO</span> Avance 63% contra 72% programado (−9 pts). Productividad buena (IP 1.08).</div>'
+ +sec(1,'Indicadores','dato del sistema','<div class="kp"><div>Avance físico<b>63%</b></div><div>Programado<b>72%</b></div><div>IP<b>1.08</b></div><div>HH restantes<b>2,710</b></div></div>')
+ +sec(2,'Avance por nivel','dato del sistema','<div class="hb">'+[['1 Obras preliminares',100,100],['2 Estructuras',78,61],['3 Tuberías',45,30],['4 Pruebas',12,0]].map(function(r){return '<div><span>'+r[0]+'</span><span class="bb"><i style="width:'+r[1]+'%;background:#3987e5"></i><i style="width:'+r[2]+'%;background:#199e70"></i></span><span>'+r[2]+'% / '+r[1]+'%</span></div>';}).join('')+'</div>')
+ +sec(3,'Logros y alertas','texto libre','<div class="la"><div><b>Logros</b><br/>• Excavación eje A cerrada.<br/>• 120 m de HDPE en un día (récord).<br/>• Cero incidentes.</div><div><b>Alertas</b><br/>• Viento para el izaje en la tarde.<br/>• Frente eje C sin liberar.<br/>• Grúa 50 t pasó sus HM contractuales.</div></div>')
+ +sec(4,'Fotos clave','2 fotos',fotos(FOT.slice(0,2),2))};
+H.foto={titulo:'Informe diario · 15-10-2026',etq:'Registro fotográfico',blq:[['Encabezado','auto'],['Fotos con partida y descripción','man']],
+ html:enc('REGISTRO FOTOGRÁFICO','PS-0011-ID-015','borrador','Fecha: 15-10-2026','<div><b>Fotos:</b> 6</div><div><b>Por página:</b> 6</div><div><b>Orden:</b> por partida</div>')
+ +'<div class="fotos" style="grid-template-columns:1fr 1fr;margin-top:10px">'+FOT.map(function(f,i){return '<div class="foto"><div class="img '+f[0]+'" style="height:130px">Foto '+(i+1)+' · '+f[1]+'</div><p><b>'+f[2]+'</b> '+f[3]+'</p></div>';}).join('')+'</div>'};
+H.costos={titulo:'Informe semanal · Semana 41 (05 al 11-10-2026)',etq:'Costos (solo roles con economía)',eco:1,blq:[['Encabezado','auto'],['1. Indicadores de costo (EVM)','auto'],['2. Personal valorizado por cargo','auto'],['3. Equipos valorizados','auto'],['4. Costo por partida','auto'],['5. Comentario de costos','man']],
+ html:enc('INFORME SEMANAL DE COSTOS','PS-0011-IS-003-C','borrador','Semana 41: 05 al 11-10-2026','<div><b>Moneda:</b> US$, costo directo</div><div><b>Fuente:</b> PR al 12-10</div><div><b>Ven:</b> 5 roles con economía</div>')
+ +'<div class="semaf"><span class="sm ro">CONFIDENCIAL</span> Contiene datos económicos. No lo ven el supervisor operativo ni los roles sin datos económicos.</div>'
+ +sec(1,'Indicadores de costo','dato del sistema · PR',tabla(['Indicador','Esta semana','Acumulado'],F([['EV (valor ganado)','US$ 18,640.20','US$ 118,478.05'],['AC (costo real)','US$ 14,120.55','US$ 93,944.55'],['CV (EV − AC)','+US$ 4,519.65','+US$ 24,533.50'],['CPI','1.32','1.26'],['SPI','0.85','0.71']]),[1,2]))
+ +sec(2,'Personal valorizado por cargo','dato del sistema · tarifas congeladas',tabla(['Cargo','HH normales','HH extra','Tarifa US$/HH','Tarifa extra (×1.25)','Costo semana','Costo acum.'],F([['Capataz','56','4','14.20','17.75','866.20','4,700.20'],['Op. soldador','128','10','11.80','14.75','1,657.90','11,593.50'],['Op. mecánico','56','2','11.20','14.00','655.20','6,837.60'],['Oficial','118','0','9.60','12.00','1,132.80','6,720.00'],['Ayudante','172','6','8.10','10.12','1,453.95','7,950.15'],['Rigger','28','0','10.40','13.00','291.20','1,976.00']]).concat([T(['<b>Total</b>','<b>558</b>','<b>22</b>','','','<b>6,057.25</b>','<b>39,777.45</b>'])]),[1,2,3,4,5,6])+'<p class="pend" style="color:#374151">Las HH de MOI no se valorizan. La HH extra se valoriza a tarifa × 1.25.</p>')
+ +sec(3,'Equipos valorizados','dato del sistema',tabla(['Equipo','HM operativas','HM stand-by','Tarifa US$/HM','Costo semana','Costo acum.'],F([['Grúa 50 t','17.5','2','95.00','1,852.50','22,800.00'],['Camión grúa','46','—','42.00','1,932.00','7,140.00'],['Excavadora 320','49','4','58.00','3,074.00','12,180.00'],['Máq. soldar (2)','116','—','4.50','522.00','855.00']]).concat([T(['<b>Total</b>','<b>228.5</b>','<b>6</b>','','<b>7,380.50</b>','<b>42,975.00</b>'])]),[1,2,3,4,5])+'<p class="pend" style="color:#374151">Las HM stand-by (equipo parado y disponible) suman al costo real: se pagan a la misma tarifa.</p>')
+ +sec(4,'Costo por partida','dato del sistema',tabla(['WBS','Partida','EV semana','AC semana','CV','CPI'],F([['2.1.2','Armado y soldadura','4,780.10','3,960.20','+819.90','1.21'],['2.3.1','Excavación dados','3,350.00','2,410.30','+939.70','1.39'],['3.1.2','Tendido HDPE 8"','5,310.00','4,120.05','+1,189.95','1.29']]),[2,3,4,5])+'<p class="pend" style="color:#374151">Materiales y subcontratos: por % de avance económico, no por costo capturado.</p>')
+ +sec(5,'Comentario de costos','texto libre','<p>CPI estable. La grúa 50 t ya pasó sus HM contractuales: su costo extra se carga a 2.1.3.</p>')};
+/* ===== Pintar ===== */
+var ROL='sup',FMT='tecnico';
+function pintaHoja(){var h=H[FMT];if(h.fn){var r=h.fn();h={etq:h.etq,eco:h.eco,titulo:r.titulo,blq:r.blq,html:r.html};}
+ var ep=document.getElementById('ed-per');ep.hidden=FMT!=='semanal';document.getElementById('e-desde').value=iso(PER.d);document.getElementById('e-hasta').value=iso(PER.h);document.getElementById('e-err').textContent='';
+ document.getElementById('hoja').innerHTML=h.html;document.getElementById('ed-tit').textContent=h.titulo;document.getElementById('ed-fmt').textContent=h.etq;
+ var lb=document.getElementById('lista-blq');lb.textContent='';h.blq.forEach(function(b){var d=document.createElement('div');d.className='blq';d.innerHTML='<span class="h" aria-hidden="true">&#8942;&#8942;</span><input type="checkbox" checked /><span class="nm"></span><span class="tag '+b[1]+'">'+(b[1]==='auto'?'Dato':'Libre')+'</span>';d.querySelector('.nm').textContent=b[0];d.querySelector('input').setAttribute('aria-label','Mostrar '+b[0]);lb.appendChild(d);});
+ document.getElementById('banco-col').hidden=(FMT==='costos');
+ document.getElementById('aviso-eco').hidden=!H[FMT].eco;
+ document.querySelectorAll('[data-hoja]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-hoja')===FMT?'true':'false');});}
+function setRol(r){ROL=r;document.body.setAttribute('data-rol',r);document.querySelectorAll('[data-rol-demo]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-rol-demo')===r?'true':'false');});
+ document.querySelectorAll('[data-eco]').forEach(function(b){if(r==='sup'){b.setAttribute('aria-disabled','true');b.title='Solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos';}else{b.removeAttribute('aria-disabled');b.title='';}});
+ if(r==='sup'&&FMT==='costos'){FMT='tecnico';}pintaHoja();pintaQue();}
+document.querySelectorAll('[data-rol-demo]').forEach(function(b){b.addEventListener('click',function(){setRol(b.getAttribute('data-rol-demo'));});});
+document.querySelectorAll('[data-hoja]').forEach(function(b){b.addEventListener('click',function(){if(b.getAttribute('aria-disabled')==='true')return;FMT=b.getAttribute('data-hoja');pintaHoja();});});
+/* Nuevo: tipo + formato y «qué trae» */
+var TIPO='diario',SEL='tecnico';
+var QUE={ejecutivo:'1 página: semáforo, 4 indicadores, avance por nivel, 3 logros y 3 alertas, 2 fotos. Sin tablas. Para jefatura y cliente.',
+ tecnico:{diario:'Lo del día: actividades del RDT, personal con nombre, cargo, partida y HH; equipos con código, HM operativas y stand-by; incidencias; fotos; firmas.',semanal:'Acumulado del período que elijas (desde – hasta): avance, tabla por actividad (acumulado anterior, cada día —o cada semana si pasa de 10 días—, total del período y acumulado a la fecha), HH y HM por día, PPC, restricciones y fotos destacadas. Se arma con los diarios emitidos.'},
+ foto:'Solo fotos (2, 4 o 6 por página) con hora, partida y descripción. Para sustentar avance o valorizaciones.',
+ costos:'Datos económicos: EV, AC, CV, CPI y SPI; personal y equipos valorizados con tarifa; costo por partida. Solo para los 5 roles con datos económicos.',
+ mio:'Tu propio arreglo de bloques, guardado desde el editor.'};
+function pintaQue(){var q=QUE[SEL];document.getElementById('que-trae').textContent=(typeof q==='string')?q:q[TIPO];
+ document.querySelectorAll('.cards .card').forEach(function(c){var on=c.getAttribute('data-fmt')===SEL;c.setAttribute('aria-pressed',on?'true':'false');c.setAttribute('aria-checked',on?'true':'false');});
+ document.getElementById('lbl-tec').textContent=TIPO==='semanal'?'Semanal acumulado':'Técnico completo';
+ document.getElementById('f-dia').hidden=TIPO==='semanal';document.getElementById('f-per').hidden=TIPO!=='semanal';pintaPer();}
+/* período del semanal: preajustes + desde/hasta */
+var pD=document.getElementById('p-desde'),pH=document.getElementById('p-hasta');
+[pD,pH,document.getElementById('e-desde'),document.getElementById('e-hasta')].forEach(function(x){x.min=iso(INI);x.max=iso(HOY);});
+function pintaPer(){var d=deIso(pD.value),h=deIso(pH.value),r=resumenPer(d,h),t=document.getElementById('per-txt'),cr=document.getElementById('b-crear');
+ t.textContent=r.err||r.txt;t.classList.toggle('err',!!r.err);cr.disabled=TIPO==='semanal'&&!!r.err;if(!r.err){PER={d:d,h:h};}}
+function prePer(p){document.querySelectorAll('[data-pre]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-pre')===p?'true':'false');});
+ if(PRE[p]){pD.value=iso(PRE[p][0]);pH.value=iso(PRE[p][1]);}else{pD.focus();}pintaPer();}
+document.querySelectorAll('[data-pre]').forEach(function(b){b.addEventListener('click',function(){prePer(b.getAttribute('data-pre'));});});
+[pD,pH].forEach(function(x){x.addEventListener('change',function(){document.querySelectorAll('[data-pre]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-pre')==='libre'?'true':'false');});pintaPer();});});
+pD.value=iso(PER.d);pH.value=iso(PER.h);
+/* período también editable desde el editor: rearma el informe */
+['e-desde','e-hasta'].forEach(function(id){document.getElementById(id).addEventListener('change',function(){var d=deIso(document.getElementById('e-desde').value),h=deIso(document.getElementById('e-hasta').value),er=valida(d,h);
+ document.getElementById('e-err').textContent=er;if(er)return;PER={d:d,h:h};pD.value=iso(d);pH.value=iso(h);pintaHoja();pintaPer();});});
+document.querySelectorAll('[data-tipo]').forEach(function(b){b.addEventListener('click',function(){TIPO=b.getAttribute('data-tipo');document.querySelectorAll('[data-tipo]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});pintaQue();});});
+document.querySelectorAll('.cards .card').forEach(function(c){c.addEventListener('click',function(){if(c.getAttribute('aria-disabled')==='true')return;SEL=c.getAttribute('data-fmt');pintaQue();});});
+document.getElementById('b-crear').addEventListener('click',function(){if(this.disabled)return;FMT=(SEL==='tecnico'&&TIPO==='semanal')?'semanal':(SEL==='mio'?'tecnico':SEL);pintaHoja();ir('editor');});
+/* navegación de vistas */
+function ir(v){document.querySelectorAll('.vista').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v);});document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===v?'true':'false');});document.querySelectorAll('.pest [data-ir]').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-ir')===v?'true':'false');});document.querySelector('.pantalla').scrollTop=0;}
+document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){ir(b.getAttribute('data-v'));});});
+document.addEventListener('click',function(e){var a=e.target.closest('[data-ir]');if(a){ir(a.getAttribute('data-ir'));}
+ var ab=e.target.closest('[data-abrir]');if(ab){FMT=ab.getAttribute('data-abrir');pintaHoja();ir('editor');}
+ var s=e.target.closest('.seg.libre button');if(s){s.parentNode.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===s?'true':'false');});}
+ var o=e.target.closest('.opc');if(o&&e.target.tagName!=='SELECT'){o.parentNode.querySelectorAll('.opc').forEach(function(x){var on=x===o;x.setAttribute('aria-checked',on?'true':'false');x.setAttribute('tabindex',on?'0':'-1');x.firstChild.innerHTML=on?'&#9673;':'&#9675;';});}});
+document.getElementById('lista-blq').addEventListener('change',function(e){var c=e.target.closest('input');if(c){c.closest('.blq').classList.toggle('off',!c.checked);}});
+var bd=document.getElementById('b-desc'),md=document.getElementById('m-desc');
+bd.addEventListener('click',function(){var op=md.hidden;md.hidden=!op;bd.setAttribute('aria-expanded',op?'true':'false');});
+md.addEventListener('click',function(e){if(e.target.closest('[data-cierra-menu]')){md.hidden=true;bd.setAttribute('aria-expanded','false');bd.focus();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!md.hidden){md.hidden=true;bd.setAttribute('aria-expanded','false');bd.focus();}});
+/* ===== Inasistencias (datos simulados) ===== */
+var IA=[
+['2026-10-15','PS-0011','74123456','Mamani Ccama, Luis','Ayudante','Descanso médico','Certificado en oficina','PS-0011-RDT-0188'],
+['2026-10-15','PS-0012','70998877','Soto Rivera, Pedro','Operario civil','Falta','No avisó','PS-0012-RDT-0102'],
+['2026-10-15','PS-0014','45671234','Vargas Luque, Jorge','Oficial','Permiso','Trámite personal','PS-0014-RDT-0067'],
+['2026-10-14','PS-0011','72551399','Huanca Pari, Rene','Ayudante','Falta','','PS-0011-RDT-0187'],
+['2026-10-14','PS-0012','73310045','Cruz Ayala, Mauro','Op. soldador','Vacaciones','Del 12 al 18-10','PS-0012-RDT-0101'],
+['2026-10-14','PS-0012','70012345','Pinto Salas, Jesús','Ayudante','Descanso médico','Reposo de 2 días','PS-0012-RDT-0101'],
+['2026-10-13','PS-0011','48220011','Apaza Nina, Raúl','Rigger','Otro','Duelo familiar','PS-0011-RDT-0186'],
+['2026-10-13','PS-0014','71889900','Ticona Mayta, Pablo','Operario civil','Falta','Sin justificar','PS-0014-RDT-0066'],
+['2026-10-13','PS-0014','46001122','Yucra Quispe, Hilda','Vigía','Permiso','Cita médica','PS-0014-RDT-0066'],
+['2026-10-12','PS-0011','75120033','Rojas Tito, Luis','Op. mecánico','Descanso médico','','PS-0011-RDT-0185'],
+['2026-10-12','PS-0012','72660044','Condori Vilca, Saúl','Oficial','Falta','','PS-0012-RDT-0100'],
+['2026-10-11','PS-0011','74123456','Mamani Ccama, Luis','Ayudante','Falta','','PS-0011-RDT-0184'],
+['2026-10-10','PS-0012','73310045','Cruz Ayala, Mauro','Op. soldador','Permiso','Trámite en Marcona','PS-0012-RDT-0098'],
+['2026-10-10','PS-0014','47001234','Zapata Núñez, Iván','Capataz','Descanso médico','Certificado adjunto','PS-0014-RDT-0064'],
+['2026-10-09','PS-0011','72551399','Huanca Pari, Rene','Ayudante','Vacaciones','Del 05 al 09-10','PS-0011-RDT-0182'],
+['2026-10-09','PS-0014','71889900','Ticona Mayta, Pablo','Operario civil','Otro','Capacitación externa','PS-0014-RDT-0063'],
+['2026-10-08','PS-0012','70012345','Pinto Salas, Jesús','Ayudante','Falta','','PS-0012-RDT-0096'],
+['2026-10-07','PS-0011','48220011','Apaza Nina, Raúl','Rigger','Permiso','Salida temprano','PS-0011-RDT-0180'],
+['2026-10-07','PS-0014','46001122','Yucra Quispe, Hilda','Vigía','Falta','','PS-0014-RDT-0061'],
+['2026-10-06','PS-0012','72660044','Condori Vilca, Saúl','Oficial','Descanso médico','Reposo de 3 días','PS-0012-RDT-0094'],
+['2026-10-05','PS-0011','75120033','Rojas Tito, Luis','Op. mecánico','Falta','','PS-0011-RDT-0178']
+];
+var MOT=['Falta','Descanso médico','Permiso','Vacaciones','Otro'];
+var iaModo='d',iaPre='actual';
+var iaDia=document.getElementById('ia-dia'),iaD=document.getElementById('ia-desde'),iaH=document.getElementById('ia-hasta');
+[iaDia,iaD,iaH].forEach(function(x){x.min=iso(INI);x.max=iso(HOY);});
+iaDia.value=iso(HOY);
+function iaSetPre(p){iaPre=p;if(p!=='libre'){var r=PRE[p];iaD.value=iso(r[0]);iaH.value=iso(r[1]);}
+ document.querySelectorAll('[data-ia-pre]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-ia-pre')===p?'true':'false');});}
+function iaPaint(){
+ var sv=document.getElementById('ia-serv').value,d,h,msg='';
+ if(iaModo==='d'){d=h=deIso(iaDia.value);if(!d||isNaN(d))msg='Elige una fecha.';}
+ else{d=deIso(iaD.value);h=deIso(iaH.value);if(!d||!h||isNaN(d)||isNaN(h))msg='Elige las dos fechas.';else if(d>h)msg='«Desde» no puede ser posterior a «Hasta».';}
+ var f=[];if(!msg){var a=iso(d),b=iso(h);f=IA.filter(function(r){return r[0]>=a&&r[0]<=b&&(!sv||r[1]===sv);}).sort(function(x,y){return x[0]<y[0]?1:x[0]>y[0]?-1:0;});}
+ var t=document.getElementById('ia-txt');
+ t.className='per-txt'+(msg?' err':'');
+ t.textContent=msg||((iaModo==='d'?'Día '+fc(d):'Del '+fc(d)+' al '+fc(h)+' ('+ndias(d,h)+' días)')+' · '+(sv||'todos mis servicios')+' · '+f.length+' inasistencia'+(f.length===1?'':'s'));
+ document.getElementById('ia-res').innerHTML=msg||!f.length?'':MOT.map(function(m){var n=f.filter(function(r){return r[5]===m;}).length;return n?'<span class="tag b">'+m+': <b>'+n+'</b></span>':'';}).join('')+'<span class="tag e">Total: <b>'+f.length+'</b></span>';
+ document.getElementById('ia-body').innerHTML=f.map(function(r){var x=deIso(r[0]);return '<tr><td class="n">'+fc(x)+'</td><td>'+r[1]+'</td><td class="n">'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+(r[6]||'—')+'</td><td class="n">'+r[7]+'</td></tr>';}).join('');
+ var vac=!f.length;document.getElementById('ia-tabla').hidden=vac;document.getElementById('ia-vacio').hidden=!vac;
+ document.getElementById('ia-pdf').disabled=vac;
+}
+document.getElementById('ia-filtros').addEventListener('click',function(e){
+ var m=e.target.closest('[data-ia-modo]');
+ if(m){iaModo=m.getAttribute('data-ia-modo');document.querySelectorAll('[data-ia-modo]').forEach(function(b){b.setAttribute('aria-pressed',b===m?'true':'false');});
+  document.getElementById('ia-l-dia').hidden=iaModo!=='d';document.getElementById('ia-l-sem').hidden=iaModo!=='s';iaPaint();}
+ var p=e.target.closest('[data-ia-pre]');if(p){iaSetPre(p.getAttribute('data-ia-pre'));iaPaint();}});
+iaDia.addEventListener('change',iaPaint);document.getElementById('ia-serv').addEventListener('change',iaPaint);
+[iaD,iaH].forEach(function(x){x.addEventListener('change',function(){iaSetPre('libre');iaPaint();});});
+iaSetPre('actual');iaPaint();
+/* #editor-semanal, #editor-costos… abren esa vista para revisar */
+var h=location.hash.slice(1).split('-');setRol(h[2]==='eco'?'eco':'sup');if(h[1]&&H[h[1]]){FMT=h[1];if(H[FMT].eco&&ROL==='sup')setRol('eco');pintaHoja();}
+if(document.getElementById('v-'+h[0])){ir(h[0]);}
+if(h[0]==='nuevo'&&h[1]==='semanal'){document.querySelector('[data-tipo=semanal]').click();}
+})();
+</script>
+<script>
+window.MARCO_ACTIVO='informe-servicio';window.MARCO_PANELES='00';
+/* Propuesta: activa el chip inerte y agrega «Foto de campo» (acción) sin tocar el marco compartido */
+window.MARCO_AJUSTE=function(R,IZQ,DER,RAPIDO){
+ R['informe-servicio']=['Informes de supervisión','sup','▤',1];
+ R['foto-campo']=['Foto de campo','sup','◉',1,1];
+ var sup=DER[2][2];sup.splice(sup.indexOf('informe-servicio')+1,0,'foto-campo');
+ DER.unshift(DER.splice(2,1)[0]);
+ RAPIDO.unshift(['foto-campo']);
+ IZQ.forEach(function(g){if(g[0]==='Reportes'){g[1].splice(1,0,'informe-servicio');}if(g[0]==='Acciones'){g[1].push('foto-campo');}});
+};
+</script>
+<script src="marco-tres-paneles.js"></script>
+</body>
+</html>

@@ -51,3 +51,12 @@ Unas 55 llamadas a herramientas entre las dos partes de la sesión.
 ## Fuentes de verdad revisadas
 
 No se editó ningún flujo. Flujos 06, 10 y 11 no se releyeron por completo; las columnas se verificaron en `db/026`, `040`, `047`, `053`, `100`, `102`. Pendiente anotar en el flujo 18/21, si procede, el origen de los bloques de informe.
+
+## Corrección
+
+C-H1 y C-H2: resueltos por el Orquestador (sin consultar a Victor).
+
+- C-H1: `FuenteActividad` ahora trae `wbsVinculados` (partidas vinculadas por `rdt_actividad_partidas` y `dp_partidas`, como hace el PR en db/053). `metradoValidado`, el personal por partida, las actividades del diario y del semanal suman por ese vínculo; el texto `wbs` solo se muestra. `cargar-fuentes.ts` lee el vínculo. Pruebas: una actividad con texto 9.9 vinculada a 1.2 suma a 1.2 (diario, avance de partida y semanal).
+- C-H2: `indicadoresDeLaFecha` (en `armar-datos-diario.ts`). Con `hoy` y una fecha pasada, avance, programado y SPI salen del punto de esa fecha de la serie física de la Curva S (`cargarCurvaS`, modo fisica); HH ganadas, HH reales e IP, de los partes VALIDADO hasta esa fecha. Un diario de hoy (o sin `hoy`) sale igual que antes. Pruebas: diario de fecha pasada contra uno de hoy. Límite: las HH legacy sin partida no se reconstruyen por fecha. `tipos.ts` sin cambios.
+- C1 y C4 de nuevo Conforme. Commit 8459b86 en `local-worker-1` y `origin/local-worker-1`.
+- Comandos: `npm test` 132 archivos y 1315 pruebas en verde; `npx tsc --noEmit` sin errores; lint 9 errores y 22 avisos (iguales a los preexistentes); `npx next build --webpack` compilado en verde. Siguen no probados en base.

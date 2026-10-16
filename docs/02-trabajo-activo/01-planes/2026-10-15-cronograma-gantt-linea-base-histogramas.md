@@ -4,12 +4,12 @@
 
 - Tema: crear y seguir el cronograma dentro del sistema, al estilo MS Project (tabla + barras), con línea base, línea de seguimiento contra el RDT, histogramas de HH y HM, y exportación a PDF y Excel.
 - Fecha de inicio: 2026-10-15.
-- Estado: `Planificando` (Spec aprobado; el Planner arma el plan por tandas con su Punch List para el Gate 1).
+- Estado: `Implementando` (Gate 1 aprobado por Victor el 2026-10-15; arranca la ola 0, la maqueta).
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-15)`
-- Gate 1: `pendiente`
+- Gate 1: `aprobado por Victor (2026-10-15)`, con la condición de usar Haiku en las tareas simples (ver «Asignación de modelos»)
 - Gate 2: `pendiente`
 
 Origen: pedido directo de Victor, 2026-10-15. Promueve el ítem «Cronograma como línea base y línea real de avance (Gantt)» de [`planes-futuros.md`](planes-futuros.md) (pospuesto el 2026-09-30); ese ítem se marca «promovido» con enlace a este plan al aprobarse el Spec.
@@ -201,45 +201,271 @@ Ver «Spec / SDD». No se duplica.
 
 ## Entorno, repositorios, ramas y worktrees
 
-Propuesta del Orquestador, verificada con `git` el 2026-10-15; se vuelve a verificar al planificar y se autoriza en el Gate 1.
+Verificado con `git` por el Planner el 2026-10-15 (la tabla del Orquestador estaba desactualizada: otro plan, «Informes de supervisión», ya usa las ramas 1 a 3).
 
-- Entorno: `local`. Documentación en `main` de `pg_control_proyectos` (directo, sin rama). Código en `py_control_proyectos_web`, en ramas `local-worker-N`, nunca `main` hasta el merge tras el Gate 2.
-- Pool real:
+- Entorno: `local`. Documentación en `main` de `pg_control_proyectos` (directo, sin rama). Código en `py_control_proyectos_web`, en ramas `local-worker-N`; nunca `main` hasta el merge tras el Gate 2.
+- Pool real hoy (`git worktree list`, `git status`, `git rev-list` en la app):
 
-| Rama | Estado | Situación |
+| Rama | Estado verificado | Uso para este plan |
 |---|---|---|
-| `local-worker-2` | Limpia, mergeada a `main`, 46 commits atrás | Libre; se actualiza con `main` |
-| `local-worker-3` | Limpia, mergeada a `main`, 72 commits atrás | Libre; se actualiza con `main` |
-| `local-worker-4` | Limpia, mergeada a `main`, 14 commits atrás | Libre; se deja para el plan de Informes |
-| `local-worker-1` | 3 commits sin mergear (Dashboard, tanda A) | En uso, no se toca |
-| `local-worker-5` | 4 commits sin mergear (Dashboard y Curva S) | En uso, no se toca |
-| `plan-maestro-tres-paneles` | 14 commits sin mergear | No es de este plan |
+| `local-worker-1` | 4 commits propios, sin mergear (tanda B de Informes: migración 098) y carpeta `src/lib/informes/` sin seguimiento | No se toca |
+| `local-worker-2` | 4 commits propios, sin mergear (tanda N de Informes: migración 101) y 6 archivos modificados | No se toca (el dato «libre» era viejo) |
+| `local-worker-3` | Igual a `main`, pero con 5 archivos modificados y la migración 100 sin seguimiento (tandas O/R de Informes) | No se toca (el dato «libre» era viejo) |
+| `local-worker-4` | Limpia, sin commits propios, 14 commits atrás de `main`; la reservaba Informes pero su Plan asigna W1 a W3 | **Libre: Worker CR-1** (se actualiza con `main`) |
+| `local-worker-5` | 4 commits propios sin mergear, 41 atrás | No se toca |
+| `plan-maestro-tres-paneles` | Sin mergear | No es de este plan |
 
-- Propuesta: `local-worker-2` para el cronograma (motor, editor, línea base, seguimiento, exportar) y `local-worker-3` para el APU por partida y los histogramas. Rangos de migración separados desde la `102`. Crear, actualizar con `main` o reasignar ramas y carpetas requiere la autorización del Gate 1.
+- **Worker CR-1** (línea principal: motor, editor, Gantt, creación, línea base, seguimiento, exportar, permisos): `local-worker-4`, carpeta `.worktrees/local-worker-4`, con `git merge main` al empezar.
+- **Worker CR-2** (APU por partida e histogramas): **no hay otra rama limpia**, así que Victor autorizó el 2026-10-15 (P1) crear la rama y carpeta nuevas `local-worker-6` desde `main` y actualizar `local-worker-4` con `main`.
+- Puerto de desarrollo: uno por carpeta, que fija el Orquestador al lanzar (por confirmar el número libre).
+- Migraciones: **la 102 ya la usa el plan de Informes** (tanda R). Este plan usa desde la **103**: CR-1 = 103 a 106; CR-2 = 107. El Worker vuelve a mirar `ls db/` y `git log` antes de escribir cada archivo.
+- Orden de merge a `main` (paso 16a): primero CR-2 (si existe), luego CR-1; el Worker git incorpora `local-worker-6` en `local-worker-4` antes de la tanda C9. Choques esperables y su dueño: `src/lib/permisos/permisos.ts` (el plan de Informes edita el mismo archivo con W1: la tanda C10 va después de que él mergee o resuelve el choque trivial), `db/README.md` (cada Worker agrega solo su línea) y `src/lib/config/registro-accesos.ts` (este plan no lo toca: el chip Cronograma ya existe).
 
 ## Skills aplicables
 
-Del repositorio (`.claude/skills/`): `seguir-flujo-de-planes` (Orquestador, al activar y antes de cerrar), `cerrar-tanda` (al terminar cada tanda), `verificar-permisos-por-rol` (tanda de permisos), `trasladar-hallazgos` (Documentador). Se completa al planificar.
+- `seguir-flujo-de-planes`: Orquestador, al activar y antes de cerrar.
+- `cerrar-tanda`: cada Worker, al terminar su tanda.
+- `verificar-permisos-por-rol`: tanda C10 y verificación C12.
+- `trasladar-hallazgos`: Documentador, tanda C11.
+- `dataviz` (del entorno): lo consulta el Worker de la maqueta (C0) y de histogramas (C8) para las reglas de color, leyenda y eje de los gráficos, sin dependencias nuevas.
+- Herramientas de navegador (Playwright): tanda C12 y las autoverificaciones de interfaz, con las dos cuentas de prueba de la memoria del Orquestador.
 
 ## Fases y dependencias
 
-Forma probable, a detallar por el Planner: F0 maqueta aprobada por Victor → F1 motor de programación y datos → F2 editor con las tres puertas de creación → F3 línea base y seguimiento → F4 APU por partida e histogramas (independiente de F2, candidata a otro Worker) → F5 exportar PDF y Excel → F6 permisos, flujos y matriz → Documentador → Auditoría.
+| Fase | Contenido | Tanda(s) | Depende de |
+|---|---|---|---|
+| F0 | Maqueta HTML aprobada por Victor | C0 | Gate 1 |
+| F1 | Motor de programación (4 vínculos, calendario, ciclos, resumen) y datos (migración 103) | C1 | F0 |
+| F2 | API de edición, editor tabla, Gantt, tres puertas de creación | C2, C3, C4 | C1 |
+| F3 | Línea base dentro de la aprobación (104, 105) y seguimiento RDT/manual (106) | C5, C6 | C4 (necesita actividades en el editor) |
+| F4 | APU por partida (107) e histogramas | C7, C8 | C7 libre; C8 necesita el calendario de C1 |
+| F5 | Exportar PDF y Excel | C9 | C6 y C8 |
+| F6 | Permisos, validación final | C10 | C2 a C9 |
+| Doc | Flujos 09, 14, 15, 16, 18, 20, `design.md`, artefacto «Matriz de permisos» | C11 | C10 |
+| Verif | Verificación en vivo en PS-0000 y los 12 criterios | C12 | C11 |
+
+Olas: **ola 0** C0 (CR-1) y Gate de la maqueta; **ola 1** C1 (CR-1) en paralelo con C7 (CR-2); **ola 2** C2, C3, C4 (CR-1) en paralelo con C8 (CR-2, tras incorporar C1); **ola 3** C5, C6 (CR-1); **ola 4** C9, C10 (CR-1); **ola 5** C11 (Documentador) y C12. Camino crítico: C0 → C1 → C2 → C3 → C4 → C5 → C6 → C9 → C10 → C11 → C12. Independencia real de archivos entre carriles: CR-2 toca solo `src/lib/dp/**`, `src/app/api/dp/**` (importación), `db/107*`, `src/lib/cronograma/histograma*.ts` y `src/components/cronograma/Histogramas*`; CR-1 no toca esas rutas salvo C9, que importa los datos del histograma sin editarlos.
 
 ## Equipo del plan
 
-Lo propone el Planner en el paso 6 (por defecto: Orquestador, Planner, de 1 a 3 Workers de código, Documentador y Worker git; sin Opus).
+Orquestador (punto único con Victor), Planner (este plan, ya terminó), Worker CR-1, Worker CR-2, Documentador (tanda C11), Worker git (merges entre ramas de trabajo, `git merge main` al empezar, incorporar CR-2 en CR-1), Auditor (informe en `04-auditoria/`). Sin Opus. Esfuerzo Medio en todas las fases; ninguna requiere esfuerzo Alto ni nivel 5.
+
+**Cuántos agentes y cuáles (respuesta a Victor, 2026-10-15):** 12 sesiones de Worker de código (una por tanda: C0 a C10 y C12), 1 Documentador (C11), 1 Worker git (varias ejecuciones cortas) y 1 Auditor; como mucho dos sesiones de código a la vez, una por carril. **Haiku** (pedido de Victor para tareas simples): C0 maqueta, C4 tres puertas, C11 documentación, Worker git y las búsquedas y mediciones mecánicas del Orquestador. **Sonnet** el resto, porque tocan lógica, dinero del avance o seguridad. Si una tanda en Haiku no logra cerrar, se suspende y se le pide a Victor aprobar Sonnet para repetirla (cambio de nivel durante la ejecución, regla de `seguir-flujo-de-planes`).
+
+### Asignación de modelos y esfuerzos por fase
+
+| Tanda / fase | Worker | Nivel de consumo (`10-niveles`) y agente | Modelo Claude | Esfuerzo | Por qué |
+|---|---|---|---|---|---|
+| C0 maqueta (F0) | CR-1 | 2 (`n2`) | **Haiku** | Medio | HTML estático con brief cerrado, partiendo de dos maquetas existentes; Victor la revisa antes de C1, así que un error se detecta barato |
+| C1 motor y datos (F1) | CR-1 | 3 (`n3`) | Sonnet | Medio | Lógica nueva con muchos casos (cuatro vínculos, desfase negativo, ciclos) y una migración aditiva |
+| C2 API y editor tabla | CR-1 | 3 (`n3`) | Sonnet | Medio | Varios archivos, validación de servidor y componente grande |
+| C3 Gantt | CR-1 | 3 (`n3`) | Sonnet | Medio | SVG a mano con arrastre y teclado, sin librería |
+| C4 tres puertas | CR-1 | 2 (`n2`) | **Haiku** | Medio | Reutiliza parsers y niveles existentes; brief cerrado. Si no cierra, se pide a Victor aprobar Sonnet |
+| C5 línea base | CR-1 | 3 (`n3`), aprobado por Victor (P5) | Sonnet | Medio | Reescribe la función de aprobación (todo o nada); la prueba de atomicidad cubre el riesgo |
+| C6 seguimiento | CR-1 | 3 (`n3`) | Sonnet | Medio | Regla nueva con cruce contra la Curva S |
+| C7 APU por partida | CR-2 | 3 (`n3`) | Sonnet | Medio | Parser y datos de cuadrilla por partida; migración aditiva |
+| C8 histogramas | CR-2 | 2 (`n2`) | Sonnet | Medio | Cálculo y gráficos con brief cerrado |
+| C9 exportar | CR-1 | 2 (`n2`) | Sonnet | Medio | `pdfkit` y `exceljs` ya existen; patrón en `src/lib/pdf/hoja.ts` |
+| C10 permisos y validación | CR-1 | 2 (`n2`) | Sonnet | Medio | Funciones de permiso y pruebas contra el flujo 14 |
+| C11 documentación | Documentador | 0 o 1 (`n0`/`n1`) | Haiku | Medio | Traslado de reglas ya acordadas |
+| C12 verificación en vivo | CR-1 (o Worker nuevo) | 2 (`n2`) | Sonnet | Medio | Protocolo aprobado con Playwright |
+| Worker git | Worker git | 0 o 1 | **Haiku** | Medio | `git merge main`, incorporar `local-worker-6` en `local-worker-4`, crear la carpeta de trabajo: mecánico |
+| Auditor | Auditor | 0 o 1 | Sonnet | Medio | Revisión de solo lectura |
+
+Los niveles de partida salen de `10-niveles-de-modelos.md`; el benchmark por nivel (Política 2) no se corre porque las tareas se parecen a las ya medidas (Lote 3). Las tablas de «Registro de cambios de nivel» y «Esfuerzos reales usados» se llenan al ejecutar.
 
 ## Archivos / componentes afectados
 
-Lo completa el Planner.
+Rutas verificadas con `ls` en la app el 2026-10-15. «Nuevo» = no existe hoy; el nombre es propuesta del Planner y el Worker puede ajustarlo si lo anota en su resumen.
+
+**Existen y se tocan:**
+- `src/app/api/cronograma/route.ts` (615 líneas: GET, PATCH de vínculos, POST de carga; llama `recalcular_pr_fechas_base`), `src/app/api/cronograma/hitos/route.ts`, `src/app/api/cronograma/plantilla/route.ts`.
+- `src/app/(workspace)/cronograma/page.tsx` (hoy solo cabecera «Fase 1» y `FormularioCronograma`).
+- `src/components/ui/FormularioCronograma.tsx` (carga e informe actuales; pasa a ser la «puerta archivo»).
+- `src/lib/cronograma/` (`parser-excel.ts`, `parser-pdf.ts`, `informe.ts`, `niveles.ts`, `vinculos.ts`, `tipos.ts`): se extiende `tipos.ts` y los parsers para devolver predecesoras estructuradas.
+- `src/components/ui/PersonalizarCampos.tsx` (se reutiliza, no se edita).
+- `src/lib/permisos/permisos.ts` (ya trae `puedeVerCronograma`, `puedeSubirCronograma`, `puedeDescargarPlantillaCronograma`).
+- `src/lib/dp/parser-apu.ts` (272 líneas, calcula HH por partida), importación del DP bajo `src/app/api/dp/**` y `src/lib/dp/**` (por confirmar el archivo exacto de la ruta de importación en C7).
+- `db/094_aprobar_plan_maestro_reposicion_determinista.sql` (función `aprobar_plan_maestro_con_reposicionamiento(uuid, uuid, jsonb)`; no se edita: se crea una versión nueva con `create or replace` en la 105) y `src/lib/proyectos/plan-maestro-aprobado.ts` (solo lee; la tabla es `proyecto_plan_maestro`).
+- `src/lib/curva-s/curva-s.ts` (solo se lee para reusar el método de avance físico; no se edita).
+- `src/lib/pdf/hoja.ts` (otro plan prohíbe editarlo: se importa; lo nuevo va en archivos nuevos).
+- `db/README.md` (una línea por migración).
+- En este repositorio: `docs/05-diseno-y-referencias/mockups/` (maqueta nueva + enlace en `index.html` y `README.md`, que hoy están modificados sin commit por el Orquestador), `design.md`, flujos 09, 14, 15, 16, 18, 20 (Documentador), `planes-futuros.md` (marcar «promovido»).
+
+**No existen y se crean (propuesta):**
+- `docs/05-diseno-y-referencias/mockups/cronograma-editor-gantt.html`.
+- `db/103_cronograma_programacion.sql` (`cronograma_dependencias`, `servicio_calendario`, columnas `fijada_a_mano` y `origen` en `cronograma_actividades`), `db/104_cronograma_lineas_base.sql`, `db/105_aprobar_plan_maestro_con_linea_base.sql`, `db/106_cronograma_seguimiento.sql`, `db/107_dp_partida_recursos.sql`.
+- `src/lib/cronograma/calendario.ts`, `predecesoras.ts`, `programacion.ts`, `ciclos.ts` (o dentro de `programacion.ts`), `edt.ts`, `seguimiento.ts`, `linea-base.ts`, `histograma.ts`, `exportar-pdf.ts`, `exportar-excel.ts` y sus `.test.ts`.
+- `src/components/cronograma/` (carpeta nueva): `EditorCronograma.tsx`, `TablaCronograma.tsx`, `GanttCronograma.tsx`, `Histogramas.tsx`, `PanelSeguimiento.tsx`.
+- `src/app/api/cronograma/actividades/`, `.../dependencias/`, `.../calendario/`, `.../desde-dp/`, `.../linea-base/`, `.../seguimiento/`, `.../histogramas/`, `.../exportar/` (rutas nuevas bajo `/api/cronograma`).
+- **Fuera de límites:** `src/lib/rdts/**` (plan de Informes), `src/lib/pr/evm.ts`, `src/lib/dashboard/**`, `src/lib/informes/**`, `db/098` a `db/102`.
+
+## Cambios que contradicen lo escrito (para el Gate 1)
+
+Tabla única: solo lo que contradice. Se consulta a Victor antes de editar cada flujo (el Documentador edita en C11, con la respuesta ya registrada).
+
+| # | Documento | Dice hoy | Pasaría a decir |
+|---|---|---|---|
+| 1 | Flujo 15, párrafo «El cronograma solo carga y muestra» | El cronograma solo carga y muestra | Se crea (DP, archivo o a mano), se edita hasta aprobar el Plan Maestro y lleva seguimiento |
+| 2 | Flujo 15, «Predecesoras/sucesoras son informativas» | Informativas | En modo automático determinan las fechas (FC, CC, FF, CF con desfase); en la carga de archivo se respetan las fechas del archivo |
+| 3 | Flujo 15, «Pendiente (fase 2)» | Interfaz Gantt no construida | Gantt construido; se retira de pendientes |
+| 4 | Flujo 15 («queda congelado») y flujo 20 §6 / línea 38 («lo único editable es el propio Plan Maestro») | Con Plan Maestro aprobado nada del cronograma se edita | Lo único editable de **planeación** es el Plan Maestro; el **seguimiento** es ejecución y sí se edita |
+| 5 | Flujo 20 §3 | Aprobación todo o nada: Plan Maestro, reposicionamiento, recálculo del PR | Suma, en la misma transacción, el guardado de la línea base |
+| 6 | AGENTS.md y flujos 18 y 20 | No se declara avance real sin fuente validada | El avance manual del seguimiento no alimenta PR, Dashboard ni Curva S; se rotula «Manual» (D1) |
+| 7 | Flujo 20, diagrama de línea 52 | «Cronograma cargado (… solo carga y vista)» | «Cronograma creado o cargado (editable hasta aprobar)» |
+| 8 | Flujo 15, «Hitos»: el hito es una `TAREA` con `requiere_partidas = false`, declarado en Paquetes | El hito se marca en Paquetes y no en el cronograma | **Respondida por Victor (2026-10-15):** el tipo Hito del editor (duración 0, rombo) es la fuente; Paquetes solo lo muestra atenuado, de solo lectura, con «◆ Hito», y ya no se marca desde Paquetes. Cómo tratar los hitos ya marcados lo confirma el Worker de C2 (CG-26) |
+| 9 | Flujo 15, «Un cronograma por servicio; volver a subirlo lo reemplaza completo» y flujo 14 nota 8 | El aviso de pérdida habla de vínculos, paquetes y borrador del Plan Maestro | **Respondida por Victor (2026-10-15):** el aviso incluye también lo editado en el cronograma y su seguimiento; crear desde el DP sobre un cronograma con actividades también reemplaza, con aviso de lo que se pierde, y queda bloqueado con el Plan Maestro aprobado |
+| 10 | Flujo 15, «Relación con Paquetes» (agregada por el Orquestador al revisar; el Planner no leyó el flujo completo) | «El cronograma conserva siempre las fechas del archivo original cargado» | El cronograma conserva las fechas de la planeación (las del archivo si se cargó, o las calculadas si se creó o editó) y, aprobado el Plan Maestro, su línea base; el seguimiento tiene fechas propias; ni Paquetes ni el seguimiento modifican la planeación |
+
+**Se actualizan sin contradicción:** flujo 09 (HH por cargo y HM por equipo por partida), flujo 14 (filas nuevas de crear/editar cronograma, editar seguimiento, histogramas y exportar; nota 8) y el artefacto «Matriz de permisos», flujo 16 (el chip Cronograma gana acciones internas; sin chip nuevo), flujo 18 (cadena e histogramas), flujo 19 (no cambia: sus vínculos siguen en Paquetes; solo se revisa la referencia a fechas), flujo 21 (se cita el método de avance físico compartido), `design.md` (Gantt e histogramas), `planes-futuros.md`.
+
+## Pedido consolidado para el Gate 1
+
+1. **Datos de prueba:** servicio PS-0000 del Portafolio Practica con DP aprobado y APU cargado (los servicios con DP congelado no traen HM por partida hasta recargar el DP: se necesita uno con DP recargado, o permiso para recargarlo ahí); los tres archivos de `docs/06-material-de-apoyo/Informacion para pruebas/`; un servicio con Plan Maestro aprobado y RDT validados para el seguimiento (por confirmar si PS-0000 los tiene) y otro sin Plan Maestro.
+2. **Preautorizaciones:** inicio de sesión con las dos cuentas de prueba (las maneja el Orquestador; nunca se leen ni se muestran) y las herramientas de navegador (Playwright) para las verificaciones de C12 y las autoverificaciones.
+3. **Ramas y carpetas:** `local-worker-4` (actualizar con `main`) y `local-worker-6` creada desde `main` con su carpeta (autorizado por Victor, 2026-10-15). No se tocan 1, 2, 3 ni 5. El Worker git incorpora `local-worker-6` en `local-worker-4` antes de C9.
+4. **Migraciones:** 103 a 106 (CR-1) y 107 (CR-2). Las prepara el Worker, las aplica Victor (o el Orquestador con su autorización y el verificador) una por una, nada se aplica en este paso. Orden: 103 antes de C1, 104 y 105 antes de la verificación de C5, 106 antes de C6, 107 antes de C8.
+5. **Modelos y esfuerzos:** tabla de arriba; todo en esfuerzo Medio y sin nivel 5; C5 en nivel 3 (P5 resuelta); Haiku en las tareas simples por pedido de Victor.
+6. **Maqueta:** el Gate de la maqueta (Victor aprueba C0) es una puerta intermedia obligatoria antes de C1.
 
 ## Punch List embebida
 
-Lo completa el Planner.
+> Estados: `Sin verificar` / `Conforme` / `Observado` / `No aplica`. La evidencia de cada ítem va en el archivo de evidencia homónimo. «CA» = criterio de aceptación del Spec. Un ítem dice qué se verifica y cómo.
+
+### Estado de aprobación
+
+Gate 1: aprobado por Victor el 2026-10-15 (lista de ítems, tabla de contradicciones, ramas, modelos y orden de migraciones).
+
+### Ítems funcionales
+
+| ID | Tanda | Qué se verifica y cómo | CA | Estado |
+|---|---|---|---|---|
+| CG-01 | C0 | Maqueta HTML de tres paneles con tabla y Gantt (barra base, barra de seguimiento con %, resumen, hito, flechas, línea «hoy», leyenda); abre sin errores de consola | 10 | Sin verificar |
+| CG-02 | C0 | Maqueta de los cuatro estados (vacío, cargando, error, datos) y de las tres puertas de creación | 10 | Sin verificar |
+| CG-03 | C0 | Maqueta de la pestaña Histogramas (barras HH/HM, acumulado, pico, filtros, rótulo de fuente programado/estimado) | 7 | Sin verificar |
+| CG-04 | C0 | Maqueta del interruptor modo RDT / manual, etiqueta «Manual», historial y selector de línea base | 5 | Sin verificar |
+| CG-05 | C0 | Maqueta de las opciones de exportar y de la vista móvil de solo lectura; enlazada en `mockups/index.html` y `README.md` | 8, 10 | Sin verificar |
+| CG-06 | C0 | **Victor aprueba la maqueta** (puerta intermedia; sin esto no empieza C1) | — | Sin verificar |
+| CG-10 | C1 | Migración 103 escrita, aditiva, con reversa documentada y RLS; no se aplica | 1 | Sin verificar |
+| CG-11 | C1 | `calendario.ts`: sumar y restar días laborables de lunes a sábado saltando los no laborables; prueba `vitest` con los 12 días del 6 al 19/08 del PDF de referencia | 1 | Sin verificar |
+| CG-12 | C1 | `predecesoras.ts`: lee `5`, `5FC+2`, `5CC`, `5FF-1`, `5CF` y rechaza lo ilegible con motivo; `vitest` | 1, 3 | Sin verificar |
+| CG-13 | C1 | `programacion.ts`: los cuatro vínculos con desfase positivo y negativo calculan la fecha correcta; actividad fijada a mano no se mueve; `vitest` por cada tipo | 1 | Sin verificar |
+| CG-14 | C1 | Un ciclo se rechaza con el motivo (cadena de actividades); `vitest` | 1 | Sin verificar |
+| CG-15 | C1 | Resumen: comienzo = el menor de sus hijas, fin = el mayor, duración calculada; hito de duración 0; `vitest` | 1 | Sin verificar |
+| CG-16 | C1 | EDT se numera solo según la sangría (sube, baja, inserta); `vitest` | 1 | Sin verificar |
+| CG-20 | C2 | API de actividades: guarda, mueve y borra con validación en servidor (permiso, alcance al servicio, ciclo, tipo, calendario) y rechaza la planeación con Plan Maestro aprobado | 1, 9 | Sin verificar |
+| CG-21 | C2 | Editor tabla con árbol de 14 px plegable y columnas Id, EDT, Nombre, Duración, Comienzo, Fin, Predecesoras, Sucesoras, % avance y variación; verificado con Playwright | 1, 10 | Sin verificar |
+| CG-22 | C2 | Cambiar una duración o predecesora mueve las siguientes en la tabla y en servidor; crear 15 actividades en 3 niveles desde cero | 1 | Sin verificar |
+| CG-23 | C2 | Borrador con guardado parcial; recargar la página conserva lo guardado | 10 | Sin verificar |
+| CG-24 | C2 | «Personalizar campos» (componente existente) y virtualización de filas desde 60 filas | 10 | Sin verificar |
+| CG-25 | C2 | Editor de calendario: lista de días no laborables que edita el planner y recalcula | 1 | Sin verificar |
+| CG-26 | C2 | Hito: el tipo Hito del editor es la fuente; Paquetes lo muestra atenuado, solo lectura, con «◆ Hito»; el Worker anota cómo trata los hitos ya marcados | 1, 5 | Sin verificar |
+| CG-30 | C3 | Gantt SVG: escalas día, semana (sábado a viernes) y mes | 10 | Sin verificar |
+| CG-31 | C3 | Barras de tarea, resumen (negro con corchetes) e hitos (rombo) con tokens de `design.md`, no solo color | 8, 10 | Sin verificar |
+| CG-32 | C3 | Flechas de dependencia de los cuatro tipos en el Gantt | 1, 8 | Sin verificar |
+| CG-33 | C3 | Línea «hoy» punteada con su fecha y leyenda siempre visible | 8, 10 | Sin verificar |
+| CG-34 | C3 | Arrastrar mueve o estira una barra, actualiza la tabla y marca la actividad «fijada a mano» | 1, 10 | Sin verificar |
+| CG-35 | C3 | Todo lo del arrastre se hace con teclado y escribiendo en la tabla | 10 | Sin verificar |
+| CG-36 | C3 | Tres paneles ocultables y desplazamiento vertical sincronizado; móvil en solo lectura | 10 | Sin verificar |
+| CG-40 | C4 | Puerta «Desde el DP»: una tarea por partida, actividades por nivel, enlace por WBS hecho en PS-0000 | 2 | Sin verificar |
+| CG-41 | C4 | Puerta «Desde archivo»: los tres archivos de prueba abren en el editor y sus fechas quedan fijadas | 3 | Sin verificar |
+| CG-42 | C4 | Predecesoras legibles del archivo quedan estructuradas; las ilegibles se informan; aviso si las fechas difieren del cálculo | 3 | Sin verificar |
+| CG-43 | C4 | Puerta «A mano»: tabla vacía y numeración de EDT según sangría | 1 | Sin verificar |
+| CG-44 | C4 | Un cronograma por servicio: avisar lo que se perdería al reemplazar (incluye lo editado), también al crear desde el DP, y bloquear con Plan Maestro aprobado | 2, 3 | Sin verificar |
+| CG-50 | C5 | Migraciones 104 (tablas de línea base) y 105 (función de aprobación nueva) escritas, aditivas, con reversa; no se aplican | 4 | Sin verificar |
+| CG-51 | C5 | Al aprobar el Plan Maestro se crea la v1 con comienzo, fin y duración congelados, en la misma transacción | 4 | Sin verificar |
+| CG-52 | C5 | Prueba de atomicidad: si falla la línea base (o el reposicionamiento), no queda aprobado nada | 4 | Sin verificar |
+| CG-53 | C5 | Una versión nueva aprobada crea la v2 y la v1 sigue consultable; selector de línea base y variación de fin en la tabla | 4 | Sin verificar |
+| CG-54 | C5 | Antes de aprobar no hay línea base ni seguimiento (tampoco RDT) | 4 | Sin verificar |
+| CG-55 | C5 | Primera acción: confirmar con `plan-maestro-aprobado.ts` y la función 094 cómo se crea y aprueba una versión nueva; resultado a su resumen | 4 | Sin verificar |
+| CG-60 | C6 | Migración 106: seguimiento (modo, comienzo, fin, %) e historial de cambios; no se aplica | 5 | Sin verificar |
+| CG-61 | C6 | Modo RDT: comienzo, fin y % salen de los RDT validados (solo lectura) con la regla del Spec; `vitest` con el método de la Curva S | 5 | Sin verificar |
+| CG-62 | C6 | Interruptor modo RDT / manual: en manual los RDT nuevos no cambian los valores y la fila dice «Manual»; volver a RDT pide confirmación, recalcula y deja historial (quién, cuándo, qué valores) | 5 | Sin verificar |
+| CG-63 | C6 | Hito o actividad sin partidas: solo manual, interruptor RDT deshabilitado con el motivo | 5 | Sin verificar |
+| CG-64 | C6 | La fila «Proyecto» en modo RDT muestra el mismo % físico que la Curva S del mismo corte (prueba cruzada) | 5, 6 | Sin verificar |
+| CG-65 | C6 | PR, Dashboard y Curva S iguales antes y después de editar avance manual | 6 | Sin verificar |
+| CG-66 | C6 | El seguimiento se edita con el Plan Maestro aprobado y el servidor lo valida (rol, servicio) | 5, 9 | Sin verificar |
+| CG-70 | C7 | Migración 107 `dp_partida_recursos` (cargo HH por unidad, equipo HM por unidad); no se aplica | 7 | Sin verificar |
+| CG-71 | C7 | `parser-apu.ts` devuelve por partida el consumo de cada cargo y equipo; la suma de HH por partida = `hh_und_partida` (`vitest` con APU de prueba) | 7 | Sin verificar |
+| CG-72 | C7 | La importación del DP guarda esos datos; sin cambios en el resto de la importación (regresión) | 7 | Sin verificar |
+| CG-73 | C7 | Evaluar volver a leer el APU guardado de un DP aprobado, sin cambiarlo, solo para completar HM; decisión escrita en el resumen (o «no hay archivo guardado») | 7 | Sin verificar |
+| CG-74 | C7 | Servicios sin HM por partida muestran «sin dato» y no cero | 7 | Sin verificar |
+| CG-80 | C8 | Histograma programado: metrado programado por día del Plan Maestro × tasa de la partida; `vitest` | 7 | Sin verificar |
+| CG-81 | C8 | Histograma estimado sin Plan Maestro: metrado vinculado repartido parejo sobre días laborables; rótulo de la fuente | 7 | Sin verificar |
+| CG-82 | C8 | Con el Plan Maestro al 100 %, Σ HH semanales programadas = HH contractual y Σ HM = HM contractual | 7 | Sin verificar |
+| CG-83 | C8 | Pestaña Histogramas en SVG: barras por semana (sábado a viernes), acumulado, pico, filtro por cargo y equipo con barras apiladas, reglas de `design.md` §13 | 7, 10 | Sin verificar |
+| CG-84 | C8 | Línea «Real» de HH cuando exista tareo validado; HM real apagado y rotulado hasta que exista el dato | 7 | Sin verificar |
+| CG-90 | C9 | PDF apaisado con título, columnas, escala, barras base y seguimiento con %, resumen, hitos, flechas, línea «hoy», leyenda, «Fecha: dd/mm/aa» y paginación | 8 | Sin verificar |
+| CG-91 | C9 | Opciones del PDF: solo base o base más seguimiento, rango de fechas y escala | 8 | Sin verificar |
+| CG-92 | C9 | Excel de tres hojas: «Cronograma», «Gantt» (celdas por semana) e «Histogramas» | 8 | Sin verificar |
+| CG-93 | C9 | La hoja «Cronograma» exportada se vuelve a cargar sin errores | 8 | Sin verificar |
+| CG-94 | C9 | PDF comparado a mano con `CRON-PROMCOSER-AESA-001.pdf` (una captura) | 8 | Sin verificar |
+| CG-100 | C10 | Funciones de permiso nuevas (crear/editar planeación, editar seguimiento, exportar) y pruebas que comparan contra el flujo 14 | 9 | Sin verificar |
+| CG-101 | C10 | `verificar-permisos-por-rol`: los 13 roles ven y pueden exactamente lo de la tabla, con llamadas sin efecto | 9 | Sin verificar |
+| CG-102 | C10 | El servidor valida cada escritura (permiso, servicio, tipos, límites) y no confía en el navegador | 9 | Sin verificar |
+| CG-103 | C10 | `tsc`, `eslint`, `vitest` y `npm run build` en verde en la rama | 11 | Sin verificar |
+| CG-110 | C11 | Flujos 09, 14, 15, 16, 18 y 20 y `design.md` actualizados con lo ya aprobado en el Gate 1 | 12 | Sin verificar |
+| CG-111 | C11 | Artefacto «Matriz de permisos» actualizado a la vez que el flujo 14 | 12 | Sin verificar |
+| CG-112 | C11 | `python scripts/verificar-referencias.py` sin errores; `planes-futuros.md` marca el ítem como promovido | 12 | Sin verificar |
+| CG-113 | C11 | `trasladar-hallazgos`: reglas R1 a R7 y los hallazgos nuevos trasladados, sin dejar nada suelto | 12 | Sin verificar |
+| CG-120 | C12 | Criterios 1 a 3 en vivo en PS-0000 (crear, programar, tres puertas) con una captura por ítem | 1–3 | Sin verificar |
+| CG-121 | C12 | Criterios 4 a 6 en vivo (línea base, seguimiento, manual no cambia PR/Dashboard/Curva S) | 4–6 | Sin verificar |
+| CG-122 | C12 | Criterios 7 a 8 en vivo (histogramas, PDF, Excel) | 7, 8 | Sin verificar |
+| CG-123 | C12 | Criterio 10 en vivo (tres paneles, cuatro estados, teclado, móvil solo lectura) | 10 | Sin verificar |
+
+### Datos y cálculos
+
+Cubierto por CG-11 a CG-16, CG-61, CG-64, CG-71, CG-80 a CG-82 (cifras cruzadas contra `hh_und_partida × metrado` y contra la Curva S).
+
+### Permisos
+
+CG-100 a CG-102, CG-66 y CG-20.
+
+### UI / responsive / accesibilidad
+
+CG-01 a CG-05, CG-21, CG-30 a CG-36, CG-83 y CG-123.
+
+### Estados vacío / carga / error
+
+CG-02 y CG-123 (en maqueta y en vivo).
+
+### Validación en servidor / API
+
+CG-20, CG-44, CG-52, CG-66 y CG-102.
+
+### Regresión
+
+CG-65 (PR, Dashboard, Curva S sin cambios), CG-72 (importación del DP), CG-44 (carga actual), CG-103 (suite completa) y la prueba de que la carga actual del cronograma (`cronograma-get.test.ts`, parsers) sigue en verde.
+
+**Cobertura de criterios de aceptación:** 1 → CG-11 a 16, 20 a 26, 34, 43, 120; 2 → CG-40, 44, 120; 3 → CG-41, 42, 44, 120; 4 → CG-50 a 55, 121; 5 → CG-60 a 63, 66, 121; 6 → CG-64, 65, 121; 7 → CG-70 a 84, 122; 8 → CG-90 a 94, 122; 9 → CG-100 a 102; 10 → CG-01 a 05, 21, 30 a 36, 123; 11 → CG-103; 12 → CG-110 a 113.
 
 ## Riesgos y bloqueos
 
-Ver «Riesgos y decisiones» del Spec.
+Además de «Riesgos y decisiones» del Spec:
+
+| # | Riesgo | Mitigación |
+|---|---|---|
+| RB1 | **Aprobación del Plan Maestro (todo o nada).** La línea base entra en una función SQL nueva (105) que reemplaza la 094; un error dejaría el servicio sin poder aprobar | Una sola tanda y un solo Worker; `create or replace` con reversa documentada; prueba de atomicidad (CG-52); la aplica Victor tras revisión y con el verificador; el Plan Maestro v1 de un servicio de prueba se aprueba antes de tocar uno real |
+| RB2 | **Choque con el plan de Informes**: mismo `permisos.ts`, mismo `db/README.md`, misma numeración (la 102 es de ellos) y ramas 1 a 3 ocupadas | Este plan usa 103 en adelante, deja `permisos.ts` para C10 (al final) y trabaja en `local-worker-4`; el Orquestador resuelve el choque trivial al integrar |
+| RB3 | **Tamaño y arrastre accesible** (Gantt a mano sin librería, 12 tandas) | Maqueta aprobada antes de código, tandas pequeñas, ocultar el arrastre si no hay tiempo y dejar la tabla como vía principal |
+| RB4 | Dos cifras de avance (cronograma vs Curva S) | Misma función compartida y prueba cruzada CG-64 |
+| RB5 | Servicios con DP congelado sin HM por partida | CG-73 evalúa releer el APU guardado; si no hay archivo, el histograma de HM dice «sin dato» |
+| RB6 | Bloqueo de ramas (resuelto el 2026-10-15: Victor autorizó `local-worker-6`) | Queda como riesgo solo si la creación de la carpeta falla; en ese caso un solo Worker haría todo, más lento |
+| RB7 | La nota «versión nueva del Plan Maestro» del Spec: aún no verificada en código | CG-55 es la primera acción de C5; si el flujo exige un paso más, vuelve a Victor |
+
+## Prompt del Auditor
+
+> Eres el Auditor del plan «Cronograma dentro del sistema: crear, línea base, seguimiento e histogramas». Solo lees; no editas código ni flujos. Entrada: el plan `2026-10-15-cronograma-gantt-linea-base-histogramas.md`, su Punch List, los resúmenes en `…-briefs/resultados/`, la evidencia y las ramas `local-worker-4` (y `local-worker-6` si existió). Verifica, con comandos y lecturas reales y sin fiarte del resumen de los Workers: (1) que cada uno de los 12 criterios de aceptación tiene su ítem en estado Conforme con evidencia que se pueda abrir; (2) trazabilidad: los flujos 09, 14, 15, 16, 18 y 20, `design.md` y el artefacto «Matriz de permisos» dicen lo mismo entre sí y con lo implementado; la tabla de contradicciones del plan se aplicó fila por fila con la respuesta de Victor; (3) que ninguna migración fue aplicada sin autorización y que la numeración 103 a 107 no pisa 098 a 102; (4) que la función de aprobación del Plan Maestro es todo o nada (revisa CG-52) y que el avance manual no llega a PR, Dashboard ni Curva S (CG-65); (5) que no hay dependencias nuevas de interfaz en `package.json`, que `src/lib/rdts/**` y `src/lib/pdf/hoja.ts` no cambiaron, y que no se leyeron ni copiaron credenciales; (6) que el libro de hallazgos está lleno y trasladado (reglas al flujo, mejoras a `03-aprendizaje-continuo`, huérfanos reportados sin borrar) y que `scripts/verificar-referencias.py` no da errores; (7) `tsc`, `eslint`, `vitest` y `npm run build` en verde. Clasifica las observaciones sobre la política para que Victor decida en el Gate 2. Escribe el informe en `docs/02-trabajo-activo/04-auditoria/2026-10-15-cronograma-gantt-linea-base-histogramas.md` con veredicto Conforme / Observado y la lista de pendientes.
+
+## Preguntas para Victor (Gate 1) — todas respondidas el 2026-10-15
+
+Respuestas: **P1** sí («1 ok»); **P2** sí, la maqueta es puerta obligatoria (aprobada por defecto con el Gate 1); **P3** sí, el editor es la fuente del hito; **P4** reemplaza con aviso de lo que se pierde; **P5** nivel 3 (aprobado por defecto con el Gate 1). Se conserva el texto original de las preguntas:
+
+- **P1.** ¿Autorizas crear la rama y carpeta `local-worker-6` para el segundo Worker (APU e histogramas)? Hoy las ramas 1, 2, 3 y 5 tienen trabajo sin mergear y solo `local-worker-4` está limpia. Recomendación: sí; si no, un solo Worker hace todo y tarda más.
+- **P2.** ¿La tanda de la maqueta (C0) se aprueba como puerta intermedia? Recomendación: sí.
+- **P3.** Hoy el hito es una tarea marcada en Paquetes. Con el editor, ¿el tipo «Hito» del cronograma pasa a ser la fuente y la marca de Paquetes se conserva solo como lectura? Ejemplo: un hito «Entrega de planos» creado en el editor, ¿aparece ya atenuado en Paquetes? Recomendación: sí.
+- **P4.** Al crear el cronograma desde el DP por segunda vez, ¿reemplaza todo lo editado (con aviso) o se bloquea si ya hay actividades? Recomendación: reemplaza con aviso, igual que la carga de archivo.
+- **P5.** ¿C5 (reescribe la aprobación del Plan Maestro) se hace en nivel 3 con la prueba de atomicidad, o subes a nivel 4? Recomendación: nivel 3.
 
 ## Registro de decisiones
 
@@ -258,6 +484,13 @@ Ver «Riesgos y decisiones» del Spec.
 | 2026-10-15 | Gantt e histogramas hechos a mano en SVG o rejilla CSS, sin dependencia nueva (regla de `design.md` §1 y §13) | Orquestador |
 | 2026-10-15 | Calendario por defecto de lunes a sábado (deducido del PDF de MS Project de referencia); al cargar un archivo se respetan sus fechas | Orquestador |
 | 2026-10-15 | El % de una actividad de resumen y del proyecto sigue el criterio de la Curva S física, para no tener dos cifras de avance | Orquestador |
+| 2026-10-15 | **Gate 1 aprobado** (opción 1: plan, Punch List, tabla de contradicciones, ramas, modelos y orden de migraciones), con la condición de usar Haiku para las tareas simples | Victor |
+| 2026-10-15 | P1: autoriza crear la rama y carpeta `local-worker-6` desde `main` y actualizar `local-worker-4` con `main` | Victor |
+| 2026-10-15 | Hitos: el tipo Hito del editor es la fuente; Paquetes solo lo muestra atenuado y de solo lectura | Victor |
+| 2026-10-15 | Crear desde el DP sobre un cronograma con actividades reemplaza con aviso de lo que se pierde (igual que la carga de archivo) | Victor |
+| 2026-10-15 | P2 (la maqueta es puerta obligatoria antes de C1) y P5 (C5 en nivel 3 con prueba de atomicidad) quedan aprobadas por defecto con el Gate 1 | Orquestador (propuso) / Victor (aprobó el Gate 1) |
+| 2026-10-15 | Haiku en C0, C4, C11, Worker git y mecánicos del Orquestador; Sonnet en el resto; si una tanda en Haiku no cierra, se suspende y se pide a Victor aprobar Sonnet | Orquestador (propuso) / Victor (pidió Haiku para tareas simples) |
+| 2026-10-15 | Se agrega el ítem CG-26 (hito del editor visible en Paquetes) a la tanda C2 | Orquestador |
 
 ## Enlaces a progreso y evidencia homónimos
 
@@ -278,8 +511,10 @@ Ninguna.
 | R1 | 2026-10-15 | Orquestador (Spec) | La línea base del cronograma queda fijada al aprobar el Plan Maestro; cada versión aprobada crea una nueva y conserva las anteriores | Flujos 15 y 20 | Registrada | |
 | R2 | 2026-10-15 | Orquestador (Spec) | El seguimiento por actividad es RDT por defecto y editable a mano; un interruptor devuelve a modo RDT | Flujo 15 | Registrada | |
 | R3 | 2026-10-15 | Orquestador (Spec) | Las fechas del cronograma se calculan por predecesoras (cuatro tipos de vínculo, con desfase) y una actividad se puede fijar a mano | Flujo 15 | Registrada | |
-| R5 | 2026-10-15 | Victor (D1) | El avance manual del seguimiento no alimenta PR, Dashboard ni Curva S; se rotula «Manual» | Flujos 15, 18 y 20 | Registrada | |
 | R4 | 2026-10-15 | Orquestador (Spec) | La importación del DP guarda por partida las HH por cargo y las HM por equipo (APU) | Flujo 09 | Registrada | |
+| R5 | 2026-10-15 | Victor (D1) | El avance manual del seguimiento no alimenta PR, Dashboard ni Curva S; se rotula «Manual» | Flujos 15, 18 y 20 | Registrada | |
+| R6 | 2026-10-15 | Victor (Gate 1) | El tipo Hito del editor del cronograma es la fuente del hito; la pantalla de Paquetes lo muestra atenuado, de solo lectura, con «◆ Hito», y ya no se marca desde Paquetes | Flujos 15 y 19 | Registrada | |
+| R7 | 2026-10-15 | Victor (Gate 1) | Crear el cronograma desde el DP sobre uno que ya tiene actividades lo reemplaza con aviso de lo que se pierde (incluye lo editado y su seguimiento); queda bloqueado con el Plan Maestro aprobado | Flujos 14 (nota 8) y 15 | Registrada | |
 
 ## Observaciones sobre la política
 

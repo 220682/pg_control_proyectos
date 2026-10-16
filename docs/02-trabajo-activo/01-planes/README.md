@@ -14,6 +14,7 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
+| [`2026-10-15-cronograma-gantt-linea-base-histogramas.md`](2026-10-15-cronograma-gantt-linea-base-histogramas.md) | **Gate 1 aprobado** (Victor, 2026-10-15) — 13 tandas (C0 a C12) en dos carriles de código (`local-worker-4` y `local-worker-6`), migraciones 103 a 107; arranca la ola 0 (maqueta). Cronograma creado en el sistema al estilo MS Project, con línea base, seguimiento contra el RDT, histogramas de HH y HM y exportación a PDF y Excel |
 | [`2026-10-02-observaciones-victor-lote-3-plan.md`](2026-10-02-observaciones-victor-lote-3-plan.md) | **Gate 2 pendiente** (2026-10-04) — 13 observaciones con la Enmienda E1 (el Plan Maestro es el umbral, U1 a U10); todo el código commiteado en `local-worker-4` (10 commits, sin mergear) y la documentación escrita; pendientes: aplicar la `094`, verificar en vivo y las cuatro reglas de R4a |
 | [`2026-10-02-observaciones-victor-lote-2-plan.md`](2026-10-02-observaciones-victor-lote-2-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — acciones del checklist (O5), importación de cronograma (O6) y acta de conformidad (O7) |
 | [`2026-10-02-observaciones-victor-plan.md`](2026-10-02-observaciones-victor-plan.md) | Cerrada (Gate 1 y Gate 2 aprobados por Victor, 2026-10-02) — checklist, área Jefatura y error de cronograma |
@@ -43,7 +44,6 @@ Las tareas ya cerradas migradas desde `docs/Tareas de implementacion/` (reestruc
 
 | Plan | Estado |
 |---|---|
-| [`2026-10-15-cronograma-gantt-linea-base-histogramas.md`](2026-10-15-cronograma-gantt-linea-base-histogramas.md) | Spec aprobado (Gate Spec, Victor, 2026-10-15); el Planner arma el plan por tandas para el Gate 1. Cronograma creado en el sistema al estilo MS Project, con línea base, seguimiento contra el RDT, histogramas de HH y HM y exportación a PDF y Excel |
 | [`2026-09-30-niveles-presupuesto-y-cronograma.md`](2026-09-30-niveles-presupuesto-y-cronograma.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-paquetes-y-plan-maestro-grilla.md`](2026-09-30-paquetes-y-plan-maestro-grilla.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |
 | [`2026-09-30-rdt-desde-plan-maestro.md`](2026-09-30-rdt-desde-plan-maestro.md) | Spec aprobado (Gate Spec 2026-09-30); se implementa en el plan conjunto `2026-09-30-niveles-paquetes-plan-maestro-rdt` |

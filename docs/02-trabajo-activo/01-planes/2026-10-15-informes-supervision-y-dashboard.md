@@ -4,7 +4,7 @@
 
 - Tema: informes de supervisión del operativo (diario y semanal, con fotos de campo y descarga en Word, PDF y Excel) y mejoras del Dashboard (responsable operativo, IP y HH, avance por nivel, recursos contractual / acumulado / restante, descarga con la Curva S).
 - Fecha de inicio: 2026-10-15.
-- Estado: `En implementación` — 11 de 19 tandas cerradas en sus ramas (A, B, N, O, H, R, I, P, J; C y S esperan incorporar R). Relevo del Orquestador el 2026-10-15 a las 22:55 (ver «Handoff 2»).
+- Estado: `En implementación` — 10 de 19 tandas cerradas en sus ramas (A, B, N, O, H, R, I, P, J, K: 68 de 124 ítems, 55 %; la cifra «11» del relevo anterior era un error, hay 9 resúmenes de cierre). Relevo 3 del Orquestador el 2026-10-16: en curso C (W1) y K (W2); R ya está incorporada en `local-worker-1` (ee80c7a) (ver «Handoff 2» y el Registro de decisiones).
 
 Puertas:
 
@@ -399,7 +399,7 @@ Trabajamos en Claude Code con subagentes; **no se usa Opus**. Esfuerzo medio en 
 
 | Rol | Modelo | Esfuerzo | Sesión o tanda | Rama | Worktree | Estado |
 |---|---|---|---|---|---|---|
-| Orquestador | Opus 5.5 (modelo de la sesión, mantenido por Victor con `/model` el 2026-10-15; la política dice no usar Opus: a confirmar en el Gate 1) | Medio | todo el plan | `main` | N/A | activo |
+| Orquestador | Sonnet 5.5 desde el relevo 3 (antes Opus 5.5; Victor fijó el modelo con `/model` y el esfuerzo con `/effort` el 2026-10-15) | Extra (xhigh), por pedido de Victor | todo el plan | `main` | N/A | activo (relevo 3) |
 | Planner | Sonnet | Medio | este Plan | `main` | N/A | entregado |
 | Worker 1 | Sonnet | Medio | A, B, C, D, G | `local-worker-1` | `.worktrees/local-worker-1` | autorizado (Gate 1) |
 | Worker 2 | Sonnet | Medio | N, H, S, I, J, K | `local-worker-2` | `.worktrees/local-worker-2` | autorizado (Gate 1) |
@@ -739,6 +739,9 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 
 | Fecha | Decisión | Quién |
 |---|---|---|
+| 2026-10-16 | Tanda K cerrada (W2, commits 104887c y a4f0808 en `local-worker-2`); K1 a K6 Conforme; K7 Observado (sin cuentas de prueba, la cierra L). Se aceptan sin cambios: ruta `descargar` con `maxDuration = 60`, PDF A4 horizontal con la Curva S en hoja aparte, Excel por bloque. El Worker git incorpora el cierre de R en `local-worker-2` para la tanda S. | Orquestador |
+| 2026-10-16 | **Briefs G, E, F, Q y L escritos** (Sonnet, esfuerzo medio, 8 KB o menos cada uno). Detalles derivados que decide el Orquestador: «Diario» en la pestaña Inasistencias es una sola fecha (hoy en Lima por defecto) y el DNI viene en la fila guardada de `rdt_partes.inasistencias` (plan, §«Verificado en la app»); la ruta `descargar` de G lleva `maxDuration = 60` explícito, igual que K, con el tiempo medido; el puerto de W3 es 3013; las capturas de L van a `03-evidencia/capturas/2026-10-15-informes-supervision-y-dashboard/`, una subcarpeta por tanda; el Worker git incorpora `local-worker-1` en `local-worker-3` dos veces (al cerrar D y al cerrar G, antes de L). El patrón de `exceljs` está en `src/lib/dp/exportador-excel.ts`, no en `rdts/exportar` como decía el plan. **Queda abierto:** el clasificador de permisos denegó dejar escrito en `E.md` el permiso para cambiar `geolocation=()` por `geolocation=(self)` en `next.config.ts` (P7, ya resuelta por Victor el 2026-10-15 según el Registro); mientras no se confirme con Victor, el brief de E dice que no se toque ese archivo. | Orquestador |
+| 2026-10-15 | **Relevo 3 del Orquestador.** Victor fijó al Orquestador en Sonnet 5.5 con esfuerzo extra (xhigh) con `/model` y `/effort`, y pidió Sonnet con esfuerzo medio para el código y Haiku (esfuerzo extra) para lo simple. Estado verificado con git por el Worker git: `local-worker-1` en 3ce0a52, `local-worker-2` en 8e60ced, `local-worker-3` en 1247100; las tres con árbol limpio y sincronizadas con origin; solo la 3 contiene 34b8bbf. **Victor da el visto bueno al merge bloqueado** (34b8bbf → `local-worker-1`, conservando ambas líneas en `db/README.md`) y **decide que él aplica las migraciones 099, 098, 100, 101 y 102 a mano** (Claude le deja los `.sql` en orden y verifica después con consultas de solo lectura). Se lanzan en paralelo el Worker git (Haiku) para el merge y W2 · K. | Victor / Orquestador |
 | 2026-10-15 | Tanda J cerrada (W2, commit 8e60ced en `local-worker-2`; W2 pasó a `node_modules` propio con `npm ci`). El Orquestador acepta: clic en cada barra de «Desempeño por partida» marca la partida y baja a la matriz; la tarjeta AC lleva a «Costo real de recursos»; el detalle de PPC va dentro del Bloque E. Relevo del Orquestador (contexto 294k). | Orquestador |
 | 2026-10-15 | Tanda P cerrada (W3, commits 2d4b3e8 y 1247100 en `local-worker-3`); P1, P7 y las capturas pasan a la verificación en vivo (L). W3 termina su parte de la Ola 1. | Orquestador |
 | 2026-10-15 | Victor autoriza subir a GitHub los archivos de este plan («sí, sube los archivos del plan»): el plan, la carpeta de briefs y resultados, y las maquetas con su índice, README y marco. Lo hace el Worker git en Haiku (Victor: «utiliza haiku para tareas simples»). | Victor |
@@ -773,6 +776,9 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 | M2 | Para proponer chips en una maqueta sin cambiar las demás, el marco compartido `marco-tres-paneles.js` acepta ahora `window.MARCO_AJUSTE` (opcional). | Registrada |
 | M5 | (tanda A) En los worktrees `node_modules` es un symlink y `npm run build` con Turbopack falla; la verificación de build se hace con `npx next build --webpack`. Pasado a los briefs siguientes. | Registrada |
 | M6 | (tanda H) Correr `npm test` modifica `src/app/api/curva-s/__snapshots__/curva-s-route.test.ts.snap` (saltos de línea); los Workers lo restauran con `git checkout` antes de commitear. Conviene fijar `.gitattributes` o el modo de escritura del snapshot. | Registrada |
+| M7 | (tanda K, K-H4) `pdfkit.dash(0, …)` lanza error; no llamarlo con longitud 0 y usar `dash` solo cuando aplica. Va a `docs/03-aprendizaje-continuo/` al cerrar. | Registrada |
+| M8 | (tanda K, K-H3) La ruta `descargar` valida sesión, rol y alcance en servidor y luego usa `crearClienteAdmin()` para `cargarCurvaS` en ambos modos; está alineada con la forma del cierre de R (34b8bbf). No es observación de política; en modo físico no sale dinero. | Registrada |
+| M9 | (tanda K, K-H1, verificación pendiente) La página del Dashboard (`dashboard/page.tsx`, líneas 124-125) y la descarga (`src/lib/dashboard/datos-descarga.ts`, línea 119) usan el mismo criterio: Completo solo si `tipo_dashboard` es COMPLETO y el rol tiene economía. L debe comprobar en vivo, con un rol con economía y `tipo_dashboard` = PARCIAL, que la página y el archivo descargado coinciden. | Registrada |
 
 ## Reglas de negocio acordadas en esta tarea
 
@@ -801,6 +807,8 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 | R22 | **Cuenta del costo real de materiales y subcontratos (decidida al aplicar R20, 2026-10-15):** se calcula solo a nivel servicio (los materiales no se pueden ligar a una partida, porque `pr_recursos` y `dp_recursos` no tienen partida), con avance físico = EV / BAC sin tope; el costo real por partida no incluye materiales ni subcontratos; en la Curva S, el subcontrato con ingreso manual entra con su monto desde el día de su último cambio y antes de ese día vale lo que daba el avance físico; sin tope en 100 %. | Flujo 10 (cálculo del AC) | Registrada |
 | R19 | Las interfaces y acciones nuevas (informes, formato Costos, foto de campo, inasistencias, campos nuevos del RDT, subcontrato manual, descargas) se registran como filas en las tablas 1 y 2 del flujo 14, con la lista exacta de este Plan (Victor, 2026-10-15). | Flujo 14 | Registrada |
 | R23 | (tanda A, decidido por el Orquestador aplicando la regla de Victor «en ejecución se cambia, no se vacía») «Vaciar» = quitar un supervisor que estaba asignado. Un servicio que ya estaba en ejecución **sin** supervisor (el relleno de la 099 no encontró a nadie) se puede seguir editando; solo se rechaza pasar de un supervisor a ninguno. Además, al crear el servicio desde la adjudicación se guarda el supervisor a cargo. | Flujo 08 y nota ³ del flujo 14 | Registrada |
+| R24 | (tanda K, K-H2) La descarga del Dashboard (PDF y Excel, ruta `dashboard/descargar`) necesita fila en el flujo 14 y en la matriz de permisos: 13 roles; el dinero solo con economía y Dashboard Completo. | Flujo 14, matriz de permisos y flujo 11 | Registrada |
+| R25 | (tanda K, K-H5, decidido por el Orquestador) El parámetro `corte` de la ruta de descarga es una fecha AAAA-MM-DD (la del filtro ya resuelta), no el preset. La Curva S del archivo recorta EV y AC al corte elegido; hoy `cargarCurvaS` usa la fecha de hoy para su rango. | Flujo 11 | Registrada |
 
 ## Observaciones sobre la política
 

@@ -41,7 +41,25 @@ Origen: RDT validado. Toda actividad (D, C y NC) se carga a una partida (regla 1
 **El PR suma por partida.** El real por paquete × partida vive solo en el Plan Maestro ([flujo 20](20-plan-maestro.md)); el real por partida (la suma de lo declarado en todos sus paquetes) es lo que alimenta al PR. **Las filas derivadas** del modo «por avance del paquete» ([flujo 06](06-rdt.md)) se guardan como actividades propias de su partida: el motor del PR (`recalcular_pr_desde_rdt`, `db/053`) **no cambia**, no hay doble conteo de metrado ni de horas, y **cada derivada cuenta como una actividad D más en `actividades_acum`**, por lo que también entra en el PPC (decisión de Victor).
 
 - `metrado_acumulado`, `hh_reales_acum`, `hh_d_acum`, `hh_c_acum`, `hh_nc_acum`, `hm_reales_acum`, `costo_real_acum`, `actividades_acum`, `actividades_con_cnc_acum`.
-- A nivel proyecto (`proyecto_pr`): `hh_mo_indirecta_acum` (MOI, horas sin costo — regla 10 de negocio), y el balde `*_legacy_sin_partida_acum` (solo RDT anteriores a la regla 12, que no se pueden reasignar retroactivamente).
+- A nivel proyecto (`proyecto_pr`): `hh_mo_indirecta_acum` (MOI, horas sin costo — regla 10 de negocio), el balde `*_legacy_sin_partida_acum` (solo RDT anteriores a la regla 12, que no se pueden reasignar retroactivamente) y, desde la migración `102`, `costo_materiales_acum` y `costo_subcontratos_acum` (ver «Costo real (AC)» abajo).
+
+#### Costo real (AC): todo suma (Victor, 2026-10-15)
+
+**Regla de costo real (reemplaza la de septiembre «materiales y subcontratos no suman al costo real»):** *si se gasta plata en algo, es costo real.* El AC del servicio es la suma de cuatro partes, todas costo directo en US$:
+
+| Parte | Cuenta |
+|---|---|
+| Mano de obra | HH del RDT × tarifa congelada. Las **HH extra** (las que el supervisor marca por persona en el RDT, [flujo 06](06-rdt.md)) valen **tarifa × 1,25**; el recargo se reparte entre las actividades de la persona en proporción a sus horas. Las HH de MOI siguen sin valorizarse (regla 10). |
+| Equipos | (HM operativas + **HM stand-by**) × tarifa del equipo. |
+| Materiales | Presupuesto del material × % de avance físico del servicio. |
+| Subcontratos | **Por avance físico** (por defecto): contractual × % de avance físico. **Con ingreso manual** (Reporte del proyecto, [flujo 11](11-dashboard.md)): el monto ingresado, que es su costo real. |
+
+* **Qué no cambia:** las HH reales, el IP, el EV, el PV y el BAC. Lo que cambia es solo el AC (y con él CV, CPI, EAC y VAC).
+* **Se calcula a nivel servicio.** Los materiales y subcontratos no se pueden ligar a una partida (`pr_recursos` y `dp_recursos` no tienen partida), así que entran al AC del **servicio** y **no** al `costo_real_acum` de cada partida. El PR lo muestra como una fila «Materiales y subcontratos (sin partida)» y una franja de desglose sobre el pie (Personal, Equipos, Materiales, Subcontratos y «Sin resolver»).
+* **Avance físico para esta cuenta** = EV / BAC **sin tope** en 100 % (`Σ pr_partidas.bac` como BAC). Si el BAC del PR y el que suma el Dashboard (`calcularBac`, desde los recursos) difirieran, el % saldría distinto según la pantalla: no se midió diferencia con una base real y queda anotado como pendiente de comprobar.
+* **En la Curva S** el subcontrato con ingreso manual entra con su monto **desde el día (Lima) de su último cambio**; antes de ese día vale lo que daba el avance físico. Las series de la Curva S usan la función `ac_materiales_subcontratos_al_corte` (`db/102`).
+* **Mismo AC en todas partes:** PR, Dashboard (pantalla, PDF y Excel), Curva S e informe de Costos dan el mismo AC. Los servicios que existían antes de la migración `102` guardan en 0 las dos columnas nuevas hasta que se recalcula su PR («Recalcular PR» por servicio): al aplicar la `102` hay que recalcular el PR de los servicios existentes.
+* **Seguridad:** la función SQL de la Curva S no se expone por RPC a `anon` ni a `authenticated`; las rutas validan sesión, rol y alcance en servidor y luego leen con el cliente de servicio.
 
 ### C — Derivados EVM
 
@@ -53,7 +71,7 @@ No se almacena. Se calcula al leer en `src/lib/pr/evm.ts` — funciones puras so
 | PV al corte | `Σ metrado_planificado × PU` hasta la fecha de corte. "Pendiente" sin Plan Maestro aprobado |
 | % avance físico | `metrado_acumulado / metrado_contractual` |
 | EV | `metrado_acumulado × precio_unitario` — no sale del dinero gastado |
-| AC | `costo_real_acum` (partida) · suma + balde legacy (proyecto). Costo directo |
+| AC | `costo_real_acum` (partida: solo personal y equipos) · proyecto: suma + balde legacy + materiales + subcontratos (ver «Costo real (AC)»). Costo directo |
 | % trabajo productivo | `hh_d_acum / hh_reales_acum` |
 | SV / CV | `EV − PV` · `EV − AC` |
 | SPI / CPI | `EV / PV` · `EV / AC` |
@@ -82,6 +100,8 @@ Reimportar un DP borra y reconstruye el PR contractual (`delete from proyecto_pr
 
 `src/app/(workspace)/proyectos/[id]/pr/page.tsx`. Tabla larga con scroll horizontal, columnas de identificación de partida (WBS, descripción, unidad) fijas a la izquierda, encabezado de dos filas (grupo de bloque + columna) sticky en la celda. Fila de total del proyecto al pie — el total físico va como N/A (no se suman unidades físicas incompatibles entre partidas) y la variación global se expresa en valor económico. Fecha de corte siempre visible. Diseño según `docs/05-diseno-y-referencias/design.md`.
 
+**Sección Subcontratos del Reporte del proyecto (Victor, 2026-10-15):** cada subcontrato del servicio tiene un selector de medición, **Por avance físico** (por defecto: acumulado = contractual × % de avance físico del servicio) o **Ingreso manual** (se escribe el monto acumulado y el sistema calcula el %: contractual 200, ingreso 40 → 20 %). Se ingresa aquí —no en «Recursos del servicio», que no muestra costos— y solo lo hacen los **5 roles con datos económicos** con el servicio asignado (`PUT /api/proyectos/[id]/pr/subcontratos`, migración `101`, tabla `pr_subcontrato_medicion`, que se guarda por servicio y descripción del subcontrato). El monto manual es el costo real del subcontrato y suma al AC (regla «Costo real (AC)»). Sin subcontratos, la sección dice «Este servicio no tiene subcontratos». El pie de la pantalla dice que el AC incluye materiales y subcontratos, no que se midan «por % de avance económico».
+
 ## Relación con Dashboard
 
-El Dashboard lee las mismas columnas que este flujo llena — no necesita cambios de código para reflejar datos reales; el semáforo, antes en `PENDIENTE` por falta de dato (AC = 0), toma color real en cuanto el PR se llena.
+El Dashboard lee las mismas columnas que este flujo llena (incluido el AC con materiales y subcontratos, con el mismo cálculo que la pantalla del PR) — no necesita cambios de código para reflejar datos reales; el semáforo, antes en `PENDIENTE` por falta de dato (AC = 0), toma color real en cuanto el PR se llena.

@@ -144,12 +144,14 @@ Servicio seleccionado
 │   ├── PR
 │   ├── Dashboard
 │   ├── Curva S
+│   ├── Informes de supervisión
 │   ├── Registro de costos
 │   └── Consolidado del servicio
 ├── Acciones
 │   ├── Generar RQ
 │   ├── Crear RDT
 │   ├── Subir RDT
+│   ├── Foto de campo
 │   └── Crear paquete de trabajo
 └── Servicio
     ├── Ficha del servicio
@@ -266,6 +268,7 @@ Implementado:
 * Panel izquierdo completo: Recursos de empresa con botón mostrar/ocultar y siete grupos con servicio (27 chips: 17 con pantalla y 10 inertes sin enlace).
 * Panel derecho con chips que abren la pantalla con el servicio elegido.
 * Registro único de accesos (`registro-accesos.ts`, `panel-izquierdo.ts`, `panel-derecho.ts`) y prueba de cobertura de pantallas.
+* **Informes de supervisión y Foto de campo (Victor, 2026-10-15; [flujo 22](22-informes-de-supervision.md)):** el chip que antes decía «Informe de servicio» y estaba inerte («Sin pantalla todavía») pasa a **«Informes de supervisión»** (mismo id `informe-servicio`; informativo con acciones internas; requiere servicio; lo ven habilitado los 13 roles, `puedeVerInformes`), en Supervisión operativa del panel derecho y en **Reportes** del panel izquierdo. Se agrega el chip de **acción «Foto de campo»** (id `foto-campo`, abre `/proyectos/{id}/informes/foto`; habilitado para administrador, jefe de proyectos, jefe de oficina técnica y supervisor operativo, `puedeTomarFotoCampo`; los otros nueve lo ven deshabilitado con título), en Supervisión operativa, en Accesos rápidos (pasan de 7 a 8) y en **Acciones** del panel izquierdo. **Conteo vigente según el registro y su prueba:** 55 accesos (antes 54), nav de servicio 42 (antes 41), panel derecho 33 (antes 32) y panel izquierdo **30 chips (antes 28): 23 con pantalla y 7 inertes** (Alcance, Consolidado del servicio, OT, Personal nuevo, PETS, Planos y Presupuesto); esta línea corrige el recuento de 22 y 6 de la línea de arriba, que sumaba mal los inertes. De los chips sin pantalla del panel derecho, «Informe de servicio» ya no es uno. La pestaña **Inasistencias** vive dentro de la pantalla de Informes (sin chip propio, sin entrada en el registro de accesos).
 * Chips deshabilitados con título por permiso.
 * Chips **Dashboard** y **Curva S** habilitados para los **13 roles** (plan dashboard-economia-y-curva-s, 2026-10-02): la restricción económica vive dentro de la pantalla (Dashboard Completo y Curva S económica para los 5 roles con economía; Parcial y curva física para todos), no en el chip.
 

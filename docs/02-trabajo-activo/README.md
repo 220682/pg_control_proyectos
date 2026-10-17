@@ -14,7 +14,7 @@ Cada plan de trabajo real vive como el mismo nombre base (`YYYY-MM-DD-<tema>.md`
 
 ## Qué no vive acá
 
-No se crea una carpeta por plan. Las reglas de negocio permanentes viven en `../04-flujos-de-negocio/`; el aprendizaje/mejoras viven en `../03-aprendizaje-continuo/`.
+No se crea una carpeta por plan. Las reglas de negocio permanentes viven en `../04-flujos-de-negocio/`; el aprendizaje/mejoras viven en `../03-aprendizaje-continuo/`. Ejemplo reciente: las reglas del plan Informes de supervisión y Dashboard se integraron en los flujos 06, 08, 10, 11, 14, 16 y 21 y en el flujo nuevo [22 — Informes de supervisión](../04-flujos-de-negocio/22-informes-de-supervision.md).
 
 ## Qué leer después
 

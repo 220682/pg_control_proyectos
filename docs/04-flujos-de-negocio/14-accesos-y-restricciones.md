@@ -20,6 +20,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-10-03 (plan observaciones-victor, Lote 3, Enmienda E1):** se **retira** la acción del 2026-10-02 (F2-A) «Editar actividad del cronograma con Plan Maestro aprobado» y su permiso. Con Plan Maestro aprobado lo único editable es el Plan Maestro (U3), así que editar actividades individuales del cronograma deja de existir y reemplazar el cronograma sigue bloqueado. La tabla 2 pierde esa fila y su nota.
 
+**Actualización 2026-10-17 (plan Informes de supervisión y Dashboard, tanda M):** las tablas 1 y 2 suman las filas de informes de supervisión (ver, crear, emitir, versión nueva, Costos, fotos de campo, «Mis formatos», pestaña Inasistencias, descargas), del Reporte del proyecto (subcontratos con dos formas de medir), de los campos nuevos del RDT y de la descarga del Dashboard (notas 11 y 12); la nota 3 suma el supervisor a cargo. **El artefacto «Matriz de permisos» no se pudo abrir desde la cuenta de Claude Code** (lectura «artifact not found», verificado el 2026-10-15): lo actualiza Victor con la lista del resumen de la tanda M.
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -45,6 +47,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Dashboard del servicio — Completo ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Reporte del proyecto: sección Subcontratos (elegir la forma de medir y ver el monto) ¹² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
 | Curva S — avance físico (%) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
@@ -53,6 +56,11 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RDT: campos HH extra, HM stand-by y estado del equipo (ver) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Informes de supervisión: ver emitidos (dentro de servicios asignados) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Informe de formato Costos: ver ¹¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Informes: pestaña Inasistencias (dentro de servicios asignados) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Banco de fotos del día ¹¹ | No | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Ficha del servicio y grilla del portafolio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -74,7 +82,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Confirmar transición de estado del proyecto ³ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Archivar / eliminar proyecto | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar contenedor (programa / portafolio) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
-| Editar servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Editar servicio (incluye asignar el supervisor operativo a cargo) ¹² | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Editar checklist del proyecto | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Importar DP (Datos del Proyecto) ⁸ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar usuarios (crear / editar / eliminar) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
@@ -98,6 +106,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
+| Registrar HH extra, HM stand-by y estado del equipo en el RDT (igual que Crear RDT estructurado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Reasignar de paquete un RDT aún no validado ¹⁰ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
@@ -108,6 +117,13 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; solo crear el borrador, aprobarlo es «Gestionar Plan Maestro») ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar paquetes de trabajo (crear, editar, mover partidas, archivar, declarar vínculos con metrado y hitos; la disciplina es obligatoria) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
+| **Informes de supervisión y Dashboard** ¹¹ | | | | | | | | | | | | | | |
+| Crear, editar su borrador y emitir un informe (formatos que no son Costos) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
+| Crear, emitir y ver un informe de formato Costos (el supervisor de costos y el jefe de costos solo crean, editan, emiten y versionan Costos) | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — | Sí |
+| Emitir una versión nueva de un informe ajeno (del propio, quien lo creó) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Guardar «Mis formatos» (arreglos de bloques propios; los de Costos solo con economía) | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — | No |
+| Tomar y subir foto de campo | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
+| Elegir la forma de medir y escribir el monto de un subcontrato en el Reporte del proyecto ¹² | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — | Sí |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
@@ -126,8 +142,11 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Descargar el PDF individual de un RQ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
 | Descargar el formato vacío PROM-GP-008 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
 | Descargar la plantilla de cronograma (.xlsx generada desde el DP) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar un informe emitido (el de Costos solo los 5 con economía) ¹¹ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar las inasistencias en PDF ¹¹ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
+| Descargar el Dashboard en PDF o Excel (el contenido sigue su modo: Parcial sin dinero; Completo solo los 5 con economía) ¹¹ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
 
-³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. No es un acceso nuevo por rol; es un requisito adicional, validado en servidor, sobre el acceso que ya existía.
+³ Desde PR Fase 2 (2026-09-21), la transición `EN_PLANEACION` → `EJECUCION` tiene además una precondición de negocio (regla 8, [20-plan-maestro.md](20-plan-maestro.md)): el proyecto debe tener un Plan Maestro en estado `APROBADO`. Desde el 2026-10-15 exige también **un supervisor operativo a cargo** asignado (columna propia del servicio, [flujo 08](08-programa-portafolio-proyecto.md)). No es un acceso nuevo por rol; son requisitos adicionales, validados en servidor, sobre el acceso que ya existía.
 
 ⁴ **Subir documento** no es un rol fijo: puede el administrador, el jefe de proyectos, **el usuario asignado como responsable de ese documento en el proyecto** (`proyecto_documentos.responsable_usuario_id`) o el rol responsable del documento. Desde el 2026-10-02 el editor del checklist asigna siempre un responsable concreto por proyecto; el `rol_responsable_id` del catálogo dejó de ser obligatorio y es informativo. El `*` indica «si es el responsable de ese documento». **Alcance de la acción (Lote 2, Gate 1 2026-10-02):** la subida cubre **solo los ítems del Grupo A del checklist** (Alcance, Presupuesto, Listado de personal nuevo y Listado de pets) **y los personalizados**; el servidor **rechaza con 400** subir un archivo a un ítem del Grupo B (pantalla propia), y el «Acta de conformidad» (fase CIERRE) sale del alcance porque no figura en la lista (ver [flujo 12](12-checklist.md), sección «Grupos de acción»).
 
@@ -142,6 +161,10 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ⁹ **Decidido por Victor (Gate 1, 2026-09-30; aprobar el borrador, 2026-10-01).** Con un Plan Maestro aprobado, **crear** una versión nueva (el borrador, con motivo obligatorio) lo hacen solo el administrador y el jefe de proyectos; el planner conserva programar y crear la primera versión. **Aprobar** ese borrador, que reemplaza a la versión aprobada, lo hacen los tres roles de «Gestionar Plan Maestro» (administrador, jefe de proyectos y planner), igual que la primera aprobación. Implementado: crear el borrador usa `puedeCrearVersionPlanMaestro` (`POST`) y aprobar usa `puedeGestionarPlanMaestro` (`PATCH`), de modo que el código coincide con el flujo.
 
 ¹⁰ **Decidido por Victor (2026-09-30).** Reasignar un RDT de paquete mientras no esté `VALIDADO` lo hace quien valida (mismos roles que «Validar / rechazar RDT»); el supervisor que crea el RDT no reasigna, corrige reemplazando el parte ([06](06-rdt.md)). Vive en la ruta de validar del RDT (`puedeValidarRdt`); no es un permiso nuevo en el código. «Crear paquete» (acción rápida del panel) sigue la fila «Gestionar paquetes de trabajo»: administrador, jefe de proyectos y planner.
+
+¹¹ **Decididos por Victor el 2026-10-15 (plan Informes de supervisión y Dashboard; [flujo 22](22-informes-de-supervision.md)).** Los informes emitidos, el banco de fotos del día y las inasistencias los ven los 13 roles dentro de los servicios que tienen asignados (`proyecto_miembros`; el administrador ve todos), salvo el banco de fotos, que es de quienes toman fotos; el borrador de un informe lo ve solo su autor. Los informes sin dinero los crean, editan y emiten el administrador, el jefe de proyectos, el jefe de oficina técnica y el supervisor operativo (los mismos de «Crear RDT estructurado»); el formato **Costos** solo lo crean, emiten y ven los 5 roles con datos económicos (regla 2 de la tabla 1), y el servidor responde 403 al resto también por URL directa. Sin aprobación previa de la jefatura. La foto de campo la toman los mismos 4 roles. Descargar un informe sigue a verlo; el Dashboard se descarga como se ve: el archivo Parcial no lleva dinero y el Completo solo sale para los 5 roles con economía y `tipo_dashboard` COMPLETO. Rutas nuevas: `api/proyectos/[id]/informes` (con su detalle, emitir, nueva versión, descargar y formatos propios), `api/proyectos/[id]/fotos-campo`, `api/inasistencias` (y `/pdf`), `api/proyectos/[id]/dashboard/descargar` y `api/proyectos/[id]/dashboard/recurso-partidas` (esta última, `puedeVerDashboard` más alcance, solo horas). **Pendiente de Victor: reflejar estas filas en el artefacto «Matriz de permisos»** (la lista exacta está en el resumen de cierre de la tanda M del plan).
+
+¹² **Decidido por Victor el 2026-10-15.** Cada subcontrato tiene dos formas de medir (por avance físico, o ingreso manual del monto acumulado); se elige y se escribe en el Reporte del proyecto, solo por los 5 roles con datos económicos con el servicio asignado ([flujo 10](10-generacion-pr.md)). **Editar servicio** no lleva fila nueva por esto: asignar el **supervisor operativo a cargo** (campo propio, uno por servicio) es parte de la fila existente; con el servicio en ejecución se puede cambiar pero no vaciar ([flujo 08](08-programa-portafolio-proyecto.md)). El registro de accesos suma `foto-campo` (acción, requiere servicio, `puedeTomarFotoCampo`) y el chip `informe-servicio` pasa a «Informes de supervisión» con `puedeVerInformes` ([flujo 16](16-paneles.md)).
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

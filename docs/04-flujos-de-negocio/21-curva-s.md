@@ -35,7 +35,7 @@ alcance por dos razones que ya cayeron:
 Por decisión de Victor (2026-09-21), la Curva S **salió del Dashboard
 Completo a pantalla propia con chip propio**, porque dentro del Dashboard no
 le alcanza el espacio. El Dashboard Completo (flujo 11) la
-**enlaza**, no la dibuja.
+**enlaza**, no la dibuja en pantalla. **Excepción (Victor, 2026-10-15):** el archivo que se descarga del Dashboard (PDF o Excel) **incluye siempre la Curva S**, en hoja aparte y con la misma fuente de este flujo (`cargarCurvaS`): en Completo, económica y física; en Parcial, solo física y sin dinero. El PDF y el Excel recortan EV y AC a la fecha de corte del filtro.
 
 ## Fuentes de verdad
 
@@ -43,7 +43,7 @@ le alcanza el espacio. El Dashboard Completo (flujo 11) la
 |---|---|
 | **PV** (valor planificado) | `plan_maestro_asignaciones.metrado_planificado × plan_maestro_partidas.precio_unitario`, del Plan Maestro con `estado = 'APROBADO'`, por día |
 | **EV** (valor ganado) | `rdt_actividades.metrado_ejecutado` (solo `ta = 'D'`) × `dp_partidas.precio_unitario`, vía `rdt_actividad_partidas`, de partes con `estado_validacion = 'VALIDADO'` y su `fecha_lima` |
-| **AC** (costo real) | `rdt_tareo_horas.horas × rdt_tareo.tarifa_hh` (excluyendo MOI, regla 10) + `rdt_equipos_parte.horas × tarifa_hm`, de los mismos partes validados y su `fecha_lima` — tarifa congelada al validar (EVM Fase 1) |
+| **AC** (costo real) | `rdt_tareo_horas.horas × rdt_tareo.tarifa_hh` (excluyendo MOI, regla 10; las HH extra × 1,25) + `(horas operativas + horas stand-by) × tarifa_hm` de equipos, de los mismos partes validados y su `fecha_lima` — tarifa congelada al validar (EVM Fase 1) — **más materiales y subcontratos** (`ac_materiales_subcontratos_al_corte`, `db/102`; ver regla 5) |
 
 Función SQL: `curva_s_proyecto(proyecto_id, desde, hasta)` (`db/070_curva_s_serie.sql`),
 que agrega por fecha en una sola pasada (no una subconsulta por día) y
@@ -55,8 +55,8 @@ vuelva cuadrática con proyectos grandes.
 **AC no filtra por partida vinculada, a propósito**: suma todas las horas
 (no-MOI) de partes validados, tengan o no vínculo a una partida vigente del
 DP — así el total cuadra exacto con el AC del PR
-(`Σ pr_partidas.costo_real_acum + proyecto_pr.costo_legacy_sin_partida_acum`)
-sin sumar el balde legacy aparte. El EV sí exige el vínculo, porque sin él
+(`Σ pr_partidas.costo_real_acum + proyecto_pr.costo_legacy_sin_partida_acum + costo_materiales_acum + costo_subcontratos_acum`)
+sin sumar el balde legacy aparte. La Curva S calcula materiales y subcontratos en vivo con la función de la `db/102`; el PR los guarda al recalcular, por eso un PR anterior a la `102` se recalcula para que ambos coincidan. El EV sí exige el vínculo, porque sin él
 no hay con qué partida calcular metrado × precio.
 
 **BAC del modo físico.** El % de avance físico divide PV y EV entre el BAC
@@ -89,9 +89,7 @@ porcentuales, sin montos USD.
    (patrón "Pendiente" ya usado en PR/Dashboard).
 4. Sin dependencias nuevas de gráficos: el gráfico es SVG a mano, igual
    criterio que la dona del Dashboard.
-5. El AC cubre solo HH y HM con tarifa congelada (regla 1 de EVM) —
-   materiales y subcontratos se miden por % de avance económico (regla 5),
-   nunca por costo capturado; la pantalla lo dice en una nota fija.
+5. **El AC suma todo lo que se gasta (Victor, 2026-10-15, regla de costo real del [flujo 10](10-generacion-pr.md)):** HH y HM con tarifa congelada (HH extra × 1,25; HM operativas más stand-by) **más materiales y subcontratos por avance físico, sin tope en 100 %**. Materiales = su presupuesto × avance físico (EV / BAC del día); subcontrato por avance físico = contractual × avance físico; subcontrato con ingreso manual = lo del avance físico hasta el día (Lima) de su último cambio y el monto ingresado desde ese día. Reemplaza la regla de septiembre («se miden por % de avance económico, nunca por costo capturado»). La pantalla lo dice en una nota fija.
 6. Las HH de MOI no se valorizan (regla 10) — no entran al AC.
 7. **La curva real (EV/AC) nunca se dibuja más allá de la fecha de corte.**
    El PV sí sigue hasta el fin del Plan Maestro aprobado. El hueco entre

@@ -10,7 +10,7 @@ Este archivo ordena **solo `docs/`**. La fuente normativa de todo el repositorio
 | [01-contexto-repositorio/](01-contexto-repositorio/README.md) | Configuración específica de este repositorio: propósito, fuentes de verdad, entorno Git/worktrees, pruebas, diseño. |
 | [02-trabajo-activo/](02-trabajo-activo/README.md) | Plan / progreso / evidencia / auditoría de cada tarea real, activa o cerrada. |
 | [03-aprendizaje-continuo/](03-aprendizaje-continuo/README.md) | Mejoras de trabajo, histórico de promociones, pendientes de promoción. |
-| [04-flujos-de-negocio/](04-flujos-de-negocio/README.md) | Reglas de negocio permanentes del sistema, una por tema dueño. |
+| [04-flujos-de-negocio/](04-flujos-de-negocio/README.md) | Reglas de negocio permanentes del sistema, una por tema dueño (22 flujos; el más reciente, [22 — Informes de supervisión](04-flujos-de-negocio/22-informes-de-supervision.md)). |
 | [05-diseno-y-referencias/](05-diseno-y-referencias/README.md) | Sistema de diseño (`design.md`) y mockups de referencia. |
 | [06-material-de-apoyo/](06-material-de-apoyo/README.md) | Material de referencia no normativo (conocimiento EVM/LPS, formatos, datos de prueba). |
 

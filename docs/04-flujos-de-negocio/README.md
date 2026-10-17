@@ -6,7 +6,7 @@ Las reglas funcionales y operativas permanentes del sistema, una vez por tema du
 
 **Interfaz:** al crear una pantalla nueva o modificar una existente en `py_control_proyectos_web`, la convención obligatoria de diseño/UI es [`../05-diseno-y-referencias/design.md`](../05-diseno-y-referencias/design.md) — layout, tokens, componentes, columnas, accesibilidad. Leerlo antes de tocar cualquier interfaz.
 
-## Índice de los 21 flujos, con su disparador
+## Índice de los 22 flujos, con su disparador
 
 Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta. **El disparador es la puerta de entrada**: si ninguna línea de la tarea coincide con él, ese flujo no se abre. Por eso la tabla de abajo basta para decidir, y no hace falta leer los flujos para saber cuáles_skip.
 
@@ -33,6 +33,7 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 | 19 | Paquetes de trabajo y jerarquía de control | agrupar en paquetes, jerarquía de control o modo de medición | [19-paquetes-de-trabajo-y-jerarquia-de-control.md](19-paquetes-de-trabajo-y-jerarquia-de-control.md) |
 | 20 | Plan Maestro | fuentes de verdad, flujo implementado, permisos, fase 2 | [20-plan-maestro.md](20-plan-maestro.md) |
 | 21 | Curva S | reglas fijas, granularidad, endpoint, pantalla propia | [21-curva-s.md](21-curva-s.md) |
+| 22 | Informes de supervisión | informes diarios y semanales del supervisor, foto de campo, formatos, período, descarga, pestaña Inasistencias | [22-informes-de-supervision.md](22-informes-de-supervision.md) |
 
 **Borrado administrador** no es un flujo: es una regla transversal: el borrado definitivo de RQ, RDT, proyecto (archivar y eliminar), programa y portafolio lo ejecutan solo el administrador y el jefe de proyectos (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)); ningún otro rol, el jefe de oficina técnica incluido. Está citada en [05](05-rq.md), [06](06-rdt.md) y [08](08-programa-portafolio-proyecto.md).
 
@@ -50,7 +51,7 @@ Bitácoras de sesión, estado de planes o procedimientos de agentes — eso vive
 
 ## Regla de lectura y actualización
 
-**Lectura por rol (D10):** **ningún rol lee los 21 flujos por costumbre.** Los cuatro leen el índice de este archivo —la tabla de disparadores de arriba— y abren solo los flujos cuyo `Lee si:` coincide con su tarea. El Worker va más acotado: solo los que el plan declara afectados por su parte. La lista completa se lee únicamente si el plan toca más de la mitad de los flujos, o si el Auditor necesita comparar dos flujos enteros porque detectó un conflicto entre reglas. Regla completa en [`../00-estandar-agentes/04-flujo-sdd-y-planes.md`](../00-estandar-agentes/04-flujo-sdd-y-planes.md).
+**Lectura por rol (D10):** **ningún rol lee los 22 flujos por costumbre.** Los cuatro leen el índice de este archivo —la tabla de disparadores de arriba— y abren solo los flujos cuyo `Lee si:` coincide con su tarea. El Worker va más acotado: solo los que el plan declara afectados por su parte. La lista completa se lee únicamente si el plan toca más de la mitad de los flujos, o si el Auditor necesita comparar dos flujos enteros porque detectó un conflicto entre reglas. Regla completa en [`../00-estandar-agentes/04-flujo-sdd-y-planes.md`](../00-estandar-agentes/04-flujo-sdd-y-planes.md).
 
 **Al agregar o cambiar un flujo:** su línea `Lee si:` es parte del flujo y se escribe con él. Si el disparador no describe algo que el flujo realmente contiene, está mal: el disparador no promete alcance que el flujo no tenga.
 

@@ -297,6 +297,17 @@ Maqueta `mockups/plan-maestro-lienzo.html`, **aprobada por Victor el 2026-09-30*
 
 Maqueta `mockups/crear-rdt-selector-paquetes.html`. **Se usa la pantalla que ya existe** (`src/components/ui/FormularioCrearRdt.tsx`), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo de personal, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos; solo mejora la presentación con los tokens de este documento. El campo de partida de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5), partidas directas aparte y, arriba, «Contributoria» / «No contributoria». En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para el WBS de las actividades C/NC, de los materiales y de los equipos (solo partidas declaradas ese día). Encabezados «Met. acum.», «Met. prog.» y «Met. ejec.» completos. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
 
+### Recuadros del Dashboard: contorno punteado amarillo
+
+**Decidido por Victor el 2026-10-15** («que se mantenga la línea punteada amarilla en todos los recuadros… déjala en el Dashboard»), a partir de las maquetas del plan Informes de supervisión y Dashboard. Es un estilo agregado, no cambia ninguna regla escrita.
+
+| Pieza | Regla | Se apoya en |
+|---|---|---|
+| Qué lleva el contorno | Todos los recuadros del Dashboard: tarjetas de arriba, paneles de gráfica, detalle que abre cada tarjeta y matriz de partidas | `components/dashboard/` |
+| Cómo se pinta | Contorno de 1 px, **punteado**, desplazado 2 px, en el `amber` de advertencia (4.1.1) al 80 % de opacidad: `outline outline-1 outline-dashed outline-offset-2 outline-amber-400/80` (constante `CONTORNO_REF` en `components/dashboard/contorno.ts`). Es un `outline`, no un `border`: no cambia el tamaño ni la rejilla del recuadro | §4.4 |
+| Qué no es | No es un color de serie (PV, AC y EV conservan su paleta, flujo 11) ni un estado de validación; los estados de §4.1.1 siguen usando su propio uso | §4.1.1 |
+| Fuera del Dashboard | No se extiende a otras pantallas sin una decisión nueva de Victor | — |
+
 ### Crear componentes nuevos
 
 Solo proponer un componente nuevo si:
@@ -542,6 +553,7 @@ Antes de declarar una interfaz terminada, el agente debe verificar:
 
 | Versión | Fecha | Cambio |
 |---|---|---|
+| 1.10.0 | 2026-10-17 | Plan Informes de supervisión y Dashboard, con la decisión de Victor del 2026-10-15: §5 nueva subsección «Recuadros del Dashboard: contorno punteado amarillo». Sin tokens ni componentes nuevos (constante `CONTORNO_REF` ya existente en la app). |
 | 1.9.0 | 2026-09-30 | F0-U1, indicaciones de Victor, pendientes de su revisión: §3 nueva línea «Toda maqueta del plan se muestra con los tres paneles»; §5 Tablas, regla de alineación de columnas (encabezado alineado con su dato, ancho justo) con un ejemplo correcto y uno incorrecto; ítem 11 del checklist de §11. Sin tokens ni componentes nuevos. |
 | 1.9.1 | 2026-09-30 | F0-V, indicaciones de Victor: §8 regla de barras de desplazamiento azuladas (no blancas) y su CSS; corrección de la regla de color del avance real en las filas «Real» (`tr.real td.pct-ej` / `.pct-100`, que antes quedaba pisada por `tr.real td`). Sin tokens nuevos. |
 | 1.8.0 | 2026-09-30 | F0-S, con dos indicaciones de Victor, pendientes de su revisión: §3 «Paneles laterales ocultables» fija la posición del icono (esquina superior interior del encabezado de cada panel, a la altura del título; visible también con el panel oculto); §4.1.2 nueva, color de los porcentajes de avance real en ejecución (0 % blanco, en curso amarillo, 100 % verde; solo porcentajes de avance; pantallas existentes fuera de este plan). Sin tokens ni componentes nuevos. |

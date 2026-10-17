@@ -48,6 +48,18 @@ No es el flujo OT: solo se vinculan por N° OT.
 - **Status y Consolidado.** Status suma la columna y el filtro «Paquete» (ocultos si ningún parte tiene paquete). El Consolidado suma el filtro «Paquete de trabajo» (se combina con el de partidas del DP) y la etiqueta del paquete en las filas de partidas. Sin paquetes, el aspecto no cambia.
 - Un RDT anterior sin paquete se valida solo si su partida está como directa en el plan aprobado.
 
+## HH extra, HM stand-by y estado del equipo (Victor, 2026-10-15; migración `100`)
+
+El RDT estructurado registra, además de las horas por persona y por equipo (`horas`, `tarifa_hm`):
+
+- **HH extra por persona:** cuántas de las horas del día de cada persona son extra. **Ya están dentro del total** de horas de la persona: HH normales = total − extra; la extra no puede pasar del total (el formulario, el servidor y la función `guardar_rdt_parte` lo rechazan). Las HH reales y el IP **no cambian**. La HH extra se valoriza a **tarifa × 1,25**; el recargo se reparte entre las actividades de la persona en proporción a sus horas. Las HH de MOI siguen sin valorizarse.
+- **HM stand-by por equipo:** horas parado y disponible, además de las HM operativas. **Suman al costo real** (con la tarifa del equipo) y **también cuentan en el consumo de HM** contra lo contractual: HM = operativas + stand-by.
+- **Estado del equipo,** con desplegable: Operativo, Stand-by, Averiado, En mantenimiento (`ESTADOS_EQUIPO`). Se valida en servidor.
+- **Los RDT existentes** quedan con extra = 0, stand-by = 0 y estado vacío; no se reescriben.
+- **El PDF del RDT (PROM-GP-002)** lleva las columnas nuevas (HH normales / extra, HM stand-by, estado) **dentro del mismo formato impreso**, sin crear otro formato.
+- **Consolidado RDTs:** las filas de HM suman operativas + stand-by y las de HH incluyen la extra; el desglose normales / extra y operativas / stand-by va como grupo aparte, sin total propio.
+- **Efecto en el costo:** ver «Costo real (AC)» en el [flujo 10](10-generacion-pr.md); la Curva S usa la misma cuenta ([flujo 21](21-curva-s.md)). Los [informes de supervisión](22-informes-de-supervision.md) leen estos campos para el personal y los equipos desglosados.
+
 ## Reposicionamiento de los RDT al aprobar un Plan Maestro nuevo (U4/U7, Enmienda E1 2026-10-03)
 
 - **Al aprobar un Plan Maestro nuevo, los RDT se reposicionan**: se vuelven a **asociar a las líneas del plan vigente**, por la clave de reporte `paquete × partida`, para que el Plan Maestro muestre ese RDT en las fechas y metrados de la nueva línea base. Alcanza a **todos** los RDT del servicio, **incluidos los validados**.

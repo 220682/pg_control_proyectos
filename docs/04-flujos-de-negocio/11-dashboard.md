@@ -17,7 +17,11 @@ dato económico**: todo lo monetario vive en el Completo.
 | | Parcial | Completo |
 |---|---|---|
 | Filtros (fecha de corte y orden de la matriz) | ✓ | ✓ |
-| KPI de avance físico (%) | ✓ | ✓ |
+| Supervisor operativo a cargo (etiqueta bajo el encabezado) | ✓ | ✓ |
+| KPI de avance físico (%), más grande y con barra ejecutado / programado / restante | ✓ | ✓ |
+| IP y HH contractuales / acumuladas / restantes (no son dinero) | ✓ (tarjeta propia en la fila) | ✓ (dos tarjetas junto a la dona) |
+| Gráfica «Avance físico por nivel» y gráfica «Recursos: contractual · acumulado · restante» (HH, HM; Subcontratos solo en Completo) | ✓ | ✓ |
+| Descargar (PDF o Excel, con la Curva S) | ✓ (sin dinero) | ✓ |
 | KPI de dinero (BAC, PV, EV, AC, SV, CV, SPI, CPI, EAC, VAC) | — | ✓ |
 | Gráficos de dinero (composición del costo, desempeño por partida) | — | ✓ |
 | Matriz de partidas (sin columnas de costo) | ✓ | ✓ |
@@ -40,7 +44,7 @@ ya no rige el interruptor.
 
 **La Curva S no vive en ningún Dashboard.** Tiene pantalla propia
 (`(workspace)/proyectos/[id]/curva-s`) y chip propio (ubicación por panel
-abajo). El Parcial y el Completo la **enlazan**, nunca la embeben; desde el
+abajo). El Parcial y el Completo la **enlazan**, nunca la embeben en pantalla (el archivo descargado sí la lleva, ver «Descargar»); desde el
 Parcial el enlace abre `?modo=fisica` para quien no tiene economía (D4).
 
 ## Ubicación en la app
@@ -86,7 +90,7 @@ directo** — el BAC no es el monto total del contrato y la interfaz lo dice.
 Fuente: `src/lib/pr/evm.ts` (leído, nunca recalculado por el Dashboard — es
 el mismo motor que usa la pantalla PR, por eso los dos siempre coinciden).
 
-- **Parcial:** % avance físico.
+- **Parcial:** % avance físico, **IP y HH** (contractuales, acumuladas y restantes: no son dinero, se ven en los dos modos).
 - **Completo:** además, BAC, PV al corte, EV, AC, SV, CV, SPI, CPI, EAC y VAC.
 - **Sin Plan Maestro aprobado**: PV, SV y SPI muestran **"Pendiente"**,
   nunca 0 ni un número inventado.
@@ -104,23 +108,59 @@ ejecutivo (imprime SPI/CPI), el chip semáforo (deriva de CPI), la dona
 «Composición del costo», el gráfico «Desempeño por partida», las columnas
 PV/EV/AC/SPI/CPI de la matriz de partidas y la opción de orden «mayor desviación
 de costo». **Conserva** filtros, % avance físico, matriz de partidas sin costo,
-panel de diagnóstico, Bloque E (PPC/Pareto) y el enlace a la Curva S.
+panel de diagnóstico, Bloque E (PPC/Pareto), el enlace a la Curva S, y desde el
+2026-10-15 el IP, las HH, las gráficas de avance por nivel y de recursos HH/HM, y
+el botón Descargar (todo sin dinero). **Pantalla y archivo descargado usan el mismo
+criterio de modo** (Completo solo si `tipo_dashboard` es COMPLETO y el rol tiene
+economía): un rol con economía y `tipo_dashboard` = PARCIAL ve el Parcial en la
+página igual que en el archivo. En el Parcial, la tarjeta de avance dice «Avance
+físico ejecutado (RDT validados)» y no nombra BAC. La gráfica por nivel recibe del
+servidor solo porcentajes por nodo (nunca pesos ni montos).
+
+## Responsable operativo, IP y HH (Victor, 2026-10-15)
+
+- **Supervisor operativo a cargo:** etiqueta justo bajo el encabezado del servicio, en el color de Supervisión operativa. Fuente única: el campo «Supervisor operativo a cargo» de Editar servicio ([flujo 08](08-programa-portafolio-proyecto.md)); **uno solo por servicio**. Sin asignar: «Sin supervisor a cargo».
+- **IP y HH sin agrandar la pantalla.** En Completo, dos tarjetas propias en el espacio libre del panel «Composición del costo», a la derecha de la dona: **IP** (valor, HH ganadas y HH reales) y **HH contractuales** (barra de consumo, acumuladas con % y restantes). Las tarjetas SPI y CPI **no** llevan cuadros adicionales (quedaban comprimidos). En Parcial, el IP y las HH tienen tarjeta propia en la misma fila.
+- **% Avance físico** más grande y con barra: lo ejecutado en verde, una marca en lo programado al corte (Plan Maestro; sin Plan Maestro aprobado no hay marca) y el restante.
+- **Matriz de partidas:** suma las columnas HH contractuales, HH acumuladas e IP por partida (sin dinero; también en Parcial).
+
+## Gráficas, detalles y partida en revisión (Victor, 2026-10-15)
+
+- **«Avance físico por nivel»:** barras verticales, programado al corte (Plan Maestro) contra real (RDT validados), con selector de nivel (Servicio, subpresupuestos, títulos…) tomado del mapa de niveles del DP (`servicio_encabezados`). Clic en una barra baja un nivel, con una ruta para volver. Sin Plan Maestro aprobado, la barra programada dice «Pendiente».
+- **«Recursos: contractual · acumulado · restante»:** barras verticales por recurso, con pestañas **Mano de obra (HH)**, **Equipos (HM)** y **Subcontratos**. La barra mide lo contractual; la parte de color es lo acumulado, la gris lo restante y la roja el exceso. Las HM acumuladas suman operativas más stand-by. Subcontratos se miden en dinero y **solo en Completo**: en Parcial la pestaña sale deshabilitada con título; lee el acumulado de cada subcontrato según su forma de medir (avance físico o monto ingresado en el Reporte del proyecto, [flujo 10](10-generacion-pr.md)) y ya no queda «Pendiente». La unidad de las cantidades contractuales de equipos se toma como HM (lo que fija el import del DP); no se verificó con un DP real.
+- **Tocar un cargo o un equipo** muestra en qué partidas se usó (solo horas; el cargo del tareo se une al recurso del PR por nombre normalizado, sin tildes ni mayúsculas, porque no hay llave entre ambos).
+- **Interactividad:** cada barra y cada sector de la dona muestran su valor al pasar el mouse, al tocar o con el teclado; la leyenda oculta o muestra series; clic en la dona (Mano de obra o Equipos) lleva la gráfica de recursos a esa pestaña; clic en una barra de «Desempeño por partida» marca la partida y baja a la matriz. Ningún valor queda solo en el globo: también está en la etiqueta o en una tabla «Ver valores».
+- **Tarjetas de arriba con clic:** cada tarjeta abre debajo de la fila un detalle y lo cierra al volver a tocarla: % avance (por subpresupuesto), BAC (por tipo de recurso), PV y EV (por subpresupuesto), AC (por recurso; lleva a «Costo real de recursos»), SPI (partidas más atrasadas), CPI (partidas con menor CPI), IP (por partida), HH (por cargo) y PPC (causas; el detalle va dentro del Bloque E). Cada detalle tiene un botón a la gráfica o la matriz que corresponde y sus filas de partida se pueden tocar para revisarla. En Parcial las tarjetas de dinero no existen y los detalles no muestran dinero.
+- **Partida en revisión:** al elegir una partida (en «Desempeño por partida», en el detalle de una tarjeta, en la gráfica de recursos o en la matriz) aparece arriba una franja fija «Revisando partida …» con su avance, IP y CPI (CPI solo en Completo), que acompaña al bajar; la fila de la matriz queda resaltada con la marca «En revisión» y las demás barras se atenúan. Se quita con «Quitar» o con Escape.
+- **Estilo:** los recuadros del Dashboard (tarjetas, paneles de gráfica, detalle y matriz) llevan contorno **punteado amarillo** (ver [design.md](../05-diseno-y-referencias/design.md)).
+
+## Descargar (Victor, 2026-10-15)
+
+- Botón en la fila de filtros, con menú PDF o Excel (`GET /api/proyectos/[id]/dashboard/descargar?formato=pdf|xlsx&corte=AAAA-MM-DD`). Lo ven y lo usan los 13 roles; el servidor valida sesión, rol y alcance.
+- **El archivo incluye siempre el Dashboard y la Curva S.** PDF A4 horizontal (lo que se ve + la Curva S en hoja aparte + la matriz) o Excel (una hoja por bloque y las series de la Curva S).
+- **Usa la fecha de corte y el modo de la pantalla:** `corte` es una fecha AAAA-MM-DD (el filtro ya resuelto, no el preset) y la Curva S del archivo recorta EV y AC a ese corte. En Completo (rol con economía y `tipo_dashboard` COMPLETO): Curva S económica y física, con dinero; en Parcial: sin dinero y Curva S solo física. Una prueba comprueba que el archivo Parcial no contiene ningún símbolo ni sigla de dinero.
+- El AC del archivo se arma con el mismo cálculo que la pantalla (materiales y subcontratos incluidos), así que PDF, Excel y pantalla dan el mismo AC. Ruta con `maxDuration = 60`.
 
 ## Costo real de recursos (solo Completo)
 
 Bloque propio del Dashboard Completo (D2, 2026-10-02): desagrega el AC real por
 recurso para ver su incidencia. El dato se lee del PR; el Dashboard no recalcula.
 
-- **Filas:** `pr_recursos` de tipo **MO (personal, HH)** y **HM (equipos)**, con
-  su `descripcion` y su costo acumulado.
+- **Filas:** `pr_recursos` de tipo **MO (personal, HH)**, **HM (equipos)**,
+  **materiales** y **subcontratos**, con su `descripcion` y su costo acumulado
+  (los cuatro tipos suman, regla de costo real del [flujo 10](10-generacion-pr.md)).
 - **Total = AC** del PR (la misma fuente que el KPI AC), nunca una suma paralela.
 - **Fila «Sin resolver»** = `AC − Σ filas`, visible **solo** cuando la diferencia
   es distinta de cero; explica las filas sin partida vinculada (deuda de
-  `db/055`). No se fuerza a cero ni se inventa dato.
+  `db/055`). Con las cuatro clases resueltas vale 0. No se fuerza a cero ni se
+  inventa dato.
 - El balde `costo_legacy_sin_partida_acum` es una **nota informativa, nunca una
   fila sumable**: ya está dentro de las filas de recursos y sumarlo duplicaría.
-- **Materiales y subcontratos no entran** (regla 5: se miden por % de avance
-  económico, no por costo capturado); **las HH de MOI no se valorizan** (regla 10).
+- **Materiales y subcontratos entran al AC desde el 2026-10-15** (Victor: «todo
+  debe sumar a todo»): materiales por % de avance físico, subcontratos por
+  avance físico o por el monto ingresado en el Reporte del proyecto. Reemplaza
+  la regla de septiembre «no suman al costo real». **Las HH de MOI no se
+  valorizan** (regla 10).
 - **Vista solo por recurso**, no por partida.
 
 ## Diagnóstico
@@ -157,5 +197,5 @@ Califica **plazo y costo por separado** (SPI y CPI, cada uno con su propio umbra
 
 - No recalcula nada: lee el PR.
 - No administra el catálogo CNC (eso vive en Recursos → Causas CNC).
-- No dibuja la Curva S ni ninguna serie temporal.
+- No dibuja la Curva S ni ninguna serie temporal **en pantalla**: el archivo que se descarga sí la incluye (ver «Descargar»).
 - No modifica `evm.ts` ni el motor de RDT → PR.

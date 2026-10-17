@@ -1145,3 +1145,14 @@ Código: avance rápido a `main` de la app, push sin force, `0 0` (arriba). Docu
 Victor autorizó el Gate 2 y el merge con el despliegue el 2026-10-17 («todo a main, despliega»). Este mensaje lo escribe el Documentador a pedido del Orquestador y no aprueba nada por Victor.
 
 **Estado: Plan cerrado el 2026-10-17 con los pendientes listados.** Tras el commit 6b5117e y su push, `git rev-list --left-right --count origin/main...main` en `pg_control_proyectos` dio `0 0`; el repo de la app también dio `0 0` (ver 16a). Esta línea final se subió en un commit posterior y se comprobó de nuevo con el mismo comando.
+
+## Actualización al cierre de sesión (2026-10-17)
+
+Solo hechos; no cambia el «Mensaje de cierre» ni lo anterior.
+
+1. **`npm ci` en el repo principal de la app** (`main` = 9633de4): terminó bien en unos 3 minutos, 536 paquetes, `docx@9.12.0` y `sharp@0.34.5` instalados. `npx tsc --noEmit` limpio; `npm test`: 160 archivos y 1623 pruebas verdes (1 omitida); `package*.json` sin cambios; `git status` solo con `db/095` sin seguimiento. npm avisó de 14 vulnerabilidades en dependencias (4 moderadas, 9 altas y 1 crítica) y de que `sharp` y `unrs-resolver` tienen scripts de instalación sin aprobar (`npm approve-scripts`). No se tocó nada de eso: queda pendiente de revisar, sin decidir. El pendiente 5 del Mensaje de cierre queda hecho.
+2. **Matriz de permisos:** Victor pidió actualizar la que ya existe (con su flujo 14). El flujo 14 está al día, pero el artefacto https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT no se pudo abrir con la cuenta de Claude Code (lectura: «artefacto no encontrado»; la lista de artefactos de la cuenta no lo incluye). Para actualizarlo hay que compartirlo con permiso de edición con victor.sup22@gmail.com, o decir en qué cuenta está. El pendiente 6 sigue abierto con esa causa.
+3. **Plan futuro:** Victor decidió el 2026-10-17 que todo lo demás queda como plan futuro: los siete cambios de reglas (con sus preguntas por aclarar), el informe estándar, las propuestas del Auditor, las pruebas en vivo (celular real, segunda cuenta, subcontrato manual, peso de descargas), la limpieza de datos de prueba de PS-0000 e informes ID-4 e ID-6, y la verificación de la app publicada. Ningún flujo se tocó por ello.
+4. **Recálculo del PR de los servicios reales:** el intento lo bloqueó el sistema de permisos y no hizo falta (ya registrado en el Registro de decisiones y en `resultados/L.md` §13).
+5. **Aprendizajes de trabajo** de hoy sumados en `docs/03-aprendizaje-continuo/2026-10-17-informes-supervision-y-dashboard-aprendizajes-de-trabajo.md` (puntos 11 y 12).
+

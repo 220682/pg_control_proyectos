@@ -58,6 +58,14 @@ La regla de hooks prohíbe mutar refs durante el render: el guardado automático
 
 Con 20 fotos de 2,5 MB cada archivo de informe pesaba ~50 MB, por encima del límite de respuesta de una función de servidor (~4,5 MB, por confirmar). Se redujo cada foto al incrustarla y se volvió a medir con fotos de ruido (peor caso, 6 MB) y luego en vivo (~360 KB con 6 fotos). Medir primero con el caso más pesado y después con datos reales evita aceptar o descartar una solución con un número que no representa el uso.
 
+### 11. El clasificador de permisos bloquea escrituras en la base de producción aunque Victor las autorice en el chat
+
+Hace falta aprobarlas en la app o con una regla de permiso, y conviene comprobar primero si la escritura es necesaria. En este plan el intento de «Recalcular PR» en un servicio real fue denegado y no era necesario: los servicios reales tenían AC 0 y avance 0 %.
+
+### 12. Antes de prometer actualizar un artefacto compartido hay que comprobar que la cuenta de la sesión lo puede abrir
+
+Se hace con `Artifact read`. La Matriz de permisos no se pudo abrir con la cuenta de Claude Code («artefacto no encontrado») y la promesa de actualizarla quedó sin cumplir.
+
 ## Evidencia
 
 Apartado «Mejoras (de trabajo)» del plan (filas M1 a M19) y los resúmenes de cierre de las tandas A, B, C, D, E, F, G, H, I, J, K, N, O, P, Q, R, S y L en `02-trabajo-activo/01-planes/2026-10-15-informes-supervision-y-dashboard-briefs/resultados/`.

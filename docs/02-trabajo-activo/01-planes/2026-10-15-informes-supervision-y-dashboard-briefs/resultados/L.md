@@ -174,3 +174,24 @@ Servidor del puerto 3013 reconstruido con `npx next build --webpack` y relevanta
 - **PARCIAL, sesión de Victor (rol con economía): Conforme.** La página tiene 0 «US$», sin AC 97.215 ni BAC/PV/EV/CV; solo aparece «SPI» en la nota del PPC («no se mezcla con SPI»). Sin scroll horizontal a 1440. Descargas: xlsx 19.321 bytes y PDF 12.113 bytes (4 págs), tamaño y número de hojas/páginas iguales al Parcial ya revisado (xlsx 8 hojas, PDF 4 págs, sin dinero); no se re-abrió el contenido celda por celda. Página y archivos coinciden (sin dinero). Captura `L-bis-dashboard-parcial-1440.png`.
 - **COMPLETO: Conforme.** Página con dinero (398 «US$» en el HTML) y AC 97.215,06; descargas xlsx 25.844 bytes y PDF 17.592 bytes. Captura `L-bis-dashboard-parcial-completo-1440.png`.
 - Defecto M9: **cerrado**.
+
+## 12. Pruebas finales (H-1)
+
+Servidor 3013 con la sesión de Victor vigente (rama 9633de4 solo agrega `.gitattributes`; no se reconstruyó). `tipo_dashboard` de PS-0000 no se tocó (COMPLETO).
+
+### Prueba A — parte con HH extra y HM stand-by: Conforme
+Parte «PRUEBA» `0699db4b-8374-4f04-8af5-6369dd97e7f7`, PS-0000, 2026-10-16 turno Día, actividad 3.2.4 con metrado ejecutado 0 (para no mover el EV). Persona: JOSHUA FARIAS (OFICIAL), 10 HH totales, 2 extra. Equipo: CAMIONETA PICK UP, 6 HM operativas + 2 stand-by, estado Stand-by. Validado con la sesión de Victor y «Recalcular PR».
+Tarifas reales (acumulado/horas del PR): OFICIAL 91.784,55 / 7.060,35 h = 13,00 US$/HH; CAMIONETA PICK UP 2.160,00 / 120 HM = 18,00 US$/HM.
+| | Antes | Después | Cálculo a mano |
+|---|---|---|---|
+| Personal | 91.784,55 | 91.921,05 (+136,50) | (8 + 1,25 × 2) × 13 = 136,50 |
+| Equipos | 2.160,00 | 2.304,00 (+144,00) | (6 + 2) × 18 = 144,00 |
+| AC total | 97.215,06 | 97.495,56 (+280,50) | 280,50 |
+Sin cambio: BAC 188.284,88, PV 182.115,04, EV 118.478,05, materiales 3.270,51, subcontratos 0, IP 1,00. HH reales de OFICIAL 7.060,35 → 7.070,35 (+10 = total del parte; la extra va dentro del total y no suma aparte). CV, CPI y EAC cambian solo por el AC.
+Cuadre al mismo corte: PR 97.495,56; Dashboard 97.495,56; Curva S 97.495,56 (EV y PV iguales); Costos (borrador PS-0000-ID-5, leído sin emitir) 97.495,56. Capturas `L-ter-A-pr-1440.png`, `L-ter-A-dashboard-1440.png`.
+
+### Prueba B — subcontrato manual: Observado (no se hizo)
+No existe vía para agregar un subcontrato a PS-0000 sin tocar el DP: los subcontratos salen de `dp_recursos` (tipo `subcontrato`, `src/lib/pr/subcontratos.ts`) y no hay API que agregue recursos; `PUT /pr/subcontratos` solo mide subcontratos que ya existen (400 «Ese subcontrato no pertenece a este servicio»). La única vía es reemplazar o reimportar el DP; no se hizo.
+
+### Datos de prueba creados
+RDT PRUEBA `0699db4b-8374-4f04-8af5-6369dd97e7f7` (VALIDADO; suma +280,50 al AC de PS-0000). Aparece un borrador PS-0000-ID-6 que no creé en esta sesión (origen desconocido, no se borró).

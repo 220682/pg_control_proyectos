@@ -69,3 +69,16 @@ Unas 45 llamadas.
 No se editó ninguna. Pendientes para el Documentador/Orquestador: flujo 14 (acceso a descargas: quien ve el informe lo descarga; COSTOS exige economía) y la matriz de permisos, si aún no registran la ruta `descargar` y los tres alcances (G-H5).
 
 Cierre del Documentador (2026-10-16): «Fuentes de verdad revisadas: ninguna fuente central editada en este cierre. Pendientes de decisión o de la tanda M: flujo 14 y matriz de permisos (ruta `descargar`, alcances y economía de COSTOS; G7 observado), flujo 22 de informes (M1) y la validación de G-H5 por Victor.»
+
+## Corrección D-H / G-H (decisión del Orquestador a las preguntas de F)
+
+Commit en `local-worker-1` (ver `git log`, mensaje «Correccion D-H / G-H»). Todo «no probado en base».
+
+| Punto | Qué se hizo | Evidencia |
+|---|---|---|
+| F-H1 | `GET informes/[informeId]` devuelve, **aditivo** (no cambia `tipos.ts`): `datos` por id de bloque, `fotos` por id de bloque y `errorDatos` si falla el cálculo en vivo (el editor abre igual con `datos: {}`). Borrador: `cargarFuente` (mismo compositor que la descarga); emitido: de `fotoFija`. `fuente.ts` descarta los bloques económicos si el formato no es COSTOS (R5); COSTOS sin economía sigue 403 por `cargarInformeVisible` | `correccion-dh.test.ts`: 13 roles (COSTOS 200 solo con economía, 403 sin filtrar datos), 404 borrador ajeno/inexistente, 401, sin dinero, fallo de la fuente |
+| F-H4 | Nuevo `src/lib/informes/fotos-huerfanas.ts`. El PATCH que cambia bloques suelta (`informe_id` y `bloque_id` nulos) las fotos de bloques que ya no existen; `emitir` hace lo mismo antes de armar la foto fija. No hay transacción: se guarda primero el informe y luego se sueltan las fotos; si eso falla responde 500 y repetir el PATCH (o emitir) es idempotente | pruebas de PATCH sin el bloque, PATCH que lo conserva y emisión sin fotos huérfanas |
+| F-H5 | `GET fotos-campo?informeId=` lista las fotos desde el primer hasta el último día del periodo (fecha Lima), con las reglas del informe (borrador ajeno y uuid malo = 404, COSTOS sin economía = 403, 401 sin sesión); `?fecha=` sigue igual; si vienen las dos manda `informeId` | pruebas de bordes de día Lima, 13 roles, 400/401/403/404 |
+| F-H2 | `partesDeConfig` alineado con las claves de F: `items[]` (INCIDENCIAS/RESTRICCIONES/PROXIMAS_ACTIVIDADES), `firmantes[{nombre,cargo}]` (tabla Nombre, Cargo, Firma), `texto`, `columnas`+`filas`, CLIMA_TURNO, `logros`/`alertas`, SEMAFORO `{estado,texto}`; los datos de prueba usan esas claves | `config-f.test.ts`: PDF, Word y Excel imprimen todas |
+
+Comandos: `npm test` 140 archivos pasan y 1 omitido, 1470 pruebas; `tsc` sin errores; lint 9 errores y 22 avisos (ninguno nuevo); build webpack en verde. G-H4 queda cerrado por F-H2. Pendiente: la tanda F/E debe usar los campos nuevos `datos`/`fotos` del GET y `?informeId=`; documentar en los flujos 14/16 (Documentador).

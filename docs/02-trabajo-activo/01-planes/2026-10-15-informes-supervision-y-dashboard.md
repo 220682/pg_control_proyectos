@@ -1155,4 +1155,4 @@ Solo hechos; no cambia el «Mensaje de cierre» ni lo anterior.
 3. **Plan futuro:** Victor decidió el 2026-10-17 que todo lo demás queda como plan futuro: los siete cambios de reglas (con sus preguntas por aclarar), el informe estándar, las propuestas del Auditor, las pruebas en vivo (celular real, segunda cuenta, subcontrato manual, peso de descargas), la limpieza de datos de prueba de PS-0000 e informes ID-4 e ID-6, y la verificación de la app publicada. Ningún flujo se tocó por ello.
 4. **Recálculo del PR de los servicios reales:** el intento lo bloqueó el sistema de permisos y no hizo falta (ya registrado en el Registro de decisiones y en `resultados/L.md` §13).
 5. **Aprendizajes de trabajo** de hoy sumados en `docs/03-aprendizaje-continuo/2026-10-17-informes-supervision-y-dashboard-aprendizajes-de-trabajo.md` (puntos 11 y 12).
-
+**Cierre de sesión 2026-10-17: plan cerrado, pendientes en plan futuro.** Tras el push del commit d9b74c5, `git rev-list --left-right --count origin/main...main` en este repo dio `0 0`.

@@ -4,11 +4,11 @@
 
 - Tema: ordenar el sistema de notificaciones bajo un estándar único (qué evento avisa, a quién, con qué texto, cuándo se cierra) y cerrar los huecos que hoy dejan al supervisor operativo sin saber qué pasó con su servicio, su RQ o su RDT. Prepara el terreno para capacitar a los supervisores operativos en el uso de la app.
 - Fecha de inicio: 2026-10-16.
-- Estado: `Propuesta` — Spec propuesto, a revisión de Victor. No hay Planner, Workers, ramas ni migraciones todavía.
+- Estado: `Spec aprobado` (Gate Spec, Victor, 2026-10-16) — pendientes P1, P2, P3 y P5 por consultar una a una antes de delegar al Planner. No hay Planner, Workers, ramas ni migraciones todavía.
 
 Puertas:
 
-- Gate Spec: `pendiente`
+- Gate Spec: `aprobado` (Victor, 2026-10-16)
 - Gate 1: `pendiente`
 - Gate 2: `pendiente`
 
@@ -140,7 +140,7 @@ Protocolo de verificación del proyecto: checklist aprobado antes de implementar
 
 ### Aprobación (Gate Spec)
 
-- [ ] El Responsable humano aprueba este Spec.
+- [x] El Responsable humano aprueba este Spec (Victor, 2026-10-16).
 
 ## Skills aplicables
 
@@ -157,6 +157,8 @@ Protocolo de verificación del proyecto: checklist aprobado antes de implementar
 | 2026-10-16 | Recepcionado pasa solo cuando Logística abre el aviso | Victor |
 | 2026-10-16 | El grupo «Proyecto» de las notificaciones pasa a llamarse «Jefatura» | Victor |
 | 2026-10-16 | No hay personas reales con esos roles: se pueden crear usuarios de prueba; Victor da los correos | Victor |
+| 2026-10-16 | Gate Spec aprobado. Las claves de las cuentas de prueba por rol se guardan solo en la memoria local del Orquestador (tabla creada, cuentas aún sin crear) | Victor |
+| 2026-10-16 | El navegador de Playwright usado en las verificaciones se cerró para que otro agente use Chrome; se reabre solo cuando haga falta | Victor / Orquestador |
 | 2026-10-16 | Se verificó en solo lectura (código y bandeja en vivo); no se escribió en la app | Orquestador |
 
 ## Libro de hallazgos

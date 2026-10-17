@@ -195,3 +195,19 @@ No existe vía para agregar un subcontrato a PS-0000 sin tocar el DP: los subcon
 
 ### Datos de prueba creados
 RDT PRUEBA `0699db4b-8374-4f04-8af5-6369dd97e7f7` (VALIDADO; suma +280,50 al AC de PS-0000). Aparece un borrador PS-0000-ID-6 que no creé en esta sesión (origen desconocido, no se borró).
+
+## 13. Lectura de los servicios reales y recálculo del PR (2026-10-17)
+
+Victor autorizó en el chat recalcular el PR de los servicios reales. **No se hizo ni hace falta.** El Worker leyó (solo lectura) los cuatro servicios reales del portafolio «Servicios Marcobre»; no hay otros reales y «Practica» solo tiene PS-0000.
+
+| Servicio | Lectura (2026-10-17) |
+|---|---|
+| PS-0001 INSTALACIÓN DE BATERÍA DE ALCANTARILLAS Y ENROCADOS – JAHUAY | AC 0,00 (personal, equipos, materiales y subcontratos en 0,00); avance físico 0 %; BAC US$ 263.778,08; último punto de la Curva S con PV, EV y AC en 0 |
+| PS-0002 FACILIDADES DE VILLA DE EJECUCIÓN FASE 2 | AC 0,00; avance 0 %; Curva S en 0; HH contractuales 1.699,18 |
+| PS-0003 MANTENIMIENTO EXTERIOR DEL CCI | AC 0,00; avance 0 %; Curva S en 0; HH contractuales 869,52 |
+| PS-0004 OBRAS CIVILES PARA SISTEMA DETECCIÓN CONTRAINCENDIOS | AC 0,00; avance 0 %; Curva S en 0; HH contractuales 943,46 |
+
+- Con AC 0 y avance 0 % no hay nada que el recálculo corrija.
+- El único intento de escritura (`POST pr/recalcular` de PS-0001) fue denegado por el sistema de permisos («Modify Shared Resources»: es la base de producción); el Worker no buscó otra vía. **No se escribió nada en ningún servicio real.**
+- Captura: `docs/02-trabajo-activo/03-evidencia/capturas/2026-10-15-informes-supervision-y-dashboard/L/L-real-PS-0001-antes.png`.
+- Conclusión (H-6 / R43): no aplica hoy, porque los servicios reales no tienen avance ni costo. El recálculo solo se necesitaría para un servicio con RDT validados antes de la 102 (solo PS-0000, ya recalculado). Desde la 102 cada validación de RDT recalcula con materiales y subcontratos. La regla R43 sigue vigente.

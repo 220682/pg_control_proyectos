@@ -22,6 +22,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-10-17 (plan Informes de supervisión y Dashboard, tanda M):** las tablas 1 y 2 suman las filas de informes de supervisión (ver, crear, emitir, versión nueva, Costos, fotos de campo, «Mis formatos», pestaña Inasistencias, descargas), del Reporte del proyecto (subcontratos con dos formas de medir), de los campos nuevos del RDT y de la descarga del Dashboard (notas 11 y 12); la nota 3 suma el supervisor a cargo. **El artefacto «Matriz de permisos» no se pudo abrir desde la cuenta de Claude Code** (lectura «artifact not found», verificado el 2026-10-15): lo actualiza Victor con la lista del resumen de la tanda M.
 
+**Actualización 2026-10-17 (Alcance y Presupuesto del servicio, pedido de Victor):** los chips «Alcance» y «Presupuesto» del panel izquierdo dejan de ser inertes y abren una pantalla propia con el archivo del ítem del mismo nombre del checklist. **Ver y descargar:** Alcance, los 13 roles; Presupuesto, los roles que ven el DP (tabla 1: trae precios). **Cargar, reemplazar y eliminar el archivo: solo el administrador** (tabla 2, nota 13). La subida desde la fila del checklist (fila «Subir documento del proyecto», nota 4) **sigue como estaba**: conviven (decisión de Victor, 2026-10-17). Filas nuevas en las tablas 1 y 2 y nota 13. **El artefacto «Matriz de permisos» no se pudo abrir desde la cuenta de Claude Code** (ver nota de arriba): lo actualiza Victor.
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -63,6 +65,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Banco de fotos del día (ver y usar) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Alcance del servicio: ver y descargar el archivo ¹³ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Presupuesto del servicio: ver y descargar el archivo ¹³ | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
 | Ficha del servicio y grilla del portafolio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Panel izquierdo del servicio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -91,6 +95,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Simular otro usuario o rol («Ver como») | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No |
 | Subir documento del proyecto (catálogo AL_INICIO, Grupo A y personalizados) ⁴ | ✓ | ✓ | — | * | * | * | * | * | * | * | * | * | * | Sí |
 | **Recursos (Personal, Cargos, Equipos, Causas CNC)** ⁶ | | | | | | | | | | | | | | |
+| Cargar, reemplazar o eliminar el archivo de Alcance o de Presupuesto del servicio (pantalla propia) ¹³ | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Crear personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Editar personal existente | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
 | Eliminar o desactivar personal | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (catálogo global) |
@@ -169,6 +174,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
+¹³ **Decidido por Victor el 2026-10-17** (pedido: «el chip de presupuesto también está muerto, hay que habilitarlo; solo yo puedo interactuar en ellos y los demás visualizar y descargar»). Las pantallas son `/proyectos/{id}/alcance` y `/proyectos/{id}/presupuesto`; muestran el archivo de la fila del mismo nombre del checklist (un archivo por servicio, cargar otro lo reemplaza). **Cargar, reemplazar y eliminar: solo el administrador**, con la OT a su alcance; el servidor lo comprueba en cada ruta. **Ver y descargar:** Alcance lo ven y descargan los 13 roles con el servicio a su alcance; el Presupuesto, **porque trae precios**, lo ven y descargan los roles que ven el DP (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de oficina técnica, supervisor de costos y jefe de costos) — **interpretación de «los demás» pendiente de confirmar con Victor**: si quiere que los 13 roles descarguen el Presupuesto, se cambia `puedeVerPresupuestoServicio` y esta fila. La subida desde el checklist (nota 4) **convive** con la pantalla: el rol responsable puede seguir subiendo desde la fila del checklist, pero eliminar el archivo solo se hace en la pantalla, por el administrador. Eliminar quita el archivo y deja la fila sin archivo; la marca de completado no se toca.
+
 
 - **Administrador y jefe de proyectos:** acceso a todas las interfaces. En acciones, no hay una regla general de "todo menos N" — cada acción se decidió una por una en el artefacto. El jefe de proyectos pasa a poder, entre otras, adjudicar y crear programas y portafolios, archivar proyectos, eliminar contenedores, editar servicio, editar checklist, importar DP, subir documento del proyecto, editar su perfil y ejecutar los borrados definitivos de RDT y RQ. **No** puede: asignar rol administrador ni "Ver como" (exclusivas de administrador, por diseño de sistema), ni actualizar estado de RQ ni subir el registro de costos (tareas operativas de logística; decidido por Victor el 2026-09-29).
 - **Jefe de oficina técnica:** conserva adjudicar, confirmar transición, subir RDT, derivar RQ y descargar el consolidado RQ; **gana** crear RDT y validar o rechazar RDT; **deja de** archivar o eliminar proyectos, editar servicio, editar checklist y editar su perfil.

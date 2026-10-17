@@ -272,7 +272,9 @@ Implementado:
 * Chips deshabilitados con título por permiso.
 * Chips **Dashboard** y **Curva S** habilitados para los **13 roles** (plan dashboard-economia-y-curva-s, 2026-10-02): la restricción económica vive dentro de la pantalla (Dashboard Completo y Curva S económica para los 5 roles con economía; Parcial y curva física para todos), no en el chip.
 
-Pendiente: los 10 chips sin pantalla (sin enlace hasta que exista la pantalla).
+* **Alcance y Presupuesto (Victor, 2026-10-17: «el chip de presupuesto también está muerto, hay que habilitarlo»):** los chips `alcance-servicio` («Alcance») y `presupuesto` («Presupuesto») del grupo «Alcance y presupuesto» dejan de ser inertes: abren `/proyectos/{id}/alcance` y `/proyectos/{id}/presupuesto` (requieren servicio; pasan por «Elegir servicio» si no hay uno). Cada pantalla muestra el archivo de la fila del mismo nombre del checklist con **Ver** (se abre en el navegador; los formatos que el navegador no muestra se descargan), **Descargar** y, solo para el administrador, **Cargar / Reemplazar** y **Eliminar** (con confirmación). El chip de Alcance lo tienen habilitado los 13 roles; el de Presupuesto, los roles que ven el DP (los demás lo ven deshabilitado con título; [flujo 14](14-accesos-y-restricciones.md) nota 13). **Panel izquierdo vigente: 30 chips, 25 con pantalla y 5 inertes** (Consolidado del servicio, OT, Personal nuevo, PETS y Planos).
+
+Pendiente: los chips sin pantalla (sin enlace hasta que exista la pantalla).
 
 ## Criterios de aceptación
 

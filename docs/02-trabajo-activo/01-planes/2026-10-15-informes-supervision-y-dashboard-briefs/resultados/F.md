@@ -54,3 +54,17 @@ Unas 35 llamadas.
 Ninguna editada. Pendientes para el Documentador: flujo de informes (claves de config, F-H2/F-H3), flujos 14 y 16.
 
 Cierre del Documentador (2026-10-16): «Fuentes de verdad revisadas: ninguna fuente central editada en este cierre; las reglas F-H2 y F-H3 quedan en el libro del plan como R41 y R42, y las decisiones de F-H1, F-H4 y F-H5 en su Registro. Pendientes de decisión o de la tanda M: flujo 22 de informes (R41, R42 y M1), flujos 14 y 16 y la matriz de permisos (acciones de F y ruta `descargar` de G).»
+
+## Corrección F
+
+Sobre `9d8a97c` (incluye G y la corrección de API de W1). Commit en `local-worker-3`: ver `git log` («Correccion F»). Todo «no probado en base».
+
+| Punto | Estado | Qué se hizo |
+|---|---|---|
+| F-H1 / F1 | Observado | El editor pide `GET informes/[id]` y pinta `datos` por id de bloque en la hoja A4, sin recalcular. Con `errorDatos` muestra un aviso claro y sigue abierto; botón «Actualizar cifras» y recarga al cambiar el período. Se quitó el aviso «sin cifras». Falta verlo con datos reales y capturas (L). |
+| F-H5 | Observado | El banco usa `fotos-campo?informeId=` (período completo) con botón «Actualizar»; se quitó el selector de día. |
+| F-H2 | Observado | Claves de `config` oficiales. La vista previa lee las mismas que los exportes (no se importó código de `exportar/`); la comparación visual de los tres archivos con la hoja queda para L. |
+| F4 | Observado | La ruta `/descargar` ya existe; el botón y el «Descargar» del listado usan la URL del contrato (`formato`, `alcance` válidos); `descargar-rutas.test.ts` pasa. Sin base no se descargó un archivo real. |
+| F-H4 | Observado | Tras quitar un bloque se guarda y se refresca el banco (W1 suelta las fotos). |
+
+Comandos: `npm install` (faltaba `docx` en el worktree; sin cambios en `package.json`); `npm test` 149 archivos pasan y 1 omitido, 1560 pruebas; `tsc` sin salida; lint 9 errores y 22 avisos (línea base); build webpack compila.

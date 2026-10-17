@@ -4,7 +4,7 @@
 
 - Tema: ordenar el sistema de notificaciones bajo un estándar único (qué evento avisa, a quién, con qué texto, cuándo se cierra) y cerrar los huecos que hoy dejan al supervisor operativo sin saber qué pasó con su servicio, su RQ o su RDT. Prepara el terreno para capacitar a los supervisores operativos en el uso de la app.
 - Fecha de inicio: 2026-10-16.
-- Estado: `Spec aprobado` (Gate Spec, Victor, 2026-10-16) — pendientes P1, P2, P3 y P5 por consultar una a una antes de delegar al Planner. No hay Planner, Workers, ramas ni migraciones todavía.
+- Estado: `Spec aprobado` (Gate Spec, Victor, 2026-10-16) con P1, P2, P3 y P5 decididas; solo falta P4 (correos de las cuentas de prueba, que se necesitan para verificar, no para planificar). No hay Planner, Workers, ramas ni migraciones todavía.
 
 Puertas:
 
@@ -44,8 +44,8 @@ Lo que **sí** funciona hoy (verificado en el código): el ciclo de estados del 
 ### Resultado esperado
 
 1. **Flujo 04 reescrito** con el estándar de aviso: qué es un aviso, el catálogo de eventos (evento, quién lo dispara, a quién llega, texto, grupo y cuándo se cierra), estados, regla por usuario o por rol, «Entorno» y grupos.
-2. **Ciclo del RQ documentado** en el flujo 05 y **verificado en vivo** con cuentas de prueba, con el aviso de cada paso.
-3. **El supervisor operativo recibe** aviso de: servicio asignado, cada paso de su RQ, comentario sobre su RQ, RDT validado o rechazado (con el motivo) y documento del checklist asignado.
+2. **Ciclo del RQ documentado** en el flujo 05 y **verificado en vivo** con cuentas de prueba, con el aviso de cada paso, incluida la nueva opción de **devolver** un RQ con motivo (decisión P1).
+3. **El supervisor operativo recibe** aviso de: servicio asignado, cada paso de su RQ, RQ devuelto (con el motivo), comentario sobre su RQ, RDT validado o rechazado (con el motivo) y documento del checklist asignado.
 4. **Bandeja ordenada:** etiqueta «Entorno» cuando no hay servicio, grupo «Jefatura», filtro por tipo de aviso, avisos que se cierran solos cuando se cumple lo que pedían y campana que cuenta lo pendiente de verdad.
 5. **Un solo estándar:** todo aviso nuevo (incluido el «informe emitido» del plan de Informes) pasa por el mismo catálogo y el mismo punto de código.
 
@@ -55,7 +55,7 @@ Orden propuesto de trabajo (lo detalla el Planner):
 
 1. **Verificar en vivo y documentar cómo funciona hoy** el ciclo del RQ y la bandeja del supervisor operativo, con usuarios de prueba por rol en `PS-0000`.
 2. **Definir el estándar** (catálogo de eventos) y decidir con Victor las pendientes de abajo.
-3. **Implementar** el estándar y los cierres: servicio asignado, RDT validado o rechazado, comentario al solicitante, unificar los caminos de estado del RQ, Recepcionado al abrir, «Entorno», grupo «Jefatura», cierre automático de «falta subir…» y filtro por tipo.
+3. **Implementar** el estándar y los cierres: servicio asignado, RDT validado o rechazado, comentario al solicitante, unificar los caminos de estado del RQ, Recepcionado al abrir, devolver un RQ con motivo (estado nuevo), «Entorno», grupo «Jefatura», cierre automático de «falta subir…» y filtro por tipo. Antes de implementar, el Planner define con Victor el detalle de «devolver» (ver fila en la tabla de reglas) y hace una maqueta si la pantalla cambia.
 4. **Documentar el resultado** (flujos 04, 05, 06, 12, 14 y los que cite) y verificar de nuevo en vivo.
 5. Auditoría y cierre.
 
@@ -65,8 +65,8 @@ Orden propuesto de trabajo (lo detalla el Planner):
 - El chat agéntico (flujo 17) y el botón de chat flotante.
 - Correo o avisos externos (push, WhatsApp): la app no los tiene hoy; si Victor los quiere es un plan aparte («por confirmar»).
 - La emisión de informes de supervisión: es del plan de Informes; aquí solo se fija el estándar al que su aviso se alinea.
-- Cambiar quién puede qué (matriz de permisos). Si algo lo exige, se consulta a Victor y se actualiza el artefacto «Matriz de permisos» y el flujo 14 en la misma tarea.
-- Borrar o archivar avisos existentes (los 18 de la bandeja de Victor, por ejemplo) sin orden suya.
+- Cambiar quién puede qué (matriz de permisos), salvo lo que exija «devolver» un RQ (lo puede hacer quien ya puede aprobarlo). Si algo más lo exige, se consulta a Victor y se actualiza el artefacto «Matriz de permisos» y el flujo 14 en la misma tarea.
+- Borrar o archivar avisos existentes sin orden de Victor. Única excepción: los 18 avisos viejos de su bandeja, por orden directa del 2026-10-16 (se respaldan y se cierran como atendidos, sin borrar nada; ver registro de decisiones).
 
 ### Usuarios / roles afectados
 
@@ -87,10 +87,11 @@ Tabla para el Gate 1 (su aprobación cubre a todos los Workers; una regla que co
 | Comentario sobre un RQ | Avisa a Logística o a jefes y administrador | También avisa al solicitante | 05, 04 |
 | Avisos «falta subir…» | Quedan pendientes hasta cerrarlos a mano | Se cierran solos al subir o completar el documento | 12, 04 |
 | Estado de un RQ | Dos caminos: con acción (avisa) y genérico (no avisa) | Un solo camino que siempre cierra y avisa | 05, 04 |
+| Devolver un RQ | No existe: el jefe solo puede comentar (o aprobar) | Propuesta del Orquestador, a cerrar con Victor en el Gate 1: quien puede aprobar un RQ en estado Solicitado puede **devolverlo** con un motivo obligatorio; pasa al estado «Devuelto» y se avisa al solicitante con el motivo; el solicitante lo corrige y lo **reenvía** (vuelve a Solicitado y se avisa de nuevo a los aprobadores). Un RQ Devuelto no avanza a Aprobado sin reenviarse. | 05, 04, 14, matriz de permisos |
 
 ### Datos, API, migraciones o dependencias
 
-- **Migración (≥ 108, no destructiva):** `notificaciones.proyecto_id` admite vacío para «Entorno»; columna `evento` (clave del catálogo) con índice, para cerrar por evento y filtrar por tipo. El Planner decide el relleno de los avisos existentes y el cambio de `grupo_nav` «Proyecto» → «Jefatura» (dato o lectura). La numeración se reconfirma al planificar: hoy la más alta es la 107, en `local-worker-6`.
+- **Migración (≥ 108, no destructiva):** `notificaciones.proyecto_id` admite vacío para «Entorno»; columna `evento` (clave del catálogo) con índice, para cerrar por evento y filtrar por tipo. El Planner confirma si el estado de un RQ está limitado por una restricción en la base (para agregar «Devuelto») y dónde se guarda el motivo de la devolución. El Planner decide el relleno de los avisos existentes y el cambio de `grupo_nav` «Proyecto» → «Jefatura» (dato o lectura). La numeración se reconfirma al planificar: hoy la más alta es la 107, en `local-worker-6`.
 - **Revisar antes de migrar:** la seguridad por filas de la tabla (`db/003_rls.sql`) y las consultas que unen avisos con servicios.
 - **Las migraciones las aplica Victor a mano** (como en los planes anteriores), con el verificador antes si está activo.
 - **Archivos de la app que se tocan (por confirmar en el plan):** `src/lib/notificaciones/*`; `src/app/api/notificaciones/*`; `src/app/(workspace)/notificaciones/ListaNotificaciones.tsx`; `src/components/ui/EntornoTrabajoGrupo.tsx`, `AccionesRqEnNotificacion.tsx`, `DetalleRqNotificacion.tsx`; `src/lib/requerimientos/*`; `api/proyectos/[id]/requerimientos/*`, `api/proyectos/route.ts`, `api/proyectos/[id]/datos/route.ts`, `api/admin/usuarios/[id]/route.ts`, `api/rdts/partes/[id]/route.ts`, `api/proyectos/[id]/checklist/route.ts` y `documentos/[documentoId]/route.ts`.
@@ -108,13 +109,16 @@ Se reutiliza la bandeja y sus insignias; no se crea una segunda interfaz. «Ento
 - El grupo se llama «Jefatura».
 - No hay personas reales con rol de Logística, jefe de proyectos u oficina técnica: se pueden crear usuarios de prueba. Victor indica los correos.
 
-**Pendientes (se consultan una por una):**
+**Decididas por Victor al aprobar el Spec (2026-10-16):**
 
-- **P1.** ¿Debe existir «rechazar o devolver» un RQ? Recomendación: no abrirlo en este plan; quien aprueba comenta y el solicitante corrige.
-- **P2.** Reglas por rol o por usuario. Recomendación: un aviso **por rol** es una cola de trabajo (el primero que lo atiende lo cierra para todos, como en Logística); un aviso **por usuario** es informativo y es solo de esa persona (servicio asignado, RDT rechazado, estado de su RQ).
-- **P3.** Los 18 avisos viejos de la bandeja de Victor: no se tocan. Si quiere limpiarlos es una orden directa suya.
+- **P1.** **Sí se crea «devolver» un RQ**, en este plan (contra la recomendación del Orquestador de dejarlo fuera; decisión de Victor). El detalle (quién, motivo, reenvío) está en la fila «Devolver un RQ» de la tabla de reglas y se cierra con Victor en el Gate 1.
+- **P2.** Un aviso **por rol** es una cola de trabajo compartida (el primero que lo atiende lo cierra para todos, como en Logística); un aviso **por usuario** es informativo y es solo de esa persona (servicio asignado, RDT rechazado, estado de su RQ, RQ devuelto).
+- **P3.** **Limpiar los 18 avisos viejos** de la bandeja de Victor: orden directa. Se respaldan (id, texto, tipo, destinatario, estado) antes de tocarlos, se cierran como atendidos (sin borrar filas) y se hace al reabrir el navegador de pruebas, al inicio de la etapa 1. Solo los de la bandeja de Victor; ningún otro aviso.
+- **P5.** Este plan **parte de `main`**; si Informes se integra antes, se adapta aquí; si después, se adapta su aviso de «informe emitido» al catálogo nuevo. Ninguno espera al otro.
+
+**Pendiente (lo único que falta de Victor):**
+
 - **P4.** Correos de los usuarios de prueba (Logística, jefe de proyectos, jefe de oficina técnica, supervisor operativo y supervisor de administración). Las contraseñas viven solo en la memoria del Orquestador, nunca en el repositorio ni en el chat.
-- **P5.** Orden de integración con el plan de Informes (su Gate 2 sigue pendiente): su aviso de «informe emitido» debe pasar por este catálogo. Propuesta: este plan parte de `main`; si Informes se integra antes, se adapta aquí; si después, se adapta en Informes.
 
 **Riesgos:**
 
@@ -133,6 +137,8 @@ Se reutiliza la bandeja y sus insignias; no se crea una segunda interfaz. «Ento
 7. Cada verificación se hace por los dos lados (quien ejecuta y quien no debería recibir) con cuentas distintas.
 8. Pruebas unitarias del catálogo y de cada disparador; las existentes siguen pasando (el comando exacto se confirma en el `package.json` de la app; no se inventa).
 9. El aviso de «informe emitido» usa el catálogo, o consta por qué no.
+10. En vivo, en `PS-0000`: el jefe devuelve un RQ con motivo, el solicitante recibe el aviso con el motivo, lo corrige y lo reenvía, y los aprobadores reciben el aviso otra vez. Un RQ Devuelto no se puede aprobar sin reenviarse, y quien no puede aprobar no ve la opción de devolver.
+11. Los 18 avisos viejos de la bandeja de Victor quedan respaldados y cerrados, sin borrar filas.
 
 ### Estrategia de prueba / evidencia
 
@@ -159,6 +165,10 @@ Protocolo de verificación del proyecto: checklist aprobado antes de implementar
 | 2026-10-16 | No hay personas reales con esos roles: se pueden crear usuarios de prueba; Victor da los correos | Victor |
 | 2026-10-16 | Gate Spec aprobado. Las claves de las cuentas de prueba por rol se guardan solo en la memoria local del Orquestador (tabla creada, cuentas aún sin crear) | Victor |
 | 2026-10-16 | El navegador de Playwright usado en las verificaciones se cerró para que otro agente use Chrome; se reabre solo cuando haga falta | Victor / Orquestador |
+| 2026-10-16 | P1: sí se crea «devolver» un RQ en este plan (la recomendación del Orquestador era no abrirlo) | Victor |
+| 2026-10-16 | P2: aviso por rol = cola compartida; aviso por usuario = informativo y solo de esa persona | Victor |
+| 2026-10-16 | P3: limpiar los 18 avisos viejos de su bandeja (orden directa): respaldar y cerrar como atendidos, sin borrar filas | Victor |
+| 2026-10-16 | P5: este plan parte de `main`; Informes o este plan se adaptan según cuál se integre primero | Victor |
 | 2026-10-16 | Se verificó en solo lectura (código y bandeja en vivo); no se escribió en la app | Orquestador |
 
 ## Libro de hallazgos

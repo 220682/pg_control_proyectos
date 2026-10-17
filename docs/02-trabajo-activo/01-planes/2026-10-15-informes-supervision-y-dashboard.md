@@ -1143,3 +1143,5 @@ Código: avance rápido a `main` de la app, push sin force, `0 0` (arriba). Docu
 ### Autorización de cierre
 
 Victor autorizó el Gate 2 y el merge con el despliegue el 2026-10-17 («todo a main, despliega»). Este mensaje lo escribe el Documentador a pedido del Orquestador y no aprueba nada por Victor.
+
+**Estado: Plan cerrado el 2026-10-17 con los pendientes listados.** Tras el commit 6b5117e y su push, `git rev-list --left-right --count origin/main...main` en `pg_control_proyectos` dio `0 0`; el repo de la app también dio `0 0` (ver 16a). Esta línea final se subió en un commit posterior y se comprobó de nuevo con el mismo comando.

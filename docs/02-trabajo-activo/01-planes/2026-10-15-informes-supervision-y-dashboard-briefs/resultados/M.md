@@ -96,7 +96,7 @@ Orden de columnas: Admin, JP, JOT, SOT, Plnr, SCo, JCo, SOp, SLog, SAdm, SSO, As
 | Informes de supervisión: ver emitidos (dentro de servicios asignados) | No | los 13 |
 | Informe de formato Costos: ver | Sí | Admin, JP, JOT, SCo, JCo |
 | Informes: pestaña Inasistencias (dentro de servicios asignados) | No | los 13 |
-| Banco de fotos del día | No | Admin, JP, JOT, SOp |
+| Banco de fotos del día (ver y usar) | No | Los 13 roles (decidido por Victor el 2026-10-17); subir foto de campo: Admin, JP, JOT, SOp |
 | Reporte del proyecto: sección Subcontratos | Sí | Admin, JP, JOT, SCo, JCo |
 | RDT: campos HH extra, HM stand-by y estado del equipo (ver) | No | los 13 |
 
@@ -107,7 +107,7 @@ Orden de columnas: Admin, JP, JOT, SOT, Plnr, SCo, JCo, SOp, SLog, SAdm, SSO, As
 | Crear, editar su borrador y emitir un informe (formatos que no son Costos) | Sí | Admin, JP, JOT, SOp |
 | Crear, emitir y ver un informe de formato Costos | Sí | Admin, JP, JOT, SCo, JCo |
 | Emitir una versión nueva de un informe ajeno | Sí | Admin, JP |
-| Guardar «Mis formatos» | No | Admin, JP, JOT, SOp (y SCo, JCo para formatos con bloques de Costos; ver pendiente 3) |
+| Guardar «Mis formatos» | No | Admin, JP, JOT, SOp, SCo y JCo (6 roles; confirmado por Victor el 2026-10-17; los bloques de Costos solo con economía) |
 | Tomar y subir foto de campo | Sí | Admin, JP, JOT, SOp |
 | Descargar un informe emitido (el de Costos solo los 5 con economía) | No | los 13 (Costos: Admin, JP, JOT, SCo, JCo) |
 | Descargar las inasistencias en PDF | No | los 13 |

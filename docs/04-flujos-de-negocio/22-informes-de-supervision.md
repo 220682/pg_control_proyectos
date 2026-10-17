@@ -46,7 +46,7 @@ Cada formato tiene contenido distinto:
 | **Ejecutivo** (1 página) | Semáforo, indicadores, avance por nivel, logros y alertas, dos fotos; sin tablas. |
 | **Registro fotográfico** | Solo fotos con hora, partida y descripción (2, 4 o 6 por página). |
 | **Costos** (diario o semanal) | EV, AC, CV, CPI y SPI; personal y equipos valorizados; costo por partida. Costo directo en US$; las HH de MOI no se valorizan; el AC sigue la regla de costo real del [flujo 10](10-generacion-pr.md). |
-| **Mis formatos** | Cada usuario guarda su propio arreglo de bloques desde el editor (los cuatro formatos de crear informe). |
+| **Mis formatos** | Cada usuario que puede crear informes (administrador, jefe de proyectos, jefe de oficina técnica, supervisor operativo, supervisor de costos y jefe de costos) guarda su propio arreglo de bloques desde el editor, como las plantillas del RDT. Un formato con bloques de Costos solo lo sirve a quien tiene economía (decidido por Victor el 2026-10-17). |
 
 **El formato Costos y todo bloque con dinero** (indicadores de costo, personal y equipos valorizados, costo por partida) **solo lo crean, ven y descargan los 5 roles con datos económicos** (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos; regla 2 del flujo 14). A los demás el formato les sale deshabilitado con título y el informe no les aparece en la lista; por URL directa el servidor responde 403. Los otros formatos **no llevan dinero** en ningún byte.
 
@@ -77,7 +77,7 @@ Con vista previa de hoja A4: los bloques se quitan, ocultan, agregan y reordenan
 ## Foto de campo y banco de fotos
 
 * **Foto de campo:** el chip abre una pantalla con el botón «Tomar foto» (un navegador no abre la cámara sin un toque). Pide servicio, actividad (partida o paquete, opcional) y **descripción obligatoria**; guarda hora y, si el usuario lo permite, GPS. Solo JPEG, hasta 3 MB; el navegador reduce la imagen a 1600 px antes de subirla. La cabecera `Permissions-Policy` permite la ubicación solo para la propia app (`geolocation=(self)`, decidido por Victor el 2026-10-16); la cámara no se tocó.
-* **Banco de fotos del servicio:** cada foto queda en el banco del servicio y del día (hora de Lima). Muestra las fotos de **todo el servicio**, no solo las propias; **cualquier foto del servicio se puede asignar a un borrador propio** mientras no esté en un informe emitido. En un semanal se ve el período completo del informe.
+* **Banco de fotos del servicio:** cada foto queda en el banco del servicio y del día (hora de Lima). Muestra las fotos de **todo el servicio**, no solo las propias; **cualquier foto del servicio se puede asignar a un borrador propio** mientras no esté en un informe emitido. En un semanal se ve el período completo del informe. **El banco lo ven y usan los 13 roles** dentro de sus servicios (Victor, 2026-10-17); subir una foto de campo sigue siendo solo de los 4 roles de campo.
 * **Quitar un bloque** libera sus fotos; al emitir no queda ninguna foto bajo un bloque inexistente.
 * Fuera de esta versión: guardar fotos sin señal y subirlas después, y editar fotos (recorte o anotaciones).
 

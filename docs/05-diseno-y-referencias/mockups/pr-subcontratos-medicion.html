@@ -82,7 +82,7 @@ tr.tot td{font-weight:700;background:rgba(255,255,255,.04)}
   <tbody id="tb"></tbody>
   <tfoot><tr class="tot"><td>Total</td><td></td><td class="n" id="t-c"></td><td></td><td class="n" id="t-a"></td><td class="n" id="t-p"></td><td class="n" id="t-r"></td></tr></tfoot>
  </table></div>
- <div class="nota w" style="margin-bottom:0">El monto cuenta como avance (valor ganado) del subcontrato, no como costo real.</div>
+ <div class="nota w" style="margin-bottom:0">El monto ingresado es el costo real del subcontrato y suma al AC del servicio (regla de costo real, 2026-10-15).</div>
 </div>
 </section>
 
@@ -91,7 +91,7 @@ tr.tot td{font-weight:700;background:rgba(255,255,255,.04)}
 <ul>
 <li><b>Forma de medir por subcontrato:</b> un desplegable en cada fila. «Por avance físico» es la opción por defecto: acumulado = contractual × % de avance físico del servicio (aquí 63 %, con la etiqueta «según avance físico del servicio»).</li>
 <li><b>Ingreso manual:</b> aparece un campo para escribir el monto acumulado y el sistema calcula el %. Ejemplo: contractual 200 e ingreso 40 dan 20 %. No acepta montos negativos y avisa si pasan del contractual.</li>
-<li><b>Qué significa el monto:</b> cuenta como avance (valor ganado) del subcontrato, no como costo real.</li>
+<li><b>Qué significa el monto:</b> es el costo real del subcontrato y suma al AC del servicio (regla de costo real, 2026-10-15).</li>
 <li><b>Quién lo ve:</b> solo los 5 roles con datos económicos. El supervisor operativo no ve la sección y recibe un mensaje que lo explica.</li>
 <li><b>Dashboard:</b> la pestaña Subcontratos de la gráfica de recursos usa el acumulado según la forma de medir de cada subcontrato.</li>
 </ul>

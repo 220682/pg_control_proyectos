@@ -12,7 +12,7 @@ Los flujos de negocio (`docs/04-flujos-de-negocio/NN-*.md`) son la fuente de ver
 
 ## Qué flujo es dueño de cada regla
 
-Ver el índice de `docs/04-flujos-de-negocio/README.md` para la lista completa de los 21 flujos y su tema. Ante la duda de a qué flujo pertenece una regla nueva, se revisa primero ese índice — nunca se crea un flujo nuevo ni se duplica una regla ya escrita en otro.
+Ver el índice de `docs/04-flujos-de-negocio/README.md` para la lista completa de los 22 flujos y su tema. Ante la duda de a qué flujo pertenece una regla nueva, se revisa primero ese índice — nunca se crea un flujo nuevo ni se duplica una regla ya escrita en otro.
 
 ## Cómo se promueve un cambio
 

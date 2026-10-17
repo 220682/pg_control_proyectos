@@ -1040,3 +1040,106 @@ Todas respondidas por Victor el 2026-10-15 (ver Registro de decisiones). Pendien
 > No vuelvas a preguntarle a Victor lo ya decidido en el Registro (regla: «si se gasta plata en algo es costo real»). Los detalles derivados los decides tú y los anotas.
 > Primero: comprueba con git (Worker git en Haiku) que local-worker-1, 2 y 3 siguen en 0369ab8, 1d7c338 y 93c5d45, limpias y subidas. Pregúntale a Victor solo (1) si confirma el GPS de las fotos (P7) y (2) si ya aplicó las migraciones 099, 098, 100, 101 y 102 (solo antes de lanzar L). Luego sigue el orden del «Handoff 3».
 > Al cerrar el plan, entrega a Victor el reporte de consumo total medido con python scripts/medir.py --resumen --desde 2026-10-15, separando lo que no es de este plan.
+
+## Mensaje de cierre
+
+> Escrito el 2026-10-17 por el Documentador a pedido del Orquestador, siguiendo el paso 17 de `04-flujo-sdd-y-planes.md`, la plantilla `06-plantillas/09-cierre.md` y «Antes de declarar cerrado un plan» del Skill `seguir-flujo-de-planes`. Dice solo lo que ocurrió; lo no verificado está marcado.
+
+### Alcance completado y no completado
+
+- Completado: las 19 tandas (A a S, L y M) y los 124 ítems de la Punch List están cerrados en sus ramas, como lo revisó el informe del Auditor (apto con condiciones para el Gate 2). Los `Observado` cuentan como cerrados, como en todo el plan.
+- No completado, aceptado como pendiente: lo listado en «Pendientes aceptados» más abajo.
+
+### Estado final de la Punch List
+
+Las 13 conversiones a `Conforme` y la tabla «Ítems que quedan en `Observado` al cierre» están en el «Registro de decisiones» (fila «Disposición individual…» y la tabla siguiente). El contador queda en 19 de 19 tandas y 124 de 124 ítems.
+
+### Evidencia
+
+Capturas en `docs/02-trabajo-activo/03-evidencia/capturas/2026-10-15-informes-supervision-y-dashboard/L/`; resúmenes por tanda en `2026-10-15-informes-supervision-y-dashboard-briefs/resultados/` (L.md hasta la §13). Pruebas corridas por el Auditor sobre `local-worker-3` en d5233c9: `npm test` 1623 pruebas verdes (1 omitida) y `tsc` limpio.
+
+### Auditoría y decisiones del Gate 2
+
+Informe del Auditor: `docs/02-trabajo-activo/04-auditoria/2026-10-15-informes-supervision-y-dashboard.md`. En el Gate 2, Victor autorizó en el chat, el 2026-10-17, «todo a main, despliega», y decidió: el banco de fotos del día lo ven y usan los 13 roles; «Guardar Mis formatos» lo hacen los 6 roles que crean informes; la unidad de equipos es horas máquina (R47); y revisó una por una las reglas del Orquestador (14 de acuerdo, 7 con cambio pedido, R47 confirmada). Todo está en el Registro de decisiones.
+
+### Paso 16a: merge y despliegue
+
+- El 2026-10-17, tras el Gate 2, `local-worker-3` (que ya contenía a `local-worker-1`, `local-worker-2` y `main`) se llevó a `main` de `py_control_proyectos_web` por avance rápido, 628918a a 9633de4 (188 archivos, sin commit de merge), con push sin force.
+- Despliegue de producción en Vercel (GitHub deployment 7139878773, sha 9633de4): terminado con éxito, según informó el Orquestador.
+- Verificado hoy por el Documentador en el repo de la app: `git rev-list --left-right --count origin/main...main` = `0 0`, `main` en 9633de4, y `git status` solo muestra `db/095_cerrar_lectura_directa.sql` sin seguimiento (no es de este plan).
+- Las ramas `local-worker-1`, `local-worker-2` y `local-worker-3` se conservan.
+- **No verificado:** no se abrió la app publicada con una sesión; la verificación en producción sigue pendiente.
+
+### Pasos 16b y 16c: fuentes de verdad y Skills
+
+- Se aplicó la única fuente de verdad que el Auditor marcó `APLICAR AHORA` (A1): «21 flujos» pasó a «22» en `AGENTS.md`, `06-mapa-documental.md` y `01-contexto-repositorio/02` (commit 9e4231d).
+- Las propuestas `PROPONER A RESPONSABLE` y `PROPONER SKILL` no están aprobadas por Victor: 16b y 16c no se ejecutaron más allá de A1. Ningún Skill se creó ni se cambió.
+- Quedan como pendientes de decisión (lista del informe del Auditor): S1, S2, S3, P11, P12, P17/P44, P25, P26/P43, P36, P42, y el cruce con `db/095`.
+
+### Hechos de los pasos 1 a 7 del Skill
+
+| Paso | Qué ocurrió | Verificación hecha |
+|---|---|---|
+| 1. Merge del código tras la segunda aprobación | Hecho (16a) | Lectura del repo de la app: `main` en 9633de4 |
+| 2. `git status` y `0 0` en cada repo | App: `0 0`, solo `db/095` sin seguimiento. Docs: ver la línea final | `git rev-list --left-right --count origin/main...main` en cada repo |
+| 3. Mejoras de política y fuentes de verdad aprobadas | Solo A1 estaba aprobada y está aplicada | Commit 9e4231d; `grep` de «21 flujos» en los archivos de A1 sin coincidencias |
+| 4. Skills aprobados | Ninguno aprobado, ninguno creado | No aplica |
+| 5. Reglas, mejoras y huérfanos | Libro trasladado (25 mejoras, 47 reglas, 61 observaciones, 7 huérfanos); huérfanos H1 a H7 reportados sin borrar nada | `grep` de «Registrada» en el plan: 1 coincidencia, el texto del prompt del Auditor (línea 622), ninguna fila del libro; `scripts/verificar-referencias.py` solo mostró referencias preexistentes a archivos que no existen (`docs/superpowers/specs/…`) |
+| 6. Mensaje de cierre en el plan | Esta sección | Consumo medido con el script y tabla de esfuerzos, abajo |
+| 7. «Cerrado» solo con todo lo anterior | Ver la línea final | Salida citada abajo |
+
+### Pendientes aceptados (enviados a planes futuros o a Victor)
+
+1. Siete cambios de reglas pedidos por Victor el 2026-10-17 (R24, R33, R35, R31, R36, R37 y R39, R40), para un plan posterior; ningún flujo se tocó. Incluye el cuadro de configuración de permisos y accesos.
+2. «Informe estándar» posterior al despliegue (idea de Victor, en el Registro de decisiones); no es regla vigente.
+3. Ítems `Observado` que quedan (tabla del plan): subcontrato manual en vivo (L7, N4), celular real (L6, E4), segunda cuenta (L1, L2, D7), F3, F5, Q4, D3, D4, D6, I5, J2, J3, J6 y A4; M4 y M5 esperan a Victor (la Matriz la actualiza él).
+4. Decidir si se limpian los datos de prueba de PS-0000 y qué hacer con los informes de origen desconocido PS-0000-ID-4 y PS-0000-ID-6; confirmar el `tipo_dashboard` original de PS-0000 (H5, H6).
+5. Correr `npm ci` en el repo principal de la app: su `node_modules` está a medias (H3) y `package.json` cambió por `docx` y `sharp`.
+6. Actualizar el artefacto «Matriz de permisos» con la lista de `resultados/M.md` (P12); lo hace Victor.
+7. Las ramas `local-worker-5` y `plan-maestro-tres-paneles` (otros planes) chocan con archivos de este plan al integrarse. Cruce hecho: no hay colisión de migraciones; `local-worker-6` trae la 107.
+8. Riesgos abiertos ya listados en «Pendientes para el Gate 2»: BAC del PR contra el del Dashboard (P21), peso de la descarga con fotos reales y límite de Vercel (H-5), árbol del marco de maquetas (P1).
+
+### Consumo total del plan
+
+Salida de `python scripts/medir.py --resumen --desde 2026-10-15` (81 sesiones, hasta el 2026-10-17 ~08:00). «Contexto máx.» no se suma.
+
+| Rol o Worker | Sesiones | Llamadas | Entrada | Caché creada | Caché leída | Salida | Contexto máx. |
+|---|---|---|---|---|---|---|---|
+| Auditor | 1 | 53 | 0k | 214k | 7.32M | 1k | 214k |
+| Documentador | 13 | 276 | 1k | 1.77M | 34.41M | 4k | 310k |
+| Planner | 9 | 224 | 0k | 1.89M | 27.69M | 3k | 317k |
+| Sesión principal (Orquestador) | 12 | 2012 | 4k | 7.70M | 360.16M | 2.16M | 316k |
+| Worker (incluye Workers 1, 2 y 3) | 26 | 1095 | 2k | 6.02M | 137.57M | 29k | 318k |
+| Worker git | 20 | 130 | 0k | 967k | 5.58M | 1k | 77k |
+| **Total del plan (81 sesiones)** | 81 | 3790 | 8k | 18.56M | 572.73M | 2.20M | 318k |
+
+**Nota: este total no es solo de este plan.** El script cuenta todo desde el 2026-10-15 y no distingue planes dentro de una sesión.
+
+- Por el nombre de la tanda, no son de este plan: los Workers «CR-1 C0 maqueta», «CR-1 C0 ronda 2» y «CR-2 C7 APU» y el Planner «plan cronograma» (plan del cronograma), y el Planner «Notificaciones» (plan de notificaciones). Suman unas 236 llamadas, 1.78M de caché creada, 41.7M de caché leída y unos 3k de salida.
+- No se pueden atribuir con el script (aproximado): el Worker «maquetas RDT» (24 llamadas, 228k de caché creada) y las 12 sesiones principales del Orquestador, donde puede haber trabajo de otros planes, por ejemplo las tres sesiones del 10-16 a las 21:14.
+- No se hizo la resta fina: el consumo propio de este plan es el total menos lo anterior, aproximado.
+- **Modelo:** el script atribuye «opus-5» a varias sesiones principales del Orquestador (10-15 08:13, 18:02, 19:38 y 23:01, y 10-17 08:00). No se pudo verificar la causa. La política dice no usar Opus; el propio plan registra que el Orquestador fue Opus 5.5 hasta el relevo 3 (2026-10-15), cuando Victor lo fijó en Sonnet 5.5 con `/model`.
+- Contexto máximo: ninguna sesión pasó de 318k. Los relevos del Orquestador están en el «Registro de decisiones» y en los Handoff 1 a 3; las 12 sesiones principales no coinciden una a una con ellos.
+
+### Esfuerzos reales por fase (default contra usado)
+
+El script no mide el esfuerzo; esta tabla sale de la asignación del Gate 1 y del Registro de decisiones.
+
+| Fase o rol | Default (Gate 1) | Usado | Cambio autorizado |
+|---|---|---|---|
+| Orquestador | Esfuerzo medio | Opus 5.5 hasta el relevo 3; Sonnet 5.5 con esfuerzo extra (xhigh) desde el relevo 3 | Sí: Victor fijó modelo y esfuerzo con `/model` y `/effort` el 2026-10-15 (Registro, relevo 3) |
+| Planner | Sonnet, medio | Sonnet, medio | Ninguno |
+| Workers de código (W1, W2, W3) | Sonnet, medio | Sonnet, medio | Ninguno. «Esfuerzo alto» no se solicitó en ninguna tanda |
+| Documentador de reglas y flujos (tanda M) | Sonnet, medio | Sonnet, medio | Ninguno |
+| Trabajos simples: Worker git, cierres de tanda, índices y referencias | Haiku, medio | Haiku, esfuerzo extra (xhigh) | Sí: Victor pidió Haiku para tareas simples el 2026-10-15 («utiliza haiku para tareas simples»); el relevo 3 anota Haiku con esfuerzo extra |
+| Auditor | Sonnet, medio | Sonnet, medio | Ninguno |
+
+Fuera de los dos cambios de la tabla, no hay ningún cambio de nivel o esfuerzo autorizado: ninguno.
+
+### Confirmación de 100% pusheado
+
+Código: avance rápido a `main` de la app, push sin force, `0 0` (arriba). Documentación: ver la línea final.
+
+### Autorización de cierre
+
+Victor autorizó el Gate 2 y el merge con el despliegue el 2026-10-17 («todo a main, despliega»). Este mensaje lo escribe el Documentador a pedido del Orquestador y no aprueba nada por Victor.

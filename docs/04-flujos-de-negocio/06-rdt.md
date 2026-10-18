@@ -1,5 +1,5 @@
 # 06 — RDT (Registro diario de trabajo)
-> Lee si: la tarea toca el RDT, sus pantallas, o crear un RDT desde el Plan Maestro. No lo confundas con la OT (flujo 13).
+> Lee si: la tarea toca el RDT, sus pantallas, los avisos al subirlo, registrarlo, validarlo o rechazarlo, o crear un RDT desde el Plan Maestro. No lo confundas con la OT (flujo 13).
 
 
 Archivo (foto/PDF) ligado a una OT vigente. Fecha Lima `dd-mm-yyyy HH:mm`.
@@ -14,7 +14,14 @@ Archivo (foto/PDF) ligado a una OT vigente. Fecha Lima `dd-mm-yyyy HH:mm`.
 * **Descargas:** RDTs según filtro (ZIP), listado de RDTs (PDF PROM-GP-0006), PDF de un RDT estructurado y archivo de un RDT subido: los 13 roles; un usuario sin rol conocido queda rechazado.
 * **Borrar RDT:** administrador y jefe de proyectos (regla transversal «Borrado administrador» del [índice](README.md)); ver más abajo.
 
-Notificación al subir: solo Administración.
+## Avisos del RDT
+
+Los eventos, textos y cierres están en el catálogo del [flujo 04](04-notificaciones.md). Ningún aviso frena ni deshace la acción que lo origina.
+
+* **Subir un RDT como archivo** (PDF o foto): aviso a Administración (supervisor de administración), como hasta ahora.
+* **Registrar un RDT estructurado en pantalla:** aviso a quienes pueden validarlo (administrador, jefe de proyectos y jefe de oficina técnica), en cola compartida (Victor, 2026-10-17; antes no avisaba a nadie). Si el supervisor corrige el RDT reemplazándolo, el aviso del RDT anterior se cierra y sale uno nuevo.
+* **Validar:** aviso al **autor** del RDT («validado»); informativo, se cierra al abrirlo. No se avisa si quien valida es el propio autor. Se cierran los avisos pendientes de «registrado» y de un rechazo anterior de ese RDT. Si el RDT tiene recursos sin tarifa, además se avisa a administrador y jefe de proyectos (sin cambio).
+* **Rechazar:** aviso al **autor** con el **motivo** del rechazo; no se avisa si quien rechaza es el autor. Se cierra el aviso de «registrado». El aviso de rechazo **no se cierra al abrirlo** (hay que corregir el RDT): se cierra cuando el RDT se valida o cuando el autor lo reemplaza por una corrección. Un rechazo nuevo reemplaza al anterior que siguiera pendiente.
 
 ## Pantallas
 

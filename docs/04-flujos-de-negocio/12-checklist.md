@@ -1,5 +1,5 @@
 # 12 — Checklist editable
-> Lee si: la tarea toca el checklist editable, su catálogo definitivo o los grupos de acción.
+> Lee si: la tarea toca el checklist editable, su catálogo definitivo, los grupos de acción o los avisos «falta subir» y su cierre automático.
 
 
 Ítems de catálogo y ad-hoc por proyecto. Spec `2026-08-18-checklist-editable`.
@@ -29,6 +29,15 @@ Trece ítems, en este orden exacto. **Todos llevan casilla de check y todos llev
 - **Completar = marca por check (manual)** para todos los ítems, incluidos DP y PR: ya no se auto-completa por archivo subido ni por la existencia del DP.
 - **Todos los ítems llevan casilla y responsable**, sin excepción por «generado por el sistema» (la fuente de datos — manual o módulo — es informativa, no cambia que hoy se completan marcando la casilla).
 - **La «Acta de conformidad» no figura en la lista del checklist del proyecto:** los documentos de fase CIERRE se ocultan de la lista y del editor y **no cuentan para el checklist completo** (deroga la decisión D5 del Lote 1; observación O7). Es ocultado, no borrado: las filas existentes se conservan en la base y su bootstrap no se modifica (sin migración destructiva).
+
+## Avisos del checklist
+
+Los eventos y textos están en el catálogo del [flujo 04](04-notificaciones.md).
+
+* **«Falta subir…» / «falta completar…»:** al crear el servicio se avisa, por cada documento del checklist inicial, a la cola del rol responsable de ese documento; al agregar, personalizar o reasignar un documento se avisa a la persona responsable. El texto lleva siempre el **N° OT** del servicio («Servicio PS-0001: falta subir "Plano de planta"» al crear; «OT PS-0001: falta subir "Plano de planta"» al editar); antes algunos avisos de edición decían solo «Servicio:», sin N° OT.
+* **Cierre automático:** el aviso se cierra solo cuando el documento se **sube**, se **marca como completado** o se **quita** del checklist (el aviso lleva como referencia el documento). Ya no quedan pendientes hasta cerrarlos a mano, y la campana baja. **Reasignar el responsable** cierra el aviso del anterior y avisa al nuevo.
+* **Checklist completo:** al subir o completar el último documento (o importar el DP) se avisa al jefe de oficina técnica, que lo atiende a mano al avanzar el estado.
+* **Documentos de cierre:** el sistema **dejó de avisar** «falta subir… para poder cerrar» (Victor, 2026-10-17): esos documentos están ocultos en este flujo, así que nadie podía atender el aviso.
 
 ## Grupos de acción (O5)
 

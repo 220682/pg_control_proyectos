@@ -18,7 +18,7 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 | T3 | Hecha | Commits `041e9e4`, `b6017c2`, `9529853`; 1933 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Capturas y verificación en vivo en T7 |
 | T5 | Hecha | Commits `83bd0f9`, `21a0e59`, `1d036ec`, `85626fd`; 2001 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Migración 109 escrita y **sin aplicar** (revisada por el Orquestador: aditiva e idempotente) |
 | T7 | En curso | T7A hecha y conforme (27 capturas en `03-evidencia/.../t7/`; revisé dos). Dividida en T7A (ciclo del RQ), T7B (bandeja, servicio, RDT, checklist, móvil) y T7C (contraseña, celular, correo); una a la vez por el navegador. Código de la rama probado con el servidor de desarrollo del worktree contra la base real |
-| T8 | Pendiente | |
+| T8 | En curso | Dividida en T8A (flujos 04, 05, 06, 12 y tabla de coherencia) y T8B (flujos 14, 02, 03, 07, 08, 16, Matriz de permisos, hallazgos, índices); corren de a una |
 
 ## Registro
 
@@ -37,6 +37,7 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-18: T5 verificada (`git log`, `npm test`, `npm run lint`) y migración 109 leída completa. Hallazgos de T5: (H1) en el consolidado de RQ no existe Aprobar hoy; Devolver está en el aviso y en el Status; Logística ve los Devueltos sin acciones; decide Victor si se agregan Aprobar/Devolver al consolidado; (H3) el estado Devuelto y sus permisos no están en ningún flujo (T8: flujos 05, 14, 16, `design.md` y Matriz de permisos); (H4) «Corregir y reenviar» son dos llamadas, reintentar es seguro; atender un aviso viejo de aprobación no cierra el aviso de devolución de un Devuelto.
 - 2026-10-18: Victor aplicó la migración 109 («ya lo corrí, quedó ok»; se comprobará con el uso en T7A). Decisión operativa del Orquestador: T7 se hace con las cuentas existentes (administrador, supervisor operativo, Logística 1 y 2); `+jefeproy` y `+ofitec` se crean si Supabase lo permite; `+supop2` y `+admin2` se omiten porque no aportan a los criterios. Brief de T7 escrito.
 - 2026-10-18: T7A conforme (T7-01 ciclo del RQ y T7-02 devolver/reenviar, en vivo con la rama local-worker-7 contra la base real). Hallazgos menores: (H1) la tarjeta ya abierta del solicitante sigue mostrando la cantidad vieja tras reenviar hasta recargar; (H2) el aviso `rq.pendiente_aprobacion` aparece al administrador con grupo «Oficina Técnica»: confirmar si es el grupo deseado; (H3) «Confirmar devolución» está habilitado con el motivo vacío (a comprobar si valida al pulsar). Datos de prueba en PS-0000 para limpiar: RQ `PS-0000-LL-SO-002` (Atendido) y `PS-0000-LL-SO-003` (Solicitado), más sus avisos.
+- 2026-10-18: Victor aprobó con mis recomendaciones: el grupo del panel izquierdo «Proyecto» pasa a «Jefatura» (falta el cambio de código en `registro-accesos.ts`, tras T7B); el consolidado de RQ queda sin Devolver; lista de avisos informativos confirmada. Brief de T8 escrito y T8A lanzada.
 
 ## Pendientes de Victor
 

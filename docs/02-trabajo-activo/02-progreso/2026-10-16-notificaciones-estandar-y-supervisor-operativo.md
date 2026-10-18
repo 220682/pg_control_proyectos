@@ -53,6 +53,8 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 
 - 2026-10-18: Push del repositorio documental hecho (`6396c7b..2e5327d`); `git rev-list --left-right --count origin/main...main` da `0 0` en los dos repositorios (app y documental), verificado con comando.
 
+- 2026-10-18: Victor aplicó el SQL de limpieza de datos de prueba en Supabase (`limpieza/limpieza-datos-prueba.sql`). Su captura muestra el resultado antes/después: RDT de prueba y sus filas hijas 1 a 0; avisos por referencia o código de RQ y RDT de prueba 44 a 0; mensajes «PRUEBA T7» de Entorno 1 a 0; `rdt_partes` de PS-0000 36 a 35. El RDT validado del 17-10 (8 HH) no se borró (decisión de Victor pendiente; recomendación: dejarlo). Faltan: borrar de Storage la carpeta `e15799ae-d964-4db7-b33f-39dc9c1a3860/` del bucket `documentos-proyecto`, comprobar que el próximo servicio vuelve a ser PS-0005 y que el correlativo de RQ de PS-0000 vuelve a SO-001, y la confirmación del conteo de avisos de otras personas. T7-07 queda Conforme en lo que cubre el SQL.
+
 ## Pendientes de Victor
 
 1. ~~Aplicar la migración 108~~ (hecha el 2026-10-18); la 109 también se aplicó el 2026-10-18.

@@ -13,8 +13,8 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 | T1C (maqueta de la bandeja) | Hecha, falta aprobación de Victor | `mockups/notificaciones-bandeja.html` (seis vistas); el Orquestador la abrió a 1440 px (vista Bandeja correcta, sin errores en consola); falta que Victor la apruebe antes de la parte visual de T3 y T5 |
 | T2 (catálogo, módulo central, migración 108) | Hecha | Commits `cc44f47` y `814efb4`; 1754 pruebas en verde; migración 108 escrita, **sin aplicar** |
 | T9 (perfil propio: contraseña, celular, correo) | Hecha | Commit `c067583`; 1787 pruebas en verde; capturas y pruebas en vivo en T7 |
-| T4 (ciclo del RQ) | En curso | Cortada por el límite de uso de la sesión y reanudada; cambios sin commitear en el worktree |
-| T6 | Brief escrito | Se lanza al terminar T4 (mismo worktree) |
+| T4 (ciclo del RQ) | Hecha | Commits `69ce6aa` y `817e9d8`; 1829 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador |
+| T6 | En curso | Worker 7 lanzado tras T4 |
 | T3, T5, T7, T8 | Pendientes | |
 
 ## Registro
@@ -23,6 +23,8 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-17: T1A. El `+` en el correo funciona. Cuentas creadas: `+logistica1` y `+logistica2`. Faltan `+jefeproy`, `+ofitec`, `+supop2` y `+admin2` (límite de correos por hora de Supabase).
 - 2026-10-17: T2 verificada por el Orquestador (`git log`, `npm test`, `npm run lint`): lint con 9 errores previos en archivos que el plan no toca.
 - 2026-10-17: Victor avisa que aplicó el SQL de cierre de avisos (T1-03).
+- 2026-10-17: T4 y la maqueta T1C cortadas por el límite de uso de la sesión; reanudadas y terminadas. T4 verificada (`git log`, `npm test`, `npm run lint`).
+- Hallazgos de T4 para el libro: pasos del RQ solo desde su estado de origen (409 si se repite o salta; integrar en flujo 05 y confirmar con Victor); T3/T7 deben llamar a `revisar` también con aviso Revisado y refrescar el estado con `recepcionado`; posible aviso doble al solicitante con rol de cola (decide Victor); pregunta abierta: si al corregir un RQ Devuelto se agregan y quitan ítems.
 
 ## Pendientes de Victor
 

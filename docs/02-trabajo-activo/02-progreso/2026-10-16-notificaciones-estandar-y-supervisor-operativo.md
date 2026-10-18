@@ -10,11 +10,12 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 |---|---|---|
 | T1A (cuentas, respaldo, cierre de avisos, datos) | Parcial | Cuentas: 2 de 6 (límite de correos de Supabase; pendiente repetir). Respaldo, cierre de los 18 avisos (SQL aplicado por Victor, comprobado en T1B) y datos de `PS-0000`: hechos |
 | T1B (informes «cómo funciona hoy») | Hecha | Ciclo del RQ completo verificado en producción con el RQ de prueba `PS-0000-LL-SO-001` (queda en Atendido); informes en la carpeta de evidencia. Avisos de Victor: 18 en Atendido (comprobado) |
-| T1C (maqueta de la bandeja) | Pendiente | Victor la aprueba antes de la parte visual de T3 y T5 |
+| T1C (maqueta de la bandeja) | Hecha, falta aprobación de Victor | `mockups/notificaciones-bandeja.html` (seis vistas); el Orquestador la abrió a 1440 px (vista Bandeja correcta, sin errores en consola); falta que Victor la apruebe antes de la parte visual de T3 y T5 |
 | T2 (catálogo, módulo central, migración 108) | Hecha | Commits `cc44f47` y `814efb4`; 1754 pruebas en verde; migración 108 escrita, **sin aplicar** |
 | T9 (perfil propio: contraseña, celular, correo) | Hecha | Commit `c067583`; 1787 pruebas en verde; capturas y pruebas en vivo en T7 |
-| T4 (ciclo del RQ) | En curso | |
-| T6, T3, T5, T7, T8 | Pendientes | |
+| T4 (ciclo del RQ) | En curso | Cortada por el límite de uso de la sesión y reanudada; cambios sin commitear en el worktree |
+| T6 | Brief escrito | Se lanza al terminar T4 (mismo worktree) |
+| T3, T5, T7, T8 | Pendientes | |
 
 ## Registro
 

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bandeja de avisos — Notificaciones</title>
+<link rel="stylesheet" href="marco-tres-paneles.css" />
+<style>
+:root{--bg-base:#05070d;--bg-elevated:#0b0f19;--accent:#22d3ee;--accent-2:#4f7df3;--text:#f8fafc;--text-2:#94a3b8;
+--line:rgba(255,255,255,.12);--ok:#34d399;--err:#fb7185;--warn:#fbbf24;--sky:#38bdf8;--viol:#a78bfa}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-base);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;display:flex;flex-direction:column;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:11px;white-space:nowrap}
+button:hover:not([aria-disabled=true]){border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent);font-weight:600}
+button.primary:hover:not([aria-disabled=true]){color:var(--bg-base);filter:brightness(1.1)}
+button.rose{border-color:rgba(251,113,133,.5);color:var(--err)}
+button.rose:hover:not([aria-disabled=true]){border-color:var(--err);color:var(--err);background:rgba(251,113,133,.1)}
+button.sky{border-color:rgba(56,189,248,.4);color:#7dd3fc}
+button.viol{border-color:rgba(167,139,250,.4);color:#c4b5fd}
+button.emer{border-color:rgba(52,211,153,.4);color:#6ee7b7}
+button[aria-disabled=true]{opacity:.4;cursor:not-allowed}
+select,input[type=text],input[type=date],input[type=number],textarea{background:var(--bg-base);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:11px;max-width:100%}
+textarea{width:100%;resize:vertical;line-height:1.45}
+[aria-invalid=true]{border-color:var(--err)!important}
+.demo{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:5px 12px;background:#000;border-bottom:1px dashed var(--line);font-size:10px;color:var(--text-2)}
+.demo a{color:var(--accent)}
+.demo .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.demo button[aria-pressed=true]{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+.pantalla{flex:1;min-height:0;display:flex;flex-direction:column;padding:10px 16px 70px;overflow:auto}
+.vista{display:none}.vista.on{display:block}
+.miga{font-size:13px;color:var(--text-2)}.miga b{color:var(--text);font-weight:500}
+.tit{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+h1{font-size:18px;font-weight:700}
+h2{font-size:13px;font-weight:600}
+.lead{color:var(--text-2);font-size:11px;margin-top:2px;line-height:1.45}
+.nuevo-tag{display:inline-block;background:var(--warn);color:#05070d;font-size:8px;font-weight:700;padding:0 4px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;vertical-align:middle;margin-left:4px}
+.nuevo{outline:1px dashed var(--warn);outline-offset:2px;border-radius:6px}
+/* campana de la cabecera */
+.campana{position:relative;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--text-2)}
+.campana svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.campana .bd{min-width:16px;height:16px;border-radius:999px;background:var(--accent);color:var(--bg-base);font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
+.campana .bd.cero{background:rgba(255,255,255,.12);color:var(--text-2)}
+/* filtros */
+.filtros{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.filtros select{background:var(--bg-elevated);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:4px 8px}
+.filtros select.nuevo{outline-offset:1px}
+/* lista de avisos (aspecto de ListaNotificaciones.tsx) */
+.lista{display:flex;flex-direction:column;gap:4px}
+.av{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);border-radius:6px;padding:6px 8px}
+.avh{display:flex;width:100%;align-items:flex-start;gap:8px;text-align:left;border:0;padding:0;border-radius:0;white-space:normal;background:none}
+.avh:hover{border:0}
+.avm{min-width:0;flex:1}
+.avb{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-bottom:2px}
+.avt{font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av.abierto .avt{white-space:normal}
+.avf{margin-top:2px;font-size:9px;color:rgba(148,163,184,.75);line-height:1.5}
+.avf .g{color:var(--text-2)}
+.dir{border-radius:999px;padding:2px 8px;font-size:10px;background:rgba(52,211,153,.15);color:#6ee7b7}
+/* insignia N° OT / Entorno: como hoy, texto en acento */
+.ins{font-size:10px;color:var(--accent)}
+/* propuesta: pastilla, igual para OT y Entorno */
+body.ins-pastilla .ins,.ins-pastilla .ins{border:1px solid rgba(34,211,238,.4);background:rgba(34,211,238,.1);border-radius:999px;padding:1px 8px}
+.est{border-radius:999px;padding:2px 8px;font-size:10px;font-weight:500;text-transform:uppercase;white-space:nowrap}
+.est.p{background:rgba(251,191,36,.2);color:#fcd34d}
+.est.r{background:rgba(56,189,248,.2);color:#7dd3fc}
+.est.a{background:rgba(52,211,153,.2);color:#6ee7b7}
+.avc{margin-top:6px;border-top:1px solid rgba(255,255,255,.1);padding-top:6px}
+.lo-sol{margin-bottom:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);border-radius:8px;padding:10px}
+.lo-sol .k,.k2{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:rgba(148,163,184,.7);margin-bottom:6px}
+.lo-sol .cab{font-size:11px;color:var(--text-2);margin-bottom:6px}
+.lo-sol ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.lo-sol li{font-size:12px}.lo-sol li span{color:var(--text-2)}
+.enl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.enl a{font-size:11px;color:var(--accent);text-decoration:none}.enl a:hover{text-decoration:underline}
+.enl a.s2{color:var(--accent-2)}
+.pasos{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.paso-c{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:2px 6px;font-size:9px;font-weight:500;text-transform:uppercase;line-height:1.2;color:rgba(148,163,184,.55)}
+.paso-c.on{border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.2);color:var(--accent)}
+.paso-c.ok{border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.1);color:#6ee7b7}
+.paso-c.dev{border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.15);color:var(--err)}
+.rqe{font-size:10px;color:var(--text-2);margin-top:6px}
+.acciones{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+.msg-ok{font-size:11px;color:#6ee7b7;margin-top:6px}
+.msg-ac{font-size:11px;color:var(--accent);margin-top:6px}
+.nota{font-size:11px;color:var(--text-2);margin-top:6px;line-height:1.45;border-left:2px solid var(--accent-2);padding-left:8px}
+.nota.warn{border-left-color:var(--warn)}
+.resp{font-size:11px;color:var(--text-2);margin-bottom:6px}
+/* devolver con motivo */
+.dev-box{margin-top:8px;border:1px solid rgba(251,113,133,.35);background:rgba(251,113,133,.05);border-radius:8px;padding:8px 10px}
+.dev-box label{display:block;font-size:11px;font-weight:600;margin-bottom:4px}
+.dev-box .cnt{font-size:10px;color:var(--text-2);text-align:right;margin-top:2px}
+.dev-box .cnt.lim{color:var(--warn)}
+.err{font-size:11px;color:var(--err);margin-top:4px;display:flex;gap:4px;align-items:center}
+/* motivo recibido por el solicitante */
+.motivo{border:1px solid rgba(251,113,133,.35);background:rgba(251,113,133,.06);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45}
+.motivo b{color:var(--err);font-size:10px;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:2px}
+/* insignia de estado del RQ */
+.rqst{display:inline-block;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:600;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);color:var(--text-2)}
+.rqst.dev{border-color:rgba(251,113,133,.6);background:rgba(251,113,133,.15);color:var(--err)}
+.rqst.sol{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.12);color:#fcd34d}
+/* vista RQ devuelto */
+.card{border:1px solid var(--line);background:var(--bg-elevated);border-radius:10px;padding:12px;margin-bottom:10px}
+.form{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:10px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:10px;color:var(--text-2)}
+.tabla{border:1px solid var(--line);border-radius:10px;overflow:auto;margin-bottom:8px}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:11px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;background:var(--bg-elevated)}
+th{color:var(--text-2);font-weight:600;font-size:10px;white-space:nowrap}
+th.num,td.num{text-align:right}
+td.num input{text-align:right;width:80px}
+td input[type=text]{width:100%;min-width:180px}
+tr:last-child td{border-bottom:0}
+.adj{display:flex;flex-wrap:wrap;gap:6px}
+.adj span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--text-2)}
+.adj em{font-style:normal;font-size:9px;text-transform:uppercase;letter-spacing:.04em;opacity:.7;border:1px solid currentColor;border-radius:4px;padding:0 4px}
+.dos{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;align-items:start}
+.dos h3{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin-bottom:6px;font-weight:600}
+/* móvil 390 */
+.tel{width:390px;max-width:100%;border:2px solid #334155;border-radius:26px;background:var(--bg-base);overflow:hidden;margin:6px 0}
+.tel-h{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--bg-elevated)}
+.tel-h .b{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;font-size:16px}
+.tel-h .mt{flex:1;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tel-h .mt em{font-style:normal;color:var(--accent)}
+.tel-c{padding:10px 12px 14px}
+.tel .filtros select{flex:1 1 44%;min-width:0}
+.tel h1{font-size:16px}
+.tel .tit{margin-top:0}
+.tel .acciones button{min-height:36px}
+.ay{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.para{max-width:900px}
+.para ol{padding-left:18px;display:flex;flex-direction:column;gap:8px;line-height:1.5;color:var(--text-2)}
+.para ol b{color:var(--text)}
+@media (max-width:1023px){.demo{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="demo" role="region" aria-label="Controles de la maqueta (no forman parte de la pantalla)">
+<a href="index.html">&larr; Índice de mockups</a>
+<span>Maqueta · Bandeja de avisos (Notificaciones) · datos simulados («PRUEBA», PS-0000)</span>
+<div class="grp" role="group" aria-label="Vista"><span>Vista:</span>
+<button type="button" data-v="bandeja" aria-pressed="true">1 · Bandeja</button>
+<button type="button" data-v="devolver" aria-pressed="false">2 · Devolver con motivo</button>
+<button type="button" data-v="devuelto" aria-pressed="false">3 · RQ Devuelto</button>
+<button type="button" data-v="logistica" aria-pressed="false">4 · Logística: antes y después</button>
+<button type="button" data-v="movil" aria-pressed="false">5 · Móvil 390 px</button>
+<button type="button" data-v="aprobar" aria-pressed="false">6 · Qué debe aprobar Victor</button></div>
+<div class="grp" role="group" aria-label="Rol de la bandeja"><span>Ver bandeja como:</span>
+<button type="button" data-rol="apr" aria-pressed="true">Jefatura (aprueba RQ)</button>
+<button type="button" data-rol="sol" aria-pressed="false">Solicitante</button>
+<button type="button" data-rol="log" aria-pressed="false">Logística</button>
+<button type="button" id="b-reset">Restablecer</button></div>
+<div class="grp" role="group" aria-label="Insignia de OT y Entorno"><span>Insignia OT / Entorno:</span>
+<button type="button" data-ins="texto" aria-pressed="true">Texto (como hoy)</button>
+<button type="button" data-ins="pastilla" aria-pressed="false">Pastilla (propuesta)</button></div>
+<div class="grp" role="group" aria-label="Paneles laterales (solo escritorio)"><span>Paneles:</span>
+<button type="button" data-pan="00" aria-pressed="true">Tres abiertos</button>
+<button type="button" data-pan="11" aria-pressed="false">Ambos ocultos</button></div>
+<span>Lo marcado con <b style="color:var(--warn)">NUEVO</b> es lo que propone este plan.</span></div>
+
+<div class="shell" id="shell">
+<aside class="pnl izq" id="pl-izq" aria-label="Panel izquierdo del servicio"><button type="button" class="icon tg" data-tg="izq" aria-expanded="true" aria-controls="in-izq" aria-label="Ocultar panel izquierdo" title="Ocultar panel izquierdo">&#8249;</button><div class="pin" id="in-izq"><div class="ph"><span class="logo" aria-hidden="true">&#9638;</span><span>Control de <em>Proyectos</em></span></div><div class="scroll-izq nav-izq"></div><div class="pie pie-izq"></div></div></aside>
+<main class="centro">
+<header class="mhead"><button type="button" id="m-menu" aria-label="Abrir menú" aria-haspopup="dialog">&#9776;</button><span class="mt">Control de <em>Proyectos</em></span><button type="button" id="m-herr" aria-label="Abrir herramientas" aria-haspopup="dialog">&#9707;</button></header>
+<div class="pantalla">
+
+<!-- ============ 1 · BANDEJA ============ -->
+<section class="vista on" id="v-bandeja" aria-label="Bandeja de avisos">
+<nav class="miga" aria-label="Migas de pan">Mi entorno &rsaquo; <b>Notificaciones</b></nav>
+<div class="tit"><div><h1>Notificaciones</h1><p class="lead">Al abrir pasa a Revisado. Los estados de RQ dependen de tu rol. Es la misma lista en <b>/notificaciones</b> y en <b>Mi entorno</b>.</p></div>
+<div class="campana" id="campana-1" title="Avisos pendientes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span>Pendientes</span><span class="bd" id="cuenta-1" aria-live="polite">3</span></div></div>
+<div class="filtros" role="group" aria-label="Filtros de la bandeja">
+<select id="f-dir" aria-label="Dirección"><option value="todos">Recibidos y enviados</option><option value="rec" selected>Solo recibidos</option><option value="env">Solo enviados</option></select>
+<select id="f-ot" aria-label="Servicio u OT" style="min-width:12rem"><option value="">Todas las OT</option><option value="PS-0000">PS-0000 — Servicio de prueba</option><option value="PS-0001">PS-0001 — Segundo servicio de prueba</option><option value="_ent">Solo Entorno (sin servicio)</option></select>
+<select id="f-tipo" class="nuevo" aria-label="Tipo de aviso"><option value="">Todos los tipos</option><option>Requerimientos</option><option>RDT</option><option>Servicio</option><option>Checklist</option><option>Mensajes</option><option>Otros</option></select>
+<select id="f-est" aria-label="Estado"><option value="">Todos los estados</option><option value="p">Pendiente</option><option value="r">Revisado</option><option value="a">Atendido</option></select>
+<select id="f-grp" aria-label="Grupo"><option value="">Todos los grupos</option><option>Jefatura</option><option>Planificación</option><option>Costos</option><option>Supervisión operativa</option><option>Logística</option><option>Oficina Técnica</option><option>Administración</option><option>SSOMA</option></select>
+</div>
+<div class="lista" id="lista-1" aria-label="Avisos"></div>
+</section>
+
+<!-- ============ 2 · DEVOLVER ============ -->
+<section class="vista" id="v-devolver" aria-label="Devolver un requerimiento con motivo">
+<nav class="miga" aria-label="Migas de pan">Mi entorno &rsaquo; <b>Notificaciones</b> &rsaquo; Devolver</nav>
+<div class="tit"><div><h1>Devolver un RQ con motivo</h1><p class="lead">Quien aprueba ve <b>Aprobar</b> y <b>Devolver</b> en el aviso del RQ Solicitado. «Devolver» pide un motivo obligatorio (hasta 500 caracteres). Prueba los tres estados o escribe tú mismo en el campo.</p></div>
+<div class="campana"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span>Pendientes</span><span class="bd" id="cuenta-2">3</span></div></div>
+<div class="filtros"><span style="color:var(--text-2);align-self:center">Estado a mostrar:</span>
+<button type="button" data-dv="cerrado">Aviso del RQ (sin abrir Devolver)</button>
+<button type="button" data-dv="vacio">Motivo vacío con error</button>
+<button type="button" data-dv="escrito">Motivo escrito</button>
+<button type="button" data-dv="confirmado">Después de confirmar</button></div>
+<div class="lista" id="lista-2" aria-label="Aviso de RQ con acciones"></div>
+</section>
+
+<!-- ============ 3 · RQ DEVUELTO ============ -->
+<section class="vista" id="v-devuelto" aria-label="Requerimiento devuelto">
+<nav class="miga" aria-label="Migas de pan">PS-0000 &rsaquo; Requerimientos &rsaquo; <b>RQ-PS0000-003</b></nav>
+<div class="tit"><div><h1>Requerimiento RQ-PS0000-003 <span class="rqst dev nuevo" id="ins-dev">Devuelto</span></h1><p class="lead">Lo ves cuando abres «Corregir y reenviar» desde el aviso. Corriges y lo reenvías: vuelve a Solicitado y se avisa de nuevo a quienes aprueban.</p></div>
+<div class="acciones"><button type="button" id="rq-cancelar">Cancelar</button><button type="button" class="primary" id="rq-reenviar">Reenviar</button></div></div>
+<div class="motivo" role="note"><b>Motivo de la devolución · Carlos PRUEBA · 16/10/2026 17:05</b>Falta la cantidad de cemento y la fecha requerida está antes de la fecha del plan semanal. Corrige y vuelve a enviarlo. (texto de prueba)</div>
+<p class="msg-ok" id="rq-msg" role="status" hidden>Reenviado (simulado): el RQ pasa a Solicitado y se avisa a quienes aprueban. El aviso de devolución queda Atendido.</p>
+<div class="dos" style="margin-top:10px">
+<div>
+<h3>Lo que corrige el solicitante</h3>
+<div class="card nuevo" style="margin-bottom:10px">
+<div class="form"><label>Fecha requerida<input type="date" value="2026-10-24" aria-label="Fecha requerida"></label>
+<label>Prioridad<select aria-label="Prioridad"><option>Normal</option><option selected>Urgente</option></select></label></div>
+<p class="k2">Ítems</p>
+<div class="tabla"><table><thead><tr><th>#</th><th>Descripción</th><th>Und.</th><th class="num">Cantidad</th><th><span class="sr">Quitar</span></th></tr></thead><tbody id="rq-items">
+<tr><td>01</td><td><input type="text" value="Cemento Portland tipo I (PRUEBA)" aria-label="Descripción ítem 1"></td><td>bol</td><td class="num"><input type="number" value="" placeholder="Falta" aria-label="Cantidad ítem 1" aria-invalid="true"></td><td><button type="button" class="rose quitar" aria-label="Quitar ítem 1">&times;</button></td></tr>
+<tr><td>02</td><td><input type="text" value="Alambre N° 16 (PRUEBA)" aria-label="Descripción ítem 2"></td><td>kg</td><td class="num"><input type="number" value="5" aria-label="Cantidad ítem 2"></td><td><button type="button" class="rose quitar" aria-label="Quitar ítem 2">&times;</button></td></tr>
+<tr><td>03</td><td><input type="text" value="Clavos 3 pulg. (PRUEBA)" aria-label="Descripción ítem 3"></td><td>kg</td><td class="num"><input type="number" value="3" aria-label="Cantidad ítem 3"></td><td><button type="button" class="rose quitar" aria-label="Quitar ítem 3">&times;</button></td></tr>
+</tbody></table></div>
+<button type="button" id="rq-add">+ Agregar ítem</button>
+<p class="k2" style="margin-top:12px">Adjuntos (solo lectura)</p>
+<div class="adj"><span>cotizacion-prueba.pdf <em>solo lectura</em></span><span>croquis-prueba.png <em>solo lectura</em></span></div>
+</div>
+</div>
+<div>
+<h3>Lo que ve quien aprueba un RQ Devuelto</h3>
+<div class="card">
+<p style="font-size:12px;margin-bottom:6px">RQ-PS0000-003 · Ana PRUEBA · <span class="rqst dev">Devuelto</span></p>
+<div class="acciones" style="margin-top:0"><button type="button" class="primary" aria-disabled="true" aria-describedby="exp-dev" title="Un RQ Devuelto no se puede aprobar hasta que el solicitante lo corrija y lo reenvíe.">Aprobar</button><button type="button" class="rose" aria-disabled="true" aria-describedby="exp-dev" title="Ya está devuelto">Devolver</button></div>
+<p class="nota warn" id="exp-dev">Un RQ Devuelto no se puede aprobar. Espera a que Ana PRUEBA lo corrija y lo reenvíe; entonces volverá a Solicitado y podrás aprobarlo.</p>
+</div>
+<h3 style="margin-top:12px">El aviso que recibe el solicitante</h3>
+<div class="lista" id="lista-3"></div>
+</div>
+</div>
+</section>
+
+<!-- ============ 4 · LOGÍSTICA ============ -->
+<section class="vista" id="v-logistica" aria-label="Aviso de Logística antes y después de abrirlo">
+<nav class="miga" aria-label="Migas de pan">Mi entorno &rsaquo; <b>Notificaciones</b> &rsaquo; Logística</nav>
+<div class="tit"><div><h1>Aviso de Logística: antes y después</h1><p class="lead">Al abrir el aviso, el RQ pasa solo a <b>Recepcionado</b>. Abajo, el mismo aviso antes y después; en la vista 1 con «Logística» lo pruebas tú.</p></div></div>
+<div class="dos">
+<div><h3>Antes de abrirlo</h3><div class="lista" id="lista-4a"></div></div>
+<div><h3>Después de abrirlo (estado actualizado)</h3><div class="lista" id="lista-4b"></div>
+<p class="nota nuevo" style="margin-top:10px">La persona de Logística que abre el aviso lo <b>cierra para sus compañeras</b>: a ellas ese aviso ya no les aparece como Pendiente.</p></div>
+</div>
+</section>
+
+<!-- ============ 5 · MÓVIL ============ -->
+<section class="vista" id="v-movil" aria-label="Bandeja a 390 píxeles">
+<nav class="miga" aria-label="Migas de pan">Vista de celular · <b>390 px de ancho</b></nav>
+<p class="lead" style="margin:6px 0 8px">Así se ve la bandeja en un celular, con un aviso de RQ abierto. En pantallas de menos de 1024 px los paneles pasan a cajón (botones de la barra superior), igual que el resto de la app.</p>
+<div class="tel" id="tel">
+<div class="tel-h"><span class="b" aria-hidden="true">&#9776;</span><span class="mt">Control de <em>Proyectos</em></span><span class="b" aria-hidden="true">&#9707;</span></div>
+<div class="tel-c">
+<div class="tit" style="margin-top:0"><div><h1>Notificaciones</h1></div><div class="campana"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="bd" id="cuenta-5">3</span></div></div>
+<div class="filtros"><select aria-label="Servicio u OT"><option>Todas las OT</option></select><select aria-label="Tipo de aviso" class="nuevo"><option>Todos los tipos</option></select><select aria-label="Estado"><option>Todos los estados</option></select><select aria-label="Grupo"><option>Todos los grupos</option></select></div>
+<div class="lista" id="lista-5"></div>
+</div></div>
+</section>
+
+<!-- ============ 6 · QUÉ APROBAR ============ -->
+<section class="vista" id="v-aprobar" aria-label="Qué debe aprobar Victor">
+<nav class="miga" aria-label="Migas de pan">Maqueta · <b>Qué debe aprobar Victor</b></nav>
+<div class="tit"><div><h1>Qué debe aprobar Victor</h1><p class="lead">Decisiones de diseño de esta maqueta, antes de la parte visual de T3 y T5.</p></div></div>
+<div class="para"><ol>
+<li><b>Insignia de OT y de Entorno.</b> Hoy la OT es solo texto en el color de acento. La maqueta muestra el Entorno con el mismo estilo; el botón «Insignia OT / Entorno» del control superior permite ver también una pastilla pequeña, igual para ambos. ¿Se queda como texto o pasa a pastilla?</li>
+<li><b>Filtro «Tipo de aviso»</b> (Requerimientos, RDT, Servicio, Checklist, Mensajes, Otros) junto al de Grupo, con el grupo renombrado a <b>Jefatura</b>. La lista de grupos sale del plan de Victor; el panel derecho del marco aún no trae «Jefatura» (no se tocó el marco).</li>
+<li><b>Filtro de OT con «Solo Entorno»</b>: opción agregada para ver únicamente los avisos sin servicio.</li>
+<li><b>Aprobar y Devolver</b> lado a lado en el aviso de RQ Solicitado. Aprobar usa el estilo acento actual; Devolver, borde rosa (color de rechazo del design.md §4.1.1).</li>
+<li><b>Motivo de devolución:</b> campo obligatorio de hasta 500 caracteres con contador, error «Escribe el motivo» e icono, y confirmación explícita; no se devuelve con un solo clic.</li>
+<li><b>RQ Devuelto:</b> insignia rosa propia, motivo visible arriba, ítems / cantidades / fecha / prioridad editables, adjuntos solo lectura, botón Reenviar. <b>Pregunta:</b> ¿el solicitante puede también quitar y agregar ítems, o solo cambiar los que ya hay? La maqueta muestra ambos.</li>
+<li><b>Un Devuelto no se aprueba:</b> botones Aprobar y Devolver deshabilitados con explicación escrita visible (no solo en el tooltip).</li>
+<li><b>Logística:</b> abrir el aviso pasa el RQ a Recepcionado solo y cierra el aviso para sus compañeras (Revisado). La nota está escrita en la pantalla.</li>
+<li><b>Texto completo al abrir:</b> la fila corta el mensaje con «…» (como hoy); al abrir el aviso se ve entero, porque el motivo de una devolución puede ser largo.</li>
+</ol></div>
+</section>
+
+</div>
+<button type="button" class="asistente" aria-label="Abrir el asistente" title="Asistente flotante (no ocupa espacio)">IA</button>
+</main>
+<aside class="pnl der" id="pl-der" aria-label="Panel derecho del servicio"><button type="button" class="icon tg" data-tg="der" aria-expanded="true" aria-controls="in-der" aria-label="Ocultar panel derecho" title="Ocultar panel derecho">&#8250;</button><div class="pin" id="in-der"><div class="ph">Accesos rápidos</div><div class="herr"></div></div></aside>
+</div>
+<div id="cajones"></div>
+
+<script>
+(function(){
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+var ITEMS=[['Cemento Portland tipo I (PRUEBA)','bol','20'],['Alambre N° 16 (PRUEBA)','kg','5'],['Clavos 3 pulg. (PRUEBA)','kg','3']];
+var MOTIVO='Falta la cantidad de cemento y la fecha requerida está antes de la fecha del plan semanal. Corrige y vuelve a enviarlo. (texto de prueba)';
+/* datos fícticios por rol. estado: p/r/a. rq.estado: SOLICITADO, APROBADO, RECEPCIONADO, EN_ALMACEN, ATENDIDO, DEVUELTO */
+function datos(){return {
+ apr:[
+  {id:'A1',ot:'PS-0000',tipo:'Requerimientos',grupo:'Jefatura',estado:'p',texto:'Requerimiento RQ-PS0000-004 solicitado por Ana PRUEBA: pendiente de aprobación.',de:'Ana PRUEBA',fecha:'17/10/2026 08:42',rq:{codigo:'RQ-PS0000-004',estado:'SOLICITADO',sol:'Ana PRUEBA'}},
+  {id:'A2',ot:null,tipo:'Mensajes',grupo:'Jefatura',estado:'p',texto:'Reunión semanal de jefaturas el lunes a las 9:00 (mensaje de prueba).',de:'Carlos PRUEBA',fecha:'17/10/2026 07:15'},
+  {id:'A3',ot:'PS-0000',tipo:'RDT',grupo:'Supervisión operativa',estado:'r',texto:'RDT del 16/10/2026 registrado por Luis PRUEBA, pendiente de validación.',de:'Luis PRUEBA',fecha:'16/10/2026 19:30'},
+  {id:'A4',ot:'PS-0000',tipo:'Checklist',grupo:'Jefatura',estado:'p',texto:'Checklist del servicio: faltan 2 ítems por completar antes del cierre.',de:'Sistema',fecha:'16/10/2026 16:00'},
+  {id:'A5',ot:'PS-0001',tipo:'Servicio',grupo:'Planificación',estado:'a',texto:'El servicio PS-0001 pasó a Ejecución.',de:'Sistema',fecha:'15/10/2026 10:05',resp:'Enterado'},
+  {id:'A6',ot:'PS-0000',tipo:'Requerimientos',grupo:'Jefatura',estado:'a',texto:'Requerimiento RQ-PS0000-003 solicitado por Ana PRUEBA: pendiente de aprobación.',de:'Ana PRUEBA',fecha:'16/10/2026 15:48',resp:'Devuelto: '+MOTIVO,rq:{codigo:'RQ-PS0000-003',estado:'DEVUELTO',sol:'Ana PRUEBA',por:'Carlos PRUEBA',cuando:'16/10/2026 17:05',motivo:MOTIVO}},
+  {id:'A7',ot:null,tipo:'Otros',grupo:'Jefatura',estado:'a',texto:'Se actualizó tu celular en tu perfil (aviso de prueba).',de:'Sistema',fecha:'14/10/2026 12:20',resp:'Enterado'}
+ ],
+ sol:[
+  {id:'S1',ot:'PS-0000',tipo:'Requerimientos',grupo:'Jefatura',estado:'p',texto:'Requerimiento RQ-PS0000-003 devuelto por Carlos PRUEBA: '+MOTIVO,de:'Carlos PRUEBA',fecha:'16/10/2026 17:05',rq:{codigo:'RQ-PS0000-003',estado:'DEVUELTO',sol:'Ana PRUEBA',por:'Carlos PRUEBA',cuando:'16/10/2026 17:05',motivo:MOTIVO}},
+  {id:'S2',ot:null,tipo:'Mensajes',grupo:'Jefatura',estado:'p',texto:'Reunión semanal de jefaturas el lunes a las 9:00 (mensaje de prueba).',de:'Carlos PRUEBA',fecha:'17/10/2026 07:15'},
+  {id:'S3',ot:'PS-0000',tipo:'Requerimientos',grupo:'Logística',estado:'a',texto:'Requerimiento RQ-PS0000-001 atendido: los materiales están en almacén.',de:'María PRUEBA',fecha:'14/10/2026 16:40',resp:'Enterado',rq:{codigo:'RQ-PS0000-001',estado:'ATENDIDO',sol:'Ana PRUEBA'}}
+ ],
+ log:[
+  {id:'L1',ot:'PS-0000',tipo:'Requerimientos',grupo:'Logística',estado:'p',texto:'Requerimiento RQ-PS0000-002 aprobado por Carlos PRUEBA: listo para recepcionar.',de:'Carlos PRUEBA',fecha:'17/10/2026 09:10',rq:{codigo:'RQ-PS0000-002',estado:'APROBADO',sol:'Ana PRUEBA'}},
+  {id:'L2',ot:'PS-0001',tipo:'Requerimientos',grupo:'Logística',estado:'p',texto:'Requerimiento RQ-PS0001-001 aprobado por Carlos PRUEBA: listo para recepcionar.',de:'Carlos PRUEBA',fecha:'17/10/2026 08:55',rq:{codigo:'RQ-PS0001-001',estado:'APROBADO',sol:'Luis PRUEBA'}},
+  {id:'L3',ot:null,tipo:'Otros',grupo:'Logística',estado:'a',texto:'Se actualizó tu contraseña (aviso de prueba).',de:'Sistema',fecha:'13/10/2026 09:00',resp:'Enterado'}
+ ]};}
+var DATA=datos(), ROL='apr';
+var ETQ={SOLICITADO:'Solicitado',APROBADO:'Aprobado',RECEPCIONADO:'Recepcionado',EN_ALMACEN:'En almacén',ATENDIDO:'Atendido',DEVUELTO:'Devuelto'};
+var ESTL={p:'Pendiente',r:'Revisado',a:'Atendido'};
+function insignia(a){return a.ot?'<span class="ins" title="N° OT del servicio">'+esc(a.ot)+'</span>':'<span class="ins" title="Aviso de tu entorno: no pertenece a un servicio">Entorno</span>';}
+function pasos(a,rol){var rq=a.rq,e=rq.estado,rev=a.estado!=='p';
+ function c(t,cl){return '<span class="paso-c'+(cl?' '+cl:'')+'">'+t+'</span>';}
+ if(rol==='log'){var apr=e==='APROBADO',rec=e==='RECEPCIONADO',alm=e==='EN_ALMACEN',at=e==='ATENDIDO';
+  return '<div class="pasos">'+c('Pendiente','ok')+c('Revisado',rev?'ok':'')+c('Recepcionado',rec?'on':(alm||at?'ok':''))+c('En almacén',alm?'on':(at?'ok':''))+c('Atendido',at?'on':'')+'</div>';}
+ if(e==='DEVUELTO'){return '<div class="pasos">'+c('Pendiente','ok')+c('Revisado','ok')+c('Devuelto','dev')+'</div>';}
+ var ap=e!=='SOLICITADO';
+ return '<div class="pasos">'+c('Pendiente','ok')+c('Revisado',ap?'ok':(rev?'on':''))+c('Aprobado',ap?'on':'')+'</div>';}
+function devBox(a){var d=a.dev;if(!d||!d.abierto)return '';var n=(d.texto||'').length;
+ return '<div class="dev-box" data-dev="'+a.id+'"><label for="mot-'+a.id+'">Motivo de la devolución (obligatorio)</label>'
+ +'<textarea id="mot-'+a.id+'" rows="3" maxlength="500" placeholder="Explica qué debe corregir el solicitante…" aria-describedby="cnt-'+a.id+'"'+(d.error?' aria-invalid="true"':'')+'>'+esc(d.texto||'')+'</textarea>'
+ +'<div class="cnt'+(n>=480?' lim':'')+'" id="cnt-'+a.id+'">'+n+' / 500</div>'
+ +(d.error?'<p class="err" role="alert"><span aria-hidden="true">&#9888;</span>Escribe el motivo</p>':'')
+ +'<div class="acciones"><button type="button" class="rose" data-acc="dev-ok" data-id="'+a.id+'">Confirmar devolución</button><button type="button" data-acc="dev-no" data-id="'+a.id+'">Cancelar</button></div></div>';}
+function cuerpo(a,rol,o){var h='';
+ if(a.rq&&a.rq.estado!=='DEVUELTO'||(a.rq&&rol!=='sol')){h+='<div class="lo-sol"><p class="k">Lo solicitado</p><p class="cab">'+esc(a.rq.codigo)+' · '+esc(a.rq.sol)+' · requerida 24/10/2026</p><ul>'
+  +ITEMS.map(function(it,i){return '<li><span>0'+(i+1)+'.</span> '+esc(it[0])+'<span> · '+it[2]+' '+it[1]+'</span></li>';}).join('')+'</ul>'
+  +'<div class="enl"><a href="#">Ver en status</a><a href="#" class="s2">Descargar PDF</a></div></div>';}
+ h+='<div class="enl">'+(a.ot?'<a href="#">Ir al servicio</a>':'')+'<a href="#">Ir a mi entorno</a></div>';
+ if(a.resp&&!(a.rq&&a.rq.estado==='DEVUELTO'&&rol==='apr'))h+='<p class="resp">Respuesta: '+esc(a.resp)+'</p>';
+ if(a.rq){var rq=a.rq,e=rq.estado;
+  h+=pasos(a,rol)+'<p class="rqe">RQ: '+ETQ[e]+(e==='DEVUELTO'?' <span class="rqst dev" style="margin-left:4px">Devuelto</span>':'')+'</p>';
+  if(rol==='apr'){
+   if(e==='SOLICITADO'&&a.estado!=='a'){h+='<div class="acciones"><button type="button" class="primary" data-acc="apr" data-id="'+a.id+'">Aprobar</button><button type="button" class="rose" data-acc="dev" data-id="'+a.id+'"'+(a.dev&&a.dev.abierto?' aria-expanded="true"':' aria-expanded="false"')+'>Devolver</button></div>'+devBox(a);}
+   else if(e==='APROBADO'){h+='<p class="msg-ok">'+esc(a.resp||'Enviado a Logística')+'</p>';}
+   else if(e==='DEVUELTO'){h+='<div class="acciones"><button type="button" class="primary" aria-disabled="true" aria-describedby="xd-'+a.id+'" title="Un RQ Devuelto no se puede aprobar hasta que el solicitante lo corrija y lo reenvíe.">Aprobar</button></div>'
+    +'<p class="nota warn" id="xd-'+a.id+'">Un RQ Devuelto no se puede aprobar. Devuelto por '+esc(rq.por)+' el '+rq.cuando+': «'+esc(rq.motivo)+'». Espera a que '+esc(rq.sol)+' lo corrija y lo reenvíe.</p>';}
+   if(e==='DEVUELTO'&&a.dev&&a.dev.hecho){}
+   if(a.dev&&a.dev.hecho){h+='<p class="msg-ok">Devuelto. Se avisó a '+esc(rq.sol)+' con el motivo.</p>';}
+  }
+  if(rol==='sol'&&e==='DEVUELTO'){
+   h+='<div class="motivo" style="margin-top:8px"><b>Motivo · '+esc(rq.por)+' · '+rq.cuando+'</b>'+esc(rq.motivo)+'</div>'
+    +'<div class="acciones"><button type="button" class="primary nuevo" data-acc="corregir" data-id="'+a.id+'">Corregir y reenviar</button></div>';}
+  if(rol==='log'){
+   if(e==='RECEPCIONADO'){h+='<div class="acciones"><button type="button" class="viol" data-acc="alm" data-id="'+a.id+'">En almacén</button></div>';}
+   if(e==='EN_ALMACEN'){h+='<div class="acciones"><button type="button" class="emer" data-acc="ate" data-id="'+a.id+'">Atendido</button></div>';}
+   if(a.auto){h+='<p class="nota nuevo">Al abrir este aviso, el RQ pasó solo a <b>Recepcionado</b>. Como lo abrió una persona de Logística, el aviso queda cerrado para sus compañeras.</p>';}
+  }
+ } else if(a.estado!=='a'){
+  h+='<textarea rows="2" placeholder="Respuesta…" aria-label="Respuesta" style="margin-bottom:6px"></textarea><button type="button" class="primary" data-acc="atender" data-id="'+a.id+'">Marcar atendido</button>';}
+ return h;}
+function fila(a,rol,o){var ab=!!o.exp[a.id];
+ return '<div class="av'+(ab?' abierto':'')+'" data-id="'+a.id+'"><button type="button" class="avh" data-acc="abrir" data-id="'+a.id+'" aria-expanded="'+ab+'">'
+ +'<div class="avm"><div class="avb"><span class="dir">Recibida</span>'+insignia(a)+'</div><p class="avt">'+esc(a.texto)+'</p>'
+ +'<p class="avf">'+a.fecha+' · De: '+esc(a.de)+' · <span class="g">'+esc(a.grupo)+'</span> · '+esc(a.tipo)+'</p></div>'
+ +'<span class="est '+a.estado+'">'+ESTL[a.estado]+'</span></button>'
+ +(ab?'<div class="avc">'+cuerpo(a,rol,o)+'</div>':'')+'</div>';}
+/* fábrica de bandejas */
+function Bandeja(cfg){var o={raiz:document.getElementById(cfg.id),exp:cfg.exp||{},rol:cfg.rol,lista:cfg.lista,auto:cfg.auto,filtros:cfg.filtros,onCambio:cfg.onCambio};
+ function filtrar(l){if(!o.filtros)return l;var f=o.filtros();return l.filter(function(a){
+  if(f.dir==='env')return false;
+  if(f.ot==='_ent'&&a.ot)return false;if(f.ot&&f.ot!=='_ent'&&a.ot!==f.ot)return false;
+  if(f.tipo&&a.tipo!==f.tipo)return false;if(f.est&&a.estado!==f.est)return false;if(f.grp&&a.grupo!==f.grp)return false;return true;});}
+ function pinta(foco){var rol=typeof o.rol==='function'?o.rol():o.rol,l=filtrar(o.lista());
+  o.raiz.innerHTML=l.length?l.map(function(a){return fila(a,rol,o);}).join(''):'<p style="font-size:12px;color:var(--text-2)">No hay notificaciones con estos filtros.</p>';
+  if(foco){var t=o.raiz.querySelector('textarea[id^=mot-]');if(t){t.focus();t.setSelectionRange(t.value.length,t.value.length);}}
+  if(o.onCambio)o.onCambio();}
+ o.pinta=pinta;
+ o.raiz.addEventListener('input',function(e){var t=e.target;if(t.id&&t.id.indexOf('mot-')===0){var id=t.id.slice(4),a=busca(id);if(a&&a.dev){a.dev.texto=t.value;if(t.value.trim()){a.dev.error=false;t.removeAttribute('aria-invalid');var er=t.parentNode.querySelector('.err');if(er)er.remove();}
+  var c=document.getElementById('cnt-'+id);c.textContent=t.value.length+' / 500';c.className='cnt'+(t.value.length>=480?' lim':'');}}});
+ o.raiz.addEventListener('click',function(e){var b=e.target.closest('[data-acc]');if(!b)return;var id=b.getAttribute('data-id'),ac=b.getAttribute('data-acc'),a=busca(id);if(!a||b.getAttribute('aria-disabled')==='true')return;
+  var rol=typeof o.rol==='function'?o.rol():o.rol;
+  if(ac==='abrir'){var abre=!o.exp[id];o.exp[id]=abre;
+   if(abre&&a.estado==='p'){a.estado='r';}
+   if(abre&&o.auto&&rol==='log'&&a.rq&&a.rq.estado==='APROBADO'){a.rq.estado='RECEPCIONADO';a.auto=true;}
+   pinta();return;}
+  if(ac==='apr'){a.rq.estado='APROBADO';a.estado='a';a.resp='Enviado a Logística';pinta();return;}
+  if(ac==='dev'){a.dev=a.dev||{};a.dev.abierto=!a.dev.abierto;a.dev.error=false;pinta(true);return;}
+  if(ac==='dev-no'){a.dev.abierto=false;a.dev.error=false;pinta();return;}
+  if(ac==='dev-ok'){var t=(a.dev.texto||'').trim();if(!t){a.dev.error=true;pinta(true);return;}
+   a.rq.estado='DEVUELTO';a.rq.por='Usuario de prueba';a.rq.cuando='17/10/2026 10:00';a.rq.motivo=t;a.estado='a';a.resp='Devuelto: '+t;a.dev={abierto:false,hecho:true};pinta();return;}
+  if(ac==='alm'){a.rq.estado='EN_ALMACEN';pinta();return;}
+  if(ac==='ate'){a.rq.estado='ATENDIDO';a.estado='a';a.resp='Enterado';pinta();return;}
+  if(ac==='atender'){a.estado='a';a.resp='Enterado';pinta();return;}
+  if(ac==='corregir'){window.irVista('devuelto');return;}
+ });
+ function busca(id){var r=o.lista().filter(function(a){return a.id===id;});return r[0];}
+ return o;}
+function cuenta(){return DATA[ROL].filter(function(a){return a.estado==='p';}).length;}
+function sincCampana(){var n=cuenta(),c1=document.getElementById('cuenta-1');if(c1){c1.textContent=n;c1.className='bd'+(n?'':' cero');}
+ var c2=document.getElementById('cuenta-2');if(c2){c2.textContent=n;}
+ document.querySelectorAll('.ib[title=Notificaciones]').forEach(function(b){var bd=b.querySelector('.bd');if(bd){bd.textContent=n;bd.style.display=n?'':'none';}b.setAttribute('aria-label','Notificaciones, '+n+' pendientes');});}
+var B1=Bandeja({id:'lista-1',rol:function(){return ROL;},lista:function(){return DATA[ROL];},auto:true,exp:{},onCambio:sincCampana,
+ filtros:function(){return {dir:val('f-dir'),ot:val('f-ot'),tipo:val('f-tipo'),est:val('f-est'),grp:val('f-grp')};}});
+function val(i){return document.getElementById(i).value;}
+['f-dir','f-ot','f-tipo','f-est','f-grp'].forEach(function(i){document.getElementById(i).addEventListener('change',function(){B1.pinta();});});
+/* vista 2: aviso A1 de Jefatura aislado */
+var D2=null;
+function nuevoD2(){D2=[datos().apr[0]];}
+var B2=Bandeja({id:'lista-2',rol:'apr',lista:function(){return D2;},exp:{},auto:false,onCambio:function(){}});
+function estadoDev(k){nuevoD2();var a=D2[0];B2.exp={A1:true};a.estado='r';
+ if(k==='vacio'){a.dev={abierto:true,texto:'',error:true};}
+ if(k==='escrito'){a.dev={abierto:true,texto:'Falta la cantidad de cemento y la fecha requerida es anterior al plan semanal.',error:false};}
+ if(k==='confirmado'){a.dev={abierto:true,texto:'Falta la cantidad de cemento. Corrige y reenvía.',error:false};a.rq.estado='DEVUELTO';a.rq.por='Usuario de prueba';a.rq.cuando='17/10/2026 10:00';a.rq.motivo=a.dev.texto;a.estado='a';a.resp='Devuelto: '+a.dev.texto;a.dev={abierto:false,hecho:true};}
+ B2.pinta(k==='vacio'||k==='escrito');
+ document.querySelectorAll('[data-dv]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-dv')===k?'true':'false');});}
+document.querySelectorAll('[data-dv]').forEach(function(b){b.addEventListener('click',function(){estadoDev(b.getAttribute('data-dv'));});});
+/* vista 3: aviso del solicitante (estático) */
+var D3=[datos().sol[0]];D3[0].estado='p';
+var B3=Bandeja({id:'lista-3',rol:'sol',lista:function(){return D3;},exp:{S1:true},auto:false});
+/* vista 4: antes y después */
+var L4a=datos().log[0],L4b=datos().log[0];L4b.estado='r';L4b.rq.estado='RECEPCIONADO';L4b.auto=true;
+var B4a=Bandeja({id:'lista-4a',rol:'log',lista:function(){return [L4a];},exp:{L1:true},auto:false});
+var B4b=Bandeja({id:'lista-4b',rol:'log',lista:function(){return [L4b];},exp:{L1:true},auto:false});
+/* vista 5: móvil */
+var D5=datos().apr.slice(0,3);D5[0].estado='r';
+var B5=Bandeja({id:'lista-5',rol:'apr',lista:function(){return D5;},exp:{A1:true},auto:false});
+function pintaTodo(){B1.pinta();estadoDev('cerrado');B3.pinta();B4a.pinta();B4b.pinta();B5.pinta();}
+/* navegación */
+window.irVista=function(v){document.querySelectorAll('.vista').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v);});
+ document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===v?'true':'false');});document.querySelector('.pantalla').scrollTop=0;};
+document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){window.irVista(b.getAttribute('data-v'));});});
+document.querySelectorAll('[data-rol]').forEach(function(b){b.addEventListener('click',function(){ROL=b.getAttribute('data-rol');
+ document.querySelectorAll('[data-rol]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});B1.exp={};B1.pinta();window.irVista('bandeja');});});
+document.getElementById('b-reset').addEventListener('click',function(){DATA=datos();B1.exp={};pintaTodo();});
+document.querySelectorAll('[data-ins]').forEach(function(b){b.addEventListener('click',function(){var p=b.getAttribute('data-ins')==='pastilla';document.body.classList.toggle('ins-pastilla',p);
+ document.querySelectorAll('[data-ins]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});});});
+/* RQ devuelto: quitar / agregar / reenviar */
+var rqItems=document.getElementById('rq-items');
+rqItems.addEventListener('click',function(e){var q=e.target.closest('.quitar');if(q){q.closest('tr').remove();}});
+document.getElementById('rq-add').addEventListener('click',function(){var n=rqItems.rows.length+1;var tr=document.createElement('tr');
+ tr.innerHTML='<td>0'+n+'</td><td><input type="text" aria-label="Descripción ítem '+n+'" placeholder="Descripción (PRUEBA)"></td><td>und</td><td class="num"><input type="number" aria-label="Cantidad ítem '+n+'"></td><td><button type="button" class="rose quitar" aria-label="Quitar ítem '+n+'">&times;</button></td>';rqItems.appendChild(tr);});
+document.getElementById('rq-reenviar').addEventListener('click',function(){var m=document.getElementById('rq-msg');m.hidden=false;
+ var ins=document.getElementById('ins-dev');ins.textContent='Solicitado';ins.className='rqst sol';});
+document.getElementById('rq-cancelar').addEventListener('click',function(){window.irVista('bandeja');});
+document.getElementById('m-menu').addEventListener('click',function(){setTimeout(sincCampana,0);});
+pintaTodo();
+sincCampana();
+})();
+</script>
+<script>
+window.MARCO_ACTIVO='notif';window.MARCO_PANELES='00';
+</script>
+<script src="marco-tres-paneles.js"></script>
+<script>
+/* la campana del marco sigue la cuenta de pendientes de esta maqueta */
+(function(){var n=document.getElementById('cuenta-1');if(!n)return;var v=n.textContent;document.querySelectorAll('.ib[title=Notificaciones] .bd').forEach(function(b){b.textContent=v;});})();
+</script>
+</body>
+</html>

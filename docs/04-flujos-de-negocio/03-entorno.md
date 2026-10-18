@@ -1,5 +1,5 @@
 # 03 — Entorno por rol
-> Lee si: la tarea toca «Mi entorno», sus chips o las herramientas disponibles por rol.
+> Lee si: la tarea toca «Mi entorno», sus chips, las herramientas disponibles por rol o el perfil propio (celular, correo y contraseña).
 
 
 Ruta: `/mi-entorno`. El grupo se elige por el rol de mayor prioridad (`slugEntornoDesdeRoles`) y solo decide el título y los accesos de Notificaciones; **no decide qué chips salen**.
@@ -21,7 +21,7 @@ Además, el grupo determina el resto de la pantalla:
 
 | Rol | Grupo entorno |
 |-----|----------------|
-| administrador, jefe_de_proyectos | Proyecto |
+| administrador, jefe_de_proyectos | Jefatura (antes «Proyecto») |
 | jefe_de_oficina_tecnica, supervisor_oficina_tecnica | Oficina Técnica |
 | supervisor_operativo | Supervisión operativa |
 | supervisor_ssoma | SSOMA |
@@ -30,7 +30,17 @@ Además, el grupo determina el resto de la pantalla:
 | planner | Planificación |
 | supervisor_costos, jefe_de_costos | Costos |
 
-Solo administrador y jefe de proyectos ven además el bloque «Equipo» con el acceso a gestionar usuarios.
+El título de la pantalla es «Entorno · {grupo}» (por ejemplo, «Entorno · Jefatura»; antes «Entorno · Proyecto»). Solo administrador y jefe de proyectos ven además el bloque «Equipo» con el acceso a gestionar usuarios.
+
+## Perfil propio (Victor, 2026-10-17)
+
+La tarjeta «Mi perfil» muestra nombre, correo, cargo, área, celular y roles. El chip **«Editar mi perfil» lo ven los 13 roles** (antes solo el administrador y el jefe de proyectos) y abre **tres bloques**, cada uno con su botón y su mensaje:
+
+* **Celular:** se ingresa, se cambia o se borra (déjelo vacío). De 6 a 20 caracteres con dígitos, espacios, `+`, guiones y paréntesis.
+* **Correo:** correo nuevo y **contraseña actual**. El correo cambia solo cuando se confirma desde el buzón nuevo; hasta entonces la tarjeta dice «pendiente de confirmar» y vale el correo anterior.
+* **Contraseña:** la actual, la nueva (mínimo 8 caracteres) y su confirmación, con el ojo de mostrar/ocultar.
+
+**Nombre, cargo, área y roles no se editan aquí:** los asigna el administrador ([flujo 02](02-usuarios.md)). Permisos en la nota 14 del [flujo 14](14-accesos-y-restricciones.md) y reglas del servidor en el [flujo 07](07-nucleo-auth.md). Los textos están en español claro (contraseña actual incorrecta, nueva muy corta o igual a la actual, confirmación distinta, celular o correo inválido, correo ya usado, error de red y éxito) y los botones se desactivan mientras guarda.
 
 Archivos: `src/lib/notificaciones/grupo-proceso.ts` (`herramientasPorGrupo`), `src/lib/config/registro-accesos.ts`, `src/app/(workspace)/mi-entorno/page.tsx`.
 

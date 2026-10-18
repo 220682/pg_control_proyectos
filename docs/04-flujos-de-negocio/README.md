@@ -13,17 +13,17 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 | # | Flujo | Cuándo abrirlo | Archivo |
 |---|--------|----------------|---------|
 | 01 | Configuración (pendiente de definir) | shell, login, móvil o el apartado Proyectos del panel izquierdo | [01-configuracion.md](01-configuracion.md) |
-| 02 | Usuarios | crear, editar o borrar usuarios, roles, cargo o área | [02-usuarios.md](02-usuarios.md) |
-| 03 | Entorno por rol | «Mi entorno», sus chips o herramientas por rol | [03-entorno.md](03-entorno.md) |
-| 04 | Notificaciones | bandeja, chips de aviso, y a quién se notifica o no | [04-notificaciones.md](04-notificaciones.md) |
-| 05 | Requerimiento de servicios (RQ) | crear, aprobar o rechazar un RQ; subflujos y estados | [05-rq.md](05-rq.md) |
-| 06 | RDT | el RDT, sus pantallas, o crearlo desde el Plan Maestro | [06-rdt.md](06-rdt.md) |
-| 07 | Núcleo / auth | login, sesión con cookie, `NEXT_PUBLIC_SITE_URL` | [07-nucleo-auth.md](07-nucleo-auth.md) |
+| 02 | Usuarios | crear, editar o borrar usuarios, roles, cargo o área; qué datos de su perfil edita cada persona | [02-usuarios.md](02-usuarios.md) |
+| 03 | Entorno por rol | «Mi entorno», sus chips o herramientas por rol; el perfil propio (celular, correo, contraseña) | [03-entorno.md](03-entorno.md) |
+| 04 | Notificaciones | bandeja, chips y campana de avisos, catálogo de eventos, a quién se notifica o no, y cuándo se cierra un aviso | [04-notificaciones.md](04-notificaciones.md) |
+| 05 | Requerimiento de servicios (RQ) | crear, aprobar, devolver o corregir un RQ; subflujos y estados (Recepcionado al abrir, Devuelto); a quién se avisa en cada paso | [05-rq.md](05-rq.md) |
+| 06 | RDT | el RDT, sus pantallas, los avisos al subirlo, registrarlo, validarlo o rechazarlo, o crearlo desde el Plan Maestro | [06-rdt.md](06-rdt.md) |
+| 07 | Núcleo / auth | login, sesión con cookie, `NEXT_PUBLIC_SITE_URL`, cambio de la propia contraseña o del propio correo | [07-nucleo-auth.md](07-nucleo-auth.md) |
 | 08 | Programa / portafolio / proyecto | adjudicar, crear, archivar o eliminar contenedores | [08-programa-portafolio-proyecto.md](08-programa-portafolio-proyecto.md) |
 | 09 | Importar DP | importación, sus tres fases, confirmación de niveles, informes | [09-importar-dp.md](09-importar-dp.md) |
 | 10 | Generación PR | el PR, sus tres bloques, cuándo se recalcula, relación con Dashboard | [10-generacion-pr.md](10-generacion-pr.md) |
 | 11 | Dashboard | los dos dashboards, filtros, indicadores, diagnóstico | [11-dashboard.md](11-dashboard.md) |
-| 12 | Checklist editable | catálogo definitivo o grupos de acción | [12-checklist.md](12-checklist.md) |
+| 12 | Checklist editable | catálogo definitivo, grupos de acción o los avisos «falta subir» y su cierre | [12-checklist.md](12-checklist.md) |
 | 13 | Orden de trabajo (OT) | la OT o su número. Hoy no hay UI | [13-orden-de-trabajo.md](13-orden-de-trabajo.md) |
 | 14 | Accesos y restricciones | **cualquier** interfaz, permiso, acción o acceso nuevo o modificado | [14-accesos-y-restricciones.md](14-accesos-y-restricciones.md) |
 | 15 | Cronograma | cronograma, sus hitos, o su relación con Paquetes | [15-cronograma.md](15-cronograma.md) |

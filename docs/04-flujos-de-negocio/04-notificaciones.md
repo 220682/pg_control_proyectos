@@ -35,7 +35,7 @@ Un aviso muestra una pastilla con el **N° OT** del servicio al que pertenece, o
 
 Cada aviso tiene un grupo, el mismo conjunto de 8 que los entornos de trabajo: **Jefatura**, Planificación, Costos, Supervisión operativa, Logística, Oficina Técnica, Administración y SSOMA. **«Jefatura» reemplaza al antiguo «Proyecto»** (decisión de Victor, 2026-10-16): lo usan el jefe de proyectos y el administrador, igual que el área JF del [flujo 02](02-usuarios.md). El título «Entorno · Proyecto» de Mi entorno pasa a «Entorno · Jefatura». Los avisos viejos guardados con «Proyecto» se leen como «Jefatura» sin tocar los datos; el enlace viejo `proyecto` sigue llevando a Jefatura.
 
-El grupo de un aviso por rol sale del rol del destinatario; el de un aviso por usuario lo indica quien avisa (ver la columna «Grupo» del catálogo). **Filtros de la bandeja `/notificaciones`:** dirección (recibidos, enviados o todos), N° OT (con la opción **«Solo Entorno (sin servicio)»**), estado, grupo y **«Tipo de aviso»**, con seis categorías: Requerimientos, RDT, Servicio, Checklist, Mensajes y Otros (esta última incluye todo aviso sin evento o con un evento que el catálogo no conoce). La lista muestra cada aviso recortado en una línea y, **al abrirlo, el texto completo**.
+El grupo de un aviso por rol sale del rol del destinatario, salvo «RQ pendiente de aprobación», que nace siempre en **Jefatura** sea cual sea el rol (así el mismo aviso no cambia de grupo según quién lo mire); el de un aviso por usuario lo indica quien avisa (ver la columna «Grupo» del catálogo). **La tarjeta unificada** (la persona con dos roles) muestra el grupo de la fila del rol de la persona; si coinciden varias, Jefatura primero. **Filtros de la bandeja `/notificaciones`:** dirección (recibidos, enviados o todos), N° OT (con la opción **«Solo Entorno (sin servicio)»**), estado, grupo y **«Tipo de aviso»**, con seis categorías: Requerimientos, RDT, Servicio, Checklist, Mensajes y Otros (esta última incluye todo aviso sin evento o con un evento que el catálogo no conoce). La lista muestra cada aviso recortado en una línea y, **al abrirlo, el texto completo**.
 
 ## Catálogo de eventos
 
@@ -47,7 +47,7 @@ El ciclo completo, sus estados y reglas están en el [flujo 05](05-rq.md).
 
 | Evento | Quién lo dispara | A quién llega | Texto | Grupo | Cierre |
 |---|---|---|---|---|---|
-| `rq.pendiente_aprobacion` | Crear un RQ que no va directo a Logística; reenviar un RQ Devuelto ya corregido | Por rol: administrador, jefe de proyectos y jefe de oficina técnica | «Requerimiento {código} pendiente de aprobación — {servicio}» | Según el rol | Solo, al aprobar, devolver o derivar el RQ. «Atender» este aviso **aprueba** el RQ si el rol puede (no si está Devuelto) |
+| `rq.pendiente_aprobacion` | Crear un RQ que no va directo a Logística; reenviar un RQ Devuelto ya corregido | Por rol: administrador, jefe de proyectos y jefe de oficina técnica | «Requerimiento {código} pendiente de aprobación — {servicio}» | Siempre Jefatura | Solo, al aprobar, devolver o derivar el RQ. «Atender» este aviso **aprueba** el RQ si el rol puede (no si está Devuelto) |
 | `rq.nuevo_logistica` | Crear un RQ directo a Logística (lo crea un jefe de proyectos o de oficina técnica y nace Aprobado) | Por rol: Logística | «Nuevo requerimiento {código} — {servicio}» | Logística | Al abrirlo una persona de Logística: el RQ pasa a Recepcionado y el aviso se cierra para todas |
 | `rq.aprobado_logistica` | Aprobar el RQ (derivarlo a Logística) | Por rol: Logística | «Requerimiento {código} aprobado — {servicio}» | Logística | Igual que el anterior: al abrirlo, Recepcionado |
 | `rq.aprobado_solicitante` | Aprobar el RQ | Por usuario: el solicitante, si no es quien aprueba | «Requerimiento {código} ha sido aprobado por {nombre}» | Jefatura | Informativo: solo, al abrirlo |
@@ -116,7 +116,7 @@ La migración `108` (aditiva): `proyecto_id` admite vacío («Entorno») y se ag
 
 ## Diferencias temporales entre este flujo y el código
 
-* El rótulo del grupo del **panel izquierdo** (`registro-accesos.ts`, constante `TITULO_GRUPO_PROYECTO`) aún dice «Proyecto» en el código. El flujo manda «Jefatura»; el Orquestador corrige el código.
+Ninguna abierta. El rótulo del grupo del panel izquierdo ya dice «Jefatura» en el código (la clave interna `notificaciones-proyecto` no cambia).
 
 ## Fuera de alcance
 

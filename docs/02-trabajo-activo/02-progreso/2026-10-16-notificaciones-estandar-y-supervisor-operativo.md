@@ -15,8 +15,9 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 | T9 (perfil propio: contraseña, celular, correo) | Hecha | Commit `c067583`; 1787 pruebas en verde; capturas y pruebas en vivo en T7 |
 | T4 (ciclo del RQ) | Hecha | Commits `69ce6aa` y `817e9d8`; 1829 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador |
 | T6 | Hecha | Commits `bcba4da`, `853bf57`, `e3c4dfa`; 1883 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Sin la migración 108 los cierres automáticos de documentos y RDT no funcionan (solo registran error) |
-| T3 | En curso | Worker 7 lanzado tras aprobarse la maqueta |
-| T5, T7, T8 | Pendientes | |
+| T3 | Hecha | Commits `041e9e4`, `b6017c2`, `9529853`; 1933 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Capturas y verificación en vivo en T7 |
+| T5 | En curso | Worker 7 lanzado (incluye pasar a «Jefatura» tres sitios que guardaban «Proyecto») |
+| T7, T8 | Pendientes | |
 
 ## Registro
 
@@ -31,6 +32,7 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-18: Decisiones de Victor sobre T6. (1) Si cambia el responsable de un servicio, se avisa al anterior (`servicio.retirado`) y al nuevo (`servicio.asignado`). (2) Al asignar o quitar servicios desde Usuarios, solo se avisa a quien corresponde: lo interpreto como supervisores operativos (Victor puede corregirlo). Ajuste «T6b» lanzado al Worker 7; los flujos 04, 06, 12, 13 y 14 se actualizan en T8. Falta su aprobación de la maqueta (T3 y T5 detenidas).
 - 2026-10-18: T6b hecha y verificada por el Orquestador (commit `04739ec`, 1889 pruebas, lint con los 9 errores previos). Cambio de responsable avisa al anterior y al nuevo; en Usuarios solo a supervisores operativos. Los avisos `servicio.asignado` anteriores a T6b no se cierran solos (no tienen referencia).
 - 2026-10-18: Victor aprobó la maqueta («APPRUEBO») tras mis cinco recomendaciones; lanzada T3. Brief de T3 escrito.
+- 2026-10-18: T3 verificada (`git log`, `npm test`, `npm run lint`). Hallazgos de T3: (H2) el grupo del panel izquierdo (`registro-accesos.ts`) sigue llamándose «Proyecto»: decide Victor con los flujos 14 y 16; (H4) lista de avisos informativos a confirmar: `servicio.asignado`, `servicio.retirado`, `rq.*_solicitante` (aprobado, recepcionado, en almacén, atendido), `rdt.validado`, `informe.emitido`; `rq.comentario` y `rdt.rechazado` no son informativos; (H5) el alias `marcar-visto` no cierra informativos y ninguna pantalla lo usa; la tarjeta única por persona agrupa filas iguales creadas con menos de 30 s de diferencia. T5 lanzada.
 
 ## Pendientes de Victor
 

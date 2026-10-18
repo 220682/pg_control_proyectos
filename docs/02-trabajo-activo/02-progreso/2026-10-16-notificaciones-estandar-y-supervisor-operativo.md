@@ -17,7 +17,8 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 | T6 | Hecha | Commits `bcba4da`, `853bf57`, `e3c4dfa`; 1883 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Sin la migración 108 los cierres automáticos de documentos y RDT no funcionan (solo registran error) |
 | T3 | Hecha | Commits `041e9e4`, `b6017c2`, `9529853`; 1933 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Capturas y verificación en vivo en T7 |
 | T5 | Hecha | Commits `83bd0f9`, `21a0e59`, `1d036ec`, `85626fd`; 2001 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Migración 109 escrita y **sin aplicar** (revisada por el Orquestador: aditiva e idempotente) |
-| T7, T8 | Pendientes | |
+| T7 | En curso | Dividida en T7A (ciclo del RQ), T7B (bandeja, servicio, RDT, checklist, móvil) y T7C (contraseña, celular, correo); una a la vez por el navegador. Código de la rama probado con el servidor de desarrollo del worktree contra la base real |
+| T8 | Pendiente | |
 
 ## Registro
 
@@ -34,9 +35,10 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-18: Victor aprobó la maqueta («APPRUEBO») tras mis cinco recomendaciones; lanzada T3. Brief de T3 escrito.
 - 2026-10-18: T3 verificada (`git log`, `npm test`, `npm run lint`). Hallazgos de T3: (H2) el grupo del panel izquierdo (`registro-accesos.ts`) sigue llamándose «Proyecto»: decide Victor con los flujos 14 y 16; (H4) lista de avisos informativos a confirmar: `servicio.asignado`, `servicio.retirado`, `rq.*_solicitante` (aprobado, recepcionado, en almacén, atendido), `rdt.validado`, `informe.emitido`; `rq.comentario` y `rdt.rechazado` no son informativos; (H5) el alias `marcar-visto` no cierra informativos y ninguna pantalla lo usa; la tarjeta única por persona agrupa filas iguales creadas con menos de 30 s de diferencia. T5 lanzada.
 - 2026-10-18: T5 verificada (`git log`, `npm test`, `npm run lint`) y migración 109 leída completa. Hallazgos de T5: (H1) en el consolidado de RQ no existe Aprobar hoy; Devolver está en el aviso y en el Status; Logística ve los Devueltos sin acciones; decide Victor si se agregan Aprobar/Devolver al consolidado; (H3) el estado Devuelto y sus permisos no están en ningún flujo (T8: flujos 05, 14, 16, `design.md` y Matriz de permisos); (H4) «Corregir y reenviar» son dos llamadas, reintentar es seguro; atender un aviso viejo de aprobación no cierra el aviso de devolución de un Devuelto.
+- 2026-10-18: Victor aplicó la migración 109 («ya lo corrí, quedó ok»; se comprobará con el uso en T7A). Decisión operativa del Orquestador: T7 se hace con las cuentas existentes (administrador, supervisor operativo, Logística 1 y 2); `+jefeproy` y `+ofitec` se crean si Supabase lo permite; `+supop2` y `+admin2` se omiten porque no aportan a los criterios. Brief de T7 escrito.
 
 ## Pendientes de Victor
 
-1. ~~Aplicar la migración 108~~ (hecha el 2026-10-18); falta la 109 (escrita por T5, lista para aplicar) antes de la verificación en vivo.
+1. ~~Aplicar la migración 108~~ (hecha el 2026-10-18); la 109 también se aplicó el 2026-10-18.
 2. ~~Aprobar la maqueta de la bandeja~~ (aprobada el 2026-10-18).
 3. Abrir el enlace de confirmación del cambio de correo (T7-09).

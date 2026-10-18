@@ -2,7 +2,7 @@
 
 ## Origen
 
-Plan [`2026-10-16-notificaciones-estandar-y-supervisor-operativo.md`](../02-trabajo-activo/01-planes/2026-10-16-notificaciones-estandar-y-supervisor-operativo.md), apartado «Mejoras (de trabajo)» del libro de hallazgos, más las mejoras que los Workers dejaron en sus resúmenes de cierre (T1A, T1B, T1C, T2, T3, T4, T5, T6, T8A, T8B y T9). Trasladado en la tanda T8B. Solo método y herramientas; ninguna regla del sistema (las reglas de negocio fueron a los flujos 02, 03, 04, 05, 06, 07, 08, 12, 14 y 16).
+Plan [`2026-10-16-notificaciones-estandar-y-supervisor-operativo.md`](../02-trabajo-activo/01-planes/2026-10-16-notificaciones-estandar-y-supervisor-operativo.md), apartado «Mejoras (de trabajo)» del libro de hallazgos, más las mejoras que los Workers dejaron en sus resúmenes de cierre (T1A, T1B, T1C, T2, T3, T4, T5, T6, T7B, T7C, T8A, T8B y T9). Trasladado en las tandas T8B y T8C (los puntos 9 a 11, de la verificación en vivo, se sumaron en T8C). Solo método y herramientas; ninguna regla del sistema (las reglas de negocio fueron a los flujos 02, 03, 04, 05, 06, 07, 08, 12, 14 y 16).
 
 ## Observación
 
@@ -41,9 +41,21 @@ Tres técnicas funcionaron: (a) copia previa + `diff -u` + `git apply --cached` 
 
 Una tanda sin navegador (T1C, T9) deja la verificación en sintaxis, compilación y revisión de código: las capturas a 1440 y 390 px se hacen en la tanda de verificación en vivo antes de aprobar. Se queda como práctica ya recogida en el plan (T7).
 
+### 9. Datos de prueba en producción: una cola de rol llega a personas reales y el servicio de prueba consume el N° real
+
+Un servicio de prueba con un documento del checklist asignado a un **rol** manda el aviso «falta subir» a toda la cola de ese rol, incluida una persona real (en este plan, el supervisor operativo real). Antes de crearlo, avisar a quien tenga el rol o asignar los documentos a una cuenta de prueba. Además, el servicio de prueba **consume el N° OT real** del portafolio (`PS-0005`): el siguiente servicio real saldrá con el número siguiente. Declararlo antes de crearlo y dejar planificada su eliminación (decisión de Victor).
+
+### 10. Probar un rol que la cuenta no tiene: rol temporal en Usuarios y revertirlo
+
+Cuando no existe la cuenta de un rol (jefe de proyectos, jefe de oficina técnica), se le da el rol temporalmente a una cuenta de prueba desde Usuarios, se prueba y se revierte, comprobando en Usuarios que la cuenta quedó con sus roles y servicios de antes. Cambiar los servicios asignados genera avisos propios («Ya no tienes a cargo…», «Se te asignó…»), así que conviene anotarlos entre los datos de prueba.
+
+### 11. Cambio de correo probado desde un servidor local: la URL del enlace
+
+La ruta del cambio de correo usa la URL pública configurada para el enlace de confirmación; en local, sin `NEXT_PUBLIC_SITE_URL`, apunta a `http://localhost:3000`. Para que la confirmación se pueda completar: levantar el servidor de la rama en el puerto 3000 antes de que se abra el enlace, o definir esa variable en el entorno de prueba. Supabase puede además pedir confirmar desde el correo actual (cambio de correo seguro): revisar ambos buzones. En la prueba de este plan el cambio no llegó a confirmarse (ver ítem T7-09 del plan).
+
 ## Evidencia
 
-Hallazgos de origen en el libro del plan (M1 a M9 y los de los resúmenes T1A-H2, T1A-H4, T1B-H5, T1B-H6, T1C-H3, T2-H6, T2-H8, T3-H6, T4-H5, T5-H7, T6-H5, T6-H6, T8A-H8, T9-H3) y en [`resultados/T8B.md`](../02-trabajo-activo/01-planes/2026-10-16-notificaciones-estandar-y-supervisor-operativo-briefs/resultados/T8B.md).
+Hallazgos de origen en el libro del plan (M1 a M13 y los de los resúmenes T1A-H2, T1A-H4, T1B-H5, T1B-H6, T1C-H3, T2-H6, T2-H8, T3-H6, T4-H5, T5-H7, T6-H5, T6-H6, T8A-H8, T9-H3) y en [`resultados/T8B.md`](../02-trabajo-activo/01-planes/2026-10-16-notificaciones-estandar-y-supervisor-operativo-briefs/resultados/T8B.md).
 
 ## Clasificación
 
@@ -57,6 +69,9 @@ Hallazgos de origen en el libro del plan (M1 a M9 y los de los resúmenes T1A-H2
 | 6 | Entorno Windows | Reincidencia: candidata a Skill (ver los aprendizajes de Informes y Lote 4) |
 | 7 | Técnica de Git | Reincidencia: candidata a Skill y a `01-contexto-repositorio/03-entorno-git-y-worktrees.md` |
 | 8 | Método | Se queda como aprendizaje |
+| 9 | Datos de prueba en producción | Candidata a `01-contexto-repositorio/04-pruebas-y-evidencia.md` (protocolo de cuentas y datos de prueba) |
+| 10 | Técnica de verificación | Se queda como aprendizaje; candidata al Skill hermano de `verificar-permisos-por-rol` para avisos |
+| 11 | Procedimiento de prueba local | Se queda como aprendizaje |
 
 ## Etiqueta de categoría
 

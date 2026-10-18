@@ -14,7 +14,7 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 | T2 (catálogo, módulo central, migración 108) | Hecha | Commits `cc44f47` y `814efb4`; 1754 pruebas en verde; migración 108 escrita, **sin aplicar** |
 | T9 (perfil propio: contraseña, celular, correo) | Hecha | Commit `c067583`; 1787 pruebas en verde; capturas y pruebas en vivo en T7 |
 | T4 (ciclo del RQ) | Hecha | Commits `69ce6aa` y `817e9d8`; 1829 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador |
-| T6 | En curso | Worker 7 lanzado tras T4 |
+| T6 | Hecha | Commits `bcba4da`, `853bf57`, `e3c4dfa`; 1883 pruebas en verde; lint con los 9 errores previos; verificada por el Orquestador. Sin la migración 108 los cierres automáticos de documentos y RDT no funcionan (solo registran error) |
 | T3, T5, T7, T8 | Pendientes | |
 
 ## Registro
@@ -25,6 +25,7 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-17: Victor avisa que aplicó el SQL de cierre de avisos (T1-03).
 - 2026-10-17: T4 y la maqueta T1C cortadas por el límite de uso de la sesión; reanudadas y terminadas. T4 verificada (`git log`, `npm test`, `npm run lint`).
 - Hallazgos de T4 para el libro: pasos del RQ solo desde su estado de origen (409 si se repite o salta; integrar en flujo 05 y confirmar con Victor); T3/T7 deben llamar a `revisar` también con aviso Revisado y refrescar el estado con `recepcionado`; posible aviso doble al solicitante con rol de cola (decide Victor); pregunta abierta: si al corregir un RQ Devuelto se agregan y quitan ítems.
+- 2026-10-17: T6 verificada (`git log`, `npm test`, `npm run lint`). Hallazgos de T6: vía 2 avisa si el responsable cambia a otra persona aunque ya fuera miembro; vía 3 avisa a cualquier rol, no solo a supervisores operativos (decide Victor); `cerrarAvisos` no cae a texto sin la migración 108 (el brief decía que sí); al corregir un RDT se cierran los avisos del anterior; flujos para el Documentador: 04, 06, 12, 13.
 
 ## Pendientes de Victor
 

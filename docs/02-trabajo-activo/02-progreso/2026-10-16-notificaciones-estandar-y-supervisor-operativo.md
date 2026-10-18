@@ -26,9 +26,10 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-17: T4 y la maqueta T1C cortadas por el límite de uso de la sesión; reanudadas y terminadas. T4 verificada (`git log`, `npm test`, `npm run lint`).
 - Hallazgos de T4 para el libro: pasos del RQ solo desde su estado de origen (409 si se repite o salta; integrar en flujo 05 y confirmar con Victor); T3/T7 deben llamar a `revisar` también con aviso Revisado y refrescar el estado con `recepcionado`; posible aviso doble al solicitante con rol de cola (decide Victor); pregunta abierta: si al corregir un RQ Devuelto se agregan y quitan ítems.
 - 2026-10-17: T6 verificada (`git log`, `npm test`, `npm run lint`). Hallazgos de T6: vía 2 avisa si el responsable cambia a otra persona aunque ya fuera miembro; vía 3 avisa a cualquier rol, no solo a supervisores operativos (decide Victor); `cerrarAvisos` no cae a texto sin la migración 108 (el brief decía que sí); al corregir un RDT se cierran los avisos del anterior; flujos para el Documentador: 04, 06, 12, 13.
+- 2026-10-18: Victor aplicó la migración 108 en Supabase; comprobada con su captura (`proyecto_id`, `evento` y `referencia_id` existen y admiten vacío). Quedan por aplicar la 109 (la escribe T5). Los 8 snapshots de Playwright con claves se borraron con su autorización; las claves siguen vigentes y se cambian al final de las pruebas.
 
 ## Pendientes de Victor
 
-1. Aplicar la migración 108 (y después la 109) antes de la verificación en vivo.
+1. ~~Aplicar la migración 108~~ (hecha el 2026-10-18); falta la 109, que escribe T5, antes de la verificación en vivo.
 2. Aprobar la maqueta de la bandeja.
 3. Abrir el enlace de confirmación del cambio de correo (T7-09).

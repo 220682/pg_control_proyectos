@@ -49,6 +49,8 @@ Rama de código: `local-worker-7` (worktree `.worktrees/local-worker-7` en `py_c
 - 2026-10-18: Auditoría entregada (`04-auditoria/2026-10-16-notificaciones-estandar-y-supervisor-operativo.md`): rama aislada de `main`, 17 commits, 2005 pruebas y `tsc` limpio; recomendación `Requiere corrección` menor y documental. Pendientes para Victor: V1 (correo), V2 (Matriz de permisos), V3 (limpieza de datos de prueba) y decisiones V4, V5 y V7.
 - 2026-10-18: T8C (Documentador) aplica los puntos «APLICAR AHORA» del Auditor: Punch List a su estado real (65 Conforme, 5 Observado, 1 Sin verificar), encabezado, siguiente paso, tabla de esfuerzos reales (todo Sonnet con esfuerzo medio, sin cambios de nivel), enlace al informe, libro de hallazgos completo (M10 a M13, R18 a R21, O4; P-2 cerrada), flujo 13 (remisión al aviso de asignación) y flujo 05 (Aprobar repetido es idempotente y responde 200). El plan **sigue abierto** hasta el Gate 2.
 
+- 2026-10-18: Victor ejecutó el merge de `local-worker-7` a `main` de la app (`b056f62`) y el push; Vercel desplegó con éxito (API de GitHub). Verificación en producción de solo lectura conforme en 3 de 4 puntos (el bloque de contraseña no se pudo ver: el entorno denegó el clic en «Editar mi perfil»; lo debe mirar Victor). El Worker redactó un snapshot con la clave del administrador en `.playwright-mcp/` (ya sin la clave): conviene cambiar esa clave. Mensaje de cierre escrito en el plan; el plan sigue abierto por los pendientes de Victor (cambio de correo, Matriz de permisos, limpieza de datos de prueba, R16 a R21, P-1 y P-3 a P-8).
+
 ## Pendientes de Victor
 
 1. ~~Aplicar la migración 108~~ (hecha el 2026-10-18); la 109 también se aplicó el 2026-10-18.

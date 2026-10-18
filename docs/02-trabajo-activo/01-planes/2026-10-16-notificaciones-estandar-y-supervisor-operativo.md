@@ -4,14 +4,14 @@
 
 - Tema: ordenar el sistema de notificaciones bajo un estándar único (qué evento avisa, a quién, con qué texto, cuándo se cierra) y cerrar los huecos que hoy dejan al supervisor operativo sin saber qué pasó con su servicio, su RQ o su RDT. Prepara el terreno para capacitar a los supervisores operativos en el uso de la app.
 - Fecha de inicio: 2026-10-16.
-- Estado: `Auditado, a la espera del Gate 2` (2026-10-18). El código está completo en la rama `local-worker-7` (17 commits sobre `main` en `69ebf94`, sin merge ni push; migraciones 108 y 109 aplicadas por Victor): 2005 pruebas pasan, `tsc` limpio y lint con los mismos 9 errores previos ajenos. La verificación en vivo (T7) y la documentación (T8) están hechas, el Auditor entregó su informe el 2026-10-18 (recomendación `Requiere corrección`, solo documental y sin bloqueos de código) y T8C aplicó sus puntos «APLICAR AHORA». El plan **sigue abierto**: faltan el Gate 2 de Victor y sus pendientes (cambio de correo T7-09, artefacto «Matriz de permisos», limpieza de datos de prueba T7-07 y las decisiones R16 a R21 y P-1, P-3 a P-8). Punch List: 65 Conforme, 5 Observado y 1 Sin verificar de 71 ítems.
+- Estado: `Código integrado y desplegado; plan abierto por pendientes de Victor` (2026-10-18; merge `b056f62` en `main` de la app, Vercel «success»; antes: `Auditado, a la espera del Gate 2`). El código está completo en la rama `local-worker-7` (17 commits sobre `main` en `69ebf94`, sin merge ni push; migraciones 108 y 109 aplicadas por Victor): 2005 pruebas pasan, `tsc` limpio y lint con los mismos 9 errores previos ajenos. La verificación en vivo (T7) y la documentación (T8) están hechas, el Auditor entregó su informe el 2026-10-18 (recomendación `Requiere corrección`, solo documental y sin bloqueos de código) y T8C aplicó sus puntos «APLICAR AHORA». El plan **sigue abierto**: faltan el Gate 2 de Victor y sus pendientes (cambio de correo T7-09, artefacto «Matriz de permisos», limpieza de datos de prueba T7-07 y las decisiones R16 a R21 y P-1, P-3 a P-8). Punch List: 65 Conforme, 5 Observado y 1 Sin verificar de 71 ítems.
 - Fecha de entrega del plan: 2026-10-17.
 
 Puertas:
 
 - Gate Spec: `aprobado` (Victor, 2026-10-16)
 - Gate 1: `aprobado` (Victor, 2026-10-17)
-- Gate 2: `pendiente` (Auditor: informe entregado el 2026-10-18, `Requiere corrección` menor y documental; aplicada en T8C)
+- Gate 2: `autorizado por Victor el 2026-10-18 («cierra el plan»); el merge y el push los ejecutó él` (Auditor: informe entregado el 2026-10-18, `Requiere corrección` menor y documental; aplicada en T8C)
 
 ## Spec
 
@@ -639,7 +639,73 @@ Entregado el 2026-10-18: [`04-auditoria/2026-10-16-notificaciones-estandar-y-sup
 
 ## Mensaje de cierre
 
-Pendiente (formato de `09-cierre.md`).
+Redactado el 2026-10-18 por el Orquestador, tras el merge, el push y el despliegue del código. **Estado: el código está integrado y en producción; el plan sigue abierto por los pendientes de Victor listados abajo.** No se declara «cerrado» hasta resolverlos.
+
+### Alcance completado y no completado
+
+- **Completado:** catálogo y módulo central de avisos (22 eventos), avisos de «Entorno» (sin servicio) y N° OT, grupo «Jefatura», filtro «Tipo de aviso», una tarjeta por aviso para quien tiene dos roles, cierre automático de avisos (por referencia), ciclo del RQ con Recepcionado al abrir y un solo camino de estado, RQ Devuelto (devolver con motivo, corregir sin agregar ni quitar ítems, reenviar), avisos de servicio asignado y retirado por las tres vías, avisos del RDT (registrado, validado, rechazado con motivo), «falta subir» con N° OT y cierre automático, y perfil propio para los 13 roles (contraseña, celular y correo). Documentación: flujos 02, 03, 04, 05, 06, 07, 08, 12, 13, 14 y 16.
+- **No completado:** cambio de correo propio probado de punta a punta (T7-09: el cambio queda «pendiente de confirmar» y la confirmación no se completó); actualización del artefacto «Matriz de permisos» (T8-05: la cuenta del Orquestador no puede abrirlo; las filas exactas están en `resultados/T8B.md`); limpieza de datos de prueba (T7-07: destructiva, sin permiso de Victor); cuentas de prueba `+jefeproy`, `+ofitec`, `+supop2`, `+admin2` (T1-01: tope de correos de Supabase); captura a 390 px del perfil (T9-04); decisiones R16 a R21 y observaciones de política P-1, P-3 a P-8.
+
+### Estado final de la Punch List
+
+65 Conforme, 5 Observado (T1-01, T7-09, T8-05, T8-06, T9-04) y 1 Sin verificar (T7-07) de 71 ítems (ver «Punch List embebida»).
+
+### Evidencia
+
+Resúmenes de cierre en `01-planes/...-briefs/resultados/` (T1A a T9, T6b, T7A a T7C, T7fix, T8A a T8C y `Produccion.md`); capturas de T7A, T7B y T7C en `03-evidencia/.../t7/` y de producción en `.../produccion/`; tabla `coherencia-flujos-codigo.md`. Verificación en producción tras el despliegue (solo lectura, administrador, 1440 px): la bandeja muestra «Tipo de aviso», «Jefatura», «Solo Entorno» y las pastillas de OT y «Entorno»; el aviso de Entorno de prueba se abre sin error; consola sin errores de la app. No se pudo ver el bloque de contraseña del perfil en producción porque el entorno denegó el clic en «Editar mi perfil».
+
+### Auditoría y decisiones del Gate 2
+
+Informe del Auditor del 2026-10-18 (`Requiere corrección`, solo documental; sus puntos «APLICAR AHORA» se aplicaron en T8C). Decisiones de Victor registradas en el plan: Q1 a Q8 y la ampliación del perfil propio (Gate 1, 2026-10-17); aprobación de la maqueta (2026-10-18); responsable anterior y nuevo avisados, y solo supervisores operativos avisados en Usuarios; grupo del panel izquierdo «Jefatura»; consolidado de RQ sin Devolver; lista de avisos informativos. Gate 2: Victor pidió el 2026-10-18 «cierra el plan» y ejecutó él mismo el merge y el push de la app, porque el entorno bloqueó al Orquestador esa acción como despliegue a producción. Quedan abiertas R16 (D9) y R17 (D8), que no bloquearon el merge.
+
+### Consumo total del plan
+
+Salida de `python scripts/medir.py --resumen --desde 2026-10-17` (no incluye la verificación de producción, que fueron 3 llamadas aparte). «Contexto máx.» no se suma.
+
+| Rol o Worker | Sesiones | Llamadas | Entrada | Caché creada | Caché leída | Salida |
+|---|---|---|---|---|---|---|
+| Planner | 1 | 64 | 0k | 410k | 10.59M | 0k |
+| Worker 7 (T2, T9, T4, T6, T6b, T3, T5, T7fix) | 8 | 393 | 1k | 1.42M | 58.21M | 5k |
+| Workers de verificación y maqueta (T1A, T1B, T1C, T7A, T7B, T7C) | 6 | 383 | 0k | 1.13M | 48.86M | 6k |
+| Documentadores (T8A, T8B, T8C) | 3 | 151 | 0k | 818k | 24.72M | 3k |
+| Auditor | 1 | 57 | 0k | 262k | 11.39M | 1k |
+| Worker git (Haiku, rama y worktree) | 1 | 6 | 0k | 50k | 238k | 0k |
+| **Subtotal sin Orquestador** | 20 | 1054 | 1k | 4.09M | 154.0M | 15k |
+| Orquestador (sesiones principales del 17 y 18 de octubre: `a98959b7`, `687f60fe`, `2470d4f3` y esta) | 4 | 684 | 1k | 3.48M | 122.9M | 941k |
+| **Total aproximado del plan** | 24 | 1738 | 2k | 7.57M | 276.9M | 956k |
+
+El script no separa las sesiones del Orquestador por plan, así que esa fila puede incluir trabajo ajeno a este plan (por ejemplo, tareas del lote de Informes atendidas por la misma sesión) y es una cota superior. Contexto máximo de una sesión del Orquestador: 318k. Tandas por encima de la meta de llamadas: T7B (154 contra 80, por crear servicio, RDT y roles temporales y recorrer ocho cuentas), T5 (102), T6 (84), T8A y T8B. Varios agentes se cortaron por el límite de uso de la sesión (T4, T1C, T7C y T8B) y se retomaron sin perder trabajo. El nivel de modelo no cambió: todo en Sonnet con esfuerzo medio, y Haiku solo en el Worker git.
+
+### Hallazgos trasladados
+
+Libro de hallazgos: ninguna fila queda en «Registrada»; mejoras de trabajo M1 a M13 en `docs/03-aprendizaje-continuo/2026-10-18-notificaciones-aprendizajes-de-trabajo.md`; reglas de negocio R1 a R15 integradas en los flujos; R16 a R21 y P-1, P-3 a P-8 pendientes de decisión de Victor; huérfanos O1 a O4 reportados sin borrar nada. `scripts/verificar-referencias.py`: 0 huérfanos y 0 enlaces rotos (2 menciones sin archivo ajenas al plan).
+
+### Documentos promovidos
+
+Flujos 02, 03, 04 (reescrito), 05, 06, 07, 08, 12, 13, 14 y 16, y el índice de `docs/04-flujos-de-negocio/README.md`.
+
+### Aprendizajes registrados
+
+`docs/03-aprendizaje-continuo/2026-10-18-notificaciones-aprendizajes-de-trabajo.md`. Candidatos a Skill propuestos por el Auditor: commitear solo los hunks propios, edición de archivos en Windows desde el shell, y verificar avisos por rol por los dos lados.
+
+### Pendientes enviados a planes futuros
+
+Ver «Elementos postergados propuestos para planes futuros» y los pendientes de Victor en «Siguiente paso». Entre ellos: cerrar el cambio de correo propio, el cierre de sesiones abiertas al cambiar la contraseña, el tope de largo y de envíos de `POST /api/notificaciones` sin servicio, los avisos anteriores a la migración 108 sin referencia y el alias `marcar-visto`.
+
+### Merge / fuentes de verdad / Skill
+
+- **Merge a `main` de la app:** hecho por Victor el 2026-10-18 (`b056f62`, merge de `local-worker-7`); push `69ebf94..b056f62`; despliegue de Vercel confirmado como exitoso con la API de GitHub.
+- **Fuentes de verdad:** flujos al día en el repositorio documental; artefacto «Matriz de permisos» **no actualizado** (pendiente de Victor).
+- **Skill:** ninguno creado; tres candidatos propuestos.
+
+### Confirmación de 100% pusheado
+
+- Repositorio de la app (`py_control_proyectos_web`): `main` en `b056f62`, igual que `origin/main`. Las ramas `local-worker-*` no se tocaron y no se borró ninguna.
+- Repositorio documental (`pg_control_proyectos`): los commits de este plan se suben después de redactar este mensaje; la confirmación se anota en el progreso.
+
+### Autorización de cierre
+
+«Cierra el plan» (Victor, 2026-10-18) autoriza el merge y el push ya hechos. El cierre definitivo espera los pendientes de arriba.
 
 ### Tabla de esfuerzos reales usados
 

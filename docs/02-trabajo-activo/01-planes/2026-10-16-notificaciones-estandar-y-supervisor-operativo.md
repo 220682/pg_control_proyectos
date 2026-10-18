@@ -240,7 +240,7 @@ Trabajamos en Claude Code con subagentes; **no se usa Opus**. Esfuerzo medio en 
 |---|---|---|---|---|---|---|---|---|
 | T1 | Preparación y cómo funciona hoy | 7 | Verificación | Sonnet | Medio | 3 | Navegador, cuentas por rol, respaldo y cierre de avisos, tres informes; sin código | aprobado (Victor, 2026-10-17) |
 | T2 | Catálogo y base | 7 | Worker 7 | Sonnet | Medio | 4 | Migración 108 con columnas nuevas, módulo central por el que pasan todos los avisos y regla por usuario o por rol; es la base de todo lo demás | aprobado (Victor, 2026-10-17) |
-| T3 | Bandeja | 7 | Worker 7 | Sonnet | Medio | 3 | Dos pantallas de avisos, filtro y renombre de grupo, con pruebas existentes que cambian | aprobado (Victor, 2026-10-17) |
+| T3 | Bandeja | 9 | Worker 7 | Sonnet | Medio | 3 | Dos pantallas de avisos, filtro y renombre de grupo, con pruebas existentes que cambian | aprobado (Victor, 2026-10-17) |
 | T4 | Ciclo del RQ | 7 | Worker 7 | Sonnet | Medio | 3 | Un camino de estado, Recepcionado al abrir con cuidado de concurrencia, varios archivos | aprobado (Victor, 2026-10-17) |
 | T5 | Devolver y reenviar | 8 | Worker 7 | Sonnet | Medio | 4 | Regla de negocio nueva, migración 109, edición de RQ que no existe y estado nuevo en 9 archivos | aprobado (Victor, 2026-10-17) |
 | T6 | Supervisor operativo y cierres | 8 | Worker 7 | Sonnet | Medio | 3 | Once rutas de API con cambios pequeños cada una; choque posible con Informes | aprobado (Victor, 2026-10-17) |
@@ -248,7 +248,7 @@ Trabajamos en Claude Code con subagentes; **no se usa Opus**. Esfuerzo medio en 
 | T7 | Verificación en vivo | 9 | Verificación | Sonnet | Medio | 3 | Navegador, permisos por rol, móvil, limpieza de datos, contraseña, celular y correo | aprobado (Victor, 2026-10-17) |
 | T8 | Documentación y traslado de hallazgos | 8 | Documentador | Sonnet / Haiku | Medio | 3 y 1 | Reescritura del flujo 04 y ediciones de otros cinco flujos (Sonnet); índices, referencias y traslados (Haiku) | aprobado (Victor, 2026-10-17) |
 
-**Esfuerzo alto: no se solicita en ninguna tanda.** Candidatos eventuales, solo si algo falla dos veces y se pide en el momento: `T2-04` (regla por usuario o por rol) y `T4-02` (Recepcionado al abrir, por la concurrencia). **Nivel 5: no se usa.** Total: **9 tandas, 69 ítems** (59 originales + 8 de T9 + T7-08 y T7-09). Si T9 falla dos veces en la verificación de la contraseña actual, se pide esfuerzo alto en ese momento.
+**Esfuerzo alto: no se solicita en ninguna tanda.** Candidatos eventuales, solo si algo falla dos veces y se pide en el momento: `T2-04` (regla por usuario o por rol) y `T4-02` (Recepcionado al abrir, por la concurrencia). **Nivel 5: no se usa.** Total: **9 tandas, 71 ítems** (59 originales + 8 de T9 + T7-08 y T7-09 + T3-08 y T3-09). Si T9 falla dos veces en la verificación de la contraseña actual, se pide esfuerzo alto en ese momento.
 
 ### Brief de cada Worker
 
@@ -290,21 +290,23 @@ Formato de `05-punch-list.md`. Estados: `Sin verificar` / `Conforme` / `Observad
 
 Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 
-**69 ítems en 9 tandas** (las ampliaciones de perfil propio suman T9-01 a T9-08, T7-08 y T7-09). Cada verificación de aviso se hace por los dos lados (quien ejecuta y quien no debería recibir), con cuentas distintas.
+**71 ítems en 9 tandas** (las ampliaciones de perfil propio suman T9-01 a T9-08, T7-08 y T7-09; la verificación de T1B suma T3-08 y T3-09). Cada verificación de aviso se hace por los dos lados (quien ejecuta y quien no debería recibir), con cuentas distintas.
 
 ### Ítems funcionales
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| T1-04 | T1 | Informe «cómo funciona hoy» del ciclo del RQ en `PS-0000` (crear, aprobar, Logística recibe, estados): a quién llega cada aviso y cuál se cierra | Informe con una fila por paso, hecho con cuentas distintas | Sin verificar |
-| T1-05 | T1 | Informe «cómo funciona hoy» de la bandeja del supervisor operativo: qué recibe y qué no; prueba con dos personas del mismo rol (hallazgo H8) | Informe y captura de la bandeja de cada persona antes y después de que una abra el aviso | Sin verificar |
-| T2-02 | T2 | Catálogo de eventos en un solo archivo: clave, categoría, quién lo dispara, a quién llega, texto, grupo y cuándo se cierra | Archivo del catálogo y prueba unitaria que valida cada entrada | Sin verificar |
-| T2-03 | T2 | Módulo central de avisos: crear y cerrar por evento o referencia; los 4 creadores actuales siguen funcionando como envoltorios y prueba de cobertura (todo evento del código está en el catálogo y viceversa) | Pruebas unitarias; la prueba de cobertura falla si se agrega un aviso fuera del catálogo | Sin verificar |
-| T2-06 | T2 | `informe.emitido` queda reservado en el catálogo y el aviso del plan de Informes (`crearNotificacionParaUsuario`) sigue funcionando | Prueba unitaria y nota en el catálogo | Sin verificar |
+| T1-04 | T1 | Informe «cómo funciona hoy» del ciclo del RQ en `PS-0000` (crear, aprobar, Logística recibe, estados): a quién llega cada aviso y cuál se cierra | Informe con una fila por paso, hecho con cuentas distintas | Conforme |
+| T1-05 | T1 | Informe «cómo funciona hoy» de la bandeja del supervisor operativo: qué recibe y qué no; prueba con dos personas del mismo rol (hallazgo H8) | Informe y captura de la bandeja de cada persona antes y después de que una abra el aviso | Conforme (RDT y servicio asignado no probados: no existe el aviso) |
+| T2-02 | T2 | Catálogo de eventos en un solo archivo: clave, categoría, quién lo dispara, a quién llega, texto, grupo y cuándo se cierra | Archivo del catálogo y prueba unitaria que valida cada entrada | Conforme |
+| T2-03 | T2 | Módulo central de avisos: crear y cerrar por evento o referencia; los 4 creadores actuales siguen funcionando como envoltorios y prueba de cobertura (todo evento del código está en el catálogo y viceversa) | Pruebas unitarias; la prueba de cobertura falla si se agrega un aviso fuera del catálogo | Conforme |
+| T2-06 | T2 | `informe.emitido` queda reservado en el catálogo y el aviso del plan de Informes (`crearNotificacionParaUsuario`) sigue funcionando | Prueba unitaria y nota en el catálogo | Conforme |
 | T3-01 | T3 | Se muestra «Entorno» cuando el aviso no tiene servicio y el N° OT cuando lo tiene, en las dos pantallas de avisos | Captura de ambas pantallas con un aviso de cada tipo | Sin verificar |
 | T3-02 | T3 | «Enviar mensaje» usa «Entorno» por defecto: ya no se guarda nada nuevo en `PS-0000` | Consulta que muestra el mensaje nuevo sin servicio y captura | Sin verificar |
 | T3-04 | T3 | Filtro «Tipo de aviso» (Requerimientos, RDT, Servicio, Checklist, Mensajes, Otros) | Prueba del parámetro `categoria` y captura filtrando | Sin verificar |
 | T3-05 | T3 | Los avisos de RQ se reconocen por su evento y no por su texto: el aviso «Nuevo requerimiento» (RQ directo a Logística) ahora tiene sus acciones | Prueba unitaria y captura con la cuenta de Logística | Sin verificar |
+| T3-08 | T3 | Sin tarjetas duplicadas: una persona con dos roles (por ejemplo, administrador y jefe de oficina técnica) ve una sola tarjeta por aviso, aunque existan dos filas por rol, y al atenderla se cierran ambas (hallazgo de T1B: el administrador veía el aviso del RQ dos veces, una Revisado y otra Pendiente) | Prueba unitaria con un usuario de dos roles y captura | Sin verificar |
+| T3-09 | T3 | Los avisos por usuario que no piden acción (por ejemplo, «Requerimiento … ha sido atendido») se cierran solos al abrirlos; hoy quedan Pendiente para siempre y la campana no baja (regla P2: el aviso por usuario es informativo) | Prueba unitaria y captura de la campana antes y después | Sin verificar |
 | T4-01 | T4 | Un solo camino para cambiar el estado de un RQ: siempre cierra el aviso anterior y avisa al solicitante | Prueba unitaria y comprobación de que ninguna pantalla usa la vía sin `accion` | Sin verificar |
 | T4-02 | T4 | Recepcionado al abrir (en el servidor): solo Logística, solo avisos de RQ aprobado, una sola vez aunque dos personas abran a la vez; registra quién recepcionó, cierra los avisos de Logística y avisa al solicitante | Pruebas unitarias con doble de base: dos aperturas seguidas dan una sola recepción; un rol no Logística no la produce | Sin verificar |
 | T4-04 | T4 | El comentario sobre un RQ avisa también al solicitante (además de a quien ya avisaba) | Prueba unitaria por los dos lados | Sin verificar |
@@ -324,9 +326,9 @@ Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 | T7-03 | T7 | Servicio asignado (3 vías), RDT validado, RDT rechazado con motivo y comentario sobre su RQ llegan al supervisor operativo (criterio 3) | Capturas de la bandeja del supervisor operativo | Sin verificar |
 | T7-04 | T7 | «Entorno» fuera de un servicio y N° OT dentro de uno; grupo «Jefatura»; filtro «Tipo de aviso» (criterios 4 y 5) | Capturas | Sin verificar |
 | T7-05 | T7 | Subir un documento del checklist cierra su aviso y la campana baja (criterio 6); con dos personas del mismo rol, el aviso por rol se cierra para ambas y el aviso por usuario es solo de una (regla P2) | Capturas de la campana antes y después, de las dos personas | Sin verificar |
-| T9-01 | T9 | Cambiar mi contraseña desde Mi entorno: el usuario escribe la actual, la nueva y su confirmación, y queda cambiada; entra con la nueva y no con la anterior | Prueba de la ruta y del flujo completo; la comprobación en vivo está en T7-08 | Sin verificar |
-| T9-07 | T9 | Celular propio para los 13 roles: quien no tiene número lo ingresa y quien lo tiene lo cambia o lo borra; solo texto de 6 a 20 caracteres con dígitos, espacios, `+`, guiones y paréntesis (formato propuesto, a confirmar en Q8); el servidor guarda solo el celular de la sesión y rechaza nombre, cargo, área o roles en el cuerpo | Pruebas de la ruta con un rol que antes no podía y con administrador; captura | Sin verificar |
-| T9-08 | T9 | Cambiar mi correo: pide la contraseña actual y un correo nuevo válido, distinto del actual y no usado por otro usuario; envía la confirmación al correo nuevo; el correo cambia solo al confirmar y hasta entonces el perfil muestra «pendiente de confirmar» y sigue valiendo el anterior | Pruebas de la ruta (formato inválido 400, repetido 409, contraseña incorrecta 400 o 403, sin sesión 401) y captura del estado pendiente | Sin verificar |
+| T9-01 | T9 | Cambiar mi contraseña desde Mi entorno: el usuario escribe la actual, la nueva y su confirmación, y queda cambiada; entra con la nueva y no con la anterior | Prueba de la ruta y del flujo completo; la comprobación en vivo está en T7-08 | Conforme |
+| T9-07 | T9 | Celular propio para los 13 roles: quien no tiene número lo ingresa y quien lo tiene lo cambia o lo borra; solo texto de 6 a 20 caracteres con dígitos, espacios, `+`, guiones y paréntesis (formato propuesto, a confirmar en Q8); el servidor guarda solo el celular de la sesión y rechaza nombre, cargo, área o roles en el cuerpo | Pruebas de la ruta con un rol que antes no podía y con administrador; captura | Conforme |
+| T9-08 | T9 | Cambiar mi correo: pide la contraseña actual y un correo nuevo válido, distinto del actual y no usado por otro usuario; envía la confirmación al correo nuevo; el correo cambia solo al confirmar y hasta entonces el perfil muestra «pendiente de confirmar» y sigue valiendo el anterior | Pruebas de la ruta (formato inválido 400, repetido 409, contraseña incorrecta 400 o 403, sin sesión 401) y captura del estado pendiente | Conforme |
 | T7-08 | T7 | Cambio de contraseña en vivo con una cuenta de prueba (criterios 12 y 13): clave actual incorrecta rechazada, nueva corta rechazada, cambio correcto, cierre de sesión y entrada con la nueva; se anota la nueva clave solo en la memoria local de cuentas de prueba | Capturas del formulario, de cada mensaje y del ingreso con la nueva; nunca se muestra la clave | Sin verificar |
 | T7-09 | T7 | Celular y correo en vivo (criterios 14 y 15): un rol que antes no editaba el perfil ingresa su celular; cambia su correo a otro alias de Victor, **Victor abre el enlace de confirmación** en su buzón, y la cuenta entra con el correo nuevo; el correo anterior ya no entra | Capturas del perfil antes y después, del estado pendiente y del ingreso con el correo nuevo; sin mostrar claves | Sin verificar |
 
@@ -334,10 +336,10 @@ Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| T1-02 | T1 | Respaldo de los 18 avisos de la bandeja de Victor antes de tocarlos (id, texto, tipo, destinatario, estado) | `respaldo-avisos-victor.json` con 18 filas | Sin verificar |
-| T1-03 | T1 | Los 18 avisos quedan cerrados como atendidos, sin borrar filas y sin aprobar ningún RQ (criterio 11) | Conteo antes y después; las filas siguen existiendo; ningún RQ cambió de estado | Sin verificar |
-| T1-06 | T1 | Datos de prueba listos: `PS-0000` en Ejecución con Plan Maestro aprobado (o el plan B que defina el Orquestador), un RDT de prueba y registros marcados «PRUEBA» | Lista de datos de prueba en la evidencia | Sin verificar |
-| T2-01 | T2 | Migración 108 (aditiva e idempotente): `proyecto_id` admite vacío, columnas `evento` y `referencia_id`, índices y relleno de `evento` en los avisos existentes por su texto; sin cambiar «Proyecto» en los datos. Revisada y aplicada por Victor | Archivo de la migración, revisión del verificador si está activo y confirmación de Victor con una consulta de comprobación | Sin verificar |
+| T1-02 | T1 | Respaldo de los 18 avisos de la bandeja de Victor antes de tocarlos (id, texto, tipo, destinatario, estado) | `respaldo-avisos-victor.json` con 18 filas | Conforme |
+| T1-03 | T1 | Los 18 avisos quedan cerrados como atendidos, sin borrar filas y sin aprobar ningún RQ (criterio 11) | Conteo antes y después; las filas siguen existiendo; ningún RQ cambió de estado | Conforme |
+| T1-06 | T1 | Datos de prueba listos: `PS-0000` en Ejecución con Plan Maestro aprobado (o el plan B que defina el Orquestador), un RDT de prueba y registros marcados «PRUEBA» | Lista de datos de prueba en la evidencia | Conforme |
+| T2-01 | T2 | Migración 108 (aditiva e idempotente): `proyecto_id` admite vacío, columnas `evento` y `referencia_id`, índices y relleno de `evento` en los avisos existentes por su texto; sin cambiar «Proyecto» en los datos. Revisada y aplicada por Victor | Archivo de la migración, revisión del verificador si está activo y confirmación de Victor con una consulta de comprobación | Conforme |
 | T4-03 | T4 | `recepcionado_por` no se pisa al marcar Atendido (hoy lo pisa en la vía con acción; el flujo 05 dice que queda quien recepcionó) | Prueba unitaria | Sin verificar |
 | T5-01 | T5 | Migración 109: el estado Devuelto es válido en la base y se guardan motivo, quién devolvió y cuándo. Revisada y aplicada por Victor | Archivo de la migración, revisión y confirmación de Victor | Sin verificar |
 | T5-02 | T5 | Devuelto se reconoce en tipos, etiqueta, color, filtros y PDF; un Devuelto no se lee como Solicitado | Pruebas de `normalizarEstadoRequerimiento` y de los filtros | Sin verificar |
@@ -347,11 +349,11 @@ Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| T1-01 | T1 | Cuentas de prueba por rol, todas miembros de `PS-0000` (si no, la app responde «No tienes esta OT a cargo»): dos de Logística, jefe de proyectos, jefe de oficina técnica, un segundo supervisor operativo y supervisor de administración, además de las dos existentes. Nombre «PRUEBA <rol>». Requiere P4 | Lista de cuentas por rol sin claves y un inicio de sesión exitoso por cuenta | Sin verificar |
-| T2-04 | T2 | Regla por usuario o por rol en lista, campana y autorización: un aviso por usuario lo ve solo esa persona aunque tenga rol; un aviso por rol es una cola compartida (P2) | Pruebas unitarias con dos usuarios del mismo rol | Sin verificar |
+| T1-01 | T1 | Cuentas de prueba por rol, todas miembros de `PS-0000` (si no, la app responde «No tienes esta OT a cargo»): dos de Logística, jefe de proyectos, jefe de oficina técnica, un segundo supervisor operativo y supervisor de administración, además de las dos existentes. Nombre «PRUEBA <rol>». Requiere P4 | Lista de cuentas por rol sin claves y un inicio de sesión exitoso por cuenta | Observado (2 de 6 cuentas: límite de correos de Supabase) |
+| T2-04 | T2 | Regla por usuario o por rol en lista, campana y autorización: un aviso por usuario lo ve solo esa persona aunque tenga rol; un aviso por rol es una cola compartida (P2) | Pruebas unitarias con dos usuarios del mismo rol | Conforme |
 | T4-06 | T4 | Quién recibe y quién no recibe cada aviso del RQ está en el catálogo y se cumple; aprobar desde el aviso, el Status y el consolidado sigue igual | Pruebas unitarias por rol | Sin verificar |
 | T8-05 | T8 | Artefacto «Matriz de permisos» actualizado con «Devolver RQ», «Corregir y reenviar RQ devuelto», «Cambiar mi contraseña», «Cambiar mi correo» y «Editar mi celular» (13 roles; la fila «Editar perfil extendido (propio)» se reemplaza o precisa; se lee el artefacto antes de publicar) | Enlace al artefacto y captura de las filas nuevas | Sin verificar |
-| T9-03 | T9 | Permiso de perfil propio («cambiar mi contraseña», «editar mi celular» y «cambiar mi correo»): lo tienen los 13 roles; sin sesión no; `puedeEditarPerfilExtendido` deja de usarse en el perfil (administrador y jefe de proyectos no pierden nada); la función vive en un archivo propio y las rutas usan el id de la sesión, nunca uno enviado en el cuerpo | Prueba unitaria con los 13 roles, un rol desconocido y sin sesión | Sin verificar |
+| T9-03 | T9 | Permiso de perfil propio («cambiar mi contraseña», «editar mi celular» y «cambiar mi correo»): lo tienen los 13 roles; sin sesión no; `puedeEditarPerfilExtendido` deja de usarse en el perfil (administrador y jefe de proyectos no pierden nada); la función vive en un archivo propio y las rutas usan el id de la sesión, nunca uno enviado en el cuerpo | Prueba unitaria con los 13 roles, un rol desconocido y sin sesión | Conforme |
 
 ### UI / responsive / accesibilidad
 
@@ -360,7 +362,7 @@ Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 | T1-07 | T1 | Maqueta de la bandeja (Entorno, N° OT, Jefatura, filtro por tipo, botón Devolver con motivo, RQ Devuelto) aprobada por Victor antes de la parte visual de T3 y T5 | `notificaciones-bandeja.html` y aprobación de Victor registrada | Sin verificar |
 | T3-03 | T3 | El grupo «Jefatura» reemplaza a «Proyecto» en el filtro; los avisos viejos con «Proyecto» se leen como «Jefatura»; pruebas actualizadas | Prueba de `grupo-proceso` y captura del filtro | Sin verificar |
 | T7-06 | T7 | La bandeja y el flujo de devolver se ven bien en móvil (390 px) y no hay errores en la consola | Capturas a 390 px y registro de la consola | Sin verificar |
-| T9-04 | T9 | En el Perfil de Mi entorno, el chip «Editar mi perfil» pasa a verse para los 13 roles (hoy solo lo ven administrador y jefe de proyectos) y abre tres bloques: celular, correo (con la contraseña actual) y contraseña (actual, nueva y confirmación, con el ojo `InputContrasena`); el texto «Solo puedes editar tu celular» se corrige; reutiliza los componentes del perfil; se ve bien a 390 px. No requiere maqueta por reutilizar lo existente; Victor lo revisa en T7 | Captura a 1440 px y a 390 px con un rol que no edita el perfil y con otro que sí | Sin verificar |
+| T9-04 | T9 | En el Perfil de Mi entorno, el chip «Editar mi perfil» pasa a verse para los 13 roles (hoy solo lo ven administrador y jefe de proyectos) y abre tres bloques: celular, correo (con la contraseña actual) y contraseña (actual, nueva y confirmación, con el ojo `InputContrasena`); el texto «Solo puedes editar tu celular» se corrige; reutiliza los componentes del perfil; se ve bien a 390 px. No requiere maqueta por reutilizar lo existente; Victor lo revisa en T7 | Captura a 1440 px y a 390 px con un rol que no edita el perfil y con otro que sí | Observado (compila; capturas en T7) |
 
 ### Estados vacío / carga / error
 
@@ -368,26 +370,26 @@ Gate 1: aprobado (Victor, 2026-10-17; ver «Registro de decisiones»).
 |---|---|---|---|---|
 | T3-06 | T3 | Estados vacío, carga y error de la bandeja con el filtro nuevo, y ancho de 390 px | Capturas | Sin verificar |
 | T5-07 | T5 | Estados vacío y error de devolver y corregir (motivo vacío, el RQ ya no está Solicitado, error de red) | Capturas y pruebas | Sin verificar |
-| T9-05 | T9 | Mensajes del perfil propio en español claro: contraseña actual incorrecta, nueva muy corta, nueva igual a la actual, confirmación distinta, celular con formato inválido, correo inválido o ya usado, correo pendiente de confirmar, error de red y éxito; el botón se desactiva mientras guarda y el formulario se limpia al terminar | Capturas de cada mensaje y pruebas | Sin verificar |
+| T9-05 | T9 | Mensajes del perfil propio en español claro: contraseña actual incorrecta, nueva muy corta, nueva igual a la actual, confirmación distinta, celular con formato inválido, correo inválido o ya usado, correo pendiente de confirmar, error de red y éxito; el botón se desactiva mientras guarda y el formulario se limpia al terminar | Capturas de cada mensaje y pruebas | Conforme |
 
 ### Validación en servidor / API
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| T2-05 | T2 | La API de avisos acepta un aviso sin servicio («Entorno») y, si hay servicio, exige que el usuario lo tenga a cargo (según Q2); los avisos propios y «Entorno» no exigen servicio | Pruebas de la API por rol | Sin verificar |
+| T2-05 | T2 | La API de avisos acepta un aviso sin servicio («Entorno») y, si hay servicio, exige que el usuario lo tenga a cargo (según Q2); los avisos propios y «Entorno» no exigen servicio | Pruebas de la API por rol | Conforme |
 | T5-03 | T5 | Acción devolver validada en el servidor: solo quien puede aprobar, solo desde Solicitado, motivo obligatorio de hasta unos 500 caracteres | Pruebas de la API: sin permiso 403, sin motivo 400, estado distinto 409 | Sin verificar |
-| T9-02 | T9 | Ruta del servidor `PATCH` de contraseña propia: exige sesión, verifica la contraseña actual en el servidor (sin tocar la sesión del navegador), exige nueva de al menos 8 caracteres, distinta de la actual y con confirmación, y no escribe ninguna contraseña en respuestas ni registros | Pruebas de la API: sin sesión 401, actual incorrecta 400 o 403, nueva corta 400, igual a la actual 400, correcta 200; revisión de que no se registra ninguna clave | Sin verificar |
+| T9-02 | T9 | Ruta del servidor `PATCH` de contraseña propia: exige sesión, verifica la contraseña actual en el servidor (sin tocar la sesión del navegador), exige nueva de al menos 8 caracteres, distinta de la actual y con confirmación, y no escribe ninguna contraseña en respuestas ni registros | Pruebas de la API: sin sesión 401, actual incorrecta 400 o 403, nueva corta 400, igual a la actual 400, correcta 200; revisión de que no se registra ninguna clave | Conforme |
 
 ### Regresión
 
 | ID | Fase | Ítem | Evidencia mínima | Estado |
 |---|---|---|---|---|
-| T2-07 | T2 | Regresión de T2: `npm test`, `npm run lint` y `npx next build --webpack` en verde | Salida de los tres comandos | Sin verificar |
+| T2-07 | T2 | Regresión de T2: `npm test`, `npm run lint` y `npx next build --webpack` en verde | Salida de los tres comandos | Conforme (lint: 9 errores previos en archivos ajenos) |
 | T3-07 | T3 | Regresión de T3: las mismas tres comprobaciones | Salida | Sin verificar |
 | T4-07 | T4 | Regresión de T4: las tres comprobaciones y aprobar desde aviso, Status y consolidado igual que antes; En almacén y Atendido siguen con botón | Salida y pruebas | Sin verificar |
 | T5-08 | T5 | Regresión de T5: las tres comprobaciones y los RQ existentes se ven igual | Salida | Sin verificar |
 | T6-08 | T6 | Regresión de T6: las tres comprobaciones y los avisos que ya existían (crear servicio, checklist, RDT subido, recursos sin tarifa) siguen llegando a quien llegaban | Salida y pruebas | Sin verificar |
-| T9-06 | T9 | Regresión de T9: las tres comprobaciones, el ingreso con correo y contraseña sigue funcionando, la lista de usuarios del administrador sigue mostrando el correo de cada uno y el celular sigue igual para administrador y jefe de proyectos | Salida y pruebas | Sin verificar |
+| T9-06 | T9 | Regresión de T9: las tres comprobaciones, el ingreso con correo y contraseña sigue funcionando, la lista de usuarios del administrador sigue mostrando el correo de cada uno y el celular sigue igual para administrador y jefe de proyectos | Salida y pruebas | Conforme |
 
 ### Documentación y trazabilidad (sección agregada por este plan; la plantilla no la trae)
 
@@ -523,6 +525,7 @@ Para que Victor responda de una vez. Cada pregunta trae un ejemplo y la recomend
 | 2026-10-17 | **Ampliación de alcance:** el usuario invitado puede cambiar su propia contraseña desde Mi entorno (hoy solo el administrador y el jefe de proyectos editan el celular; nadie cambia contraseña). Se suma la tanda T9 y el ítem T7-08. Pregunta Q7 para el Gate 1 | Victor |
 | 2026-10-17 | **Segunda ampliación:** todos los usuarios pueden ingresar o cambiar su celular y su correo electrónico desde Mi entorno. T9 pasa a 8 ítems y se suma T7-09: el plan queda en 9 tandas y 69 ítems. Contradice el flujo 14 (fila 94 y línea 184); pregunta Q8 para el Gate 1 | Victor |
 | 2026-10-17 | **Gate 1 aprobado.** Victor respondió «si ok, procede con la implementación, te quedarás trabajando solo»: el Orquestador lo lee como aprobación del plan, la Punch List (69 ítems en 9 tandas), la asignación de modelos (Sonnet, esfuerzo medio, sin Opus), las pre-autorizaciones (rama y worktree `local-worker-7`, usuarios de prueba con alias de su buzón, cierre de los 18 avisos con respaldo, servicio de prueba, migraciones 108 y 109 que aplica Victor a mano) y las recomendaciones de Q1 a Q8, que quedan como sus decisiones (R4 a R7, R9 y R10 pasan a `Registrada`). Cualquier duda de alcance se le devuelve; las migraciones y el enlace de confirmación de T7-09 requieren una acción suya | Victor |
+| 2026-10-17 | **T1B (cómo funciona hoy) verificado en producción:** confirmó H8 (una sola fila por rol: al abrirla Logística 1 se apaga la campana de Logística 2), que «En almacén» y «Atendido» no avisan a Logística ni a administración, que el solicitante no recibe aviso de comentarios y que el aviso «atendido» queda pendiente para siempre. Hallazgo nuevo: el administrador, con dos roles, veía cada aviso de RQ dos veces. El Orquestador agrega a T3 dos ítems del propio alcance de «bandeja ordenada»: **T3-08** (sin tarjetas duplicadas por persona con varios roles) y **T3-09** (los avisos por usuario que no piden acción se cierran al abrirlos, consecuencia de la regla P2). Plan: 71 ítems | Orquestador |
 | 2026-10-17 | Respuesta a P4: los correos de las cuentas de prueba serán alias `+` del buzón `victor.sup22@gmail.com` (`+logistica1`, `+logistica2`, `+jefeproy`, `+ofitec`, `+supop2`, `+admin2`); se prueba con la primera cuenta antes de crear las demás y, si la app o Supabase rechazan el `+`, se usan los otros buzones de Victor. Confirmado con el Gate 1 | Victor (aprobó) |
 | 2026-10-17 | **Propuesta:** migraciones 108 (notificaciones, tras T2) y 109 (RQ Devuelto, tras T5), aplicadas por Victor; se reconfirma la numeración por el choque posible con Informes y Cronograma | Planner (propuesta) |
 | 2026-10-17 | **Propuesta:** columna extra `referencia_id` en `notificaciones` (id del RQ, RDT o documento) para cerrar avisos por referencia y no por el comienzo del texto; los avisos viejos se siguen cerrando por texto | Planner (propuesta) |
@@ -549,6 +552,12 @@ Un hallazgo se anota en el momento en que ocurre. Los Workers dejan los suyos en
 |---|---|---|---|---|---|---|
 | M1 | 2026-10-16 | Orquestador, diagnóstico | El «Ver como» solo cambia la pantalla: la bandeja y la campana siguen siendo las del usuario real. Para verificar avisos de otro rol hay que iniciar sesión con su cuenta. | `03-aprendizaje-continuo/` | Registrada | — |
 | M2 | 2026-10-17 | Planner (hallazgo 6) | Crear un usuario de prueba envía un correo de invitación al correo indicado: usar solo buzones de Victor y advertirlo en el protocolo de cuentas de prueba. | `03-aprendizaje-continuo/` | Registrada | — |
+| M4 | 2026-10-17 | Worker de verificación, T1A | Para crear usuarios de prueba sin pasar claves por el chat: `POST /api/admin/usuarios` y `PATCH /api/admin/usuarios/<id>` (`asignarProyectos`) con `fetch` desde la sesión del administrador. El alta envía un correo de invitación y el tope por hora de Supabase se agotó tras 2 altas: espaciar las altas por horas. | `03-aprendizaje-continuo/` | Registrada | — |
+| M5 | 2026-10-17 | Worker de verificación, T1A | El filtro `?visto=false` de `/api/notificaciones` devuelve solo los PENDIENTE, no los REVISADO: los «18 avisos» eran 17 pendientes y 1 revisado. Contar siempre con el estado, no con `visto`. | `03-aprendizaje-continuo/` | Registrada | — |
+| M6 | 2026-10-17 | Worker 7, T2 | La prueba de cobertura de avisos obliga a registrar cada llamada nueva a un creador de avisos en `SITIOS` (`cobertura-avisos.test.ts`) y en el catálogo: todo brief de código que toque avisos debe decirlo. | `03-aprendizaje-continuo/` | Registrada | — |
+| M7 | 2026-10-17 | Worker 7, T9 | No nombrar `avisar` a funciones que no sean del catálogo de avisos: la prueba de cobertura busca el texto `avisar(` en todo `src/`. | `03-aprendizaje-continuo/` | Registrada | — |
+| M8 | 2026-10-17 | Worker de verificación, T1B | El formulario de login del navegador de Playwright se rellena solo con la última cuenta usada y el snapshot guarda la clave en texto dentro de `.playwright-mcp/` del repositorio documental (carpeta sin seguimiento, publicada en GitHub si alguien hace `git add -A`). Antes de iniciar sesión con una cuenta de prueba, limpiar cookies y almacenamiento; excluir la carpeta de git (hecho en `.git/info/exclude` local el 2026-10-17); borrar los snapshots con claves es decisión de Victor | `03-aprendizaje-continuo/` | Registrada | — |
+| M9 | 2026-10-17 | Worker de verificación, T1B | Cambiar de cuenta cuesta menos en una sola llamada `browser_run_code_unsafe` (limpiar cookies, login, leer la bandeja y capturar); la campana equivale a `GET /api/notificaciones/count` (solo PENDIENTE recibidos). | `03-aprendizaje-continuo/` | Registrada | — |
 | M3 | 2026-10-17 | Orquestador, revisión | El «Sin choque hoy» del Spec se redactó por impresión y falló; el Planner lo corrigió con `git diff` entre ramas, y al revisar se encontró que la base (`main`) ya había avanzado. Antes de afirmar que hay o no choque con otros planes, y antes de fijar la base de una rama, comprobar con `git branch --merged main`, `git diff --name-only main...<rama>` y el commit actual de `main`, el mismo día. | `03-aprendizaje-continuo/` | Registrada | — |
 
 ### Reglas de negocio acordadas en esta tarea
@@ -568,7 +577,10 @@ Un hallazgo se anota en el momento en que ocurre. Los Workers dejan los suyos en
 
 ### Observaciones sobre la política
 
-Ninguna.
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| P-1 | 2026-10-17 | Worker de verificación, T1A | El clasificador de permisos del entorno deja pasar altas de usuarios en producción pero bloquea el cierre en lote de avisos aunque el brief lo ordene y Victor lo haya autorizado en el plan. Una pre-autorización del Gate 1 no basta para el entorno: las escrituras masivas en producción deben pedirse con el permiso del entorno o dejarse como SQL que aplica Victor. | Auditor / Gate 2 (¿agregar al estándar que las pre-autorizaciones masivas se confirmen además en el entorno?) | Registrada | — |
+| P-2 | 2026-10-17 | Worker 7, T9 | `db/003_rls.sql` no da política de escritura sobre `perfiles` para usuarios: el `PATCH /api/perfil` anterior (que escribía con la sesión del usuario) pudo haber guardado 0 filas sin avisar. Ahora escribe con el cliente de administrador sobre el id de la sesión. Se confirma en vivo en T7 que el celular se guarda. | Auditor / T7 | Registrada | — |
 
 ### Carpetas/archivos huérfanos
 

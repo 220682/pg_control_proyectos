@@ -51,6 +51,7 @@
 | L5-27 | Estilo A en la app: pestaña de acento (color elegible, sin amarillo; por defecto turquesa), barra casi del mismo alto y resumen en la barra con cifras chicas y barrita de progreso, personalizable | Hecho (pantalla, PDF y Word; Excel sin cambio). Cifras por defecto según el bloque; el usuario marca hasta 4 de un catálogo por bloque. Si hay cifras, la barra no muestra el origen del dato |
 | L5-28 | Prueba en producción: datos siempre a la derecha y dos decimales; semana en el encabezado (del año o desde el inicio del servicio); cuadrícula en el cajetín; firma como imagen en los cuadros | Hecho (alineación y decimales en pantalla, PDF y Word; cajetín con cuadrícula y celda de semana; el editor de firmas muestra siempre los cuadros) |
 | L5-29 | Exportación del Dashboard: una hoja con el Dashboard como la pantalla, la matriz de partidas y la Curva S enmarcada con título | Hecho en el PDF (flujo 11 § Descargar). Pendiente: probarlo con un servicio real |
+| L5-30 | Prueba en producción (2026-10-19): letra mayor en la descripción de las fotos; fotos como figuras («Figura N°01», consecutivas, sin cortar, ajustadas al cuadro, como el Excel de referencia); «Avance por nivel» con barrita de avance al final (en % físico: Victor aclaró que no quiere metrados); columna «Avance» con barrita en «Actividades ejecutadas»; datos del cajetín centrados en vertical | Hecho en pantalla, PDF y Word (y en la hoja «Fotos» del Excel); los datos del cajetín y de las celdas de tabla también quedan centrados en vertical. Pendiente: que Victor lo revise en pantalla |
 
 ## Decisiones de Victor (2026-10-18)
 
@@ -84,8 +85,9 @@
 | Las tablas de actividades llevan Contractual, Acumulado, Restante antes del metrado del día y no llevan columna «Estado» | Flujo 22 § Editor por bloques (actualizado) |
 | El código del informe es el correlativo por fecha entre los informes del servicio y se renumera al declarar uno de fecha anterior | Flujo 22 § Tipos, código y estados (actualizado en T7) |
 | Cada sección lleva barra con pestaña de acento (color elegible, sin amarillo) y hasta 4 cifras de resumen con barrita de progreso, a elección del usuario | Flujo 22 § Editor por bloques, «Barra de sección con resumen» (actualizado) |
-| «Avance por nivel» tiene las mismas columnas que «Actividades ejecutadas», con el nivel en % ponderado | Flujo 22 § Bloques de datos (actualizado) |
-| En las tablas del informe la cabecera va centrada y los datos de cifra a la derecha | Flujo 22 § Editor por bloques (actualizado); **`design.md` § Alineación de columnas dice otra cosa y no se tocó** |
+| «Avance por nivel» tiene las mismas columnas que «Actividades ejecutadas» pero medidas en avance físico en % (un nivel no suma metrados de unidades distintas) y al final «Avance» como barrita con cifra; «Actividades ejecutadas» lleva también la columna «Avance» | Flujo 22 § Bloques de datos y § Tablas de actividades (actualizado el 2026-10-19) |
+| Cada foto va como figura: «Figura N°NN» consecutivo en todo el informe, foto entera sin cortar, descripción debajo en letra mayor; datos del cajetín y de las tablas centrados en vertical | Flujo 22 § Editor por bloques (actualizado el 2026-10-19) |
+| En las tablas del informe la cabecera se alinea como sus datos (cifras a la derecha, texto largo a la izquierda) y los datos van centrados en vertical | Flujo 22 § Editor por bloques (actualizado el 2026-10-19); coincide con `design.md` § Alineación de columnas |
 
 ## Mejoras (de trabajo)
 
@@ -93,7 +95,7 @@
 
 ## Observaciones sobre la política
 
-- `design.md` § Alineación de columnas (2026-09-30: la cabecera va alineada igual que su dato) contradice el estándar de los informes (2026-10-18: cabecera centrada, datos de cifra a la derecha). Victor debe decidir si el estándar del informe aplica solo a los informes o a todas las tablas, y en ese caso se cambia `design.md` en la misma tarea (política de coherencia). Sin resolver.
+- **Resuelta (2026-10-19).** Se había anotado que `design.md` § Alineación de columnas (cabecera alineada como su dato) contradecía el estándar del informe (cabecera centrada). Victor aclaró que nunca pidió centrar la cabecera: pidió centrar en vertical los datos pegados arriba. Las cabeceras vuelven a alinearse como sus datos, que es lo que dice `design.md`; no hay contradicción y `design.md` no se toca.
 
 ## Carpetas/archivos huérfanos
 

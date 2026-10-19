@@ -7,22 +7,22 @@ Aplica `../00-estandar-agentes/08-medicion-y-relevo.md`. Decisiones de Victor de
 - **Todo en terminal**, con Claude Code o con Cursor. Un Orquestador y sus subagentes (Planner, Workers, Auditor, Analista del flujo). No se usan chats con nombre ni aplicaciones de escritorio o web para coordinar.
 - **Trabajo remoto:** la laptop de Victor queda encendida con las sesiones corriendo y él entra a ella con un medio de control remoto externo (cuál: por confirmar). Consecuencias para los agentes: el avance real vive en git y en el progreso, nunca en una sesión; una consulta al Responsable humano puede tardar, y se registra y se espera sin improvisar; nada asume que Victor está frente a la pantalla.
 
-## Modelos por rol
+## Modelos por rol (Claude Code, vigente desde el 2026-10-19)
 
-**No se usa Opus.** Ver política completa en `../00-estandar-agentes/09-orquestacion-y-modelos.md` y los cinco niveles de consumo en `../00-estandar-agentes/10-niveles-de-modelos.md`.
+**No se usa Opus.** Política completa en `../00-estandar-agentes/09-orquestacion-y-modelos.md`. Decisión de Victor del 2026-10-19: se trabaja mayormente con Claude Code y el Documentador va en Haiku.
 
 | Trabajo | Modelo |
 |---|---|
-| Orquestador | `opencode-go/qwen3.7-plus` (nivel 3); lo elige Victor al abrir la sesión |
-| Planner y Documentador | Los hace el Orquestador o el agente `general` (`opencode-go/space-bunny-free`, nivel 1): **no existe un subagente `planner` ni `documenter`** en este harness |
-| Workers de código | `worker-flash` → `opencode-go/deepseek-v4.1-flash` (nivel 1) · `worker-plus` → `opencode-go/deepseek-v4-pro` variante `high` (nivel 2) |
-| Auditor | `opencode-go/space-bunny-free` (nivel 1) |
-| Analista del flujo | Agente `general` |
-| Worker git (y tareas puramente mecánicas) | `worker-flash` (nivel 1) |
+| Orquestador, Planner, Auditor, Analista del flujo | Sonnet; el del Orquestador lo trae la sesión que abre Victor |
+| Workers de código | Sonnet (Haiku solo en tareas simples, bien especificadas y sin lógica ni parte visual) |
+| Documentador | Haiku por defecto; Sonnet solo para integrar una regla en un flujo existente |
+| Worker git (y tareas puramente mecánicas) | Haiku |
+
+Los modelos de opencode (qwen y deepseek) y los cinco niveles de consumo siguen en `09-orquestacion-y-modelos.md` § Referencia opencode y en `10-niveles-de-modelos.md`, para las sesiones que se abran con opencode.
 
 Si un rol falla de forma repetida con el modelo asignado, el Orquestador lo anota en la medición y lo consulta con Victor; no cambia de modelo por su cuenta.
 
-## Dónde vive la configuración de modelos, y qué la limita
+## Dónde vive la configuración de modelos con opencode, y qué la limita
 
 Verificado el 2026-10-04 con `opencode debug config`, `opencode agent list` y una corrida real (opencode 1.18.34):
 
@@ -37,13 +37,13 @@ Verificado el 2026-10-04 con `opencode debug config`, `opencode agent list` y un
 
 Detalle y las tres políticas: `../00-estandar-agentes/10-niveles-de-modelos.md`.
 
-## Agentes por nivel (los seis de este repositorio)
+## Agentes por nivel con opencode (los seis de este repositorio)
 
 `opencode.json` en la raíz del proyecto define un agente por nivel, para no depender del config global y para que dos planes no se pisen: `n0` gratis (documentación, Auditor, Documentador) · `n1` `deepseek-v4.1-flash` (por defecto) · `n2` `deepseek-v4-pro` **variante `high`** · `n3` `qwen3.7-plus` · `n4` `qwen3.8-max` variante `medium` · `n5` `qwen3.8-max` (requiere aprobación de Victor). Se eligen por nivel, nunca por nombre de modelo. Tabla y medidas: `../00-estandar-agentes/10-niveles-de-modelos.md`.
 
 ## Medición
 
-- **Fuente real en este entorno: la base de opencode**, `%USERPROFILE%\.local\share\opencode\opencode.db`, tabla `session`: trae `model`, `cost`, `tokens_input/output/reasoning/cache_read/cache_write`, `parent_id` (subagentes) y `directory` por sesión. Es lo que hace posible medir por modelo. Hallazgo V-M5 del Lote 3.
+- **Fuente de las sesiones de opencode** (las de Claude Code, que son las medidas desde el 15-oct, se leen con `scripts/medir.py`, abajo): la base de opencode, `%USERPROFILE%\.local\share\opencode\opencode.db`, tabla `session`: trae `model`, `cost`, `tokens_input/output/reasoning/cache_read/cache_write`, `parent_id` (subagentes) y `directory` por sesión. Es lo que hace posible medir por modelo. Hallazgo V-M5 del Lote 3.
 - Script de niveles: `python scripts/niveles-modelos.py` (reparte los modelos medidos en los cinco niveles de consumo; `--niveles N`, `--modelo <subcadena>`, `--dir <ruta>`, `--json`). Creado el 2026-10-04.
 - Script: `scripts/medir.py` (`python scripts/medir.py 8` lista las 8 sesiones más recientes). Lee los registros locales de sesión de Claude Code en `%USERPROFILE%\.claude\projects`, en las carpetas de este repositorio y de la app. Probado el 2026-10-01. Para sesiones de Cursor: por confirmar.
 
@@ -92,5 +92,5 @@ Detalle y las tres políticas: `../00-estandar-agentes/10-niveles-de-modelos.md`
 
 **Recalibrado el 2026-10-19** (antes: verde 200k, amarilla 200k a 300k, roja 300k, red de seguridad 350k). Con 217 sesiones medidas, el Orquestador pasó el 53 % de la caché leída y 13 de sus 23 sesiones desde el 1-oct superaron los 300k; la simulación da un ahorro de ~36 % del Orquestador (~15 % del total) con relevo a 200k, con el doble de relevos. La meta del Worker sigue en 200k (las tandas medidas entre 93k y 186k funcionaron bien). Análisis completo: [`../02-trabajo-activo/05-eficiencia/2026-10-19-consumo-de-tokens-del-flujo.md`](../02-trabajo-activo/05-eficiencia/2026-10-19-consumo-de-tokens-del-flujo.md).
 
-Configuración: `/autocompact 250k` (**pendiente de que Victor la cambie; hoy `autoCompactWindow` vale 350000**), más un hook `SessionStart` con filtro `compact` que recuerde al Orquestador ejecutar el script de medición, escribir el handoff en el progreso y entregar el prompt de relevo antes de seguir. Un Worker no se compacta: cierra su tanda y se lanza uno nuevo.
+Configuración: `/autocompact 250k` (**aplicada por Victor el 2026-10-19 para Sonnet 5.5**; el valor general de su configuración, `autoCompactWindow` = 350000, sigue para los demás modelos), más un hook `SessionStart` con filtro `compact` que recuerde al Orquestador ejecutar el script de medición, escribir el handoff en el progreso y entregar el prompt de relevo antes de seguir. Un Worker no se compacta: cierra su tanda y se lanza uno nuevo.
 

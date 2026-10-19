@@ -1,6 +1,6 @@
 # Orquestación y modelos
 
-> **Estado: propuesto por Victor el 2026-10-02. Configurado y verificado el 2026-10-04.**
+> **Estado: propuesto por Victor el 2026-10-02. Revisado el 2026-10-19: se trabaja mayormente con Claude Code, así que los modelos vigentes están en la primera tabla; lo de opencode queda como referencia para las sesiones que se abran con opencode.**
 >
 > Este archivo es la fuente de verdad de **roles, esfuerzo y Jev**. El **nivel de consumo de cada modelo** (los cinco niveles) está en [`10-niveles-de-modelos.md`](10-niveles-de-modelos.md), con la tabla medida y la vía para ejecutar un modelo sin depender de la configuración.
 >
@@ -10,7 +10,20 @@
 
 El Orquestador asigna modelos a los agentes según la complejidad de la tarea, optimizando costo sin sacrificar calidad. Jev valida acciones críticas. Los umbrales de contexto gobiernan el relevo.
 
-## Modelos y niveles de esfuerzo por rol
+## Modelos por rol en Claude Code (vigente desde el 2026-10-19)
+
+Decisión de Victor del 2026-10-19: se trabaja mayormente con Claude Code y el Documentador va en Haiku. **No se usa Opus.**
+
+| Rol | Modelo | Esfuerzo |
+|-----|--------|----------|
+| Orquestador, Planner, Auditor, Analista del flujo | Sonnet | Medio |
+| Worker de código | Sonnet (Haiku solo en tareas simples, bien especificadas y sin lógica ni parte visual) | Medio |
+| Documentador | **Haiku por defecto**. Sonnet solo en una tanda que deba integrar una regla en un flujo existente; el Orquestador lo anota en el plan | Medio |
+| Worker git | Haiku | Medio |
+
+El modelo del Orquestador lo trae la sesión que abre Victor (se declara al activar el flujo); el de cada subagente lo fija el Orquestador al lanzarlo. Los niveles de consumo 1 a 5 y los agentes `n0` a `n5` solo valen si la sesión se abre con opencode.
+
+## Referencia opencode: modelos y niveles de esfuerzo por rol (solo si la sesión se abre con opencode)
 
 Verificado el 2026-10-04 con `opencode debug config` (configuración resuelta) y `opencode agent list`. Esta tabla **no se inventa**: es lo que el harness tiene registrado.
 

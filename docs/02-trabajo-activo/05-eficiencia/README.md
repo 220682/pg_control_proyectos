@@ -25,7 +25,7 @@ Entrega su informe en esta carpeta, con la plantilla, y una lista de mejoras pro
 
 | Informe | Plan analizado | Estado |
 |---|---|---|
-| [`2026-10-19-consumo-de-tokens-del-flujo.md`](2026-10-19-consumo-de-tokens-del-flujo.md) | Todo el período medido (27-sep a 19-oct): consumo por rol, topes de relevo, Planner, Opus y salida de herramientas | Cuatro mejoras aplicadas el 2026-10-19, dos sin cambio a propósito y tres pendientes de decisión de Victor |
+| [`2026-10-19-consumo-de-tokens-del-flujo.md`](2026-10-19-consumo-de-tokens-del-flujo.md) | Todo el período medido (27-sep a 19-oct): consumo por rol, topes de relevo, Planner, Opus y salida de herramientas | Siete mejoras aplicadas el 2026-10-19 y dos sin cambio a propósito |
 
 Cada informe nuevo se agrega a esta tabla en la misma tarea en que se crea.
 

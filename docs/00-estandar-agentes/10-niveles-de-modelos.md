@@ -1,5 +1,7 @@
 # Niveles de modelos, benchmark por nivel y ejecución sin bloqueo de configuración
 
+> **Alcance (2026-10-19): solo para sesiones abiertas con opencode.** Victor trabaja mayormente con Claude Code; los modelos que ahí rigen (Sonnet y Haiku, sin Opus) están en [`09-orquestacion-y-modelos.md`](09-orquestacion-y-modelos.md). Lo de abajo se conserva para cuando se vuelva a usar opencode.
+>
 > **Estado: aprobado por Victor el 2026-10-04.** Define tres políticas: (1) los **cinco niveles de modelos** según su consumo de tokens, (2) el **benchmark por nivel** que se corre antes de asignar un modelo a una tanda, y (3) la **vía para ejecutar el modelo que el nivel pida sin que la configuración lo impida**, incluso con dos planes simultáneos.
 >
 > Complementa a [`09-orquestacion-y-modelos.md`](09-orquestacion-y-modelos.md), que sigue siendo la fuente de verdad de **roles, esfuerzo y Jev**. Este archivo no repite esa tabla: solo ordena los modelos por consumo y dice cómo ejecutar cada nivel.

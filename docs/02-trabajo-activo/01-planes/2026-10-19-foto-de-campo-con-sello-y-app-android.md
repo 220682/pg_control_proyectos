@@ -262,3 +262,54 @@ Pendiente.
 - App para iPhone (necesita la cuenta de Apple Developer y compilación en un Mac o en la nube).
 - Publicación en Play Store con prueba interna, para que el envoltorio también se actualice solo.
 - Fotos sin señal con subida posterior, si Victor cambia de opinión.
+
+## Handoff — 2026-10-19 (relevo del Orquestador)
+
+Aún no hay archivo de progreso: el plan sigue en el Spec, sin subagentes lanzados. El handoff va aquí por eso.
+
+### Fecha
+
+2026-10-19.
+
+### Objetivo y estado
+
+Foto de campo con sello (Paso 1) y APK Android (Paso 2). **Spec propuesto; Gate Spec pendiente de Victor.** Única decisión abierta que él debe contestar: qué dirección abre el APK (recomendada: `https://py-control-proyectos-web.vercel.app`, responde 200 en `/login`).
+
+### Plan / progreso / evidencia relacionados
+
+Este plan. Informe de consumo y política recalibrada: `../05-eficiencia/2026-10-19-consumo-de-tokens-del-flujo.md`.
+
+### Rama, worktree y último commit
+
+- Repo de documentos: `main`, sincronizado con `origin/main` (0 0) tras el commit `ee2a6b1` (política de modelos); el commit de este handoff va encima. Hay 22 archivos sin commitear de sesiones anteriores que **no son de este plan** (no tocarlos).
+- Repo de la app: `main` en `1919fba`, sincronizado (0 0). **El Spec dice `0b9961a`: avanzó con dos commits del Lote 5 de informes** (`017806f` y `1919fba`, este último con la hora fuera del pie de fotos). Hay que releer `FotoCampo.tsx` y la generación del informe antes de que el Planner fije el alcance. `db/095_cerrar_lectura_directa.sql` sin seguimiento no es de este plan.
+- Sin worktrees creados ni autorizados.
+
+### Terminado
+
+Spec escrito y subido. Informe de consumo de tokens. Política recalibrada y subida: relevo del Orquestador a 200k, Planner con metas de Worker, tope de salida de herramientas para el Orquestador, declarar modelo al activar el flujo. Decisiones de Victor del 2026-10-19: Documentador en Haiku por defecto; documentos de modelos pasados a Claude Code (opencode queda como referencia); compactación a 250k aplicada por él; diez skills de redes sociales apagados en este proyecto (`.claude/settings.local.json`).
+
+### No terminado
+
+Gate Spec. Después: Planner (pasos 5 y 6) → plan y Punch List → Gate 1 → Workers → Documentador → Auditor → Gate 2 → cierre.
+
+### Pruebas ejecutadas
+
+Ninguna de código. Verificado con comandos: ramas y sincronía de ambos repositorios, `/login` en 200, `skillOverrides` presente en el ejecutable de Claude Code.
+
+### Bloqueos y riesgos
+
+- Gate 1 debe pedir: reutilizar los worktrees `local-worker-1` (Paso 1) y `local-worker-2` (Paso 2), nombre, identificador y versión mínima de Android del APK, y los datos de prueba.
+- Victor debe instalar Android Studio antes del Paso 2 (no hay Java ni SDK en su PC).
+- Corre otro Orquestador en paralelo (sesión `2470d4f3`, Lote de informes): no editar sus archivos ni los del repo de la app sin verificar.
+- Los skills de redes sociales están en `off`, pero la documentación consultada dice que escribir el comando a mano aún podría ejecutarlos; comprobar en la sesión nueva que ya no aparecen en el listado.
+- Observación para Victor (no es de este plan): su configuración de usuario tiene el esfuerzo en `xhigh` para Sonnet 5.5 (y `high` general), mientras la política dice esfuerzo medio. No se tocó.
+- Orquestador saliente: sesión `ab0aaa6e`, 62 llamadas, 10,25 M de caché leída, contexto máximo 297k (pasó la red de seguridad de 250k).
+
+### Qué debe leer el siguiente agente
+
+`AGENTS.md`; `docs/00-estandar-agentes/04-flujo-sdd-y-planes.md`; `08-medicion-y-relevo.md`; el Skill `seguir-flujo-de-planes`; este plan (el Spec); del índice de flujos, solo el 01 y el 22; `09-orquestacion-y-modelos.md` (tabla de Claude Code). Confirmar el estado con `git status` y `git rev-list --left-right --count origin/<rama>...<rama>` en ambos repositorios antes de actuar.
+
+### Próximo paso concreto
+
+Declarar modelo y esfuerzo de la sesión, decir en qué paso está el flujo y pedir a Victor el Gate Spec (aprobar el Spec y contestar la dirección del APK). Si aprueba, lanzar el Planner en Sonnet con las metas de 08 (80 llamadas, 200k).

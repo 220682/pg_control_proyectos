@@ -166,9 +166,9 @@ Credenciales, claves, tokens, rutas de archivos de secretos, valores de variable
 
 | Zona | Tokens | Acción |
 |------|--------|--------|
-| Verde | < 200k | Operación normal |
-| Amarillo | 200k - 300k | No abrir frentes nuevos; cerrar ola en curso |
-| Rojo | > 300k | Relevo del Orquestador al terminar la ola |
+| Verde | < 150k | Operación normal |
+| Amarillo | 150k - 200k | No abrir frentes nuevos; cerrar ola en curso |
+| Rojo | > 200k | Relevo del Orquestador al terminar la ola |
 
 ## Flujo de decisión del Orquestador
 

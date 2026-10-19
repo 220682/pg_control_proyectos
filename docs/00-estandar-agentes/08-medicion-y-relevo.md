@@ -19,6 +19,8 @@ El contexto de una sesión crece casi todo por **resultados de herramienta**, no
 | Artefactos y páginas | Se abren por sección, no completos. |
 | Evidencia y logs | Se recortan en el brief, pero **la evidencia guarda el resultado real, no el recortado**: lo que se archiva tiene que servir para reproducir. |
 
+**Rige también para el Orquestador.** Sus propios resultados de herramienta cuentan igual: cada uno se vuelve a pagar en todas las llamadas siguientes de su sesión (un bloque de 20k tokens leído a mitad de una sesión de 300 llamadas se relee unas 150 veces). El Orquestador lee por rango o con búsqueda, acota la salida de la consola y, cuando tiene que mirar varios archivos grandes, pide a un subagente que los lea y le responda en un párrafo. Al terminar cada ola mide qué herramienta llenó su contexto, con el script de arranque del repositorio.
+
 Si una tanda se pasa de la meta por esto, la causa es «qué se leyó o repitió» y el ajuste va en el brief de la tanda siguiente, no en una nota.
 
 ## Cuándo se mide
@@ -35,12 +37,13 @@ Si la herramienta muestra el uso de contexto en vivo, se mira también antes de 
 
 ## Umbrales
 
-Valores iniciales; se recalibran con las mediciones del primer plan que los use.
+Recalibrados el 2026-10-19 con 217 sesiones medidas (el costo por llamada crece con el contexto de la sesión; el tope del Orquestador pasó de 300k a 200k).
 
 | Sesión | Meta |
 |---|---|
 | Worker de una tanda | 80 llamadas o menos (cierra a las ~60 con handoff), contexto máximo de 200k o menos, 12M de caché leída o menos |
-| Orquestador | Relevo al pasar de ~300k de contexto. Como red de seguridad, la herramienta compacta solo un poco por encima de ese umbral (~350k) y, si compacta, el Orquestador ejecuta de inmediato el procedimiento de relevo antes de seguir |
+| Planner | Las mismas metas que un Worker: 80 llamadas o menos y 200k de contexto o menos. Un plan que no cabe se redacta en partes (el plan base y, aparte, los briefs por grupo de tandas), y cada parte la hace un Planner nuevo |
+| Orquestador | Relevo al pasar de ~200k de contexto, al terminar la ola; no abre frentes nuevos desde los 150k. Como red de seguridad, la herramienta compacta a ~250k y, si compacta, el Orquestador ejecuta de inmediato el procedimiento de relevo antes de seguir |
 
 Si una tanda supera una meta, el Orquestador anota la causa (qué se leyó o repitió) y corrige el brief de la siguiente antes de lanzarla.
 

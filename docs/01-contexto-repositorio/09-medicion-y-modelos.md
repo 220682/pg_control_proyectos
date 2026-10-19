@@ -85,10 +85,12 @@ Detalle y las tres políticas: `../00-estandar-agentes/10-niveles-de-modelos.md`
 
 | Zona | Contexto | Qué se hace |
 |---|---|---|
-| Verde | Hasta 200k (20% de la ventana) | Meta del Worker. Las tandas medidas en 93k a 186k funcionaron bien |
-| Amarilla | 200k a 300k | El Orquestador no abre frentes nuevos; cierra la ola en curso |
-| Roja | Más de 300k | Relevo del Orquestador al terminar la ola (`08-medicion-y-relevo.md`) |
-| Red de seguridad | 350k | Compactación automática, solo por si una ola se alarga y no se llegó al relevo |
+| Verde | Hasta 150k | Operación normal |
+| Amarilla | 150k a 200k | El Orquestador no abre frentes nuevos; cierra la ola en curso |
+| Roja | Más de 200k | Relevo del Orquestador al terminar la ola (`08-medicion-y-relevo.md`) |
+| Red de seguridad | 250k | Compactación automática, solo por si una ola se alarga y no se llegó al relevo |
 
-Configuración propuesta (pendiente de que Victor la aplique): `/autocompact 350k`, más un hook `SessionStart` con filtro `compact` que recuerde al Orquestador ejecutar el script de medición, escribir el handoff en el progreso y entregar el prompt de relevo antes de seguir. Un Worker no se compacta: cierra su tanda y se lanza uno nuevo.
+**Recalibrado el 2026-10-19** (antes: verde 200k, amarilla 200k a 300k, roja 300k, red de seguridad 350k). Con 217 sesiones medidas, el Orquestador pasó el 53 % de la caché leída y 13 de sus 23 sesiones desde el 1-oct superaron los 300k; la simulación da un ahorro de ~36 % del Orquestador (~15 % del total) con relevo a 200k, con el doble de relevos. La meta del Worker sigue en 200k (las tandas medidas entre 93k y 186k funcionaron bien). Análisis completo: [`../02-trabajo-activo/05-eficiencia/2026-10-19-consumo-de-tokens-del-flujo.md`](../02-trabajo-activo/05-eficiencia/2026-10-19-consumo-de-tokens-del-flujo.md).
+
+Configuración: `/autocompact 250k` (**pendiente de que Victor la cambie; hoy `autoCompactWindow` vale 350000**), más un hook `SessionStart` con filtro `compact` que recuerde al Orquestador ejecutar el script de medición, escribir el handoff en el progreso y entregar el prompt de relevo antes de seguir. Un Worker no se compacta: cierra su tanda y se lanza uno nuevo.
 

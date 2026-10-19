@@ -87,6 +87,7 @@ Recibe el objetivo aprobado (Spec/SDD) y produce:
 - Prompt breve y cerrado para cada Worker.
 - Alcance y prompt del Auditor.
 - **Anticipar incongruencias con reglas de negocio ya documentadas**, revisando los flujos de negocio afectados antes de que el plan se apruebe. Esto reduce los conflictos que aparecen recién durante la implementación a los que de verdad no se podían prever.
+- **Caber en su sesión:** respeta las metas de `08-medicion-y-relevo.md` (80 llamadas, 200k de contexto). Si el plan no cabe, lo redacta en partes —el plan base y, aparte, los briefs por grupo de tandas— y el Orquestador lanza un Planner por parte.
 
 El Planner no implementa ni aprueba el plan. El Orquestador lo presenta al Responsable humano para el Gate 1.
 

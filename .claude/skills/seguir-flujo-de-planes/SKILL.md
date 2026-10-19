@@ -14,6 +14,7 @@ Aplica a cualquier repositorio que trabaje con un documento normativo del flujo 
 3. Di en qué paso del flujo estás, qué puerta sigue y qué necesita el responsable humano de ti.
 4. Si eres el orquestador, lanza cada subagente con una descripción «<Rol N> · <tanda>» y mide tus sesiones por evento: al cerrar cada tanda, al terminar cada ola y al cierre del plan. Compara tu contexto con el umbral de relevo; si lo pasas, haz el relevo entre olas (verifica con git que nada queda sin subir, escribe el handoff y entrega el prompt para el orquestador siguiente).
 5. Lee la política de modelos y esfuerzos (`09-orquestacion-y-modelos.md`): todos los agentes arrancan con esfuerzo medio; Max o esfuerzo alto requieren aprobación de Victor en el Gate 1.
+6. Si eres el orquestador, di qué modelo y esfuerzo trae tu sesión. Opus no se usa en este repositorio: si lo traes, avísale a Victor antes de seguir.
 
 ## Puertas: no avances sin esto
 
@@ -34,9 +35,10 @@ Antes de merge, push, delete, migrate, branch o close: consulta al verificador (
 
 ## Umbrales de contexto
 
-- Verde (<200k tokens): operación normal.
-- Amarillo (200k-300k): no abrir frentes nuevos; cerrar ola en curso.
-- Rojo (>300k): relevo del Orquestador al terminar la ola.
+- Verde (<150k tokens): operación normal.
+- Amarillo (150k-200k): no abrir frentes nuevos; cerrar ola en curso.
+- Rojo (>200k): relevo del Orquestador al terminar la ola.
+- Los resultados de herramienta del Orquestador también tienen tope: lee por rango o con búsqueda, acota la consola y delega al subagente las lecturas de varios archivos grandes.
 
 ## Antes de declarar cerrado un plan
 

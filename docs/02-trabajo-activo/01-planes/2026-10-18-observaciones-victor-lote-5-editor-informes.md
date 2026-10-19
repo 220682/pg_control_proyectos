@@ -5,7 +5,7 @@
 ## Identificación y estado
 
 - Fecha: 2026-10-18
-- Estado: **T1 a T7 construidas en `py_control_proyectos_web` (sin commit ni push); tipos, lint de lo tocado y más de 2 000 pruebas en verde y PDF de muestra revisado a mano. Pendiente: verificación en pantalla con login (el navegador de Playwright estaba tomado y la extensión de Chrome sin conexión) ; `db/110_informes_codigo_por_fecha.sql` ya fue aplicada por Victor (2026-10-18), falta comprobar la renumeración creando un informe**
+- Estado: **Lote cerrado en código y documentación; falta autorización de Victor para el commit y push de los dos repositorios y su revisión en pantalla.** T1 a T7 y las tandas L5-13 a L5-27 (orden de columnas, firmas con imagen, partidas por grupo, inasistencias, alineación, estilo A con resumen en la barra) están construidas en `py_control_proyectos_web` (la primera parte ya se desplegó el 2026-10-18; lo posterior está sin commit). Tipos, pruebas y PDF de muestra en verde. `db/110_informes_codigo_por_fecha.sql` aplicada por Victor. Pendiente: verificación en pantalla con login (sin navegador disponible en esta sesión)
 - Flujos que cambian: [22](../../04-flujos-de-negocio/22-informes-de-supervision.md) (descarga, código, editor, fotos, formatos), [16](../../04-flujos-de-negocio/16-paneles.md) si cambia alguna pantalla, [14](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) solo si cambia algún permiso (hoy ninguno).
 
 ## Observaciones (Victor)
@@ -39,6 +39,17 @@
 | L5-20 | Firmas como cajitas con cantidad elegible | Hecho |
 | L5-21 | Fotos que se pisan; elegir filas × columnas, alto de fila y foto por caja (del día o de otros días) | Hecho (cajas, selector modal con desplegable por día) |
 
+### Tercera tanda (2026-10-18, tras el despliegue)
+
+| # | Observación | Resultado |
+|---|---|---|
+| L5-22 | Orden de columnas de «Actividades ejecutadas»: WBS, Un., Contractual, Acumulado, Restante, Metrado del día, Observaciones; sin «Estado»; lo mismo en «Avance por nivel» | Hecho; lo pendiente de validación se avisa en una línea bajo la tabla. «Avance por nivel» queda **igual que Actividades ejecutadas** (WBS, Descripción, Un., Contractual, Acumulado, Restante) con el nivel medido en % ponderado por presupuesto (Victor lo aclaró el 2026-10-18; antes el agente había supuesto otras columnas) |
+| L5-23 | Firmas: opción de colocar imagen como en el encabezado | Hecho (pantalla, PDF y Word) |
+| L5-24 | Elegir partidas por grupos (subpresupuesto, paquetes de partidas…), no sueltas | Hecho (árbol por niveles del presupuesto con casilla de grupo) |
+| L5-25 | Campo para inasistencias; «por estándar, columnas al centro y datos a la derecha» | Bloque opcional «Inasistencias» (hecho). Alineación: cabecera centrada y cifras a la derecha en todas las tablas del informe; **contradice en parte `design.md`** (cabecera igual que el dato): Victor confirma cuál manda |
+| L5-26 | Tres maquetas del estilo de los formatos, con un detalle más llamativo en la barra de sección; sin quitar el estilo actual; el nuevo, personalizable y con datos por defecto ampliables | Maquetas entregadas para elegir; Victor eligió el estilo A (pestaña de acento), sin amarillo ni más alto, y pidió ver el «pequeño dashboard»: ver L5-27 |
+| L5-27 | Estilo A en la app: pestaña de acento (color elegible, sin amarillo; por defecto turquesa), barra casi del mismo alto y resumen en la barra con cifras chicas y barrita de progreso, personalizable | Hecho (pantalla, PDF y Word; Excel sin cambio). Cifras por defecto según el bloque; el usuario marca hasta 4 de un catálogo por bloque. Si hay cifras, la barra no muestra el origen del dato |
+
 ## Decisiones de Victor (2026-10-18)
 
 | Decisión | Resultado |
@@ -67,15 +78,20 @@
 | El editor rotula los bloques Dato/Libre, edita con un clic en la hoja y deja elegir el fondo de trabajo (solo pantalla) | Flujo 22 § Editor por bloques (actualizado) |
 | Las actividades C y NC no llevan metrado en el RDT ni van en la tabla de partidas del informe | Flujo 06 (actualizado) y flujo 22 § Editor por bloques (actualizado) |
 | El encabezado del informe es el cajetín de la empresa, editable salvo código y versión; las firmas son cuadros; las fotos van en cajas filas × columnas con alto elegido | Flujo 22 § Editor por bloques (actualizado) |
-| El código del informe es el correlativo por fecha entre los informes del servicio y se renumera al declarar uno de fecha anterior | Flujo 22 § Tipos, código y estados (se actualiza en T7) |
+| Las inasistencias pueden ir dentro de un informe como bloque opcional | Flujo 22 § Pestaña Inasistencias y § Editor por bloques (actualizado; reemplaza «las inasistencias no van dentro de los informes») |
+| Las tablas de actividades llevan Contractual, Acumulado, Restante antes del metrado del día y no llevan columna «Estado» | Flujo 22 § Editor por bloques (actualizado) |
+| El código del informe es el correlativo por fecha entre los informes del servicio y se renumera al declarar uno de fecha anterior | Flujo 22 § Tipos, código y estados (actualizado en T7) |
+| Cada sección lleva barra con pestaña de acento (color elegible, sin amarillo) y hasta 4 cifras de resumen con barrita de progreso, a elección del usuario | Flujo 22 § Editor por bloques, «Barra de sección con resumen» (actualizado) |
+| «Avance por nivel» tiene las mismas columnas que «Actividades ejecutadas», con el nivel en % ponderado | Flujo 22 § Bloques de datos (actualizado) |
+| En las tablas del informe la cabecera va centrada y los datos de cifra a la derecha | Flujo 22 § Editor por bloques (actualizado); **`design.md` § Alineación de columnas dice otra cosa y no se tocó** |
 
 ## Mejoras (de trabajo)
 
-- Sin entradas todavía.
+- Trasladadas al cierre del lote a [`2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md`](../../03-aprendizaje-continuo/2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md) (seis aprendizajes: copiar la referencia que Victor da, citar el documento normativo al consultar, cerrar con los apartados llenos, PDF de muestra como imagen, parches con Write, prueba inestable de avisos).
 
 ## Observaciones sobre la política
 
-- Sin entradas todavía.
+- `design.md` § Alineación de columnas (2026-09-30: la cabecera va alineada igual que su dato) contradice el estándar de los informes (2026-10-18: cabecera centrada, datos de cifra a la derecha). Victor debe decidir si el estándar del informe aplica solo a los informes o a todas las tablas, y en ese caso se cambia `design.md` en la misma tarea (política de coherencia). Sin resolver.
 
 ## Carpetas/archivos huérfanos
 

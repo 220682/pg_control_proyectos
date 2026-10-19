@@ -1,0 +1,250 @@
+<title>Estilos de informe</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Concepto: el informe diario en cuatro estilos de barra de seccion (el actual y tres nuevos) sobre la misma hoja, con un panel que muestra como se personaliza. */
+:root {
+  --bg: #eef1f6;
+  --panel: #ffffff;
+  --fg: #1b2433;
+  --muted: #5b6678;
+  --line: #d5dbe6;
+  --ui: #1e3a8a;
+  --acento: #f2a900;
+  --f-cuerpo: 'Barlow', 'Segoe UI', Arial, sans-serif;
+  --f-titulo: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+  /* La hoja es papel: siempre blanca, en cualquier tema. */
+  --hoja: #ffffff;
+  --tinta: #1b2433;
+  --tinta-suave: #5b6678;
+  --regla: #c9d1de;
+  --azul: #1e3a8a;
+  --azul-claro: #eef2fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #12161f; --panel: #1b212d; --fg: #e8ecf4; --muted: #99a3b6; --line: #2e3646; --ui: #9db4ff; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #12161f; --panel: #1b212d; --fg: #e8ecf4; --muted: #99a3b6; --line: #2e3646; --ui: #9db4ff; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-cuerpo); font-size: 15px; line-height: 1.45; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 1240px; margin: 0 auto; display: grid; gap: 24px; }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: 34px; letter-spacing: .02em; margin: 0; text-transform: uppercase; text-wrap: balance; }
+h2 { font-family: var(--f-titulo); font-weight: 600; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; }
+p { margin: 0; }
+.intro { color: var(--muted); max-width: 70ch; }
+
+/* ---------- panel de personalizacion ---------- */
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.panel > div { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.etq { font-family: var(--f-titulo); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; color: var(--muted); }
+.muestras { display: flex; flex-wrap: wrap; gap: 8px; }
+.muestra { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; padding: 0; }
+.muestra[aria-pressed="true"] { outline: 2px solid var(--fg); outline-offset: 2px; }
+.muestra:focus-visible, .chip button:focus-visible, .agregar button:focus-visible, label:focus-within { outline: 2px solid var(--ui); outline-offset: 2px; }
+.opcion { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.campos { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+.chip.fijo { color: var(--muted); }
+.chip button { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 0 0 0 2px; font-size: 15px; line-height: 1; }
+.agregar { display: flex; gap: 6px; }
+.agregar input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: var(--bg); color: var(--fg); font: inherit; }
+.agregar button { border: 1px solid var(--ui); background: transparent; color: var(--ui); border-radius: 6px; padding: 6px 12px; font: inherit; font-weight: 600; cursor: pointer; }
+.nota { font-size: 13px; color: var(--muted); }
+
+/* ---------- las hojas ---------- */
+.hojas { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); align-items: start; }
+.ficha { min-width: 0; display: grid; gap: 8px; }
+.ficha > header { display: grid; gap: 2px; }
+.ficha .rotulo { font-family: var(--f-titulo); font-weight: 700; font-size: 18px; letter-spacing: .05em; text-transform: uppercase; }
+.ficha .detalle { color: var(--muted); font-size: 14px; }
+.marco { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #c9ced8; padding: 14px; }
+.hoja { background: var(--hoja); color: var(--tinta); min-width: 470px; padding: 14px 16px 16px; font-size: 11px; line-height: 1.4; display: grid; gap: 10px; box-shadow: 0 1px 8px rgba(20, 30, 50, .25); }
+
+.cajetin { border: 1px solid #7c8699; display: grid; grid-template-columns: 96px 1fr 96px; }
+.cajetin .empresa { grid-column: 1 / -1; text-align: center; font-weight: 700; font-size: 12px; padding: 2px; border-bottom: 1px solid #7c8699; letter-spacing: .03em; }
+.cajetin .logo { display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 17px; color: #c8102e; letter-spacing: .02em; }
+.cajetin .centro { border-inline: 1px solid #7c8699; padding: 4px 6px; text-align: center; }
+.cajetin .centro b { display: block; font-family: var(--f-titulo); font-size: 15px; letter-spacing: .05em; text-transform: uppercase; }
+.cajetin .datos { margin-top: 2px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; text-align: left; font-size: 9px; }
+.cajetin .datos span b { display: inline; font-family: var(--f-cuerpo); font-size: 9px; letter-spacing: 0; text-transform: none; color: var(--tinta-suave); }
+.cajetin .cliente { display: grid; place-items: center; font-weight: 700; font-size: 11px; text-transform: uppercase; text-align: center; padding: 3px; }
+.cajetin .extra { grid-column: 1 / -1; border-top: 1px solid #7c8699; padding: 3px 8px; font-size: 9px; display: flex; flex-wrap: wrap; gap: 2px 16px; }
+.cajetin .extra b { color: var(--tinta-suave); }
+
+/* barra de seccion: cada estilo define sus piezas con las mismas clases */
+.sec { display: grid; gap: 6px; }
+.barra { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.barra .num { display: none; }
+.barra .titulo { min-width: 0; flex: 1; }
+.barra .origen { font-size: 8.5px; white-space: nowrap; }
+.sin-origen .barra .origen { display: none; }
+.sin-num .barra .num { display: none !important; }
+
+/* Actual */
+.e-actual .barra { background: var(--azul); color: #fff; padding: 3px 8px; }
+.e-actual .titulo { font-weight: 700; font-size: 12px; }
+.e-actual .origen { opacity: .85; }
+
+/* A: pestaña de acento */
+.e-a .barra { background: var(--azul); color: #fff; height: 30px; padding-right: 8px; border-bottom: 3px solid var(--acento); }
+.e-a .barra::before { content: ''; align-self: stretch; width: 12px; background: var(--acento); flex: none; }
+.e-a .num { display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 15px; color: var(--acento); min-width: 20px; }
+.e-a .titulo { font-family: var(--f-titulo); font-weight: 700; font-size: 16px; letter-spacing: .09em; text-transform: uppercase; }
+.e-a .origen { border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px; padding: 1px 8px; letter-spacing: .03em; }
+
+/* B: cinta con numero */
+.e-b .barra { background: var(--azul-claro); border-bottom: 2px solid var(--azul); padding-right: 8px; height: 30px; }
+.e-b .num { display: grid; place-items: center; width: 34px; align-self: stretch; background: var(--acento); color: #1b2433; font-family: var(--f-titulo); font-weight: 700; font-size: 18px; }
+.e-b .titulo { font-family: var(--f-titulo); font-weight: 600; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--azul); }
+.e-b .origen { color: var(--tinta-suave); font-style: italic; }
+
+/* C: corte diagonal con dato */
+.e-c .barra { background: var(--azul); color: #fff; height: 30px; padding-left: 10px; padding-right: 0; clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); position: relative; }
+.e-c .barra::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 34px; background: var(--acento); clip-path: polygon(16px 0, 100% 0, calc(100% - 0px) 100%, 0 100%); }
+.e-c .titulo { font-family: var(--f-titulo); font-weight: 700; font-size: 16px; letter-spacing: .08em; text-transform: uppercase; }
+.e-c .num { display: inline; font-family: var(--f-titulo); font-weight: 700; color: var(--acento); font-size: 16px; }
+.e-c .origen { margin-right: 44px; background: rgba(255, 255, 255, .16); border-radius: 3px; padding: 1px 6px; }
+
+.num-on .barra .num { }
+.sin-num.e-a .num, .sin-num.e-b .num, .sin-num.e-c .num { display: none; }
+.e-b.sin-num .barra { padding-left: 8px; }
+
+/* tabla segun el estandar: cabecera centrada, texto a la izquierda, cifras a la derecha */
+table { width: 100%; border-collapse: collapse; font-size: 10px; }
+th { background: #f0f3f8; border: 1px solid var(--regla); padding: 2px 4px; text-align: center; font-weight: 700; }
+td { border: 1px solid var(--regla); padding: 2px 4px; vertical-align: top; }
+td.n { text-align: right; font-variant-numeric: tabular-nums; }
+.aviso { font-size: 9.5px; color: var(--tinta-suave); margin-top: 3px; }
+
+.firmas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 10px; }
+.firma .caja { border: 1px solid var(--tinta); height: 58px; padding: 3px 5px; font-weight: 700; font-size: 9.5px; position: relative; }
+.firma .caja p + p { margin-top: 10px; }
+.firma .sello { position: absolute; right: 6px; bottom: 5px; width: 54px; height: 22px; border: 1.5px solid var(--azul); border-radius: 3px; color: var(--azul); font-size: 8px; display: grid; place-items: center; transform: rotate(-4deg); }
+.firma .pie { text-align: center; font-weight: 700; font-size: 9.5px; margin-top: 2px; }
+</style>
+
+<main id="app" data-acento="#f2a900">
+  <div>
+    <h1>Estilos de informe</h1>
+    <p class="intro">Cuatro versiones de la misma hoja: el estilo actual y tres propuestas con más presencia en la barra de cada sección. Las tres nuevas son personalizables: color de acento, numeración, origen del dato y campos del cajetín. Prueba los controles y mira cómo cambian todas las hojas.</p>
+  </div>
+
+  <section class="panel" aria-label="Personalización">
+    <div>
+      <span class="etq">Color de acento</span>
+      <div class="muestras" id="muestras" role="group" aria-label="Color de acento"></div>
+      <p class="nota">Detalle de la barra, número de sección y sello. El azul base y el cajetín no cambian.</p>
+    </div>
+    <div>
+      <span class="etq">Detalles de la barra</span>
+      <label class="opcion" for="o-num"><input id="o-num" type="checkbox" checked> Numerar las secciones (según su orden en la hoja)</label>
+      <label class="opcion" for="o-ori"><input id="o-ori" type="checkbox" checked> Mostrar el origen del dato («dato del sistema», «texto libre»)</label>
+      <label class="opcion" for="o-cnt"><input id="o-cnt" type="checkbox"> Mostrar la cantidad de filas de cada tabla</label>
+    </div>
+    <div>
+      <span class="etq">Campos del cajetín</span>
+      <div class="campos" id="campos" aria-live="polite"></div>
+      <form class="agregar" id="form-campo">
+        <input id="nuevo-campo" type="text" placeholder="Agregar campo (ej. Contrato, Revisión)" maxlength="40" aria-label="Nombre del campo nuevo">
+        <button type="submit">Agregar</button>
+      </form>
+      <p class="nota">Vienen de fábrica los datos de hoy; los que agregues salen en una franja bajo el cajetín y se llenan en el editor.</p>
+    </div>
+  </section>
+
+  <section class="hojas" id="hojas" aria-label="Las cuatro hojas"></section>
+</main>
+
+<script>
+const ACENTOS = [['#f2a900', 'Ámbar'], ['#e4572e', 'Naranja obra'], ['#00a6a6', 'Turquesa'], ['#7ab800', 'Lima'], ['#c8102e', 'Rojo Promcoser']];
+const ESTILOS = [
+  { id: 'e-actual', rotulo: 'Actual', detalle: 'Barra azul plana con el origen a la derecha. Se conserva tal cual.' },
+  { id: 'e-a', rotulo: 'A · Pestaña de acento', detalle: 'Barra más alta, pestaña de color a la izquierda y filete inferior. Título en condensada con el origen en una píldora.' },
+  { id: 'e-b', rotulo: 'B · Cinta con número', detalle: 'Cinta clara con el número de sección en un bloque de color. La más liviana al imprimir.' },
+  { id: 'e-c', rotulo: 'C · Corte diagonal', detalle: 'Barra azul con corte diagonal y remate de color. La que más se nota en una hoja llena.' },
+];
+const SECCIONES = ['Actividades ejecutadas', 'Inasistencias', 'Personal'];
+const FILAS = { 'Actividades ejecutadas': 4, 'Inasistencias': 2, 'Personal': 3 };
+const estado = { acento: '#f2a900', num: true, ori: true, cnt: false, campos: ['Código', 'Versión', 'Fecha de elaboración', 'Aprobado por'], extras: [] };
+
+const $ = (s) => document.querySelector(s);
+const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function barra(estiloId, n, titulo, origen, filas) {
+  const cnt = estado.cnt ? ` · ${filas} filas` : '';
+  return `<div class="barra"><span class="num">${String(n).padStart(2, '0')}</span><span class="titulo">${esc(titulo)}</span><span class="origen">${esc(origen)}${cnt}</span></div>`;
+}
+
+function hoja(e) {
+  const clase = `hoja ${e.id}${estado.num ? '' : ' sin-num'}${estado.ori ? '' : ' sin-origen'}`;
+  const extras = estado.extras.length ? `<div class="extra">${estado.extras.map((x) => `<span><b>${esc(x)}:</b> ____________</span>`).join('')}</div>` : '';
+  const fijos = { 'Código': 'OT-1-ID-12', 'Versión': '01', 'Fecha de elaboración': '18/10/26', 'Aprobado por': '—' };
+  const datos = estado.campos.map((c) => `<span><b>${esc(c)}:</b> ${esc(fijos[c] ?? '—')}</span>`).join('');
+  return `<div class="${clase}">
+    <div class="cajetin">
+      <div class="empresa">PROMCOSER S.R.L.</div>
+      <div class="logo">PROMCOSER</div>
+      <div class="centro"><b>Informe diario de supervisión</b><div class="datos">${datos}</div></div>
+      <div class="cliente">Cliente SA</div>
+      ${extras}
+    </div>
+    <div class="sec">${barra(e.id, 1, SECCIONES[0], 'dato del sistema', FILAS[SECCIONES[0]])}
+      <table>
+        <thead><tr><th>N.º</th><th>Descripción</th><th>WBS</th><th>Un.</th><th>Contractual</th><th>Acumulado</th><th>Restante</th><th>Metrado del día</th><th>Observaciones</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>COMISIONAMIENTO Y ENTREGA DE SISTEMA</td><td>3.2.5</td><td class="n">glb</td><td class="n">1</td><td class="n">0</td><td class="n">1</td><td class="n">0.40</td><td>NO LLEGARON MATERIALES</td></tr>
+          <tr><td class="n">2</td><td>LIMPIEZA FINAL DE OBRA</td><td>3.3.3</td><td class="n">m2</td><td class="n">1,100</td><td class="n">0</td><td class="n">900</td><td class="n">200</td><td>—</td></tr>
+          <tr><td class="n">4</td><td>RESTITUCION DE TERRENO Y REVEGETACION</td><td>3.3.1</td><td class="n">m2</td><td class="n">660</td><td class="n">0</td><td class="n">540</td><td class="n">120</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="aviso">Reportado, pendiente de validación: N.º 1, 2, 4.</p>
+    </div>
+    <div class="sec">${barra(e.id, 2, SECCIONES[1], 'dato del sistema', FILAS[SECCIONES[1]])}
+      <table>
+        <thead><tr><th>Turno</th><th>Nombre</th><th>DNI</th><th>Motivo</th><th>Observación</th></tr></thead>
+        <tbody>
+          <tr><td>DIA</td><td>JOSE ALFREDO COTRINA ALTAMIRANO</td><td class="n">45821903</td><td>Falta</td><td>—</td></tr>
+          <tr><td>DIA</td><td>LUIS GOMEZ RAMIREZ</td><td class="n">40127788</td><td>Permiso</td><td>Trámite personal</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sec">${barra(e.id, 3, 'Firmas', 'texto libre', 3)}
+      <div class="firmas">
+        <div class="firma"><div class="caja"><p>Nombre: M. Quispe</p><p>Firma:</p><span class="sello">SELLO</span></div><p class="pie">SUPERVISOR</p></div>
+        <div class="firma"><div class="caja"><p>Nombre:</p><p>Firma:</p></div><p class="pie">OFICINA TÉCNICA</p></div>
+        <div class="firma"><div class="caja"><p>Nombre:</p><p>Firma:</p></div><p class="pie">CLIENTE</p></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function pintar() {
+  $('#app').style.setProperty('--acento', estado.acento);
+  $('#hojas').innerHTML = ESTILOS.map((e) => `<article class="ficha"><header><span class="rotulo">${e.rotulo}</span><span class="detalle">${e.detalle}</span></header><div class="marco">${hoja(e)}</div></article>`).join('');
+  $('#campos').innerHTML = estado.campos.map((c) => `<span class="chip fijo">${esc(c)}</span>`).join('') +
+    estado.extras.map((c, i) => `<span class="chip">${esc(c)}<button type="button" data-quitar="${i}" aria-label="Quitar el campo ${esc(c)}">×</button></span>`).join('');
+}
+
+$('#muestras').innerHTML = ACENTOS.map(([c, n]) => `<button type="button" class="muestra" style="background:${c}" data-c="${c}" aria-label="${n}" aria-pressed="${c === estado.acento}"></button>`).join('');
+$('#muestras').addEventListener('click', (ev) => {
+  const b = ev.target.closest('button[data-c]');
+  if (!b) return;
+  estado.acento = b.dataset.c;
+  document.querySelectorAll('.muestra').forEach((m) => m.setAttribute('aria-pressed', String(m === b)));
+  pintar();
+});
+$('#o-num').addEventListener('change', (ev) => { estado.num = ev.target.checked; pintar(); });
+$('#o-ori').addEventListener('change', (ev) => { estado.ori = ev.target.checked; pintar(); });
+$('#o-cnt').addEventListener('change', (ev) => { estado.cnt = ev.target.checked; pintar(); });
+$('#form-campo').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const v = $('#nuevo-campo').value.trim();
+  if (v && !estado.extras.includes(v) && estado.extras.length < 6) { estado.extras.push(v); $('#nuevo-campo').value = ''; pintar(); }
+});
+$('#campos').addEventListener('click', (ev) => {
+  const b = ev.target.closest('button[data-quitar]');
+  if (b) { estado.extras.splice(Number(b.dataset.quitar), 1); pintar(); }
+});
+pintar();
+</script>

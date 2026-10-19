@@ -5,7 +5,7 @@
 ## Identificación y estado
 
 - Fecha: 2026-10-18
-- Estado: **Lote cerrado en código y documentación; falta autorización de Victor para el commit y push de los dos repositorios y su revisión en pantalla.** T1 a T7 y las tandas L5-13 a L5-27 (orden de columnas, firmas con imagen, partidas por grupo, inasistencias, alineación, estilo A con resumen en la barra) están construidas en `py_control_proyectos_web` (la primera parte ya se desplegó el 2026-10-18; lo posterior está sin commit). Tipos, pruebas y PDF de muestra en verde. `db/110_informes_codigo_por_fecha.sql` aplicada por Victor. Pendiente: verificación en pantalla con login (sin navegador disponible en esta sesión)
+- Estado: **Lote 5 entregado y subido a `main` el 2026-10-19 (app `1919fba`, documentación al día); falta la revisión de Victor en pantalla con un servicio real.** Incluye T1 a T7 y L5-13 a L5-32 (alineación y decimales, semana y cuadrícula del cajetín, fotos como figuras, columna Avance con barrita, Avance por nivel por paquetes de partidas, marco por sección, PDF del Dashboard en tres entregas). `db/110_informes_codigo_por_fecha.sql` aplicada por Victor. **Pendientes de la siguiente sesión (Victor, 2026-10-19):** (1) crear el cuadro de entregables; (2) mejorar el PDF del Dashboard; (3) seguir mejorando el Dashboard de la app; (4) verificar en pantalla con login el editor, las figuras, los tres modos de Avance por nivel y la exportación del Dashboard con un servicio real.
 - Flujos que cambian: [22](../../04-flujos-de-negocio/22-informes-de-supervision.md) (descarga, código, editor, fotos, formatos), [16](../../04-flujos-de-negocio/16-paneles.md) si cambia alguna pantalla, [14](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) solo si cambia algún permiso (hoy ninguno).
 
 ## Observaciones (Victor)
@@ -53,6 +53,7 @@
 | L5-29 | Exportación del Dashboard: una hoja con el Dashboard como la pantalla, la matriz de partidas y la Curva S enmarcada con título | Hecho en el PDF (flujo 11 § Descargar). Pendiente: probarlo con un servicio real |
 | L5-30 | Prueba en producción (2026-10-19): letra mayor en la descripción de las fotos; fotos como figuras («Figura N°01», consecutivas, sin cortar, ajustadas al cuadro, como el Excel de referencia); «Avance por nivel» con metrados y barrita de avance físico en % al final; el pie de las fotos sin la hora por defecto; columna «Avance» con barrita en «Actividades ejecutadas»; datos del cajetín centrados en vertical | Hecho en pantalla, PDF y Word (y en la hoja «Fotos» del Excel); los datos del cajetín y de las celdas de tabla también quedan centrados en vertical. Pendiente: que Victor lo revise en pantalla |
 | L5-31 | «Avance por nivel» con opción para elegir qué muestra: paquetes de partidas y sus partidas, solo paquetes (avance) o paquetes con HH y avance (paquete de partidas = nivel con rol PAQUETE_PARTIDAS, el 3.3; no el paquete de trabajo del flujo 19) | Hecho en pantalla, PDF, Word y Excel; los bloques anteriores siguen con «Niveles del presupuesto». Pendiente: que Victor lo revise en pantalla con un servicio real |
+| L5-32 | Marco azul de esquinas redondeadas alrededor de cada sección, como el de selección del editor | Hecho en pantalla y PDF (flujo 22); pendiente: que Victor lo revise |
 
 ## Decisiones de Victor (2026-10-18)
 
@@ -92,7 +93,7 @@
 
 ## Mejoras (de trabajo)
 
-- Trasladadas al cierre del lote a [`2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md`](../../03-aprendizaje-continuo/2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md) (seis aprendizajes: copiar la referencia que Victor da, citar el documento normativo al consultar, cerrar con los apartados llenos, PDF de muestra como imagen, parches con Write, prueba inestable de avisos).
+- Trasladadas al cierre del lote a [`2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md`](../../03-aprendizaje-continuo/2026-10-18-lote-5-informes-aprendizajes-de-trabajo.md) (ocho aprendizajes: copiar la referencia que Victor da, citar el documento normativo al consultar, cerrar con los apartados llenos, PDF de muestra como imagen, parches con Write, prueba inestable de avisos, confirmar qué es lo que Victor nombra con su palabra de negocio, y contrastar una aclaración con la anterior antes de revertir).
 
 ## Observaciones sobre la política
 

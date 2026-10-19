@@ -30,6 +30,14 @@ Los heredocs con barras invertidas y comillas rompieron los reemplazos (reincide
 
 Falla de forma intermitente en la corrida completa y pasa sola. No es del lote; se corre aparte antes de culpar al cambio.
 
+### 7. Cuando Victor nombra algo con su palabra de negocio, se confirma qué es en el sistema antes de construir
+
+«Paquete de partidas» se leyó como el paquete de trabajo del flujo 19 y se propuso otra tabla; Victor aclaró que era el nivel 3.3 del presupuesto (rol `PAQUETE_PARTIDAS`) y que ahí solo quería el avance. Dos rondas de maqueta se perdieron. Lo que funcionó: mostrar la maqueta en una tabla con sus datos reales antes de escribir código, y corregirla con lo que él dijo.
+
+### 8. Una aclaración corta de Victor puede corregir mi lectura de la anterior, no confirmarla
+
+«Quiero saber el avance de un 3 Tuberías, no el de sus metrados» describía la columna Avance, no pedía quitar los metrados. Ante una frase que parece contradecir la anterior, se contrasta con lo ya dicho y se muestra el resultado antes de revertir.
+
 ## Clasificación y destino propuesto
 
 | # | Tipo | Destino propuesto |
@@ -40,3 +48,5 @@ Falla de forma intermitente en la corrida completa y pasa sola. No es del lote; 
 | 4 | Técnica de verificación | Candidata a `01-contexto-repositorio/04-pruebas-y-evidencia.md` |
 | 5 | Entorno Windows | Reincidencia: candidata a Skill |
 | 6 | Prueba inestable | Se queda como aprendizaje |
+| 7 | Método de consulta | Candidata a `00-estandar-agentes/01-principios-y-seguridad.md` (junto con la 2) |
+| 8 | Método de consulta | Se queda como aprendizaje |

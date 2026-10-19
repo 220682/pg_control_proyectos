@@ -137,7 +137,7 @@ servidor solo porcentajes por nodo (nunca pesos ni montos).
 ## Descargar (Victor, 2026-10-15)
 
 - Botón en la fila de filtros, con menú PDF o Excel (`GET /api/proyectos/[id]/dashboard/descargar?formato=pdf|xlsx&corte=AAAA-MM-DD`). Lo ven y lo usan los 13 roles; el servidor valida sesión, rol y alcance.
-- **El archivo incluye siempre el Dashboard y la Curva S.** PDF A4 horizontal (lo que se ve + la Curva S en hoja aparte + la matriz) o Excel (una hoja por bloque y las series de la Curva S).
+- **El archivo incluye siempre el Dashboard, la Matriz de partidas y la Curva S.** El PDF A4 horizontal entrega tres cosas (Victor, 2026-10-18): **(1) el Dashboard en una sola hoja**, con el aspecto de la pantalla (fondo oscuro, tarjetas, barras de avance por nivel, recursos HH y HM, composición del costo y desviación en Completo, Pareto de CNC y diagnóstico); **(2) la Matriz de partidas**, con su título y su banda, que sigue en más hojas si hace falta (y los subcontratos en Completo); **(3) la Curva S**, con título, resumen al corte y cada gráfica enmarcada (económica y física en Completo, solo física en Parcial). Excel: una hoja por bloque y las series de la Curva S.
 - **Usa la fecha de corte y el modo de la pantalla:** `corte` es una fecha AAAA-MM-DD (el filtro ya resuelto, no el preset) y la Curva S del archivo recorta EV y AC a ese corte. En Completo (rol con economía y `tipo_dashboard` COMPLETO): Curva S económica y física, con dinero; en Parcial: sin dinero y Curva S solo física. Una prueba comprueba que el archivo Parcial no contiene ningún símbolo ni sigla de dinero.
 - El AC del archivo se arma con el mismo cálculo que la pantalla (materiales y subcontratos incluidos), así que PDF, Excel y pantalla dan el mismo AC. Ruta con `maxDuration = 60`.
 

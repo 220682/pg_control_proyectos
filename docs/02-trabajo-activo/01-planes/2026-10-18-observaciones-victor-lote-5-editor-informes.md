@@ -49,6 +49,8 @@
 | L5-25 | Campo para inasistencias; «por estándar, columnas al centro y datos a la derecha» | Bloque opcional «Inasistencias» (hecho). Alineación: cabecera centrada y cifras a la derecha en todas las tablas del informe; **contradice en parte `design.md`** (cabecera igual que el dato): Victor confirma cuál manda |
 | L5-26 | Tres maquetas del estilo de los formatos, con un detalle más llamativo en la barra de sección; sin quitar el estilo actual; el nuevo, personalizable y con datos por defecto ampliables | Maquetas entregadas para elegir; Victor eligió el estilo A (pestaña de acento), sin amarillo ni más alto, y pidió ver el «pequeño dashboard»: ver L5-27 |
 | L5-27 | Estilo A en la app: pestaña de acento (color elegible, sin amarillo; por defecto turquesa), barra casi del mismo alto y resumen en la barra con cifras chicas y barrita de progreso, personalizable | Hecho (pantalla, PDF y Word; Excel sin cambio). Cifras por defecto según el bloque; el usuario marca hasta 4 de un catálogo por bloque. Si hay cifras, la barra no muestra el origen del dato |
+| L5-28 | Prueba en producción: datos siempre a la derecha y dos decimales; semana en el encabezado (del año o desde el inicio del servicio); cuadrícula en el cajetín; firma como imagen en los cuadros | Hecho (alineación y decimales en pantalla, PDF y Word; cajetín con cuadrícula y celda de semana; el editor de firmas muestra siempre los cuadros) |
+| L5-29 | Exportación del Dashboard: una hoja con el Dashboard como la pantalla, la matriz de partidas y la Curva S enmarcada con título | Hecho en el PDF (flujo 11 § Descargar). Pendiente: probarlo con un servicio real |
 
 ## Decisiones de Victor (2026-10-18)
 

@@ -151,8 +151,13 @@ def cuerpo_rdt(cat, dia, ml_t1=None, correccion=False):
 def leer_pantallas(pg, dia):
     """Guarda el texto del PR y del Dashboard tras validar el dia."""
     textos = {}
-    for nombre in ("pr", "dashboard", "curva-s"):
-        pg.goto(f"{APP}/proyectos/{PROYECTO_ID}/{nombre}", wait_until="networkidle")
+    rutas = {"pr": "pr", "dashboard": "dashboard", "curva-s": "curva-s", "restricciones": "restricciones",
+             "informes": "informes"}
+    globales = {"notificaciones": "/notificaciones", "status-rdts": f"/rdts/status?proyectoId={PROYECTO_ID}",
+                "plan-maestro": f"/plan-maestro?proyectoId={PROYECTO_ID}"}
+    for nombre in [*rutas, *globales]:
+        ruta = f"/proyectos/{PROYECTO_ID}/{rutas[nombre]}" if nombre in rutas else globales[nombre]
+        pg.goto(f"{APP}{ruta}", wait_until="networkidle")
         textos[nombre] = pg.inner_text("body")
         guardar(f"pantalla-{dia}-{nombre}.txt".replace(".txt", ".json"), {"texto": textos[nombre]})
     return textos

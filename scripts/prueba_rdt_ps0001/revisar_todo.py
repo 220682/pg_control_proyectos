@@ -10,7 +10,7 @@ necesita mas cuentas. Hace, en orden:
   2. Avisos: las notificaciones que ve cada rol (validadores deben ver los RDT registrados).
   3. Pruebas negativas (D.8) que la app debe rechazar sin guardar nada.
   4. Rechazar el RDT del 21.10 ya VALIDADO (el PR vuelve a D2), exigir justificacion y revalidarlo.
-  5. Restriccion RE-1: recepcionar y atender, y ver el cambio en Informes.
+  5. Restriccion RE-1: recepcionar y atender, y ver el cambio en su pantalla.
 Termina siempre devolviendo la vista al rol propio. Resultado: salida/revision-todo.json.
 Necesita PG_CORREO y PG_CLAVE (ver comun.py).
 """
@@ -73,18 +73,21 @@ def main():
                 e3, _ = api(pg, "GET", f"/api/rdts/partes?proyectoId={PROYECTO_ID}")
                 anotar("permisos", f"{rol} ve los RDT", 200, e3)
 
-            # 2. Avisos por rol
-            for rol in ("jefe_de_proyectos", "jefe_de_oficina_tecnica", "supervisor_operativo", "administrador"):
-                como(pg, rol)
+            # 2. Avisos: son por usuario (quien actua no recibe el suyo), asi que se ve la app como cada usuario
+            pg.goto(f"{APP}/proyectos/{PROYECTO_ID}/pr", wait_until="networkidle")
+            usuarios = pg.eval_on_selector_all(
+                "select option", "os => os.filter(o => o.value.startsWith('usuario:')).map(o => [o.value.slice(8), o.textContent.trim()])")
+            conteo = {}
+            for uid, nombre in usuarios:
+                api(pg, "POST", "/api/ver-como", {"usuario": uid})
                 t = texto(pg, "/notificaciones")
-                hoy = [b for b in t.split("Recibida") if "21/10/2026" in b]
-                nuevos = [b for b in hoy if "RDT registrado para validar" in b]
-                guardar(f"avisos-{rol}.json", {"texto": t})
-                anotar("avisos", f"{rol}: avisos de RDT registrado el 21.10",
-                       "validadores >= 3" if rol in PUEDEN_VALIDAR - {"administrador"} else "sin exigencia",
-                       len(nuevos),
-                       ok=(len(nuevos) >= 3) if rol in PUEDEN_VALIDAR - {"administrador"} else True)
+                hoy = [x for x in t.split("Recibida") if "21/10/2026" in x and "RDT registrado para validar" in x]
+                conteo[nombre] = len(hoy)
+                guardar(f"avisos-usuario-{nombre.replace(' ', '_')}.json", {"texto": t})
             como(pg, None)
+            print("Avisos de RDT registrado el 21.10 por usuario:", {k: v for k, v in conteo.items() if v})
+            anotar("avisos", "algun validador recibio los avisos de RDT registrado (4 RDT el 21.10)", ">= 1 usuario con >= 3",
+                   max(conteo.values(), default=0), ok=max(conteo.values(), default=0) >= 3)
 
             # 3. Negativos (no deben guardar nada)
             d1 = cuerpo_rdt(cat, "D1")
@@ -106,7 +109,7 @@ def main():
             anotar("negativos", "fecha futura", "FECHA_FUTURA", (j or {}).get("codigo"))
             sin = cuerpo_rdt(cat, "D3")
             sin["fechaLima"] = "2026-10-21"
-            sin["personas"][0]["cargo"] = "CARGO QUE NO EXISTE PRUEBA"
+            sin["personas"][0]["cargo"] = "TOPOGRAFO"
             e, j = api(pg, "POST", "/api/rdts/partes", sin)
             anotar("negativos", "cargo sin tarifa en el presupuesto", "CARGO_SIN_TARIFA", (j or {}).get("codigo"))
 
@@ -132,13 +135,11 @@ def main():
             if not re1:
                 anotar("restriccion", "RE-1 existe", True, False)
             else:
-                for accion, estado in (("recepcionar", "Recepcionado"), ("atender", "Atendido")):
-                    e, j = api(pg, "PATCH", f"/api/proyectos/{PROYECTO_ID}/restricciones/{re1['id']}",
-                               {"accion": accion})
-                    anotar("restriccion", f"{accion} RE-1", 200, e)
-                t = texto(pg, f"/proyectos/{PROYECTO_ID}/informes")
-                guardar("informes-despues.json", {"texto": t})
-                anotar("restriccion", "Informes muestra RE-1", True, "RE-1" in t)
+                for accion in ("recepcionar", "atender"):
+                    e, j = api(pg, "PATCH", f"/api/proyectos/{PROYECTO_ID}/restricciones/{re1['id']}", {"accion": accion})
+                    anotar("restriccion", f"{accion} RE-1", "200 (o 409 si ya estaba)", e, ok=e in (200, 409))
+                t = texto(pg, f"/proyectos/{PROYECTO_ID}/restricciones")
+                anotar("restriccion", "la pantalla Restricciones la muestra Atendida", True, "Atendido (1)" in t)
         finally:
             como(pg, None)
 

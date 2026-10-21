@@ -4,12 +4,12 @@
 
 - Tema: cerrar los vacíos que dejó la prueba funcional del RDT (19.10.2026, PS-0001 TECNET) y repetir la prueba con un guion actualizado.
 - Fecha: 2026-10-21.
-- Estado: `Planificando` — Gate Spec aprobado por Victor (2026-10-21); falta el Gate 1 (equipo, modelos, tandas y entorno), propuesto en este documento. El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera.
+- Estado: `En ejecución` — Gate Spec aprobado por Victor (2026-10-21); Gate 1 aprobado el mismo día (equipo, modelos, tandas y entorno como se propone abajo). El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera.
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-21)`
-- Gate 1: `propuesto por el Orquestador (2026-10-21), a la espera de Victor`
+- Gate 1: `aprobado por Victor (2026-10-21)`
 - Gate 2: `pendiente`
 
 Fuentes: informe final `01_pg_planeamiento/vpc_trabajo/servicios/PS-167-2026_.../..._prueba-rdt.md`; [log de ejecución](../06-pruebas/03-prueba-rdt-ps0001-ejecucion.md); [plan de la prueba](../06-pruebas/02-prueba-rdt-ps0001-plan.md). Respuestas de Victor del 2026-10-21 en el Registro de decisiones.
@@ -165,6 +165,7 @@ Mapa del Planner (lectura, 2026-10-21; los Workers confirman líneas exactas):
 | 2026-10-21 | Arreglar métricas del paquete, autocompletar «Met. prog.», y revisar el motivo del rechazo | Victor |
 | 2026-10-21 | Los equipos no llevan partida: quitar la opción | Victor |
 | 2026-10-21 | Gate Spec aprobado. Las HH ganadas tampoco cuentan la parte de la transversal (queda con la misma regla que las HH reales) | Victor |
+| 2026-10-21 | Gate 1 aprobado tal como se propuso; Victor pidió ejecutar hasta terminar sin más preguntas (decide el Orquestador lo operativo) | Victor |
 | 2026-10-21 | Autorizado separar y empujar a `main` solo lo de restricciones (Lote 0) | Victor |
 | 2026-10-21 | Limpieza de los 5 RDT de prueba: queda **pendiente**. Victor intentó borrarlos y la pantalla no ofrece la opción (solo el administrador puede borrar RDT ya validados) | Victor |
 

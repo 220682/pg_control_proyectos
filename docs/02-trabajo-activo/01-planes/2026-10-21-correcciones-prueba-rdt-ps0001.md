@@ -167,6 +167,8 @@ Mapa del Planner (lectura, 2026-10-21; los Workers confirman líneas exactas):
 | 2026-10-21 | Gate Spec aprobado. Las HH ganadas tampoco cuentan la parte de la transversal (queda con la misma regla que las HH reales) | Victor |
 | 2026-10-21 | Gate 1 aprobado tal como se propuso; Victor pidió ejecutar hasta terminar sin más preguntas (decide el Orquestador lo operativo) | Victor |
 | 2026-10-21 | Autorizado separar y empujar a `main` solo lo de restricciones (Lote 0) | Victor |
+| 2026-10-21 | Las HH programadas del Plan Maestro sí incluyen la transversal (cierra la primera duda abierta; escrito en los flujos 10 y 20) | Victor |
+| 2026-10-21 | Prueba por script (`scripts/prueba_rdt_ps0001/`, sin agentes): D1 a D3 comparados con los esperados sin diferencias; `revisar_todo.py` con una sola cuenta: 54 comprobaciones, 0 diferencias (13 roles, avisos, negativos, rechazo y revalidación de un RDT validado, restricción RE-1). D4 y D5 esperan su fecha | Orquestador |
 | 2026-10-21 | Limpieza de los 5 RDT de prueba: queda **pendiente**. Victor intentó borrarlos y la pantalla no ofrece la opción (solo el administrador puede borrar RDT ya validados) | Victor |
 
 ## Enlaces a progreso y evidencia homónimos
@@ -205,7 +207,7 @@ Ninguno detectado.
 
 - **Victor debe aplicar `db/116`** (`db/116_hh_transversales_fuera_del_ip.sql`, en el SQL Editor, antes de desplegar la app: la app lee `pr_partidas.hh_transversal_acum`) y después recalcular el PR de los servicios con transversales (se recalcula solo al validar o rechazar un RDT).
 - **Victor debe sumar a la Matriz de permisos: «Equivalencias de cargos del servicio» (administrador y jefe de proyectos).** El artefacto (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT) no se puede abrir desde esta cuenta; el flujo 14 ya trae la fila y la nota 18.
-- **Duda abierta, no decidida (no está escrita como regla):** si las HH contractuales y las HH programadas del Plan Maestro también deben excluir la transversal (hoy el Plan Maestro las deja en el total programado y excluye solo las HH reales). Anotada en los flujos 10 y 20.
+- **Resuelta (Victor, 2026-10-21):** las HH programadas del Plan Maestro sí incluyen la transversal; escrito en los flujos 10 y 20. Queda sin decidir solo las HH contractuales.
 - **Duda abierta, no decidida:** `hm_legacy_sin_partida_acum` (HM de equipos sin partida) no entra a HH ni al IP. Anotada en los flujos 06 y 10.
 - **Limpieza de los 5 RDT de prueba y decisión sobre Braulio** siguen pendientes de Victor (ver Registro de decisiones).
 - **Verificación en producción** de restricciones (día 3 de la prueba v2): sigue «pendiente de verificación» en el flujo 22.

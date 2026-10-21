@@ -10,6 +10,7 @@ Cada plan de trabajo real vive como el mismo nombre base (`YYYY-MM-DD-<tema>.md`
 03-evidencia/YYYY-MM-DD-<tema>.md → demostración: qué se verificó y con qué resultado
 04-auditoria/YYYY-MM-DD-<tema>.md → informe del Auditor de ese plan, con su clasificación de hallazgos
 05-eficiencia/YYYY-MM-DD-<tema>.md → informe del Analista del flujo, después del cierre: eficiencia y mejoras a la política
+06-pruebas/NN-<prueba>.md       → pruebas de punta a punta con datos sintéticos (ver `06-pruebas/README.md`)
 ```
 
 ## Qué no vive acá

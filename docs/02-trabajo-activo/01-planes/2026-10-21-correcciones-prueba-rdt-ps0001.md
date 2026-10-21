@@ -4,12 +4,12 @@
 
 - Tema: cerrar los vacíos que dejó la prueba funcional del RDT (19.10.2026, PS-0001 TECNET) y repetir la prueba con un guion actualizado.
 - Fecha: 2026-10-21.
-- Estado: `Planificando` — Gate Spec aprobado por Victor (2026-10-21); falta el Gate 1 (equipo, modelos y tandas). El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera.
+- Estado: `Planificando` — Gate Spec aprobado por Victor (2026-10-21); falta el Gate 1 (equipo, modelos, tandas y entorno), propuesto en este documento. El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera.
 
 Puertas:
 
 - Gate Spec: `aprobado por Victor (2026-10-21)`
-- Gate 1: `pendiente`
+- Gate 1: `propuesto por el Orquestador (2026-10-21), a la espera de Victor`
 - Gate 2: `pendiente`
 
 Fuentes: informe final `01_pg_planeamiento/vpc_trabajo/servicios/PS-167-2026_.../..._prueba-rdt.md`; [log de ejecución](../06-pruebas/03-prueba-rdt-ps0001-ejecucion.md); [plan de la prueba](../06-pruebas/02-prueba-rdt-ps0001-plan.md). Respuestas de Victor del 2026-10-21 en el Registro de decisiones.
@@ -61,7 +61,7 @@ La verificación es el caso de restricción del guion v2 (día 3).
 
 1. **En Importar DP**, tras la conciliación actual, nueva sección: «Cargos del catálogo de personal sin fila en este presupuesto». Para cada cargo del personal que pueda trabajar en el servicio sin fila de mano de obra en HH (ni MOI) en el presupuesto, el usuario elige a qué fila del presupuesto equivale (OPERARIO → OPERARIO CIVIL; OFICIAL → OFICIAL CIVIL; INGENIERO DE SEGURIDAD → INGENIERO SSOMA). La equivalencia es **del servicio** (otro servicio puede mapear OPERARIO a OPERARIO MECANICO). Sin resolver, el botón de importar queda bloqueado y el aviso nombra cada cargo: «El cargo X no existe en el presupuesto de este servicio».
 2. **En Crear/Corregir RDT**: si se elige a una persona cuyo cargo no tiene tarifa en el presupuesto del servicio (ni MOI ni equivalencia), se rechaza con un mensaje que dice qué hacer («pida al jefe de proyectos declarar la equivalencia en Importar DP»). Así ninguna hora entra con costo 0 sin que se vea. La validación en servidor repite la comprobación (el navegador no basta).
-3. **Aviso `rdt.recursos_sin_tarifa`**: existe en el código (`avisarRecursosSinTarifa`) y se invoca al validar, pero en la prueba no llegó. Primero se **diagnostica** (producción desfasada, destinatario, o cierre automático) antes de tocarlo. Con el punto 2 dejará de dispararse casi siempre, pero queda para equipos y datos antiguos.
+3. **Aviso `rdt.recursos_sin_tarifa`**: existe en el código (`avisarRecursosSinTarifa`) y se invoca al validar, pero en la prueba no llegó. **Lectura del Planner (2026-10-21):** el recorrido de código es correcto (`resolverYCongelarTarifas` devuelve `sinResolver` y el PUT de validación avisa a administrador y jefe de proyectos); la función existe desde el 2026-09-21. No se puede explicar solo leyendo código; el Worker del Lote 2 lo diagnostica **consultando la base** (tabla de avisos del 19 al 23.10 y qué devolvió `sinResolver`) antes de tocarlo. Hipótesis: el aviso se creó pero se cerró o quedó en la cola compartida; o el cargo resolvió como MOI en vez de sin resolver (las horas sin costo no serían «sin tarifa» sino «MOI»). Con el punto 2 dejará de dispararse casi siempre, pero queda para equipos y datos antiguos.
 4. **Dashboard «Recursos sin tarifa»**: la tarjeta lista los nombres y su enlace va a esa lista (hoy solo cuenta y abre `/recursos/personal`).
 5. La fila del presupuesto en unidad **MES** (p. ej. OPERARIO 0,5 MES) no es tarifa por hora: se ignora para HH, como hoy, y el mensaje del punto 1 lo dice.
 
@@ -107,7 +107,7 @@ Qué falló en el método de la sesión anterior, y no debe repetirse: **desde l
 
 ## Entorno, repositorios, ramas y worktrees
 
-Por confirmar en el Gate 1. Hoy: app en `main` con cambios ajenos sin commit y `origin/main` un commit adelante; `AGENTS.md` pide no crear ramas ni worktrees sin autorización de Victor.
+Propuesta para el Gate 1: trabajar **directo en `main`** de la app, sin rama ni worktree (así se trabajó hasta ahora y `AGENTS.md` lo fija por defecto). Estado verificado el 2026-10-21 tras el Lote 0: `main` = `origin/main` = `ddb18ee`; solo quedan sin seguimiento `db/095` y `db/114` (de otros trabajos, no se tocan). La migración nueva del Lote 3 será `db/115`, aplicada solo con autorización de Victor.
 
 ## Skills aplicables
 
@@ -119,11 +119,31 @@ Lote 0 primero y sin depender de nada. Lotes 1, 2, 3 y 4 son independientes entr
 
 ## Equipo del plan
 
-Se define en el Gate 1 (modelos y Workers según `09-orquestacion-y-modelos.md`; sin Opus). Propuesta: 1 Worker para Lotes 1 y 3, 1 para el 2 y luego el 4, Documentador en Haiku, Worker git para el Lote 0.
+Propuesta para el Gate 1 (modelos según `09-orquestacion-y-modelos.md`; sin Opus), en tandas de 4 a 8 ítems con brief de hasta 8 KB:
+
+| Tanda | Contenido | Quién | Modelo |
+|---|---|---|---|
+| T1 | Lote 1 (fecha futura y Curva S) | Worker 1 | Sonnet |
+| T2 | Lote 3 (regla de HH, `db/115`, PR, Dashboard, Plan Maestro) | Worker 1 | Sonnet |
+| T3 | Lote 2 (cargos, tarifas, Importar DP, diagnóstico del aviso) | Worker 2 | Sonnet |
+| T4 | Lote 4 (formulario, equipos sin partida, rechazo, menores) | Worker 2, tras T3 | Sonnet |
+| T5 | Lote 5 (flujos 06, 09, 10, 11, 18, 21, 22 y Matriz) | Documentador | Haiku |
+| T6 | Auditoría de trazabilidad | Auditor | Sonnet |
+
+T1 y T3 pueden ir en paralelo (no comparten archivos); T2 va después de T1 porque ambos tocan el PR y el Dashboard. Los commits y el push los hace el Orquestador, uno por tanda, con `npm test` y build en verde.
 
 ## Archivos / componentes afectados
 
-Por confirmar por el Planner tras el Gate Spec. Puntos de partida leídos: `src/lib/dp/equivalencias.ts`, `src/lib/dp/tarifas.ts`, `src/lib/dp/tarifas-servidor.ts`, `src/lib/pr/acumulacion-rdt.ts`, `src/app/api/rdts/partes/route.ts`, `src/components/ui/FormularioCrearRdt.tsx`, `src/app/api/curva-s/route.ts`.
+Mapa del Planner (lectura, 2026-10-21; los Workers confirman líneas exactas):
+
+| Lote | Archivos de la app |
+|---|---|
+| 1 | `src/app/api/rdts/partes/route.ts` (crear: ya valida `fechaLima`), `src/app/api/rdts/partes/[id]/route.ts` (corregir), ruta de RDT subidos, `FormularioCrearRdt.tsx` (`type="date"`, línea ~1122), `src/app/api/curva-s/route.ts`, `src/lib/curva-s/curva-s.ts`, `cargar-curva-s.ts`, `textos.ts` |
+| 2 | `src/lib/dp/equivalencias.ts`, `tarifas.ts`, `tarifas-servidor.ts`, pantalla Importar DP, `rdts/partes/route.ts` (rechazo al crear), `src/lib/pr/acumulacion-rdt.ts`, `dashboard/page.tsx` (tarjeta sin tarifa), `recursos_cargo_equivalencias` |
+| 3 | `db/115` (redefine `recalcular_pr_desde_rdt`, vigente en `db/112`), `pr/page.tsx`, `dashboard/page.tsx`, `src/lib/dashboard/cargar-dashboard.ts`, `datos-descarga.ts`, `src/lib/informes/cargar-fuentes.ts` |
+| 4 | `FormularioCrearRdt.tsx` (columna WBS del equipo, línea ~1831; métricas y autocompletado de actividad, líneas ~1234-1295), `rdts/partes/[id]/route.ts` (**quitar el bloqueo de validación «equipo sin WBS válido del DP»**, líneas ~340-355), Status de RDT, Revisar RDT, Plan Maestro (estado de carga y rótulo «Sin resolver») |
+
+**Hallazgo nuevo del Planner:** al validar, el servidor hoy responde 400 «No se puede validar: N equipo(s) no tiene(n) un WBS válido del DP». Al quitar la partida del equipo ese bloqueo debe desaparecer en el mismo cambio, o ningún RDT con equipo podría validarse.
 
 ## Riesgos y bloqueos
 

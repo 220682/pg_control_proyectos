@@ -73,6 +73,7 @@ def main():
                 e3, _ = api(pg, "GET", f"/api/rdts/partes?proyectoId={PROYECTO_ID}")
                 anotar("permisos", f"{rol} ve los RDT", 200, e3)
 
+            como(pg, None)
             # 2. Avisos: la pantalla Notificaciones siempre usa al usuario real (no sigue a «Ver como») y
             # esconde lo que uno mismo envia. Se leen los AVISOS ENVIADOS por este usuario: cada RDT
             # registrado debe haber dejado un aviso en la cola de cada rol que valida (3 roles).
@@ -84,9 +85,11 @@ def main():
             for n in reg:
                 por_rdt.setdefault(n["mensaje"] + "|" + str(n.get("referencia_id", "")), 0)
                 por_rdt[n["mensaje"] + "|" + str(n.get("referencia_id", ""))] += 1
-            anotar("avisos", "avisos enviados de RDT registrado (por rol validador, 3 roles x RDT)",
-                   ">= 12 (4 RDT del 21.10 x 3 roles)", len(reg), ok=len(reg) >= 12)
-            guardar("avisos-resumen.json", {"total": len(env), "rdt_registrado": len(reg), "porRdt": por_rdt})
+            # La API agrupa por destinatario y RDT: una fila puede traer varios avisos (campo ids).
+            filas_aviso = sum(len(n.get("ids") or [1]) for n in reg)
+            anotar("avisos", "avisos de RDT registrado (4 RDT del 21.10 x 3 roles que validan)",
+                   12, filas_aviso, ok=filas_aviso >= 12)
+            guardar("avisos-resumen.json", {"total": len(env), "rdt_registrado": filas_aviso, "porRdt": por_rdt})
 
             # 3. Negativos (no deben guardar nada)
             d1 = cuerpo_rdt(cat, "D1")

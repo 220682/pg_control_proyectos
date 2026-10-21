@@ -34,14 +34,14 @@ Datos del paquete
 - Servicio.
 - Nombre (obligatorio).
 - **Nivel** (profundidad de la estructura en la que se arma; p. ej. en un presupuesto de 3 niveles, 3).
-- **Modo de medición** (ver más abajo).
-- **Partida guía** (solo en el modo «por avance del paquete»; debe ser una de las partidas del paquete).
+- **Partida guía** (obligatoria al crear; debe ser una de las partidas del paquete; ver «Avance del paquete»).
+- **Unidad del paquete**: la de su partida guía (no se escribe).
 - **Orden** (se sube o baja con ▲▼ o Alt+↑/↓).
 - **Disciplina** (obligatoria al crear; catálogo fijo, ver abajo).
 - Estado (`BORRADOR`, `VALIDADO`, `ARCHIVADO`).
 - Presupuesto y avance calculados, no escritos.
 
-**El paquete no tiene fechas.** No se programa en paquetes: lo programado vive en el lienzo del Plan Maestro (flujo 20) y se edita por línea (actividad × partida). Las fechas del cronograma no se tocan.
+**El paquete no tiene fechas.** No se programa en paquetes: lo programado vive en el lienzo del Plan Maestro (flujo 20): los días se escriben en la fila del paquete, sobre el metrado de su partida guía, y se guardan por línea (actividad × partida) según la proporción de la guía. Las fechas del cronograma no se tocan.
 
 Disciplina
 - Catálogo **fijo de 5**: Civil, Mecánica, Eléctrica, Instrumentación y Tuberías (tabla `disciplinas`, solo lectura para la app; lectura para cualquier usuario autenticado).
@@ -68,14 +68,14 @@ Crear paquete
 - Quién gestiona: administrador, jefe de proyectos y planner; los 13 roles ven (tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md)).
 
 Unidades diferentes
-Las partidas de un paquete conservan sus unidades originales (m³, kg, m², unidades): no se suman físicamente. El paquete no tiene unidad ni meta propias.
+Las partidas de un paquete conservan sus unidades originales (m³, kg, m², unidades): no se suman físicamente. **La unidad del paquete es la de su partida guía** y es la unidad en la que se declara el avance del paquete; no hay otra unidad ni meta propias.
 
 Avance
-**Los pesos por partida y el avance ponderado del diseño original quedan superados.** El avance se declara según el modo de medición:
-- **Por partida** (`POR_PARTIDAS`): cada partida con su unidad y metrado.
-- **Por la guía** (`AVANCE_PAQUETE`): se declara el avance de la partida guía y el mismo % se aplica a todas las partidas del paquete.
+**Los pesos por partida y el avance ponderado del diseño original quedan superados.** El avance diario se declara **de solo dos formas** (decisión de Victor, 2026-10-15):
+- **Por partida**: una partida suelta (directa, sin paquete) se declara con su propia unidad y metrado.
+- **Por paquete**: si la partida pertenece a un paquete, se elige el paquete y se escribe el metrado avanzado **del paquete, en la unidad de su partida guía**; el sistema calcula el % (`metrado avanzado / metrado de la guía`) y lo aplica a las demás partidas del paquete.
 
-Para mostrar un avance del paquete en el selector del RDT: por avance = % de la guía; por partidas = promedio simple de sus partidas. Lo oficial es el **real por paquete × partida**, que se ve en el Plan Maestro (flujos 18 y 20); el real por partida (suma de todos sus paquetes) alimenta al PR. Solo RDT validados alimentan el avance oficial.
+Para mostrar un avance del paquete en el selector del RDT se usa el % de su guía. Una partida repartida en dos paquetes no es un caso especial: se declara por paquete y el sistema calcula las partidas; las porciones suman 100 % del metrado contractual y no hay regla adicional. Lo oficial es el **real por paquete × partida**, que se ve en el Plan Maestro (flujos 18 y 20); el real por partida (suma de todos sus paquetes) alimenta al PR. Solo RDT validados alimentan el avance oficial.
 
 Reportabilidad
 La cadena de trazabilidad será:
@@ -93,18 +93,30 @@ El Plan Maestro es el **umbral** del servicio. Aprobado el Plan Maestro, los paq
 
 La restricción se valida en **servidor** con un mensaje claro, en el mismo tono que el bloqueo de recarga del DP y del cronograma; no cambia quién puede la acción, solo si se puede (como la transición `EN_PLANEACION` → `EJECUCION`). Antes de aprobar el Plan Maestro, los paquetes se gestionan con normalidad; y lo **administrativo** del servicio (checklist, notificaciones y datos del servicio) sigue funcionando.
 
-## Modo de medición (Fase 1 — implementado 2026-09-23)
+## Partidas transversales (Victor, 2026-10-19)
 
-El paquete tiene un modo de medición, definido en la columna `paquetes_trabajo.modo_medicion` (migración `072`):
+Una **partida transversal** es la que ocurre durante todo el servicio (p. ej. movilización de personal). No es un paquete ni va en uno.
 
-| Modo | Descripción |
-|---|---|
-| `AVANCE_PAQUETE` | Se declara el avance del paquete como porcentaje de su **partida guía** y ese mismo % se aplica a **todas** las partidas del paquete. La partida guía (`dp_partida_guia_id`) jala su **unidad y metrado** del DP; con eso se calcula `% = metrado_ejecutado / metrado_guía`. Ejemplo: guía cama de arena 10 ml, declaras 5 ml → 50 % → excavación 7.5 m³, cama de arena 5 ml, relleno 7.5 m³. En el RDT (flujo 06) el servidor guarda una fila derivada de solo lectura por cada partida. El metrado de la guía dentro del paquete es la suma de su metrado declarado. |
-| `POR_PARTIDAS` | El paquete no tiene unidad propia; el avance se declara **partida por partida**, cada una con su unidad y metrado originales. |
+- **Se marcan en la pantalla de Paquetes**, en el paso «Transversales» (junto a «Agrupar» y «Declarar»), con un interruptor por partida: **partida por partida, sin catálogo fijo**. Las marcan quienes ya gestionan paquetes: administrador, jefe de proyectos y planner. Se declaran **antes** de crear el Plan Maestro.
+- **No aparecen en las partidas del RDT** (flujo 06) ni llevan actividad, metrado o vínculo: la API rechaza vincularles actividades, y no se pueden marcar si son la **partida guía** de un paquete vigente (cambia primero la guía).
+- **Están exentas de la regla del 100 %** y de tener línea en el Plan Maestro (flujo 20): no se les reparte metrado.
+- Su avance, EV, PV, HH y costo real salen del **% físico del resto del servicio** (fórmulas en el [flujo 10](10-generacion-pr.md), «Partidas transversales»). Se ven en el PR, el Dashboard, la Curva S y los informes como filas calculadas de solo lectura.
+- **Cambiarlas con el Plan Maestro aprobado** (excepción acotada al congelamiento de arriba): el cambio se prepara en el paso «Transversales» —solo **administrador y jefe de proyectos**, los que pueden crear una versión nueva— y **rige cuando se aprueba una versión nueva del Plan Maestro**, que parte de la vigente (flujo 20); el que está aprobado no cambia. Si ya hay un borrador armado con las transversales anteriores, hay que generar uno nuevo. Esto se aplica también a los servicios que ya existen.
+- Para marcarlas, el DP del servicio debe tener la **composición de mano de obra y equipo por partida**, que se guarda al importar el DP (flujo 09); un DP anterior se reimporta.
+- No se mezclan con las actividades C/NC: son cosas distintas.
 
-**El modo de medición solo es editable mientras el paquete esté en `BORRADOR`.** Una vez en `VALIDADO` o `ARCHIVADO`, queda fijo. La pantalla de Paquetes crea hoy en `POR_PARTIDAS`; el modo `AVANCE_PAQUETE` lo admite la API y el RDT, sin selector en la pantalla de Paquetes.
+## Avance del paquete y partida guía (regla de Victor, 2026-10-15)
 
-La partida guía **no** se elige por peso ni por jerarquía: la selecciona el usuario, y debe ser una de las partidas del paquete.
+Todo paquete se mide **por avance del paquete** (`paquetes_trabajo.modo_medicion = 'AVANCE_PAQUETE'`, valor fijo que fija el servidor). **Desaparece el modo «por partidas» dentro de un paquete** y el selector de modo que nunca llegó a la pantalla: ya no hay nada que elegir.
+
+- **La partida guía es obligatoria al crear y al editar** el paquete (`dp_partida_guia_id`): la elige el usuario entre las partidas del paquete; no se elige por peso ni por jerarquía. La API rechaza el paquete sin guía o con una guía que no esté entre sus partidas.
+- **La unidad del paquete es la de la guía** (`unidad_paquete`) y su metrado es la suma del metrado declarado de la guía dentro del paquete (`metrado_paquete`).
+- **El supervisor declara el avance del paquete**: elige el paquete y escribe el metrado en la unidad de la guía. Con `% = metrado avanzado / metrado de la guía`, el servidor guarda una fila derivada de solo lectura por cada otra partida: guía cama de arena 10 ml, declaras 5 ml → 50 % → excavación 7.5 m³, cama de arena 5 ml, relleno 7.5 m³.
+- **La guía no pierde su fila** en Crear RDT ni en el Plan Maestro: se ve primero, con lo declarado, y las demás partidas se ven como calculadas con el mismo %.
+- Las actividades **contributorias (C) y no contributorias (NC)** se cargan a la partida que el usuario elija al crear el RDT (flujo 06).
+- La partida guía solo es editable mientras el paquete esté en `BORRADOR`; en `VALIDADO` o `ARCHIVADO` queda fija (y con el Plan Maestro aprobado, congelada por U3).
+
+**Datos existentes.** Los paquetes creados antes de esta regla no tenían guía. Se les asignó guía por script, con respaldo previo: la partida de mayor metrado de cada paquete (servicio de pruebas PS-0011, 9 paquetes, 2026-10-15). Los RDT validados anteriores no se reescriben: sus filas de paquete se declararon partida por partida y siguen siendo lo oficial de su fecha.
 
 ## Capa operativa (regla fundacional)
 

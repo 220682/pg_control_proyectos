@@ -235,6 +235,8 @@ La densidad es deliberadamente compacta.
 - `tdClase`
 - `filaClase`
 
+**Orden de los metrados (Victor, 2026-10-15):** donde se vean juntos, siempre en el orden metrado contractual, metrado acumulado, metrado restante.
+
 **Alineación de columnas (regla de Victor, 2026-09-30, para todas las pantallas).** El encabezado de cada columna va sobre su dato y alineado igual: texto a la izquierda; numéricos, porcentajes, montos, fechas y unidades a la **derecha**, con el encabezado también a la derecha. No se da ancho de más a una columna cuyo dato no lo necesita (Und., Met., %, códigos cortos): ancho justo al contenido, y el espacio sobrante va a la columna de texto largo.
 
 - Correcto: `<th class="text-right">Met.</th>` con `<td class="text-right tabular-nums">420.00</td>`.
@@ -295,7 +297,7 @@ Maqueta `mockups/plan-maestro-lienzo.html`, **aprobada por Victor el 2026-09-30*
 
 ### Crear RDT y selector de actividad (rehecha en F0-R, pendiente de revisión de Victor)
 
-Maqueta `mockups/crear-rdt-selector-paquetes.html`. **Se usa la pantalla que ya existe** (`src/components/ui/FormularioCrearRdt.tsx`), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo de personal, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos; solo mejora la presentación con los tokens de este documento. El campo de partida de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5), partidas directas aparte y, arriba, «Contributoria» / «No contributoria». En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para el WBS de las actividades C/NC, de los materiales y de los equipos (solo partidas declaradas ese día). Encabezados «Met. acum.», «Met. prog.» y «Met. ejec.» completos. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
+Maqueta `mockups/crear-rdt-selector-paquetes.html`. **Se usa la pantalla que ya existe** (`src/components/ui/FormularioCrearRdt.tsx`), no una nueva: conserva 1.0 Identificación, 2.0 Reporte de avance, 3.0 Tareo de personal, Equipos, Materiales, Observaciones, «Cargar plantilla», «Guardar plantilla» y «Cargar RDT al sistema», con todos sus campos; solo mejora la presentación con los tokens de este documento. El campo de partida de cada actividad abre el cuadro «Elegir actividad del Plan Maestro»: diálogo modal (`role="dialog"`, `aria-modal`, foco a la búsqueda, Escape cierra y devuelve el foco) con búsqueda, paquetes plegables con sus partidas (marca de paquete de §5), partidas directas aparte y, arriba, «Contributoria» / «No contributoria». En paquete «por avance del paquete» solo se elige el paquete: se escribe el metrado de la guía y las demás partidas se muestran calculadas en solo lectura. El mismo selector sirve para el WBS de las actividades C/NC, y de los materiales (solo partidas declaradas ese día; el equipo ya no lleva partida desde el 2026-10-21, flujo 06). Encabezados «Met. acum.», «Met. prog.» y «Met. ejec.» completos. Sin Plan Maestro aprobado muestra un mensaje informativo y ninguna fila.
 
 ### Recuadros del Dashboard: contorno punteado amarillo
 

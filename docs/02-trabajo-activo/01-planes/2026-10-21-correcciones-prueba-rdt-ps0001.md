@@ -4,7 +4,7 @@
 
 - Tema: cerrar los vacíos que dejó la prueba funcional del RDT (19.10.2026, PS-0001 TECNET) y repetir la prueba con un guion actualizado.
 - Fecha: 2026-10-21.
-- Estado: `En ejecución` — Gate Spec aprobado por Victor (2026-10-21); Gate 1 aprobado el mismo día (equipo, modelos, tandas y entorno como se propone abajo). El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera.
+- Estado: `En ejecución` — Gate Spec aprobado por Victor (2026-10-21); Gate 1 aprobado el mismo día (equipo, modelos, tandas y entorno como se propone abajo). El Lote 0 (desplegar restricciones) quedó autorizado por Victor el mismo día y **se ejecutó el 2026-10-21**: app `ddb18ee` en `main`, 2146 pruebas y build en verde, pendiente de verificación en producción (día 3 de la prueba v2). `db/095` y `db/114` quedaron fuera. **Tandas T1 a T5 hechas (la app en el commit `981b2fd`, la documentación de los flujos en la T5); falta aplicar `db/116` (Victor), desplegar, la Auditoría de trazabilidad (T6) y el Gate 2.**
 
 Puertas:
 
@@ -107,7 +107,7 @@ Qué falló en el método de la sesión anterior, y no debe repetirse: **desde l
 
 ## Entorno, repositorios, ramas y worktrees
 
-Propuesta para el Gate 1: trabajar **directo en `main`** de la app, sin rama ni worktree (así se trabajó hasta ahora y `AGENTS.md` lo fija por defecto). Estado verificado el 2026-10-21 tras el Lote 0: `main` = `origin/main` = `ddb18ee`; solo quedan sin seguimiento `db/095` y `db/114` (de otros trabajos, no se tocan). La migración nueva del Lote 3 será `db/115`, aplicada solo con autorización de Victor.
+Propuesta para el Gate 1: trabajar **directo en `main`** de la app, sin rama ni worktree (así se trabajó hasta ahora y `AGENTS.md` lo fija por defecto). Estado verificado el 2026-10-21 tras el Lote 0: `main` = `origin/main` = `ddb18ee`; solo quedan sin seguimiento `db/095` y `db/114` (de otros trabajos, no se tocan). La migración nueva del Lote 3 quedó como `db/116` (`db/116_hh_transversales_fuera_del_ip.sql`), aplicada solo con autorización de Victor.
 
 ## Skills aplicables
 
@@ -124,7 +124,7 @@ Propuesta para el Gate 1 (modelos según `09-orquestacion-y-modelos.md`; sin Opu
 | Tanda | Contenido | Quién | Modelo |
 |---|---|---|---|
 | T1 | Lote 1 (fecha futura y Curva S) | Worker 1 | Sonnet |
-| T2 | Lote 3 (regla de HH, `db/115`, PR, Dashboard, Plan Maestro) | Worker 1 | Sonnet |
+| T2 | Lote 3 (regla de HH, `db/116`, PR, Dashboard, Plan Maestro) | Worker 1 | Sonnet |
 | T3 | Lote 2 (cargos, tarifas, Importar DP, diagnóstico del aviso) | Worker 2 | Sonnet |
 | T4 | Lote 4 (formulario, equipos sin partida, rechazo, menores) | Worker 2, tras T3 | Sonnet |
 | T5 | Lote 5 (flujos 06, 09, 10, 11, 18, 21, 22 y Matriz) | Documentador | Haiku |
@@ -140,7 +140,7 @@ Mapa del Planner (lectura, 2026-10-21; los Workers confirman líneas exactas):
 |---|---|
 | 1 | `src/app/api/rdts/partes/route.ts` (crear: ya valida `fechaLima`), `src/app/api/rdts/partes/[id]/route.ts` (corregir), ruta de RDT subidos, `FormularioCrearRdt.tsx` (`type="date"`, línea ~1122), `src/app/api/curva-s/route.ts`, `src/lib/curva-s/curva-s.ts`, `cargar-curva-s.ts`, `textos.ts` |
 | 2 | `src/lib/dp/equivalencias.ts`, `tarifas.ts`, `tarifas-servidor.ts`, pantalla Importar DP, `rdts/partes/route.ts` (rechazo al crear), `src/lib/pr/acumulacion-rdt.ts`, `dashboard/page.tsx` (tarjeta sin tarifa), `recursos_cargo_equivalencias` |
-| 3 | `db/115` (redefine `recalcular_pr_desde_rdt`, vigente en `db/112`), `pr/page.tsx`, `dashboard/page.tsx`, `src/lib/dashboard/cargar-dashboard.ts`, `datos-descarga.ts`, `src/lib/informes/cargar-fuentes.ts` |
+| 3 | `db/116` (redefine `recalcular_pr_desde_rdt`, vigente en `db/112`), `pr/page.tsx`, `dashboard/page.tsx`, `src/lib/dashboard/cargar-dashboard.ts`, `datos-descarga.ts`, `src/lib/informes/cargar-fuentes.ts` |
 | 4 | `FormularioCrearRdt.tsx` (columna WBS del equipo, línea ~1831; métricas y autocompletado de actividad, líneas ~1234-1295), `rdts/partes/[id]/route.ts` (**quitar el bloqueo de validación «equipo sin WBS válido del DP»**, líneas ~340-355), Status de RDT, Revisar RDT, Plan Maestro (estado de carga y rótulo «Sin resolver») |
 
 **Hallazgo nuevo del Planner:** al validar, el servidor hoy responde 400 «No se puede validar: N equipo(s) no tiene(n) un WBS válido del DP». Al quitar la partida del equipo ese bloqueo debe desaparecer en el mismo cambio, o ningún RDT con equipo podría validarse.
@@ -179,16 +179,19 @@ Se crean al activar el Gate 1: `02-progreso/` y `03-evidencia/2026-10-21-correcc
 
 | ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
 |---|---|---|---|---|---|---|
-| M1 | 2026-10-21 | Orquestador | Los esperados de una prueba se fijan antes y se calculan desde el presupuesto, no desde lo que muestra la app; no se recalculan durante la prueba | `03-aprendizaje-continuo/` | Registrada | — |
+| M1 | 2026-10-21 | Orquestador | Los esperados de una prueba se fijan antes y se calculan desde el presupuesto, no desde lo que muestra la app; no se recalculan durante la prueba | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-21-esperados-independientes-de-la-app.md`](../../03-aprendizaje-continuo/2026-10-21-esperados-independientes-de-la-app.md) (T5, 2026-10-21; falta el commit) |
 
 ### Reglas de negocio acordadas en esta tarea
 
 | ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
 |---|---|---|---|---|---|---|
-| R1 | 2026-10-21 | Victor | No se registra un RDT con fecha posterior a hoy | Flujo 06 | Pendiente de decisión (se escribe al implementar) | — |
-| R2 | 2026-10-21 | Victor | Todo cargo con horas debe tener tarifa en el presupuesto del servicio (fila, MOI o equivalencia del servicio); si no, no se importa ni se registra | Flujos 09 y 06 | Pendiente de decisión | — |
-| R3 | 2026-10-21 | Victor | El equipo no se asigna a una partida; su costo suma al servicio | Flujos 06, 10 y 18 | Pendiente de decisión (contradice lo escrito) | — |
-| R4 | 2026-10-21 | Victor | PV y valor ganado de la Curva S se leen a la misma fecha | Flujo 21 | Pendiente de decisión | — |
+| R1 | 2026-10-21 | Victor | No se registra un RDT con fecha posterior a hoy | Flujo 06 | Trasladada | [Flujo 06](../../04-flujos-de-negocio/06-rdt.md), «Crear RDT con el Plan Maestro» (T5, 2026-10-21) |
+| R2 | 2026-10-21 | Victor | Todo cargo con horas debe tener tarifa en el presupuesto del servicio (fila, MOI o equivalencia del servicio); si no, no se importa ni se registra | Flujos 09 y 06 | Trasladada | [Flujo 09](../../04-flujos-de-negocio/09-importar-dp.md) («Cargos del personal sin fila en el presupuesto y equivalencias del servicio»), [flujo 06](../../04-flujos-de-negocio/06-rdt.md) y [flujo 14](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) (nota 18) (T5, 2026-10-21) |
+| R3 | 2026-10-21 | Victor | El equipo no se asigna a una partida; su costo suma al servicio | Flujos 06, 10 y 18 | Trasladada | [Flujo 06](../../04-flujos-de-negocio/06-rdt.md) («Equipos sin partida»), [flujo 10](../../04-flujos-de-negocio/10-generacion-pr.md) y [flujo 18](../../04-flujos-de-negocio/18-control-avance.md); lo contradictorio se reemplazó (T5, 2026-10-21) |
+| R4 | 2026-10-21 | Victor | PV y valor ganado de la Curva S se leen a la misma fecha | Flujo 21 | Trasladada | [Flujo 21](../../04-flujos-de-negocio/21-curva-s.md), «Granularidad» (reemplaza «o al último dato real si la semana todavía está en curso»; T5, 2026-10-21) |
+| R5 | 2026-10-21 | Victor | Las HH de las partidas transversales no entran a las HH reales, ni a las HH ganadas, ni al IP (los dos lados); se muestran aparte como «HH de transversales (informativas)»; su metrado sí suma al EV | Flujos 06, 10, 11, 18 y 20 | Trasladada | [Flujo 10](../../04-flujos-de-negocio/10-generacion-pr.md), [11](../../04-flujos-de-negocio/11-dashboard.md), [18](../../04-flujos-de-negocio/18-control-avance.md), [20](../../04-flujos-de-negocio/20-plan-maestro.md) y [06](../../04-flujos-de-negocio/06-rdt.md) (T5, 2026-10-21) |
+| R6 | 2026-10-21 | Victor | Las métricas del formulario del RDT salen de la línea paquete × partida (acumulado: solo D, sin RDT rechazados); «Met. prog.» y la descripción se autocompletan; el motivo del rechazo es visible en Status y como aviso en Revisar/Corregir; columna HM del Status = operativas + stand-by; columna «Paquete» con «Directas»; rótulo «Transversales (prorrata)» | Flujos 06, 10 y 11 | Trasladada | [Flujo 06](../../04-flujos-de-negocio/06-rdt.md), [10](../../04-flujos-de-negocio/10-generacion-pr.md) y [11](../../04-flujos-de-negocio/11-dashboard.md) (T5, 2026-10-21) |
+| R7 | 2026-10-21 | Victor | Pantalla «Equivalencias de cargos del servicio» (administrador y jefe de proyectos, con el servicio en planeación o ejecución); aviso `rdt.recursos_sin_tarifa` con texto nuevo; tarjeta «Recursos sin tarifa» con nombres y enlace a la página del DP | Flujos 09, 04, 11 y 14 | Trasladada | [Flujo 09](../../04-flujos-de-negocio/09-importar-dp.md), [04](../../04-flujos-de-negocio/04-notificaciones.md), [11](../../04-flujos-de-negocio/11-dashboard.md) y [14](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) (T5, 2026-10-21) |
 
 ### Observaciones sobre la política
 
@@ -197,6 +200,15 @@ Ninguna.
 ### Carpetas/archivos huérfanos
 
 Ninguno detectado.
+
+## Pendiente tras la tanda T5 (documentación)
+
+- **Victor debe aplicar `db/116`** (`db/116_hh_transversales_fuera_del_ip.sql`, en el SQL Editor, antes de desplegar la app: la app lee `pr_partidas.hh_transversal_acum`) y después recalcular el PR de los servicios con transversales (se recalcula solo al validar o rechazar un RDT).
+- **Victor debe sumar a la Matriz de permisos: «Equivalencias de cargos del servicio» (administrador y jefe de proyectos).** El artefacto (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT) no se puede abrir desde esta cuenta; el flujo 14 ya trae la fila y la nota 18.
+- **Duda abierta, no decidida (no está escrita como regla):** si las HH contractuales y las HH programadas del Plan Maestro también deben excluir la transversal (hoy el Plan Maestro las deja en el total programado y excluye solo las HH reales). Anotada en los flujos 10 y 20.
+- **Duda abierta, no decidida:** `hm_legacy_sin_partida_acum` (HM de equipos sin partida) no entra a HH ni al IP. Anotada en los flujos 06 y 10.
+- **Limpieza de los 5 RDT de prueba y decisión sobre Braulio** siguen pendientes de Victor (ver Registro de decisiones).
+- **Verificación en producción** de restricciones (día 3 de la prueba v2): sigue «pendiente de verificación» en el flujo 22.
 
 ## Informe de Auditoría
 

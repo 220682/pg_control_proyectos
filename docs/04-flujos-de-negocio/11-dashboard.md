@@ -120,15 +120,16 @@ servidor solo porcentajes por nodo (nunca pesos ni montos).
 ## Responsable operativo, IP y HH (Victor, 2026-10-15)
 
 - **Supervisor operativo a cargo:** etiqueta justo bajo el encabezado del servicio, en el color de Supervisión operativa. Fuente única: el campo «Supervisor operativo a cargo» de Editar servicio ([flujo 08](08-programa-portafolio-proyecto.md)); **uno solo por servicio**. Sin asignar: «Sin supervisor a cargo».
-- **IP y HH sin agrandar la pantalla.** En Completo, dos tarjetas propias en el espacio libre del panel «Composición del costo», a la derecha de la dona: **IP** (valor, HH ganadas y HH reales) y **HH contractuales** (barra de consumo, acumuladas con % y restantes). Las tarjetas SPI y CPI **no** llevan cuadros adicionales (quedaban comprimidos). En Parcial, el IP y las HH tienen tarjeta propia en la misma fila.
+- **IP y HH sin agrandar la pantalla.** En Completo, dos tarjetas propias en el espacio libre del panel «Composición del costo», a la derecha de la dona: **IP** (valor, HH ganadas y HH reales; con partidas transversales aprobadas, una línea «HH de transversales (informativas)») y **HH contractuales** (barra de consumo, acumuladas con % y restantes). Las tarjetas SPI y CPI **no** llevan cuadros adicionales (quedaban comprimidos). En Parcial, el IP y las HH tienen tarjeta propia en la misma fila.
 - **% Avance físico** más grande y con barra: lo ejecutado en verde, una marca en lo programado al corte (Plan Maestro; sin Plan Maestro aprobado no hay marca) y el restante.
 - **Matriz de partidas:** suma las columnas HH contractuales, HH acumuladas e IP por partida (sin dinero; también en Parcial).
+- **HH de las partidas transversales (Victor, 2026-10-21; `db/116`).** Las HH de una partida transversal **no entran a las HH reales, ni a las HH ganadas, ni al IP** (la misma regla en los dos lados: si no, el IP mezclaría un lado con y otro sin). Se muestran aparte como **«HH de transversales (informativas)»**: en la tarjeta IP, en la nota del PR ([flujo 10](10-generacion-pr.md)) y en el resumen del Excel de la descarga. Su metrado **sí suma al EV**. En la fila de la transversal se ven sus HH, pero el total real del servicio no las suma (Plan Maestro, [flujo 20](20-plan-maestro.md)).
 
 ## Gráficas, detalles y partida en revisión (Victor, 2026-10-15)
 
 - **«Avance físico por nivel»:** barras verticales, programado al corte (Plan Maestro) contra real (RDT validados), con selector de nivel (Servicio, subpresupuestos, títulos…) tomado del mapa de niveles del DP (`servicio_encabezados`). Clic en una barra baja un nivel, con una ruta para volver. Sin Plan Maestro aprobado, la barra programada dice «Pendiente».
 - **«Recursos: contractual · acumulado · restante»:** barras verticales por recurso, con pestañas **Mano de obra (HH)**, **Equipos (HM)** y **Subcontratos**. La barra mide lo contractual; la parte de color es lo acumulado, la gris lo restante y la roja el exceso. Las HM acumuladas suman operativas más stand-by. Subcontratos se miden en dinero y **solo en Completo**: en Parcial la pestaña sale deshabilitada con título; lee el acumulado de cada subcontrato según su forma de medir (avance físico o monto ingresado en el Reporte del proyecto, [flujo 10](10-generacion-pr.md)) y ya no queda «Pendiente». La unidad de las cantidades contractuales de equipos se toma como HM (lo que fija el import del DP); confirmado por Victor el 2026-10-17: las cantidades de equipos de sus presupuestos vienen en horas.
-- **Tocar un cargo o un equipo** muestra en qué partidas se usó (solo horas; el cargo del tareo se une al recurso del PR por nombre normalizado, sin tildes ni mayúsculas, porque no hay llave entre ambos).
+- **Tocar un cargo o un equipo** muestra en qué partidas se usó (solo horas; el equipo de un RDT nuevo muestra «Sin partida vinculada», porque ya no se asigna a una partida; el cargo del tareo se une al recurso del PR por nombre normalizado, sin tildes ni mayúsculas, porque no hay llave entre ambos).
 - **Interactividad:** cada barra y cada sector de la dona muestran su valor al pasar el mouse, al tocar o con el teclado; la leyenda oculta o muestra series; clic en la dona (Mano de obra o Equipos) lleva la gráfica de recursos a esa pestaña; clic en una barra de «Desempeño por partida» marca la partida y baja a la matriz. Ningún valor queda solo en el globo: también está en la etiqueta o en una tabla «Ver valores».
 - **Tarjetas de arriba con clic:** cada tarjeta abre debajo de la fila un detalle y lo cierra al volver a tocarla: % avance (por subpresupuesto), BAC (por tipo de recurso), PV y EV (por subpresupuesto), AC (por recurso; lleva a «Costo real de recursos»), SPI (partidas más atrasadas), CPI (partidas con menor CPI), IP (por partida), HH (por cargo) y PPC (causas; el detalle va dentro del Bloque E). Cada detalle tiene un botón a la gráfica o la matriz que corresponde y sus filas de partida se pueden tocar para revisarla. En Parcial las tarjetas de dinero no existen y los detalles no muestran dinero.
 - **Partida en revisión:** al elegir una partida (en «Desempeño por partida», en el detalle de una tarjeta, en la gráfica de recursos o en la matriz) aparece arriba una franja fija «Revisando partida …» con su avance, IP y CPI (CPI solo en Completo), que acompaña al bajar; la fila de la matriz queda resaltada con la marca «En revisión» y las demás barras se atenúan. Se quita con «Quitar» o con Escape.
@@ -138,7 +139,7 @@ servidor solo porcentajes por nodo (nunca pesos ni montos).
 
 - Botón en la fila de filtros, con menú PDF o Excel (`GET /api/proyectos/[id]/dashboard/descargar?formato=pdf|xlsx&corte=AAAA-MM-DD`). Lo ven y lo usan los 13 roles; el servidor valida sesión, rol y alcance.
 - **El archivo incluye siempre el Dashboard, la Matriz de partidas y la Curva S.** El PDF A4 horizontal entrega tres cosas (Victor, 2026-10-18): **(1) el Dashboard en una sola hoja**, con el aspecto de la pantalla (fondo oscuro, tarjetas, barras de avance por nivel, recursos HH y HM, composición del costo y desviación en Completo, Pareto de CNC y diagnóstico); **(2) la Matriz de partidas**, con su título y su banda, que sigue en más hojas si hace falta (y los subcontratos en Completo); **(3) la Curva S**, con título, resumen al corte y cada gráfica enmarcada (económica y física en Completo, solo física en Parcial). Excel: una hoja por bloque y las series de la Curva S.
-- **Usa la fecha de corte y el modo de la pantalla:** `corte` es una fecha AAAA-MM-DD (el filtro ya resuelto, no el preset) y la Curva S del archivo recorta EV y AC a ese corte. En Completo (rol con economía y `tipo_dashboard` COMPLETO): Curva S económica y física, con dinero; en Parcial: sin dinero y Curva S solo física. Una prueba comprueba que el archivo Parcial no contiene ningún símbolo ni sigla de dinero.
+- **Usa la fecha de corte y el modo de la pantalla:** `corte` es una fecha AAAA-MM-DD (el filtro ya resuelto, no el preset) y la Curva S del archivo recorta EV y AC a ese corte. La descarga no lleva hoy tabla semanal; cuando la lleve, usará **la misma regla de fila parcial que la pantalla** ([flujo 21](21-curva-s.md), «Granularidad»): PV, EV y AC de cada fila al mismo corte. En Completo (rol con economía y `tipo_dashboard` COMPLETO): Curva S económica y física, con dinero; en Parcial: sin dinero y Curva S solo física. Una prueba comprueba que el archivo Parcial no contiene ningún símbolo ni sigla de dinero.
 - El AC del archivo se arma con el mismo cálculo que la pantalla (materiales y subcontratos incluidos), así que PDF, Excel y pantalla dan el mismo AC. Ruta con `maxDuration = 60`.
 
 ## Costo real de recursos (solo Completo)
@@ -150,7 +151,7 @@ recurso para ver su incidencia. El dato se lee del PR; el Dashboard no recalcula
   **materiales** y **subcontratos**, con su `descripcion` y su costo acumulado
   (los cuatro tipos suman, regla de costo real del [flujo 10](10-generacion-pr.md)).
 - **Total = AC** del PR (la misma fuente que el KPI AC), nunca una suma paralela.
-- **Fila «Sin resolver»** = `AC − Σ filas`, visible **solo** cuando la diferencia
+- **Fila «Sin resolver»** (con partidas transversales aprobadas se rotula **«Transversales (prorrata)»**, Victor 2026-10-21, igual que en el PR) = `AC − Σ filas`, visible **solo** cuando la diferencia
   es distinta de cero; explica las filas sin partida vinculada (deuda de
   `db/055`). Con las cuatro clases resueltas vale 0. No se fuerza a cero ni se
   inventa dato.
@@ -162,6 +163,7 @@ recurso para ver su incidencia. El dato se lee del PR; el Dashboard no recalcula
   la regla de septiembre «no suman al costo real». **Las HH de MOI no se
   valorizan** (regla 10).
 - **Vista solo por recurso**, no por partida.
+- **Partidas transversales (Victor, 2026-10-19):** suman al BAC, PV, EV, AC y a las HH/HM del Dashboard como **filas calculadas de solo lectura** en la matriz de partidas (fórmulas en el [flujo 10](10-generacion-pr.md)). **Limitación:** el costo por recurso de esta tabla (`pr_recursos.costo_acumulado` de mano de obra y equipo) **no incluye la parte de las transversales**; por eso, con transversales aprobadas, «Sin resolver» puede mostrar esa diferencia, y no se fuerza a cero.
 
 ## Diagnóstico
 
@@ -169,8 +171,7 @@ Cuatro puntos, tomados de datos que ya existen en el PR:
 
 - Partidas sobre-ejecutadas (metrado restante negativo).
 - Partidas sin actividad registrada.
-- Recursos sin tarifa (`proyecto_pr.recursos_sin_tarifa`), con camino a
-  Recursos → Personal / Equipos para corregirlo.
+- Recursos sin tarifa (`proyecto_pr.recursos_sin_tarifa`): la tarjeta **lista hasta 4 nombres** («y N más») y su enlace abre la **página del DP del servicio**, donde se declara la equivalencia en «Equivalencias de cargos del servicio» ([flujo 09](09-importar-dp.md)); la descarga Excel agrega una fila «Cuáles (sin tarifa)» con todos los nombres.
 - HH de MOI acumuladas — horas, **nunca valorizadas** (regla 10).
 
 ## Paleta de series (compartida con la Curva S)

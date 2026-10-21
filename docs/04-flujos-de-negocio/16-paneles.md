@@ -61,7 +61,7 @@ Agrupa los accesos del servicio y las acciones rápidas por grupo o rol:
 * Costos.
 * Otros grupos configurados.
 
-Un chip cuya pantalla existe abre esa pantalla con el servicio ya elegido (`?proyectoId=`). Un chip cuya pantalla no existe queda inerte, sin enlace, y el título dice «Sin pantalla todavía».
+Un chip cuya pantalla existe abre esa pantalla con el servicio ya elegido (`?proyectoId=`). Un chip cuya pantalla no existe queda inerte, sin enlace, y el título dice «Sin pantalla todavía». **Todo chip con pantalla está vivo, también sin servicio elegido** (Victor, 2026-10-15: «revisa que todos los chips estén vivos cuando tengan interfaz»; por ejemplo, Paquetes de Trabajo desde la vista de portafolio). Si la pantalla exige servicio y no hay uno elegido, el chip abre «Elegir servicio» (`/elegir-servicio?acceso=…`), una lista de los servicios vigentes; al elegir uno se abre la pantalla con ese servicio. La pantalla de destino sigue validando rol y alcance como siempre. Solo quedan muertos los chips sin pantalla y los que el rol no tiene permitidos.
 
 Se implementa mediante los patrones existentes de `NAV_PROYECTO`, `GruposAccordion`, `PanelSecciones` y `WorkspaceShell`.
 
@@ -134,6 +134,7 @@ Servicio seleccionado
 │   ├── Cargos (HH)
 │   ├── Equipos (HM)
 │   ├── Materiales (c/c)
+│   ├── Subcontratos
 │   └── Personal nuevo
 ├── Documentación
 │   ├── Planos
@@ -236,7 +237,7 @@ Cada acceso tiene metadatos comunes:
 * Grupo.
 * Tipo: informativo o acción.
 * Ruta o acción.
-* Requiere servicio: `sí`, `opcional` o `no`. «Opcional» aplica a las pantallas que abren sin servicio y lo preseleccionan si se abren con él (Plan Maestro, Status de Requerimiento, Consolidado RQ, Status de RDTs).
+* Requiere servicio: `sí`, `opcional` o `no`. «Opcional» aplica a las pantallas que abren sin servicio y lo preseleccionan si se abren con él (Plan Maestro, Status de Requerimiento, Consolidado RQ, Status de RDTs). «Sí» sin servicio elegido pasa por «Elegir servicio» (no queda inerte).
 * Permiso requerido.
 * Visible en panel izquierdo.
 * Visible en panel central.
@@ -265,11 +266,13 @@ Implementado:
 * `WorkspaceShell` con los tres paneles y el asistente como icono flotante.
 * `/mi-entorno` (`EntornoTrabajoGrupo`, `herramientasPorGrupo`).
 * Paneles laterales ocultables con un icono por panel y recuerdo por usuario (plan niveles-paquetes-plan-maestro-rdt, F3-C; lógica y compilación verificadas, observación visual por rol pendiente de F5).
-* Panel izquierdo completo: Recursos de empresa con botón mostrar/ocultar y siete grupos con servicio (27 chips: 17 con pantalla y 10 inertes sin enlace).
+* Panel izquierdo completo: Recursos de empresa con botón mostrar/ocultar y siete grupos con servicio (28 chips: 22 con pantalla y 6 inertes sin enlace desde 2026-10-15, cuando se activaron Cargos (HH), Equipos (HM) y Materiales (c/c) y se agregó Subcontratos).
+* **Recursos del servicio (Victor, 2026-10-15):** Cargos (HH), Equipos (HM), Materiales (c/c) y **Subcontratos** son pantallas **solo informativas** (`/proyectos/{id}/recursos/{cargos|equipos|materiales|subcontratos}`) con los recursos que el DP trae para el servicio, desagregados por tipo (C1 mano de obra, C2 equipos, C3 materiales, C4 subcontratos), **sin precios ni costos**. **Las ve cualquier rol** (los 13): el servidor lee solo descripción, unidad y cantidad contractual y nunca envía datos económicos al navegador. Sustituye a los botones muertos «Sin pantalla todavía» de esos tres chips. Distintos de los recursos de empresa, que no se mezclan con ellos. **Cargos (HH) muestra la cantidad en su unidad y las HH reales aparte (Victor, 2026-10-17):** columnas Cargo · Und. · Cantidad · HH Contractual (los cargos en MES convertidos a 208 h por mes), con una fila TOTAL de HH reales y una nota con la conversión; sigue sin precios ni costos. La regla de conversión está en el [flujo 09](09-importar-dp.md) («Mano de obra directa en la vista del DP»).
 * **Grupo «Jefatura» (antes «Proyecto»):** el rótulo del grupo cambia en el panel izquierdo, en el panel derecho y en el título «Entorno · Jefatura» de Mi entorno (flujo 03); la clave interna `notificaciones-proyecto` no cambia y los enlaces viejos siguen funcionando. Es el mismo grupo de los avisos del [flujo 04](04-notificaciones.md); el área JF («Jefatura», [flujo 02](02-usuarios.md)) ya se llamaba así.
 * Panel derecho con chips que abren la pantalla con el servicio elegido.
 * Registro único de accesos (`registro-accesos.ts`, `panel-izquierdo.ts`, `panel-derecho.ts`) y prueba de cobertura de pantallas.
 * **Informes de supervisión y Foto de campo (Victor, 2026-10-15; [flujo 22](22-informes-de-supervision.md)):** el chip que antes decía «Informe de servicio» y estaba inerte («Sin pantalla todavía») pasa a **«Informes de supervisión»** (mismo id `informe-servicio`; informativo con acciones internas; requiere servicio; lo ven habilitado los 13 roles, `puedeVerInformes`), en Supervisión operativa del panel derecho y en **Reportes** del panel izquierdo. Se agrega el chip de **acción «Foto de campo»** (id `foto-campo`, abre `/proyectos/{id}/informes/foto`; habilitado para administrador, jefe de proyectos, jefe de oficina técnica y supervisor operativo, `puedeTomarFotoCampo`; los otros nueve lo ven deshabilitado con título), en Supervisión operativa, en Accesos rápidos (pasan de 7 a 8) y en **Acciones** del panel izquierdo. **Conteo vigente según el registro y su prueba:** 55 accesos (antes 54), nav de servicio 42 (antes 41), panel derecho 33 (antes 32) y panel izquierdo **30 chips (antes 28): 23 con pantalla y 7 inertes** (Alcance, Consolidado del servicio, OT, Personal nuevo, PETS, Planos y Presupuesto); esta línea corrige el recuento de 22 y 6 de la línea de arriba, que sumaba mal los inertes. De los chips sin pantalla del panel derecho, «Informe de servicio» ya no es uno. La pestaña **Inasistencias** vive dentro de la pantalla de Informes (sin chip propio, sin entrada en el registro de accesos).
+* **Restricciones (Victor, 2026-10-19; [flujo 22](22-informes-de-supervision.md)):** chip nuevo **«Restricciones»** (id `restricciones`, abre `/proyectos/{id}/restricciones`; requiere servicio; lo ven habilitado los 13 roles, `puedeVerRestricciones`), en el grupo Supervisión operativa del panel derecho. No está en el panel izquierdo. **Conteo vigente según el registro y su prueba:** 56 accesos, nav de servicio 43 y panel derecho 34.
 * Chips deshabilitados con título por permiso.
 * Chips **Dashboard** y **Curva S** habilitados para los **13 roles** (plan dashboard-economia-y-curva-s, 2026-10-02): la restricción económica vive dentro de la pantalla (Dashboard Completo y Curva S económica para los 5 roles con economía; Parcial y curva física para todos), no en el chip.
 

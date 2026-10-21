@@ -164,6 +164,8 @@ Las semanas deben agregarse horizontalmente según la duración del servicio. No
 
 ## Cálculos
 
+**Orden de los metrados en toda interfaz (Victor, 2026-10-15): contractual, acumulado, restante.** El Plan Maestro los muestra por defecto en columnas «Met.», «Met. acum.» y «Met. rest.» (flujo 20).
+
 ### Metrado acumulado
 
 ```text
@@ -184,7 +186,7 @@ Si el resultado es negativo, debe generarse una alerta de sobre-ejecución.
 Avance físico = metrado real acumulado / metrado contractual × 100
 ```
 
-Para hitos o paquetes ponderados se aplica el método de medición configurado.
+**Avance de un paquete:** es el de su **partida guía** (`metrado acumulado de la guía / metrado de la guía × 100`), en la unidad de la guía; las demás partidas del paquete reflejan ese mismo %. Ya no hay paquetes «ponderados» ni método de medición configurable: todo paquete se mide por su guía (flujo 19, 2026-10-15). Para hitos no hay metrado.
 
 ### Valor planificado
 
@@ -209,6 +211,8 @@ EV = avance físico real validado × BAC de la partida
 
 El EV no se obtiene simplemente del dinero gastado.
 
+**Partidas transversales (Victor, 2026-10-19).** Las que ocurren durante todo el servicio no se miden por RDT: su avance es el **% físico del resto del servicio** (sin las transversales), y su EV, PV, HH y costo real salen de ese % (reglas y fórmulas en [flujo 10](10-generacion-pr.md), «Partidas transversales»). **Sus HH no entran a las HH reales, ni a las HH ganadas, ni al IP** (Victor, 2026-10-21; se muestran aparte como «HH de transversales (informativas)»); su metrado sí suma al EV. No cuentan en la regla del 100 % del Plan Maestro ni se confunden con actividades C/NC.
+
 ### Costo real
 
 El AC proviene de costos validados de:
@@ -219,6 +223,8 @@ El AC proviene de costos validados de:
 - Materiales con control real.
 
 Los materiales no medidos deben permanecer como estimación provisional y no confundirse con AC real.
+
+**Equipos sin partida (Victor, 2026-10-21).** El equipo no se asigna a una partida en el RDT: su costo suma al costo real del **servicio**, pero no se reparte por partida; el PR lo muestra como «Equipos (sin partida)» ([flujo 10](10-generacion-pr.md)). Los RDT históricos con WBS de equipo siguen repartidos por partida.
 
 ### HH restantes
 
@@ -249,6 +255,8 @@ Cuánto de las horas reales de la partida fue trabajo directo (D) frente a contr
 HH ganadas = avance físico real × HH contractuales
 ```
 
+Sin la parte de las partidas transversales: sus HH son informativas y no entran a las HH ganadas ni a las HH reales (misma regla en los dos lados; Victor, 2026-10-21).
+
 ### IP
 
 Definir el significado de IP en la configuración del sistema. Recomendación inicial:
@@ -256,6 +264,8 @@ Definir el significado de IP en la configuración del sistema. Recomendación in
 ```text
 IP = HH ganadas / HH reales
 ```
+
+Las HH de las partidas transversales quedan fuera del numerador y del denominador.
 
 Debe mostrarse nombre, fórmula y unidad, no solo la abreviatura IP.
 

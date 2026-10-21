@@ -14,7 +14,7 @@ Se ven en la bandeja `/notificaciones` y en la bandeja de **Mi entorno**; la cam
 Tres estados: **Pendiente** → **Revisado** (se abrió) → **Atendido** (cerrado). Abrir un aviso Pendiente lo pasa a Revisado. Un aviso se cierra de tres maneras:
 
 * **A mano:** el destinatario lo atiende («Atender», con respuesta) o, en un aviso de aprobación de RQ, aprueba o devuelve desde él.
-* **Solo, al abrirlo** (avisos informativos, solo los avisos **por usuario**): `servicio.asignado`, `servicio.retirado`, `rq.aprobado_solicitante`, `rq.recepcionado_solicitante`, `rq.en_almacen_solicitante`, `rq.atendido_solicitante`, `rdt.validado` e `informe.emitido`. No piden ninguna acción, así que abrirlos los cierra y la campana baja. **No** se cierran al abrir `rq.comentario` (el solicitante puede responder) ni `rdt.rechazado` (hay que corregir el RDT).
+* **Solo, al abrirlo** (avisos informativos, solo los avisos **por usuario**): `servicio.asignado`, `servicio.retirado`, `rq.aprobado_solicitante`, `rq.recepcionado_solicitante`, `rq.en_almacen_solicitante`, `rq.atendido_solicitante`, `rdt.validado`, `restriccion.recepcionada`, `restriccion.atendida` e `informe.emitido`. No piden ninguna acción, así que abrirlos los cierra y la campana baja. **No** se cierran al abrir `rq.comentario` (el solicitante puede responder) ni `rdt.rechazado` (hay que corregir el RDT).
 * **Solo, cuando se cumple lo que pedían** (por la referencia del aviso): por ejemplo, el aviso «falta subir…» se cierra al subir el documento, y los avisos de un RQ se cierran al cambiar su estado. Los avisos viejos que no tienen referencia se cierran por su texto.
 
 La campana cuenta los avisos **Pendiente** recibidos por la persona, una vez por tarjeta.
@@ -59,6 +59,16 @@ El ciclo completo, sus estados y reglas están en el [flujo 05](05-rq.md).
 
 Al cambiar el estado de un RQ se cierran los avisos pendientes de ese RQ y se avisa al solicitante del paso nuevo; el aviso anterior nunca queda abierto. No se crea un aviso «atendida» al aprobador.
 
+### Restricciones
+
+Reglas y estados en el [flujo 22](22-informes-de-supervision.md), «Restricciones». Un fallo al avisar nunca deshace ni frena la acción principal.
+
+| Evento | Quién lo dispara | A quién llega | Texto | Grupo | Cierre |
+|---|---|---|---|---|---|
+| `restriccion.nueva` | Crear una restricción, desde la pantalla Restricciones o al registrar un RDT con restricciones en sus actividades | Por rol: administrador, jefe de proyectos y jefe de oficina técnica | «Restricción {código} ({prioridad}) — {servicio}: {descripción}» | Jefatura | **Abrir el aviso recepciona la restricción** (la pasa a Recepcionado); el aviso sigue pendiente. Se cierra para todos cuando cualquiera de los tres la atiende, aunque no la haya recepcionado |
+| `restriccion.recepcionada` | Recepcionar la restricción al abrir su aviso o con «Recepcionar» (no avisa si quien la recepciona es quien la creó) | Por usuario: quien la creó | «Restricción {código} recepcionada por {nombre}» | Supervisión operativa | Informativo: solo, al abrirlo |
+| `restriccion.atendida` | Atender la restricción (no avisa si quien la atiende es quien la creó) | Por usuario: quien la creó | «Restricción {código} atendida por {nombre}» | Supervisión operativa | Informativo: solo, al abrirlo |
+
 ### RDT
 
 El detalle del RDT está en el [flujo 06](06-rdt.md).
@@ -69,7 +79,7 @@ El detalle del RDT está en el [flujo 06](06-rdt.md).
 | `rdt.registrado` | Registrar un RDT estructurado en pantalla (nuevo o corregido) | Por rol: quienes pueden validarlo (administrador, jefe de proyectos y jefe de oficina técnica) | «RDT registrado para validar · {N° OT} · {autor} · {fecha}» | Según el rol | Solo, al validar o rechazar el RDT, o al reemplazarlo por una corrección |
 | `rdt.validado` | Validar un RDT (no avisa si quien valida es el autor) | Por usuario: el autor del RDT | «Tu RDT del {fecha} (turno {turno}) del servicio {N° OT} fue validado.» | Supervisión operativa | Informativo: solo, al abrirlo |
 | `rdt.rechazado` | Rechazar un RDT (no avisa si quien rechaza es el autor) | Por usuario: el autor, con el motivo | «Tu RDT del {fecha} (turno {turno}) del servicio {N° OT} fue rechazado: {motivo}» | Supervisión operativa | Solo, al validarse el RDT o al reemplazarlo el autor por una corrección. Un rechazo nuevo reemplaza al anterior que siguiera pendiente |
-| `rdt.recursos_sin_tarifa` | Validar un RDT con recursos sin tarifa en el presupuesto | Por rol: administrador y jefe de proyectos | «RDT validado con recursos sin tarifa en el presupuesto: {detalle}. Resuélvelo en Importar DP.» | Jefatura | A mano |
+| `rdt.recursos_sin_tarifa` | Validar un RDT con recursos sin tarifa en el presupuesto | Por rol: administrador y jefe de proyectos | «RDT validado con recursos sin tarifa en el presupuesto: {detalle}. Declara la equivalencia en «Equivalencias de cargos del servicio» (página del DP).» (cambio del 2026-10-21; cualquier fallo al avisar queda en el log) | Jefatura | A mano |
 
 ### Servicio
 
@@ -107,8 +117,8 @@ Los avisos anteriores decían «Servicio: falta…» sin N° OT; hoy todos lleva
 * `GET /api/notificaciones`: devuelve cada aviso con `evento`, `categoria`, `referencia_id`, el grupo ya normalizado a «Jefatura», el N° OT y el nombre del servicio (o nulos si es «Entorno»). Parámetros: `direccion` (`recibidos`, `enviados` o `todos`), `categoria` (una de las seis; un valor inválido se ignora) y `soloEntorno=true`. Una persona con dos roles recibe una tarjeta por aviso, con todas sus filas en `ids`.
 * `GET /api/notificaciones/count`: cuenta tarjetas Pendiente recibidas (campana).
 * `POST /api/notificaciones`: `proyectoId` es opcional («Entorno»); con servicio exige tenerlo a cargo, salvo avisos a uno mismo.
-* `POST /api/notificaciones/[id]/revisar`: marca Revisado; cierra solo los informativos por usuario; si la persona es de Logística y el aviso es de un RQ aprobado, **recepciona el RQ** una sola vez (ver [flujo 05](05-rq.md)). Responde `{ ok, recepcionado, estado }`.
-* `POST /api/notificaciones/[id]/atender`: cierra con respuesta; sobre un aviso de aprobación de RQ y con un rol que aprueba, aprueba el RQ.
+* `POST /api/notificaciones/[id]/revisar`: marca Revisado; cierra solo los informativos por usuario; si la persona es de Logística y el aviso es de un RQ aprobado, **recepciona el RQ** una sola vez (ver [flujo 05](05-rq.md)); si el aviso es `restriccion.nueva` y la persona puede atender restricciones, **recepciona la restricción** (ver [flujo 22](22-informes-de-supervision.md)). Responde `{ ok, recepcionado, estado }`.
+* `POST /api/notificaciones/[id]/atender`: cierra con respuesta; sobre un aviso de aprobación de RQ y con un rol que aprueba, aprueba el RQ; sobre un aviso `restriccion.nueva` y con un rol que atiende restricciones, atiende la restricción.
 
 ## Datos
 

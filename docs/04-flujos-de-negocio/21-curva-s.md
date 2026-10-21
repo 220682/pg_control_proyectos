@@ -91,6 +91,7 @@ porcentuales, sin montos USD.
    criterio que la dona del Dashboard.
 5. **El AC suma todo lo que se gasta (Victor, 2026-10-15, regla de costo real del [flujo 10](10-generacion-pr.md)):** HH y HM con tarifa congelada (HH extra × 1,25; HM operativas más stand-by) **más materiales y subcontratos por avance físico, sin tope en 100 %**. Materiales = su presupuesto × avance físico (EV / BAC del día); subcontrato por avance físico = contractual × avance físico; subcontrato con ingreso manual = lo del avance físico hasta el día (Lima) de su último cambio y el monto ingresado desde ese día. Reemplaza la regla de septiembre («se miden por % de avance económico, nunca por costo capturado»). La pantalla lo dice en una nota fija.
 6. Las HH de MOI no se valorizan (regla 10) — no entran al AC.
+6b. **Partidas transversales (Victor, 2026-10-19; `db/112`).** Con transversales en el Plan Maestro aprobado, `curva_s_proyecto` calcula el avance con el resto del servicio y escala: k = BAC total / BAC del resto. **EV y PV del total = los del resto × k**; el **AC** suma las HH/HM reales, más (mano de obra + equipo de las transversales) × EV del resto / BAC del resto, más materiales y subcontratos con el EV total. Sin transversales aprobadas, k = 1 y todo da igual que antes. La Curva S, el PR y el Dashboard cuadran entre sí.
 7. **La curva real (EV/AC) nunca se dibuja más allá de la fecha de corte.**
    El PV sí sigue hasta el fin del Plan Maestro aprobado. El hueco entre
    ambos es la lectura central del gráfico — extenderlos con ceros o una
@@ -114,8 +115,17 @@ porcentuales, sin montos USD.
 La serie se calcula día a día. La pantalla la agrupa por semana (sábado a
 viernes, mismo criterio que el Plan Maestro — `generarSemanasPlanMaestro`,
 flujo 20 §4) por defecto; la vista diaria queda disponible para el detalle.
-El punto de cada semana es el acumulado a su día de cierre (viernes), o al
-último dato real si la semana todavía está en curso.
+**El PV, el EV y el AC de la fila de una semana se cortan en la misma fecha
+(Victor, 2026-10-21).** La semana que contiene la fecha de corte y termina
+después de ella (en curso, o cortada a mitad) es **parcial**: sus tres series
+se leen al último dato ≤ corte y la fila se rotula con esa fecha, por ejemplo
+«S1 al 21-10». Las semanas completas ya pasadas se leen a su día de cierre
+(viernes). Las semanas que empiezan **después** del corte no tienen ejecución:
+se muestran como «posterior a la fecha de corte» (solo PV). Nunca se mezcla el
+PV al viernes con el real al corte (esa mezcla daba un SPI sin sentido). La
+tarjeta de lectura usa esa misma fila. La descarga del Dashboard
+([flujo 11](11-dashboard.md)) no lleva hoy tabla semanal; el helper `serieSemanal`
+de `datos-descarga.ts` ya aplica la regla para cuando se use.
 
 ## Endpoint
 

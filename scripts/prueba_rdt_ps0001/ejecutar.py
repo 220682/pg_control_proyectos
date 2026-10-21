@@ -94,9 +94,10 @@ class Catalogo:
         """n personas distintas del catalogo con ese cargo."""
         lote = [p for p in self.cat["personal"]
                 if (p.get("cargo") or "").strip().upper() == cargo and p["id"] not in usadas][:n]
-        if len(lote) < n:
-            sys.exit(f"Faltan personas en el catalogo para el cargo {cargo} (hay {len(lote)}, se piden {n})")
         usadas.update(p["id"] for p in lote)
+        # Sin personas del catalogo para ese cargo: filas libres (sin DNI) con nombre PRUEBA FUNCIONAL.
+        while len(lote) < n:
+            lote.append({"id": None, "dni": "", "nombre": f"{P} {cargo} {len(lote) + 1}", "especialidad": None})
         return lote
 
     def equipo(self, nombre):
@@ -135,15 +136,15 @@ def cuerpo_rdt(cat, dia, ml_t1=None, correccion=False):
          "semana": 1, "ubicacion": UBICACION["PT-01" if dia != "D5" else "PT-02"], "observaciones": OBS[dia],
          "jornadaHoras": 8 if dia != "D3" else 10, "actividades": lista, "personas": personas, "equipos": equipos,
          "inasistencias": []}
+    pers = cat.cat["personal"]
     if dia == "D2" and not correccion:
         c["observaciones"] = f"{P} D2 v1: metrado con error, rechazar"
     if correccion:
         c.update(reemplazar=True, motivoCorreccion=f"{P}: metrado corregido a 8.9 ml")
     if dia == "D2":
-        c["inasistencias"] = [{"personalId": cat.cat["personal"][-1]["id"], "nombre": cat.cat["personal"][-1]["nombre"],
-                               "dni": cat.cat["personal"][-1]["dni"], "motivo": "Falta",
-                               "fechaDesde": FECHAS[dia], "fechaHasta": FECHAS[dia],
-                               "nota": f"{P}: inasistencia informativa"}] if correccion else []
+        ausente = pers[-1] if pers else {"id": None, "dni": "", "nombre": f"{P} ausente"}
+        c["inasistencias"] = [{"personalId": ausente["id"], "nombre": ausente["nombre"], "dni": ausente["dni"],
+                               "motivo": "Falta", "nota": f"{P}: inasistencia informativa"}] if correccion else []
     return c
 
 
@@ -175,6 +176,8 @@ with sesion() as pg:
     if e != 200:
         sys.exit(f"Catalogos: {e} {cat}")
     cat = Catalogo(cat)
+    print("Personal del catalogo:", len(cat.cat["personal"]), "- cargos:",
+          sorted({(p.get("cargo") or "").strip() for p in cat.cat["personal"]}))
     guardar("catalogo-claves.json", [(l.get("paqueteCodigo"), l["wbs"], l["claveReporte"]) for l in cat.lineas])
     resultado = {}
     for dia in dias:

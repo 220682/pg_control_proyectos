@@ -169,48 +169,53 @@ def numeros_cerca(texto, etiqueta):
     return m.group(1) if m else None
 
 
-ap = argparse.ArgumentParser()
-ap.add_argument("--dias", default="D1,D2,D3,D4,D5")
-ap.add_argument("--solo-leer", action="store_true")
-a = ap.parse_args()
-hoy = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-5))).date().isoformat()
-dias = [d for d in a.dias.split(",") if d in FECHAS]
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dias", default="D1,D2,D3,D4,D5")
+    ap.add_argument("--solo-leer", action="store_true")
+    a = ap.parse_args()
+    hoy = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-5))).date().isoformat()
+    dias = [d for d in a.dias.split(",") if d in FECHAS]
 
-with sesion() as pg:
-    e, cat = api(pg, "GET", f"/api/rdts/catalogos?proyectoId={PROYECTO_ID}")
-    if e != 200:
-        sys.exit(f"Catalogos: {e} {cat}")
-    cat = Catalogo(cat)
-    print("Personal del catalogo:", len(cat.cat["personal"]), "- cargos:",
-          sorted({(p.get("cargo") or "").strip() for p in cat.cat["personal"]}))
-    guardar("catalogo-claves.json", [(l.get("paqueteCodigo"), l["wbs"], l["claveReporte"]) for l in cat.lineas])
-    resultado = {}
-    for dia in dias:
-        if a.solo_leer:
-            resultado[dia] = leer_pantallas(pg, "hoy")
-            break
-        if FECHAS[dia] > hoy:
-            print(f"{dia} {FECHAS[dia]}: fecha futura, se omite")
-            continue
-        if dia == "D2":
-            e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia, ml_t1=9.5))
-            print(dia, "crear v1", e, j)
+    with sesion() as pg:
+        e, cat = api(pg, "GET", f"/api/rdts/catalogos?proyectoId={PROYECTO_ID}")
+        if e != 200:
+            sys.exit(f"Catalogos: {e} {cat}")
+        cat = Catalogo(cat)
+        print("Personal del catalogo:", len(cat.cat["personal"]), "- cargos:",
+              sorted({(p.get("cargo") or "").strip() for p in cat.cat["personal"]}))
+        guardar("catalogo-claves.json", [(l.get("paqueteCodigo"), l["wbs"], l["claveReporte"]) for l in cat.lineas])
+        resultado = {}
+        for dia in dias:
+            if a.solo_leer:
+                resultado[dia] = leer_pantallas(pg, "hoy")
+                break
+            if FECHAS[dia] > hoy:
+                print(f"{dia} {FECHAS[dia]}: fecha futura, se omite")
+                continue
+            if dia == "D2":
+                e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia, ml_t1=9.5))
+                print(dia, "crear v1", e, j)
+                if e != 200:
+                    sys.exit("D2 v1 fallo")
+                e2, j2 = api(pg, "PATCH", f"/api/rdts/partes/{j['id']}",
+                             {"accion": "RECHAZAR", "motivoRechazo": f"{P}: el metrado de la guia no coincide con el control de campo; corregir a 8.9 ml"})
+                print(dia, "rechazar", e2, j2)
+                e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia, correccion=True))
+                print(dia, "corregir", e, j)
+            else:
+                e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia))
+                print(dia, "crear", e, j)
             if e != 200:
-                sys.exit("D2 v1 fallo")
-            e2, j2 = api(pg, "PATCH", f"/api/rdts/partes/{j['id']}",
-                         {"accion": "RECHAZAR", "motivoRechazo": f"{P}: el metrado de la guia no coincide con el control de campo; corregir a 8.9 ml"})
-            print(dia, "rechazar", e2, j2)
-            e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia, correccion=True))
-            print(dia, "corregir", e, j)
-        else:
-            e, j = api(pg, "POST", "/api/rdts/partes", cuerpo_rdt(cat, dia))
-            print(dia, "crear", e, j)
-        if e != 200:
-            sys.exit(f"{dia}: no se pudo crear. Se detiene.")
-        e, j2 = api(pg, "PATCH", f"/api/rdts/partes/{j['id']}", {"accion": "VALIDAR"})
-        print(dia, "validar", e, j2)
-        if e != 200:
-            sys.exit(f"{dia}: no se pudo validar. Se detiene.")
-        resultado[dia] = leer_pantallas(pg, dia)
-        print(f"{dia}: pantallas guardadas en salida/")
-    print("Listo. Resultados en", guardar("resultado-ejecucion.json", {d: list(v) for d, v in resultado.items()}))
+                sys.exit(f"{dia}: no se pudo crear. Se detiene.")
+            e, j2 = api(pg, "PATCH", f"/api/rdts/partes/{j['id']}", {"accion": "VALIDAR"})
+            print(dia, "validar", e, j2)
+            if e != 200:
+                sys.exit(f"{dia}: no se pudo validar. Se detiene.")
+            resultado[dia] = leer_pantallas(pg, dia)
+            print(f"{dia}: pantallas guardadas en salida/")
+        print("Listo. Resultados en", guardar("resultado-ejecucion.json", {d: list(v) for d, v in resultado.items()}))
+
+
+if __name__ == "__main__":
+    main()

@@ -14,7 +14,7 @@
 
 | # | Condición | Quién |
 |---|---|---|
-| P1 | Los 5 RDT de la prueba anterior rechazados o borrados, y PR recalculado en cero. **Pendiente (2026-10-21):** la pantalla no ofrece borrar un RDT validado; ver riesgos del plan | Victor |
+| P1 | Los 5 RDT de la prueba anterior rechazados o borrados, y PR recalculado en cero. **Cumplida (2026-10-21):** los 5 RDT se borraron por script (`scripts/prueba_rdt_ps0001/limpiar.py`) con respaldo previo | Victor |
 | P2 | Supervisor a cargo de PS-0001 decidido (Braulio o López Cáceres) | Victor |
 | P3 | Equivalencias de cargo del servicio declaradas en Importar DP: OPERARIO → OPERARIO CIVIL, OFICIAL → OFICIAL CIVIL, INGENIERO DE SEGURIDAD → INGENIERO SSOMA | Victor (con la pantalla del Lote 2) |
 | P4 | Lotes 0 a 4 desplegados en producción (anotar el commit) | Orquestador |

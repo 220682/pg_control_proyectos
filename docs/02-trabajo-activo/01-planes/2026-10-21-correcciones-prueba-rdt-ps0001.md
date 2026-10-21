@@ -182,6 +182,7 @@ Se crean al activar el Gate 1: `02-progreso/` y `03-evidencia/2026-10-21-correcc
 | ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
 |---|---|---|---|---|---|---|
 | M1 | 2026-10-21 | Orquestador | Los esperados de una prueba se fijan antes y se calculan desde el presupuesto, no desde lo que muestra la app; no se recalculan durante la prueba | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-21-esperados-independientes-de-la-app.md`](../../03-aprendizaje-continuo/2026-10-21-esperados-independientes-de-la-app.md) (T5, 2026-10-21; falta el commit) |
+| M2 | 2026-10-21 | Orquestador | Las pruebas funcionales se hacen con un solo script y una sola cuenta (Ver como), sin agentes ni claves repetidas | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-21-prueba-por-script-con-una-sola-cuenta.md`](../../03-aprendizaje-continuo/2026-10-21-prueba-por-script-con-una-sola-cuenta.md) (cierre de sesión, 2026-10-21) |
 
 ### Reglas de negocio acordadas en esta tarea
 
@@ -194,6 +195,7 @@ Se crean al activar el Gate 1: `02-progreso/` y `03-evidencia/2026-10-21-correcc
 | R5 | 2026-10-21 | Victor | Las HH de las partidas transversales no entran a las HH reales, ni a las HH ganadas, ni al IP (los dos lados); se muestran aparte como «HH de transversales (informativas)»; su metrado sí suma al EV | Flujos 06, 10, 11, 18 y 20 | Trasladada | [Flujo 10](../../04-flujos-de-negocio/10-generacion-pr.md), [11](../../04-flujos-de-negocio/11-dashboard.md), [18](../../04-flujos-de-negocio/18-control-avance.md), [20](../../04-flujos-de-negocio/20-plan-maestro.md) y [06](../../04-flujos-de-negocio/06-rdt.md) (T5, 2026-10-21) |
 | R6 | 2026-10-21 | Victor | Las métricas del formulario del RDT salen de la línea paquete × partida (acumulado: solo D, sin RDT rechazados); «Met. prog.» y la descripción se autocompletan; el motivo del rechazo es visible en Status y como aviso en Revisar/Corregir; columna HM del Status = operativas + stand-by; columna «Paquete» con «Directas»; rótulo «Transversales (prorrata)» | Flujos 06, 10 y 11 | Trasladada | [Flujo 06](../../04-flujos-de-negocio/06-rdt.md), [10](../../04-flujos-de-negocio/10-generacion-pr.md) y [11](../../04-flujos-de-negocio/11-dashboard.md) (T5, 2026-10-21) |
 | R7 | 2026-10-21 | Victor | Pantalla «Equivalencias de cargos del servicio» (administrador y jefe de proyectos, con el servicio en planeación o ejecución); aviso `rdt.recursos_sin_tarifa` con texto nuevo; tarjeta «Recursos sin tarifa» con nombres y enlace a la página del DP | Flujos 09, 04, 11 y 14 | Trasladada | [Flujo 09](../../04-flujos-de-negocio/09-importar-dp.md), [04](../../04-flujos-de-negocio/04-notificaciones.md), [11](../../04-flujos-de-negocio/11-dashboard.md) y [14](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) (T5, 2026-10-21) |
+| R8 | 2026-10-21 | Victor | Las HH programadas del Plan Maestro sí incluyen la transversal (no tiene otro lugar donde declararse); las HH reales, ganadas e IP no | Flujos 10 y 20 | Trasladada | [Flujo 10](../../04-flujos-de-negocio/10-generacion-pr.md) y [flujo 20](../../04-flujos-de-negocio/20-plan-maestro.md) (commit `3c174dc`) |
 
 ### Observaciones sobre la política
 

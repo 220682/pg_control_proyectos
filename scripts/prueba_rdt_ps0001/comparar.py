@@ -32,6 +32,31 @@ def leer(texto):
     return r
 
 
+def cargar(d, nombre):
+    ruta = os.path.join(AQUI, "salida", f"pantalla-{d}-{nombre}.json")
+    return json.load(open(ruta, encoding="utf-8"))["texto"] if os.path.exists(ruta) else None
+
+
+def tras(t, etiqueta):
+    """Primer monto US$ que aparece despues de una etiqueta del Dashboard."""
+    m = re.search(re.escape(etiqueta) + r"\s+US\$ ([\d,.\-]+)", t)
+    return num(m.group(1)) if m else None
+
+
+def leer_dashboard(t):
+    r = {"ev": tras(t, "EV\n\nUS$") if False else tras(t, "Valor ganado al"), "ac": tras(t, "Costo real acumulado")}
+    ip = re.search(r"IP .. .NDICE DE PRODUCTIVIDAD\s+([\d.]+)", t, re.I)
+    hh = re.search(r"HH ganadas ([\d,.]+)\s+HH reales ([\d,.]+)", t)
+    r["ip"] = num(ip.group(1)) if ip else None
+    r["hh_ganadas"], r["hh_reales"] = (num(hh.group(1)), num(hh.group(2))) if hh else (None, None)
+    return r
+
+
+def leer_curva(t):
+    m = re.search(r"Semana \d+ . [\d-]+\s+PV\s+US\$ ([\d,.]+)\s+EV\s+US\$ ([\d,.]+)\s+AC\s+US\$ ([\d,.]+)", t)
+    return {"pv": num(m.group(1)), "ev": num(m.group(2)), "ac": num(m.group(3))} if m else {}
+
+
 esperado = esp.calcular("nueva")
 observado, extra = {}, {}
 for d in esp.DIAS:
@@ -50,6 +75,25 @@ for d in esp.DIAS:
         for k in ("pv", "sv", "spi"):
             observado[d].pop(k, None)
 fallas = esp.comparar(esperado, observado)
+# Dashboard y Curva S del dia: deben mostrar lo mismo que el PR (misma lectura, otra pantalla).
+for d in observado:
+    pr = observado[d]
+    comp = []
+    t = cargar(d, "dashboard")
+    if t:
+        dash = leer_dashboard(t)
+        comp += [("dashboard", k, dash[k], pr[k], 0.5 if k.startswith("hh") else 0.02 if k != "ip" else 0.01)
+                 for k in ("ev", "hh_ganadas", "hh_reales", "ip") if dash.get(k) is not None and k in pr]
+    t = cargar(d, "curva-s")
+    if t:
+        cur = leer_curva(t)
+        comp += [("curva-s", k, cur[k], pr[k], 0.02) for k in ("ev",) if k in cur and k in pr]
+        if "ac" in cur and None not in (pr.get("ac_personal"), pr.get("ac_equipos"), pr.get("ac_transversales")):
+            comp.append(("curva-s", "ac vs pr", cur["ac"], round(pr["ac_personal"] + pr["ac_equipos"] + pr["ac_transversales"] + extra[d][0], 2), 0.02))
+    for pantalla, clave, valor, ref, tol in comp:
+        ok = abs(valor - ref) <= tol + 1e-9
+        fallas += 0 if ok else 1
+        print(f"{'OK   ' if ok else 'FALLA'} {d} {pantalla:<9} {clave:<10} pantalla {valor:>10}  PR {ref:>10}")
 for d, (mat, m) in extra.items():
     print(f"INFO {d} materiales observado {mat}  (M implicito {m:.2f}; A=5307.00, B=3570.22, suma APU=5389.32)")
 print(f"{fallas} diferencia(s)")

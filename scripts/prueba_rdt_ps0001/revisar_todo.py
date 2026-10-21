@@ -73,21 +73,20 @@ def main():
                 e3, _ = api(pg, "GET", f"/api/rdts/partes?proyectoId={PROYECTO_ID}")
                 anotar("permisos", f"{rol} ve los RDT", 200, e3)
 
-            # 2. Avisos: son por usuario (quien actua no recibe el suyo), asi que se ve la app como cada usuario
-            pg.goto(f"{APP}/proyectos/{PROYECTO_ID}/pr", wait_until="networkidle")
-            usuarios = pg.eval_on_selector_all(
-                "select option", "os => os.filter(o => o.value.startsWith('usuario:')).map(o => [o.value.slice(8), o.textContent.trim()])")
-            conteo = {}
-            for uid, nombre in usuarios:
-                api(pg, "POST", "/api/ver-como", {"usuario": uid})
-                t = texto(pg, "/notificaciones")
-                hoy = [x for x in t.split("Recibida") if "21/10/2026" in x and "RDT registrado para validar" in x]
-                conteo[nombre] = len(hoy)
-                guardar(f"avisos-usuario-{nombre.replace(' ', '_')}.json", {"texto": t})
-            como(pg, None)
-            print("Avisos de RDT registrado el 21.10 por usuario:", {k: v for k, v in conteo.items() if v})
-            anotar("avisos", "algun validador recibio los avisos de RDT registrado (4 RDT el 21.10)", ">= 1 usuario con >= 3",
-                   max(conteo.values(), default=0), ok=max(conteo.values(), default=0) >= 3)
+            # 2. Avisos: la pantalla Notificaciones siempre usa al usuario real (no sigue a «Ver como») y
+            # esconde lo que uno mismo envia. Se leen los AVISOS ENVIADOS por este usuario: cada RDT
+            # registrado debe haber dejado un aviso en la cola de cada rol que valida (3 roles).
+            e, env = api(pg, "GET", f"/api/notificaciones?direccion=enviados&proyectoId={PROYECTO_ID}")
+            env = env if isinstance(env, list) else []
+            guardar("avisos-enviados.json", env)
+            reg = [n for n in env if "RDT registrado para validar" in str(n.get("mensaje", ""))]
+            por_rdt = {}
+            for n in reg:
+                por_rdt.setdefault(n["mensaje"] + "|" + str(n.get("referencia_id", "")), 0)
+                por_rdt[n["mensaje"] + "|" + str(n.get("referencia_id", ""))] += 1
+            anotar("avisos", "avisos enviados de RDT registrado (por rol validador, 3 roles x RDT)",
+                   ">= 12 (4 RDT del 21.10 x 3 roles)", len(reg), ok=len(reg) >= 12)
+            guardar("avisos-resumen.json", {"total": len(env), "rdt_registrado": len(reg), "porRdt": por_rdt})
 
             # 3. Negativos (no deben guardar nada)
             d1 = cuerpo_rdt(cat, "D1")

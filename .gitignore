@@ -1,2 +1,6 @@
 ??.playwright-mcp/
 .worktrees/
+
+# Salidas de los scripts de prueba (pueden contener datos reales)
+scripts/prueba_rdt_ps0001/salida/
+__pycache__/

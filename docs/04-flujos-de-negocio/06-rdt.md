@@ -40,7 +40,7 @@ Nav del apartado Supervisión operativa: Crear RDTs, Subir RDTs, Status de RDTs,
 
 No es el flujo OT: solo se vinculan por N° OT.
 
-**RDT validado alimenta el PR.** Toda actividad registrada (D, C y NC) se carga a un **paquete × partida del Plan Maestro aprobado** (o a una partida directa) — solo las D generan metrado ejecutado; C y NC aportan horas y costo, sin avance (regla 12 de negocio, ver [18-control-avance.md](18-control-avance.md)). **Las actividades C y NC no llevan metrado** (ni programado ni ejecutado): en el RDT esas celdas no se escriben y no se exige CNC por metrado (Victor, 2026-10-18); solo aportan horas. El metrado programado del RDT es informativo, no oficial. El CNC (causa de no cumplimiento) se registra contra un catálogo mantenible y es obligatorio para actividades NC.
+**RDT validado alimenta el PR.** Toda actividad registrada (D, C y NC) se carga a un **paquete × partida del Plan Maestro aprobado** (o a una partida directa) — solo las D generan metrado ejecutado; C y NC aportan horas y costo, sin avance (regla 12 de negocio, ver [18-control-avance.md](18-control-avance.md)). **Las actividades C y NC no llevan metrado** (ni programado ni ejecutado): en el RDT esas celdas no se escriben y no se exige CNC por metrado (Victor, 2026-10-18); solo aportan horas. El metrado programado del RDT es informativo, no oficial. El CNC (causa de no cumplimiento) se registra contra un catálogo mantenible y es obligatorio para actividades NC. En una actividad D solo se exige cuando el metrado ejecutado es menor que el programado, comparados a 2 decimales (los que se escriben en pantalla): si son iguales, o el ejecutado supera al programado, el RDT se guarda sin CNC (Victor, 2026-10-23).
 
 ## Crear RDT con el Plan Maestro (2026-09-30)
 

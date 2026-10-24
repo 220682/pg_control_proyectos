@@ -123,7 +123,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Rechazar un RDT ya validado (destraba para corregir, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
-| Eliminar RDT (borrado definitivo; cubre archivo y parte estructurado, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar RDT del Archivo de RDTs subidos (borrado definitivo, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar parte de RDT estructurado desde Status de RDTs (borrado definitivo; si estaba VALIDADO, recálculo del PR; deja foto en el historial) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
 | Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |

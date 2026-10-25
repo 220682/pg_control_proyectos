@@ -15,7 +15,7 @@ El sistema **lee dos correos** (los que reciben casi lo mismo), decide a qué se
 |---|---|---|
 | Estado del servicio | `/proyectos/{id}/estado-servicio` | Pestañas **Temas**, **Por revisar** y **Minutas**; filtros de fecha, movimiento y texto. Chip «Estado del servicio» (id `estado-servicio`, requiere servicio, grupo Jefatura). |
 | Estado del portafolio | `/programas/{id}/portafolios/{portafolioId}/estado-servicio` | Lo mismo para los correos que no son de un servicio concreto; sin minutas. Enlace «Estado del portafolio» en la página del portafolio. |
-| Correos del cliente (configuración) | `/admin/estado-servicio` | Conectar o desconectar correos de Gmail, pausar uno, limitar lo que se lee, **horas de lectura**, «Sincronizar ahora», registro de las últimas lecturas y qué piezas faltan en el servidor. Enlace «Correos del cliente» en el encabezado del inicio. |
+| Correos del cliente (configuración) | `/admin/estado-servicio` | Conectar o desconectar correos de Gmail, pausar uno, limitar lo que se lee, **horas de lectura**, «Sincronizar ahora», registro de las últimas lecturas y qué piezas faltan en el servidor. Se abre con el icono «Correos del cliente» (sobre de correos) junto a Usuarios en la parte baja del panel izquierdo, y con el enlace del mismo nombre en el encabezado de las pantallas de inicio; ambos solo los ven administrador y jefe de proyectos. |
 
 Cualquier correo se abre completo (asunto, remitente, destinatarios, buzones donde llegó, texto y **documentos adjuntos descargables**) en un panel lateral desde la nota o desde «Por revisar».
 

@@ -88,8 +88,9 @@ Nuevos: `db/119_estado_servicio.sql`, `src/lib/estado-servicio/*`, `src/app/api/
 | 2026-10-24 | Google Cloud (proyecto My Project Engineer): Gmail API habilitada, permiso `gmail.readonly`, cliente OAuth «Estado del servicio» creado; la app queda en modo «Prueba» (Google no deja publicar con `vercel.app`) | Orquestador |
 | 2026-10-24 | Vercel (Producción): `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ESTADO_SERVICIO_CLAVE` y `CRON_SECRET` cargadas como secretas | Orquestador |
 | 2026-10-24 | `db/119` verificada en Supabase (8 tablas con RLS, 1 fila de configuración); app `220d3d5` en producción, pantalla `/admin/estado-servicio` abre con 3 de 4 requisitos en verde (falta la IA, opcional) | Orquestador |
+| 2026-10-24 | Acceso visible «Correos del cliente» en el panel izquierdo (app `66a7fc1`): el único enlace estaba en el encabezado de login/inicio y no se llegaba desde el panel de trabajo; Victor dijo «dale» | Victor |
 
-Pendiente: conectar el Gmail desde `/admin/estado-servicio` (el consentimiento de Google lo completa Victor), definir el disparador horario (Vercel Hobby solo permite crons diarios; propuesta: workflow de GitHub Actions), decidir qué hacer con la caducidad de 7 días del permiso en modo «Prueba», y probar «Sincronizar ahora». Hasta entonces la lectura real de Gmail y la IA siguen **sin probar**.
+Pendiente: entender por qué en el Edge de Victor `/admin/estado-servicio` lo redirige al portafolio (con la misma cuenta abre bien en el navegador de pruebas; descartados los roles y «Ver como»), conectar el Gmail desde `/admin/estado-servicio` (el consentimiento de Google lo completa Victor), definir el disparador horario (Vercel Hobby solo permite crons diarios; propuesta: workflow de GitHub Actions), decidir qué hacer con la caducidad de 7 días del permiso en modo «Prueba», y probar «Sincronizar ahora». Hasta entonces la lectura real de Gmail y la IA siguen **sin probar**.
 
 ## Libro de hallazgos
 

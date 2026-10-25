@@ -1,5 +1,5 @@
-# 23 — Estado del servicio
-> Lee si: la tarea toca el apartado «Estado del servicio» (minutas de la reunión semanal con el cliente y correos del cliente por tema), la lectura de los correos de Gmail y sus horas, el anti-duplicado entre los dos buzones, la clasificación de un correo a un servicio, a un portafolio o a un tema, las notas y sus movimientos, «Por revisar», o la configuración de correos en `/admin/estado-servicio`.
+# 23 — Gestión de interesados (antes «Estado del servicio»)
+> Lee si: la tarea toca el apartado «Gestión de interesados» (minutas de la reunión semanal con el cliente y correos del cliente por tema), la lectura de los correos de Gmail y sus horas, el anti-duplicado entre los dos buzones, la clasificación de un correo a un servicio, a un portafolio o a un tema, las notas y sus movimientos, «Por revisar», o la configuración de correos en `/admin/estado-servicio`.
 
 Origen: plan [Estado del servicio](../02-trabajo-activo/01-planes/2026-10-24-estado-del-servicio.md) (pedido de Victor el 2026-10-24; proveedor de correo y alcance confirmados por él). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota ¹⁹; no se repite aquí.
 
@@ -13,8 +13,8 @@ El sistema **lee dos correos** (los que reciben casi lo mismo), decide a qué se
 
 | Pantalla | Ruta | Contenido |
 |---|---|---|
-| Estado del servicio | `/proyectos/{id}/estado-servicio` | Pestañas **Temas**, **Por revisar** y **Minutas**; filtros de fecha, movimiento y texto. Chip «Estado del servicio» (id `estado-servicio`, requiere servicio, grupo Jefatura). |
-| Estado del portafolio | `/programas/{id}/portafolios/{portafolioId}/estado-servicio` | Lo mismo para los correos que no son de un servicio concreto; sin minutas. Enlace «Estado del portafolio» en la página del portafolio. |
+| Gestión de interesados | `/proyectos/{id}/estado-servicio` | Pestañas **Temas**, **Por revisar** y **Minutas**; filtros de fecha, movimiento y texto. Chip «Gestión de interesados» (id `estado-servicio`, requiere servicio, grupo Planificación). |
+| Gestión de interesados del portafolio | `/programas/{id}/portafolios/{portafolioId}/estado-servicio` | Lo mismo para los correos que no son de un servicio concreto; sin minutas. Enlace «Gestión de interesados del portafolio» en la página del portafolio. |
 | Correos del cliente (configuración) | `/admin/estado-servicio` | Conectar o desconectar correos de Gmail, pausar uno, limitar lo que se lee, **horas de lectura**, «Sincronizar ahora», registro de las últimas lecturas y qué piezas faltan en el servidor. Se abre con el icono «Correos del cliente» (sobre de correos) junto a Usuarios en la parte baja del panel izquierdo, y con el enlace del mismo nombre en el encabezado de las pantallas de inicio; ambos solo los ven administrador y jefe de proyectos. |
 
 Cualquier correo se abre completo (asunto, remitente, destinatarios, buzones donde llegó, texto y **documentos adjuntos descargables**) en un panel lateral desde la nota o desde «Por revisar».

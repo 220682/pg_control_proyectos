@@ -34,7 +34,7 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 | 20 | Plan Maestro | fuentes de verdad, flujo implementado, permisos, fase 2 | [20-plan-maestro.md](20-plan-maestro.md) |
 | 21 | Curva S | reglas fijas, granularidad, endpoint, pantalla propia | [21-curva-s.md](21-curva-s.md) |
 | 22 | Informes de supervisión | informes diarios y semanales del supervisor, foto de campo, formatos, período, descarga, pestaña Inasistencias | [22-informes-de-supervision.md](22-informes-de-supervision.md) |
-| 23 | Estado del servicio | las minutas de la reunión semanal, los correos del cliente por tema (lectura de Gmail, anti-duplicado, «Por revisar», horas de lectura) y su configuración | [23-estado-del-servicio.md](23-estado-del-servicio.md) |
+| 23 | Gestión de interesados | las minutas de la reunión semanal, los correos del cliente por tema (lectura de Gmail, anti-duplicado, «Por revisar», horas de lectura) y su configuración | [23-estado-del-servicio.md](23-estado-del-servicio.md) |
 
 **Borrado administrador** no es un flujo: es una regla transversal: el borrado definitivo de RQ, RDT, proyecto (archivar y eliminar), programa y portafolio lo ejecutan solo el administrador y el jefe de proyectos (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)); ningún otro rol, el jefe de oficina técnica incluido. Está citada en [05](05-rq.md), [06](06-rdt.md) y [08](08-programa-portafolio-proyecto.md).
 

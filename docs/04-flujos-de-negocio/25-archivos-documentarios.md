@@ -1,16 +1,16 @@
-# 25 — Archivos documentarios
-> Lee si: la tarea toca el apartado «Archivos documentarios» (el árbol de archivos de cada documento por área y tipo, la versión vigente, los estados de archivo Aprobado/En revisión/Observado/Falta, los comentarios, abrir y descargar, la subida a mano) o el almacén de archivos en Cloudflare R2 y la copia de adjuntos desde Gmail.
+# 25 — Gestión documentaria (antes «Archivos documentarios»)
+> Lee si: la tarea toca el apartado «Gestión documentaria» (el árbol de archivos de cada documento por área y tipo, la versión vigente, los estados de archivo Aprobado/En revisión/Observado/Falta, los comentarios, abrir y descargar, la subida a mano) o el almacén de archivos en Cloudflare R2 y la copia de adjuntos desde Gmail.
 
 Origen: plan [Archivos documentarios](../02-trabajo-activo/01-planes/2026-10-25-repositorio-de-archivos-documentarios.md) (pedido de Victor el 2026-10-25). Es la **tercera de tres interfaces**: 1 [Gestión de interesados](23-estado-del-servicio.md) (de dónde salen los correos), 2 [Gestión documentaria](24-gestion-documentaria.md) (el estado de cada documento), 3 esta (los archivos). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); la lista de pantallas, en el [flujo 16](16-paneles.md).
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/archivos-documentarios`, chip «Archivos documentarios» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión documentaria**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
+Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión de emails**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
 
 ## Árbol y filas
 
 * **Carpetas:** cada área y cada tipo muestran cuántos documentos y cuántos archivos tienen; el área marca además cuántos **faltan**. Las carpetas vacías no aparecen. Hay «Expandir todo», «Colapsar todo» y la casilla **«Solo carpetas»** (muestra la estructura sin los documentos). Al buscar por texto el árbol se abre solo.
-* **Fila de documento:** nombre y revisión, **estado** (Aprobado, En revisión, Observado o **Falta**), el archivo vigente (nombre, fecha, tamaño), el comentario de esa versión, la marca **«Nuevo»** si el archivo es de los últimos 7 días, y los botones **Abrir** (pestaña nueva), **Descargar**, **Ver versiones**, **Ficha** (lleva a la Gestión documentaria) y, para el administrador, **Subir**.
+* **Fila de documento:** nombre y revisión, **estado** (Aprobado, En revisión, Observado o **Falta**), el archivo vigente (nombre, fecha, tamaño), el comentario de esa versión, la marca **«Nuevo»** si el archivo es de los últimos 7 días, y los botones **Abrir** (pestaña nueva), **Descargar**, **Ver versiones**, **Ficha** (lleva a la Gestión de emails) y, para el administrador, **Subir**.
 * **Documento sin archivo:** aparece igual, con estado **Falta**, para que se vea qué no hay. Un documento que solo tiene archivos de referencia (por ejemplo, la solicitud del cliente) también está en **Falta**: no hay entregable.
 * **Versiones:** cada una muestra nombre, etiqueta, estado, fecha, tamaño, si vino de un correo o se subió a mano, su comentario, el botón **Correo** (abre el correo completo, con «Abrir en Gmail») y Abrir/Descargar.
 * **Resumen y filtros:** tarjetas con el total y los conteos por estado (se pueden tocar para filtrar); filtros por **área, tipo, estado, texto** (sin tildes, en el nombre del documento y de sus archivos) y **«Solo faltantes»**; «Sin aprobar» agrupa todo lo que no está aprobado, incluido lo que falta.
@@ -42,7 +42,7 @@ La **versión vigente** es la **última aprobada**; si no hay ninguna aprobada, 
 
 ## Permisos
 
-Provisorios, iguales a los de la Gestión documentaria para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, etiqueta, comentario, subir, borrar lo subido y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
+Provisorios, iguales a los de la Gestión de emails para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, etiqueta, comentario, subir, borrar lo subido y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
 
 ## Qué no es
 

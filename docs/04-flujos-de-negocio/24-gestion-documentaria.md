@@ -1,15 +1,15 @@
-# 24 — Gestión documentaria
-> Lee si: la tarea toca el apartado «Gestión documentaria» (un documento por fila con su estado Solicitado/Enviado/Observado/Levantado/Aprobado, la vida del documento en casillas o en vista compacta, el correo en el panel de la derecha, a quién le toca moverlo, el semáforo de días esperando, las cinco áreas, «Otros correos»/«Sin ubicar», «Por asignar», la carga inicial desde los correos) o el botón «Abrir en Gmail» del correo completo.
+# 24 — Gestión de emails (antes «Gestión documentaria»)
+> Lee si: la tarea toca el apartado «Gestión de emails» (un documento por fila con su estado Solicitado/Enviado/Observado/Levantado/Aprobado, la vida del documento en casillas o en vista compacta, el correo en el panel de la derecha, a quién le toca moverlo, el semáforo de días esperando, las cinco áreas, «Otros correos»/«Sin ubicar», «Por asignar», la carga inicial desde los correos) o el botón «Abrir en Gmail» del correo completo.
 
 Origen: plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md) (pedido de Victor el 2026-10-25; Spec y Gate 1 aprobados por él). Es la **segunda de tres interfaces**: 1 [Gestión de interesados](23-estado-del-servicio.md) (de dónde salen los correos), 2 esta, 3 [Archivos documentarios](25-archivos-documentarios.md) (el árbol de archivos de cada documento). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); la lista de pantallas, en el [flujo 16](16-paneles.md).
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la [tercera interfaz](25-archivos-documentarios.md)): lleva el **estado** del documento a partir de los correos que ya lee la Gestión de interesados.
+Una pantalla por servicio (`/proyectos/{id}/gestion-emails`, chip «Gestión de emails» en el grupo Planificación) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la [tercera interfaz](25-archivos-documentarios.md)): lleva el **estado** del documento a partir de los correos que ya lee la Fuente-Gmail.
 
 ## Un documento = una fila
 
-Cada documento tiene: **nombre**, **tipo** (plano, ficha técnica, procedimiento/PETS, informe, trámite, valorización, otros), **área**, **revisión** (opcional), una **nota** corta de qué trata y los **correos** que le pertenecen. Los correos son las notas de la Gestión de interesados (`estado_notas.documento_id`); un documento puede tener varios y una nota pertenece como máximo a uno. Borrar un documento **no borra sus correos**: vuelven a «Por asignar».
+Cada documento tiene: **nombre**, **tipo** (plano, ficha técnica, procedimiento/PETS, informe, trámite, valorización, otros), **área**, **revisión** (opcional), una **nota** corta de qué trata y los **correos** que le pertenecen. Los correos son las notas de la Fuente-Gmail (`estado_notas.documento_id`); un documento puede tener varios y una nota pertenece como máximo a uno. Borrar un documento **no borra sus correos**: vuelven a «Por asignar».
 
 ## Cómo se calcula el estado
 
@@ -50,7 +50,7 @@ Rediseñada el 2026-10-25 a pedido de Victor (maqueta aprobada por él). Es un *
   * **En casillas:** la vida del documento hacia la derecha. Lo que **pide el cliente** (ciclo largo) tiene cinco casillas: **Pedido → Envío → Respuesta (observado o aprobado) → Nuevo envío → Aprobado**. Lo que **pedimos nosotros** (ciclo corto, tabla aparte) tiene dos: **Pedido → Entregado**. Una columna **Otros** recoge lo que no cabe en el ciclo (reenvíos repetidos, correos informativos): **nada se pierde**.
 * **Quién lo pide:** lo pedimos nosotros si la primera solicitud del documento salió de la contratista (`promcoser.com.pe`); en cualquier otro caso (incluido un documento sin solicitud) lo pide el cliente.
 * **La casilla:** muestra el movimiento (Pedido, Enviado, Observado, Aprobado, Entregado, Informativo), la fecha, quién escribió y si el correo trae archivo (**Con archivo**, con clip) o **Sin archivo**. Al pasar el mouse sale la **nota** del correo (y su asunto). Al tocarla se abre el **correo completo en el panel de la derecha**, con la nota arriba para la revisión rápida, los archivos adjuntos con descarga, el cuerpo y «Abrir en Gmail». Escape o la X lo cierran. En pantallas angostas el panel ocupa toda la pantalla.
-* **Otros correos del servicio, por tema** (debajo de los documentos): los correos que no pertenecen a ningún documento y sí a un tema de la Gestión de interesados (reportes diarios, reuniones y minutas, restricciones, reenvíos…), cada tema plegable, con su movimiento, asunto, quién, fecha y si trae archivo. Se incluyen también los informativos y las notas escritas a mano.
+* **Otros correos del servicio, por tema** (debajo de los documentos): los correos que no pertenecen a ningún documento y sí a un tema de la Fuente-Gmail (reportes diarios, reuniones y minutas, restricciones, reenvíos…), cada tema plegable, con su movimiento, asunto, quién, fecha y si trae archivo. Se incluyen también los informativos y las notas escritas a mano.
 * **Sin ubicar:** al final, los correos sin nota ni tema, para que ninguno quede fuera. No se crean «comentarios» aparte.
 * **Filtros (pocos):** buscador (nombre del documento, asunto, remitente o nota; sin tildes ni mayúsculas; al buscar se abren todos los temas), **quién lo pide** (cliente / nosotros), **área** (y «Sin área») y **estado**. Con área, estado o quién lo pide activos se ocultan los correos sueltos, porque esos filtros hablan de documentos.
 * **Por asignar:** pestaña aparte con los correos de movimiento (no los informativos) que aún no pertenecen a ningún documento. Se marcan varios y se crea con ellos un documento nuevo (el nombre se propone desde el asunto sin «RE:»/«RV:») o se suman a uno existente. Un correo se puede sacar de un documento con **Quitar del documento** (en el panel del correo) y vuelve a esta lista.
@@ -68,7 +68,7 @@ En el correo completo (de cualquiera de las dos interfaces) hay un botón secund
 
 ## Permisos
 
-Provisorios, iguales a los de la Gestión de interesados: **ven** el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica; **gestionan** el administrador y el jefe de proyecto. Victor dejó para el final la regla «todos ven, solo el administrador crea, edita y elimina»; al aplicarla se cambia aquí, en el flujo 23 y en la Matriz de permisos.
+Provisorios, iguales a los de la Fuente-Gmail: **ven** el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica; **gestionan** el administrador y el jefe de proyecto. Victor dejó para el final la regla «todos ven, solo el administrador crea, edita y elimina»; al aplicarla se cambia aquí, en el flujo 23 y en la Matriz de permisos.
 
 ## Datos
 

@@ -1156,3 +1156,12 @@ Solo hechos; no cambia el «Mensaje de cierre» ni lo anterior.
 4. **Recálculo del PR de los servicios reales:** el intento lo bloqueó el sistema de permisos y no hizo falta (ya registrado en el Registro de decisiones y en `resultados/L.md` §13).
 5. **Aprendizajes de trabajo** de hoy sumados en `docs/03-aprendizaje-continuo/2026-10-17-informes-supervision-y-dashboard-aprendizajes-de-trabajo.md` (puntos 11 y 12).
 **Cierre de sesión 2026-10-17: plan cerrado, pendientes en plan futuro.** Tras el push del commit d9b74c5, `git rev-list --left-right --count origin/main...main` en este repo dio `0 0`.
+
+## Actualización de la sesión 2026-10-25 (ajustes a la plantilla estándar del informe)
+
+Solo hechos; el plan sigue cerrado. Pedidos de Victor para la plantilla estándar, ya integrados en el [flujo 22](../../04-flujos-de-negocio/22-informes-de-supervision.md):
+
+1. **Causa de las HH en 0 y del IP «Pendiente»:** `cargarPartesRdt` leía `rdt_tareo_horas` (1035 filas) y otras tablas del parte sin paginar; Supabase corta en 1000 filas y se perdían las horas de los partes recientes. Ahora lee por páginas y parte los `.in(...)` en tandas de 100 ids. Verificado en PS-0000: el diario del 18-10 pasó de 0.00 a 40.00 HH y los indicadores al corte salen (IP 1.01, HH acumuladas 7,139.35). `real-por-clave.ts` y `recurso-partidas.ts` (dashboard) usan lotes de 200 ids y no se truncan en la práctica; se dejaron como están.
+2. **Partes de PS-0000 validados** (servicio de prueba, autorizado por Victor): 15-10 día y noche, 18-10 día. Los informes ID-7 e IS-1 siguen en borrador; **no se emitieron** (emitir avisa a los miembros del servicio).
+3. **Nuevo bloque «Cargos»** (junto a «Personal», sin reemplazarlo), **exportación sin «pendiente de validación»**, **«Semana: N»** sin paréntesis en la exportación y **logo del cliente recortado y más grande** en el PDF.
+4. Pruebas nuevas en `src/lib/informes/cargos-y-exportacion.test.ts`; suite completa verde (2415).

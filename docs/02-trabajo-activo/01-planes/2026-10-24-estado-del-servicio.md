@@ -4,7 +4,7 @@
 
 - Tema: apartado «Estado del servicio» en `py_control_proyectos_web`.
 - Fecha: 2026-10-24.
-- Estado: `Desplegado, pendiente de conectar Gmail, disparador horario y Gate 2` (código en producción con `220d3d5`, migración y claves listas).
+- Estado: `Desplegado, leyendo dos buzones; clasificación manual del histórico a medias; pendientes R2, disparador horario y Gate 2` (código en producción con `2568fe1`, migración y claves listas).
 - Gate Spec: aprobado por Victor (2026-10-24) — pidió «mejóralo, propón mejoras, ejecuta» y eligió «Spec + construir todo lo que no necesita mis claves».
 - Gate 1: pendiente (el flujo se salta el Punch List formal por orden directa de Victor; la verificación queda en la evidencia).
 - Gate 2: pendiente.
@@ -90,6 +90,12 @@ Nuevos: `db/119_estado_servicio.sql`, `src/lib/estado-servicio/*`, `src/app/api/
 | 2026-10-24 | `db/119` verificada en Supabase (8 tablas con RLS, 1 fila de configuración); app `220d3d5` en producción, pantalla `/admin/estado-servicio` abre con 3 de 4 requisitos en verde (falta la IA, opcional) | Orquestador |
 | 2026-10-24 | Acceso visible «Correos del cliente» en el panel izquierdo (app `66a7fc1`): el único enlace estaba en el encabezado de login/inicio y no se llegaba desde el panel de trabajo; Victor dijo «dale» | Victor |
 | 2026-10-25 | Primera lectura real con Gmail (`oficinatecnica@promcoser.com.pe`): 200 correos leídos, todos en «Por revisar» (sin IA ni temas); la lectura ahora corta por tiempo y el botón repite pasadas (app `4022ee7`). Ver evidencia | Orquestador |
+| 2026-10-25 | Arrancar con trabajo manual (lo hace el agente) y ver luego cómo automatizar: API de Claude o agente en la nube | Victor |
+| 2026-10-25 | Segundo buzón `proyectos@promcoser.com.pe` conectado; ambos se leen desde el 7 de septiembre. Original de un correo repetido = el de oficina técnica | Victor / Orquestador |
+| 2026-10-25 | Los adjuntos dejan de copiarse a Supabase (`e3e3925`, ~200 MB ya guardados bajo `estado-servicio/`, sin borrar); los archivos irán a Cloudflare R2 | Victor |
+| 2026-10-25 | Cuenta de Cloudflare creada por Victor (id de cuenta en el panel `dash.cloudflare.com`); falta activar R2 con su método de pago, crear bucket y token, y el código de subida | Victor |
+| 2026-10-25 | Clasificación del histórico: se ubican solo los 4 servicios vigentes; lo ajeno no se ubica ni se migra; los administrativos sin servicio nombrado quedan archivados en «Por revisar». Los dos correos de Tecnovias con contraseña no se tocan | Victor |
+| 2026-10-25 | Ronda de aprendizaje con 4 subagentes Sonnet (240 correos) y ronda masiva con 9 subagentes Haiku (801); salidas sin aplicar ni validar con script (el verificador de seguridad de comandos cayó). Ver evidencia | Orquestador |
 
 Pendiente: entender por qué en el Edge de Victor `/admin/estado-servicio` lo redirige al portafolio (con la misma cuenta abre bien en el navegador de pruebas; descartados los roles y «Ver como»), conectar el Gmail desde `/admin/estado-servicio` (el consentimiento de Google lo completa Victor), definir el disparador horario (Vercel Hobby solo permite crons diarios; propuesta: workflow de GitHub Actions), decidir qué hacer con la caducidad de 7 días del permiso en modo «Prueba», y probar «Sincronizar ahora». Hasta entonces la lectura real de Gmail y la IA siguen **sin probar**.
 
@@ -97,15 +103,27 @@ Pendiente: entender por qué en el Edge de Victor `/admin/estado-servicio` lo re
 
 ### Mejoras (de trabajo)
 
-Ninguna por ahora.
+| ID | Fecha | Quién | Qué | Destino propuesto | Estado | Enlace |
+|---|---|---|---|---|---|---|
+| M1 | 2026-10-25 | Orquestador | Clasificar un buzón grande: ronda de aprendizaje con Sonnet y el resto con Haiku, sobre una exportación fuera del repo; validar ids por script y no por conteo | `03-aprendizaje-continuo/` | Trasladada | [`2026-10-25-clasificar-correos-en-tandas.md`](../../03-aprendizaje-continuo/2026-10-25-clasificar-correos-en-tandas.md) (cierre de sesión, 2026-10-25) |
 
 ### Reglas de negocio acordadas en esta tarea
 
 Las reglas del pedido van directo al flujo 23 (nuevo). No contradicen ningún flujo escrito.
 
+Acordadas por Victor el 2026-10-25 para la **carga manual del histórico** (7 sep al 25 oct), no para la lectura automática; por eso no se editó el flujo 23:
+
+* Se ubican y se migran solo los correos de los **4 servicios vigentes**; el resto (otros trabajos de Promcoser, publicidad, avisos automáticos) no se ubica ni se migra.
+* Los correos **administrativos** de campamento y personal que no nombran el servicio quedan **archivados en «Por revisar»**, sin revisarlos.
+* El original de un correo que llega a los dos buzones es el de **oficina técnica** (`oficinatecnica@`); el de `proyectos@` queda como copia.
+* Los archivos adjuntos van a **Cloudflare R2**, no a Supabase.
+* Los dos correos de Tecnovias con usuario y contraseña en el texto **no se tocan**.
+
 ### Observaciones sobre la política
 
-Ninguna.
+| ID | Fecha | Quién | Observación | Estado |
+|---|---|---|---|---|
+| O1 | 2026-10-25 | Orquestador | El [flujo 23](../../04-flujos-de-negocio/23-estado-del-servicio.md) dice que los adjuntos se guardan en Storage (bucket `documentos-proyecto`), que se descargan desde la pantalla y que «sin servicio identificable → portafolio». Lo desplegado desde `e3e3925` ya no copia adjuntos (queda solo nombre, tipo y tamaño) y la carga manual deja sin ubicar lo ajeno. Cuando se implemente R2, el flujo debe reescribirse con Victor; no se editó por cuenta propia | Pendiente de Victor (Gate 2) |
 
 ### Carpetas/archivos huérfanos
 
@@ -113,4 +131,4 @@ Ninguna.
 
 ## Mensaje de cierre
 
-Pendiente de Gate 2. Estado al 2026-10-24: F1 a F6 construidas y verificadas (evidencia en [`verificacion.md`](../03-evidencia/2026-10-24-estado-del-servicio/verificacion.md)); flujo 23 nuevo, flujos 14 y 16 e índices actualizados. Falta, de parte de Victor: claves de Google, `ESTADO_SERVICIO_CLAVE`, `CRON_SECRET`, plan de Vercel, aplicar `db/119_estado_servicio.sql`, confirmar los roles de la nota ¹⁹ del flujo 14 y actualizar la Matriz de permisos.
+Pendiente de Gate 2. Al cierre de sesión del 2026-10-25: los dos buzones están leídos desde el 7 de septiembre (1 341 correos, 300 copias, 1 041 por ubicar); las 9 salidas de la ronda masiva existen en el scratchpad y **no están validadas ni aplicadas a la base**. Siguiente sesión: (1) correr `validar.mjs` (ids, orden, destinos), (2) unir las dos rondas, normalizar los temas y simular, (3) aplicar solo los 4 servicios con confianza alta o media, (4) activar R2 con Victor (método de pago) y subir los adjuntos de esos correos, (5) decidir el disparador horario, la caducidad de 7 días de Google y la IA. Estado al 2026-10-24: F1 a F6 construidas y verificadas (evidencia en [`verificacion.md`](../03-evidencia/2026-10-24-estado-del-servicio/verificacion.md)); flujo 23 nuevo, flujos 14 y 16 e índices actualizados. Falta, de parte de Victor: claves de Google, `ESTADO_SERVICIO_CLAVE`, `CRON_SECRET`, plan de Vercel, aplicar `db/119_estado_servicio.sql`, confirmar los roles de la nota ¹⁹ del flujo 14 y actualizar la Matriz de permisos.

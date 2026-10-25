@@ -4,7 +4,7 @@
 
 - Tema: apartado «Estado del servicio» en `py_control_proyectos_web`.
 - Fecha: 2026-10-24.
-- Estado: `Implementado, pendiente de claves, migración y Gate 2` (código y flujo 23 listos; sin commit).
+- Estado: `Desplegado, pendiente de conectar Gmail, disparador horario y Gate 2` (código en producción con `220d3d5`, migración y claves listas).
 - Gate Spec: aprobado por Victor (2026-10-24) — pidió «mejóralo, propón mejoras, ejecuta» y eligió «Spec + construir todo lo que no necesita mis claves».
 - Gate 1: pendiente (el flujo se salta el Punch List formal por orden directa de Victor; la verificación queda en la evidencia).
 - Gate 2: pendiente.
@@ -84,6 +84,12 @@ Nuevos: `db/119_estado_servicio.sql`, `src/lib/estado-servicio/*`, `src/app/api/
 | 2026-10-24 | Permisos propuestos (ver tabla), por confirmar | Orquestador |
 | 2026-10-24 | No se agrega `vercel.json` con cron hasta saber el plan de Vercel de Victor | Orquestador |
 | 2026-10-24 | No se hace commit ni push mientras `db/119` no esté aplicada (la pantalla fallaría en producción) | Orquestador |
+| 2026-10-24 | «Apruebo todo, luego vemos qué modificamos»: se autoriza commit, push y cargar claves y migración | Victor |
+| 2026-10-24 | Google Cloud (proyecto My Project Engineer): Gmail API habilitada, permiso `gmail.readonly`, cliente OAuth «Estado del servicio» creado; la app queda en modo «Prueba» (Google no deja publicar con `vercel.app`) | Orquestador |
+| 2026-10-24 | Vercel (Producción): `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ESTADO_SERVICIO_CLAVE` y `CRON_SECRET` cargadas como secretas | Orquestador |
+| 2026-10-24 | `db/119` verificada en Supabase (8 tablas con RLS, 1 fila de configuración); app `220d3d5` en producción, pantalla `/admin/estado-servicio` abre con 3 de 4 requisitos en verde (falta la IA, opcional) | Orquestador |
+
+Pendiente: conectar el Gmail desde `/admin/estado-servicio` (el consentimiento de Google lo completa Victor), definir el disparador horario (Vercel Hobby solo permite crons diarios; propuesta: workflow de GitHub Actions), decidir qué hacer con la caducidad de 7 días del permiso en modo «Prueba», y probar «Sincronizar ahora». Hasta entonces la lectura real de Gmail y la IA siguen **sin probar**.
 
 ## Libro de hallazgos
 

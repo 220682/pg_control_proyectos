@@ -66,6 +66,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Informes: pestaña Inasistencias (dentro de servicios asignados) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Banco de fotos del día (ver y usar) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Restricciones del servicio (Supervisión operativa): ver ¹⁷ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Estado del servicio (minutas y correos del cliente, dentro de servicios a su alcance; el portafolio solo por rol) ¹⁹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos del servicio, ver (Cargos HH, Equipos HM, Materiales c/c, Subcontratos; sin costos) ⁷ | Sí | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -143,6 +144,10 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Crear una restricción desde el RDT (quien llena «restricciones» en una actividad; mismos roles que Crear RDT estructurado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Recepcionar y atender una restricción (y recibir su aviso) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Subir una foto «para restricciones» | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | ✓ | — | — | Sí |
+| **Estado del servicio** ¹⁹ | | | | | | | | | | | | | | |
+| Ver el correo completo y descargar adjuntos y minutas | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
+| Crear, renombrar, cerrar o eliminar temas; escribir o quitar notas; ubicar o ignorar un correo; subir o eliminar minutas | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí (en el portafolio solo el rol) |
+| Conectar o desconectar correos, pausarlos, cambiar las horas de lectura, pausar la lectura y «Sincronizar ahora» (`/admin/estado-servicio`) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
@@ -200,6 +205,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ¹⁷ **Decidido por Victor (2026-10-19, observación 1 del levantamiento; [flujo 22](22-informes-de-supervision.md), «Restricciones»).** La pantalla Restricciones (`/proyectos/{id}/restricciones`) la ven los **13 roles**, dentro de los servicios a su alcance. **Crean** una restricción el supervisor operativo y el supervisor SSOMA; **excepción:** quien llena el texto «restricciones» de una actividad al crear un RDT (administrador, jefe de proyectos, jefe de oficina técnica o supervisor operativo) crea una restricción a su nombre. **Recepcionan y atienden** el administrador, el jefe de proyectos y el jefe de oficina técnica (cualquiera de los tres, aunque no la haya recepcionado), y los tres reciben el aviso de las nuevas. Las fotos «para restricciones» las suben los cuatro roles de campo más el supervisor SSOMA, que solo puede subir ese uso. Todas las acciones exigen el servicio a cargo (el administrador pasa). Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor).
 
 ¹⁸ **Decidido por Victor (2026-10-21, plan Correcciones de la prueba del RDT en PS-0001; [flujo 09](09-importar-dp.md), «Cargos del personal sin fila en el presupuesto»).** Declarar a qué fila del presupuesto equivale un cargo del personal, **también con el servicio en ejecución** (cuando Importar DP ya no abre y el RDT sí se crea), lo hacen solo el administrador y el jefe de proyectos (mismo permiso que Importar DP: `puedeImportarDp`), con el servicio a su cargo y en planeación o en ejecución (no cerrado). Ruta nueva: `PUT /api/proyectos/[id]/dp/equivalencias-cargos` (el servidor valida sesión, rol, alcance, estado y la asignación). La pantalla es una sección de la página del DP (`/proyectos/[id]/dp`): no agrega chip ni cambia el [flujo 16](16-paneles.md). **Pendiente de Victor: sumar a la Matriz de permisos «Equivalencias de cargos del servicio» (administrador y jefe de proyectos)** (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT); esta cuenta no puede abrirlo.
+
+¹⁹ **Propuesta de roles por confirmar con Victor (2026-10-24, plan [Estado del servicio](../02-trabajo-activo/01-planes/2026-10-24-estado-del-servicio.md); [flujo 23](23-estado-del-servicio.md)).** El pedido y el alcance son de Victor; los **roles** los propuso el Orquestador porque los correos del cliente pueden traer precios y contratos. **Ven** Estado del servicio (pantalla, correo completo, adjuntos y minutas) el administrador, el jefe de proyectos, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance. **Gestionan** (temas, notas, ubicar correos, minutas, correos conectados y horas) solo el administrador y el jefe de proyectos. El chip «Estado del servicio» (grupo Jefatura) es el único acceso nuevo de servicio; `/admin/estado-servicio` y el estado del portafolio son pantallas de contenedor o globales sin chip (excepciones declaradas). Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

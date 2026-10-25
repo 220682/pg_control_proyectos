@@ -1,0 +1,108 @@
+# Plan — Estado del servicio (minutas y correos del cliente)
+
+## Identificación y estado
+
+- Tema: apartado «Estado del servicio» en `py_control_proyectos_web`.
+- Fecha: 2026-10-24.
+- Estado: `Implementado, pendiente de claves, migración y Gate 2` (código y flujo 23 listos; sin commit).
+- Gate Spec: aprobado por Victor (2026-10-24) — pidió «mejóralo, propón mejoras, ejecuta» y eligió «Spec + construir todo lo que no necesita mis claves».
+- Gate 1: pendiente (el flujo se salta el Punch List formal por orden directa de Victor; la verificación queda en la evidencia).
+- Gate 2: pendiente.
+
+## Referencia al Spec aprobado
+
+Pedido de Victor (2026-10-24), en sus palabras: un apartado **Estado del servicio** donde se guardan las **minutas** de la reunión semanal con el cliente y donde se **conectan dos correos electrónicos** (reciben casi la misma información). El sistema lee los correos dos veces al día (7 a. m. y 2 p. m., con botón para cambiar las horas), analiza uno solo cuando el mismo correo llega a los dos, y lo manda al servicio que corresponde; si el servicio no existe, va al portafolio (Servicios Marcobre). Dentro de cada servicio se arman **temas** (por ejemplo PETS): cada correo agrega una **nota** al tema (enviado a revisión, aprobado, observado…), y si falta un tema, el sistema lo crea. Se debe poder abrir el correo completo y sus adjuntos desde la app y filtrar por fecha para no ver todo el histórico.
+
+## Objetivo, alcance y no alcance
+
+- **Resultado esperado:** una pantalla por servicio (y una por portafolio) que muestra, por tema, la línea de tiempo de notas sacadas de los correos del cliente, más las minutas de la reunión semanal.
+- **Alcance de este plan:**
+  1. Base de datos: buzones, configuración de horarios, correos, adjuntos, temas, notas, minutas y registro de sincronizaciones (`db/119_estado_servicio.sql`).
+  2. Servidor: lectura de Gmail (solo lectura, OAuth), anti-duplicado, clasificación (reglas + IA), sincronización por horario, descarga de adjuntos.
+  3. Pantallas: Estado del servicio (por servicio), Estado del portafolio (correos sin servicio y temas generales), Configuración de correos y horarios.
+  4. Permisos, chip en el panel, flujo 23 nuevo y actualización del flujo 14.
+- **No alcance:** responder correos desde la app; leer otros proveedores distintos de Gmail; WhatsApp; convertir las minutas en acuerdos con seguimiento (queda como mejora futura).
+- **Validación esperada:** pruebas automáticas de las piezas puras (huella, horarios, reglas, lectura del correo, cifrado); `tsc` y `lint` sin errores nuevos; la conexión real a Gmail y a la IA **no se prueba** hasta que Victor entregue las claves.
+
+## Mejoras propuestas (todas incluidas salvo que se diga lo contrario)
+
+1. **Anti-duplicado en dos pasos:** primero el `Message-ID` del correo (idéntico en ambos buzones), luego una huella del contenido. El segundo ejemplar se guarda como duplicado, no se analiza ni crea nota, y la nota recuerda que llegó a los dos buzones.
+2. **Los hilos heredan el tema:** si una respuesta pertenece al mismo hilo de un correo ya clasificado, va al mismo tema sin gastar IA.
+3. **Clasificación en dos etapas:** reglas primero (código `PS-####` en el asunto o cuerpo, nombre del servicio, palabra del tema); la IA solo cuando las reglas no alcanzan. Si la confianza es baja, el correo va a **Por revisar** en lugar de adivinar.
+4. **Cada nota trae un «movimiento»:** Enviado, Aprobado, Observado, Solicitud, Información. El encabezado del tema muestra el último movimiento como estado (ejemplo: PETS — Observado).
+5. **«Sin respuesta»:** un tema cuyo último movimiento fue «Enviado» o «Solicitud» y lleva 3 días o más sin novedad se marca para prepararlo antes de la reunión semanal.
+6. **Ver el correo completo y sus adjuntos** desde la propia app (los adjuntos se guardan en Storage al sincronizar, hasta 10 MB cada uno).
+7. **Filtros:** rango de fechas, tema, movimiento y texto. Por defecto se muestran los últimos 30 días.
+8. **Registro de sincronizaciones** visible (cuándo corrió, cuántos correos nuevos, duplicados, por revisar, errores) y botón «Sincronizar ahora».
+9. **Reasignar a mano:** un correo mal clasificado se mueve a otro tema, servicio o portafolio; la corrección queda marcada como manual y la IA no la vuelve a tocar.
+10. **Horarios editables:** el botón de horarios guarda las horas en base de datos; un disparador externo llama al endpoint cada hora y el servidor decide si toca correr (no hay que cambiar el despliegue para cambiar la hora).
+
+## Decisiones técnicas y por qué
+
+| Decisión | Motivo |
+|---|---|
+| Gmail API con OAuth de solo lectura, sin librería nueva (`fetch`) | No se guarda ninguna contraseña; el token de refresco se guarda cifrado (AES-256-GCM, clave en variable de entorno). No suma dependencias. |
+| IA con la API de Claude (`claude-haiku-5-5`) solo si hay clave | Lo mecánico va en el modelo pequeño. Sin clave el sistema funciona solo con reglas y deja lo dudoso en Por revisar. |
+| Disparador externo cada hora + horas en base | `vercel.json` es fijo; un cron por hora permite que el botón de horarios mande. Requiere un plan de Vercel que admita cron horario, o un disparador gratuito externo con la cabecera `Authorization: Bearer <CRON_SECRET>`. **No se agrega `vercel.json` hasta que Victor confirme su plan.** |
+| Un portafolio por defecto (Servicios Marcobre) para lo que no tiene servicio | Ya es el portafolio por defecto de la app (`NOMBRE_PORTAFOLIO_DEFECTO`). |
+| Permisos: ver = administrador, jefe de proyectos, jefe de oficina técnica y supervisor de oficina técnica; gestionar (temas, reasignar, minutas, horarios, buzones) = administrador y jefe de proyectos | Propuesta mía, **por confirmar con Victor**: los correos del cliente pueden traer precios y contratos. |
+
+## Lo que necesito de Victor (bloquea solo la parte real con Gmail/IA)
+
+1. Crear un cliente OAuth en Google Cloud (tipo «aplicación web», permiso `gmail.readonly`, redirección `<sitio>/api/estado-servicio/google/callback`) y pasar `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET`.
+2. Definir `ESTADO_SERVICIO_CLAVE` (32 bytes en base64) y `CRON_SECRET` en Vercel.
+3. Opcional: `ANTHROPIC_API_KEY` para la clasificación con IA.
+4. Decir qué plan de Vercel tiene (para el disparador horario) o aceptar un disparador externo.
+5. Aplicar `db/119_estado_servicio.sql` en el SQL Editor de Supabase.
+6. Compartir la Matriz de permisos como editor para actualizarla.
+
+## Entorno, repositorios, ramas y worktrees
+
+Trabajo directo en `main`, sin worktree (orden de Victor en la sesión). Código en `py_control_proyectos_web`; documentación aquí. No se hace push hasta que `db/119` esté aplicada (si no, la pantalla falla en producción).
+
+## Fases y dependencias
+
+| Fase | Contenido | Depende de |
+|---|---|---|
+| F1 | `db/119` y tipos | — |
+| F2 | Piezas puras con pruebas: huella, horarios, reglas, lectura de correo, cifrado | F1 |
+| F3 | Gmail, IA y sincronización | F2 |
+| F4 | Rutas API | F3 |
+| F5 | Pantallas, permisos, chip | F4 |
+| F6 | Flujo 23, flujo 14, índice, evidencia | F5 |
+
+## Archivos / componentes afectados
+
+Nuevos: `db/119_estado_servicio.sql`, `src/lib/estado-servicio/*`, `src/app/api/estado-servicio/**`, `src/app/(workspace)/proyectos/[id]/estado-servicio/page.tsx`, `src/app/(workspace)/programas/[id]/portafolios/[portafolioId]/estado-servicio/page.tsx`, `src/app/(workspace)/admin/estado-servicio/page.tsx`, `src/components/estado-servicio/*`. Modificados: `permisos.ts`, `registro-accesos.ts`, `matriz-base-flujo14.ts`, `cobertura-pantallas.ts` y sus pruebas, página del portafolio (enlace), `db/README.md`. Documentación: flujo 23 (nuevo), flujos 14 y 16, índice de flujos.
+
+## Registro de decisiones
+
+| Fecha | Decisión | Quién |
+|---|---|---|
+| 2026-10-24 | Proveedor de los dos correos: Gmail / Google Workspace | Victor |
+| 2026-10-24 | Avanzar con Spec + construir lo que no necesita claves | Victor |
+| 2026-10-24 | Permisos propuestos (ver tabla), por confirmar | Orquestador |
+| 2026-10-24 | No se agrega `vercel.json` con cron hasta saber el plan de Vercel de Victor | Orquestador |
+| 2026-10-24 | No se hace commit ni push mientras `db/119` no esté aplicada (la pantalla fallaría en producción) | Orquestador |
+
+## Libro de hallazgos
+
+### Mejoras (de trabajo)
+
+Ninguna por ahora.
+
+### Reglas de negocio acordadas en esta tarea
+
+Las reglas del pedido van directo al flujo 23 (nuevo). No contradicen ningún flujo escrito.
+
+### Observaciones sobre la política
+
+Ninguna.
+
+### Carpetas/archivos huérfanos
+
+Ninguna.
+
+## Mensaje de cierre
+
+Pendiente de Gate 2. Estado al 2026-10-24: F1 a F6 construidas y verificadas (evidencia en [`verificacion.md`](../03-evidencia/2026-10-24-estado-del-servicio/verificacion.md)); flujo 23 nuevo, flujos 14 y 16 e índices actualizados. Falta, de parte de Victor: claves de Google, `ESTADO_SERVICIO_CLAVE`, `CRON_SECRET`, plan de Vercel, aplicar `db/119_estado_servicio.sql`, confirmar los roles de la nota ¹⁹ del flujo 14 y actualizar la Matriz de permisos.

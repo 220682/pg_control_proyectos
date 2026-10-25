@@ -146,7 +146,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
-| Actualizar estado de RQ (dar de alta, ATENDIDO) | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
+| Actualizar estado de RQ (recepcionar el RQ; En almacén y Atendido por material) | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Derivar RQ a logística (aprobación) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Devolver un RQ Solicitado con motivo (mismo reparto que Derivar RQ a logística) ¹⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir y reenviar un RQ Devuelto (el solicitante del RQ y el administrador) ¹⁵ | ✓ | * | * | * | * | * | * | * | * | * | * | * | * | Sí |

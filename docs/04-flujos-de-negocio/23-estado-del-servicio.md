@@ -13,7 +13,7 @@ El sistema **lee dos correos** (los que reciben casi lo mismo), decide a qué se
 
 | Pantalla | Ruta | Contenido |
 |---|---|---|
-| Gestión de interesados | `/proyectos/{id}/estado-servicio` | Pestañas **Temas**, **Por revisar** y **Minutas**; filtros de fecha, movimiento y texto. Chip «Gestión de interesados» (id `estado-servicio`, requiere servicio, grupo Planificación). |
+| Gestión de interesados | `/proyectos/{id}/estado-servicio` | Pestañas **Últimos correos** (la primera y la que se abre por defecto), **Temas**, **Por revisar** y **Minutas**; filtros de fecha, movimiento, remitente y texto. Chip «Gestión de interesados» (id `estado-servicio`, requiere servicio, grupo Planificación). |
 | Gestión de interesados del portafolio | `/programas/{id}/portafolios/{portafolioId}/estado-servicio` | Lo mismo para los correos que no son de un servicio concreto; sin minutas. Enlace «Gestión de interesados del portafolio» en la página del portafolio. |
 | Correos del cliente (configuración) | `/admin/estado-servicio` | Conectar o desconectar correos de Gmail, pausar uno, limitar lo que se lee, **horas de lectura**, «Sincronizar ahora», registro de las últimas lecturas y qué piezas faltan en el servidor. Se abre con el icono «Correos del cliente» (sobre de correos) junto a Usuarios en la parte baja del panel izquierdo, y con el enlace del mismo nombre en el encabezado de las pantallas de inicio; ambos solo los ven administrador y jefe de proyectos. |
 
@@ -22,7 +22,7 @@ Cualquier correo se abre completo (asunto, remitente, destinatarios, buzones don
 ## De dónde salen los correos
 
 * **Dos buzones de Gmail / Google Workspace** (decisión de Victor, 2026-10-24). Se conectan con permiso de **solo lectura** de Google; la app no guarda contraseñas. El permiso permanente se guarda **cifrado** (AES-256-GCM, clave en el servidor) y nunca se muestra.
-* **Lectura automática dos veces al día, 7:00 y 14:00** (hora de Lima por defecto). El botón «Guardar horas» de la configuración cambia las horas (de 1 a 6); un disparador externo llama al servidor cada hora y el servidor decide si toca, así que cambiar una hora no exige volver a desplegar. Si una hora programada no corrió, se recupera durante las 12 horas siguientes; pasado ese margen la cubre el turno siguiente. La lectura automática se puede pausar.
+* **Lectura automática cuatro veces al día, 7:00, 10:00, 13:00 y 16:00** (hora de Lima; así quedó configurado el 2026-10-25). El botón «Guardar horas» de la configuración cambia las horas (de 1 a 6); un disparador externo llama al servidor cada hora y el servidor decide si toca, así que cambiar una hora no exige volver a desplegar. Si una hora programada no corrió, se recupera durante las 12 horas siguientes; pasado ese margen la cubre el turno siguiente. La lectura automática se puede pausar.
 * **Sincronizar ahora** lee en el momento. Cada lectura deja su registro (nuevos, copias, ubicados, por revisar, avisos).
 * Cada corrida trae hasta 40 correos nuevos por buzón; si hay más, el resto entra en la siguiente.
 
@@ -53,7 +53,11 @@ Se prueba en este orden y se detiene en el primero que acierte:
 
 ## Filtros
 
-Fecha **desde / hasta**, movimiento y texto (tema, nota o asunto). Por defecto se ven los **últimos 30 días**, para no cargar todo el histórico. Los mismos filtros de fecha aplican a las minutas.
+Fecha **desde / hasta**, movimiento, **remitente** (nombre o correo de quien envía) y texto (tema, nota o asunto). Por defecto Temas se ve con los **últimos 30 días**, para no cargar todo el histórico. Los filtros de fecha aplican también a las minutas. El filtro de remitente aplica a Últimos correos, Temas y Por revisar; los de movimiento y texto, a Temas.
+
+## Últimos correos
+
+Primera pestaña: los correos más recientes del servicio (o del portafolio), de más nuevo a más viejo, **7 por defecto**, con un desplegable para ver 7, 15, 30, 50 o 100. Cada correo muestra fecha, tema donde quedó (o «Por revisar»), movimiento, adjuntos, remitente y un extracto, y se abre completo con el botón «Correo». Aquí el rango de fechas solo recorta si la persona lo cambió a mano (el botón «Últimos 30 días» lo deja libre otra vez); no se muestran las copias del mismo correo.
 
 ## Minutas
 

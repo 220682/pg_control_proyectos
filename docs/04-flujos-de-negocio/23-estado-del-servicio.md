@@ -17,7 +17,9 @@ El sistema **lee dos correos** (los que reciben casi lo mismo), decide a qué se
 | Gestión de interesados del portafolio | `/programas/{id}/portafolios/{portafolioId}/estado-servicio` | Lo mismo para los correos que no son de un servicio concreto; sin minutas. Enlace «Gestión de interesados del portafolio» en la página del portafolio. |
 | Correos del cliente (configuración) | `/admin/estado-servicio` | Conectar o desconectar correos de Gmail, pausar uno, limitar lo que se lee, **horas de lectura**, «Sincronizar ahora», registro de las últimas lecturas y qué piezas faltan en el servidor. Se abre con el icono «Correos del cliente» (sobre de correos) junto a Usuarios en la parte baja del panel izquierdo, y con el enlace del mismo nombre en el encabezado de las pantallas de inicio; ambos solo los ven administrador y jefe de proyectos. |
 
-Cualquier correo se abre completo (asunto, remitente, destinatarios, buzones donde llegó, texto y **documentos adjuntos descargables**) en un panel lateral desde la nota o desde «Por revisar».
+Cualquier correo se abre completo (asunto, remitente, destinatarios, buzones donde llegó, texto y **documentos adjuntos descargables**) en un panel lateral desde la nota o desde «Por revisar». Un botón secundario **Abrir en Gmail** abre ese mismo mensaje en Gmail, en el buzón donde llegó (un botón por buzón si llegó a los dos; hay que tener esa cuenta abierta en el navegador).
+
+Cada nota de movimiento puede pertenecer a un **documento** de la [Gestión documentaria](24-gestion-documentaria.md) (`estado_notas.documento_id`); las notas y los correos no se tocan por eso, y borrar el documento no las borra.
 
 ## De dónde salen los correos
 

@@ -29,7 +29,7 @@ La arquitectura funcional, el flujo principal documentado (presupuesto, cronogra
 
 ## Flujos principales
 
-Los 23 flujos de negocio, con su índice, viven en [docs/04-flujos-de-negocio/README.md](docs/04-flujos-de-negocio/README.md); son la fuente de verdad de las reglas funcionales. Los de uso más frecuente: [14 accesos y restricciones](docs/04-flujos-de-negocio/14-accesos-y-restricciones.md), [16 paneles](docs/04-flujos-de-negocio/16-paneles.md), [18 control de avance](docs/04-flujos-de-negocio/18-control-avance.md) y [20 plan maestro](docs/04-flujos-de-negocio/20-plan-maestro.md).
+Los 24 flujos de negocio, con su índice, viven en [docs/04-flujos-de-negocio/README.md](docs/04-flujos-de-negocio/README.md); son la fuente de verdad de las reglas funcionales. Los de uso más frecuente: [14 accesos y restricciones](docs/04-flujos-de-negocio/14-accesos-y-restricciones.md), [16 paneles](docs/04-flujos-de-negocio/16-paneles.md), [18 control de avance](docs/04-flujos-de-negocio/18-control-avance.md) y [20 plan maestro](docs/04-flujos-de-negocio/20-plan-maestro.md).
 
 ## Políticas de coherencia y trazabilidad
 

@@ -4,9 +4,9 @@
 
 - Tema: apartado «Gestión documentaria» en `py_control_proyectos_web`, hermano de «Gestión de interesados».
 - Fecha: 2026-10-25.
-- Estado: `Planificando` (Spec aprobado; falta el Gate 1 para construir).
+- Estado: `Implementando` (2026-10-25): código, pruebas y documentación listos en la app sin empujar; falta que Victor aplique `db/120_gestion_documentaria.sql`, la carga inicial (F5), el push y la verificación en producción.
 - Gate Spec: aprobado por Victor (2026-10-25) — pidió la interfaz, pidió «mejora mi idea», respondió las decisiones de una fila por documento, semáforo ajustable y área primero, y dijo «dale».
-- Gate 1: pendiente.
+- Gate 1: aprobado por Victor (2026-10-25, «ok, continua»). Victor pidió no hacer auditoría ni revisión: él revisa las áreas y los documentos al final.
 - Gate 2: pendiente.
 
 ## Referencia al Spec aprobado
@@ -117,7 +117,7 @@ Nuevos: `db/120_gestion_documentaria.sql`, `src/lib/gestion-documentaria/*`, `sr
 
 ## Enlaces a progreso y evidencia homónimos
 
-Aún no creados; se crean al iniciar la construcción (`02-progreso/` y `03-evidencia/` con este mismo nombre).
+Sin carpetas aparte: el avance está en este plan y la evidencia (conteos de la carga inicial y capturas de producción) se anota en el «Mensaje de cierre».
 
 ## Libro de hallazgos
 
@@ -127,7 +127,7 @@ Ninguna.
 
 ### Reglas de negocio acordadas en esta tarea
 
-Las del apartado «Referencia al Spec aprobado» y «Diseño propuesto»; se integran directo en el flujo 24 al cerrar. Contradicciones con lo ya escrito: ninguna detectada hasta ahora (el flujo 23 solo habla de temas y notas, no de documentos).
+Las del apartado «Referencia al Spec aprobado» y «Diseño propuesto»; ya integradas en el [flujo 24](../../04-flujos-de-negocio/24-gestion-documentaria.md) (2026-10-25); el flujo 23 solo ganó el botón «Abrir en Gmail» y la mención de que una nota puede pertenecer a un documento. Contradicciones con lo ya escrito: ninguna detectada hasta ahora (el flujo 23 solo habla de temas y notas, no de documentos).
 
 ### Observaciones sobre la política
 

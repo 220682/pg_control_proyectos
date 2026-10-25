@@ -67,6 +67,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Banco de fotos del día (ver y usar) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Restricciones del servicio (Supervisión operativa): ver ¹⁷ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Gestión de interesados (minutas y correos del cliente, dentro de servicios a su alcance; el portafolio solo por rol) ¹⁹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
+| Gestión documentaria (documentos del servicio con su estado y semáforo, dentro de servicios a su alcance) ²⁰ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos del servicio, ver (Cargos HH, Equipos HM, Materiales c/c, Subcontratos; sin costos) ⁷ | Sí | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -148,6 +149,9 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Ver el correo completo y descargar adjuntos y minutas | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Crear, renombrar, cerrar o eliminar temas; escribir o quitar notas; ubicar o ignorar un correo; subir o eliminar minutas | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí (en el portafolio solo el rol) |
 | Conectar o desconectar correos, pausarlos, cambiar las horas de lectura, pausar la lectura y «Sincronizar ahora» (`/admin/estado-servicio`) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
+| **Gestión documentaria** ²⁰ | | | | | | | | | | | | | | |
+| Ver los documentos, su historial de correos y exportar a Excel | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
+| Crear, editar o borrar un documento, corregir su estado o su área, asignar o sacar correos | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
 | Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
@@ -207,6 +211,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ¹⁸ **Decidido por Victor (2026-10-21, plan Correcciones de la prueba del RDT en PS-0001; [flujo 09](09-importar-dp.md), «Cargos del personal sin fila en el presupuesto»).** Declarar a qué fila del presupuesto equivale un cargo del personal, **también con el servicio en ejecución** (cuando Importar DP ya no abre y el RDT sí se crea), lo hacen solo el administrador y el jefe de proyectos (mismo permiso que Importar DP: `puedeImportarDp`), con el servicio a su cargo y en planeación o en ejecución (no cerrado). Ruta nueva: `PUT /api/proyectos/[id]/dp/equivalencias-cargos` (el servidor valida sesión, rol, alcance, estado y la asignación). La pantalla es una sección de la página del DP (`/proyectos/[id]/dp`): no agrega chip ni cambia el [flujo 16](16-paneles.md). **Pendiente de Victor: sumar a la Matriz de permisos «Equivalencias de cargos del servicio» (administrador y jefe de proyectos)** (https://claude.ai/artifact/4no1PCEfDb5pYmgmnrP5MT); esta cuenta no puede abrirlo.
 
 ¹⁹ **Propuesta de roles por confirmar con Victor (2026-10-24, plan [Estado del servicio](../02-trabajo-activo/01-planes/2026-10-24-estado-del-servicio.md); [flujo 23](23-estado-del-servicio.md)).** El pedido y el alcance son de Victor; los **roles** los propuso el Orquestador porque los correos del cliente pueden traer precios y contratos. **Ven** Gestión de interesados (pantalla, correo completo, adjuntos y minutas) el administrador, el jefe de proyectos, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance. **Gestionan** (temas, notas, ubicar correos, minutas, correos conectados y horas) solo el administrador y el jefe de proyectos. El chip «Gestión de interesados» (grupo Jefatura) es el único acceso nuevo de servicio; `/admin/estado-servicio` y el estado del portafolio son pantallas de contenedor o globales sin chip (excepciones declaradas); `/admin/estado-servicio` se abre con un icono «Correos del cliente» en la parte baja del panel izquierdo (junto a Usuarios), solo para administrador y jefe de proyectos. Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
+
+²⁰ **Provisorio, igual que la nota ¹⁹ (2026-10-25, plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md); [flujo 24](24-gestion-documentaria.md)).** El chip «Gestión documentaria» (id `gestion-documentaria`, grupo Planificación, `/proyectos/{id}/gestion-documentaria`) lo ven y lo gestionan los mismos roles que la Gestión de interesados, hasta que Victor aplique al final la regla «todos ven, solo el administrador crea, edita y elimina». Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

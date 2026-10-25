@@ -7,7 +7,7 @@
 - Estado: `Implementando` (2026-10-25).
 - Gate Spec: aprobado por Victor (2026-10-25) con sus respuestas: se vincula su propio número, el grupo es «Villa Fase 2» (servicio «Facilidades de Villa de Ejecución Fase 2»), «ok dale».
 - Gate 1: aprobado por Victor (2026-10-25, «continúa»).
-- Gate 2: pendiente (falta aplicar `db/122`, verificar en pantalla y la decisión de Restricciones).
+- Gate 2: pendiente de la revisión de Victor (`db/122` aplicada, verificado en pantalla, decisión de Restricciones tomada, envío automático activo; solo falta R2).
 
 ## Referencia al Spec aprobado
 
@@ -67,8 +67,9 @@ Directo en `main` en `py_control_proyectos_web` y en este repositorio. El script
 - [x] Verificación con Playwright (2026-10-25, servidor local): registro del grupo, bandeja «Por revisar (337)», Restricciones-Notas con dos paneles. Se verificó en el servicio real y no en PS-0000 porque el grupo es único. Confirmar un mensaje como pedido de campo quedó cubierto por pruebas, no probado a mano para no crear datos reales.
 - [x] `db/122` aplicada por Victor; app publicada en `main` (854af64). Docs: push con el cierre de esta tanda.
 - [x] Tanda B: puente revinculado por QR; grupo «Villa Fase 2» (servicio PS-0003) registrado; 337 mensajes enviados con el script (hallazgo: el historial no trae autor → «Emisor desconocido»).
-- [ ] Variable `WHATSAPP_INGRESO_SECRETO` cargada en Vercel por Victor + redeploy; falta confirmar que el envío desde el PC llegue a producción (hoy se probó contra el servidor local, misma base).
-- [ ] Dejar el script programado en el PC (tarea de Windows) y copia de archivos a R2 cuando exista.
+- [x] Variable `WHATSAPP_INGRESO_SECRETO` cargada en Vercel (Production) y verificada; el envío desde el PC llega a producción (341 enviados: 4 nuevos, 337 repetidos).
+- [x] Script programado en el PC (2026-10-25): tarea de Windows «Fuente-WhatsApp envio Villa Fase 2», cada 10 min, solo con la sesión abierta; ejecuta `C:\Users\BRANDY\.whatsapp-ingreso\enviar.ps1` (secreto, estado y registro en esa carpeta privada, fuera de los repos). Verificada: el registro muestra la corrida automática («Mensajes nuevos del grupo: 0»).
+- [ ] Copia de archivos a R2 cuando exista (depende de que Victor pague y configure R2).
 
 ## Decisiones de Victor durante la implementación
 

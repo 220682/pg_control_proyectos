@@ -14,6 +14,7 @@ Teléfono de Victor → **puente de WhatsApp** en su PC (`mcp_whatsapp`, vincula
 * **Privacidad:** el script toma **únicamente** el grupo configurado; la consulta filtra por el código del grupo y ningún otro chat del teléfono sale del PC. La app, además, **rechaza** cualquier lote cuyo grupo no esté registrado y activo en un servicio.
 * **Registro del grupo:** administrador o jefe de proyectos escriben el código del grupo (termina en `@g.us`) en la pantalla; un grupo no puede estar en dos servicios. El grupo se puede pausar.
 * **Idempotente:** cada mensaje se guarda una sola vez (por su id en WhatsApp). La misma información repetida por el mismo emisor en el mismo minuto entra ya **descartada**. Un fallo a medio envío se reintenta sin duplicar.
+* **Envío automático:** una tarea de Windows en el PC de Victor ejecuta el script **cada 10 minutos** (solo con la sesión de Windows abierta y el puente corriendo); el secreto, el último mensaje enviado y el registro viven en una carpeta privada del PC, fuera de los repositorios.
 * **Riesgos asumidos:** el puente usa una conexión **no oficial**; el teléfono debe abrir WhatsApp al menos cada ~14 días; el PC debe estar encendido para recibir.
 
 ## Qué se extrae

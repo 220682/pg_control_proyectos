@@ -1,7 +1,7 @@
 # 26 — Fuente-WhatsApp
 > Lee si: la tarea toca el apartado «Fuente-WhatsApp» (el grupo de WhatsApp del servicio, la bandeja «Por revisar», la sugerencia de pedido de campo / nota / archivo / sin importancia, los contactos por celular), el panel de **Notas** de Restricciones-Notas y su vigencia, el origen «WhatsApp» de una restricción con su emisor, o el script local que envía el grupo a la app.
 
-Origen: plan [Fuente-WhatsApp](../02-trabajo-activo/01-planes/2026-10-25-fuente-whatsapp.md) (pedido de Victor el 2026-10-25; paso 2 de la reestructuración Fuentes / Gestión documentaria). Hermana de [Fuente-Gmail](23-estado-del-servicio.md) y de Fuente-Drive (pendiente). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota 23; la lista de pantallas, en el [flujo 16](16-paneles.md). **Estado (2026-10-25): implementada y probada en local; pendiente de aplicar `db/122` en Supabase, de revincular el puente de WhatsApp y de publicarla.**
+Origen: plan [Fuente-WhatsApp](../02-trabajo-activo/01-planes/2026-10-25-fuente-whatsapp.md) (pedido de Victor el 2026-10-25; paso 2 de la reestructuración Fuentes / Gestión documentaria). Hermana de [Fuente-Gmail](23-estado-del-servicio.md) y de Fuente-Drive (pendiente). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota 23; la lista de pantallas, en el [flujo 16](16-paneles.md). **Estado (2026-10-25): publicada; `db/122` aplicada; puente revinculado; grupo «Villa Fase 2» registrado y sus 337 mensajes ya en «Por revisar». Falta la copia de archivos a R2.**
 
 ## Qué es
 
@@ -46,6 +46,8 @@ Un mensaje trae el celular de quien lo escribió. Para saber quién es **no se d
 1. **Usuarios del sistema** (perfiles): nombre y cargo.
 2. **Personal de obra** (`recursos_personal`): nombre y cargo.
 3. **Contacto externo de WhatsApp**: solo si no está en ninguna de las dos, se crea en la tabla propia de contactos (celular, nombre, cargo, empresa) con el nombre que muestra WhatsApp; quien gestiona completa nombre, cargo y empresa desde la bandeja.
+
+**Emisor desconocido:** el historial que WhatsApp sincroniza al vincular el puente **no dice quién escribió** (el puente guarda entonces el código del propio grupo). Esos mensajes entran con emisor vacío y se muestran como «Emisor desconocido», sin celular ni «Editar contacto»; nunca se inventa un celular. Los mensajes **nuevos** sí traen al autor (si WhatsApp lo identifica con un código interno, el script lo cambia por su celular).
 
 Los usuarios y el personal se editan donde ya viven (Usuarios, Personal), no en Fuente-WhatsApp: la bandeja solo muestra «Usuario del sistema» o «Personal de obra». Una restricción por WhatsApp lleva el nombre del usuario o del personal si el celular coincide; si no, el contacto externo; si no, el nombre que mostró WhatsApp.
 

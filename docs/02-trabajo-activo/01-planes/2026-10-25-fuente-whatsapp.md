@@ -64,9 +64,11 @@ Directo en `main` en `py_control_proyectos_web` y en este repositorio. El script
 - [x] A4 Script local probado con una base de prueba (`scripts/whatsapp/enviar_grupo.py`, 5 pruebas; solo sale el grupo configurado).
 - [x] A4 Flujo 26 escrito y flujos 14, 16 y 22, README de flujos, `AGENTS.md`, `docs/README.md` y mapa documental al día.
 - [x] Reconocer al emisor en usuarios y personal antes de crear un contacto (pedido de Victor; 2 pruebas más).
-- [ ] Verificación con Playwright en PS-0000 (necesita `db/122` aplicada).
-- [ ] Commit y push a `main` en ambos repositorios (la app **no se empuja** antes de aplicar `db/122`: Restricciones ya pide las columnas del emisor y fallaría en producción).
-- [ ] Tanda B: revincular el puente (QR), registrar el grupo «Villa Fase 2», prueba con el grupo real, y copia de archivos a R2 cuando exista.
+- [x] Verificación con Playwright (2026-10-25, servidor local): registro del grupo, bandeja «Por revisar (337)», Restricciones-Notas con dos paneles. Se verificó en el servicio real y no en PS-0000 porque el grupo es único. Confirmar un mensaje como pedido de campo quedó cubierto por pruebas, no probado a mano para no crear datos reales.
+- [x] `db/122` aplicada por Victor; app publicada en `main` (854af64). Docs: push con el cierre de esta tanda.
+- [x] Tanda B: puente revinculado por QR; grupo «Villa Fase 2» (servicio PS-0003) registrado; 337 mensajes enviados con el script (hallazgo: el historial no trae autor → «Emisor desconocido»).
+- [ ] Variable `WHATSAPP_INGRESO_SECRETO` cargada en Vercel por Victor + redeploy; falta confirmar que el envío desde el PC llegue a producción (hoy se probó contra el servidor local, misma base).
+- [ ] Dejar el script programado en el PC (tarea de Windows) y copia de archivos a R2 cuando exista.
 
 ## Decisiones de Victor durante la implementación
 

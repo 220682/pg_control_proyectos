@@ -537,6 +537,34 @@ Las **13 observaciones** del Lote 3, con la Enmienda E1 («el Plan Maestro es el
 - `pg_control_proyectos`: commit de cierre en `main` y push.
 - Las dos Policies y el aprendizaje viven en este repositorio; el código, en el hermano.
 
+## Verificación posterior al cierre (2026-10-14)
+
+Pedido de Victor: comprobar una por una si las observaciones quedaron resueltas. Revisión contra el código de `main` de la app (`0374187`) y en pantalla en PS-0011.
+
+| Observación | Estado | Evidencia |
+|---|---|---|
+| O1 Cargar DP / Recalcular PR con barra de progreso | Resuelta | `importar-dp.tsx` («Cargar DP»), `RecalcularPr.tsx` con `<progress>`; botón visible en el PR |
+| O2 Terminología «Actividad» | Resuelta (resto corregido hoy) | Quedaba «Actividad resumen» en un mensaje de error de `lib/cronograma/niveles.ts`; corregido en `0374187` |
+| O3 Editar actividades del cronograma con PM aprobado | Derogada por E1 | Endpoint, modal y permiso borrados (no existen en el código) |
+| O4 «Declarar partida» | Resuelta | `PasoDeclarar.tsx` |
+| O5 «Este servicio tiene N niveles» | Resuelta | `PasoDeclarar.tsx:121` |
+| O6 «Guardar cambios» global en Paquetes | Resuelta | `PasoDeclarar.tsx:329`, `PasoAgrupar.tsx:433` |
+| O7 Selector de OT compacto | Resuelta | `max-w-[160px]`, visible en todos los estados (2026-10-14) |
+| O8 Metrados por paquete | Resuelta | Fila de declaración resaltada, `esDeclaracionPaquete` |
+| O9 Fechas editables, rojas fuera de rango | Resuelta | `LienzoPlanMaestro.tsx` (`text-red-400` + aviso) |
+| O10 8 disciplinas y plegable | Resuelta | Migración `090` aplicada; selector de RDT agrupado por disciplina (visto en pantalla) |
+| O11 Icono flotante sin tapar | Resuelta | `WorkspaceShell.tsx` reserva el alto, salvo pantallas con `data-area-completa` |
+| O12 Paquete completo como `PQ-001` | Resuelta | `wbsVisibleDeActividad` en `FormularioCrearRdt.tsx` |
+| O13 Libertad de WBS para C/NC, equipos y materiales | **Resuelta** (el punto 3 de «Lo que NO quedó hecho» estaba desactualizado) | Selector en modo `wbs` para actividad C/NC, equipos y materiales (`FormularioCrearRdt.tsx:1060, 1409, 1496`) sin filtrar por las D del día; el servidor valida contra el plan |
+| U1/U9 RDT exige PM aprobado + Ejecución | Resuelta | `api/rdts/route.ts:152`, `api/rdts/partes/route.ts:191,202` |
+| U3/U10 Congelamiento (incluye MOVER) | Resuelta | Guardias en DP, cronograma, paquetes y vínculos; `MOVER` congelado |
+| U4/U7/U8 Reposicionamiento con historial, todo o nada | En código, **sin prueba en vivo** | Función `aprobar_plan_maestro_con_reposicionamiento` (094 aplicada) |
+| U6 Aviso de impacto antes de aprobar | En código, **sin prueba en vivo** | `ModalImpactoAprobacion.tsx` |
+
+**Contradicción detectada (2026-10-14), pendiente de Victor:** U3/U10 congelan los paquetes mientras exista una versión APROBADO (`planMaestroAprobado`), y la versión nueva del Plan Maestro se arma con esos mismos paquetes (`POST /api/plan-maestro`). Mientras la versión nueva está en borrador, la anterior sigue aprobada: la versión nueva no puede mover partidas ni crear o desagrupar paquetes como dice U5, y el reposicionamiento de U4 no tiene nada que mover. Solo cambian el reparto por día, la declaración de metrado, las fechas y la disciplina. **Resuelta por Victor el mismo día:** una versión nueva puede reorganizar los paquetes y, al aprobarla, los RDT se adecuan al nuevo plan. Se registró y se implementa en el plan `2026-10-14-revision-completa-app.md` (regla R1, hallazgo H4).
+
+Lo que sigue abierto: la prueba en vivo del reposicionamiento y del aviso (requiere aprobar una versión nueva del Plan Maestro en un servicio de prueba, sobre la base real), las reglas pendientes de decisión (R4a-R1 a R4a-R4, R4c-R1, R6a-R1 sin escribir) y la edición del artefacto «Matriz de permisos» (no se pudo abrir desde esta cuenta).
+
 ## Elementos postergados propuestos para planes futuros
 
 - Aplicar migración 091 en Supabase y completar la UI del Lienzo (celdas editables verdes + fechas rojas fuera de rango).

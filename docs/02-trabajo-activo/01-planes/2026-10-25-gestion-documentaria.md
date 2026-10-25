@@ -19,7 +19,8 @@ Pedido de Victor (2026-10-25), en sus palabras: otra interfaz, en Planificación
 4. Pocas columnas: cada documento es una ficha compacta que lleva el **correo, el remitente** y otros datos menores.
 5. **Áreas:** **SSOMA** (incluye medio ambiente), Oficina Técnica, Calidad, **Administración** (incluye accesos y otros) y **Gerencia** (contratos y compras, por ahora); se afinan después.
 6. La contratista usa **un correo por área**; el cliente puede que no. Se trata igual: el área se decide por quién envía, mirando la dirección **y** el nombre.
-7. El correo se ve desde esta misma interfaz, en el panel lateral que ya existe; **no** se redirige a Gmail.
+7. El correo se ve desde esta misma interfaz, en el panel lateral que ya existe, como lectura principal. Victor pidió además poder **ir al correo**: se agrega un botón secundario «Abrir en Gmail» en ese panel (lleva al mensaje del buzón correcto; funciona si esa persona tiene ese Gmail abierto en su navegador).
+8. Esta interfaz es la **segunda de tres**: la 1 extrae y agrupa los correos (Gestión de interesados), la 2 es el seguimiento documentario (este plan) y la 3 muestra los archivos en jerarquía (plan `2026-10-25-repositorio-de-archivos-documentarios.md`, es lo siguiente). Las versiones de cada documento y la versión aprobada se resuelven en la 3.
 
 ## Objetivo, alcance y no alcance
 

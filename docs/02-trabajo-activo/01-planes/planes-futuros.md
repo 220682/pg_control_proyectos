@@ -85,3 +85,11 @@ planes-futuros.md → Spec/SDD → plan aprobado (Gate 1) → progreso y evidenc
 Herramientas de Claude Code no tienen forma de inyectar esa credencial en el sandbox de un agente en la nube (el tool de lanzar agentes no acepta variables de entorno ni secretos) — Victor tiene que configurarla él mismo del lado de la plataforma, en la sección de entornos/secretos del sandbox para ese repositorio. Nunca se pega en un chat.
 
 > **Nota de la reestructuración (2026-09-27):** los dos enlaces de "Fase 1"/"Fase 2" de arriba apuntan todavía a `docs/Tareas de implementacion/` porque esas tareas se migran recién en la Fase 7 de `2026-09-27-reestructuracion-documental-y-estandar-de-trabajo.md`. Cuando esa fase las mueva a `01-planes/`, estos enlaces se corrigen en el mismo commit (pasan a ser archivos hermanos, sin prefijo de carpeta).
+
+### Archivos documentarios (tercera interfaz, sigue a Gestión documentaria)
+
+- **Origen:** pedido de Victor del 2026-10-25 (árbol de carpetas como `maqueta_dossier`, versión aprobada por defecto, abrir y descargar desde Cloudflare R2, estado, comentario y filtros).
+- **Qué es:** tercera interfaz; el Spec ya está escrito en `2026-10-25-repositorio-de-archivos-documentarios.md`.
+- **Pospuesto:** 2026-10-25, hasta terminar «Gestión documentaria».
+- **Estado:** pendiente, es lo siguiente a retomar.
+- **Requiere Spec/SDD:** ya escrito; falta el Gate Spec al retomarlo.

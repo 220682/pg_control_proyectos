@@ -1,11 +1,11 @@
 # 24 — Gestión documentaria
 > Lee si: la tarea toca el apartado «Gestión documentaria» (un documento por fila con su estado Solicitado/Enviado/Observado/Levantado/Aprobado, a quién le toca moverlo, el semáforo de días esperando, las cinco áreas, «Por asignar», la carga inicial desde los correos) o el botón «Abrir en Gmail» del correo completo.
 
-Origen: plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md) (pedido de Victor el 2026-10-25; Spec y Gate 1 aprobados por él). Es la **segunda de tres interfaces**: 1 [Gestión de interesados](23-estado-del-servicio.md) (de dónde salen los correos), 2 esta, 3 Archivos documentarios (el árbol de archivos; plan aparte, aún por aprobar). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); la lista de pantallas, en el [flujo 16](16-paneles.md).
+Origen: plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md) (pedido de Victor el 2026-10-25; Spec y Gate 1 aprobados por él). Es la **segunda de tres interfaces**: 1 [Gestión de interesados](23-estado-del-servicio.md) (de dónde salen los correos), 2 esta, 3 [Archivos documentarios](25-archivos-documentarios.md) (el árbol de archivos de cada documento). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); la lista de pantallas, en el [flujo 16](16-paneles.md).
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la tercera interfaz): lleva el **estado** del documento a partir de los correos que ya lee la Gestión de interesados.
+Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la [tercera interfaz](25-archivos-documentarios.md)): lleva el **estado** del documento a partir de los correos que ya lee la Gestión de interesados.
 
 ## Un documento = una fila
 

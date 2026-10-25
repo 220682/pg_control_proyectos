@@ -4,9 +4,9 @@
 
 - Tema: apartado «Archivos documentarios» en `py_control_proyectos_web`: los documentos en su versión aprobada (o la que se elija), ordenados como un árbol de carpetas, con estado, comentario, apertura y descarga.
 - Fecha: 2026-10-25.
-- Estado: `Propuesta` (Spec escrito con lo que dijo Victor; es **lo siguiente que se hace** después de «Gestión documentaria»).
-- Gate Spec: pendiente (Victor lo confirma al retomarlo).
-- Gate 1: pendiente.
+- Estado: `Implementando` (código construido y comiteado en la app, `f23ddad`; falta que Victor aplique `db/121`, cargue las variables de R2 en Vercel y configure el CORS del bucket, y recién entonces se empuja y se verifica en producción).
+- Gate Spec: aprobado por Victor el 2026-10-25 al decir «sigue con el plan de archivos documentarios».
+- Gate 1: aprobado en el mismo mensaje (Victor pidió que el Orquestador construya y que él revise al final, sin auditoría).
 - Gate 2: pendiente.
 
 ## Las tres interfaces y cómo se relacionan
@@ -44,7 +44,7 @@ Pedido de Victor (2026-10-25), en sus palabras: desde la app llegar a los archiv
 **Datos:**
 - El archivo vive en R2 con su ruta; la base guarda, por cada versión: documento, número de revisión, archivo (los adjuntos de los correos ya existen en `estado_adjuntos`), estado, comentario y fecha de aprobación.
 - Los archivos que hoy están en el disco de Victor (por ejemplo el dossier de calidad) se pueden **subir a mano** a un documento desde la misma pantalla (administrador).
-- Requiere que los adjuntos de los 309 correos pasen primero a R2 (pendiente del plan de Gestión de interesados; el bucket y el token ya existen).
+- Requiere que los adjuntos de los correos pasen primero a R2 (el bucket y el token ya existen; la copia se hace desde esta misma pantalla, ver «Refinamientos»).
 
 **Costos:** R2 tiene capa gratuita de 10 GB y descargas sin cargo; lo que hay hoy (unos 200 MB) cabe de sobra.
 
@@ -69,6 +69,15 @@ Pedido de Victor (2026-10-25), en sus palabras: desde la app llegar a los archiv
 | 2026-10-25 | Son tres interfaces: correos agrupados, seguimiento documentario y archivos en jerarquía; esta última es un plan aparte y es lo siguiente después de Gestión documentaria | Victor |
 | 2026-10-25 | La jerarquía se parece a la maqueta del dossier, con estado y comentario por archivo, abrir y descargar desde Cloudflare, y filtros por área y estado | Victor |
 | 2026-10-25 | Propuesta del Orquestador (por aprobar): no mover archivos al aprobar; «aprobados por área» es una vista filtrada y la versión aprobada se muestra por defecto | Orquestador |
+| 2026-10-25 | «Sigue con el plan de archivos documentarios»: se toma como aprobación del Spec y del Gate 1, incluida la propuesta de arriba | Victor |
+| 2026-10-25 | Solo se convierten en versión los adjuntos que no son imágenes, calendarios ni correos reenviados; el mismo nombre y tamaño repetido en el hilo queda una sola vez (el más antiguo); no se copian archivos de más de 30 MB | Orquestador |
+
+## Refinamientos hechos al construir
+
+- **Claves de R2 sin el área:** el Spec ponía el área en la ruta (`servicios/PS-0003/SSOMA/…`), pero cambiar un documento de área dejaría la copia desubicada. La clave es `servicios/{número}/adjuntos/{id del adjunto}/{nombre}` (`…/manuales/{id de la versión}/{nombre}` para lo subido a mano); el área y el tipo salen de la base. Detalle en el [flujo 25](../../04-flujos-de-negocio/25-archivos-documentarios.md).
+- **Copia de adjuntos desde la propia pantalla:** `POST /api/archivos-documentarios/copiar` (botón «Copiar adjuntos pendientes» del administrador y un paso horario en el workflow de la lectura de correos) relee el mensaje en Gmail, empareja por nombre y tamaño y sube a R2; cada llamada avanza unos 48 s. En la base había 2404 adjuntos registrados y solo 380 con archivo en Supabase (133 MB): el resto solo estaba en Gmail.
+- **CORS del bucket:** el token de R2 que creó Victor solo da lectura y escritura de objetos y no permite cambiar la política CORS del bucket (R2 responde `AccessDenied`); sin CORS el navegador no puede subir a mano. Victor debe configurarla en el panel de Cloudflare (bucket → Configuración → Política de CORS).
+- **Estado de versión desde el correo:** Enviado → En revisión, Observado → Observada, Aprobado → Aprobada, Solicitud o Información → Referencia (no cuenta como entregable); el administrador puede corregirlo a mano y volver a «Automático».
 
 ## Libro de hallazgos
 

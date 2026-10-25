@@ -68,7 +68,7 @@ Solo en servicios. Cada minuta lleva fecha de la reunión, título y un archivo 
 ## Reglas de seguridad
 
 * Todo se valida en el servidor: rol, y para un servicio, tenerlo a cargo; un portafolio solo exige el rol. Los adjuntos se descargan con un enlace firmado de dos minutos.
-* Los adjuntos de más de 10 MB y las imágenes diminutas de firmas no se guardan; el correo indica que no se guardó.
+* Al leer los correos solo se anota el nombre, el tipo y el tamaño de cada adjunto (las imágenes diminutas de firmas no se anotan); el archivo se copia después a Cloudflare R2 desde [Archivos documentarios](25-archivos-documentarios.md), que es quien lo abre y lo descarga. Los adjuntos que ya estaban en el almacén de Supabase se siguen descargando desde allí.
 * El contenido de los correos nunca se ejecuta ni se obedece.
 
 ## Datos (migración `db/119_estado_servicio.sql`)

@@ -68,6 +68,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Restricciones del servicio (Supervisión operativa): ver ¹⁷ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Gestión de interesados (minutas y correos del cliente, dentro de servicios a su alcance; el portafolio solo por rol) ¹⁹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | Gestión documentaria (documentos del servicio con su estado y semáforo, dentro de servicios a su alcance) ²⁰ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
+| Archivos documentarios (árbol de archivos de cada documento, dentro de servicios a su alcance) ²¹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos del servicio, ver (Cargos HH, Equipos HM, Materiales c/c, Subcontratos; sin costos) ⁷ | Sí | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -149,6 +150,9 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Ver el correo completo y descargar adjuntos y minutas | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Crear, renombrar, cerrar o eliminar temas; escribir o quitar notas; ubicar o ignorar un correo; subir o eliminar minutas | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí (en el portafolio solo el rol) |
 | Conectar o desconectar correos, pausarlos, cambiar las horas de lectura, pausar la lectura y «Sincronizar ahora» (`/admin/estado-servicio`) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No |
+| **Archivos documentarios** ²¹ | | | | | | | | | | | | | | |
+| Ver el árbol de archivos, abrirlos y descargarlos | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
+| Corregir el estado de una versión, ponerle etiqueta o comentario, subir o borrar un archivo a mano y copiar los adjuntos pendientes | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Gestión documentaria** ²⁰ | | | | | | | | | | | | | | |
 | Ver los documentos, su historial de correos y exportar a Excel | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Crear, editar o borrar un documento, corregir su estado o su área, asignar o sacar correos | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
@@ -213,6 +217,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ¹⁹ **Propuesta de roles por confirmar con Victor (2026-10-24, plan [Estado del servicio](../02-trabajo-activo/01-planes/2026-10-24-estado-del-servicio.md); [flujo 23](23-estado-del-servicio.md)).** El pedido y el alcance son de Victor; los **roles** los propuso el Orquestador porque los correos del cliente pueden traer precios y contratos. **Ven** Gestión de interesados (pantalla, correo completo, adjuntos y minutas) el administrador, el jefe de proyectos, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance. **Gestionan** (temas, notas, ubicar correos, minutas, correos conectados y horas) solo el administrador y el jefe de proyectos. El chip «Gestión de interesados» (grupo Jefatura) es el único acceso nuevo de servicio; `/admin/estado-servicio` y el estado del portafolio son pantallas de contenedor o globales sin chip (excepciones declaradas); `/admin/estado-servicio` se abre con un icono «Correos del cliente» en la parte baja del panel izquierdo (junto a Usuarios), solo para administrador y jefe de proyectos. Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
 
 ²⁰ **Provisorio, igual que la nota ¹⁹ (2026-10-25, plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md); [flujo 24](24-gestion-documentaria.md)).** El chip «Gestión documentaria» (id `gestion-documentaria`, grupo Planificación, `/proyectos/{id}/gestion-documentaria`) lo ven y lo gestionan los mismos roles que la Gestión de interesados, hasta que Victor aplique al final la regla «todos ven, solo el administrador crea, edita y elimina». Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
+
+²¹ **Provisorio, igual que la nota ²⁰ para ver (2026-10-25, plan [Archivos documentarios](../02-trabajo-activo/01-planes/2026-10-25-repositorio-de-archivos-documentarios.md); [flujo 25](25-archivos-documentarios.md)).** El chip «Archivos documentarios» (id `archivos-documentarios`, grupo Planificación, `/proyectos/{id}/archivos-documentarios`) lo ven —y desde él abren y descargan archivos— los mismos cuatro roles que la Gestión documentaria. **Gestiona solo el administrador** (estado a mano, etiqueta, comentario, subir, borrar lo subido y copiar adjuntos). Victor aplicará al final la regla «todos ven, solo el administrador edita». Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

@@ -63,13 +63,15 @@ Directo en `main` en `py_control_proyectos_web` y en este repositorio. El script
 - [x] A3 Restricciones-Notas con dos paneles y origen WhatsApp (código listo; **sin verificar en pantalla** hasta aplicar `db/122`).
 - [x] A4 Script local probado con una base de prueba (`scripts/whatsapp/enviar_grupo.py`, 5 pruebas; solo sale el grupo configurado).
 - [x] A4 Flujo 26 escrito y flujos 14, 16 y 22, README de flujos, `AGENTS.md`, `docs/README.md` y mapa documental al día.
+- [x] Reconocer al emisor en usuarios y personal antes de crear un contacto (pedido de Victor; 2 pruebas más).
 - [ ] Verificación con Playwright en PS-0000 (necesita `db/122` aplicada).
 - [ ] Commit y push a `main` en ambos repositorios (la app **no se empuja** antes de aplicar `db/122`: Restricciones ya pide las columnas del emisor y fallaría en producción).
 - [ ] Tanda B: revincular el puente (QR), registrar el grupo «Villa Fase 2», prueba con el grupo real, y copia de archivos a R2 cuando exista.
 
-## Decisión pendiente de Victor
+## Decisiones de Victor durante la implementación
 
-Victor dijo que Restricciones-Notas tiene dos paneles y que el de restricciones es de **solo lectura informativa** (emisor y fecha). Hoy ese panel también deja crear, recepcionar y atender (flujo 22, decidido el 2026-10-19). Se **dejó como estaba** (solo se agregó el emisor de WhatsApp) para no contradecir lo escrito sin consultarlo. Preguntar a Victor si quiere quitar esas acciones o si «solo lectura» se refería únicamente a lo que viene de WhatsApp.
+- 2026-10-25 · Restricciones-Notas: el panel de restricciones **conserva** crear, recepcionar y atender, y se pueden agregar notas igual; «vamos a dejarlo así». No cambia el flujo 22.
+- 2026-10-25 · Contactos: usar la base de usuarios y de personal que ya existe (celular, nombre, cargo) y no duplicarla; solo los externos van a la tabla de contactos de WhatsApp. Aplicado en el flujo 26 y en el servidor (reconocimiento por los últimos 9 dígitos).
 
 ## Riesgos y bloqueos
 

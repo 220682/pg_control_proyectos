@@ -39,15 +39,21 @@ Cada mensaje muestra quién lo escribió (nombre y celular, con cargo y empresa 
 
 Un mensaje se confirma **una sola vez**: si dos personas lo hacen a la vez, gana una y la otra recibe un aviso; si crear el destino falla, el mensaje vuelve a «Por revisar».
 
-## Contactos
+## Quién es el emisor
 
-Tabla **única** de contactos por celular (solo dígitos, con código de país): celular, nombre, cargo y empresa. Al llegar un mensaje, si el celular no existe **se crea** con el nombre que muestra WhatsApp; quien gestiona completa nombre, cargo y empresa desde la bandeja. Una restricción por WhatsApp muestra el nombre del contacto si existe y, si no, el que mostró WhatsApp.
+Un mensaje trae el celular de quien lo escribió. Para saber quién es **no se duplica** lo que ya existe (Victor, 2026-10-25): se busca el celular, comparando los **últimos 9 dígitos** (WhatsApp lo manda con el código de país), en este orden:
+
+1. **Usuarios del sistema** (perfiles): nombre y cargo.
+2. **Personal de obra** (`recursos_personal`): nombre y cargo.
+3. **Contacto externo de WhatsApp**: solo si no está en ninguna de las dos, se crea en la tabla propia de contactos (celular, nombre, cargo, empresa) con el nombre que muestra WhatsApp; quien gestiona completa nombre, cargo y empresa desde la bandeja.
+
+Los usuarios y el personal se editan donde ya viven (Usuarios, Personal), no en Fuente-WhatsApp: la bandeja solo muestra «Usuario del sistema» o «Personal de obra». Una restricción por WhatsApp lleva el nombre del usuario o del personal si el celular coincide; si no, el contacto externo; si no, el nombre que mostró WhatsApp.
 
 ## Restricciones-Notas: dos paneles
 
 La pantalla Restricciones-Notas (`/proyectos/{id}/restricciones`) tiene dos paneles lado a lado:
 
-* **Restricciones:** como siempre ([flujo 22](22-informes-de-supervision.md)). Las que vienen de WhatsApp muestran «Desde WhatsApp — nombre (+celular)» y quién las registró y cuándo.
+* **Restricciones:** como siempre ([flujo 22](22-informes-de-supervision.md)); **se conservan crear, recepcionar y atender** (Victor, 2026-10-25: «vamos a dejarlo así»). Las que vienen de WhatsApp muestran «Desde WhatsApp — nombre (+celular)» y quién las registró y cuándo.
 * **Notas:** hechos del servicio con su **día**, su origen (WhatsApp con emisor, o escrita a mano) y su vigencia. Las ven los 13 roles; escriben a mano y quitan validez administrador y jefe de proyectos. Una nota **pierde validez** cuando su información **ya está en un correo u otro apartado**: se marca «Ya está en…» con el motivo, queda tachada al final y **no se borra**. No se reactiva.
 
 ## Almacén de archivos

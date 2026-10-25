@@ -4,7 +4,7 @@
 
 - Tema: apartado «Archivos documentarios» en `py_control_proyectos_web`: los documentos en su versión aprobada (o la que se elija), ordenados como un árbol de carpetas, con estado, comentario, apertura y descarga.
 - Fecha: 2026-10-25.
-- Estado: `Implementando` (código construido y comiteado en la app, `f23ddad`; falta que Victor aplique `db/121`, cargue las variables de R2 en Vercel y configure el CORS del bucket, y recién entonces se empuja y se verifica en producción).
+- Estado: `Implementando` (desplegado en producción el 2026-10-25, app `2dedc11`; `db/121` aplicada, variables de R2 cargadas y 324 archivos ya copiados a R2; solo falta el CORS del bucket para que funcione «Subir» a mano).
 - Gate Spec: aprobado por Victor el 2026-10-25 al decir «sigue con el plan de archivos documentarios».
 - Gate 1: aprobado en el mismo mensaje (Victor pidió que el Orquestador construya y que él revise al final, sin auditoría).
 - Gate 2: pendiente.
@@ -78,6 +78,17 @@ Pedido de Victor (2026-10-25), en sus palabras: desde la app llegar a los archiv
 - **Copia de adjuntos desde la propia pantalla:** `POST /api/archivos-documentarios/copiar` (botón «Copiar adjuntos pendientes» del administrador y un paso horario en el workflow de la lectura de correos) relee el mensaje en Gmail, empareja por nombre y tamaño y sube a R2; cada llamada avanza unos 48 s. En la base había 2404 adjuntos registrados y solo 380 con archivo en Supabase (133 MB): el resto solo estaba en Gmail.
 - **CORS del bucket:** el token de R2 que creó Victor solo da lectura y escritura de objetos y no permite cambiar la política CORS del bucket (R2 responde `AccessDenied`); sin CORS el navegador no puede subir a mano. Victor debe configurarla en el panel de Cloudflare (bucket → Configuración → Política de CORS).
 - **Estado de versión desde el correo:** Enviado → En revisión, Observado → Observada, Aprobado → Aprobada, Solicitud o Información → Referencia (no cuenta como entregable); el administrador puede corregirlo a mano y volver a «Automático».
+
+- **La copia sincroniza las versiones antes de buscar pendientes:** en la primera llamada en producción la copia respondió 0 pendientes porque las versiones solo nacían al abrir la pantalla; ahora `copiarAdjuntosPendientes` las pone al día primero (`2dedc11`).
+
+## Verificación en producción (2026-10-25)
+
+- `db/121` existe en la base (`doc_versiones` y `estado_adjuntos.ruta_r2`).
+- Copia a R2: 6 llamadas seguidas hasta 0 pendientes; 324 adjuntos en R2 (los reintentos recogieron los fallidos intermedios).
+- Pantalla de PS-0003 con el administrador: 32 documentos (4 aprobados, 16 en revisión, 3 observados, 9 faltan), carpetas por área con sus conteos y 115 versiones, todas disponibles.
+- Abrir: un PDF guardado en R2 se abre por navegación normal en un enlace firmado de 5 minutos; uno anterior de Supabase se sigue sirviendo desde allí.
+- **Subir a mano: NO funciona todavía.** El bucket responde «CORS not configured for this bucket» al preflight desde `https://py-control-proyectos-web.vercel.app`; la API descartó sola el registro de prueba (409, «La subida no se completó»). Falta la política CORS (GET, HEAD, PUT) en Cloudflare.
+- Sin probar en vivo: el comportamiento de un rol sin permiso (solo con las pruebas automáticas) y el botón «Copiar adjuntos pendientes».
 
 ## Libro de hallazgos
 

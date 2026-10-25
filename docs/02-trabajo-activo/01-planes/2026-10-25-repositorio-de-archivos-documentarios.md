@@ -4,7 +4,7 @@
 
 - Tema: apartado «Archivos documentarios» en `py_control_proyectos_web`: los documentos en su versión aprobada (o la que se elija), ordenados como un árbol de carpetas, con estado, comentario, apertura y descarga.
 - Fecha: 2026-10-25.
-- Estado: `Implementando` (desplegado en producción el 2026-10-25, app `2dedc11`; `db/121` aplicada, variables de R2 cargadas y 324 archivos ya copiados a R2; solo falta el CORS del bucket para que funcione «Subir» a mano).
+- Estado: `Implementando` (desplegado en producción el 2026-10-25, app `2dedc11`; `db/121` aplicada, variables de R2 cargadas y 324 archivos ya copiados a R2; «Subir» a mano no funciona por el CORS del bucket y **ya no se persigue**: Victor dijo que no quiere subir archivos desde la app). **En pausa:** Victor dijo que esta pantalla y la de Gestión documentaria no le gustaban; esta tercera quizá quede obsoleta (su idea era ordenar gráficamente los archivos, no los correos) y se retoma después.
 - Gate Spec: aprobado por Victor el 2026-10-25 al decir «sigue con el plan de archivos documentarios».
 - Gate 1: aprobado en el mismo mensaje (Victor pidió que el Orquestador construya y que él revise al final, sin auditoría).
 - Gate 2: pendiente.
@@ -87,7 +87,7 @@ Pedido de Victor (2026-10-25), en sus palabras: desde la app llegar a los archiv
 - Copia a R2: 6 llamadas seguidas hasta 0 pendientes; 324 adjuntos en R2 (los reintentos recogieron los fallidos intermedios).
 - Pantalla de PS-0003 con el administrador: 32 documentos (4 aprobados, 16 en revisión, 3 observados, 9 faltan), carpetas por área con sus conteos y 115 versiones, todas disponibles.
 - Abrir: un PDF guardado en R2 se abre por navegación normal en un enlace firmado de 5 minutos; uno anterior de Supabase se sigue sirviendo desde allí.
-- **Subir a mano: NO funciona todavía.** El bucket responde «CORS not configured for this bucket» al preflight desde `https://py-control-proyectos-web.vercel.app`; la API descartó sola el registro de prueba (409, «La subida no se completó»). Falta la política CORS (GET, HEAD, PUT) en Cloudflare.
+- **Subir a mano: NO funciona** (y ya no se persigue: Victor no quiere subir archivos desde la app; el CORS no hace falta). El bucket responde «CORS not configured for this bucket» al preflight desde `https://py-control-proyectos-web.vercel.app`; la API descartó sola el registro de prueba (409, «La subida no se completó»). Falta la política CORS (GET, HEAD, PUT) en Cloudflare.
 - Sin probar en vivo: el comportamiento de un rol sin permiso (solo con las pruebas automáticas) y el botón «Copiar adjuntos pendientes».
 
 ## Libro de hallazgos

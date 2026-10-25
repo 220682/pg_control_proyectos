@@ -4,7 +4,7 @@
 
 - Tema: apartado «Gestión documentaria» en `py_control_proyectos_web`, hermano de «Gestión de interesados».
 - Fecha: 2026-10-25.
-- Estado: `Implementada y desplegada` (2026-10-25), a la espera de la revisión de Victor (sin auditoría, por pedido suyo).
+- Estado: `Implementada y desplegada` (2026-10-25), a la espera de la revisión de Victor (sin auditoría, por pedido suyo). **Pantalla rediseñada el 2026-10-25** (cuadro con una fila por documento, vista compacta y en casillas, correo en panel fijo a la derecha, «Otros correos» por tema y «Sin ubicar»): ver el flujo 24 y la última fila del registro de decisiones.
 - Gate Spec: aprobado por Victor (2026-10-25) — pidió la interfaz, pidió «mejora mi idea», respondió las decisiones de una fila por documento, semáforo ajustable y área primero, y dijo «dale».
 - Gate 1: aprobado por Victor (2026-10-25, «ok, continua»). Victor pidió no hacer auditoría ni revisión: él revisa las áreas y los documentos al final.
 - Gate 2: pendiente.
@@ -114,6 +114,7 @@ Nuevos: `db/120_gestion_documentaria.sql`, `src/lib/gestion-documentaria/*`, `sr
 | 2026-10-25 | Medio Ambiente se unifica con SSOMA: queda una sola área, **SSOMA** | Victor |
 | 2026-10-25 | El área se decide por quien envía (dirección y nombre), igual para contratista y cliente; el correo se ve en el panel lateral, sin redirigir a Gmail | Victor |
 | 2026-10-25 | AESA queda fuera de los 4 servicios | Victor |
+| 2026-10-25 | Rediseño de la pantalla: a Victor no le gustó la lista de fichas. Quedó un cuadro con **una fila por documento** (no por correo) y su vida en casillas (pedido, envío, respuesta, nuevo envío, aprobado); lo que pedimos nosotros usa un ciclo corto (pedido, entregado); dos vistas con interruptor, **compacta por defecto**; el correo se abre en un **panel fijo a la derecha** y solo se desliza el panel central; ningún correo queda fuera (con archivo / sin archivo, «Otros correos por tema» y «Sin ubicar», sin crear «comentarios»); menos filtros (buscador, quién lo pide, área, estado); se quitan las tarjetas por área y el plazo del semáforo ajustable | Victor («continuemos, impleméntalo») |
 
 ## Enlaces a progreso y evidencia homónimos
 

@@ -17,7 +17,7 @@ Pedido de Victor (2026-10-25), en sus palabras: otra interfaz, en Planificación
 2. **Semáforo:** rojo a los 7 días por defecto, con un desplegable para elegir en cuántos días se enciende; cada documento muestra además una **nota** que dice de qué se trata.
 3. Lo primero que se distingue es **a qué área le corresponde** y luego **qué documento es**: una ficha técnica pedida para SSOMA, para Oficina Técnica o para Calidad son documentos distintos.
 4. Pocas columnas: cada documento es una ficha compacta que lleva el **correo, el remitente** y otros datos menores.
-5. **Áreas:** SSOMA, Medio Ambiente, Oficina Técnica, Calidad, **Administración** (incluye accesos y otros) y **Gerencia** (contratos y compras, por ahora); se afinan después.
+5. **Áreas:** **SSOMA** (incluye medio ambiente), Oficina Técnica, Calidad, **Administración** (incluye accesos y otros) y **Gerencia** (contratos y compras, por ahora); se afinan después.
 6. La contratista usa **un correo por área**; el cliente puede que no. Se trata igual: el área se decide por quién envía, mirando la dirección **y** el nombre.
 7. El correo se ve desde esta misma interfaz, en el panel lateral que ya existe; **no** se redirige a Gmail.
 
@@ -109,7 +109,8 @@ Nuevos: `db/120_gestion_documentaria.sql`, `src/lib/gestion-documentaria/*`, `sr
 |---|---|---|
 | 2026-10-25 | Interfaz nueva «Gestión documentaria» en Planificación, junto a Gestión de interesados | Victor |
 | 2026-10-25 | Una fila por documento; rojo a los 7 días con plazo elegible; la ficha lleva una nota de qué trata | Victor |
-| 2026-10-25 | Primero el área y luego el tipo de documento; áreas: SSOMA, Medio Ambiente, Oficina Técnica, Calidad, Administración (accesos y otros) y Gerencia (contratos y compras, por ahora); se afinan después | Victor |
+| 2026-10-25 | Primero el área y luego el tipo de documento; áreas: SSOMA, Oficina Técnica, Calidad, Administración (accesos y otros) y Gerencia (contratos y compras, por ahora); se afinan después | Victor |
+| 2026-10-25 | Medio Ambiente se unifica con SSOMA: queda una sola área, **SSOMA** | Victor |
 | 2026-10-25 | El área se decide por quien envía (dirección y nombre), igual para contratista y cliente; el correo se ve en el panel lateral, sin redirigir a Gmail | Victor |
 | 2026-10-25 | AESA queda fuera de los 4 servicios | Victor |
 

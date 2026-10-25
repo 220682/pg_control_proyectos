@@ -4,7 +4,7 @@
 
 - Tema: apartado «Gestión documentaria» en `py_control_proyectos_web`, hermano de «Gestión de interesados».
 - Fecha: 2026-10-25.
-- Estado: `Implementando` (2026-10-25): código, pruebas y documentación listos en la app sin empujar; falta que Victor aplique `db/120_gestion_documentaria.sql`, la carga inicial (F5), el push y la verificación en producción.
+- Estado: `Implementada y desplegada` (2026-10-25), a la espera de la revisión de Victor (sin auditoría, por pedido suyo).
 - Gate Spec: aprobado por Victor (2026-10-25) — pidió la interfaz, pidió «mejora mi idea», respondió las decisiones de una fila por documento, semáforo ajustable y área primero, y dijo «dale».
 - Gate 1: aprobado por Victor (2026-10-25, «ok, continua»). Victor pidió no hacer auditoría ni revisión: él revisa las áreas y los documentos al final.
 - Gate 2: pendiente.
@@ -143,7 +143,7 @@ Pendiente.
 
 ## Mensaje de cierre
 
-Pendiente.
+2026-10-25: app en `main` (3ed3353, Vercel en verde), `db/120` aplicada por Victor y carga inicial hecha: **93 documentos** (PS-0001 16, PS-0002 10, PS-0003 32 con notas de movimiento, PS-0004 43 según el ensayo; 53 quedaron «Sin área»). Verificado en producción en PS-0003 con el administrador: tarjetas por área, filtros (la tarjeta Oficina Técnica/Observados filtra 5 de 32), ficha de dos líneas con semáforo, historial, correo en panel lateral con botón «Abrir en Gmail» (el enlace se genera; falta que Victor compruebe que Gmail lo abre), pestaña «Por asignar» (20). Pendientes: Victor revisa áreas y documentos (hay falsos como «mail delivery subsystem» para borrar); el artefacto Matriz de permisos; permisos finales «todos ven, solo admin edita»; creación automática de documentos para correos nuevos; lo siguiente es el plan Archivos documentarios.
 
 ## Elementos postergados propuestos para planes futuros
 

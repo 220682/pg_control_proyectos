@@ -2,7 +2,7 @@
 
 ## Índice de los flujos de negocio
 
-Ver `docs/04-flujos-de-negocio/README.md` para el índice completo de los 25 flujos.
+Ver `docs/04-flujos-de-negocio/README.md` para el índice completo de los 26 flujos.
 
 ## Material de apoyo relevante
 

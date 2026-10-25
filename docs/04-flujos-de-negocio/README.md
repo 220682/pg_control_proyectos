@@ -6,7 +6,7 @@ Las reglas funcionales y operativas permanentes del sistema, una vez por tema du
 
 **Interfaz:** al crear una pantalla nueva o modificar una existente en `py_control_proyectos_web`, la convención obligatoria de diseño/UI es [`../05-diseno-y-referencias/design.md`](../05-diseno-y-referencias/design.md) — layout, tokens, componentes, columnas, accesibilidad. Leerlo antes de tocar cualquier interfaz.
 
-## Índice de los 25 flujos, con su disparador
+## Índice de los 26 flujos, con su disparador
 
 Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta. **El disparador es la puerta de entrada**: si ninguna línea de la tarea coincide con él, ese flujo no se abre. Por eso la tabla de abajo basta para decidir, y no hace falta leer los flujos para saber cuáles_skip.
 
@@ -37,6 +37,7 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 | 23 | Fuente-Gmail | las minutas de la reunión semanal, los correos del cliente por tema (lectura de Gmail, anti-duplicado, «Por revisar», horas de lectura) y su configuración | [23-estado-del-servicio.md](23-estado-del-servicio.md) |
 | 24 | Gestión de emails | los documentos de un servicio con su estado (Solicitado a Aprobado), a quién le toca, el semáforo de días, las cinco áreas, «Por asignar», la carga inicial desde los correos y el botón «Abrir en Gmail» | [24-gestion-documentaria.md](24-gestion-documentaria.md) |
 | 25 | Gestión documentaria | el árbol de archivos de cada documento por área y tipo, la versión vigente, los estados Aprobado/En revisión/Observado/Falta, comentarios, abrir y descargar, la subida a mano y el almacén de archivos en Cloudflare R2 con la copia de adjuntos desde Gmail | [25-archivos-documentarios.md](25-archivos-documentarios.md) |
+| 26 | Fuente-WhatsApp | el grupo de WhatsApp del servicio, la bandeja «Por revisar» y la sugerencia de pedido de campo / nota / archivo, los contactos por celular, el panel de Notas de Restricciones-Notas y su vigencia, y el script local que envía el grupo | [26-fuente-whatsapp.md](26-fuente-whatsapp.md) |
 
 **Borrado administrador** no es un flujo: es una regla transversal: el borrado definitivo de RQ, RDT, proyecto (archivar y eliminar), programa y portafolio lo ejecutan solo el administrador y el jefe de proyectos (tabla 2 del [flujo 14](14-accesos-y-restricciones.md)); ningún otro rol, el jefe de oficina técnica incluido. Está citada en [05](05-rq.md), [06](06-rdt.md) y [08](08-programa-portafolio-proyecto.md).
 
@@ -54,7 +55,7 @@ Bitácoras de sesión, estado de planes o procedimientos de agentes — eso vive
 
 ## Regla de lectura y actualización
 
-**Lectura por rol (D10):** **ningún rol lee los 25 flujos por costumbre.** Los cuatro leen el índice de este archivo —la tabla de disparadores de arriba— y abren solo los flujos cuyo `Lee si:` coincide con su tarea. El Worker va más acotado: solo los que el plan declara afectados por su parte. La lista completa se lee únicamente si el plan toca más de la mitad de los flujos, o si el Auditor necesita comparar dos flujos enteros porque detectó un conflicto entre reglas. Regla completa en [`../00-estandar-agentes/04-flujo-sdd-y-planes.md`](../00-estandar-agentes/04-flujo-sdd-y-planes.md).
+**Lectura por rol (D10):** **ningún rol lee los 26 flujos por costumbre.** Los cuatro leen el índice de este archivo —la tabla de disparadores de arriba— y abren solo los flujos cuyo `Lee si:` coincide con su tarea. El Worker va más acotado: solo los que el plan declara afectados por su parte. La lista completa se lee únicamente si el plan toca más de la mitad de los flujos, o si el Auditor necesita comparar dos flujos enteros porque detectó un conflicto entre reglas. Regla completa en [`../00-estandar-agentes/04-flujo-sdd-y-planes.md`](../00-estandar-agentes/04-flujo-sdd-y-planes.md).
 
 **Al agregar o cambiar un flujo:** su línea `Lee si:` es parte del flujo y se escribe con él. Si el disparador no describe algo que el flujo realmente contiene, está mal: el disparador no promete alcance que el flujo no tenga.
 

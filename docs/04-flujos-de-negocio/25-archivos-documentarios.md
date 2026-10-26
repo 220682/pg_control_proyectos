@@ -5,7 +5,7 @@ Origen: plan [Archivos documentarios](../02-trabajo-activo/01-planes/2026-10-25-
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión de emails**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
+Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión de Email**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
 
 ## Árbol y filas (calcado de la maqueta del dossier)
 
@@ -13,7 +13,7 @@ Victor pidió el 2026-10-25 que esta pantalla se parezca a la maqueta `maqueta_d
 
 * **Carpetas:** el **área** va en una banda de color (como los tomos de la maqueta) y el **tipo**, en ámbar y negrita, con cuántos documentos y archivos tienen; el área marca además cuántos **faltan**. Las carpetas vacías no aparecen. Hay «Expandir todo», «Colapsar todo» y la casilla **«Solo carpetas»** (la estructura sin los documentos). Al buscar por texto el árbol se abre solo.
 * **Fila de archivo:** cada documento con archivo es una fila con el **nombre del documento y su revisión**, debajo el **nombre del archivo vigente y su fecha**, la marca **«Nuevo»** (más un borde verde a la izquierda) si el archivo es de los últimos 7 días, la **observación** (el comentario de esa versión, editable por el administrador: se guarda al salir del campo o con Enter) y el **estado** (lista para el administrador, etiqueta de color para los demás). A la derecha: **Abrir** (pestaña nueva), **Descargar** y **Correo** (el correo que traía el archivo). Junto al nombre, un contador abre las **versiones**, una fila por archivo con su propia observación y estado.
-* **Documento sin archivo:** una **fila punteada** en cursiva con el campo «sin archivo — anota aquí lo que falta» y el estado **Falta**. Lo que se anota ahí es la **nota del documento** (la misma que se ve en la Gestión de emails). Un documento que solo tiene archivos de referencia (por ejemplo, la solicitud del cliente) también está en **Falta**: no hay entregable.
+* **Documento sin archivo:** una **fila punteada** en cursiva con el campo «sin archivo — anota aquí lo que falta» y el estado **Falta**. Lo que se anota ahí es la **nota del documento** (la misma que se ve en la Gestión de Email). Un documento que solo tiene archivos de referencia (por ejemplo, la solicitud del cliente) también está en **Falta**: no hay entregable.
 * **Resumen y filtros:** abajo, un resumen con el total y un punto de color por estado (verde Aprobado, azul En revisión, ámbar Observado, rojo Falta) con su conteo; tocarlo filtra. Arriba: búsqueda por texto (sin tildes, en el nombre del documento y de sus archivos), **área**, **tipo** y la casilla **«Solo sin aprobar»** (todo lo que no está aprobado, incluido lo que falta).
 * **Se actualiza solo:** la pantalla vuelve a leer los datos cada 30 segundos mientras está a la vista y nadie escribe, así lo que llega de los correos aparece sin recargar.
 * **Pendientes (.md):** baja un archivo Markdown con lo que no está aprobado, por área y tipo, cada documento con su estado y su observación (o la nota si falta el archivo): el equivalente a la lista de pendientes de la maqueta.
@@ -45,7 +45,7 @@ La **versión vigente** es la **última aprobada**; si no hay ninguna aprobada, 
 
 ## Permisos
 
-Provisorios, iguales a los de la Gestión de emails para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, observación, lo que falta de un documento sin archivo y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
+Provisorios, iguales a los de la Gestión de Email para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, observación, lo que falta de un documento sin archivo y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
 
 ## Pendiente de este flujo
 

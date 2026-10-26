@@ -163,3 +163,7 @@ Pendiente.
 **Próximo paso.** Esperar la captura o la aclaración de Victor; recién entonces tocar el código. No volver a adivinar la versión: identificarla con evidencia antes de revertir.
 
 **Leer.** Este plan, el flujo 24, la memoria `gestion-documentaria-estado.md` y `gestion-documentaria-arbol-maqueta-estado.md`.
+
+## Actualización — 2026-10-26 (Gestión de Email reconstruida)
+
+Victor aclaró lo que quería: la pantalla del artefacto «Gestión documentaria — maquetas» (vista compacta y en casillas, correo a la derecha), pero **ocupando poco espacio**, y el nombre **«Gestión de Email»** con E mayúscula. Se reconstruyó (app `7479d38`, en `main`): una sola tabla con tres grupos (Documentos, Otros correos por tema, Sin ubicar), casillas de dos líneas, columnas fijas al deslizar, casilla punteada de «quién tiene la pelota», y una sola barra de herramientas (vista, buscador, tres filtros, pestañas, Nuevo documento, Excel) más el aviso de cobertura con la leyenda en una línea. Se retiró `OtrosCorreosVista.tsx` (sus filas ahora son grupos del cuadro). Flujo 24 y el nombre en los flujos 14, 16, 25 y README actualizados. Verificado con tipos, lint y pruebas; **la revisión visual en producción la hace Victor** (el agente no inicia sesión con contraseñas). Pendiente: que Victor actualice el nombre en la Matriz de permisos.

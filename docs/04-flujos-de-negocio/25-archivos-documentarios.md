@@ -7,13 +7,16 @@ Origen: plan [Archivos documentarios](../02-trabajo-activo/01-planes/2026-10-25-
 
 Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión de emails**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
 
-## Árbol y filas
+## Árbol y filas (calcado de la maqueta del dossier)
 
-* **Carpetas:** cada área y cada tipo muestran cuántos documentos y cuántos archivos tienen; el área marca además cuántos **faltan**. Las carpetas vacías no aparecen. Hay «Expandir todo», «Colapsar todo» y la casilla **«Solo carpetas»** (muestra la estructura sin los documentos). Al buscar por texto el árbol se abre solo.
-* **Fila de documento:** nombre y revisión, **estado** (Aprobado, En revisión, Observado o **Falta**), el archivo vigente (nombre, fecha, tamaño), el comentario de esa versión, la marca **«Nuevo»** si el archivo es de los últimos 7 días, y los botones **Abrir** (pestaña nueva), **Descargar**, **Ver versiones**, **Ficha** (lleva a la Gestión de emails) y, para el administrador, **Subir**.
-* **Documento sin archivo:** aparece igual, con estado **Falta**, para que se vea qué no hay. Un documento que solo tiene archivos de referencia (por ejemplo, la solicitud del cliente) también está en **Falta**: no hay entregable.
-* **Versiones:** cada una muestra nombre, etiqueta, estado, fecha, tamaño, si vino de un correo o se subió a mano, su comentario, el botón **Correo** (abre el correo completo, con «Abrir en Gmail») y Abrir/Descargar.
-* **Resumen y filtros:** tarjetas con el total y los conteos por estado (se pueden tocar para filtrar); filtros por **área, tipo, estado, texto** (sin tildes, en el nombre del documento y de sus archivos) y **«Solo faltantes»**; «Sin aprobar» agrupa todo lo que no está aprobado, incluido lo que falta.
+Victor pidió el 2026-10-25 que esta pantalla se parezca a la maqueta `maqueta_dossier`: un árbol denso de carpetas y archivos con dos columnas editables, no tarjetas. Tiene el encabezado **Carpeta / archivo · Observaciones · Estado** y, a la derecha de cada archivo, las acciones.
+
+* **Carpetas:** el **área** va en una banda de color (como los tomos de la maqueta) y el **tipo**, en ámbar y negrita, con cuántos documentos y archivos tienen; el área marca además cuántos **faltan**. Las carpetas vacías no aparecen. Hay «Expandir todo», «Colapsar todo» y la casilla **«Solo carpetas»** (la estructura sin los documentos). Al buscar por texto el árbol se abre solo.
+* **Fila de archivo:** cada documento con archivo es una fila con el **nombre del documento y su revisión**, debajo el **nombre del archivo vigente y su fecha**, la marca **«Nuevo»** (más un borde verde a la izquierda) si el archivo es de los últimos 7 días, la **observación** (el comentario de esa versión, editable por el administrador: se guarda al salir del campo o con Enter) y el **estado** (lista para el administrador, etiqueta de color para los demás). A la derecha: **Abrir** (pestaña nueva), **Descargar** y **Correo** (el correo que traía el archivo). Junto al nombre, un contador abre las **versiones**, una fila por archivo con su propia observación y estado.
+* **Documento sin archivo:** una **fila punteada** en cursiva con el campo «sin archivo — anota aquí lo que falta» y el estado **Falta**. Lo que se anota ahí es la **nota del documento** (la misma que se ve en la Gestión de emails). Un documento que solo tiene archivos de referencia (por ejemplo, la solicitud del cliente) también está en **Falta**: no hay entregable.
+* **Resumen y filtros:** abajo, un resumen con el total y un punto de color por estado (verde Aprobado, azul En revisión, ámbar Observado, rojo Falta) con su conteo; tocarlo filtra. Arriba: búsqueda por texto (sin tildes, en el nombre del documento y de sus archivos), **área**, **tipo** y la casilla **«Solo sin aprobar»** (todo lo que no está aprobado, incluido lo que falta).
+* **Se actualiza solo:** la pantalla vuelve a leer los datos cada 30 segundos mientras está a la vista y nadie escribe, así lo que llega de los correos aparece sin recargar.
+* **Pendientes (.md):** baja un archivo Markdown con lo que no está aprobado, por área y tipo, cada documento con su estado y su observación (o la nota si falta el archivo): el equivalente a la lista de pendientes de la maqueta.
 
 ## De dónde salen los archivos y su estado
 
@@ -26,7 +29,7 @@ Cada **adjunto** de los correos de un documento es una versión, con tres limpie
 | Aprobado | Aprobada |
 | Solicitud o Información | Referencia (no cuenta como entregable) |
 
-Las versiones se ponen al día solas cada vez que se abre la pantalla: se crean las que faltan, se corrige el estado de las que nadie tocó a mano y se quitan las que dejaron de pertenecer al documento (solo si nadie les escribió un comentario ni cambió su estado). El administrador puede **corregir el estado a mano** (el sistema lo marca «(a mano)» y ofrece «Automático» para volver al del correo), poner una **etiqueta** corta (Rev. 1, Final…) y un **comentario**.
+Las versiones se ponen al día solas cada vez que se abre la pantalla: se crean las que faltan, se corrige el estado de las que nadie tocó a mano y se quitan las que dejaron de pertenecer al documento (solo si nadie les escribió un comentario ni cambió su estado). El administrador puede **corregir el estado a mano** (el sistema lo marca «(a mano)» y ofrece «Automático» para volver al del correo), y escribir una **observación** (el comentario de la versión). La etiqueta corta (Rev. 1, Final…) se sigue mostrando si existe, pero la pantalla ya no la edita.
 
 ## Versión vigente y estado del documento
 
@@ -38,11 +41,15 @@ La **versión vigente** es la **última aprobada**; si no hay ninguna aprobada, 
 * **Abrir y descargar** no usan un enlace permanente: el servidor comprueba el permiso sobre el servicio y recién entonces redirige a un **enlace firmado de 5 minutos**. Abrir muestra el archivo en una pestaña nueva si el navegador puede (PDF, imágenes); si no, lo baja. Los adjuntos que ya estaban en el almacén anterior de Supabase se siguen sirviendo desde allí.
 * **Claves estables:** `servicios/{número}/adjuntos/{id del adjunto}/{nombre}` para los de correo y `servicios/{número}/manuales/{id de la versión}/{nombre}` para los subidos a mano. No dependen del área ni del nombre del documento, para que cambiar un documento de área no deje la copia desubicada.
 * **Copia de adjuntos desde Gmail:** el sistema solo guardaba el nombre, el tipo y el tamaño de cada adjunto; el archivo seguía en Gmail. «**Copiar adjuntos pendientes**» (botón del administrador, y un paso horario en el mismo disparador de la lectura de correos) vuelve a leer el mensaje en el buzón donde llegó —o en el de su copia—, empareja el adjunto por nombre y tamaño y lo sube a R2. Cada llamada avanza lo que alcanza en unos 50 segundos y avisa cuántos quedan. No se copian archivos de más de 30 MB; mientras un archivo no esté copiado se ve «Pendiente de copiar» y no se puede abrir.
-* **Subida a mano (administrador):** botón **Subir** en la fila del documento; hasta 30 MB. El navegador sube el archivo directo a R2 con un enlace firmado de 15 minutos y el servidor confirma que llegó antes de mostrarlo. Si la subida falla, el registro se descarta. El administrador puede borrar los archivos que subió a mano (los que vienen de un correo no se borran desde aquí).
+* **Subida a mano:** la pantalla **ya no tiene botón «Subir»** (Victor no quiere subir archivos desde la app). El código del servidor para subir y borrar archivos a mano sigue en la base y las rutas, sin uso, porque el bucket no tiene política CORS.
 
 ## Permisos
 
-Provisorios, iguales a los de la Gestión de emails para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, etiqueta, comentario, subir, borrar lo subido y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
+Provisorios, iguales a los de la Gestión de emails para **ver**: el administrador, el jefe de proyecto, el jefe de oficina técnica y el supervisor de oficina técnica, dentro de los servicios a su alcance (ver, abrir, descargar). **Gestiona** —estado a mano, observación, lo que falta de un documento sin archivo y copiar adjuntos— **solo el administrador**. Victor dejó para el final la regla «todos ven, solo el administrador edita»; al aplicarla se cambia aquí, en el flujo 14 y en la Matriz de permisos.
+
+## Pendiente de este flujo
+
+El árbol es el **destino único de archivos**: hoy solo entran los adjuntos de Fuente-Gmail. Los archivos de Fuente-WhatsApp (que esperan el almacén R2) y los de Fuente-Drive (paso 3 del plan de fuentes) entrarán como versiones del mismo documento, sin repetirse (mismo nombre y tamaño = un solo archivo), cuando esas fuentes los traigan.
 
 ## Qué no es
 

@@ -98,3 +98,7 @@ Mejoras de trabajo, reglas de negocio, observaciones sobre la política y huérf
 
 - Esquema configurable de tomos (como el dossier de calidad) y descarga en lote (zip) por área.
 - Alertas cuando falte una versión aprobada a una fecha.
+
+## Rediseño calcado de la maqueta (2026-10-26, paso 4 del plan de fuentes)
+
+Victor pidió «continuemos con la implementación de Gestión documentaria»: la pantalla se rehízo siguiendo `maqueta_dossier` (árbol denso Carpeta/archivo · Observaciones · Estado, filas punteadas «sin archivo — anota aquí lo que falta», resumen por estado abajo, refresco solo cada 30 s, lista «Pendientes (.md)»). Se retiró el botón «Subir» y la edición de etiqueta. Sin migración ni permisos nuevos (los de siempre: ven 4 roles, edita el administrador), por lo que la Matriz de permisos no cambia. Decisión del Orquestador: la observación de un archivo es el comentario de su versión y la de un documento sin archivo es la nota del documento (ya existía; sin base de datos nueva); el color de cada fila sale del estado, no de un semáforo aparte. App `4406c86` y `c4984b2`; verificado en producción (PS-0003 lectura; PS-0000 con un documento de prueba ya borrado: la nota se guardó y persistió). **Sin probar en pantalla:** editar observación y estado de un archivo con versiones (la ruta PATCH es la de antes) y «Pendientes (.md)» (probado solo con prueba unitaria). **Pendiente:** que Victor revise; los archivos de WhatsApp y Drive entrarán cuando esas fuentes los traigan.

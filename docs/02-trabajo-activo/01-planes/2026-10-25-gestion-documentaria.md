@@ -151,3 +151,15 @@ Pendiente.
 - Agente Haiku en la nube que arme y actualice los documentos desde los correos nuevos.
 - Afinar qué ve y qué hace cada área.
 - Alertas cuando un documento pase a rojo.
+
+## Handoff — 2026-10-26 (relevo de sesión)
+
+**Objetivo y estado.** Gestión de emails (antes «Gestión documentaria», ruta `/proyectos/{id}/gestion-emails`). Victor pidió que, tras el cambio de nombre, conserve «la interfaz que ya existía». Se probaron dos versiones y Victor rechazó ambas: (1) la de tarjetas por área y ficha por documento (commit 3ed3353, restaurada en app 7a45824) y (2) la de la maqueta «Gestión documentaria — maquetas» (cuadro por documento, vista compacta o en casillas, correo en panel fijo; app a57f459/5c566b0, hoy publicada en ff6ebef). Verificado con diff que la (2) es idéntica, salvo nombres, a la que estaba en línea justo antes del cambio de nombre (5c566b0). No existe en el historial una tercera pantalla de correos publicada.
+
+**Último commit.** App `ff6ebef` y docs `679660b`, ambos en `main`, sin diferencia con `origin` (0/0). Los archivos sin commitear son ajenos (xlsx/pdf de cronogramas, pngs sueltos, evidencias, `db/095`, `db/114`, `scripts/cargar-rq-ps108-fase2.mjs`): no se tocan.
+
+**No terminado.** Se le preguntó a Victor cuál es la pantalla correcta (captura, o si se refiere a otra pantalla, p. ej. «Fuente-Gmail», antes «Gestión de interesados»). Sin respuesta. No se cambió nada más.
+
+**Próximo paso.** Esperar la captura o la aclaración de Victor; recién entonces tocar el código. No volver a adivinar la versión: identificarla con evidencia antes de revertir.
+
+**Leer.** Este plan, el flujo 24, la memoria `gestion-documentaria-estado.md` y `gestion-documentaria-arbol-maqueta-estado.md`.

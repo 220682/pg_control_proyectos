@@ -124,9 +124,11 @@ Sin carpetas aparte: el avance está en este plan y la evidencia (conteos de la 
 
 ### Mejoras (de trabajo)
 
-Ninguna.
+- Ver una captura propia antes de entregar un cambio visual (banco temporal + Chrome headless) y las trampas de las escrituras en producción y de los comandos con marcadores: extraídas el 2026-10-26 a [`2026-10-26-ver-captura-y-escrituras-en-produccion.md`](../../03-aprendizaje-continuo/2026-10-26-ver-captura-y-escrituras-en-produccion.md).
 
 ### Reglas de negocio acordadas en esta tarea
+
+Integrada el 2026-10-26 en el flujo 24 (sección «Las familias de documentos»): un documento agrupa por tema, con 15 familias fijas iguales en todos los servicios; los correos nuevos se asignan solos (hilo, luego familia del asunto); un tema que aparece una sola vez queda como documento propio. Además:
 
 Las del apartado «Referencia al Spec aprobado» y «Diseño propuesto»; ya integradas en el [flujo 24](../../04-flujos-de-negocio/24-gestion-documentaria.md) (2026-10-25); el flujo 23 solo ganó el botón «Abrir en Gmail» y la mención de que una nota puede pertenecer a un documento. Contradicciones con lo ya escrito: ninguna detectada hasta ahora (el flujo 23 solo habla de temas y notas, no de documentos).
 
@@ -136,7 +138,7 @@ Ninguna.
 
 ### Carpetas/archivos huérfanos
 
-Ninguna.
+Reportados a Victor el 2026-10-26, sin borrar nada: en la app, `scripts/revision/zz-agrupar.mjs` y `scripts/revision/zz-docs.mjs` (locales, sin commit; el primero quedó reemplazado por `reagrupar-familias.mjs`) y los archivos ajenos ya conocidos (`db/095`, `db/114`, `scripts/cargar-rq-ps108-fase2.mjs`); en este repositorio, las capturas sueltas de la raíz (`estado-ps0002.png`, `fuente-whatsapp-nuevo.png`, `gestion-interesados-panel.png`, `login-ojo-contrasena.png`, `prueba-sello-T3.jpg`, `restricciones-admin.png`), carpetas de evidencia sin commit de otros planes y los xlsx/pdf de cronogramas en «Informacion para pruebas».
 
 ## Informe de Auditoría
 
@@ -175,3 +177,10 @@ Victor aclaró lo que quería: la pantalla del artefacto «Gestión documentaria
 **Agrupación por tema en PS-0003 (aplicada el 2026-10-26 por Victor; verificada: 16 documentos):** de 32 documentos pasan a 16 (Planos ×4→1, Cronograma ×4→1, Contrato y adjudicación ×3→1 más 2 correos del tema «Contrato y garantías», Plan y dossier de calidad ×2→1, Movilización/migración/acceso de personal y vehículos ×7→1, y áreas asignadas a lo que estaba «Sin área»); el reporte semanal deja de ser documento. Respaldo previo guardado antes de aplicar; script `scripts/revision/zz-agrupar.mjs` de la app (local, sin commit). Victor lo ejecutó él mismo.
 **Familias de documentos para todos los servicios (app `fd65523`, 2026-10-26):** Victor pidió que el agrupamiento por tema valga para todos los servicios y que el sistema lo use al actualizar. Se analizaron los 4 servicios y la lista quedó en 15 familias (las 5 de PS-0003 más Lista de contactos y coordinación, Visita técnica, Informes técnicos e inspecciones, Entregables y codificación de documentos, Plan de trabajo y memoria descriptiva, Fichas técnicas, Cotizaciones y pagos, Documentación SSO, Solicitud de ingreso FOCAM y Combustible; el código de contrato en 2PERSONNEL y la habilitación de personal se suman a Movilización; seguridad de excavaciones, operatividad de equipos y AITAE, a Documentación SSO). Los temas que aparecen una sola vez quedan como documento propio. Hecho: lista en `src/lib/gestion-emails/familias.ts` (9 pruebas); `asignarDocumentoAutomatico` en el servidor, llamado al crear cada nota en el sincronizador (primero por hilo, luego por familia del asunto, creando el documento con origen IA; reportes diarios y reuniones excluidos; si falla, la nota queda en Por asignar); script `scripts/revision/reagrupar-familias.mjs` (simula, respalda y aplica con `--aplicar`). Simulación de los 4 servicios: PS-0001 13→8, PS-0002 9→4, PS-0004 39→10 aprox.; PS-0003 casi sin cambios (renombres y 4 fusiones). Reagrupo aplicado por Victor el 2026-10-26 y verificado en la base con una segunda simulación (sin nada más que cambiar; ningún correo perdido: 32, 36, 134 y 109 correos con nota): PS-0001 13→7, PS-0002 9→4, PS-0003 16→15, PS-0004 39→11. Pendiente: que Victor lo revise en pantalla. Flujo 24 actualizado con la tabla de familias.
 **Lección de método:** no entregar un cambio visual sin ver una captura; si la app real no se puede abrir, montar un banco temporal local con los datos de la maqueta.
+
+## Handoff — 2026-10-26 (cierre de sesión)
+
+**Estado.** Pantalla «Gestión de Email» terminada y publicada (app `fd65523`, docs hasta `30170f3`). Las familias de documentos están en el código, en el sincronizador y aplicadas a los 4 servicios (PS-0001 7, PS-0002 4, PS-0003 15, PS-0004 11 documentos), verificado en la base.
+**Pendiente de Victor.** Revisar la pantalla de cada servicio; confirmar que «Abrir en Gmail» abre el correo; actualizar la Matriz de permisos con el nombre «Gestión de Email»; R2 (pago), `CRON_SECRET` en GitHub, Fuente-Drive (paso 3) y la regla final «todos ven, solo el administrador edita».
+**Pendiente mío (postergado).** Sugerencia automática de documento con el agente Haiku para lo que no encaja en una familia; «Por asignar» también muestra notas ENVIADO de temas como Reportes diarios.
+**No tocar.** Archivos ajenos sin commit (ver Huérfanos).

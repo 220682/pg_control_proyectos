@@ -110,7 +110,7 @@ Origen: observación 1 del levantamiento de Victor (2026-10-19; primero la llam�
 **Quién puede qué** (fuente única: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota 17):
 
 * **La ven** los 13 roles, dentro de los servicios a su alcance (Victor, 2026-10-19).
-* **La crean** el supervisor operativo y el supervisor SSOMA. **Excepción:** quien llena el texto «restricciones» de una actividad al crear un RDT crea una restricción a su nombre, sea cual sea su rol (ver «Relación con el RDT»).
+* **La crean** el administrador (desde 2026-10-25, a pedido de Victor), el supervisor operativo y el supervisor SSOMA. **Excepción:** quien llena el texto «restricciones» de una actividad al crear un RDT crea una restricción a su nombre, sea cual sea su rol (ver «Relación con el RDT»).
 * **La atienden** el administrador, el jefe de proyectos y el jefe de oficina técnica; cualquiera de los tres, aunque no la haya recepcionado. **No hay responsable asignado.**
 
 **Estados**, como el RQ ([flujo 05](05-rq.md)): **Pendiente** → **Recepcionado** → **Atendido**. Pasa a Recepcionado cuando uno de los tres roles que atienden **abre el aviso** (también puede pulsar «Recepcionar» en la pantalla). Pasa a Atendido cuando uno de los tres la atiende (en el aviso o en la pantalla); eso cierra el aviso para todos. No se reabre una restricción atendida.

@@ -29,7 +29,7 @@ Teléfono de Victor → **puente de WhatsApp** en su PC (`mcp_whatsapp`, vincula
 
 ## La bandeja «Por revisar»
 
-Cada mensaje muestra quién lo escribió (nombre y celular, con cargo y empresa si se conocen), cuándo, su texto o su archivo, y lo sugerido. Quien gestiona elige:
+Cada mensaje es una **tarjeta compacta**: quién lo escribió (nombre y celular, con cargo y empresa si se conocen), cuándo, su texto (los largos se recortan a 3 líneas con «Ver todo») o su archivo, y lo sugerido. Arriba, una línea **«Escriben:»** resume quiénes participan en lo que se ve, con cuántos mensajes cada uno, y una casilla permite **ocultar los de poca importancia** (saludos, «ok», mensajes cortos; marcada de entrada, con su conteo). Todos los mensajes del grupo entran a «Por revisar»; **solo lo que Victor confirma** pasa a restricción, nota o archivo. Quien gestiona elige:
 
 | Acción | Resultado |
 |---|---|
@@ -48,7 +48,13 @@ Un mensaje trae el celular de quien lo escribió. Para saber quién es **no se d
 2. **Personal de obra** (`recursos_personal`): nombre y cargo.
 3. **Contacto externo de WhatsApp**: solo si no está en ninguna de las dos, se crea en la tabla propia de contactos (celular, nombre, cargo, empresa) con el nombre que muestra WhatsApp; quien gestiona completa nombre, cargo y empresa desde la bandeja.
 
-**Emisor desconocido:** el historial que WhatsApp sincroniza al vincular el puente **no dice quién escribió** (el puente guarda entonces el código del propio grupo). Esos mensajes entran con emisor vacío y se muestran como «Emisor desconocido», sin celular ni «Editar contacto»; nunca se inventa un celular. Los mensajes **nuevos** sí traen al autor (si WhatsApp lo identifica con un código interno, el script lo cambia por su celular).
+**Autor del historial (Victor, 2026-10-25: «buscar el celular y asignar el nombre automáticamente»):** el historial que WhatsApp sincroniza al vincular el puente no dice quién escribió en la tabla de mensajes (el puente guarda el código del propio grupo), pero el puente sí guarda el **autor de cada mensaje** en otra de sus tablas (`whatsmeow_message_secrets`). El script lo toma de ahí y, si WhatsApp lo identifica con un **código interno (LID)**, lo cambia por su **celular** con la tabla de equivalencias del puente (`whatsmeow_lid_map`). El **nombre que muestra WhatsApp** sale de los contactos del puente (`whatsmeow_contacts`). Con el celular, la app busca en el catálogo como se explicó arriba (usuario → personal → contacto) y el mensaje muestra **el nombre del catálogo**.
+
+* **Reenvío:** `enviar_grupo.py --reenviar` manda el grupo desde el inicio; la app **completa el autor** de los mensajes ya guardados que no lo tenían, y el texto de los que siguen «Por revisar». Un mensaje ya revisado conserva su texto.
+* **Número oculto:** si WhatsApp no da el celular de alguien (solo su código interno), el mensaje lleva su nombre de WhatsApp y se rotula «Número oculto por WhatsApp»; el código interno **no** se compara con el catálogo (sus últimos dígitos podrían coincidir con un celular ajeno). Quien gestiona puede completar su nombre, cargo y empresa con «Editar contacto».
+* **Emisor desconocido:** solo si el puente tampoco tiene el autor (mensaje sin registro); nunca se inventa un celular.
+
+**Menciones `@…` dentro del texto:** WhatsApp las manda con el código interno de la persona, no con su nombre. El script las cambia por el celular (o por el nombre de WhatsApp si no hay celular) y la app muestra **`@Nombre`** buscando el celular en el catálogo (últimos 9 dígitos); un celular sin nombre se ve `@+51…` y un código sin celular, `@contacto`. El texto que pasa a una restricción o nota ya lleva los nombres.
 
 Los usuarios y el personal se editan donde ya viven (Usuarios, Personal), no en Fuente-WhatsApp: la bandeja solo muestra «Usuario del sistema» o «Personal de obra». Una restricción por WhatsApp lleva el nombre del usuario o del personal si el celular coincide; si no, el contacto externo; si no, el nombre que mostró WhatsApp.
 

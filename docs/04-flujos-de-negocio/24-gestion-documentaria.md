@@ -11,6 +11,8 @@ Una pantalla por servicio (`/proyectos/{id}/gestion-emails`, chip «Gestión de 
 
 Cada documento tiene: **nombre**, **tipo** (plano, ficha técnica, procedimiento/PETS, informe, trámite, valorización, otros), **área**, **revisión** (opcional), una **nota** corta de qué trata y los **correos** que le pertenecen. Los correos son las notas de la Fuente-Gmail (`estado_notas.documento_id`); un documento puede tener varios y una nota pertenece como máximo a uno. Borrar un documento **no borra sus correos**: vuelven a «Por asignar».
 
+**Un documento agrupa por tema, no por nombre de archivo** (Victor, 2026-10-26). Todo lo que trate de lo mismo va en **un solo documento**, aunque cada correo nombre un archivo distinto: todos los planos (cerco perimétrico, pérgola, distribución, envíos para revisión) en «Planos»; todos los cronogramas (ejecución, histograma, valorizado) en «Cronograma»; el contrato, la adjudicación, las reuniones de contrato y las garantías en «Contrato y adjudicación»; los trámites de movilización, migración y acceso de personal y vehículos en uno. Un documento con su propio ciclo de revisión (por ejemplo el Plan de Ejecución o el Plan de habitabilidad) se mantiene aparte. **Un mismo tema no puede quedar en dos áreas:** el área del documento agrupado manda (cronogramas y planos son de Oficina Técnica; contrato y compras, de Gerencia; accesos y movilización, de Administración). Los correos de un reporte periódico (diario o semanal) no son documentos: van al tema «Reportes diarios».
+
 ## Cómo se calcula el estado
 
 De los correos del documento, de la nota más antigua a la más nueva (una nota «Información» no mueve el estado):

@@ -1,5 +1,5 @@
 # 24 — Gestión de emails (antes «Gestión documentaria»)
-> Lee si: la tarea toca el apartado «Gestión de emails» (un documento por fila con su estado Solicitado/Enviado/Observado/Levantado/Aprobado, a quién le toca moverlo, el semáforo de días esperando, las tarjetas por área, las cinco áreas, «Por asignar», la carga inicial desde los correos) o el botón «Abrir en Gmail» del correo completo.
+> Lee si: la tarea toca el apartado «Gestión de emails» (un documento por fila con su estado Solicitado/Enviado/Observado/Levantado/Aprobado, la vida del documento en casillas o en vista compacta, el correo en el panel de la derecha, a quién le toca moverlo, el semáforo de días esperando, las cinco áreas, «Otros correos»/«Sin ubicar», «Por asignar», la carga inicial desde los correos) o el botón «Abrir en Gmail» del correo completo.
 
 Origen: plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-gestion-documentaria.md) (pedido de Victor el 2026-10-25; Spec y Gate 1 aprobados por él). Es la **segunda de tres interfaces**: 1 [Gestión de interesados](23-estado-del-servicio.md) (de dónde salen los correos), 2 esta, 3 [Archivos documentarios](25-archivos-documentarios.md) (el árbol de archivos de cada documento). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); la lista de pantallas, en el [flujo 16](16-paneles.md).
 
@@ -28,7 +28,7 @@ El administrador puede **corregir el estado a mano** («Automático» lo devuelv
 
 ## Semáforo de días esperando
 
-Los días se cuentan desde el último correo que movió el estado. **Rojo** al llegar al plazo, **ámbar** desde la mitad del plazo (redondeada hacia arriba), **verde** antes. Un documento **Aprobado no tiene semáforo**. El plazo es de **7 días** y se cambia con el desplegable «Semáforo rojo desde» de los filtros.
+Los días se cuentan desde el último correo que movió el estado. **Rojo** al llegar al plazo, **ámbar** desde la mitad del plazo (redondeada hacia arriba), **verde** antes. Un documento **Aprobado no tiene semáforo**. El plazo es de **7 días**; desde el rediseño del 2026-10-25 la pantalla ya no ofrece el desplegable para cambiarlo y el semáforo se ve como el color del «hace N días» del último movimiento en la vista compacta.
 
 ## Áreas
 
@@ -42,14 +42,21 @@ Cuando el administrador corrige el área de un documento, el sistema **aprende l
 
 ## La pantalla
 
-*Victor pidió el 2026-10-26 volver a esta interfaz: en el cambio de nombre solo debía cambiar el nombre, no la pantalla. El rediseño de cuadro por documento con vista compacta, casillas, panel fijo del correo, «Otros correos» y «Sin ubicar» (2026-10-25) quedó retirado de la pantalla; su código sigue en el repositorio de la app, sin uso.*
+Rediseñada el 2026-10-25 a pedido de Victor (maqueta aprobada por él). Es un **cuadro con una fila por documento** —no por correo— y el correo se lee en un **panel fijo a la derecha**. Como en las demás pantallas de la app, **solo se desliza el panel central**; el panel del correo no se mueve.
 
-* **Tarjetas por área** con cuatro conteos: *Por emitir* (nos toca), *Esperando al cliente*, *Observados*, *Aprobados*. Al tocar una tarjeta o un conteo se filtra la lista.
-* **Filtros:** área (y «Sin área»), tipo, estado, a quién le toca, remitente, rango de fechas del último movimiento, «solo pendientes», «esperando más de X días» y el plazo del semáforo.
-* **Ficha compacta de dos líneas** por documento: tipo, nombre y revisión, chips de área, estado y semáforo (con los días); debajo, remitente, asunto, fecha del último correo y «a quién le toca». La **nota** de qué trata va debajo. Un desplegable muestra el **historial** de correos (con adjuntos), cada uno con su botón «Correo» (panel lateral con el correo completo y sus adjuntos).
-* **Por asignar:** los correos de movimiento (no los informativos) que aún no pertenecen a ningún documento. Se marcan varios y se crea con ellos un documento nuevo (el nombre se propone desde el asunto sin «RE:»/«RV:») o se suman a uno existente. Un correo se puede sacar de un documento y vuelve a esta lista.
+* **Barra de cobertura:** «Ningún correo queda fuera: X correos — A en documentos · B en otros temas · C sin ubicar». Cuenta los correos originales del servicio (una copia en el otro buzón no se cuenta dos veces) y siempre suma el total.
+* **Dos vistas, con un interruptor** (por defecto la **compacta**):
+  * **Compacta:** área, documento, quién lo pide, fecha del pedido, último movimiento (con «hace N días» en el color del semáforo), cantidad de envíos nuestros y estado. La flecha de la fila despliega la **vida del documento**: una casilla por correo, de la más antigua a la más nueva, con la nota del documento arriba.
+  * **En casillas:** la vida del documento hacia la derecha. Lo que **pide el cliente** (ciclo largo) tiene cinco casillas: **Pedido → Envío → Respuesta (observado o aprobado) → Nuevo envío → Aprobado**. Lo que **pedimos nosotros** (ciclo corto, tabla aparte) tiene dos: **Pedido → Entregado**. Una columna **Otros** recoge lo que no cabe en el ciclo (reenvíos repetidos, correos informativos): **nada se pierde**.
+* **Quién lo pide:** lo pedimos nosotros si la primera solicitud del documento salió de la contratista (`promcoser.com.pe`); en cualquier otro caso (incluido un documento sin solicitud) lo pide el cliente.
+* **La casilla:** muestra el movimiento (Pedido, Enviado, Observado, Aprobado, Entregado, Informativo), la fecha, quién escribió y si el correo trae archivo (**Con archivo**, con clip) o **Sin archivo**. Al pasar el mouse sale la **nota** del correo (y su asunto). Al tocarla se abre el **correo completo en el panel de la derecha**, con la nota arriba para la revisión rápida, los archivos adjuntos con descarga, el cuerpo y «Abrir en Gmail». Escape o la X lo cierran. En pantallas angostas el panel ocupa toda la pantalla.
+* **Otros correos del servicio, por tema** (debajo de los documentos): los correos que no pertenecen a ningún documento y sí a un tema de la Fuente-Gmail (reportes diarios, reuniones y minutas, restricciones, reenvíos…), cada tema plegable, con su movimiento, asunto, quién, fecha y si trae archivo. Se incluyen también los informativos y las notas escritas a mano.
+* **Sin ubicar:** al final, los correos sin nota ni tema, para que ninguno quede fuera. No se crean «comentarios» aparte.
+* **Filtros (pocos):** buscador (nombre del documento, asunto, remitente o nota; sin tildes ni mayúsculas; al buscar se abren todos los temas), **quién lo pide** (cliente / nosotros), **área** (y «Sin área») y **estado**. Con área, estado o quién lo pide activos se ocultan los correos sueltos, porque esos filtros hablan de documentos.
+* **Por asignar:** pestaña aparte con los correos de movimiento (no los informativos) que aún no pertenecen a ningún documento. Se marcan varios y se crea con ellos un documento nuevo (el nombre se propone desde el asunto sin «RE:»/«RV:») o se suman a uno existente. Un correo se puede sacar de un documento con **Quitar del documento** (en el panel del correo) y vuelve a esta lista.
 * **Exportar a Excel:** descarga lo que se ve (con los filtros) en un archivo CSV separado por «;» con codificación UTF-8 con BOM, que Excel en español abre directo.
-* El administrador (y quien gestione) puede **crear, editar y borrar** documentos y asignar correos. El resto solo ve.
+* El administrador (y quien gestione) puede **crear, editar y borrar** documentos (lápiz y papelera en la fila) y asignar correos. El resto solo ve.
+* **Ya no están** (quitados en el rediseño): las tarjetas por área con sus cuatro conteos, el filtro por tipo, a quién le toca, remitente, rango de fechas, «solo pendientes» y «esperando más de X días», y el desplegable del plazo del semáforo.
 
 ## Carga inicial y correos nuevos
 

@@ -4,7 +4,7 @@
 
 - Tema: apartado «Gestión documentaria» en `py_control_proyectos_web`, hermano de «Gestión de interesados».
 - Fecha: 2026-10-25.
-- Estado: `Implementada y desplegada` (2026-10-25), a la espera de la revisión de Victor (sin auditoría, por pedido suyo). **El rediseño del 2026-10-25 se revirtió el 2026-10-26:** Victor pidió que, al cambiar el nombre a «Gestión de emails», la pantalla quedara como la anterior (tarjetas por área, ficha por documento, «Por asignar»). El cuadro con vista compacta y casillas, el correo en panel fijo, «Otros correos» y «Sin ubicar» ya no se muestran (su código sigue en la app, sin uso; app `7a45824`). Ver el flujo 24.
+- Estado: `Implementada y desplegada` (2026-10-25), a la espera de la revisión de Victor (sin auditoría, por pedido suyo). **Pantalla rediseñada el 2026-10-25** (cuadro con una fila por documento, vista compacta y en casillas, correo en panel fijo a la derecha, «Otros correos» por tema y «Sin ubicar»): ver el flujo 24 y la última fila del registro de decisiones.
 - Gate Spec: aprobado por Victor (2026-10-25) — pidió la interfaz, pidió «mejora mi idea», respondió las decisiones de una fila por documento, semáforo ajustable y área primero, y dijo «dale».
 - Gate 1: aprobado por Victor (2026-10-25, «ok, continua»). Victor pidió no hacer auditoría ni revisión: él revisa las áreas y los documentos al final.
 - Gate 2: pendiente.

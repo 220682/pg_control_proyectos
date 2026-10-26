@@ -11,7 +11,31 @@ Una pantalla por servicio (`/proyectos/{id}/gestion-emails`, chip «Gestión de 
 
 Cada documento tiene: **nombre**, **tipo** (plano, ficha técnica, procedimiento/PETS, informe, trámite, valorización, otros), **área**, **revisión** (opcional), una **nota** corta de qué trata y los **correos** que le pertenecen. Los correos son las notas de la Fuente-Gmail (`estado_notas.documento_id`); un documento puede tener varios y una nota pertenece como máximo a uno. Borrar un documento **no borra sus correos**: vuelven a «Por asignar».
 
-**Un documento agrupa por tema, no por nombre de archivo** (Victor, 2026-10-26). Todo lo que trate de lo mismo va en **un solo documento**, aunque cada correo nombre un archivo distinto: todos los planos (cerco perimétrico, pérgola, distribución, envíos para revisión) en «Planos»; todos los cronogramas (ejecución, histograma, valorizado) en «Cronograma»; el contrato, la adjudicación, las reuniones de contrato y las garantías en «Contrato y adjudicación»; los trámites de movilización, migración y acceso de personal y vehículos en uno. Un documento con su propio ciclo de revisión (por ejemplo el Plan de Ejecución o el Plan de habitabilidad) se mantiene aparte. **Un mismo tema no puede quedar en dos áreas:** el área del documento agrupado manda (cronogramas y planos son de Oficina Técnica; contrato y compras, de Gerencia; accesos y movilización, de Administración). Los correos de un reporte periódico (diario o semanal) no son documentos: van al tema «Reportes diarios».
+**Un documento agrupa por tema, no por nombre de archivo** (Victor, 2026-10-26). Todo lo que trate de lo mismo va en **un solo documento**, aunque cada correo nombre un archivo distinto: todos los planos (cerco perimétrico, pérgola, distribución, envíos para revisión) en «Planos»; todos los cronogramas (ejecución, histograma, valorizado) en «Cronograma»; el contrato, la adjudicación, las reuniones de contrato y las garantías en «Contrato y adjudicación»; los trámites de movilización, migración y acceso de personal y vehículos en uno. Un documento con su propio ciclo de revisión (por ejemplo el Plan de Ejecución o el Plan de habitabilidad) se mantiene aparte. **Un mismo tema no puede quedar en dos áreas:** el área del documento agrupado manda (cronogramas y planos son de Oficina Técnica; contrato y compras, de Gerencia; accesos y movilización, de Administración). Los correos de un reporte periódico (diario o semanal) y las reuniones no son documentos: van a sus temas («Reportes diarios», «Reuniones y minutas»).
+
+### Las familias de documentos (igual en todos los servicios)
+
+La lista siguiente es la misma para los cuatro servicios y para los que vengan (Victor, 2026-10-26). Cada familia es **un solo documento por servicio**, con su nombre, su área y su tipo fijos. La app la guarda en `src/lib/gestion-emails/familias.ts`; **para sumar o cambiar una familia se avisa a Victor y se actualiza el código y esta tabla a la vez**.
+
+| Familia (nombre del documento) | Área | Qué entra |
+|---|---|---|
+| Planos | Oficina Técnica | envíos para revisión, ubicación del campamento, cerco, pérgola, distribución, planos nativos |
+| Cronograma | Oficina Técnica | cronograma de ejecución, histograma, valorizado, Last Planner |
+| Lista de contactos y coordinación | Oficina Técnica | listas y directorios de contactos, matriz de comunicaciones, contacto con la supervisión |
+| Plan y dossier de calidad | Oficina Técnica | plan de calidad, índice del dossier, protocolos, certificados de calidad y fichas de pintura |
+| Plan de trabajo y memoria descriptiva | Oficina Técnica | plan de trabajo, memoria descriptiva, vía alterna, comentarios legales |
+| Fichas técnicas | Oficina Técnica | fichas técnicas de materiales y equipos |
+| Visita técnica | Oficina Técnica | solicitud, confirmación y ejecución de la visita |
+| Informes técnicos e inspecciones | Oficina Técnica | informes técnicos, inspección de contenedores |
+| Entregables y codificación de documentos | Oficina Técnica | lista de entregables, procedimiento de codificación (Aconex) |
+| Contrato y adjudicación | Gerencia | adjudicación, contrato, reuniones de contrato, carta fianza, pólizas |
+| Cotizaciones y pagos | Gerencia | cotizaciones, propuestas económicas, adelantos, pagos, baños, buzones |
+| Documentación SSO | SSOMA | paquete SSO (todas sus partes), manual de gestión, seguridad de excavaciones, operatividad de equipos, AITAE |
+| Solicitud de ingreso FOCAM | SSOMA | solicitud, observaciones y aprobación del FOCAM |
+| Movilización, migración y acceso de personal y vehículos | Administración | código de contrato en 2PERSONNEL, migración y activación, formatos de movilización, permisos de ingreso, habilitación de personal, cuadrillas, CV del personal clave |
+| Combustible | Administración | habilitación de combustible y reportes de consumo |
+
+**Documentos con ciclo propio** (siguen aparte): el Plan de Ejecución y el Plan de movilización y habitabilidad. **Un tema que aparece una sola vez** (por ejemplo la verificación VAPE) queda como documento propio; solo pasa a ser familia cuando se repite y Victor lo aprueba.
 
 ## Cómo se calcula el estado
 
@@ -61,7 +85,9 @@ Rediseñada el 2026-10-25 a pedido de Victor (maqueta aprobada por él). Es un *
 
 ## Carga inicial y correos nuevos
 
-La primera vez, los correos ya leídos de los cuatro servicios se agrupan por **hilo** (o por asunto sin «RE:») y se crea un documento por grupo, con origen «CARGA»; se excluyen los temas «Reportes diarios» y «Reuniones y minutas» y los grupos que solo tienen notas informativas. Los correos nuevos que llegan después caen en **Por asignar** (si son de movimiento) o en **Otros correos / Sin ubicar** hasta que alguien los agrupe; la creación automática de documentos para correos nuevos queda como mejora posterior. Los datos de los correos nunca se guardan en el repositorio.
+La primera vez, los correos ya leídos de los cuatro servicios se agrupan por **hilo** (o por asunto sin «RE:») y se crea un documento por grupo, con origen «CARGA»; se excluyen los temas «Reportes diarios» y «Reuniones y minutas» y los grupos que solo tienen notas informativas. **Los correos nuevos se asignan solos** (2026-10-26): al clasificar un correo, el sistema lo sigue hasta su documento así: (1) si otro correo del **mismo hilo** ya está en un documento, va al mismo; (2) si no, y el correo mueve el estado (pedido, envío, observación o aprobación), busca su **familia** por el asunto con la lista de arriba y usa el documento de esa familia en el servicio, **creándolo si no existe** (origen «IA»); (3) si no encaja en ninguna familia, queda en **Por asignar** (o en Otros correos / Sin ubicar si es informativo) hasta que alguien lo agrupe. Los reportes diarios y las reuniones nunca se asignan. Si algo falla, el correo queda en Por asignar y no se pierde. La asignación automática no cambia lo que ya ubicó una persona.
+
+**Reagrupar lo ya cargado:** el script `scripts/revision/reagrupar-familias.mjs` de la app aplica la misma lista a los documentos existentes de todos los servicios: funde los documentos de una familia en uno (conserva todos sus correos), pasa los correos sueltos a su documento y deja el resto como estaba. Primero simula y guarda un respaldo; solo escribe con `--aplicar`. Los datos de los correos nunca se guardan en el repositorio.
 
 ## «Abrir en Gmail»
 

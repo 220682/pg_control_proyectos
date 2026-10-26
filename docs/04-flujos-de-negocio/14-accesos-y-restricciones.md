@@ -60,7 +60,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| RDT: campos HH extra, HM stand-by y estado del equipo (ver) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RDT: campos HH extra, HH stand-by (personal), HM stand-by y estado del equipo (ver) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Informes de supervisión: ver emitidos (dentro de servicios asignados) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Informe de formato Costos: ver ¹¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Informes: pestaña Inasistencias (dentro de servicios asignados) ¹¹ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -123,7 +123,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | **RDT** | | | | | | | | | | | | | | |
 | Subir RDT (PDF o foto) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Crear RDT estructurado (PROM-GP-002) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
-| Registrar HH extra, HM stand-by y estado del equipo en el RDT (igual que Crear RDT estructurado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
+| Registrar HH extra, HH stand-by (personal), HM stand-by y estado del equipo en el RDT (igual que Crear RDT estructurado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Reasignar de paquete un RDT aún no validado ¹⁰ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |

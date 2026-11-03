@@ -37,7 +37,7 @@ Se reconoce primero por su identificador de mensaje (es el mismo en ambos buzone
 Se prueba en este orden y se detiene en el primero que acierte:
 
 1. **Hilo:** si responde a una conversación ya ubicada, hereda su servicio y su tema.
-2. **Reglas:** el código del servicio (`PS-####`) o su nombre en el asunto o el texto, y el nombre de un tema ya existente.
+2. **Reglas:** el código del servicio (su N° OT, ej. `PS-108-2026`) o su nombre en el asunto o el texto, y el nombre de un tema ya existente.
 3. **Asistente de IA** (solo si está configurado en el servidor): propone servicio, tema, movimiento y resumen. Es una respuesta validada: lo que diga el correo se trata como dato, nunca como instrucción. Si su confianza es baja, no se acepta.
 4. **Por revisar:** si nada alcanza, el correo queda sin ubicar para que una persona lo mueva a mano.
 

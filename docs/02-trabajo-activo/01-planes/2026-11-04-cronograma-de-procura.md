@@ -96,7 +96,7 @@ Decisiones respondidas por Victor el 2026-11-04:
 | D1 | ¿Quién **ve** la pantalla y descarga? | **Todos** (los 13 roles) |
 | D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108) | En «Configurar» se elige la **actividad del cronograma** del RQ (de ahí sale la fecha en obra del Plan Maestro); si el material no es de ninguna actividad, se escribe la fecha en obra a mano |
 | D3 | Días de **«Por vencer»** antes del cierre de compra | **3 por defecto, configurable** (en los valores por defecto y por RQ) |
-| D4 | Comprado = **100 % atendido** | Sí |
+| D4 | Comprado = **100 % atendido** | Sí. **Cambió el 2026-11-04 (Victor):** Comprado = el RQ pasa al estado **Comprado** (todos sus materiales comprados en el Consolidado). Cada material guarda `fecha_llegada` (fecha de llegada a almacén, no se corrige), útil para la barra real Aprobado → Comprado → llegada y la alerta «llegará tarde». Ya implementado en el servidor (db/133): `procura_comprado_en` se llena en el paso a COMPRADO |
 | D5 | Un Comprado a mano se puede desmarcar | Sí, los mismos dos roles, con historial |
 | D6 | Días **hábiles** o calendario | **Hábiles**: lunes a sábado sin feriados (se reutiliza `src/lib/calendario/feriados.ts`, `esDiaHabil`) |
 | D7 | **Tiempo de procura** por defecto de un RQ nuevo | **7 días** hábiles; se cambia por RQ |

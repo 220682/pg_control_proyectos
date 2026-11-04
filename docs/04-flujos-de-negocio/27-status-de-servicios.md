@@ -63,7 +63,7 @@ Los datos entran **de dos formas** (Victor, 2026-11-03: «cargar datos desde la 
 
 Los que llenan pueden trabajar sin el Excel:
 
-- **Presupuestos** (pestaña Presupuestos): «Nuevo presupuesto», el lápiz para corregir y la papelera para borrar (pide confirmar en la misma fila).
+- **Presupuestos** (pestaña Presupuestos): «Nueva cotización» (Victor, 2026-11-04: «la palabra es nueva cotización»), el lápiz para corregir y la papelera para borrar (pide confirmar en la misma fila).
   - Solo la descripción es obligatoria.
   - Sin N° de control, se le da el siguiente.
   - El N° de control no se puede repetir.
@@ -90,7 +90,7 @@ Se calcula solo desde las fechas, sin filtros a mano. Esto corrige lo que el Exc
 
 **Filtros:**
 - año;
-- mes, o el año completo; al abrir sale el último mes con presupuestos enviados;
+- **periodo** (Victor, 2026-11-04): año completo, un mes, un **rango de meses** (desde–hasta) o **varios meses marcados con casillas**. Al abrir sale el último mes con presupuestos enviados. Si se marcan casillas y luego se desmarcan todas, se ve el año completo. El periodo vale para el dashboard, las dos tablas y el PDF;
 - tipo: todos, servicios o agregados;
 - moneda.
 
@@ -104,10 +104,10 @@ Se calcula solo desde las fechas, sin filtros a mano. Esto corrige lo que el Exc
 |---|---|
 | Enviado | Monto y cantidad de presupuestos enviados en el periodo |
 | Adjudicado | Monto y cantidad adjudicados en el periodo |
-| Meta | Meta del periodo y cuánto se cumplió |
+| Meta | Meta del periodo y cuánto se cumplió. Su nombre dice qué meta es: «Meta anual» si se mira el año, «Meta de Octubre» si se mira un mes, «Meta Mar–Jun» si se mira un rango y «Meta de N meses» si se marcaron meses sueltos (Victor, 2026-11-04). Si el periodo es del año en curso e incluye meses que aún no terminan, también se ve la **meta a la fecha**: la meta de los meses ya llegados y cuánto de ella se cumplió. La franja de arriba es verde desde el 100 %, ámbar desde el 70 % y roja por debajo |
 | Tasa de cierre | Ganados entre (ganados + desestimados + sin respuesta), por cantidad, de lo enviado en el periodo |
 | Conversión en monto | Monto adjudicado entre monto enviado, solo de esos presupuestos ya cerrados |
-| En revisión | Monto y cantidad esperando respuesta |
+| En revisión | Monto y cantidad esperando respuesta; avisa cuántos llevan más de 30 días desde el envío |
 | Tiempo de respuesta | Promedio de días entre la solicitud y el envío |
 | Visitas técnicas | Cantidad de visitas en el periodo |
 
@@ -120,13 +120,24 @@ La conversión del Excel («adjudicado del mes entre enviado del mes») comparab
 - Por responsable, en cantidad de enviados y adjudicados.
 - Estado de lo enviado.
 - Nivel de respuesta.
+- **Antigüedad de lo en revisión:** lo que sigue esperando respuesta, por días desde el envío hasta hoy: 0 a 15, 16 a 30, 31 a 60 y más de 60 días.
 - **Visitas técnicas:** por mes, por gerencia y por responsable. El Excel solo mostraba un conteo por gerencia de un mes.
+
+**Todo el dashboard es interactivo** (Victor, 2026-11-04: «dale vida a cada cuadro… que muestre lo que está detrás»). Cada tarjeta, barra, punto de la curva y fila de las gráficas abre una ventana con lo que la forma:
+- los presupuestos de ese cuadro, con su monto en la moneda elegida, estado, fecha, gerencia, responsable y descripción, y el total;
+- en la tarjeta de meta, la meta, lo adjudicado y el cumplimiento de cada mes del periodo, y los adjudicados que la suman;
+- en las tarjetas de tasa de cierre y conversión, los ganados, desestimados y sin respuesta por separado;
+- en las de visitas, la lista de visitas.
+
+Las listas de gerencias y responsables muestran 10 filas; «ver todos» abre el resto.
+
+**Tabla de presupuestos:** además del periodo y del buscador, se filtra por **Ver** (todos, adjudicados, en revisión, aprobado, desestimado, sin respuesta o sin estado), por gerencia y por responsable. Muestra el total enviado y adjudicado de lo filtrado. «Adjudicados» ubica cada presupuesto por su fecha de adjudicación, igual que el dashboard; el resto, por la fecha de envío.
 
 **Metas mensuales:** se ven en la pantalla y las editan los tres roles que llenan. Pueden estar en S/ o en US$.
 
 ## PDF
 
-«PDF vertical» y «PDF horizontal» descargan el dashboard en una hoja A4 con los mismos filtros de la pantalla: tarjetas, gráficas y visitas, acomodadas según la orientación. El fondo es claro, para imprimir.
+«PDF vertical» y «PDF horizontal» descargan el dashboard en una hoja A4 con los mismos filtros de la pantalla (también el periodo de varios meses): tarjetas, gráficas, antigüedad y visitas. Lleva **los mismos colores y formas del dashboard** (Victor, 2026-11-04: «que el PDF sea similar o idéntico al dashboard… en los colores, la forma»): fondo oscuro, tarjetas con el mismo borde, la franja de la meta, las mismas series y la barra de filtros arriba. Solo cambia la ubicación de las piezas para que entren en la hoja.
 
 ## Datos
 

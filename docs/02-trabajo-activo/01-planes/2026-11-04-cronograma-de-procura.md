@@ -2,17 +2,17 @@
 
 ## Identificación y estado
 
-Tema: cronograma de procura de los RQ, para todos los servicios. Fecha: 2026-11-04. Estado: `Propuesta`.
+Tema: cronograma de procura de los RQ, para todos los servicios. Fecha: 2026-11-04. Estado: `Implementando`.
 
-- Gate Spec: `pendiente`
-- Gate 1: `pendiente`
+- Gate Spec: `aprobado por Victor (2026-11-04)`
+- Gate 1: `aprobado por Victor (2026-11-04)`
 - Gate 2: `pendiente`
 
 ## Spec
 
 ### Estado
 
-`Propuesto`.
+`Aprobado (Gate Spec)` — Victor, 2026-11-04 («ok todo bien, dale»).
 
 ### Problema y contexto
 
@@ -122,7 +122,7 @@ Pruebas unitarias del cálculo de fecha de necesidad, estado de compra y alertas
 
 ### Aprobación (Gate Spec)
 
-- [ ] Victor aprueba este Spec (y responde D1 a D5 o acepta las propuestas por defecto).
+- [x] Victor aprueba este Spec (y responde D1 a D5 o acepta las propuestas por defecto).
 
 ## Referencia al Spec aprobado
 
@@ -155,10 +155,10 @@ Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proy
 
 | # | Ítem | Tanda | Estado |
 |---|---|---|---|
-| 1 | `db/132` aditiva + ruta completa del SQL a Victor | T1 | Pendiente |
-| 2 | Cálculo de fecha en obra (primer día con metrado de la actividad en el PM aprobado; varias actividades = el más temprano; manual si no hay actividad) | T1 | Pendiente |
-| 3 | Fechas hacia atrás en días hábiles: llegada, cierre, inicio | T1 | Pendiente |
-| 4 | Estado de compra, color de la barra y las 7 alertas | T1 | Pendiente |
+| 1 | `db/132` aditiva + ruta completa del SQL a Victor | T1 | Hecho (app `4847835`); falta que Victor la aplique |
+| 2 | Cálculo de fecha en obra (primer día con metrado de la actividad en el PM aprobado; varias actividades = el más temprano; manual si no hay actividad) | T1 | Hecho (app `4847835`, 18 pruebas) |
+| 3 | Fechas hacia atrás en días hábiles: llegada, cierre, inicio | T1 | Hecho (app `4847835`, 18 pruebas) |
+| 4 | Estado de compra, color de la barra y las 7 alertas | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 5 | API marcar / configurar / comprado a mano / valores por defecto con 403 e historial | T2 | Pendiente |
 | 6 | API lectura del cronograma multi-servicio | T2 | Pendiente |
 | 7 | Comprado automático al llegar a 100 % | T2 | Pendiente |

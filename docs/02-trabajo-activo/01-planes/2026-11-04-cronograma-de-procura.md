@@ -155,17 +155,17 @@ Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proy
 
 | # | Ítem | Tanda | Estado |
 |---|---|---|---|
-| 1 | `db/132` aditiva + ruta completa del SQL a Victor | T1 | Hecho (app `4847835`); falta que Victor la aplique |
+| 1 | `db/132` aditiva + ruta completa del SQL a Victor | T1 | Hecho (app `4847835`); aplicada por Victor el 2026-11-04 |
 | 2 | Cálculo de fecha en obra (primer día con metrado de la actividad en el PM aprobado; varias actividades = el más temprano; manual si no hay actividad) | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 3 | Fechas hacia atrás en días hábiles: llegada, cierre, inicio | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 4 | Estado de compra, color de la barra y las 7 alertas | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 5 | API marcar / configurar / comprado a mano / valores por defecto con 403 e historial | T2 | Hecho (app `e6a3446`; 293 pruebas, tipos y lint en verde) |
 | 6 | API lectura del cronograma multi-servicio | T2 | Hecho (app `e6a3446`; consultas comprobadas en solo lectura con PS-108: VP-PL-004 → en obra 05.11) |
 | 7 | Comprado automático al llegar a 100 % | T2 | Hecho (app `e6a3446`; no pisa un comprado a mano) |
-| 8 | Columna «Va a procura» y contador en el Status RQ | T3 | Pendiente |
-| 9 | Grupo Seguimiento + chip Cronograma procura | T3 | Pendiente |
-| 10 | Pantalla: tarjetas, barras plan/real, hoy, filtros, Configurar | T3 | Pendiente |
-| 11 | Verificación por rol (13 ven; 2 editan) | T3 | Pendiente |
+| 8 | Columna «Va a procura» y contador en el Status RQ | T3 | Hecho (app `f0bdb42`; filtrable, también en el PDF del listado; en producción: 19 «Por decidir») |
+| 9 | Grupo Seguimiento + chip Cronograma procura | T3 | Hecho (app `f0bdb42`; después de Logística, con Notificaciones como los demás grupos; visto en producción) |
+| 10 | Pantalla: tarjetas, barras plan/real, hoy, filtros, Configurar | T3 | Hecho (app `f0bdb42`; captura a 1366 px con datos de ejemplo en una página temporal ya borrada, porque aún no hay RQ en SÍ; el cronograma de barras va arriba y el detalle abajo para que las barras se vean con los dos paneles abiertos) |
+| 11 | Verificación por rol (13 ven; 2 editan) | T3 | Hecho en producción con las dos cuentas de prueba: administrador ve y edita; la cuenta sin administración ve el cronograma y la marca, sin selector ni «Valores por defecto», y el servidor responde 403 a marcar y a cambiar valores. Pendiente: guardar un cambio real (lo hace Victor al marcar el primer RQ) |
 | 12 | PDF y Excel del cronograma | T4 | Pendiente |
 | 13 | PDF y Excel del informe de alertas | T4 | Pendiente |
 | 14 | Flujos 29, 05, 14, 16, 20 e índice | T5 | Pendiente |
@@ -183,6 +183,7 @@ Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proy
 | 2026-11-04 | Respuestas D1–D7: ven todos; RQ sin actividad se configura; por vencer 3 configurable; comprado = 100 %; desmarcable; días hábiles; tiempo de procura por defecto 7 | Victor |
 | 2026-11-04 | Fecha requerida del RQ ≠ fecha en obra; el cronograma usa la fecha en obra. Llega 1 día antes, compra cerrada 7 días antes, tiempo de procura propio de cada RQ (10, 30 días…); todo configurable por RQ; cronograma de barras de colores | Victor |
 | 2026-11-04 | Barra de avance por materiales atendidos en el Status RQ, hecha antes del Spec (app `800af77`, docs `b9f6658`) | Victor |
+| 2026-11-04 | Grupo Seguimiento después de Logística, con su chip Notificaciones como los demás grupos; en Configurar también se puede cambiar la marca (No o Por decidir = sale del cronograma) | Orquestador (operativo) |
 
 ## Libro de hallazgos
 
@@ -204,6 +205,12 @@ Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proy
 ## Observaciones sobre la política
 
 Ninguna.
+
+## Preguntas abiertas a Victor
+
+| ID | Fecha | Qué | Estado |
+|---|---|---|---|
+| P1 | 2026-11-04 | Otra sesión está agregando el estado «Comprado» por material (Logística cierra la compra y anota la fecha de llegada a almacén; `db/133`, sin publicar). D4 dice «Comprado = 100 % atendido». ¿El cronograma debe tomar como comprado el RQ cuando todos sus materiales están Comprados (cierre de compra real) y usar su fecha de llegada como llegada real? | Consultada |
 
 ## Carpetas/archivos huérfanos
 

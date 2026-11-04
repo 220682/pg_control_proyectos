@@ -30,15 +30,26 @@ Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde 
 ### Alcance
 
 - **Marca «Va a procura»** en el Status RQ: columna nueva con el valor; la cambian solo administrador y jefe de proyectos (Victor, 2026-11-04). Se marca **el RQ completo** (no por material). Filtro y contador de «Por decidir» para que no quede ninguno sin marcar.
-- **Fecha en que lo necesita la obra** = el **primer día con metrado programado** de la actividad del RQ en el **Plan Maestro aprobado** de su servicio (si el RQ tiene varias actividades, el día más temprano). Verificado el 2026-11-04 con PS-108-2026: el RQ guarda su actividad (`actividad_id`) y esa misma actividad está en las líneas del Plan Maestro aprobado (`plan_maestro_partidas.actividad_id` → `plan_maestro_asignaciones.fecha`); p. ej. VP-PL-004 (2.4.1) → 05.11.2026. Si el RQ no tiene actividad o su actividad no está programada, se usa la **fecha requerida** del RQ; si tampoco la tiene, queda **«Sin fecha»** y sale en las alertas.
+- **Dos fechas distintas (Victor, 2026-11-04):** la **fecha requerida del RQ** es la que escribió el solicitante y solo se muestra como dato; **la fecha en obra** es la que manda en el cronograma. El cronograma lleva su propia fecha de procura, aparte de lo que diga el RQ.
+- **Fecha en obra** = el **primer día con metrado programado** de la actividad del RQ en el **Plan Maestro aprobado** de su servicio (si el RQ tiene varias actividades, el día más temprano). Verificado el 2026-11-04 con PS-108-2026: el RQ guarda su actividad (`actividad_id`) y esa misma actividad está en las líneas del Plan Maestro aprobado (`plan_maestro_partidas.actividad_id` → `plan_maestro_asignaciones.fecha`); p. ej. VP-PL-004 (2.4.1) → 05.11.2026. Si el RQ no tiene actividad o su actividad no está programada, queda **«Sin fecha en obra»** hasta que se configure (ver D2); **nunca se toma la fecha requerida del RQ**.
+- **Fechas de la procura, hacia atrás desde la fecha en obra (Victor, 2026-11-04):**
+  1. **Llega a destino** = fecha en obra − **días de llegada** (por defecto **1**: el material llega un día antes a donde se requiere).
+  2. **Cierre de compra** (la compra debe estar finalizada) = fecha en obra − **días de cierre** (por defecto **7**).
+  3. **Inicio de procura** = cierre de compra − **tiempo de procura** (cada RQ tiene el suyo: unos 10 días, otros 30).
+- **Cada RQ es configurable** (Victor, 2026-11-04: «cada requerimiento es diferente»): tiempo de procura, días de cierre y días de llegada. Los valores por defecto (tiempo de procura, 7 y 1) se configuran una vez y cada RQ los puede cambiar; lo cambian administrador y jefe de proyectos, y queda en el historial.
+- **Cronograma de barras de colores**, una fila por RQ, sobre una escala de días:
+  - **Plan:** barra de **procura** (inicio → cierre de compra), tramo de **entrega** (cierre → llegada) y marca de **en obra**.
+  - **Real** (debajo, sin mezclarse con el plan): desde que el RQ se aprueba hasta que llega a 100 % (Comprado).
+  - **Colores por estado:** gris = aún no empieza; azul = en procura a tiempo; ámbar = por vencer; rojo = atrasado; verde = comprado. Línea vertical de **hoy**.
 - **Estado de compra** de cada RQ del cronograma: **Pendiente** (aún no recepcionado), **En proceso** (recepcionado con avance menor a 100 %), **Comprado** (100 % automático o a mano). Se muestra también la barra de avance.
 - **Alertas**, calculadas cada vez que se abre la pantalla con la fecha de hoy (Lima):
-  - **Atrasado:** no comprado y la fecha de necesidad ya pasó.
-  - **Por vencer:** no comprado y vence en los próximos **7 días** (por confirmar).
-  - **Próximas compras:** vence entre 8 y 30 días.
-  - **Sin fecha:** sin fecha del Plan Maestro ni fecha requerida.
-  - **Comprado a tiempo / Comprado tarde:** fecha de compra ≤ o > fecha de necesidad.
-- **Pantalla «Cronograma procura»** (a pantalla completa, como el Status RQ): arriba, tarjetas con el conteo de cada alerta (al hacer clic, filtran); debajo, tabla por RQ con N° OT, código, actividad (WBS y nombre), solicitante, F. solicitud, F. requerida, **Lo necesita (Plan Maestro)**, días que faltan o de atraso, avance, estado de compra y una **barra de tiempo** (desde la solicitud hasta la fecha de necesidad, con una marca en la fecha de compra). Filtros por servicio, estado y alerta. Con `?proyectoId=` preselecciona el servicio.
+  - **Debe iniciar:** hoy ya pasó el inicio de procura y el RQ aún no está aprobado.
+  - **Por vencer:** no comprado y el cierre de compra llega en los próximos días (cantidad configurable, por defecto 3; D3).
+  - **Atrasado:** no comprado y ya pasó el cierre de compra.
+  - **Próximas compras:** el inicio de procura cae en los próximos 15 días.
+  - **Sin fecha en obra:** la actividad no está en el Plan Maestro aprobado o el RQ no tiene actividad.
+  - **Comprado a tiempo / Comprado tarde:** fecha de compra ≤ o > cierre de compra.
+- **Pantalla «Cronograma procura»** (a pantalla completa, como el Status RQ): arriba, tarjetas con el conteo de cada alerta (al hacer clic, filtran); debajo, el **cronograma de barras** con, a la izquierda, N° OT, código, actividad (WBS y nombre), tiempo de procura, inicio, cierre, llegada, en obra, F. requerida del RQ (solo dato), avance y estado; botón **Configurar** por RQ. Filtros por servicio, estado y alerta. Con `?proyectoId=` preselecciona el servicio.
 - **Descargas:** «Descargar cronograma (PDF)», «Descargar cronograma (Excel)» e «Informe de alertas (PDF y Excel)», según el filtro activo, con el encabezado de PDF configurable que ya existe (flujos 27 y 14).
 - **Historial** de la marca y del comprado manual: quién y cuándo (también si un SÍ pasa a NO).
 
@@ -66,7 +77,7 @@ Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde 
 
 ### Datos, API, migraciones o dependencias
 
-- **Migración aditiva `db/132`** (no borra ni renombra nada) en `proyecto_requerimientos`: `procura` (`POR_DECIDIR` / `SI` / `NO`, por defecto `POR_DECIDIR`), `procura_decidido_por_id`, `procura_decidido_en`, `procura_comprado_en` (fecha de compra), `procura_comprado_manual` (sí/no) y `procura_comprado_por_id`. Tabla `requerimiento_procura_historial` (RQ, campo, valor anterior, valor nuevo, quién, cuándo). Los 19 RQ que ya existen quedan en «Por decidir». La aplica Victor (se le da la ruta completa del SQL).
+- **Migración aditiva `db/132`** (no borra ni renombra nada) en `proyecto_requerimientos`: `procura` (`POR_DECIDIR` / `SI` / `NO`, por defecto `POR_DECIDIR`), `procura_decidido_por_id`, `procura_decidido_en`, `procura_comprado_en` (fecha de compra), `procura_comprado_manual` (sí/no), `procura_comprado_por_id`, `procura_dias` (tiempo de procura), `procura_dias_cierre`, `procura_dias_llegada` y `procura_fecha_obra_manual` (solo si D2 lo acepta). Tabla de valores por defecto (tiempo de procura, 7, 1 y días de «por vencer»). Tabla `requerimiento_procura_historial` (RQ, campo, valor anterior, valor nuevo, quién, cuándo). Los 19 RQ que ya existen quedan en «Por decidir». La aplica Victor (se le da la ruta completa del SQL).
 - **Comprado automático:** en el mismo paso del servidor que pasa el RQ a Atendido (`cambiar-estado-rq` / estado por material), se guarda `procura_comprado_en` = hoy (Lima) si el RQ va a procura y aún no tiene fecha.
 - **API nuevas:** cambiar la marca y el comprado manual (PATCH sobre el RQ, validando rol en el servidor y que el RQ exista); leer el cronograma de varios servicios; exportar PDF y Excel. La fecha de necesidad se calcula al leer, desde el Plan Maestro aprobado (no se guarda una copia).
 - Reutiliza: `avanceItemsRq` (barra), el exportador de PDF y Excel ya usado en el Status RQ y en Status de servicios, el encabezado de PDF configurable.
@@ -80,8 +91,10 @@ Mismo estilo que el Status de requerimiento (tabla a pantalla completa, filtros 
 | # | Decisión (Victor) | Propuesta por defecto |
 |---|---|---|
 | D1 | ¿Quién **ve** la pantalla y descarga? | Administrador, jefe de proyectos y logística (logística es quien compra); los demás no la ven |
-| D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108) | Usa su fecha requerida; si tampoco la tiene, sale en «Sin fecha» para que se complete |
-| D3 | Días de **«Por vencer»** | 7 días calendario |
+| D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108); la fecha requerida del RQ ya no sirve | En «Configurar», elegir la **actividad del cronograma** del RQ (de ahí sale la fecha en obra del Plan Maestro); si el material no es de ninguna actividad, escribir la fecha en obra a mano |
+| D3 | Días de **«Por vencer»** antes del cierre de compra | 3 días |
+| D6 | ¿Los días se cuentan **hábiles** (lunes a sábado sin feriados, como el cronograma del servicio) o **calendario**? | Hábiles |
+| D7 | **Tiempo de procura** por defecto de un RQ nuevo | 8 días (el plazo de compra de fabricaciones del PS-108); se cambia por RQ |
 | D4 | ¿Comprado = **100 % atendido** (entregado al solicitante) o basta **En almacén**? | 100 % atendido, como dijo Victor |
 | D5 | Si un RQ Comprado a mano luego cambia, ¿se puede desmarcar? | Sí, solo los mismos dos roles, y queda en el historial |
 
@@ -93,7 +106,8 @@ Mismo estilo que el Status de requerimiento (tabla a pantalla completa, filtros 
 1. Un RQ nuevo aparece como «Por decidir» en el Status y suma en su contador.
 2. Solo administrador y jefe de proyectos cambian la marca; otro rol recibe 403 del servidor aunque llame la API directo.
 3. Al marcar SÍ, el RQ aparece en el Cronograma procura sin recargar a mano; al pasar a NO, sale.
-4. La fecha «Lo necesita» de VP-PL-004 (PS-108-2026) es 05.11.2026 (primer día de 2.4.1 en el Plan Maestro v6 aprobado).
+4. La fecha en obra de VP-PL-004 (PS-108-2026) es 05.11.2026 (primer día de 2.4.1 en el Plan Maestro v6 aprobado); con los valores por defecto, llegada = un día antes, cierre de compra = 7 días antes e inicio = cierre − su tiempo de procura. Al cambiar el tiempo de procura de un RQ, solo su barra se mueve.
+4b. La fecha requerida del RQ se ve como dato y no mueve ninguna barra.
 5. Al llevar todos los materiales de un RQ a Atendido, el RQ sale «Comprado» con la fecha de ese día, sin tocar nada más.
 6. Las tarjetas de alerta cuentan bien con la fecha de hoy y filtran la tabla.
 7. El PDF y el Excel del cronograma y del informe salen con el filtro activo.
@@ -124,6 +138,7 @@ Ver Spec. El plan de tandas (Gate 1) se escribe después del Gate Spec.
 | 2026-11-04 | RQ al 100 % = Comprado automático; también a mano | Victor |
 | 2026-11-04 | Marcan administrador y jefe de proyectos | Victor |
 | 2026-11-04 | Fechas cruzadas con el Plan Maestro; para todos los servicios | Victor |
+| 2026-11-04 | Fecha requerida del RQ ≠ fecha en obra; el cronograma usa la fecha en obra. Llega 1 día antes, compra cerrada 7 días antes, tiempo de procura propio de cada RQ (10, 30 días…); todo configurable por RQ; cronograma de barras de colores | Victor |
 | 2026-11-04 | Barra de avance por materiales atendidos en el Status RQ, hecha antes del Spec (app `800af77`, docs `b9f6658`) | Victor |
 
 ## Libro de hallazgos

@@ -57,6 +57,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
 | Registro de costos por servicio, ver ² ²⁴ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Status de servicios (Costos): ver el dashboard, los presupuestos y las visitas técnicas, y descargar el PDF vertical u horizontal ²⁵ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -175,6 +176,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Descargar consolidado RQ (PROM-GP-004) ⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | No (descarga) |
 | Subir registro de costos por servicio (cargar pagos de materiales y de subcontratos desde el PDF; logística solo carga, no ve ni descarga) ²⁴ | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Descargar registro de costos por servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (descarga) |
+| Status de servicios: cargar el Excel del reporte mensual (reemplaza presupuestos y visitas) y editar las metas mensuales ²⁵ | ✓ | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — | No (de la empresa, no de un servicio) |
 | **Descargas** ⁷ | | | | | | | | | | | | | | |
 | Exportar DP (Excel o PDF) | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — | No (descarga) |
 | Descargar RDTs según filtro (ZIP) y listado de RDTs (PDF PROM-GP-0006) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No (descarga) |
@@ -235,6 +237,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ²⁴ **Registro de costos con compras y pagos (Victor, 2026-11-03).** La pantalla «Registro de costos por servicios» carga PDF de órdenes de compra, cotizaciones o pagos y extrae solo los datos globales (N° de documento, proveedor, RUC, fecha, moneda, sin IGV, IGV, con IGV), con una revisión antes de guardar, en dos listas: **pagos de materiales** y **pagos de subcontratos** (tabla `proyecto_compras`, `db/126`). La descripción se arma sola leyendo los ítems. Las compras en soles se pasan a US$ con la venta SUNAT del día en que se cargan. **Cargan:** logística, administrador y jefe de proyectos. **Ven el listado:** los 5 roles con economía (tabla 1; logística en modo «solo cargar», sin ver montos ya cargados). **Abren el PDF y eliminan:** administrador y jefe de proyectos. El Dashboard las usa con el botón «Pagos (OC)» ([flujo 11](11-dashboard.md)).
 
+²⁵ **Status de servicios (Victor, 2026-11-03; [flujo 27](27-status-de-servicios.md)).** Pantalla de la empresa en el grupo Costos (`/costos/status-servicios`), no de un servicio: reporte mensual de presupuestos enviados y adjudicados, visitas técnicas, metas y su dashboard. **Ven y descargan el PDF:** los 5 roles con economía (`puedeVerStatusServicios`); los demás ven el chip deshabilitado. **Cargan el Excel y editan las metas:** administrador, jefe de costos y supervisor de costos (`puedeCargarStatusServicios`; el administrador «por el momento», palabras de Victor). El servidor valida el rol en cada ruta (`api/costos/status-servicios/cargar`, `/metas`, `/pdf`). Impacto en la Matriz de permisos: dos filas nuevas (pendiente de actualizar por Victor, que debe compartir el artefacto como editor).
+
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
@@ -266,7 +270,7 @@ El asistente (icono flotante y panel desplegable del shell, flujo 16) **no es un
 
 ### Otros grupos del nav (Costos, Oficina Técnica, Administración, SSOMA)
 
-Sin accesos propios más allá de «Notificaciones» (común a todos los grupos, ver abajo). Los ítems `status-servicios`, `tareo-moi`, `consolidado-moi`, `pets` están registrados en el nav pero **sin `ruta` implementada todavía** — no tienen función de permiso propia que registrar aquí hasta que existan. Tampoco están implementados 3WLA ni Status / Programación de capacitaciones (ver `docs/02-trabajo-activo/01-planes/planes-futuros.md`).
+Sin accesos propios más allá de «Notificaciones» (común a todos los grupos, ver abajo). «Status de servicios» ya tiene pantalla (nota ²⁵). Los ítems `tareo-moi`, `consolidado-moi`, `pets` están registrados en el nav pero **sin `ruta` implementada todavía** — no tienen función de permiso propia que registrar aquí hasta que existan. Tampoco están implementados 3WLA ni Status / Programación de capacitaciones (ver `docs/02-trabajo-activo/01-planes/planes-futuros.md`).
 
 ### Notificaciones (común a todos los grupos)
 

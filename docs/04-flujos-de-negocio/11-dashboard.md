@@ -29,7 +29,8 @@ dato económico**: todo lo monetario vive en el Completo.
 | **Bloque E** (PPC + Pareto de CNC) | ✓ | ✓ |
 | **Enlace a la Curva S** | ✓ | ✓ |
 | Resumen ejecutivo y chip semáforo (derivan de SPI/CPI) | — | ✓ |
-| Bloque **«Costo real de recursos»** | — | ✓ |
+| Bloque **«Costo real de recursos»** (con el botón «% Avance / Pagos (OC)») | — | ✓ |
+| Visor **«Dólar SUNAT»** (tipo de cambio del día, compra y venta) | — | ✓ |
 
 **El interruptor Parcial/Completo es funcional**: lo activan los roles que pueden
 ver datos económicos según la matriz aprobada (`puedeVerEconomia`; tabla 1 del
@@ -172,6 +173,18 @@ recurso para ver su incidencia. El dato se lee del PR; el Dashboard no recalcula
   es distinta de cero; explica las filas sin partida vinculada (deuda de
   `db/055`). Con las cuatro clases resueltas vale 0. No se fuerza a cero ni se
   inventa dato.
+- **Botón «% Avance / Pagos (OC)»** (Victor, 2026-11-03): elige de dónde salen
+  materiales y subcontratos. «% Avance» es lo de siempre (presupuesto × % de
+  avance físico). «Pagos (OC)» los toma de las compras cargadas en el
+  [Registro de costos](14-accesos-y-restricciones.md) (tabla `proyecto_compras`,
+  `db/126`): **una fila por compra**, «descripción — proveedor», con el monto
+  **sin IGV en US$**. HH y HM salen siempre del RDT. Va en la URL (`?costo=pagos`)
+  y cambia el KPI AC, el CPI y este bloque; la Curva S y los Informes siguen con
+  «% Avance».
+- **Visor «Dólar SUNAT»** en la cabecera (Completo): tipo de cambio del día
+  (`api.apis.net.pe`, respaldo referencial `open.er-api.com`, se refresca cada
+  hora). Una compra en soles se pasa a US$ con la **venta** del día en que se carga
+  y ese tipo de cambio queda guardado en la compra.
 - El balde `costo_legacy_sin_partida_acum` es una **nota informativa, nunca una
   fila sumable**: ya está dentro de las filas de recursos y sumarlo duplicaría.
 - **Materiales y subcontratos entran al AC desde el 2026-10-15** (Victor: «todo

@@ -40,7 +40,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 **Reglas decididas por Victor (2026-09-28):**
 
 1. **Interfaces sin datos económicos: las ven los 13 roles.**
-2. **Interfaces con datos económicos: solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos.** Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2).
+2. **Interfaces con datos económicos: solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos.** Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴).
 3. **Administrador y jefe de proyectos ven todas las interfaces**, las económicas incluidas.
 4. **Los recursos de empresa (catálogos) los ven todos los roles.**
 5. **El panel izquierdo del servicio lo ven los 13 roles** (flujo 16); lo que el rol no puede usar se muestra deshabilitado.
@@ -56,7 +56,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Curva S — avance físico (%) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
-| Registro de costos por servicio, ver ² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Registro de costos por servicio, ver ² ²⁴ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -82,7 +82,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 ¹ **Confirmado por Victor (2026-09-28) y aplicado el 2026-10-02** (plan `2026-10-01-dashboard-economia-y-curva-s`): el Dashboard Parcial no tiene datos económicos y lo ven los 13 roles; el Dashboard Completo sí tiene datos económicos y lo ven **exactamente los cinco roles con economía** de esta tabla (las excepciones de planner y supervisor de oficina técnica son para Plan Maestro y DP, no para el Completo). Quién alterna entre Parcial y Completo (Victor, C35, 2026-09-29): lo alternan los roles que ven datos económicos (`puedeVerEconomia`: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos); los demás ven el interruptor **deshabilitado con título** y quedan **fijos en Parcial** (D3). El servidor fuerza Parcial para el rol sin economía aunque `tipo_dashboard` esté en `COMPLETO`. La separación del Dashboard Parcial y de la Curva S física ya **no** es un estado objetivo ni depende de `planes-futuros.md`: está implementada.
 
-² «Registro de costos» es un archivo (`.xlsx`, `.xls`, `.pdf` o `.csv`) que Logística sube por servicio; no es el RQ. Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
+² «Registro de costos» son las compras y pagos del servicio (PDF de orden de compra, cotización o pago) que se cargan por servicio; no es el RQ. Desde el 2026-11-03 se cargan en dos listas, materiales y subcontratos (nota ²⁴). Descargarlo es una acción (tabla 2): la decisión de Victor del 2026-09-28 es que lo descarguen el administrador y el jefe de proyectos.
 
 ## Tabla 2 — Acciones: quién puede ejecutarlas
 
@@ -173,7 +173,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Corregir y reenviar un RQ Devuelto (el solicitante del RQ y el administrador) ¹⁵ | ✓ | * | * | * | * | * | * | * | * | * | * | * | * | Sí |
 | Eliminar requerimiento (borrado definitivo) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Descargar consolidado RQ (PROM-GP-004) ⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | No (descarga) |
-| Subir registro de costos por servicio (solo subir; no ve ni descarga el contenido) | — | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
+| Subir registro de costos por servicio (cargar pagos de materiales y de subcontratos desde el PDF; logística solo carga, no ve ni descarga) ²⁴ | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Descargar registro de costos por servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (descarga) |
 | **Descargas** ⁷ | | | | | | | | | | | | | | |
 | Exportar DP (Excel o PDF) | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — | No (descarga) |
@@ -233,6 +233,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ²³ **Provisorio, igual que la nota ¹⁹ (2026-10-25, plan [Fuente-WhatsApp](../02-trabajo-activo/01-planes/2026-10-25-fuente-whatsapp.md); [flujo 26](26-fuente-whatsapp.md)).** Ven Fuente-WhatsApp (mensajes, contactos) administrador, jefe de proyectos, jefe de oficina técnica y supervisor de oficina técnica (`puedeVerFuenteWhatsapp`); registran el grupo, confirman o descartan mensajes, completan contactos y escriben o invalidan notas el administrador y el jefe de proyectos (`puedeGestionarFuenteWhatsapp`). Las **notas** del panel de Restricciones-Notas las ven los mismos 13 roles que las restricciones. El ingreso del grupo no es una acción de usuario: lo hace el script local con el secreto `WHATSAPP_INGRESO_SECRETO` (ruta pública solo en el middleware, que valida el secreto). Una restricción confirmada desde WhatsApp se crea a nombre de quien la confirma, con el emisor del mensaje. La decisión final de Victor («todos ven, solo el administrador edita») se aplica al final del plan. Impacto en la Matriz de permisos: ver el artefacto (pendiente de actualizar por Victor, que debe compartirlo como editor).
 
+²⁴ **Registro de costos con compras y pagos (Victor, 2026-11-03).** La pantalla «Registro de costos por servicios» carga PDF de órdenes de compra, cotizaciones o pagos y extrae solo los datos globales (N° de documento, proveedor, RUC, fecha, moneda, sin IGV, IGV, con IGV), con una revisión antes de guardar, en dos listas: **pagos de materiales** y **pagos de subcontratos** (tabla `proyecto_compras`, `db/126`). La descripción se arma sola leyendo los ítems. Las compras en soles se pasan a US$ con la venta SUNAT del día en que se cargan. **Cargan:** logística, administrador y jefe de proyectos. **Ven el listado:** los 5 roles con economía (tabla 1; logística en modo «solo cargar», sin ver montos ya cargados). **Abren el PDF y eliminan:** administrador y jefe de proyectos. El Dashboard las usa con el botón «Pagos (OC)» ([flujo 11](11-dashboard.md)).
+
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 
 Respecto de la matriz que regía antes, Victor fijó en el artefacto:
@@ -253,7 +255,7 @@ Respecto de la matriz que regía antes, Victor fijó en el artefacto:
 1. **Descargas.** Resuelto el 2026-09-30: todas las descargas están decididas y escritas en la tabla 2 (nota 7). Sin puntos abiertos, salvo la brecha del código que la nota 7 indica.
 2. **Diferencias con el código actual.** La implementación debe alinear `permisos.ts` a esta matriz; el informe «antes/después por rol» lo produce la fase F0 del plan `docs/02-trabajo-activo/01-planes/2026-09-27-paneles-servicio-persistente.md`.
 3. **Otros flujos.** Cerrado el 2026-09-30: los flujos 05, 06, 08, 12 y el resto de los alcanzados se reescribieron con la aprobación de Victor según esta matriz; los flujos 02 y 13 no citan el ciclo de vida del proyecto ni reservan los borrados al administrador, y no requirieron cambios.
-4. **Estado de RQ y registro de costos para el jefe de proyectos.** Cerrado (Victor, 2026-09-29): siguen siendo solo de logística (más el administrador en el estado de RQ, ya en la tabla 2).
+4. **Estado de RQ y registro de costos para el jefe de proyectos.** Cerrado (Victor, 2026-09-29): siguen siendo solo de logística (más el administrador en el estado de RQ, ya en la tabla 2). **Cambiado por Victor el 2026-11-03 para el registro de costos:** lo suben logística, administrador y jefe de proyectos (nota ²⁴).
 5. **Quién alterna el Dashboard entre Parcial y Completo.** Cerrado (Victor, C35, 2026-09-29): ver nota ¹.
 
 6. **Aprobar el borrador que reemplaza un Plan Maestro aprobado.** Resuelto por Victor (2026-10-01): lo aprueban los tres roles de «Gestionar Plan Maestro» (administrador, jefe de proyectos y planner); solo crear la versión nueva queda para administrador y jefe de proyectos (nota 9). Sin brecha con el código.

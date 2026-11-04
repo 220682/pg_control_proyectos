@@ -85,6 +85,8 @@ contenido anterior se mantiene atenuado (sin esqueleto ni salto de layout).
 
 ## Indicadores
 
+**Físico o económico (Victor, 2026-11-04).** El **avance físico** es solo el de **una partida**: metrado acumulado / contractual (los metrados de partidas distintas no se suman). El avance del **servicio, de un subpresupuesto o de cualquier nivel** es **económico**: valor ganado / presupuesto (EV / BAC; en PS-108 al 04.11.2026, 25,586 / 322,877 = 7.92 %). Nombres en pantalla, PDF y Excel: Completo «% avance económico (valor ganado)»; Parcial «% avance del servicio» (no nombra lo económico); la Curva S en % se llama **«Curva S de avance (%)»** (antes «Curva S física»); la columna de la matriz dice «% avance» con una leyenda (partida: físico; nivel: económico). Lo mismo en los textos de materiales y subcontratos por avance (db/102), transversales, tarjetas de servicios, portafolio e informes. Pendiente sin decidir: las columnas «Físico semanal / acum.» del Plan Maestro (en una partida son metrado; en un grupo, EV / BAC).
+
 Se separan por modo: el **Parcial** muestra solo lo físico/operativo; el
 **Completo** agrega todo lo económico. Los KPI de dinero van en **USD, costo
 directo** — el BAC no es el monto total del contrato y la interfaz lo dice.

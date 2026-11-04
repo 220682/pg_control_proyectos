@@ -164,7 +164,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Ver los documentos, su historial de correos y exportar a Excel | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | Sí |
 | Crear, editar o borrar un documento, corregir su estado o su área, asignar o sacar correos | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Requerimientos (RQ) y costos** | | | | | | | | | | | | | | |
-| Crear requerimiento (RQ) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
+| Crear requerimiento (RQ), a mano o cargando el Excel; se sube al compartirlo en WhatsApp (flujo 05) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
+| Crear un RQ a nombre de otro miembro del servicio (Excel de otro solicitante) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Actualizar estado de RQ (recepcionar el RQ; En almacén y Atendido por material) | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí |
 | Derivar RQ a logística (aprobación) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |

@@ -159,9 +159,9 @@ Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proy
 | 2 | Cálculo de fecha en obra (primer día con metrado de la actividad en el PM aprobado; varias actividades = el más temprano; manual si no hay actividad) | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 3 | Fechas hacia atrás en días hábiles: llegada, cierre, inicio | T1 | Hecho (app `4847835`, 18 pruebas) |
 | 4 | Estado de compra, color de la barra y las 7 alertas | T1 | Hecho (app `4847835`, 18 pruebas) |
-| 5 | API marcar / configurar / comprado a mano / valores por defecto con 403 e historial | T2 | Pendiente |
-| 6 | API lectura del cronograma multi-servicio | T2 | Pendiente |
-| 7 | Comprado automático al llegar a 100 % | T2 | Pendiente |
+| 5 | API marcar / configurar / comprado a mano / valores por defecto con 403 e historial | T2 | Hecho (app `e6a3446`; 293 pruebas, tipos y lint en verde) |
+| 6 | API lectura del cronograma multi-servicio | T2 | Hecho (app `e6a3446`; consultas comprobadas en solo lectura con PS-108: VP-PL-004 → en obra 05.11) |
+| 7 | Comprado automático al llegar a 100 % | T2 | Hecho (app `e6a3446`; no pisa un comprado a mano) |
 | 8 | Columna «Va a procura» y contador en el Status RQ | T3 | Pendiente |
 | 9 | Grupo Seguimiento + chip Cronograma procura | T3 | Pendiente |
 | 10 | Pantalla: tarjetas, barras plan/real, hoy, filtros, Configurar | T3 | Pendiente |

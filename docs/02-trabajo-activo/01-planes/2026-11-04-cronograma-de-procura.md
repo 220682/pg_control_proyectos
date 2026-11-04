@@ -1,0 +1,156 @@
+# Cronograma de procura (Seguimiento)
+
+## Identificación y estado
+
+Tema: cronograma de procura de los RQ, para todos los servicios. Fecha: 2026-11-04. Estado: `Propuesta`.
+
+- Gate Spec: `pendiente`
+- Gate 1: `pendiente`
+- Gate 2: `pendiente`
+
+## Spec
+
+### Estado
+
+`Propuesto`.
+
+### Problema y contexto
+
+Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde el 2026-11-04, la barra de avance por materiales atendidos). No hay una vista que diga **qué material debe estar comprado y para cuándo** según lo que programa el Plan Maestro, ni qué compras están por vencer o se compraron tarde. Victor quiere elegir qué RQ entran en ese seguimiento y verlo en un cronograma que se actualice solo.
+
+### Resultado esperado
+
+1. En el **Status de requerimiento**, cada RQ tiene una marca **«Va a procura»: Por decidir / SÍ / NO**. Un RQ nuevo entra como **Por decidir**.
+2. Grupo nuevo **«Seguimiento»** en el panel derecho con el chip **«Cronograma procura»**: un cronograma de **todos los servicios** con los RQ marcados SÍ, que se actualiza solo al marcar un RQ o al cambiar su avance.
+3. Cada RQ del cronograma muestra **cuándo lo necesita la obra** (sacado del Plan Maestro aprobado) y su estado de compra.
+4. **Comprado automático:** cuando el RQ llega al **100 %** de la barra (todos sus materiales Atendidos), aparece como **Comprado**, con la fecha de ese día. También se puede marcar Comprado **a mano**.
+5. **Informe de alertas** en la misma pantalla: atrasados, por vencer, próximas compras, sin fecha, comprados a tiempo y comprados tarde.
+6. Descarga del cronograma y del informe en **PDF y Excel**.
+
+### Alcance
+
+- **Marca «Va a procura»** en el Status RQ: columna nueva con el valor; la cambian solo administrador y jefe de proyectos (Victor, 2026-11-04). Se marca **el RQ completo** (no por material). Filtro y contador de «Por decidir» para que no quede ninguno sin marcar.
+- **Fecha en que lo necesita la obra** = el **primer día con metrado programado** de la actividad del RQ en el **Plan Maestro aprobado** de su servicio (si el RQ tiene varias actividades, el día más temprano). Verificado el 2026-11-04 con PS-108-2026: el RQ guarda su actividad (`actividad_id`) y esa misma actividad está en las líneas del Plan Maestro aprobado (`plan_maestro_partidas.actividad_id` → `plan_maestro_asignaciones.fecha`); p. ej. VP-PL-004 (2.4.1) → 05.11.2026. Si el RQ no tiene actividad o su actividad no está programada, se usa la **fecha requerida** del RQ; si tampoco la tiene, queda **«Sin fecha»** y sale en las alertas.
+- **Estado de compra** de cada RQ del cronograma: **Pendiente** (aún no recepcionado), **En proceso** (recepcionado con avance menor a 100 %), **Comprado** (100 % automático o a mano). Se muestra también la barra de avance.
+- **Alertas**, calculadas cada vez que se abre la pantalla con la fecha de hoy (Lima):
+  - **Atrasado:** no comprado y la fecha de necesidad ya pasó.
+  - **Por vencer:** no comprado y vence en los próximos **7 días** (por confirmar).
+  - **Próximas compras:** vence entre 8 y 30 días.
+  - **Sin fecha:** sin fecha del Plan Maestro ni fecha requerida.
+  - **Comprado a tiempo / Comprado tarde:** fecha de compra ≤ o > fecha de necesidad.
+- **Pantalla «Cronograma procura»** (a pantalla completa, como el Status RQ): arriba, tarjetas con el conteo de cada alerta (al hacer clic, filtran); debajo, tabla por RQ con N° OT, código, actividad (WBS y nombre), solicitante, F. solicitud, F. requerida, **Lo necesita (Plan Maestro)**, días que faltan o de atraso, avance, estado de compra y una **barra de tiempo** (desde la solicitud hasta la fecha de necesidad, con una marca en la fecha de compra). Filtros por servicio, estado y alerta. Con `?proyectoId=` preselecciona el servicio.
+- **Descargas:** «Descargar cronograma (PDF)», «Descargar cronograma (Excel)» e «Informe de alertas (PDF y Excel)», según el filtro activo, con el encabezado de PDF configurable que ya existe (flujos 27 y 14).
+- **Historial** de la marca y del comprado manual: quién y cuándo (también si un SÍ pasa a NO).
+
+### No alcance
+
+- El **Excel de fabricaciones del PS-108** (civil, estructuras, madera; `…cronograma-requerimiento-fabricacion-v2.xlsx`): Victor lo usará para **otra interfaz más adelante** (2026-11-04). Va a «Elementos postergados».
+- Marcar por material, cotizaciones, proveedores, órdenes de compra o costos de la compra.
+- Avisos/notificaciones de alertas (se puede proponer después).
+- Cambiar la actividad de un RQ desde esta pantalla.
+
+### Usuarios / roles afectados
+
+- **Marcar SÍ/NO y marcar Comprado a mano:** administrador y jefe de proyectos (Victor, 2026-11-04). El servidor lo valida.
+- **Ver la pantalla y descargar:** por decidir (D1).
+
+### Reglas de negocio y documentos afectados
+
+| Documento | Cambio |
+|---|---|
+| [05 RQ](../../04-flujos-de-negocio/05-rq.md) | Marca «Va a procura» en el Status, quién la cambia, «Comprado» al 100 % y su fecha |
+| Flujo nuevo **29 — Cronograma de procura** | Toda la regla de la pantalla, fechas, estados, alertas y descargas; su línea `Lee si:` y su fila en el índice |
+| [14 Accesos](../../04-flujos-de-negocio/14-accesos-y-restricciones.md) y artefacto «Matriz de permisos» | Pantalla, chip y acciones nuevas por rol. **El artefacto no abre con esta cuenta** (memoria del 2026-10-19): Victor lo actualiza o lo comparte como editor |
+| [16 Paneles](../../04-flujos-de-negocio/16-paneles.md) | Grupo «Seguimiento» y chip «Cronograma procura» |
+| [20 Plan Maestro](../../04-flujos-de-negocio/20-plan-maestro.md) | Solo una nota: el cronograma de procura lee la versión aprobada (no cambia ninguna regla del Plan Maestro) |
+
+### Datos, API, migraciones o dependencias
+
+- **Migración aditiva `db/132`** (no borra ni renombra nada) en `proyecto_requerimientos`: `procura` (`POR_DECIDIR` / `SI` / `NO`, por defecto `POR_DECIDIR`), `procura_decidido_por_id`, `procura_decidido_en`, `procura_comprado_en` (fecha de compra), `procura_comprado_manual` (sí/no) y `procura_comprado_por_id`. Tabla `requerimiento_procura_historial` (RQ, campo, valor anterior, valor nuevo, quién, cuándo). Los 19 RQ que ya existen quedan en «Por decidir». La aplica Victor (se le da la ruta completa del SQL).
+- **Comprado automático:** en el mismo paso del servidor que pasa el RQ a Atendido (`cambiar-estado-rq` / estado por material), se guarda `procura_comprado_en` = hoy (Lima) si el RQ va a procura y aún no tiene fecha.
+- **API nuevas:** cambiar la marca y el comprado manual (PATCH sobre el RQ, validando rol en el servidor y que el RQ exista); leer el cronograma de varios servicios; exportar PDF y Excel. La fecha de necesidad se calcula al leer, desde el Plan Maestro aprobado (no se guarda una copia).
+- Reutiliza: `avanceItemsRq` (barra), el exportador de PDF y Excel ya usado en el Status RQ y en Status de servicios, el encabezado de PDF configurable.
+
+### Diseño / UI aplicable
+
+Mismo estilo que el Status de requerimiento (tabla a pantalla completa, filtros en cabecera, «Personalizar campos», chip «Salir a Mi entorno»), tarjetas de conteo como las del dashboard de Status de servicios, colores de alerta: rojo atrasado, ámbar por vencer, azul próximas, gris sin fecha, verde comprado. Scroll horizontal en la tabla sin perder N° OT y código. Se verifica con captura propia a 1366 px antes de entregar.
+
+### Riesgos y decisiones pendientes
+
+| # | Decisión (Victor) | Propuesta por defecto |
+|---|---|---|
+| D1 | ¿Quién **ve** la pantalla y descarga? | Administrador, jefe de proyectos y logística (logística es quien compra); los demás no la ven |
+| D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108) | Usa su fecha requerida; si tampoco la tiene, sale en «Sin fecha» para que se complete |
+| D3 | Días de **«Por vencer»** | 7 días calendario |
+| D4 | ¿Comprado = **100 % atendido** (entregado al solicitante) o basta **En almacén**? | 100 % atendido, como dijo Victor |
+| D5 | Si un RQ Comprado a mano luego cambia, ¿se puede desmarcar? | Sí, solo los mismos dos roles, y queda en el historial |
+
+- Riesgo: un Plan Maestro aprobado nuevo cambia las fechas de necesidad (es lo correcto: siempre se lee la versión aprobada vigente).
+- Riesgo: RQ sin actividad no tienen fecha del Plan Maestro; por eso la tarjeta «Sin fecha».
+
+### Criterios de aceptación
+
+1. Un RQ nuevo aparece como «Por decidir» en el Status y suma en su contador.
+2. Solo administrador y jefe de proyectos cambian la marca; otro rol recibe 403 del servidor aunque llame la API directo.
+3. Al marcar SÍ, el RQ aparece en el Cronograma procura sin recargar a mano; al pasar a NO, sale.
+4. La fecha «Lo necesita» de VP-PL-004 (PS-108-2026) es 05.11.2026 (primer día de 2.4.1 en el Plan Maestro v6 aprobado).
+5. Al llevar todos los materiales de un RQ a Atendido, el RQ sale «Comprado» con la fecha de ese día, sin tocar nada más.
+6. Las tarjetas de alerta cuentan bien con la fecha de hoy y filtran la tabla.
+7. El PDF y el Excel del cronograma y del informe salen con el filtro activo.
+8. Funciona con varios servicios a la vez.
+
+### Estrategia de prueba / evidencia
+
+Pruebas unitarias del cálculo de fecha de necesidad, estado de compra y alertas; pruebas de API (marca, permisos 403, comprado automático); verificación en pantalla con captura a 1366 px; prueba con los RQ reales del PS-108 en solo lectura; prueba de escritura solo sobre el servicio de prueba. Commit y push a `main`; Victor revisa en la app publicada.
+
+### Aprobación (Gate Spec)
+
+- [ ] Victor aprueba este Spec (y responde D1 a D5 o acepta las propuestas por defecto).
+
+## Referencia al Spec aprobado
+
+Pendiente del Gate Spec.
+
+## Objetivo, alcance y no alcance
+
+Ver Spec. El plan de tandas (Gate 1) se escribe después del Gate Spec.
+
+## Registro de decisiones
+
+| Fecha | Decisión | Quién |
+|---|---|---|
+| 2026-11-04 | La tarea es en la app (no un Excel): marca SÍ/NO en Status RQ y pantalla «Seguimiento › Cronograma procura» | Victor |
+| 2026-11-04 | Descargas en PDF y Excel; informe de alertas (por vencer, próximas, no comprados a tiempo) | Victor |
+| 2026-11-04 | RQ al 100 % = Comprado automático; también a mano | Victor |
+| 2026-11-04 | Marcan administrador y jefe de proyectos | Victor |
+| 2026-11-04 | Fechas cruzadas con el Plan Maestro; para todos los servicios | Victor |
+| 2026-11-04 | Barra de avance por materiales atendidos en el Status RQ, hecha antes del Spec (app `800af77`, docs `b9f6658`) | Victor |
+
+## Libro de hallazgos
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+
+## Mejoras (de trabajo)
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| M1 | 2026-11-04 | Orquestador | Antes de ejecutar un prompt preparado, confirmar con Victor si el resultado va en la app o en un archivo: el prompt pedía un Excel y Victor quería la función en la app | `03-aprendizaje-continuo/` | Registrada | |
+
+## Reglas de negocio acordadas en esta tarea
+
+| ID | Fecha | Quién (rol, tanda) | Qué | Destino propuesto | Estado | Enlace al destino |
+|---|---|---|---|---|---|---|
+| R1 | 2026-11-04 | Orquestador | Barra de avance del Status RQ = materiales Atendidos ÷ materiales del RQ; reemplaza «el Status no muestra avance parcial» | Flujo 05 | Trasladada | `b9f6658` |
+
+## Observaciones sobre la política
+
+Ninguna.
+
+## Carpetas/archivos huérfanos
+
+Ninguna.
+
+## Elementos postergados propuestos para planes futuros
+
+- Interfaz para el Excel de fabricaciones del PS-108 (civil, estructuras, madera, módulos; `pg_planeamiento/…/03_cronograma/PS-108-2026_fase-2_cronograma-requerimiento-fabricacion-v2.xlsx`) — Victor, 2026-11-04.

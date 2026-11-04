@@ -36,7 +36,7 @@ Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde 
   1. **Llega a destino** = fecha en obra − **días de llegada** (por defecto **1**: el material llega un día antes a donde se requiere).
   2. **Cierre de compra** (la compra debe estar finalizada) = fecha en obra − **días de cierre** (por defecto **7**).
   3. **Inicio de procura** = cierre de compra − **tiempo de procura** (cada RQ tiene el suyo: unos 10 días, otros 30).
-- **Cada RQ es configurable** (Victor, 2026-11-04: «cada requerimiento es diferente»): tiempo de procura, días de cierre y días de llegada. Los valores por defecto (tiempo de procura, 7 y 1) se configuran una vez y cada RQ los puede cambiar; lo cambian administrador y jefe de proyectos, y queda en el historial.
+- **Cada RQ es configurable** (Victor, 2026-11-04: «cada requerimiento es diferente»): tiempo de procura, días de cierre, días de llegada y días de «por vencer», todos en **días hábiles** (lunes a sábado sin feriados). Los valores por defecto (tiempo de procura 7, cierre 7, llegada 1, por vencer 3) se configuran una vez y cada RQ los puede cambiar; lo cambian administrador y jefe de proyectos, y queda en el historial.
 - **Cronograma de barras de colores**, una fila por RQ, sobre una escala de días:
   - **Plan:** barra de **procura** (inicio → cierre de compra), tramo de **entrega** (cierre → llegada) y marca de **en obra**.
   - **Real** (debajo, sin mezclarse con el plan): desde que el RQ se aprueba hasta que llega a 100 % (Comprado).
@@ -63,7 +63,8 @@ Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde 
 ### Usuarios / roles afectados
 
 - **Marcar SÍ/NO y marcar Comprado a mano:** administrador y jefe de proyectos (Victor, 2026-11-04). El servidor lo valida.
-- **Ver la pantalla y descargar:** por decidir (D1).
+- **Ver la pantalla y descargar:** **los 13 roles** (Victor, 2026-11-04, D1).
+- **Configurar un RQ** (tiempo de procura, días de cierre, de llegada y de «por vencer», actividad o fecha en obra) y **los valores por defecto:** administrador y jefe de proyectos.
 
 ### Reglas de negocio y documentos afectados
 
@@ -88,15 +89,17 @@ Mismo estilo que el Status de requerimiento (tabla a pantalla completa, filtros 
 
 ### Riesgos y decisiones pendientes
 
-| # | Decisión (Victor) | Propuesta por defecto |
+Decisiones respondidas por Victor el 2026-11-04:
+
+| # | Decisión | Respuesta de Victor |
 |---|---|---|
-| D1 | ¿Quién **ve** la pantalla y descarga? | Administrador, jefe de proyectos y logística (logística es quien compra); los demás no la ven |
-| D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108); la fecha requerida del RQ ya no sirve | En «Configurar», elegir la **actividad del cronograma** del RQ (de ahí sale la fecha en obra del Plan Maestro); si el material no es de ninguna actividad, escribir la fecha en obra a mano |
-| D3 | Días de **«Por vencer»** antes del cierre de compra | 3 días |
-| D6 | ¿Los días se cuentan **hábiles** (lunes a sábado sin feriados, como el cronograma del servicio) o **calendario**? | Hábiles |
-| D7 | **Tiempo de procura** por defecto de un RQ nuevo | 8 días (el plazo de compra de fabricaciones del PS-108); se cambia por RQ |
-| D4 | ¿Comprado = **100 % atendido** (entregado al solicitante) o basta **En almacén**? | 100 % atendido, como dijo Victor |
-| D5 | Si un RQ Comprado a mano luego cambia, ¿se puede desmarcar? | Sí, solo los mismos dos roles, y queda en el historial |
+| D1 | ¿Quién **ve** la pantalla y descarga? | **Todos** (los 13 roles) |
+| D2 | RQ marcado SÍ **sin actividad** (hoy 14 de los 19 del PS-108) | En «Configurar» se elige la **actividad del cronograma** del RQ (de ahí sale la fecha en obra del Plan Maestro); si el material no es de ninguna actividad, se escribe la fecha en obra a mano |
+| D3 | Días de **«Por vencer»** antes del cierre de compra | **3 por defecto, configurable** (en los valores por defecto y por RQ) |
+| D4 | Comprado = **100 % atendido** | Sí |
+| D5 | Un Comprado a mano se puede desmarcar | Sí, los mismos dos roles, con historial |
+| D6 | Días **hábiles** o calendario | **Hábiles**: lunes a sábado sin feriados (se reutiliza `src/lib/calendario/feriados.ts`, `esDiaHabil`) |
+| D7 | **Tiempo de procura** por defecto de un RQ nuevo | **7 días** hábiles; se cambia por RQ |
 
 - Riesgo: un Plan Maestro aprobado nuevo cambia las fechas de necesidad (es lo correcto: siempre se lee la versión aprobada vigente).
 - Riesgo: RQ sin actividad no tienen fecha del Plan Maestro; por eso la tarjeta «Sin fecha».
@@ -127,7 +130,46 @@ Pendiente del Gate Spec.
 
 ## Objetivo, alcance y no alcance
 
-Ver Spec. El plan de tandas (Gate 1) se escribe después del Gate Spec.
+- Resultado esperado, alcance y no alcance: los del Spec.
+- Validación esperada: pruebas unitarias y de API en verde, `tsc` sin errores, captura propia a 1366 px de cada pantalla, commit y push a `main` por tanda; Victor revisa en la app publicada.
+
+## Entorno, repositorios, ramas y worktrees
+
+Trabajo directo en `main` de `py_control_proyectos_web` (app) y `pg_control_proyectos` (docs), como se viene haciendo; sin worktrees. Ejecución en esta sesión, sin subagentes (lote de trabajo normal, no flujo de Orquestador). Escritura de datos de prueba solo en el servicio de prueba; los RQ reales del PS-108 solo se leen.
+
+## Skills aplicables
+
+`verificar-permisos-por-rol` en la tanda 3 (pantalla y acciones nuevas por rol). `cerrar-tanda` al terminar cada tanda.
+
+## Fases y dependencias
+
+| Tanda | Qué | Depende de |
+|---|---|---|
+| T1 — Datos y cálculo | Migración aditiva `db/132` (columnas de procura en `proyecto_requerimientos`, historial y valores por defecto); módulo de cálculo puro: fecha en obra desde el Plan Maestro aprobado, fechas hacia atrás en días hábiles, estado de compra, color y alertas; pruebas unitarias | — (Victor aplica `db/132`) |
+| T2 — Servidor | API: marcar SÍ/NO, configurar un RQ, comprado a mano y valores por defecto (solo administrador y jefe de proyectos, 403 a los demás, con historial); leer el cronograma de varios servicios (los 13 roles); comprado automático al pasar el RQ a Atendido; pruebas de API | T1 |
+| T3 — Pantallas | Status RQ: columna «Va a procura» con contador de «Por decidir»; grupo **Seguimiento** y chip **Cronograma procura**; pantalla con tarjetas de alerta, cronograma de barras (plan y real, línea de hoy) y panel **Configurar**; captura a 1366 px | T2 |
+| T4 — Descargas | PDF y Excel del cronograma y del informe de alertas, según el filtro, con el encabezado de PDF configurable | T3 |
+| T5 — Documentación | Flujo nuevo 29 y su fila en el índice; flujos 05, 14, 16 y nota en 20; aviso a Victor para la Matriz de permisos | T1–T4 |
+
+## Punch List embebida
+
+| # | Ítem | Tanda | Estado |
+|---|---|---|---|
+| 1 | `db/132` aditiva + ruta completa del SQL a Victor | T1 | Pendiente |
+| 2 | Cálculo de fecha en obra (primer día con metrado de la actividad en el PM aprobado; varias actividades = el más temprano; manual si no hay actividad) | T1 | Pendiente |
+| 3 | Fechas hacia atrás en días hábiles: llegada, cierre, inicio | T1 | Pendiente |
+| 4 | Estado de compra, color de la barra y las 7 alertas | T1 | Pendiente |
+| 5 | API marcar / configurar / comprado a mano / valores por defecto con 403 e historial | T2 | Pendiente |
+| 6 | API lectura del cronograma multi-servicio | T2 | Pendiente |
+| 7 | Comprado automático al llegar a 100 % | T2 | Pendiente |
+| 8 | Columna «Va a procura» y contador en el Status RQ | T3 | Pendiente |
+| 9 | Grupo Seguimiento + chip Cronograma procura | T3 | Pendiente |
+| 10 | Pantalla: tarjetas, barras plan/real, hoy, filtros, Configurar | T3 | Pendiente |
+| 11 | Verificación por rol (13 ven; 2 editan) | T3 | Pendiente |
+| 12 | PDF y Excel del cronograma | T4 | Pendiente |
+| 13 | PDF y Excel del informe de alertas | T4 | Pendiente |
+| 14 | Flujos 29, 05, 14, 16, 20 e índice | T5 | Pendiente |
+| 15 | Matriz de permisos (Victor la actualiza o comparte como editor) | T5 | Pendiente de Victor |
 
 ## Registro de decisiones
 
@@ -138,6 +180,7 @@ Ver Spec. El plan de tandas (Gate 1) se escribe después del Gate Spec.
 | 2026-11-04 | RQ al 100 % = Comprado automático; también a mano | Victor |
 | 2026-11-04 | Marcan administrador y jefe de proyectos | Victor |
 | 2026-11-04 | Fechas cruzadas con el Plan Maestro; para todos los servicios | Victor |
+| 2026-11-04 | Respuestas D1–D7: ven todos; RQ sin actividad se configura; por vencer 3 configurable; comprado = 100 %; desmarcable; días hábiles; tiempo de procura por defecto 7 | Victor |
 | 2026-11-04 | Fecha requerida del RQ ≠ fecha en obra; el cronograma usa la fecha en obra. Llega 1 día antes, compra cerrada 7 días antes, tiempo de procura propio de cada RQ (10, 30 días…); todo configurable por RQ; cronograma de barras de colores | Victor |
 | 2026-11-04 | Barra de avance por materiales atendidos en el Status RQ, hecha antes del Spec (app `800af77`, docs `b9f6658`) | Victor |
 

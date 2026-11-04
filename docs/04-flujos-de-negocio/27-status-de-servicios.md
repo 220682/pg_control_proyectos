@@ -1,7 +1,7 @@
 # 27 — Status de servicios (reporte mensual de Costos)
 > Lee si: la tarea toca el chip «Status de servicios» del grupo Costos, el reporte mensual de presupuestos enviados y adjudicados, las visitas técnicas, las metas mensuales de venta, la carga del Excel «DASHBOARD - REPORTE MENSUAL» de Costos, su dashboard o su PDF vertical u horizontal.
 
-Origen: pedido de Victor del 2026-11-03 («crear algo para el apartado de Costos» con el Excel de Costos que tiene base de datos, visitas técnicas y dashboard). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota ²⁵. **Estado (2026-11-04): publicada, con registro a mano y comparación del Excel antes de guardar; falta aplicar `db/127_costos_status_servicios.sql`.**
+Origen: pedido de Victor del 2026-11-03 («crear algo para el apartado de Costos» con el Excel de Costos que tiene base de datos, visitas técnicas y dashboard). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), notas ²⁵ y ²⁷. **Estado (2026-11-04): publicada, con registro a mano, comparación del Excel antes de guardar, dashboard interactivo y encabezado de los PDF; `db/127` ya está aplicada; falta aplicar `db/130_encabezado_pdf.sql`.**
 
 ## Qué es
 
@@ -44,7 +44,7 @@ Los datos entran **de dos formas** (Victor, 2026-11-03: «cargar datos desde la 
   - Las metas salen de la celda «META MENSUAL», con los 12 meses debajo.
 - **Si falta una columna**, ese dato queda vacío y la pantalla lo avisa antes de guardar.
 - **Antes de guardar** se muestran los avisos del Excel junto con la comparación. El servidor vuelve a leer el archivo y a comparar; no confía en lo que mostró el navegador.
-- **Gerencias escritas de otra forma:** «Sulfuros» se guarda como **«Planta Sulfuros»** (Victor, 2026-11-03), tanto desde el Excel como desde la app.
+- **Gerencias escritas de otra forma:** «Sulfuros» se guarda como **«Planta Sulfuros»** (Victor, 2026-11-03) y «Logista» como **«Logística»** (Victor, 2026-11-04), tanto desde el Excel como desde la app. Lo ya guardado se corrige con `db/130_encabezado_pdf.sql`.
 - **Montos escritos como texto** (por ejemplo «.2467642.43» o «1579969.97»): se leen como número y se avisan. En el Excel original esos montos **no entraban en las sumas**. Con el Excel del 2026-11-03:
 
   | | El Excel mostraba | Real |
@@ -102,16 +102,25 @@ Se calcula solo desde las fechas, sin filtros a mano. Esto corrige lo que el Exc
 
 | Indicador | Qué mide |
 |---|---|
-| Enviado | Monto y cantidad de presupuestos enviados en el periodo |
-| Adjudicado | Monto y cantidad adjudicados en el periodo |
+| Enviado | Monto y cantidad de presupuestos enviados en el periodo, y cuánto subió o bajó contra el periodo anterior |
+| Adjudicado | Monto y cantidad adjudicados en el periodo, y cuánto subió o bajó contra el periodo anterior |
 | Meta | Meta del periodo y cuánto se cumplió. Su nombre dice qué meta es: «Meta anual» si se mira el año, «Meta de Octubre» si se mira un mes, «Meta Mar–Jun» si se mira un rango y «Meta de N meses» si se marcaron meses sueltos (Victor, 2026-11-04). Si el periodo es del año en curso e incluye meses que aún no terminan, también se ve la **meta a la fecha**: la meta de los meses ya llegados y cuánto de ella se cumplió. La franja de arriba es verde desde el 100 %, ámbar desde el 70 % y roja por debajo |
 | Tasa de cierre | Ganados entre (ganados + desestimados + sin respuesta), por cantidad, de lo enviado en el periodo |
 | Conversión en monto | Monto adjudicado entre monto enviado, solo de esos presupuestos ya cerrados |
 | En revisión | Monto y cantidad esperando respuesta; avisa cuántos llevan más de 30 días desde el envío |
+| Pronóstico de lo en revisión | Lo que se espera ganar de lo que está en revisión: cada presupuesto por la tasa de cierre de su gerencia |
+| Ticket promedio | Monto promedio por presupuesto enviado, y por adjudicado |
 | Tiempo de respuesta | Promedio de días entre la solicitud y el envío |
 | Visitas técnicas | Cantidad de visitas en el periodo |
 
 La conversión del Excel («adjudicado del mes entre enviado del mes») comparaba presupuestos distintos; por eso se reemplazó por la tasa de cierre y la conversión en monto.
+
+**Métricas agregadas el 2026-11-04** (Victor: «aplica tus 5 métricas, están bien»):
+- **Contra el periodo anterior:** un mes se compara con el mes anterior; un rango, con los mismos meses justo antes (Mar–Jun con Nov–Feb); el año completo o meses sueltos, con los mismos meses del año anterior. Si el periodo anterior no tiene datos, se dice así en vez de un porcentaje.
+- **Tasa de cierre por gerencia y por responsable:** aprobados entre cerrados de lo enviado en el periodo.
+- **Ticket promedio:** monto enviado entre presupuestos enviados; y adjudicado entre adjudicados.
+- **De visita a adjudicación:** de las visitas del periodo, cuántas están ligadas a la cotización que salió de ellas y cuántas de esas se adjudicaron. Solo cuentan las visitas ligadas en la app; las del Excel no traen ese vínculo.
+- **Pronóstico de lo en revisión:** la tasa de cierre de cada gerencia se calcula con toda la historia de cerrados (del tipo elegido). Una gerencia con menos de 3 cerrados usa la tasa general.
 
 **Gráficas:**
 - Enviado y adjudicado por mes, con la meta.
@@ -120,13 +129,17 @@ La conversión del Excel («adjudicado del mes entre enviado del mes») comparab
 - Por responsable, en cantidad de enviados y adjudicados.
 - Estado de lo enviado.
 - Nivel de respuesta.
+- **Tasa de cierre por gerencia o por responsable** (se cambia con un botón).
+- **De visita a adjudicación:** visitas, con cotización y adjudicadas, con el porcentaje de paso de cada etapa.
 - **Antigüedad de lo en revisión:** lo que sigue esperando respuesta, por días desde el envío hasta hoy: 0 a 15, 16 a 30, 31 a 60 y más de 60 días.
 - **Visitas técnicas:** por mes, por gerencia y por responsable. El Excel solo mostraba un conteo por gerencia de un mes.
 
 **Todo el dashboard es interactivo** (Victor, 2026-11-04: «dale vida a cada cuadro… que muestre lo que está detrás»). Cada tarjeta, barra, punto de la curva y fila de las gráficas abre una ventana con lo que la forma:
 - los presupuestos de ese cuadro, con su monto en la moneda elegida, estado, fecha, gerencia, responsable y descripción, y el total;
 - en la tarjeta de meta, la meta, lo adjudicado y el cumplimiento de cada mes del periodo, y los adjudicados que la suman;
-- en las tarjetas de tasa de cierre y conversión, los ganados, desestimados y sin respuesta por separado;
+- en las tarjetas de tasa de cierre y conversión, y en cada fila de la tasa por gerencia o responsable, los ganados, desestimados y sin respuesta por separado;
+- en el pronóstico, lo en revisión agrupado por gerencia, con el porcentaje que se espera ganar en cada una;
+- en «De visita a adjudicación», las cotizaciones que salieron de las visitas, las adjudicadas y las visitas;
 - en las de visitas, la lista de visitas.
 
 Las listas de gerencias y responsables muestran 10 filas; «ver todos» abre el resto.
@@ -137,7 +150,21 @@ Las listas de gerencias y responsables muestran 10 filas; «ver todos» abre el 
 
 ## PDF
 
-«PDF vertical» y «PDF horizontal» descargan el dashboard en una hoja A4 con los mismos filtros de la pantalla (también el periodo de varios meses): tarjetas, gráficas, antigüedad y visitas. Lleva **los mismos colores y formas del dashboard** (Victor, 2026-11-04: «que el PDF sea similar o idéntico al dashboard… en los colores, la forma»): fondo oscuro, tarjetas con el mismo borde, la franja de la meta, las mismas series y la barra de filtros arriba. Solo cambia la ubicación de las piezas para que entren en la hoja.
+«PDF vertical» y «PDF horizontal» descargan el dashboard en una hoja A4 con los mismos filtros de la pantalla (también el periodo de varios meses): tarjetas, gráficas, antigüedad y visitas. Lleva **los mismos colores y formas del dashboard** (Victor, 2026-11-04: «que el PDF sea similar o idéntico al dashboard… en los colores, la forma»): fondo oscuro, tarjetas con el mismo borde, la franja de la meta, las mismas series y la barra de filtros arriba. Solo cambia la ubicación de las piezas para que entren en la hoja. Las tarjetas llevan el mismo contorno punteado amarillo de la pantalla (Victor, 2026-11-04). Arriba va el encabezado de los PDF (ver abajo).
+
+## Encabezado de los PDF
+
+Arriba de cada PDF va el **encabezado** (Victor, 2026-11-04: «a esto le llamaremos encabezado, ya que otras exportaciones PDF también lo mostrarán»):
+- a la izquierda, el **logo** de la empresa sobre una placa clara, y el título y la descripción del reporte;
+- a la derecha, la **empresa** y su **RUC**, el **responsable** del reporte con su cargo, su correo y teléfono, y la fecha en que se generó.
+
+Va en la misma franja del título, sin hacerla más alta («no quiero que ocupe mucho espacio, solo lo necesario»). Lo que no se llenó no sale.
+
+**Se configura una vez** con el botón **«Encabezado»**, junto a los de PDF, y queda para las exportaciones futuras hasta que se cambie (por ejemplo, si cambia la empresa). La ventana muestra una vista previa.
+- **Empresa** (nombre, RUC de 11 dígitos y logo PNG o JPG): una sola para todos los PDF; la cambia el **administrador**. Por defecto, «PROMCOSER S.R.L.» con el logo de Promcoser que ya usan los formatos de la empresa. Se puede subir otro logo, volver al de Promcoser o dejarlo sin logo.
+- **Responsable del reporte** (nombre, cargo, correo y teléfono): uno por reporte; en Status de servicios lo cambian los que llenan (administrador, jefe y supervisor de costos).
+
+Por ahora lo muestra el PDF de Status de servicios; los demás PDF lo pueden tomar más adelante.
 
 ## Datos
 
@@ -146,15 +173,16 @@ Las listas de gerencias y responsables muestran 10 filas; «ver todos» abre el 
 - `costos_metas_mensuales`, una fila por año y mes, con su `origen`;
 - la función `costos_aplicar_carga`, que solo usa el servidor: aplica en una transacción lo confirmado de la comparación.
 
+`db/130_encabezado_pdf.sql`: `encabezado_pdf_empresa` (una fila: empresa, RUC, logo) y `encabezado_pdf_responsable` (una fila por reporte), sin lectura por RLS; además pasa «Logista» a «Logística».
+
 **Rutas:**
 - `POST /api/costos/status-servicios/cargar`: el Excel, en dos pasos (`modo=comparar` y `modo=aplicar`).
 - `POST /api/costos/status-servicios/presupuestos`, `PATCH` y `DELETE …/presupuestos/[id]`: registro a mano.
 - `POST /api/costos/status-servicios/visitas`, `PATCH` y `DELETE …/visitas/[id]`: registro a mano.
 - `PUT /api/costos/status-servicios/metas`: las metas.
 - `GET /api/costos/status-servicios/pdf`: el PDF.
+- `PUT /api/encabezado-pdf`: guarda el encabezado (empresa y responsable del reporte).
 
 ## Pendiente
 
-- Medir cuántas visitas terminan en presupuesto y cuántas en adjudicación: el vínculo ya se registra; falta el indicador.
 - Ligar un presupuesto a su servicio de la app.
-- Confirmar con Victor si la gerencia «Logista» del Excel es «Logística».

@@ -149,6 +149,8 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 - (2026-11-04, Orquestador) Cuadro comparativo: de 2 a 6 cotizaciones por RQ. La propuesta de qué ítem corresponde a cada material es por parecido de palabras, con las medidas valiendo el doble, y la corrección a mano manda. El mejor precio se marca solo con 2 o más precios. El total en verde es el menor entre las cotizaciones que cotizan todo. El motivo de la elección es obligatorio en la pantalla. Se compara contra las cotizaciones del RQ y las de su servicio.
 - (2026-11-04, Orquestador) En la ficha del proveedor, «cotizado contra pagado» se muestra **solo a los 5 roles con economía**, porque son montos del Registro de costos; esto no cambia D1 (Logística ve precios de cotizaciones). Pagado = `proyecto_compras` con el mismo RUC en el mismo servicio, en US$ sin IGV.
 - (2026-11-04, Orquestador) Los datos del proveedor los editan los 6 roles del Banco; el RUC no se cambia. El responsable del encabezado del PDF del cuadro lo cambian los 6 roles; la empresa y el logo, solo el administrador (como en los demás PDF).
+- (2026-11-04, Orquestador) En la prueba con VP-PL-005 la propuesta relacionaba piezas equivocadas: un codo de 45° con uno de 90°, una unión de 4" con una de 3", una reducción con un niple y unos accesorios con un «tanque sin accesorios». Se endureció: no se propone si no coincide el tipo de pieza, si las medidas no cuadran, con SAP contra SAL ni con una palabra negada. Se prefiere la celda vacía a un precio mal comparado.
+- (2026-11-04, Orquestador) Sin db/136 el cuadro igual se arma y se descarga con lo marcado en pantalla, para no esperar la migración para verlo.
 - (2026-11-04, Orquestador) **«Precios con IGV»** es un dato de cada cotización: se detecta comparando la suma de los ítems con el subtotal y con el total, y se puede corregir en la revisión. El buscador muestra siempre el precio **sin IGV**.
 
 ## Punch List
@@ -166,7 +168,7 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 | 9 | Etapa 2: cuadro comparativo por RQ (selección, pares, mejor precio, totales y condiciones, elegir con motivo e historial, PDF y Excel con encabezado) y `db/136` | Hecho (app `314ba53`); **db/136 sin aplicar**: la aplica Victor |
 | 10 | Etapa 3: pestaña Proveedores, ficha editable, cotizado contra pagado (solo economía) e historial de precios en Buscar | Hecho (app `314ba53`) |
 | 11 | Pruebas: comparativo (4), exportar PDF y Excel (2), lectura por posición (3); tsc y eslint limpios | Hecho (284 pruebas de cotizaciones, PDF, permisos y config en verde) |
-| 12 | Verificación en producción de las etapas 2 y 3, capturas a 1366 y 1920 px | En curso (lo que guarda espera db/136) |
+| 12 | Verificación en producción de las etapas 2 y 3, capturas a 1366 y 1920 px | Hecho con VP-PL-005 de PS-108 (34 materiales, 3 cotizaciones), sin db/136; PDF y Excel descargados. Ajustes de la propuesta en `fa6556b`, `3f1f3c1`, `5f909ea` y `d22be39`. Lo que guarda (selección, correcciones, elección y contacto) se verifica cuando Victor aplique db/136 |
 | 13 | Flujos 30, 14 (cinco filas nuevas y nota ²⁹), 16 y 05 | Hecho; la Matriz la actualiza Victor (ocho filas del Banco) |
 
 ## Mejoras (de trabajo)

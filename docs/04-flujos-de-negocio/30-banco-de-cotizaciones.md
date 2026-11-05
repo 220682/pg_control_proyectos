@@ -1,7 +1,7 @@
 # 30 — Banco de cotizaciones
 > Lee si: la tarea toca el chip «Cotizaciones» del grupo Logística: subir la cotización de un proveedor en PDF, la lectura de sus datos e ítems, el buscador de precios (mínimo, promedio y último), el listado de cotizaciones, descargar o eliminar una cotización, los proveedores, o el cuadro comparativo por RQ.
 
-Origen: sugerencia del área de Almacén, presentada por Victor el 2026-11-04 (plan [`2026-11-04-banco-de-cotizaciones`](../02-trabajo-activo/01-planes/2026-11-04-banco-de-cotizaciones.md)). Quién puede: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota ²⁹. **Estado (2026-11-04): etapas 1, 2 y 3 publicadas (app `aad4e13`, `59d4d73`, `d7c8ed1` y `314ba53`). db/134 ya está aplicada; falta que Victor aplique `db/136_cuadro_comparativo_y_proveedores.sql`. Sin db/136 el cuadro comparativo se ve pero no guarda la selección ni la elección, y la ficha del proveedor no guarda los datos de contacto.**
+Origen: sugerencia del área de Almacén, presentada por Victor el 2026-11-04 (plan [`2026-11-04-banco-de-cotizaciones`](../02-trabajo-activo/01-planes/2026-11-04-banco-de-cotizaciones.md)). Quién puede: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota ²⁹. **Estado (2026-11-04): etapas 1, 2 y 3 publicadas (app `aad4e13`, `59d4d73`, `d7c8ed1`, `314ba53` y ajustes hasta `d22be39`). db/134 ya está aplicada; falta que Victor aplique `db/136_cuadro_comparativo_y_proveedores.sql`. Sin db/136 el cuadro comparativo se arma y se descarga con lo marcado en pantalla, pero no guarda la selección, las correcciones a mano ni la elección, y la ficha del proveedor no guarda los datos de contacto.**
 
 ## Qué es
 
@@ -67,7 +67,13 @@ Todas las cotizaciones de la empresa, de la más reciente a la más antigua: fec
 
 1. Se elige el **servicio** y luego el **RQ**. Las filas del cuadro son los **materiales del RQ** (descripción, unidad y cantidad del RQ).
 2. Se marcan las cotizaciones a comparar: **mínimo 2, máximo 6**. Se ofrecen las ligadas a ese RQ y las del mismo servicio (marcadas «del servicio»). La primera vez la app propone las ligadas al RQ. Lo marcado queda guardado para el RQ.
-3. **Qué ítem corresponde a cada material.** La app lo propone sola comparando las palabras de la descripción; las **medidas y números pesan el doble**, para que un tubo de 3" no se confunda con uno de 1". Cada ítem de una cotización se usa para un solo material, y si ningún ítem se parece lo suficiente, la celda queda vacía. Bajo cada precio se ve el ítem relacionado y se puede corregir a mano: otro ítem, «No lo cotiza» o volver a la propuesta. **La corrección a mano manda** y queda guardada.
+3. **Qué ítem corresponde a cada material.** La app lo propone sola comparando las palabras de la descripción; las **medidas y números pesan el doble**. Prefiere dejar la celda vacía antes que proponer una pieza equivocada, porque un precio mal relacionado engaña al comparar. No propone cuando:
+   - **la pieza no es la misma**: la primera palabra del material (codo, tubería, reducción, accesorios…) tiene que estar en el ítem, en singular o plural; «tubo» y «tubería» valen igual;
+   - **las medidas no cuadran**: el material tiene una medida que el ítem no tiene y el ítem tiene otra que el material no tiene (codo de 45° contra codo de 90°; unión de 1" contra una de 1 1/2"). «5M» es «5 m», «10,000» es «10 000» y «½» es «1/2»;
+   - **SAP contra SAL**, o **macho contra hembra**;
+   - la palabra viene negada en el ítem: «tanque sin accesorios» no es «accesorios».
+
+   Cada ítem de una cotización se usa para un solo material, y si ningún ítem se parece lo suficiente, la celda queda vacía. Bajo cada precio se ve el ítem relacionado y se puede corregir a mano: otro ítem, «No lo cotiza» o volver a la propuesta. **La corrección a mano manda** y queda guardada.
 4. Por proveedor se muestran el **P.U. y el parcial** (cantidad del RQ × P.U.), **sin IGV**, en soles o en dólares a elección. Cada cotización se convierte con su propio tipo de cambio.
 5. El **mejor precio** de cada material sale **en verde**, solo si al menos 2 proveedores lo cotizan.
 6. Al pie, por proveedor: **total sin IGV**, materiales cotizados («n de N»), cuántos mejores precios tiene, **plazo de entrega**, **forma de pago** y **válida hasta**. El total en verde es el menor entre los proveedores que cotizan **todos** los materiales.

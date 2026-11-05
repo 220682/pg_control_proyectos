@@ -2,7 +2,7 @@
 
 ## Identificación y estado
 
-Tema: base única de cotizaciones de proveedores, con buscador de precios y descarga. Sugerencia del área de Almacén. Fecha: 2026-11-04. Estado: `Implementando (etapa 1)`.
+Tema: base única de cotizaciones de proveedores, con buscador de precios y descarga. Sugerencia del área de Almacén. Fecha: 2026-11-04. Estado: `Implementando (etapas 1, 2 y 3 publicadas; falta db/136 y la revisión de Victor)`.
 
 - Gate Spec: `aprobado por Victor (2026-11-04, «por lo demás está bien» y «continua»)`
 - Gate 1: `aprobado por Victor (2026-11-04, «continua»)`
@@ -144,9 +144,14 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 - (2026-11-04, Orquestador) Lectura de ítems sin IA (D4): una fila es ítem cuando trae **cantidad × precio unitario = total** (con 1 % de tolerancia). La descripción se toma de la misma línea o de las líneas de arriba. Probado con los textos de 4 cotizaciones reales de PS-108 (Tradisa, Rotoplas, Jofer, Alquimodul). En formatos donde el lector separa los números de las descripciones (Jofer), los ítems salen con precio y la descripción vacía, para llenarla en la revisión.
 - (2026-11-04, Orquestador) «Queda registrado quién y cuándo» al eliminar: tabla `cotizaciones_eliminadas` en la misma db/134 (aún sin aplicar, así que no hizo falta otra migración).
 - (2026-11-04, Orquestador) «Si se elige el RQ, sus materiales» se deja para la etapa 2 (cuadro comparativo): en la etapa 1 el RQ solo queda ligado a la cotización.
+- (2026-11-04, Victor) «mejoralo, colócale autocompletado en el buscador; no se pudo subir la cotización 2061 de Jofer; e implementa lo que falta» → arreglo del lector, autocompletado y etapas 2 y 3.
+- (2026-11-04, Orquestador) La 2061 fallaba porque el PDF guarda los números lejos de las descripciones. La app ahora lee el PDF también **por posición en la hoja** y se queda con la lectura que saca más ítems con descripción. Se verificó en producción, y la 2061 ya está en el banco, ligada a PS-108.
+- (2026-11-04, Orquestador) Cuadro comparativo: de 2 a 6 cotizaciones por RQ. La propuesta de qué ítem corresponde a cada material es por parecido de palabras, con las medidas valiendo el doble, y la corrección a mano manda. El mejor precio se marca solo con 2 o más precios. El total en verde es el menor entre las cotizaciones que cotizan todo. El motivo de la elección es obligatorio en la pantalla. Se compara contra las cotizaciones del RQ y las de su servicio.
+- (2026-11-04, Orquestador) En la ficha del proveedor, «cotizado contra pagado» se muestra **solo a los 5 roles con economía**, porque son montos del Registro de costos; esto no cambia D1 (Logística ve precios de cotizaciones). Pagado = `proyecto_compras` con el mismo RUC en el mismo servicio, en US$ sin IGV.
+- (2026-11-04, Orquestador) Los datos del proveedor los editan los 6 roles del Banco; el RUC no se cambia. El responsable del encabezado del PDF del cuadro lo cambian los 6 roles; la empresa y el logo, solo el administrador (como en los demás PDF).
 - (2026-11-04, Orquestador) **«Precios con IGV»** es un dato de cada cotización: se detecta comparando la suma de los ítems con el subtotal y con el total, y se puede corregir en la revisión. El buscador muestra siempre el precio **sin IGV**.
 
-## Punch List (etapa 1)
+## Punch List
 
 | # | Ítem | Estado |
 |---|---|---|
@@ -155,8 +160,14 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 | 3 | Permisos, chip «Cotizaciones» en Logística, matriz base y pruebas de conteo | Hecho |
 | 4 | Rutas: leer, guardar (con aviso de duplicado), listar, buscar, detalle, descargar PDF y eliminar | Hecho |
 | 5 | Pantalla: Buscar precios, Cotizaciones y Subir con revisión | Hecho (publicada; Vercel compiló) |
-| 6 | Verificación en la app publicada (después de que Victor aplique db/134), capturas a 1366 y 1920 px | Pendiente: espera db/134 |
+| 6 | Verificación en la app publicada, capturas a 1366 y 1920 px | Hecho para la etapa 1 (db/134 aplicada; 2061 subida y buscada en producción) |
 | 7 | Flujo 30 nuevo, flujos 14 y 16, índice; cambios para la Matriz de permisos | Hecho (también flujo 05); la Matriz la actualiza Victor (nota ²⁹ del flujo 14) |
+| 8 | Lector por posición (cotización 2061) y autocompletado del buscador | Hecho (app `d7c8ed1`, verificado en producción) |
+| 9 | Etapa 2: cuadro comparativo por RQ (selección, pares, mejor precio, totales y condiciones, elegir con motivo e historial, PDF y Excel con encabezado) y `db/136` | Hecho (app `314ba53`); **db/136 sin aplicar**: la aplica Victor |
+| 10 | Etapa 3: pestaña Proveedores, ficha editable, cotizado contra pagado (solo economía) e historial de precios en Buscar | Hecho (app `314ba53`) |
+| 11 | Pruebas: comparativo (4), exportar PDF y Excel (2), lectura por posición (3); tsc y eslint limpios | Hecho (284 pruebas de cotizaciones, PDF, permisos y config en verde) |
+| 12 | Verificación en producción de las etapas 2 y 3, capturas a 1366 y 1920 px | En curso (lo que guarda espera db/136) |
+| 13 | Flujos 30, 14 (cinco filas nuevas y nota ²⁹), 16 y 05 | Hecho; la Matriz la actualiza Victor (ocho filas del Banco) |
 
 ## Mejoras (de trabajo)
 
@@ -165,6 +176,7 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 ## Reglas de negocio acordadas en esta tarea
 
 - D1 a D4 (arriba): pasan al flujo 30 y al flujo 14 al cerrar.
+- Reglas del cuadro comparativo y de la ficha del proveedor (Registro de decisiones, 2026-11-04): ya integradas en el flujo 30, en la nota ²⁹ del flujo 14 y en el flujo 05.
 
 ## Observaciones sobre la política
 

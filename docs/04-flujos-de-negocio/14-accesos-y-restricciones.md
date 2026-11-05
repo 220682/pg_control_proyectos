@@ -169,7 +169,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Crear requerimiento (RQ), a mano o cargando el Excel; se sube al compartirlo en WhatsApp (flujo 05) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Sí |
 | Crear un RQ a nombre de otro miembro del servicio (Excel de otro solicitante) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Comentar requerimiento | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí, salvo logística ²⁸ |
-| Actualizar estado de RQ (recepcionar el RQ; En almacén y Atendido por material) | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí, salvo logística ²⁸ |
+| Actualizar estado de RQ (recepcionar el RQ; Comprado, En almacén y Atendido por material; «Deshacer» un paso en el Consolidado, flujo 05) | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — | Sí, salvo logística ²⁸ |
 | Derivar RQ a logística (aprobación) | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Devolver un RQ Solicitado con motivo (mismo reparto que Derivar RQ a logística) ¹⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir y reenviar un RQ Devuelto (el solicitante del RQ y el administrador) ¹⁵ | ✓ | * | * | * | * | * | * | * | * | * | * | * | * | Sí |
@@ -246,7 +246,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ²⁶ **Valorización del servicio (Victor, 2026-11-03; [flujo 28](28-valorizacion.md)). Provisorio.** Chip «Valorización» en el grupo Costos (`/proyectos/{id}/valorizacion`). Ven y arman la valorización los 5 roles con economía (`puedeVerValorizacion`, `puedeGestionarValorizacion`); el servidor valida el rol y el alcance por OT en cada ruta (`api/proyectos/[id]/valorizaciones`, `/[valorizacionId]`, `/[valorizacionId]/manual`, `/partidas`, `/config`). Victor puede acotar después quién la edita.
 
-²⁸ **Logística no necesita la OT a cargo (Victor, 2026-11-04).** Logística atiende a todos los servicios, así que sus funciones no piden tener el servicio asignado: recepcionar el RQ, cambiar el estado de cada material (En almacén, Comprado, Atendido), comentar el RQ y cargar compras al Registro de costos (incluida la pantalla, en modo «solo cargar»). Corrige la matriz del 2026-09-28, que pedía la OT a cargo en esas acciones y dejaba al supervisor de logística sin poder trabajar en los servicios que no tenía asignados. Por ahora los demás roles siguen igual: aprobar y devolver un RQ, ver montos del Registro de costos y el resto de acciones con «Sí» siguen pidiendo la OT a cargo. En la app: `tieneAlcanceLogistica` (`src/lib/permisos/alcance-proyecto.ts`), app `d6cc26a`.
+²⁸ **Logística no necesita la OT a cargo (Victor, 2026-11-04).** Logística atiende a todos los servicios, así que sus funciones no piden tener el servicio asignado: recepcionar el RQ, cambiar el estado de cada material (Comprado, En almacén, Atendido) o deshacerlo un paso, comentar el RQ y cargar compras al Registro de costos (incluida la pantalla, en modo «solo cargar»). Corrige la matriz del 2026-09-28, que pedía la OT a cargo en esas acciones y dejaba al supervisor de logística sin poder trabajar en los servicios que no tenía asignados. Por ahora los demás roles siguen igual: aprobar y devolver un RQ, ver montos del Registro de costos y el resto de acciones con «Sí» siguen pidiendo la OT a cargo. En la app: `tieneAlcanceLogistica` (`src/lib/permisos/alcance-proyecto.ts`), app `d6cc26a`.
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

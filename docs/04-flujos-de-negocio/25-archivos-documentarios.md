@@ -5,7 +5,7 @@ Origen: plan [Archivos documentarios](../02-trabajo-activo/01-planes/2026-10-25-
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Planificación) que muestra **los archivos de cada documento de la Gestión de Email**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
+Una pantalla por servicio (`/proyectos/{id}/gestion-documentaria`, chip «Gestión documentaria» en el grupo Seguimiento (antes Planificación; movido el 2026-11-05)) que muestra **los archivos de cada documento de la Gestión de Email**, ordenados como carpetas: **Área → Tipo → Documento**. El servicio es la propia página, no una carpeta. Cada documento es una fila con su **archivo vigente**; sus demás archivos son **versiones**.
 
 ## Árbol y filas (calcado de la maqueta del dossier)
 

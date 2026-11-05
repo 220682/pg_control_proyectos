@@ -5,7 +5,7 @@ Origen: plan [Gestión documentaria](../02-trabajo-activo/01-planes/2026-10-25-g
 
 ## Qué es
 
-Una pantalla por servicio (`/proyectos/{id}/gestion-emails`, chip «Gestión de Email» en el grupo Planificación) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la [tercera interfaz](25-archivos-documentarios.md)): lleva el **estado** del documento a partir de los correos que ya lee la Fuente-Gmail.
+Una pantalla por servicio (`/proyectos/{id}/gestion-emails`, chip «Gestión de Email» en el grupo Seguimiento (antes Planificación; movido el 2026-11-05)) que responde **qué documentos están en juego, en qué estado, a quién le toca moverlos y cuántos días llevan esperando**. No guarda los archivos (eso es la [tercera interfaz](25-archivos-documentarios.md)): lleva el **estado** del documento a partir de los correos que ya lee la Fuente-Gmail.
 
 ## Un documento = una fila
 

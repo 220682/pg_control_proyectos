@@ -211,6 +211,7 @@ Ninguna.
 | ID | Fecha | Qué | Estado |
 |---|---|---|---|
 | P1 | 2026-11-04 | Otra sesión está agregando el estado «Comprado» por material (Logística cierra la compra y anota la fecha de llegada a almacén; `db/133`, sin publicar). D4 dice «Comprado = 100 % atendido». ¿El cronograma debe tomar como comprado el RQ cuando todos sus materiales están Comprados (cierre de compra real) y usar su fecha de llegada como llegada real? | Consultada |
+| P2 | 2026-11-04 | Brechas del cronograma frente a Status/Consolidado (revisión de la sesión): (a) la llegada mostrada es la del plan, no la `fecha_llegada` declarada en Comprado; (b) la barra Ítems del cronograma no muestra los comprados; (c) falta la alerta «llegará tarde» (fecha_llegada > fecha en obra − 1). ¿Se corrigen? | Pendiente de Victor |
 
 ## Carpetas/archivos huérfanos
 

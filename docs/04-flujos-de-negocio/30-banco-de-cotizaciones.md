@@ -26,7 +26,7 @@ Propuestas del Orquestador tomadas en el Gate Spec (Victor puede cambiarlas): en
    - **ítems:** descripción, unidad, cantidad y precio unitario.
 3. **Revisión obligatoria antes de guardar.** La persona corrige, agrega o quita ítems. La app no inventa: lo que no pudo leer queda vacío. No se guarda un ítem sin descripción.
 4. Opcional: el **servicio** (se propone el del chip si se abrió desde un servicio) y el **RQ** de ese servicio.
-5. Guardar: el PDF se guarda tal cual, junto con los datos revisados.
+5. Guardar: el PDF se guarda tal cual en **Cloudflare R2** (el mismo almacén de la [Gestión documentaria](25-archivos-documentarios.md)), y los datos revisados en la base. Ver y descargar pasan por el servidor, que comprueba el rol y redirige a un enlace firmado de 5 minutos.
 
 **Cómo lee los ítems (sin IA, D4):** una fila es ítem cuando trae **cantidad × precio unitario = total** (con 1 % de tolerancia), con el precio y el total al final de la fila. La descripción se toma de la misma línea o de las de arriba. Cada proveedor arma su PDF distinto, así que la app lo lee de **dos formas** y se queda con la que saca más ítems con descripción: el texto en el orden en que viene guardado y el texto **ordenado por su posición en la hoja** (renglón por renglón, de izquierda a derecha). La segunda resuelve los PDF que guardan los números separados de las descripciones (caso de la cotización 2061 de Jofer para PS-108, 2026-11-04). En la lectura por posición la descripción es la celda más larga del renglón y el proveedor sale del membrete (nunca PROMCOSER, que es la empresa). Si aun así un ítem queda sin descripción, se llena en la revisión. Probado con cotizaciones reales de PS-108 (Tradisa, Rotoplas, Alquimodul, Dalka y Jofer).
 
@@ -103,7 +103,7 @@ Solo **quien la subió o el administrador**, con confirmación. Se borran la cot
 Migración aditiva `db/134_banco_cotizaciones.sql`:
 
 - `proveedores`: RUC único (opcional) y razón social.
-- `cotizaciones`: proveedor, N°, fecha, moneda, precios con o sin IGV, tipo de cambio, válida hasta, plazo, forma de pago, observaciones, servicio y RQ opcionales, total, ruta del PDF (`documentos-proyecto/cotizaciones/`), quién la subió y cuándo.
+- `cotizaciones`: proveedor, N°, fecha, moneda, precios con o sin IGV, tipo de cambio, válida hasta, plazo, forma de pago, observaciones, servicio y RQ opcionales, total, clave del PDF en R2 (`banco-cotizaciones/{id}/{nombre}`; las 3 cotizaciones subidas antes del 2026-11-05 tienen `cotizaciones/…` y siguen en el almacén de Supabase hasta moverlas), quién la subió y cuándo.
 - `cotizacion_items`: descripción, unidad, cantidad, precio unitario tal cual, precios sin IGV en S/ y US$, y el texto normalizado para el buscador (índice de trigramas).
 - `cotizaciones_eliminadas`: quién eliminó qué cotización y cuándo.
 

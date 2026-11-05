@@ -36,14 +36,16 @@ Se reconoce primero por su identificador de mensaje (es el mismo en ambos buzone
 
 Se prueba en este orden y se detiene en el primero que acierte:
 
-1. **Hilo:** si responde a una conversación ya ubicada, hereda su servicio y su tema.
-2. **Reglas:** el código del servicio (su N° OT, ej. `PS-108-2026`, reconocido también corto: «PS-108», «PS 108», «PS108») o su nombre en el asunto o el texto, y el nombre de un tema ya existente. **Si el correo no trae el N° OT** (Victor, 2026-11-03), el servicio se reconoce por el **nombre del presupuesto** (el nombre del servicio) o por el **nombre de uno de sus subpresupuestos** del DP, con la misma confianza que el nombre del servicio. Un subpresupuesto solo decide si es propio de un único servicio y no está hecho solo de palabras genéricas («Obras preliminares», «Supervisión de trabajos», «Gestión de servicio», «Instalaciones sanitarias» no deciden). El asistente de IA recibe también los subpresupuestos de cada servicio.
+1. **Hilo:** si responde a una conversación ya ubicada en un tema, hereda su servicio y su tema. Si la conversación solo está en un servicio (todavía por revisar, sin tema), hereda **el servicio** y el tema se busca con las reglas dentro de ese servicio (Victor, 2026-11-05: la respuesta a un correo del PS-108 se quedaba en el portafolio).
+2. **Reglas:** el código del servicio (su N° OT, ej. `PS-108-2026`, reconocido también corto: «PS-108», «PS 108», «PS108») o su nombre en el asunto o el texto, y el tema. El tema se reconoce por su **nombre completo** en el asunto o en el texto, o por la **primera palabra de su nombre** en el asunto, en singular o plural, si es una palabra de 5 letras o más y la nombra **un solo tema** del servicio (Victor, 2026-11-05: «Planos de los módulos» entra a «Planos y documentos técnicos»; «Reporte diario» a «Reportes diarios»; si el asunto nombra dos temas, no se decide). **Si el correo no trae el N° OT** (Victor, 2026-11-03), el servicio se reconoce por el **nombre del presupuesto** (el nombre del servicio) o por el **nombre de uno de sus subpresupuestos** del DP, con la misma confianza que el nombre del servicio. Un subpresupuesto solo decide si es propio de un único servicio y no está hecho solo de palabras genéricas («Obras preliminares», «Supervisión de trabajos», «Gestión de servicio», «Instalaciones sanitarias» no deciden). El asistente de IA recibe también los subpresupuestos de cada servicio.
 3. **Asistente de IA** (solo si está configurado en el servidor): propone servicio, tema, movimiento y resumen. Es una respuesta validada: lo que diga el correo se trata como dato, nunca como instrucción. Si su confianza es baja, no se acepta.
 4. **Por revisar:** si nada alcanza, el correo queda sin ubicar para que una persona lo mueva a mano.
 
 * **Sin servicio identificable → portafolio** (Servicios Marcobre, el portafolio por defecto).
 * **Tema que no existe → el sistema lo crea** (queda marcado como creado automáticamente). Un correo ubicado sin tema claro va a **Por revisar**, no a un tema inventado.
-* Lo que una persona mueve a mano queda marcado **manual** y ni las reglas ni la IA lo vuelven a tocar.
+* Lo que una persona mueve a mano queda marcado **manual** y ni las reglas ni la IA lo vuelven a tocar. Excepción: un correo movido a un **servicio sin tema** sigue pudiendo recibir su tema por las reglas dentro de ese servicio.
+* **Lo por revisar se vuelve a probar** (Victor, 2026-11-05: «veo correos de planos sin ubicar»): en cada lectura, los correos del **último mes** que siguen por revisar y que nadie movió a mano pasan otra vez por el hilo y las reglas (sin IA). Solo mejora su lugar: entra a su tema o, si estaba en el portafolio, pasa al servicio que se reconoció. Nunca se saca un correo del servicio donde ya está.
+* **Ubicar un correo a mano arrastra su conversación:** cuando una persona ubica un correo en un tema, los demás correos de esa conversación que seguían por revisar lo siguen al mismo servicio y tema en ese momento. Así basta ubicar una vez una conversación que no nombra al servicio (ejemplo: «Planos de los módulos de oficinas», sin código ni nombre del servicio).
 
 ## Temas y notas
 
@@ -51,7 +53,8 @@ Se prueba en este orden y se detiene en el primero que acierte:
 * Cada correo ubicado agrega una **nota** con su fecha, un resumen y el correo de origen. También se pueden escribir notas a mano.
 * **Movimiento** de cada nota: **Enviado**, **Aprobado**, **Observado**, **Solicitud** o **Información**. El movimiento de la nota más reciente es el «estado» que se ve en el encabezado del tema (ejemplo: PETS — Observado).
 * **Sin respuesta:** un tema abierto cuyo último movimiento fue **Enviado** o **Solicitud** y que lleva **3 días o más** sin novedad se marca para prepararlo antes de la reunión.
-* Quitar una nota que vino de un correo devuelve ese correo a **Por revisar**.
+* Quitar una nota que vino de un correo devuelve ese correo a **Por revisar**, marcado como decisión de la persona: la nueva prueba automática no lo devuelve a ese tema.
+* «Comparto», «se comparten» y «se envían» cuentan como **Enviado** (Victor, 2026-11-05).
 
 ## Filtros
 

@@ -378,6 +378,11 @@ El Dashboard es una vista derivada y debe mostrar:
 10. Permitir rastrear cada EV, AC y avance hasta partida y RDT.
 11. **El sistema calcula solo COSTO DIRECTO.** El DP extrae únicamente de la hoja CD del presupuesto. Gastos generales, utilidad y todo lo que no sea costo directo no entran a ningún cálculo. BAC, AC, PV y EV quedan todos en la misma base de costo directo (así el CPI es comparable). Todo dato derivado de estos (BAC, AC, EAC…) se rotula explícitamente "costo directo" en la interfaz, para que nadie lo lea como el monto total del contrato.
 12. **Las HH del personal indirecto (MOI) se acumulan como horas en el consolidado de RDTs, pero no se valorizan** (`tarifa_hh` NULL por diseño). Horas sí, costo no — el MOI no aporta a AC ni a ningún indicador monetario.
+    **Quién es directo o indirecto lo decide el DP del servicio, no el nombre del cargo** (Victor, 2026-11-05). Un supervisor operativo que el presupuesto considera mano de obra directa se carga como directo. Al validar el RDT, cada cargo se busca así, por su nombre o por su equivalencia del servicio:
+    1. **Directo primero:** una fila de mano de obra del costo directo, en HH (su tarifa) o en MES (tarifa = precio ÷ 208 h).
+    2. **Indirecto** solo si no hay fila directa y el cargo figura en gastos generales **con horas**; una fila de gastos generales sin horas no cuenta.
+    3. Si no está en ninguno, queda **sin resolver** y se pide su fila o equivalencia.
+    Si un cargo aparece en los dos lados del DP, gana el directo. El consolidado de RDTs agrupa con la misma regla. Los RDT ya validados guardan la clasificación de su validación; el administrador los reclasifica de una vez con la ruta `POST /api/admin/rdts/reclasificar-hh` (con `?aplicar=1` escribe), que recalcula el PR. Así se reclasificaron Tecnet (PS-167) y Jahuay (PS-131) el 2026-11-05, con las equivalencias SUPERVISOR OPERATIVO = INGENIERO OPERATIVO / INGENIERO SUPERVISOR DE CAMPO y SUPERVISOR SSOMA = INGENIERO DE SEGURIDAD.
 13. **Todo el sistema trabaja en USD.** No hay multi-moneda.
 
 ### Terminología — dos cosas distintas que NO se deben confundir
@@ -385,7 +390,7 @@ El Dashboard es una vista derivada y debe mostrar:
 | Término | Qué es | Dónde vive |
 |---|---|---|
 | Actividad **Contributoria (C)** / **No Contributoria (NC)** | Categoría de la **actividad**: traslado, charla, espera. No genera metrado, pero sí se carga a una partida y aporta horas y costo. | `rdt_actividades.ta` |
-| **Mano de obra indirecta (MOI)** | Categoría de la **persona**: supervisor, ingeniero. No es un tipo de actividad. | `dp_moi` |
+| **Mano de obra indirecta (MOI)** | Categoría de la **persona** según lo que declara el DP (gastos generales con horas y sin fila directa, regla 12), no según su cargo. No es un tipo de actividad. | `dp_moi` (con horas) y `rdt_tareo.es_moi` |
 
 Son ejes independientes: una persona MOI puede declarar horas en actividades D, C o NC. **Nunca llamar "indirectas" a las HH de actividades C/NC** — se nombran por su tipo (contributorias / no contributorias). "Indirecto" queda reservado exclusivamente para MOI (regla 12).
 

@@ -103,7 +103,7 @@ Solo **quien la subió o el administrador**, con confirmación. Se borran la cot
 Migración aditiva `db/134_banco_cotizaciones.sql`:
 
 - `proveedores`: RUC único (opcional) y razón social.
-- `cotizaciones`: proveedor, N°, fecha, moneda, precios con o sin IGV, tipo de cambio, válida hasta, plazo, forma de pago, observaciones, servicio y RQ opcionales, total, clave del PDF en R2 (`banco-cotizaciones/{id}/{nombre}`; las 3 cotizaciones subidas antes del 2026-11-05 tienen `cotizaciones/…` y siguen en el almacén de Supabase hasta moverlas), quién la subió y cuándo.
+- `cotizaciones`: proveedor, N°, fecha, moneda, precios con o sin IGV, tipo de cambio, válida hasta, plazo, forma de pago, observaciones, servicio y RQ opcionales, total, clave del PDF en R2 (`logistica/cotizaciones/{id}/{nombre}`; las 3 cotizaciones subidas antes del 2026-11-05 ya se pasaron a esa carpeta), quién la subió y cuándo.
 - `cotizacion_items`: descripción, unidad, cantidad, precio unitario tal cual, precios sin IGV en S/ y US$, y el texto normalizado para el buscador (índice de trigramas).
 - `cotizaciones_eliminadas`: quién eliminó qué cotización y cuándo.
 

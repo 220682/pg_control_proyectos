@@ -40,7 +40,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 **Reglas decididas por Victor (2026-09-28):**
 
 1. **Interfaces sin datos económicos: las ven los 13 roles.**
-2. **Interfaces con datos económicos: solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos.** Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴). Pero sí ve los precios del **Banco de cotizaciones**, que maneja con normalidad (nota ²⁹).
+2. **Interfaces con datos económicos: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos, jefe de costos y supervisor operativo.** El **supervisor operativo** las **ve** (Victor, 2026-11-05) pero no arma la economía: armar valorizaciones y medir subcontratos siguen siendo de los otros cinco. Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴). Pero sí ve los precios del **Banco de cotizaciones**, que maneja con normalidad (nota ²⁹).
 3. **Administrador y jefe de proyectos ven todas las interfaces**, las económicas incluidas.
 4. **Los recursos de empresa (catálogos) los ven todos los roles.**
 5. **El panel izquierdo del servicio lo ven los 13 roles** (flujo 16); lo que el rol no puede usar se muestra deshabilitado.
@@ -48,17 +48,17 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Interfaz | ¿Datos económicos? | Admin | JP | JOT | SOT | Plnr | SCo | JCo | SOp | SLog | SAdm | SSO | Asist | RRHH |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | Dashboard del servicio — Parcial ¹ | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Dashboard del servicio — Completo ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Dashboard del servicio — Completo ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
+| Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
+| PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Reporte del proyecto: sección Subcontratos (elegir la forma de medir y ver el monto) ¹² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
+| DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Curva S — avance físico (%) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
-| Registro de costos por servicio, ver ² ²⁴ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| Status de servicios (Costos): ver el dashboard, los presupuestos y las visitas técnicas, y descargar el PDF vertical u horizontal ²⁵ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| Valorización del servicio (Costos): ver y armar las valorizaciones (rangos de fecha, tipo, GG, utilidad, combustible y partidas por subcontrato) ²⁶ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
+| Plan Maestro, ver | Sí | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — |
+| Registro de costos por servicio, ver ² ²⁴ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
+| Status de servicios (Costos): ver el dashboard, los presupuestos y las visitas técnicas, y descargar el PDF vertical u horizontal ²⁵ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
+| Valorización del servicio (Costos): ver y armar las valorizaciones (rangos de fecha, tipo, GG, utilidad, combustible y partidas por subcontrato); el supervisor operativo solo las ve ²⁶ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Cronograma, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Paquetes de trabajo, ver | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | RDTs: status, archivo de subidos, consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -74,13 +74,13 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Gestión de Email (documentos del servicio con su estado y semáforo, dentro de servicios a su alcance) ²⁰ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | Gestión documentaria (árbol de archivos de cada documento, dentro de servicios a su alcance) ²¹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Banco de cotizaciones (Logística): buscar precios, ver el listado y las cotizaciones, ver y descargar el PDF que subió cualquiera ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | — | — | — | — |
-| Banco de cotizaciones: cuadro comparativo por RQ (ver, descargar PDF y Excel) y Proveedores (listado y ficha) ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | — | — | — | — |
-| Banco de cotizaciones: ficha del proveedor, bloque «cotizado contra pagado» (montos del Registro de costos) ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Banco de cotizaciones (Logística): buscar precios, ver el listado y las cotizaciones, ver y descargar el PDF que subió cualquiera ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | ✓ | — | — | — | — |
+| Banco de cotizaciones: cuadro comparativo por RQ (ver, descargar PDF y Excel) y Proveedores (listado y ficha) ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | ✓ | — | — | — | — |
+| Banco de cotizaciones: ficha del proveedor, bloque «cotizado contra pagado» (montos del Registro de costos) ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos del servicio, ver (Cargos HH, Equipos HM, Materiales c/c, Subcontratos; sin costos) ⁷ | Sí | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Alcance del servicio: ver y descargar el archivo ¹³ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Presupuesto del servicio: ver y descargar el archivo ¹³ | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | — | — | — | — |
+| Presupuesto del servicio: ver y descargar el archivo ¹³ | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Ficha del servicio y grilla del portafolio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Panel izquierdo del servicio | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notificaciones y Mi entorno | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |

@@ -237,7 +237,7 @@ Cada acceso tiene metadatos comunes:
 * Grupo.
 * Tipo: informativo o acción.
 * Ruta o acción.
-* Requiere servicio: `sí`, `opcional` o `no`. «Opcional» aplica a las pantallas que abren sin servicio y lo preseleccionan si se abren con él (Plan Maestro, Status de Requerimiento, Consolidado RQ, Status de RDTs, Banco de cotizaciones). «Sí» sin servicio elegido pasa por «Elegir servicio» (no queda inerte).
+* Requiere servicio: `sí`, `opcional` o `no`. «Opcional» aplica a las pantallas que abren sin servicio y lo preseleccionan si se abren con él (Plan Maestro, Status de Requerimiento, Consolidado RQ, Status de RDTs, Banco de cotizaciones, Fabricaciones). «Sí» sin servicio elegido pasa por «Elegir servicio» (no queda inerte).
 * Permiso requerido.
 * Visible en panel izquierdo.
 * Visible en panel central.

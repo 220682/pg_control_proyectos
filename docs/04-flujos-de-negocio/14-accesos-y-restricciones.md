@@ -40,7 +40,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 **Reglas decididas por Victor (2026-09-28):**
 
 1. **Interfaces sin datos económicos: las ven los 13 roles.**
-2. **Interfaces con datos económicos: solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos.** Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴).
+2. **Interfaces con datos económicos: solo administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos.** Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴). Pero sí ve los precios del **Banco de cotizaciones**, que maneja con normalidad (nota ²⁹).
 3. **Administrador y jefe de proyectos ven todas las interfaces**, las económicas incluidas.
 4. **Los recursos de empresa (catálogos) los ven todos los roles.**
 5. **El panel izquierdo del servicio lo ven los 13 roles** (flujo 16); lo que el rol no puede usar se muestra deshabilitado.
@@ -74,6 +74,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Gestión de Email (documentos del servicio con su estado y semáforo, dentro de servicios a su alcance) ²⁰ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | Gestión documentaria (árbol de archivos de cada documento, dentro de servicios a su alcance) ²¹ | Sí | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
 | RQ: status y consolidado | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Banco de cotizaciones (Logística): buscar precios, ver el listado y las cotizaciones, ver y descargar el PDF que subió cualquiera ²⁹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | — | — | — | — |
 | Recursos de empresa: Personal, Cargos, Equipos, Causas CNC (consulta) | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Recursos del servicio, ver (Cargos HH, Equipos HM, Materiales c/c, Subcontratos; sin costos) ⁷ | Sí | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Alcance del servicio: ver y descargar el archivo ¹³ | No | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -177,6 +178,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Descargar consolidado RQ (PROM-GP-004) ⁵ | ✓ | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | No (descarga) |
 | Subir registro de costos por servicio (cargar pagos de materiales y de subcontratos desde el PDF; logística solo carga, no ve ni descarga) ²⁴ | ✓ | ✓ | — | — | — | — | — | — | ✓ | — | — | — | — | Sí, salvo logística ²⁸ |
 | Descargar registro de costos por servicio | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | No (descarga) |
+| Subir una cotización al Banco de cotizaciones (PDF, revisar lo leído y guardar; servicio y RQ opcionales) ²⁹ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | — | — | — | — | No (de la empresa) |
+| Eliminar una cotización del Banco (solo quien la subió o el administrador) ²⁹ | ✓ | * | * | — | — | * | * | — | * | — | — | — | — | No (de la empresa) |
 | Status de servicios: cargar el Excel del reporte mensual (compara antes de guardar), registrar, corregir y borrar presupuestos y visitas técnicas desde la app, y editar las metas mensuales ²⁵ | ✓ | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — | No (de la empresa, no de un servicio) |
 | Encabezado de los PDF: cambiar los datos de la empresa (nombre, RUC y logo), que valen para todos los PDF ²⁷ | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | No (de la empresa) |
 | Encabezado de los PDF de Status de servicios: cambiar el responsable del reporte (nombre, cargo, correo y teléfono) ²⁷ | ✓ | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — | No (de la empresa) |
@@ -247,6 +250,8 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 ²⁶ **Valorización del servicio (Victor, 2026-11-03; [flujo 28](28-valorizacion.md)). Provisorio.** Chip «Valorización» en el grupo Costos (`/proyectos/{id}/valorizacion`). Ven y arman la valorización los 5 roles con economía (`puedeVerValorizacion`, `puedeGestionarValorizacion`); el servidor valida el rol y el alcance por OT en cada ruta (`api/proyectos/[id]/valorizaciones`, `/[valorizacionId]`, `/[valorizacionId]/manual`, `/partidas`, `/config`). Victor puede acotar después quién la edita.
 
 ²⁸ **Logística no necesita la OT a cargo (Victor, 2026-11-04).** Logística atiende a todos los servicios, así que sus funciones no piden tener el servicio asignado: recepcionar el RQ, cambiar el estado de cada material (Comprado, En almacén, Atendido) o deshacerlo un paso, comentar el RQ y cargar compras al Registro de costos (incluida la pantalla, en modo «solo cargar»). Corrige la matriz del 2026-09-28, que pedía la OT a cargo en esas acciones y dejaba al supervisor de logística sin poder trabajar en los servicios que no tenía asignados. Por ahora los demás roles siguen igual: aprobar y devolver un RQ, ver montos del Registro de costos y el resto de acciones con «Sí» siguen pidiendo la OT a cargo. En la app: `tieneAlcanceLogistica` (`src/lib/permisos/alcance-proyecto.ts`), app `d6cc26a`.
+
+²⁹ **Banco de cotizaciones (Victor, 2026-11-04; [flujo 30](30-banco-de-cotizaciones.md)).** Pantalla de la empresa, no de un servicio (`/logistica/cotizaciones`, chip «Cotizaciones» del grupo Logística): una sola base con las cotizaciones de proveedores en PDF y su buscador de precios. Suben, buscan, ven precios y descargan los 5 roles con economía **y el supervisor de logística** («ellos manejan precios con normalidad»): es una excepción acotada a la regla 2 de la tabla 1, que no cambia el Registro de costos (Logística lo sigue solo cargando). Ninguna acción pide la OT a cargo, porque la base es de toda la empresa; el servicio y el RQ de cada cotización son opcionales. **Eliminar**: el `*` de la tabla 2 es «solo las que subió él»; el administrador elimina cualquiera, y queda registrado quién y cuándo. El servidor valida el rol en cada ruta (`puedeUsarBancoCotizaciones`; rutas `api/cotizaciones`, `/leer`, `/buscar`, `/[id]` y `/[id]/pdf`) y responde 403 al resto. Los roles de entrada y de eliminar son la propuesta del Orquestador tomada en el Gate Spec (P1 y P2); Victor puede cambiarlos. **Pendiente de Victor: reflejar estas tres filas en el artefacto «Matriz de permisos».**
 
 ### Qué se decidió al aprobar la matriz (2026-09-28)
 

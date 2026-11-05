@@ -142,19 +142,21 @@ Almacén y Logística reciben cotizaciones de proveedores en PDF y no tienen dó
 
 - (2026-11-04, Orquestador) P1 y P2 con la propuesta: entran los 5 roles con economía más Logística; elimina quien subió o el administrador. Si Victor dice otra cosa, se cambia.
 - (2026-11-04, Orquestador) Lectura de ítems sin IA (D4): una fila es ítem cuando trae **cantidad × precio unitario = total** (con 1 % de tolerancia). La descripción se toma de la misma línea o de las líneas de arriba. Probado con los textos de 4 cotizaciones reales de PS-108 (Tradisa, Rotoplas, Jofer, Alquimodul). En formatos donde el lector separa los números de las descripciones (Jofer), los ítems salen con precio y la descripción vacía, para llenarla en la revisión.
+- (2026-11-04, Orquestador) «Queda registrado quién y cuándo» al eliminar: tabla `cotizaciones_eliminadas` en la misma db/134 (aún sin aplicar, así que no hizo falta otra migración).
+- (2026-11-04, Orquestador) «Si se elige el RQ, sus materiales» se deja para la etapa 2 (cuadro comparativo): en la etapa 1 el RQ solo queda ligado a la cotización.
 - (2026-11-04, Orquestador) **«Precios con IGV»** es un dato de cada cotización: se detecta comparando la suma de los ítems con el subtotal y con el total, y se puede corregir en la revisión. El buscador muestra siempre el precio **sin IGV**.
 
 ## Punch List (etapa 1)
 
 | # | Ítem | Estado |
 |---|---|---|
-| 1 | Migración aditiva `db/134_banco_cotizaciones.sql` (proveedores, cotizaciones, ítems e índices) | Pendiente |
-| 2 | Lectura del PDF: datos generales e ítems, con pruebas sobre los textos reales | Pendiente |
-| 3 | Permisos, chip «Cotizaciones» en Logística, matriz base y pruebas de conteo | Pendiente |
-| 4 | Rutas: leer, guardar (con aviso de duplicado), listar, buscar, detalle, descargar PDF y eliminar | Pendiente |
-| 5 | Pantalla: Buscar precios, Cotizaciones y Subir con revisión | Pendiente |
-| 6 | Verificación en la app publicada (después de que Victor aplique db/134), capturas a 1366 y 1920 px | Pendiente |
-| 7 | Flujo 30 nuevo, flujos 14 y 16, índice; cambios para la Matriz de permisos | Pendiente |
+| 1 | Migración aditiva `db/134_banco_cotizaciones.sql` (proveedores, cotizaciones, ítems e índices) | Hecho (app `aad4e13`, `59d4d73`); **sin aplicar**: la aplica Victor |
+| 2 | Lectura del PDF: datos generales e ítems, con pruebas sobre los textos reales | Hecho (17 pruebas) |
+| 3 | Permisos, chip «Cotizaciones» en Logística, matriz base y pruebas de conteo | Hecho |
+| 4 | Rutas: leer, guardar (con aviso de duplicado), listar, buscar, detalle, descargar PDF y eliminar | Hecho |
+| 5 | Pantalla: Buscar precios, Cotizaciones y Subir con revisión | Hecho (publicada; Vercel compiló) |
+| 6 | Verificación en la app publicada (después de que Victor aplique db/134), capturas a 1366 y 1920 px | Pendiente: espera db/134 |
+| 7 | Flujo 30 nuevo, flujos 14 y 16, índice; cambios para la Matriz de permisos | Hecho (también flujo 05); la Matriz la actualiza Victor (nota ²⁹ del flujo 14) |
 
 ## Mejoras (de trabajo)
 

@@ -45,7 +45,7 @@ Hoy los RQ se siguen solo en el Status de requerimiento (estado del RQ y, desde 
 - **Alertas**, calculadas cada vez que se abre la pantalla con la fecha de hoy (Lima):
   - **Debe iniciar:** hoy ya pasó el inicio de procura y el RQ aún no está aprobado.
   - **Por vencer:** no comprado y el cierre de compra llega en los próximos días (cantidad configurable, por defecto 3; D3).
-  - **Atrasado:** no comprado y ya pasó el cierre de compra.
+  - **Atrasado:** no comprado y ya pasó el cierre de compra. **Días que se muestran (Victor, 2026-11-04):** solo los **días hábiles de atraso en obra** (de la fecha en obra a hoy), no los del cierre de compra; si el cierre ya pasó pero la obra aún no, «faltan N d hábiles para obra».
   - **Próximas compras:** el inicio de procura cae en los próximos 15 días.
   - **Sin fecha en obra:** la actividad no está en el Plan Maestro aprobado o el RQ no tiene actividad.
   - **Comprado a tiempo / Comprado tarde:** fecha de compra ≤ o > cierre de compra.

@@ -1,6 +1,6 @@
 # Consolidado como fuente única
 
-Fecha: 2026-11-05. Estado: `Implementando` (código, documentos y datos de los 4 servicios corregidos; falta la revisión de Victor y las decisiones de Pendientes).
+Fecha: 2026-11-05. Estado: `Implementando` (código, documentos y datos de los 4 servicios corregidos; falta la revisión de Victor y los Pendientes; sesión cerrada el 2026-11-05).
 
 Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu criterio… Lista. Continúa. Y Termínalo». No siguió el flujo con Orquestador ni tuvo Gates.
 
@@ -53,14 +53,14 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 ## Pendientes
 
 2. Victor actualiza la Matriz de permisos (chip Consolidado de servicio, sin chip PR, sin medir subcontratos).
-3. PS-108: 6 h de RETROEXCAVADORA en RDT validados no tienen fila en el presupuesto y siguen sin tarifa. Desde ahora no puede volver a pasar; esas horas quedan como están salvo que Victor decida otra cosa.
-4. PS-131: la copia del Excel guardada en el almacén de la app sigue con `4.02`, porque las claves del almacén no están en este equipo. No se usa para calcular nada; se reemplaza cuando Victor vuelva a cargar el Excel.
+3. **PS-108: equipo cargado como material (próxima sesión, Victor).** La RETROEXCAVADORA JOHN DEERE 310G sí está en el presupuesto: 6.56 HM × 38.23 = US$ 250.92 en la partida 2.9.1, pero dentro del bloque Materiales del Excel, y el importador clasifica por bloque. Por eso no sale en el desplegable de equipos. Propuesta sin aprobar: al importar, todo insumo en HM o HE es equipo sin importar el bloque, y corregir ese recurso de PS-108 (el costo directo total no cambia). Es el único caso en los 4 servicios. Falta decidir cómo evitar que se repita.
+4. Después del punto 3, Victor edita el RDT de PS-108 del 2026-11-03 y elige ese equipo. Sus 6 h son stand-by y siguen sin costo; con la tarifa de 38.23 serían US$ 229.38. Hasta entonces esa edición no es posible.
+5. PS-131: la copia del Excel guardada en el almacén de la app sigue con `4.02`, porque las claves del almacén no están en este equipo. No se usa para calcular nada; se reemplaza cuando Victor vuelva a cargar el Excel.
+6. El Excel corregido de PS-131 está en `pg_planeamiento` sin confirmar en su repositorio.
 
 ## Mejoras (de trabajo)
 
-- Un candado automático que falla si alguien salta la frontera protege mejor que una regla escrita.
-- Medir la misma cifra en todas sus fuentes antes de arreglar evitó adivinar la causa.
-- Antes de declarar un dato en un reporte, leerlo de la fuente: el reporte anterior dio 1,248 h del conductor en cada lado, y en gastos generales eran 208 h.
+- Extraídas a [`2026-11-05-consolidado-medir-y-buscar-en-toda-la-fuente.md`](../../03-aprendizaje-continuo/2026-11-05-consolidado-medir-y-buscar-en-toda-la-fuente.md).
 
 ## Reglas de negocio acordadas en esta tarea
 

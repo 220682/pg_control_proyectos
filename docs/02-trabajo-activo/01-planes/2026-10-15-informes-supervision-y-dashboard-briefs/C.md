@@ -24,7 +24,7 @@ Rama `local-worker-1`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/
 
 1. `src/lib/informes/tipos.ts` (**contrato congelado de la tanda B**: `Bloque`, `TipoBloqueDatos`, `FotoFija`; no lo cambies), `periodo.ts`, `formatos.ts`.
 2. `src/lib/pr/evm.ts`, `db/026`, `db/053`, `db/100`, `db/102`, `src/lib/curva-s/`, `src/lib/dashboard/cargar-dashboard.ts`, `src/lib/rdts/parte.ts` (campos `horasExtra`, `horasStandby`, `estado`; columnas SQL `horas_extra`, `horas_standby`, `estado_equipo`).
-3. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `06-rdt.md`, `10-generacion-pr.md`, `11-dashboard.md` (confirma el nombre real con `ls`).
+3. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `06-rdt.md`, `10-consolidado-de-servicio.md`, `11-dashboard.md` (confirma el nombre real con `ls`).
 
 **Verifica con `grep` los nombres reales** de columnas, funciones y campos antes de usarlos; no los infieras del brief. **No leas** el plan completo ni otros flujos.
 

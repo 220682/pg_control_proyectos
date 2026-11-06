@@ -25,7 +25,7 @@ Este repositorio es documental: no tiene `package.json` ni scripts verificados d
 
 ## Arquitectura y fuentes de verdad
 
-La arquitectura funcional, el flujo principal documentado (presupuesto, cronograma, Plan Maestro, plan semanal, RDT, PR, dashboard) y el modelo de datos con la fuente de verdad de cada pieza están en [docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md](docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md). Regla central: el sistema no mezcla lo planificado, lo ejecutado, lo estimado, lo consolidado y la vista ejecutiva.
+La arquitectura funcional, el flujo principal documentado (presupuesto, cronograma, Plan Maestro, plan semanal, RDT, Consolidado de servicio, dashboard) y el modelo de datos con la fuente de verdad de cada pieza están en [docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md](docs/01-contexto-repositorio/08-arquitectura-funcional-y-datos.md). Regla central: el sistema no mezcla lo planificado, lo ejecutado, lo estimado, lo consolidado y la vista ejecutiva. Desde el 2026-11-05: DP → Consolidado de servicio ← RDT validados, y toda interfaz lee del Consolidado (flujo 10); el PR ya no existe.
 
 ## Flujos principales
 
@@ -69,7 +69,7 @@ Cuando se trabaje con backend o contratos en repositorios derivados o en la app 
 - No borrar ni renombrar columnas sin plan de migración.
 - No ejecutar migraciones destructivas sin autorización expresa.
 - Revisar datos existentes antes de cambiar restricciones o integridad referencial.
-- Mantener consistencia entre WBS, cronograma, PR y dashboard.
+- Mantener consistencia entre WBS, cronograma, Consolidado de servicio y dashboard.
 - Si se añade un campo nuevo, documentar su uso y origen.
 - No convertir estimaciones en costo real sin fuente validada.
 

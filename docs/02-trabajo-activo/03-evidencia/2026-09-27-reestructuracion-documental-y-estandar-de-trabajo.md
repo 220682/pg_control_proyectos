@@ -118,7 +118,7 @@ Cruce completo de las 7 fuentes (`AGENTS.md`, `README.md`, `docs/README.md`, los
 
 ## Fase 7B — antes/después por flujo
 
-Revisados los 21 flujos de `04-flujos-de-negocio/` contra §3.7, con foco en los 11 con indicios detectados en el cruce (`14-accesos-y-restricciones`, `10-generacion-pr`, `16-paneles`, `09-importar-dp`, `20-plan-maestro`, `18-control-avance`, `15-cronograma`, `12-checklist`, `21-curva-s`, `11-dashboard`, `04-notificaciones`) más el README, y una segunda pasada de `grep` sobre los 21 completos buscando "Punch List", "CERRADO 100%", "Worker/Auditor/Orquestador" literales y etiquetas "Agente A–D".
+Revisados los 21 flujos de `04-flujos-de-negocio/` contra §3.7, con foco en los 11 con indicios detectados en el cruce (`14-accesos-y-restricciones`, `10-consolidado-de-servicio`, `16-paneles`, `09-importar-dp`, `20-plan-maestro`, `18-control-avance`, `15-cronograma`, `12-checklist`, `21-curva-s`, `11-dashboard`, `04-notificaciones`) más el README, y una segunda pasada de `grep` sobre los 21 completos buscando "Punch List", "CERRADO 100%", "Worker/Auditor/Orquestador" literales y etiquetas "Agente A–D".
 
 | Flujo | Resultado |
 |---|---|

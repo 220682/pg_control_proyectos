@@ -367,7 +367,7 @@ Victor autorizó expresamente actualizar el flujo, siguiendo el precedente de la
 - **`design.md`** — si aparece una regla visual nueva y reutilizable (§ "Regla de evolución"), **proponerla**, no aplicarla en silencio. Si Victor la aprueba, agregarla con su fila en el historial de cambios.
 - **Este archivo** — decisiones, convenciones y cambios acordados durante la ejecución, escritos conforme ocurren.
 
-⚠️ **Coordinación de flujos con el Agente D:** `11-dashboard.md` lo edita **solo el Agente C**. El Agente D documenta la Curva S en su propio archivo de flujo. Ninguno de los dos toca `10-generacion-pr.md`, `18-control-avance.md` ni `20-plan-maestro.md`, que quedaron cerrados en la Fase 2.
+⚠️ **Coordinación de flujos con el Agente D:** `11-dashboard.md` lo edita **solo el Agente C**. El Agente D documenta la Curva S en su propio archivo de flujo. Ninguno de los dos toca `10-consolidado-de-servicio.md`, `18-control-avance.md` ni `20-plan-maestro.md`, que quedaron cerrados en la Fase 2.
 
 ### C12. Verificación
 

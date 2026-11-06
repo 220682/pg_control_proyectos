@@ -24,7 +24,7 @@ Rama `local-worker-3`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/
 1. **El cuerpo vigente** de `recalcular_pr_desde_rdt` y `curva_s_proyecto` es el que dejó la `db/100*` de la tanda O en este worktree, **no** `db/053` ni `db/070`. Confírmalo con `grep -ln "function public.recalcular_pr_desde_rdt\|function public.curva_s_proyecto" db/*.sql`; copia el cuerpo completo y cambia solo lo de la tanda.
 2. Como los nombres exactos de lo que crearon O y N aún no existen en este brief, **verifica con grep en tu worktree los nombres reales** (columnas de `pr_subcontrato_medicion`, `ac_diario_hh`, `ac_diario_hm`, `horas-extra.ts`) antes de usarlos.
 3. `db/007_pr.sql`, `src/lib/pr/evm.ts`, `src/lib/pr/acumulacion-rdt.ts`, `src/lib/pr/subcontratos*`, `src/lib/dashboard/cargar-dashboard.ts` (solo leer, para R5c).
-4. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-generacion-pr.md` y `11-*` (Dashboard).
+4. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-consolidado-de-servicio.md` y `11-*` (Dashboard).
 
 **No leas** el plan completo ni otros flujos.
 

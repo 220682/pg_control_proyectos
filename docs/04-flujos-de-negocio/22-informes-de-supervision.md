@@ -2,7 +2,7 @@
 > Lee si: la tarea toca los informes diarios o semanales del supervisor operativo, el chip «Informes de supervisión», la foto de campo y su banco de fotos, los formatos y bloques de informe, el código del informe, el período del semanal, la descarga en PDF, Word o Excel, el aviso al emitir, la pestaña Inasistencias, o las restricciones del servicio (la pantalla Restricciones, sus estados Pendiente → Recepcionado → Atendido, quién las crea, ve y atiende, las fotos «para restricciones», el campo «restricciones» del RDT y la tabla de restricciones del informe).
 
 
-Origen: plan [Informes de supervisión y Dashboard](../02-trabajo-activo/01-planes/2026-10-15-informes-supervision-y-dashboard.md) (Spec aprobado por Victor el 2026-10-15; reglas validadas en su Gate 1). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); no se repite aquí. Las pantallas y chips: [flujo 16](16-paneles.md). El informe **lee** el RDT ([flujo 06](06-rdt.md)), el PR ([flujo 10](10-generacion-pr.md)) y la Curva S ([flujo 21](21-curva-s.md)); no los cambia.
+Origen: plan [Informes de supervisión y Dashboard](../02-trabajo-activo/01-planes/2026-10-15-informes-supervision-y-dashboard.md) (Spec aprobado por Victor el 2026-10-15; reglas validadas en su Gate 1). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md); no se repite aquí. Las pantallas y chips: [flujo 16](16-paneles.md). El informe **lee** el RDT ([flujo 06](06-rdt.md)), el Consolidado ([flujo 10](10-consolidado-de-servicio.md)) y la Curva S ([flujo 21](21-curva-s.md)); no los cambia.
 
 ## Qué es
 
@@ -29,10 +29,10 @@ Chips (flujo 16): **Informes de supervisión** (informativo, con acciones intern
 
 ## Foto fija al emitir y avance validado
 
-* **Foto fija:** al emitir, los bloques de datos guardan los valores del momento; el informe emitido **no cambia** si después cambia el RDT o el PR. Un borrador usa los datos en vivo (el listado y el detalle del borrador los calculan al abrirlo).
+* **Foto fija:** al emitir, los bloques de datos guardan los valores del momento; el informe emitido **no cambia** si después cambia el RDT o el Consolidado. Un borrador usa los datos en vivo (el listado y el detalle del borrador los calculan al abrirlo).
 * **Avance real solo validado:** los indicadores usan RDT `VALIDADO`. Lo del día que aún no se valida entra rotulado **«reportado, pendiente de validación»** en el editor, nunca como avance real; **el documento exportado (PDF, Word, Excel) no lleva ese rótulo** (columna, nota bajo la tabla, sufijo en nombres y equipos, causas pendientes del PPC) — Victor, 2026-10-25. Las **horas-hombre y de máquina de cada parte salen en el informe aunque el parte siga sin validar** y no dependen de que el informe esté emitido; los indicadores al corte (avance, IP, HH acumuladas) siguen contando solo partes validados.
-* **Indicadores «al corte» de un diario** salen de la **fecha del diario**, no del PR de hoy: avance, programado y SPI de la serie física de la Curva S en esa fecha; HH ganadas, HH reales e IP de los partes `VALIDADO` hasta esa fecha. Límite: las HH legacy sin partida no se reconstruyen por fecha.
-* **El acumulado por actividad suma el metrado por el vínculo oficial** `rdt_actividad_partidas` (el mismo del PR); el texto `wbs` de la actividad solo se muestra. Una actividad con texto 9.9 vinculada a la partida 1.2 suma a 1.2.
+* **Indicadores «al corte» de un diario** salen de la **fecha del diario**, no del Consolidado de hoy: avance, programado y SPI de la serie física de la Curva S en esa fecha; HH ganadas, HH reales e IP de los partes `VALIDADO` hasta esa fecha. Límite: las HH legacy sin partida no se reconstruyen por fecha.
+* **El acumulado por actividad suma el metrado por el vínculo oficial** `rdt_actividad_partidas` (el mismo del Consolidado); el texto `wbs` de la actividad solo se muestra. Una actividad con texto 9.9 vinculada a la partida 1.2 suma a 1.2.
 * **PPC y causas de no cumplimiento:** el PPC cuenta las actividades directas de los partes validados del período. El Pareto de causas cuenta, igual que el Dashboard, toda actividad con causa (directa, contributoria o no contributoria) de los partes validados. Las causas reportadas en partes aún sin validar (no rechazados) no entran al Pareto: salen como «Causas reportadas, pendientes de validación» (Victor, 2026-10-18).
 * **Días sin diario:** el aviso del informe se calcula con los **partes del RDT** (días sin ningún parte), no con los diarios emitidos.
 
@@ -46,7 +46,7 @@ Cada formato tiene contenido distinto:
 | **Semanal acumulado** | El Técnico en tipo Semanal. Por actividad: contractual, acumulado anterior, metrado de cada día del período (de cada semana si pasa de 10 días), total del período, acumulado a la fecha y %; personal y equipos con sus horas por día o semana, total, acumulado y contractual; avance acumulado (programado contra real); indicadores del período y acumulados; restricciones y próximo período; fotos destacadas y la lista de diarios que lo forman. |
 | **Ejecutivo** (1 página) | Semáforo, indicadores, avance por nivel, logros y alertas, dos fotos; sin tablas. |
 | **Registro fotográfico** | Solo fotos con hora, partida y descripción, en cajas (filas × columnas y alto elegidos por el usuario; ver § Editor por bloques). |
-| **Costos** (diario o semanal) | EV, AC, CV, CPI y SPI; personal y equipos valorizados; costo por partida. Costo directo en US$; las HH de MOI no se valorizan; el AC sigue la regla de costo real del [flujo 10](10-generacion-pr.md). |
+| **Costos** (diario o semanal) | EV, AC, CV, CPI y SPI; personal y equipos valorizados; costo por partida. Costo directo en US$; las HH de MOI no se valorizan; el AC sigue la regla de costo real del [flujo 10](10-consolidado-de-servicio.md). |
 | **Mis formatos** | Cada usuario que puede crear informes (administrador, jefe de proyectos, jefe de oficina técnica, supervisor operativo, supervisor de costos y jefe de costos) guarda su propio arreglo de bloques desde el editor, como las plantillas del RDT. Un formato con bloques de Costos solo lo sirve a quien tiene economía (decidido por Victor el 2026-10-17). |
 
 **El formato Costos y todo bloque con dinero** (indicadores de costo, personal y equipos valorizados, costo por partida) **solo lo crean, ven y descargan los 5 roles con datos económicos** (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos y jefe de costos; regla 2 del flujo 14). A los demás el formato les sale deshabilitado con título y el informe no les aparece en la lista; por URL directa el servidor responde 403. Los otros formatos **no llevan dinero** en ningún byte.
@@ -147,6 +147,6 @@ Pestaña propia dentro de «Informes de supervisión», aparte de los informes (
 
 ## Qué no hace
 
-* No calcula avance ni costo por su cuenta: usa el PR, la Curva S y el RDT.
+* No calcula avance ni costo por su cuenta: usa el Consolidado, la Curva S y el RDT.
 * No tiene aprobación previa de la jefatura, informe mensual ni de cierre; el «Acta de conformidad» sigue sin pantalla.
 * No muestra dinero salvo en el formato Costos y solo a los 5 roles con economía.

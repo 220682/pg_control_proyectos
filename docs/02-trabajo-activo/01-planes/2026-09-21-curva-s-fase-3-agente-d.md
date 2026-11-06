@@ -289,7 +289,7 @@ Sin plan aprobado no hay PV. La pantalla muestra el aviso explicando por qué y 
 - **`design.md`** — si aparece una regla visual nueva y reutilizable (primer gráfico de líneas del proyecto: crosshair, tooltip, leyenda), **proponerla** a Victor; si la aprueba, agregarla con su fila en el historial.
 - **Este archivo** — decisiones y convenciones conforme ocurren.
 
-⚠️ **Coordinación de flujos con el Agente C:** `11-dashboard.md` lo edita **solo el Agente C**. Ninguno de los dos toca `10-generacion-pr.md`, `18-control-avance.md` ni `20-plan-maestro.md`, cerrados en la Fase 2.
+⚠️ **Coordinación de flujos con el Agente C:** `11-dashboard.md` lo edita **solo el Agente C**. Ninguno de los dos toca `10-consolidado-de-servicio.md`, `18-control-avance.md` ni `20-plan-maestro.md`, cerrados en la Fase 2.
 
 ### D10. Verificación
 

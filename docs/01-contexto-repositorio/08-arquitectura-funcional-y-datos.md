@@ -15,7 +15,7 @@ La organización funcional que aparece con mayor consistencia es la siguiente:
 - Plan Maestro.
 - Plan semanal / 3WLA.
 - RDT.
-- PR.
+- Consolidado de servicio.
 - Dashboard.
 - RQ.
 - Notificaciones.
@@ -28,7 +28,7 @@ La organización funcional que aparece con mayor consistencia es la siguiente:
 4. Plan Maestro.
 5. Plan semanal / 3WLA.
 6. RDT.
-7. PR.
+7. Consolidado de servicio.
 8. Dashboard.
 
 La regla central documentada es que el sistema no debe mezclar:
@@ -61,14 +61,15 @@ Fuente del avance real y de los costos reales medidos.
 - Alimenta la ejecución real y validación del campo.
 - Los materiales sin control real no deben convertirse en costo real sin validación.
 
-### PR
-Consolidado técnico del proyecto.
+### Consolidado de servicio
+Reemplaza al antiguo PR (Victor, 2026-11-05). Absorbe lo contractual del DP y lo de campo de los RDT validados, y crea todas las métricas.
 - No es la fuente original del alcance ni del cronograma.
-- Sí es la capa de consolidación entre plan y real para análisis técnico.
+- Toda interfaz lee de él; ninguna calcula ni convierte unidades. Si un dato no existe, lo dice.
+- Detalle en [flujo 10](../04-flujos-de-negocio/10-consolidado-de-servicio.md).
 
 ### Dashboard
 Vista derivada.
-- Consume el PR y el historial.
+- Consume el Consolidado de servicio y el historial.
 - No es fuente de datos; es una representación ejecutiva del estado del proyecto.
 
 ### Paquetes de trabajo

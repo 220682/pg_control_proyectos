@@ -12,7 +12,7 @@ Este proyecto reúne la base conceptual, metodológica y operativa para gestiona
 - Plan Maestro,
 - Plan semanal / 3WLA,
 - RDT,
-- PR,
+- Consolidado de servicio,
 - dashboard ejecutivo.
 
 La diferencia central del sistema es que separa claramente:
@@ -71,7 +71,7 @@ El sistema se construye por capas y cada una tiene una responsabilidad distinta.
 4. El Plan Maestro genera el valor planificado por semana.
 5. El plan semanal/3WLA define el compromiso operativo de corto plazo.
 6. El RDT mide la ejecución real.
-7. El PR consolida plan y ejecución.
+7. El Consolidado de servicio reúne plan y ejecución, y todas las pantallas leen de él.
 8. El dashboard presenta la situación del proyecto de forma ejecutiva.
 
 ## Regla clave del negocio

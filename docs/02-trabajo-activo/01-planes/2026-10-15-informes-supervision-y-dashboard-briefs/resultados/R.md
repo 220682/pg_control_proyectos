@@ -46,7 +46,7 @@ Unas 30 llamadas.
 
 ## Fuentes de verdad revisadas
 
-No se editó ninguna. Pendientes de actualizar: flujos `10-generacion-pr.md` y `11-*` (Dashboard) con la cuenta del AC (R-H3).
+No se editó ninguna. Pendientes de actualizar: flujos `10-consolidado-de-servicio.md` y `11-*` (Dashboard) con la cuenta del AC (R-H3).
 
 ## R-fix (respuesta al hallazgo R-H1)
 

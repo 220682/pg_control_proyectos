@@ -29,7 +29,7 @@ Rama `local-worker-2`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/
 1. `src/app/(workspace)/proyectos/[id]/pr/page.tsx`, `src/lib/pr/evm.ts`, `src/lib/pr/acumulacion-rdt.ts` (`recalcularPr`).
 2. `db/007_pr.sql`, `db/060_pr_linea_base_dp.sql`, `db/096*` (forma de migración).
 3. `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/05-diseno-y-referencias/mockups/pr-subcontratos-medicion.html` (solo aspecto).
-4. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-generacion-pr.md` y `14-accesos-y-restricciones.md`.
+4. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-consolidado-de-servicio.md` y `14-accesos-y-restricciones.md`.
 
 **No leas** el plan completo ni otros flujos.
 

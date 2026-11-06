@@ -25,7 +25,7 @@ Rama `local-worker-3`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/
 
 1. `db/053_pr_motor_rdt.sql`, `db/054_catalogo_cnc.sql` (confirma cuál es la definición vigente de `guardar_rdt_parte` con `grep -ln "function public.guardar_rdt_parte" db/*.sql`), `db/070_curva_s_serie.sql`, `db/096*` (forma de migración).
 2. `src/lib/rdts/{parte,plantilla,tipos,borrador,consolidado,real-por-clave}.ts` y `src/app/api/rdts/partes/**`; pruebas existentes como `reposicionamiento-sql*.test.ts` (patrón de prueba de texto del SQL).
-3. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `06-rdt.md` y `10-generacion-pr.md`.
+3. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `06-rdt.md` y `10-consolidado-de-servicio.md`.
 
 **No leas** el plan completo ni otros flujos.
 

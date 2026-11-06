@@ -246,7 +246,7 @@ Victor pidió expresamente dejar escritas estas reglas. Según `docs/README.md` 
 - `20-plan-maestro.md`: el Plan Maestro define el PV del servicio desde el inicio y es requisito restrictivo para pasar a Ejecución.
 - `08-programa-portafolio-proyecto.md`: la transición a `EJECUCION` exige Plan Maestro aprobado.
 - `18-control-avance.md`: las reglas 9, 10 y 11 (solo costo directo, MOI horas sin costo, USD) y la aclaración de terminología C/NC vs MOI.
-- `10-generacion-pr.md`: hoy es un stub de dos líneas; pasa a describir el PR real de tres bloques.
+- `10-consolidado-de-servicio.md`: hoy es un stub de dos líneas; pasa a describir el PR real de tres bloques.
 - `14-accesos-y-restricciones.md`: registrar cualquier acceso nuevo.
 
 ### B8. Verificación
@@ -428,7 +428,7 @@ La versión vieja de `proyectos/[id]/pr/page.tsx` (una sola tabla de partidas + 
 - Plan Maestro define el PV y es restrictivo para pasar a Ejecución → aplicado en [docs/Flujos de trabajo/20-plan-maestro.md](../Flujos%20de%20trabajo/20-plan-maestro.md).
 - Transición a `EJECUCION` exige Plan Maestro aprobado → aplicado en [docs/Flujos de trabajo/08-programa-portafolio-proyecto.md](../Flujos%20de%20trabajo/08-programa-portafolio-proyecto.md).
 - Reglas de costo directo, MOI y USD → aplicado en [docs/Flujos de trabajo/18-control-avance.md](../Flujos%20de%20trabajo/18-control-avance.md).
-- PR de tres bloques (línea base, real, derivados EVM) → aplicado en [docs/Flujos de trabajo/10-generacion-pr.md](../Flujos%20de%20trabajo/10-generacion-pr.md).
+- PR de tres bloques (línea base, real, derivados EVM) → aplicado en [docs/Flujos de trabajo/10-consolidado-de-servicio.md](../Flujos%20de%20trabajo/10-consolidado-de-servicio.md).
 - Acceso nuevo (confirmar transición) → aplicado en [docs/Flujos de trabajo/14-accesos-y-restricciones.md](../Flujos%20de%20trabajo/14-accesos-y-restricciones.md).
 
 ## Resumen de checklist (migrado)

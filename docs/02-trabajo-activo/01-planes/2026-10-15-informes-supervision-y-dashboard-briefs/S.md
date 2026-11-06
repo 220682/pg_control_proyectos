@@ -20,7 +20,7 @@ Rama `local-worker-2`, worktree `D:/VICTOR/CLAUDE CODE/py_control_proyectos_web/
 ## Qué leer, y qué no
 
 1. `src/lib/dashboard/{cargar-dashboard,costo-recursos,dashboard}.ts` y su prueba, `dashboard/page.tsx`, `src/app/(workspace)/proyectos/[id]/pr/page.tsx`, `src/lib/pr/evm.ts` (solo leer), `db/102*` (para ver las columnas y la función).
-2. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-generacion-pr.md` y `11-*` (Dashboard).
+2. Flujos en `D:/VICTOR/CLAUDE CODE/pg_control_proyectos/docs/04-flujos-de-negocio/`: `10-consolidado-de-servicio.md` y `11-*` (Dashboard).
 
 **No leas** el plan completo ni otros flujos.
 

@@ -21,7 +21,7 @@ Cada flujo abre con una línea `Lee si:` que dice en qué situación hace falta.
 | 07 | Núcleo / auth | login, sesión con cookie, `NEXT_PUBLIC_SITE_URL`, cambio de la propia contraseña o del propio correo | [07-nucleo-auth.md](07-nucleo-auth.md) |
 | 08 | Programa / portafolio / proyecto | adjudicar, crear, archivar o eliminar contenedores | [08-programa-portafolio-proyecto.md](08-programa-portafolio-proyecto.md) |
 | 09 | Importar DP | importación, sus tres fases, confirmación de niveles, informes | [09-importar-dp.md](09-importar-dp.md) |
-| 10 | Generación PR | el PR, sus tres bloques, cuándo se recalcula, relación con Dashboard | [10-generacion-pr.md](10-generacion-pr.md) |
+| 10 | Consolidado de servicio | de dónde sale cada número del sistema (antes PR), sus bloques, cuándo se recalcula, relación con Dashboard | [10-consolidado-de-servicio.md](10-consolidado-de-servicio.md) |
 | 11 | Dashboard | los dos dashboards, filtros, indicadores, diagnóstico | [11-dashboard.md](11-dashboard.md) |
 | 12 | Checklist editable | catálogo definitivo, grupos de acción o los avisos «falta subir» y su cierre | [12-checklist.md](12-checklist.md) |
 | 13 | Orden de trabajo (OT) | la OT o su número. Hoy no hay UI | [13-orden-de-trabajo.md](13-orden-de-trabajo.md) |

@@ -382,7 +382,7 @@ Consulta única: aprobación en bloque de Victor del 2026-09-30 (sección anteri
 | `07-nucleo-auth.md` | No aplica | Revisado, sin acción | — |
 | `08-programa-portafolio-proyecto.md` | Aprobación en bloque (C31, C32, C33) | F7-C | [Ciclo de vida, borrado y transición](../../04-flujos-de-negocio/08-programa-portafolio-proyecto.md) |
 | `09-importar-dp.md` | Aprobación en bloque (V6) | F7-C | [Quién importa](../../04-flujos-de-negocio/09-importar-dp.md) |
-| `10-generacion-pr.md` | No aplica | Revisado, sin acción | — |
+| `10-consolidado-de-servicio.md` | No aplica | Revisado, sin acción | — |
 | `11-dashboard.md` | Aprobación en bloque (C19, C35) | F7-C | [Ubicación en la app](../../04-flujos-de-negocio/11-dashboard.md#ubicación-en-la-app) |
 | `12-checklist.md` | Aprobación en bloque (V6) | F7-C | [Quién edita](../../04-flujos-de-negocio/12-checklist.md) |
 | `13-orden-de-trabajo.md` | No aplica | F7-C2 (revisado, sin cambios) | [13](../../04-flujos-de-negocio/13-orden-de-trabajo.md): sin citas falsas |

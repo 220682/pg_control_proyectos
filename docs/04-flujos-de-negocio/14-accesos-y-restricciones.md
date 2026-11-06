@@ -40,7 +40,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 **Reglas decididas por Victor (2026-09-28):**
 
 1. **Interfaces sin datos económicos: las ven los 13 roles.**
-2. **Interfaces con datos económicos: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos, jefe de costos y supervisor operativo.** El **supervisor operativo** las **ve** (Victor, 2026-11-05) pero no arma la economía: armar valorizaciones y medir subcontratos siguen siendo de los otros cinco. Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴). Pero sí ve los precios del **Banco de cotizaciones**, que maneja con normalidad (nota ²⁹).
+2. **Interfaces con datos económicos: administrador, jefe de proyectos, jefe de oficina técnica, supervisor de costos, jefe de costos y supervisor operativo.** El **supervisor operativo** las **ve** (Victor, 2026-11-05) pero no arma la economía: armar valorizaciones sigue siendo de los otros cinco. Más dos excepciones acotadas a la herramienta de trabajo del rol: el **planner** ve el Plan Maestro y el **supervisor de oficina técnica** ve el DP. El supervisor de logística no ve el registro de costos; solo lo **sube** (ver tabla 2 y nota ²⁴). Pero sí ve los precios del **Banco de cotizaciones**, que maneja con normalidad (nota ²⁹).
 3. **Administrador y jefe de proyectos ven todas las interfaces**, las económicas incluidas.
 4. **Los recursos de empresa (catálogos) los ven todos los roles.**
 5. **El panel izquierdo del servicio lo ven los 13 roles** (flujo 16); lo que el rol no puede usar se muestra deshabilitado.
@@ -50,8 +50,7 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 | Dashboard del servicio — Parcial ¹ | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Dashboard del servicio — Completo ¹ | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Dashboard del portafolio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
-| PR (Reporte del proyecto) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
-| Reporte del proyecto: sección Subcontratos (elegir la forma de medir y ver el monto) ¹² | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| Consolidado de servicio | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | DP (Datos del proyecto), ver | Sí | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | — | — | — |
 | Curva S — avance físico (%) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Curva S — económica (USD) | Sí | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — |
@@ -133,9 +132,9 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Reasignar de paquete un RDT aún no validado ¹⁰ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
-| Rechazar un RDT ya validado (destraba para corregir, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
-| Eliminar RDT del Archivo de RDTs subidos (borrado definitivo, dispara recálculo del PR) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
-| Eliminar parte de RDT estructurado desde Status de RDTs (borrado definitivo; si estaba VALIDADO, recálculo del PR; deja foto en el historial) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Rechazar un RDT ya validado (destraba para corregir, dispara recálculo del Consolidado) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar RDT del Archivo de RDTs subidos (borrado definitivo, dispara recálculo del Consolidado) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Eliminar parte de RDT estructurado desde Status de RDTs (borrado definitivo; si estaba VALIDADO, recálculo del Consolidado; deja foto en el historial) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
 | Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
@@ -148,7 +147,6 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Emitir una versión nueva de un informe ajeno (del propio, quien lo creó) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Guardar «Mis formatos» (arreglos de bloques propios; los de Costos solo con economía) | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | — | — | — | — | — | No |
 | Tomar y subir foto de campo «para partidas» | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
-| Elegir la forma de medir y escribir el monto de un subcontrato en el Reporte del proyecto ¹² | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — | — | Sí |
 | **Restricciones** ¹⁷ | | | | | | | | | | | | | | |
 | Crear una restricción (pantalla Restricciones) | ✓ | — | — | — | — | — | — | ✓ | — | — | ✓ | — | — | Sí |
 | Crear una restricción desde el RDT (quien llena «restricciones» en una actividad; mismos roles que Crear RDT estructurado) | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | — | — | — | — | Sí |
@@ -225,7 +223,7 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 
 ¹¹ **Decididos por Victor el 2026-10-15 (plan Informes de supervisión y Dashboard; [flujo 22](22-informes-de-supervision.md)).** Los informes emitidos, el banco de fotos del día y las inasistencias los ven y usan los 13 roles dentro de los servicios que tienen asignados (`proyecto_miembros`; el administrador ve todos); el borrador de un informe lo ve solo su autor. Los informes sin dinero los crean, editan y emiten el administrador, el jefe de proyectos, el jefe de oficina técnica y el supervisor operativo (los mismos de «Crear RDT estructurado»); el formato **Costos** solo lo crean, emiten y ven los 5 roles con datos económicos (regla 2 de la tabla 1), y el servidor responde 403 al resto también por URL directa. Sin aprobación previa de la jefatura. La foto de campo (subir una foto) la toman solo los mismos 4 roles; el banco del día lo ven y usan los 13 (decidido por Victor el 2026-10-17, que cierra la contradicción que había entre esta nota, la fila y el código). Descargar un informe sigue a verlo; el Dashboard se descarga como se ve: el archivo Parcial no lleva dinero y el Completo solo sale para los 5 roles con economía y `tipo_dashboard` COMPLETO. Rutas nuevas: `api/proyectos/[id]/informes` (con su detalle, emitir, nueva versión, descargar y formatos propios), `api/proyectos/[id]/fotos-campo`, `api/inasistencias` (y `/pdf`), `api/proyectos/[id]/dashboard/descargar` y `api/proyectos/[id]/dashboard/recurso-partidas` (esta última, `puedeVerDashboard` más alcance, solo horas). **Pendiente de Victor: reflejar estas filas en el artefacto «Matriz de permisos»** (la lista exacta está en el resumen de cierre de la tanda M del plan).
 
-¹² **Decidido por Victor el 2026-10-15.** Cada subcontrato tiene dos formas de medir (por avance físico, o ingreso manual del monto acumulado); se elige y se escribe en el Reporte del proyecto, solo por los 5 roles con datos económicos con el servicio asignado ([flujo 10](10-generacion-pr.md)). **Editar servicio** no lleva fila nueva por esto: asignar el **supervisor operativo a cargo** (campo propio, uno por servicio) es parte de la fila existente; con el servicio en ejecución se puede cambiar pero no vaciar ([flujo 08](08-programa-portafolio-proyecto.md)). El registro de accesos suma `foto-campo` (acción, requiere servicio, `puedeTomarFotoCampo`) y el chip `informe-servicio` pasa a «Informes de supervisión» con `puedeVerInformes` ([flujo 16](16-paneles.md)).
+¹² **Retirado el 2026-11-05 (Victor):** la casilla para medir subcontratos ya no existe; el subcontrato se llena en Valorización y su costo real sale del avance o del registro de costos. El chip **Consolidado de servicio** (grupo Proyecto, antes inerte) reemplaza al antiguo chip del PR, con los mismos roles.
 
 ¹³ **Decidido por Victor el 2026-10-17** (pedido: «el chip de presupuesto también está muerto, hay que habilitarlo; solo yo puedo interactuar en ellos y los demás visualizar y descargar»). Las pantallas son `/proyectos/{id}/alcance` y `/proyectos/{id}/presupuesto`; muestran el archivo de la fila del mismo nombre del checklist (un archivo por servicio, cargar otro lo reemplaza). **Cargar, reemplazar y eliminar: solo el administrador**, con la OT a su alcance; el servidor lo comprueba en cada ruta. **Ver y descargar:** Alcance lo ven y descargan los 13 roles con el servicio a su alcance; el Presupuesto, **porque trae precios**, lo ven y descargan los roles que ven el DP (administrador, jefe de proyectos, jefe de oficina técnica, supervisor de oficina técnica, supervisor de costos y jefe de costos) — **interpretación de «los demás» pendiente de confirmar con Victor**: si quiere que los 13 roles descarguen el Presupuesto, se cambia `puedeVerPresupuestoServicio` y esta fila. La subida desde el checklist (nota 4) **convive** con la pantalla: el rol responsable puede seguir subiendo desde la fila del checklist, pero eliminar el archivo solo se hace en la pantalla, por el administrador. Eliminar quita el archivo y deja la fila sin archivo; la marca de completado no se toca.
 

@@ -30,7 +30,7 @@ Una pantalla por servicio (`/proyectos/{id}/valorizacion`, chip «Valorización�
 
 | Fuente | Regla |
 |---|---|
-| RDT | Metrado ejecutado de los RDT **validados**, actividades D, por el vínculo oficial `rdt_actividad_partidas` (lo mismo que el PR y la Curva S) |
+| RDT | Metrado ejecutado de los RDT **validados**, actividades D, por el vínculo oficial `rdt_actividad_partidas` (lo mismo que el Consolidado y la Curva S) |
 | Transversal | Partidas transversales del Plan Maestro **aprobado**: acumulado = metrado × p, con p = avance del resto del servicio al corte (declarado ÷ base, regla de `db/112`). No se cambia desde aquí |
 | Subc. % | Partida marcada «por subcontrato»: en cada valorización se escribe el % del contrato |
 | Subc. US$ | Partida marcada «por subcontrato»: en cada valorización se escribe el monto |

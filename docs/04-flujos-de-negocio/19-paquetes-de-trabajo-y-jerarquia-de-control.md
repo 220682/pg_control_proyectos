@@ -57,7 +57,7 @@ El paquete **agrupa vínculos actividad × partida**. El vínculo y su metrado s
 - La regla del 100 % por partida **se exige para crear el Plan Maestro** (flujo 20); en Paquetes solo se avisa, no bloquea guardar la declaración ni el paquete.
 
 Partida repartida entre paquetes
-**Una partida repartida entre varios paquetes es la regla general** (ya no una excepción «autorizada»): cada paquete toma una porción de su metrado, la pantalla muestra «250.00 de 420.00 (60 %) · repartida en 2 paquetes» y **la suma de las porciones debe llegar al 100 % del metrado contractual**. Las partidas que no van en ningún paquete son **partidas directas** (sin paquete), permitidas. La clave de reporte de cada línea es `paquete|DIRECTA : partida`, y el PR suma por partida (flujo 10).
+**Una partida repartida entre varios paquetes es la regla general** (ya no una excepción «autorizada»): cada paquete toma una porción de su metrado, la pantalla muestra «250.00 de 420.00 (60 %) · repartida en 2 paquetes» y **la suma de las porciones debe llegar al 100 % del metrado contractual**. Las partidas que no van en ningún paquete son **partidas directas** (sin paquete), permitidas. La clave de reporte de cada línea es `paquete|DIRECTA : partida`, y el Consolidado suma por partida (flujo 10).
 
 Crear paquete
 - Botón «Crear paquete» dentro de la pantalla de Paquetes (no es un chip nuevo); el acceso rápido «Crear paquete» abre la pantalla con `?accion=crear`, ya en modo crear (flujo 16).
@@ -75,13 +75,13 @@ Avance
 - **Por partida**: una partida suelta (directa, sin paquete) se declara con su propia unidad y metrado.
 - **Por paquete**: si la partida pertenece a un paquete, se elige el paquete y se escribe el metrado avanzado **del paquete, en la unidad de su partida guía**; el sistema calcula el % (`metrado avanzado / metrado de la guía`) y lo aplica a las demás partidas del paquete.
 
-Para mostrar un avance del paquete en el selector del RDT se usa el % de su guía. Una partida repartida en dos paquetes no es un caso especial: se declara por paquete y el sistema calcula las partidas; las porciones suman 100 % del metrado contractual y no hay regla adicional. Lo oficial es el **real por paquete × partida**, que se ve en el Plan Maestro (flujos 18 y 20); el real por partida (suma de todos sus paquetes) alimenta al PR. Solo RDT validados alimentan el avance oficial.
+Para mostrar un avance del paquete en el selector del RDT se usa el % de su guía. Una partida repartida en dos paquetes no es un caso especial: se declara por paquete y el sistema calcula las partidas; las porciones suman 100 % del metrado contractual y no hay regla adicional. Lo oficial es el **real por paquete × partida**, que se ve en el Plan Maestro (flujos 18 y 20); el real por partida (suma de todos sus paquetes) alimenta al Consolidado. Solo RDT validados alimentan el avance oficial.
 
 Reportabilidad
 La cadena de trazabilidad será:
 
 text
-Servicio → Paquete → Partida → Actividad → RDT validado → PR → Dashboard
+Servicio → Paquete → Partida → Actividad → RDT validado → Consolidado → Dashboard
 La partida sigue siendo la unidad base para presupuesto, valorización, avance validado, costo y auditoría. El paquete no se convierte en una nueva partida.
 
 ## Congelamiento con Plan Maestro aprobado (U3, Enmienda E1 2026-10-03)
@@ -100,7 +100,7 @@ Una **partida transversal** es la que ocurre durante todo el servicio (p. ej. mo
 - **Se marcan en la pantalla de Paquetes**, en el paso «Transversales» (junto a «Agrupar» y «Declarar»), con un interruptor por partida: **partida por partida, sin catálogo fijo**. Las marcan quienes ya gestionan paquetes: administrador, jefe de proyectos y planner. Se declaran **antes** de crear el Plan Maestro.
 - **No aparecen en las partidas del RDT** (flujo 06) ni llevan actividad, metrado o vínculo: la API rechaza vincularles actividades, y no se pueden marcar si son la **partida guía** de un paquete vigente (cambia primero la guía).
 - **Están exentas de la regla del 100 %** y de tener línea en el Plan Maestro (flujo 20): no se les reparte metrado.
-- Su avance, EV, PV, HH y costo real salen del **% físico del resto del servicio** (fórmulas en el [flujo 10](10-generacion-pr.md), «Partidas transversales»). Se ven en el PR, el Dashboard, la Curva S y los informes como filas calculadas de solo lectura.
+- Su avance, EV, PV, HH y costo real salen del **% físico del resto del servicio** (fórmulas en el [flujo 10](10-consolidado-de-servicio.md), «Partidas transversales»). Se ven en el Consolidado, el Dashboard, la Curva S y los informes como filas calculadas de solo lectura.
 - **Cambiarlas con el Plan Maestro aprobado** (excepción acotada al congelamiento de arriba): el cambio se prepara en el paso «Transversales» —solo **administrador y jefe de proyectos**, los que pueden crear una versión nueva— y **rige cuando se aprueba una versión nueva del Plan Maestro**, que parte de la vigente (flujo 20); el que está aprobado no cambia. Si ya hay un borrador armado con las transversales anteriores, hay que generar uno nuevo. Esto se aplica también a los servicios que ya existen.
 - Para marcarlas, el DP del servicio debe tener la **composición de mano de obra y equipo por partida**, que se guarda al importar el DP (flujo 09); un DP anterior se reimporta.
 - No se mezclan con las actividades C/NC: son cosas distintas.
@@ -157,9 +157,9 @@ Presupuesto / DP (con mapa de niveles)
 → Plan Maestro (lienzo)
 → Plan semanal / 3WLA
 → RDT validado
-→ PR
+→ Consolidado
 → Dashboard
-El cronograma debe continuar vinculándose contra DP/WBS y no contra PR. Si una partida tiene varias actividades, la relación debe conservarse a nivel de partida.
+El cronograma debe continuar vinculándose contra DP/WBS y no contra Consolidado. Si una partida tiene varias actividades, la relación debe conservarse a nivel de partida.
 
 Implementación en la app real
 La lógica de paquetes se implementa sobre la estructura existente del servicio y del presupuesto, no creando una segunda fuente de verdad. La partida del presupuesto sigue siendo la unidad contractual y técnica. El paquete es una capa agregadora y operativa.
@@ -226,4 +226,4 @@ Se mantienen las unidades originales.
 
 Se llega desde el paquete hasta la partida.
 
-Queda preparada la integración con el Plan Maestro, el RDT, el PR y el Dashboard.
+Queda preparada la integración con el Plan Maestro, el RDT, el Consolidado y el Dashboard.

@@ -1048,7 +1048,7 @@ Lista completa de documentos afectados o revisados, con su destino. Es la lista 
 | `07-nucleo-auth.md` | Ninguna | — | Revisado |
 | `08-programa-portafolio-proyecto.md` | C31, C32, C33 | Ciclo de vida, borrado y transición | Pendiente |
 | `09-importar-dp.md` | V6 | Línea con quién importa | Pendiente |
-| `10-generacion-pr.md` | Ninguna | — | Revisado |
+| `10-consolidado-de-servicio.md` | Ninguna | — | Revisado |
 | `11-dashboard.md` | C19, C35 | Ubicación del chip por panel; permiso del interruptor | Pendiente |
 | `12-checklist.md` | V6 | Línea con quién edita | Pendiente |
 | `13-orden-de-trabajo.md` | Ninguna | — | Revisado |

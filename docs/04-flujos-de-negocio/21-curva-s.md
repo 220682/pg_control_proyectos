@@ -13,10 +13,10 @@ en USD) y **avance físico** (%: PV/BAC y EV/BAC). Responde:
 ejecutado y lo realmente gastado — y en qué momento se separaron?
 ```
 
-No es una tabla de snapshots históricos ni un cálculo aparte del PR: es la
-misma cuenta que hace el PR (`pr_partidas.costo_real_acum`,
+No es una tabla de snapshots históricos ni un cálculo aparte del Consolidado: es la
+misma cuenta que hace el Consolidado (`pr_partidas.costo_real_acum`,
 `pr_partidas.metrado_acumulado`), cortada en cada fecha en vez de colapsada
-a un único total. No reemplaza el PR, el Dashboard ni `evm.ts` — los
+a un único total. No reemplaza el Consolidado, el Dashboard ni `evm.ts` — los
 reutiliza.
 
 ## Por qué existe pantalla propia (y no es el Bloque G del Dashboard)
@@ -26,7 +26,7 @@ El spec original del Dashboard Completo (`2026-08-16-dashboard-parcial-design.md
 alcance por dos razones que ya cayeron:
 
 1. Dependía del RDT, que en agosto "no capturaba nada" — el RDT ya alimenta
-   el PR desde [PR Fase 1 y 2](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-1-pipeline-rdt.md).
+   el Consolidado desde [PR Fase 1 y 2](../02-trabajo-activo/01-planes/2026-09-21-pr-fase-1-pipeline-rdt.md).
 2. Se creía que hacía falta una tabla de snapshots semanales, equivalente al
    `HISTORIAL` del Excel. **Ese supuesto quedó obsoleto**: el dato diario ya
    existe en las tablas de origen (Plan Maestro y RDT validado); no hace
@@ -54,13 +54,13 @@ vuelva cuadrática con proyectos grandes.
 
 **AC no filtra por partida vinculada, a propósito**: suma todas las horas
 (no-MOI) de partes validados, tengan o no vínculo a una partida vigente del
-DP — así el total cuadra exacto con el AC del PR
+DP — así el total cuadra exacto con el AC del Consolidado
 (`Σ pr_partidas.costo_real_acum + proyecto_pr.costo_legacy_sin_partida_acum + costo_materiales_acum + costo_subcontratos_acum`)
-sin sumar el balde legacy aparte. La Curva S calcula materiales y subcontratos en vivo con la función de la `db/102`; el PR los guarda al recalcular, por eso un PR anterior a la `102` se recalcula para que ambos coincidan. El EV sí exige el vínculo, porque sin él
+sin sumar el balde legacy aparte. La Curva S calcula materiales y subcontratos en vivo con la función de la `db/102`; el Consolidado los guarda al recalcular, por eso un Consolidado anterior a la `102` se recalcula para que ambos coincidan. El EV sí exige el vínculo, porque sin él
 no hay con qué partida calcular metrado × precio.
 
 **BAC del modo físico.** El % de avance físico divide PV y EV entre el BAC
-vigente = **`Σ pr_partidas.bac`** (misma base que el PR, §8). Se lee en el
+vigente = **`Σ pr_partidas.bac`** (misma base que el Consolidado, §8). Se lee en el
 servidor y **no se devuelve** en la respuesta de `modo=fisica` (contrato PD2,
 V02): el cuerpo físico solo lleva series en % y la brecha en puntos
 porcentuales, sin montos USD.
@@ -86,12 +86,12 @@ porcentuales, sin montos USD.
    con título (patrón "ver no es acceder", flujo 16).
 3. **Sin Plan Maestro aprobado no hay PV** (en los dos modos) — la pantalla lo
    dice explícitamente («Pendiente») y no dibuja una curva de PV inventada
-   (patrón "Pendiente" ya usado en PR/Dashboard).
+   (patrón "Pendiente" ya usado en Consolidado/Dashboard).
 4. Sin dependencias nuevas de gráficos: el gráfico es SVG a mano, igual
    criterio que la dona del Dashboard.
-5. **El AC suma todo lo que se gasta (Victor, 2026-10-15, regla de costo real del [flujo 10](10-generacion-pr.md)):** HH y HM con tarifa congelada (HH extra × 1,25; HM operativas más stand-by) **más materiales y subcontratos por avance físico, sin tope en 100 %**. Materiales = su presupuesto × avance físico (EV / BAC del día); subcontrato por avance físico = contractual × avance físico; subcontrato con ingreso manual = lo del avance físico hasta el día (Lima) de su último cambio y el monto ingresado desde ese día. Reemplaza la regla de septiembre («se miden por % de avance económico, nunca por costo capturado»). La pantalla lo dice en una nota fija.
+5. **El AC suma todo lo que se gasta (Victor, 2026-10-15, regla de costo real del [flujo 10](10-consolidado-de-servicio.md)):** HH y HM con tarifa congelada (HH extra × 1,25; HM operativas más stand-by) **más materiales y subcontratos por avance físico, sin tope en 100 %**. Materiales = su presupuesto × avance físico (EV / BAC del día); subcontrato por avance físico = contractual × avance físico; subcontrato con ingreso manual = lo del avance físico hasta el día (Lima) de su último cambio y el monto ingresado desde ese día. Reemplaza la regla de septiembre («se miden por % de avance económico, nunca por costo capturado»). La pantalla lo dice en una nota fija.
 6. Las HH de MOI no se valorizan (regla 10) — no entran al AC.
-6b. **Partidas transversales (Victor, 2026-10-19; `db/112`).** Con transversales en el Plan Maestro aprobado, `curva_s_proyecto` calcula el avance con el resto del servicio y escala: k = BAC total / BAC del resto. **EV y PV del total = los del resto × k**; el **AC** suma las HH/HM reales, más (mano de obra + equipo de las transversales) × EV del resto / BAC del resto, más materiales y subcontratos con el EV total. Sin transversales aprobadas, k = 1 y todo da igual que antes. La Curva S, el PR y el Dashboard cuadran entre sí.
+6b. **Partidas transversales (Victor, 2026-10-19; `db/112`).** Con transversales en el Plan Maestro aprobado, `curva_s_proyecto` calcula el avance con el resto del servicio y escala: k = BAC total / BAC del resto. **EV y PV del total = los del resto × k**; el **AC** suma las HH/HM reales, más (mano de obra + equipo de las transversales) × EV del resto / BAC del resto, más materiales y subcontratos con el EV total. Sin transversales aprobadas, k = 1 y todo da igual que antes. La Curva S, el Consolidado y el Dashboard cuadran entre sí.
 7. **La curva real (EV/AC) nunca se dibuja más allá de la fecha de corte.**
    El PV sí sigue hasta el fin del Plan Maestro aprobado. El hueco entre
    ambos es la lectura central del gráfico — extenderlos con ceros o una
@@ -100,7 +100,7 @@ porcentuales, sin montos USD.
    `metrado_contractual × precio_unitario` del DP actual). Si el DP se
    reimportó, la curva pasada se recalcula con la base nueva — es
    consistente con que solo existe una línea base vigente a la vez (mismo
-   criterio que el PR), no un histórico de BAC por fecha.
+   criterio que el Consolidado), no un histórico de BAC por fecha.
 9. **El modo físico lee el BAC del servidor** (`Σ pr_partidas.bac`, §8) para
    calcular PV/BAC y EV/BAC, y **no lo devuelve** en la respuesta de
    `modo=fisica`: el cuerpo físico no expone USD (contrato PD2/V02).
@@ -178,7 +178,7 @@ y no se mezcla con SPI.
 
 - Proyección / EAC dibujado hacia el futuro sobre la curva real.
 - Pareto de CNC, cierre semanal auditado y 3WLA.
-- El motor de RDT → PR y la pantalla del PR (`src/lib/pr/evm.ts` se importa,
+- El motor de RDT → Consolidado y la pantalla del Consolidado (`src/lib/pr/evm.ts` se importa,
   nunca se modifica).
 
 ## Archivos

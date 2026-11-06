@@ -15,7 +15,7 @@ Presupuesto / DP
 → Plan Maestro aprobado
 → 3WLA / Plan semanal
 → RDT validado
-→ PR
+→ Consolidado
 → Dashboard
 ```
 
@@ -82,7 +82,7 @@ Deben registrar:
 
 ### Ejecución real
 
-La ejecución real proviene de RDT validados. Cada registro debe alimentar la fecha, **paquete × partida** (o partida directa) del Plan Maestro aprobado, cantidad, HH, costo y evidencia correspondiente. **El real se declara contra paquete × partida**: por paquete × partida vive solo en el Plan Maestro y por partida (suma de sus paquetes) alimenta al PR (flujos 06, 10 y 20).
+La ejecución real proviene de RDT validados. Cada registro debe alimentar la fecha, **paquete × partida** (o partida directa) del Plan Maestro aprobado, cantidad, HH, costo y evidencia correspondiente. **El real se declara contra paquete × partida**: por paquete × partida vive solo en el Plan Maestro y por partida (suma de sus paquetes) alimenta al Consolidado (flujos 06, 10 y 20).
 
 Responde:
 
@@ -211,7 +211,7 @@ EV = avance físico real validado × BAC de la partida
 
 El EV no se obtiene simplemente del dinero gastado.
 
-**Partidas transversales (Victor, 2026-10-19).** Las que ocurren durante todo el servicio no se miden por RDT: su avance es el **% físico del resto del servicio** (sin las transversales), y su EV, PV, HH y costo real salen de ese % (reglas y fórmulas en [flujo 10](10-generacion-pr.md), «Partidas transversales»). **Sus HH no entran a las HH reales, ni a las HH ganadas, ni al IP** (Victor, 2026-10-21; se muestran aparte como «HH de transversales (informativas)»); su metrado sí suma al EV. No cuentan en la regla del 100 % del Plan Maestro ni se confunden con actividades C/NC.
+**Partidas transversales (Victor, 2026-10-19).** Las que ocurren durante todo el servicio no se miden por RDT: su avance es el **% físico del resto del servicio** (sin las transversales), y su EV, PV, HH y costo real salen de ese % (reglas y fórmulas en [flujo 10](10-consolidado-de-servicio.md), «Partidas transversales»). **Sus HH no entran a las HH reales, ni a las HH ganadas, ni al IP** (Victor, 2026-10-21; se muestran aparte como «HH de transversales (informativas)»); su metrado sí suma al EV. No cuentan en la regla del 100 % del Plan Maestro ni se confunden con actividades C/NC.
 
 ### Costo real
 
@@ -224,7 +224,7 @@ El AC proviene de costos validados de:
 
 Los materiales no medidos deben permanecer como estimación provisional y no confundirse con AC real.
 
-**Equipos sin partida (Victor, 2026-10-21).** El equipo no se asigna a una partida en el RDT: su costo suma al costo real del **servicio**, pero no se reparte por partida; el PR lo muestra como «Equipos (sin partida)» ([flujo 10](10-generacion-pr.md)). Los RDT históricos con WBS de equipo siguen repartidos por partida.
+**Equipos sin partida (Victor, 2026-10-21).** El equipo no se asigna a una partida en el RDT: su costo suma al costo real del **servicio**, pero no se reparte por partida; el Consolidado lo muestra como «Equipos (sin partida)» ([flujo 10](10-consolidado-de-servicio.md)). Los RDT históricos con WBS de equipo siguen repartidos por partida.
 
 ### HH restantes
 
@@ -298,7 +298,7 @@ PPC y SPI miden cosas diferentes y no deben mezclarse.
 8. El registro pasa a `Validado` o `Rechazado`.
 9. Solo un RDT validado alimenta las casillas `Real` del Plan Maestro.
 10. El sistema recalcula acumulados, avance físico, EV, HH reales, rendimiento, HH ganadas e IP.
-11. El PR recibe los datos consolidados.
+11. El Consolidado recibe los datos consolidados.
 12. El Dashboard actualiza sus indicadores.
 
 Estados:
@@ -337,11 +337,11 @@ PM-Rev-01 — línea base original.
 PM-Rev-02 — reprogramación aprobada.
 ```
 
-El PR debe poder comparar contra la línea base original y contra la revisión vigente.
+El Consolidado debe poder comparar contra la línea base original y contra la revisión vigente.
 
-## Relación con PR y Dashboard
+## Relación con Consolidado y Dashboard
 
-El PR es el consolidado técnico. Debe poder consultar:
+El Consolidado es el consolidado técnico. Debe poder consultar:
 
 ```text
 Servicio
@@ -351,7 +351,7 @@ Servicio
 → Día / semana
 ```
 
-El PR trabaja **por partida**: el paquete vive solo en el Plan Maestro y el real de sus partidas se suma por partida (flujos 10 y 20); el PR y el Dashboard no consumen datos de paquete. El área y el frente **ya no forman parte de la ruta**: salieron de los datos del paquete (flujo 19). La disciplina la hereda la partida de su paquete, o la define la propia partida directa en el Plan Maestro (flujo 20).
+El Consolidado trabaja **por partida**: el paquete vive solo en el Plan Maestro y el real de sus partidas se suma por partida (flujos 10 y 20); el Consolidado y el Dashboard no consumen datos de paquete. El área y el frente **ya no forman parte de la ruta**: salieron de los datos del paquete (flujo 19). La disciplina la hereda la partida de su paquete, o la define la propia partida directa en el Plan Maestro (flujo 20).
 
 El Dashboard es una vista derivada y debe mostrar:
 
@@ -371,7 +371,7 @@ El Dashboard es una vista derivada y debe mostrar:
 3. No usar 3WLA para modificar el PV automáticamente.
 4. No mezclar unidades físicas incompatibles.
 5. No mezclar avance semanal con acumulado.
-6. No usar PR como fuente original del alcance.
+6. No usar Consolidado como fuente original del alcance.
 7. No convertir un paquete en una partida contractual.
 8. No tratar materiales estimados como AC real.
 9. Mantener historial de revisiones y correcciones.
@@ -382,7 +382,7 @@ El Dashboard es una vista derivada y debe mostrar:
     1. **Directo primero:** una fila de mano de obra del costo directo, en HH (su tarifa) o en MES (tarifa = precio ÷ 208 h).
     2. **Indirecto** solo si no hay fila directa y el cargo figura en gastos generales **con horas**; una fila de gastos generales sin horas no cuenta.
     3. Si no está en ninguno, queda **sin resolver** y se pide su fila o equivalencia.
-    Si un cargo aparece en los dos lados del DP, gana el directo. El consolidado de RDTs agrupa con la misma regla. Los RDT ya validados guardan la clasificación de su validación; el administrador los reclasifica de una vez con la ruta `POST /api/admin/rdts/reclasificar-hh` (con `?aplicar=1` escribe), que recalcula el PR. Así se reclasificaron Tecnet (PS-167) y Jahuay (PS-131) el 2026-11-05, con las equivalencias SUPERVISOR OPERATIVO = INGENIERO OPERATIVO / INGENIERO SUPERVISOR DE CAMPO y SUPERVISOR SSOMA = INGENIERO DE SEGURIDAD. En Jahuay quedaban además 46 registros de cargos sin fila en su DP (sus horas no sumaban costo); se emparejaron por la categoría de construcción civil: operario mecánico, operario civil, mecánico, operador de línea amarilla y topógrafo = OPERARIO, y ayudante = PEÓN. **Ningún cargo de un RDT validado queda sin tarifa:** si aparece uno, se declara su equivalencia en el DP del servicio antes de cerrar el periodo.
+    Si un cargo aparece en los dos lados del DP, gana el directo. El consolidado de RDTs agrupa con la misma regla. Los RDT ya validados guardan la clasificación de su validación; el administrador los reclasifica de una vez con la ruta `POST /api/admin/rdts/reclasificar-hh` (con `?aplicar=1` escribe), que recalcula el Consolidado. Así se reclasificaron Tecnet (PS-167) y Jahuay (PS-131) el 2026-11-05, con las equivalencias SUPERVISOR OPERATIVO = INGENIERO OPERATIVO / INGENIERO SUPERVISOR DE CAMPO y SUPERVISOR SSOMA = INGENIERO DE SEGURIDAD. En Jahuay quedaban además 46 registros de cargos sin fila en su DP (sus horas no sumaban costo); se emparejaron por la categoría de construcción civil: operario mecánico, operario civil, mecánico, operador de línea amarilla y topógrafo = OPERARIO, y ayudante = PEÓN. **Ningún cargo de un RDT validado queda sin tarifa:** si aparece uno, se declara su equivalencia en el DP del servicio antes de cerrar el periodo.
 13. **Todo el sistema trabaja en USD.** No hay multi-moneda.
 
 ### Terminología — dos cosas distintas que NO se deben confundir

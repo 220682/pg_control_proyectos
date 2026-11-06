@@ -1,6 +1,6 @@
 # Consolidado como fuente única
 
-Fecha: 2026-11-05. Estado: `Implementando` (código y documentos publicados; falta correr la corrección de los datos guardados de los servicios).
+Fecha: 2026-11-05. Estado: `Implementando` (código, documentos y datos de los 4 servicios corregidos; falta la revisión de Victor y las decisiones de Pendientes).
 
 Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu criterio… Lista. Continúa. Y Termínalo». No siguió el flujo con Orquestador ni tuvo Gates.
 
@@ -29,13 +29,14 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 - [x] Candado `frontera.test.ts`.
 - [x] Flujos 6, 9, 10, 11, 12, 14, 16, 20, arquitectura, AGENTS y README.
 - [x] Segunda orden de Victor: recursos = presupuesto con líneas de ajuste, cargo en los dos lados es directo, equipos en HM con tarifa convertida, verificación automática con detalle por día, gastos generales y utilidad por defecto en Valorización.
-- [ ] **Corregir los datos guardados de los 4 servicios** y el nombre del ítem del checklist. La escritura en la base la bloqueó el control de permisos de la sesión; la simulación da exacto (ver Evidencia). Ver Pendientes.
+- [x] Datos guardados de los 4 servicios y nombre del ítem del checklist: corregidos. Victor corrió `aplicar-cuadre.ts` el 2026-11-05, porque el control de permisos de la sesión bloqueó esa escritura.
 - [ ] Actualizar la Matriz de permisos (artefacto no accesible desde esta cuenta).
 
 ## Evidencia
 
 - Pruebas: 2,696 pasan, 1 omitida; tipos y build limpios.
 - Causa de PS-131 (leída del Excel): presupuesto 263,778.08 y APU 264,345.14, diferencia 567.07. En la partida 02.02 el precio es 10.20 y su APU 9.2243 (+487.87); en la 03.01.01 el precio es 2.72 y su APU 10.2036 (−1,058.55); la 4.02 da +0.31 y el redondeo del resto +3.31.
+- Después de corregir los datos, en local con datos reales y solo lectura: las 9 comprobaciones están correctas en PS-108, PS-131, PS-140 y PS-167, y Valorización da 416,760.93; 320,003.41; 73,597.84 y 50,921.27 sin IGV.
 - Simulación con el lector nuevo: recursos = presupuesto en los 4 servicios (322,877.39; 61,331.54; 39,930.56; 263,778.08) y costo directo + gastos generales + utilidad = monto del presupuesto (416,760.93; 73,597.84; 50,921.27; 320,003.41).
 - Verificación vista en local con datos reales de PS-108 y PS-131: las 5 comparaciones por día cuadran; las de presupuesto fallan hasta correr la corrección, como se esperaba.
 - Simulación de HH por partida (partidas = DP): PS-108 5,054.12; PS-140 1,616.65; PS-167 1,570.50; PS-131 9,005.54; ninguna partida faltante ni metrado distinto.
@@ -45,7 +46,6 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 
 ## Pendientes
 
-1. Correr la corrección de datos y checklist (`D:\VICTOR\RESPALDOS\consolidado-2026-11-05\aplicar-cuadre.ts`, argumento `aplicar`, desde la carpeta de la app; reemplaza a `aplicar-hh-dp.ts`). Hasta entonces la Verificación y el DP muestran «no cuadra» en PS-108, PS-131, PS-140 y PS-167. Respaldo en la misma carpeta.
 2. Victor actualiza la Matriz de permisos (chip Consolidado de servicio, sin chip PR, sin medir subcontratos).
 3. PS-131: revisar si los precios de 02.02 y 03.01.01 del Excel son correctos; el APU de 03.01.01 da 10.20, que es el precio escrito en 02.02. No cambia el cuadre.
 4. PS-108: 6 h de RETROEXCAVADORA en RDT validados no tienen fila en el presupuesto y siguen sin tarifa.

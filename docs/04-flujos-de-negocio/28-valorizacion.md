@@ -48,6 +48,8 @@ En las dos de subcontrato la tabla muestra solo metrado y parcial US$, igual que
 
 Cada uno se fija por servicio en **porcentaje** (sobre el costo directo de cada columna; se guarda con hasta 6 decimales y se muestra con 2) o en **monto**. En monto, el del presupuesto base va en la configuración y el de cada valorización se escribe al agregarla o editarla.
 
+**Por defecto, tal cual el presupuesto (Victor, 2026-11-05):** al importar el presupuesto, sus gastos generales y su utilidad quedan aquí como porcentaje, para que costo directo + gastos generales + utilidad den el monto del presupuesto en la columna contractual. Cada valorización los toma sola con ese porcentaje sobre su costo directo; no hay que calcular nada. Para cambiarlo en todas se edita la configuración. Para cambiarlo en **una sola** se escribe su monto al agregarla o editarla: ese monto manda solo en ella y, si se deja vacío, vuelve al porcentaje.
+
 El combustible **no es fijo** (no siempre se da): se agrega como **campo adicional** con nombre libre (p. ej. «Combustible (reembolsable)»), hasta 10 por servicio. Un campo adicional solo aparece al pie si se agregó, entre GG y utilidad.
 
 ## Exportar

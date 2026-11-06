@@ -27,6 +27,8 @@ Un candado automático (`src/lib/consolidado/frontera.test.ts`) hace fallar las 
 
 **Cargos y equipos:** tabla con una sola fila por cargo o equipo (por nombre normalizado: `PEON` y `PEON.` son uno), en HH o HM ya convertidas; un cargo que viene en HH y en MES a la vez no duplica sus horas acumuladas (`src/lib/consolidado/recursos.ts`).
 
+**Verificación automática (Victor, 2026-11-05: «que el sistema verifique que todo esté correcto»):** nadie comprueba a mano. La pantalla muestra sección por sección si: los recursos suman el presupuesto; las HH de partidas y de cargos coinciden; HM × tarifa da el costo de los equipos; la **suma por día** de los RDT validados da los mismos acumulados en HH directas, HH indirectas, HM, metrado y costo de personal y equipos; y el servicio tiene gastos generales y utilidad en Valorización. Trae el **detalle por día** desplegable. Las partidas transversales no entran en la suma por día porque se miden con su propio cálculo. Al validar un RDT se corre sola y, si algo no cuadra, avisa a administrador y jefe de proyectos (evento `consolidado.sin_verificar`). No corrige ni bloquea nada. Código: `src/lib/consolidado/verificacion.ts` y `verificacion-servidor.ts`.
+
 ## Qué es el Consolidado
 
 El Consolidado es la tabla que consolida todo lo que alimenta al Dashboard: una sola fila por partida (`pr_partidas`), más una cabecera por proyecto (`proyecto_pr`). No es la fuente original del alcance ni del cronograma — es la capa de consolidación entre plan y real.

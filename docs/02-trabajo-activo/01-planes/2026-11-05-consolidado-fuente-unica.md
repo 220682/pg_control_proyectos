@@ -14,7 +14,7 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 
 | Repositorio | Commit | Estado |
 |---|---|---|
-| `py_control_proyectos_web` | `a002c49` y `16d46e7` | en `main`, desplegados |
+| `py_control_proyectos_web` | `a002c49`, `16d46e7` y `ba190f7` | en `main`, desplegados |
 | `pg_control_proyectos` | este commit | en `main` |
 
 ## Avance
@@ -28,6 +28,9 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 - [x] Matriz «Consolidado RDTs» solo con RDT validados.
 - [x] Candado `frontera.test.ts`.
 - [x] Flujos 6, 9, 10, 11, 12, 14, 16, 20, arquitectura, AGENTS y README.
+- [x] Crear RDT solo con equipos del presupuesto con tarifa, validado en servidor (`ba190f7`).
+- [x] PS-131: `4.02` corregido a `04.02` en el Excel base y en el sistema, a mano por orden de Victor.
+- [x] Aviso en la Revisión del DP para un código al que le falta el cero.
 - [x] Segunda orden de Victor: recursos = presupuesto con líneas de ajuste, cargo en los dos lados es directo, equipos en HM con tarifa convertida, verificación automática con detalle por día, gastos generales y utilidad por defecto en Valorización.
 - [x] Datos guardados de los 4 servicios y nombre del ítem del checklist: corregidos. Victor corrió `aplicar-cuadre.ts` el 2026-11-05, porque el control de permisos de la sesión bloqueó esa escritura.
 - [ ] Actualizar la Matriz de permisos (artefacto no accesible desde esta cuenta).
@@ -42,14 +45,16 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 - Simulación de HH por partida (partidas = DP): PS-108 5,054.12; PS-140 1,616.65; PS-167 1,570.50; PS-131 9,005.54; ninguna partida faltante ni metrado distinto.
 - HH reales, tres fuentes iguales: PS-108 1,010; PS-131 1,030; PS-140 0; PS-167 850.
 - Revisión local con datos reales, sin contraseñas y solo lectura: Consolidado, DP, Dashboard, redirección de `/pr`, catálogo de cargos y matriz de RDT (MOD 1,010 de 5,054.12).
+- Corrección del código en PS-131: el Excel da los mismos totales antes y después (recursos 263,778.08; 29 partidas iguales salvo el código); en la base quedaron 0 filas con `4.02`; Valorización ya no abre «Título 4». Respaldo en `D:\VICTOR\RESPALDOS\wbs-ps131-2026-11-05\`.
+- Después del cambio, en local con datos reales: 9 de 9 comprobaciones correctas en los 4 servicios y Valorización sin cambios (416,760.93; 320,003.41; 73,597.84; 50,921.27).
+- Equipos en Crear RDT: PS-108 22, PS-131 20, PS-140 9 y PS-167 13; en PS-108 ya no aparece RETROEXCAVADORA, sí MARTILLO NEUMATICO P/ RETROEXCAVADORA. El catálogo no envía precios al navegador. El rechazo en servidor se probó con pruebas automáticas, no contra producción.
 - No se revisó en producción con sesión iniciada.
 
 ## Pendientes
 
 2. Victor actualiza la Matriz de permisos (chip Consolidado de servicio, sin chip PR, sin medir subcontratos).
-3. PS-131: revisar si los precios de 02.02 y 03.01.01 del Excel son correctos; el APU de 03.01.01 da 10.20, que es el precio escrito en 02.02. No cambia el cuadre.
-4. PS-108: 6 h de RETROEXCAVADORA en RDT validados no tienen fila en el presupuesto y siguen sin tarifa.
-5. PS-131: el WBS `4.02` del Excel debería ser `04.02`; por eso Valorización abre un «Título 4» aparte.
+3. PS-108: 6 h de RETROEXCAVADORA en RDT validados no tienen fila en el presupuesto y siguen sin tarifa. Desde ahora no puede volver a pasar; esas horas quedan como están salvo que Victor decida otra cosa.
+4. PS-131: la copia del Excel guardada en el almacén de la app sigue con `4.02`, porque las claves del almacén no están en este equipo. No se usa para calcular nada; se reemplaza cuando Victor vuelva a cargar el Excel.
 
 ## Mejoras (de trabajo)
 
@@ -59,7 +64,7 @@ Lote de trabajo tradicional por orden directa de Victor: «Arréglalo a tu crite
 
 ## Reglas de negocio acordadas en esta tarea
 
-Integradas en los flujos 6, 9, 10, 11, 14, 18, 20, 28: líneas de ajuste de cuadre; tarifa ponderada; cargo en los dos lados es directo; tarifa de equipos convertida a HM; verificación automática; gastos generales y utilidad por defecto en Valorización; DP → Consolidado ← RDT; ninguna interfaz calcula; 1 MES = 208 HH solo en el DP; equipos MES = 208 HM y día = 8 HM; RDT sin creación de cargos; la matriz de RDT muestra solo validados; subcontrato sin casilla manual; sin paquetes nuevos.
+Integradas en los flujos 6, 9, 10, 11, 14, 18, 20, 28: manda el precio de la partida, no el APU; equipos del RDT solo del presupuesto con tarifa; aviso de código escrito distinto; líneas de ajuste de cuadre; tarifa ponderada; cargo en los dos lados es directo; tarifa de equipos convertida a HM; verificación automática; gastos generales y utilidad por defecto en Valorización; DP → Consolidado ← RDT; ninguna interfaz calcula; 1 MES = 208 HH solo en el DP; equipos MES = 208 HM y día = 8 HM; RDT sin creación de cargos; la matriz de RDT muestra solo validados; subcontrato sin casilla manual; sin paquetes nuevos.
 
 ## Observaciones sobre la política
 

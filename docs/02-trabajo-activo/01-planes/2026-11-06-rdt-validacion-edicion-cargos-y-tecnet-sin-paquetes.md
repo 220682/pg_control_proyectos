@@ -1,6 +1,6 @@
 # RDT: validación opcional, editar validados, cargos del presupuesto y Tecnet sin paquetes
 
-Fecha: 2026-11-06. Estado: `Implementando` (código en `main`; falta que Victor aplique db/138, revise en producción y actualice la Matriz de permisos).
+Fecha: 2026-11-06. Estado: `Implementando` (código en `main` y verificado en producción; db/138 aplicada por Victor; falta que Victor actualice la Matriz de permisos y revise).
 
 Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con Orquestador ni tuvo Gates.
 
@@ -8,7 +8,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 
 - **Resultado esperado:** (a) un cargo no sale dos veces con nombres parecidos en el RDT; (b) el informe y el Dashboard dan el mismo avance; (c) cada servicio elige si sus RDT necesitan validación; (d) un RDT validado se puede editar; (e) Tecnet (PS-167) deja de trabajar por paquetes.
 - **Alcance:** Crear RDT y Status de RDTs, bloque «Avance por nivel» de los informes, Plan Maestro (versión «Sin paquetes»), flujos 06, 14, 20 y 22.
-- **No alcance:** borrar la fila repetida de Aquino en el RDT de PS-108 del 05-11 (Victor no lo autorizó); renombrar los cargos antiguos ya guardados en RDT y plantillas; los 14 RDT validados de Tecnet se quedan como están (Victor).
+- **No alcance:** los 14 RDT validados de Tecnet se quedan como están (Victor).
 
 ## Repositorios
 
@@ -28,6 +28,9 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - [x] Plan Maestro: versión «Sin paquetes»; al aprobarla se archivan los paquetes sin uso; cada línea hereda la disciplina de su paquete.
 - [x] Tecnet PS-167: versión 4 «Sin paquetes» creada y aprobada (desde la app local, contra la base real).
 - [x] Flujos 06, 14, 20 y 22 actualizados.
+- [x] Victor aplicó db/138 (todos los servicios en «Sí»). Verificado en producción: interruptor activo y lápiz en Status de RDTs; informe ID-2 con «Total del servicio» 8.76 % y una sola fila de INGENIERO DE CALIDAD.
+- [x] Por orden de Victor: borrada la fila repetida de Aquino (RDT de PS-108 del 05-11, la del nombre antiguo, 10 h MOI), con su foto en el historial del RDT (acción CORRECCION y motivo).
+- [x] Cargos antiguos pasados al nombre del presupuesto con la misma función del servidor: 174 filas de RDT (PS-108 y PS-131), las 3 plantillas de RDT que existen (de todos los usuarios) y 0 borradores. Consolidado recalculado en los dos servicios: solo cambió lo esperado (HH indirectas de PS-108 de 620 a 610; metrado, HH directas y costo iguales). Revisión final de todos los RDT: 0 personas repetidas y 0 cargos fuera del presupuesto en PS-108, PS-131 y PS-167. Respaldo previo en el equipo local (carpeta temporal de la sesión; no se sube al repositorio porque lleva nombres y DNI).
 
 ## Evidencia
 
@@ -37,12 +40,9 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 
 ## Pendientes
 
-1. Victor aplica `D:\VICTOR\CLAUDE CODE\py_control_proyectos_web\db\138_rdt_requiere_validacion.sql` (sin ella el interruptor sale deshabilitado y todo RDT necesita validación).
-2. Victor actualiza la Matriz de permisos con las dos filas nuevas del flujo 14.
-3. Fila repetida de Aquino en el RDT de PS-108 del 05-11: Victor la corrige con «editar RDT validado» o autoriza borrarla.
-4. Decidir si se renombran a nombre del presupuesto los cargos antiguos ya guardados en RDT y plantillas (con respaldo).
-5. Título del bloque del informe `PS-108-2026-ID-2`: dice «Avance por nivelñ» (ya estaba así guardado; no se tocó).
-6. Victor revisa en producción.
+1. Victor actualiza la Matriz de permisos con las dos filas nuevas del flujo 14.
+2. Título del bloque del informe `PS-108-2026-ID-2`: dice «Avance por nivelñ» (ya estaba así guardado; lo corrige Victor si quiere).
+3. Victor revisa en producción.
 
 ## Mejoras (de trabajo)
 

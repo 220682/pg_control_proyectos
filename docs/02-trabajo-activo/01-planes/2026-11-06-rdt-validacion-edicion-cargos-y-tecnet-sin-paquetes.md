@@ -14,7 +14,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 
 | Repositorio | Commit | Estado |
 |---|---|---|
-| `py_control_proyectos_web` | `0739b8e`, `6760750` | en `main` (Vercel) |
+| `py_control_proyectos_web` | `0739b8e`, `6760750`, `f25cf50` | en `main` (Vercel) |
 | `pg_control_proyectos` | este commit | flujos 06, 14, 20, 22 y este plan |
 
 ## Avance
@@ -31,9 +31,11 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - [x] Victor aplicó db/138 (todos los servicios en «Sí»). Verificado en producción: interruptor activo y lápiz en Status de RDTs; informe ID-2 con «Total del servicio» 8.76 % y una sola fila de INGENIERO DE CALIDAD.
 - [x] Por orden de Victor: borrada la fila repetida de Aquino (RDT de PS-108 del 05-11, la del nombre antiguo, 10 h MOI), con su foto en el historial del RDT (acción CORRECCION y motivo).
 - [x] Cargos antiguos pasados al nombre del presupuesto con la misma función del servidor: 174 filas de RDT (PS-108 y PS-131), las 3 plantillas de RDT que existen (de todos los usuarios) y 0 borradores. Consolidado recalculado en los dos servicios: solo cambió lo esperado (HH indirectas de PS-108 de 620 a 610; metrado, HH directas y costo iguales). Revisión final de todos los RDT: 0 personas repetidas y 0 cargos fuera del presupuesto en PS-108, PS-131 y PS-167. Respaldo previo en el equipo local (carpeta temporal de la sesión; no se sube al repositorio porque lleva nombres y DNI).
+- [x] **Tanda 3 (Victor, 2026-11-06):** «Avance por nivel» completo cortado por subpresupuesto (cada trozo con su encabezado, entero en la hoja; tope de 32 filas cortando en un nivel), en vista previa y PDF; botón «Elegir de la galería o de WhatsApp» en el selector de la caja (Victor aclaró que basta elegir la foto desde la carpeta de WhatsApp del celular, sin traer los grupos al sistema); filas y alto de las cajas de fotos editables en el celular; emojis fuera del PDF. Flujo 22 actualizado. Sin cambio de permisos (la Matriz no cambia por esta tanda).
 
 ## Evidencia
 
+- Tanda 3: tipos y lint limpios, 2722 pruebas pasan; vista previa (1366 px) y PDF de `PS-108-2026-ID-2` en «Metrado completo»: 5 hojas, cada subpresupuesto con su encabezado y ninguno partido a media hoja; el modo del bloque se devolvió a «Metrado por subpresupuesto». Selector a 390 px: el botón abre el explorador de archivos (no se subió foto de prueba para no dejar registros en la base real).
 - Tipos limpios; 2716 pruebas pasan (una corrida tuvo 2 fallos intermitentes que no se repitieron); lint sin errores nuevos (los 8 que salen son de archivos no tocados).
 - Pantalla (Playwright, 1366 px): Status de RDTs con el interruptor (deshabilitado hasta db/138) y el lápiz en filas validadas; informe `PS-108-2026-ID-2` con «Metrado por subpresupuesto» (1: 8.76 %, 2: 0.29 %, 3: 0.00 %, 4: 55.69 %, total 8.76 %; coincide con el Consolidado) y «Metrado completo» con niveles en negrita. El modo del bloque se devolvió a como estaba.
 - Tecnet: v4 con 58 líneas, 0 de paquete, 9 partidas; PV por partida y fecha igual a v3 (215 combinaciones, 0 diferencias); Consolidado igual antes y después; 14 RDT reposicionados; 8 paquetes archivados; el catálogo del RDT lista las 9 partidas directas con el acumulado del Consolidado.

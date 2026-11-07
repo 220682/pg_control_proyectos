@@ -26,6 +26,8 @@ El instrumento editable es el artefacto **«Matriz de permisos»** (https://clau
 
 **Actualización 2026-10-18 (plan Notificaciones estándar y supervisor operativo, tanda T8):** la tabla 2 suma «Devolver un RQ» y «Corregir y reenviar un RQ Devuelto» (nota 15) y reemplaza «Editar perfil extendido (propio)» por tres acciones del perfil propio para los 13 roles: «Editar mi celular», «Cambiar mi correo» y «Cambiar mi contraseña» (nota 14). **Corrige lo decidido el 2026-09-28**, cuando solo el administrador y el jefe de proyectos editaban su perfil y el jefe de oficina técnica dejaba de editarlo; la nueva decisión es de Victor (2026-10-17). La sección «Notificaciones» precisa cuándo hace falta tener el servicio a cargo (no para «Entorno»). Ninguna otra decisión aprobada cambia. **El artefacto «Matriz de permisos» no se pudo abrir desde la cuenta de Claude Code** (verificado el 2026-10-18: «artifact not found»): lo actualiza Victor con la lista de filas del resumen de la tanda T8B del plan.
 
+**Actualización 2026-11-06 (RDT y Plan Maestro, pedido de Victor):** la tabla 2 suma «Editar un RDT validado» y «Cambiar si los RDT del servicio necesitan validación», las dos solo de administrador y jefe de proyectos (`puedeEditarRdtValidado` y `puedeConfigurarValidacionRdt`), y «Crear una versión nueva del Plan Maestro» admite la opción «Sin paquetes». No hay interfaz ni chip nuevo: el interruptor y el lápiz viven en Status de RDTs. **Pendiente: Victor actualiza la Matriz de permisos** (esta cuenta no puede abrir el artefacto).
+
 **Regla:** toda interfaz, acción, permiso o acceso nuevo, modificado o eliminado actualiza el artefacto y este flujo en la misma tarea (política de coherencia y trazabilidad, `docs/01-contexto-repositorio/02-arquitectura-y-fuentes-de-verdad.md`). Si un Spec o plan entra en conflicto con esta matriz, la implementación abarca todos los flujos afectados (flujo 16 y los que la citen) y se consulta a Victor antes de editarlos.
 
 ## Cómo leer las tablas
@@ -133,12 +135,14 @@ Las acciones son crear, editar, subir, validar o borrar. La visibilidad de las i
 | Validar / rechazar RDT | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | Sí |
 | Corregir RDT rechazado | ✓ | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | Sí |
 | Rechazar un RDT ya validado (destraba para corregir, dispara recálculo del Consolidado) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Editar un RDT validado (lápiz en Status de RDTs; motivo obligatorio; sigue validado y recalcula el Consolidado; 2026-11-06) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Cambiar si los RDT del servicio necesitan validación (interruptor en Status de RDTs; por defecto «Sí»; lo ven quienes ven RDT; 2026-11-06) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar RDT del Archivo de RDTs subidos (borrado definitivo, dispara recálculo del Consolidado) | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Eliminar parte de RDT estructurado desde Status de RDTs (borrado definitivo; si estaba VALIDADO, recálculo del Consolidado; deja foto en el historial) | ✓ | — | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | **Planificación** | | | | | | | | | | | | | | |
 | Subir / reemplazar cronograma ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Gestionar Plan Maestro (programar en el lienzo, crear = aprobar la primera versión y aprobar el borrador que reemplaza una versión aprobada) ⁸ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
-| Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; solo crear el borrador, aprobarlo es «Gestionar Plan Maestro») ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
+| Crear una versión nueva del Plan Maestro (con una aprobada vigente; motivo obligatorio; puede ser «Sin paquetes (todas las partidas)», 2026-11-06; solo crear el borrador, aprobarlo es «Gestionar Plan Maestro») ⁹ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | — | — | Sí |
 | Gestionar paquetes de trabajo (crear, editar, mover partidas, archivar, declarar vínculos con metrado y hitos; la disciplina es obligatoria) | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | Declarar partidas transversales (paso «Transversales» de Paquetes; con Plan Maestro aprobado solo administrador y jefe de proyectos) ¹⁶ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — | — | — | Sí |
 | **Informes de supervisión y Dashboard** ¹¹ | | | | | | | | | | | | | | |

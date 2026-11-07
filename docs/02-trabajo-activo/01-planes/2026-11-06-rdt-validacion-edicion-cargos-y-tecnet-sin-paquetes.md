@@ -14,8 +14,8 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 
 | Repositorio | Commit | Estado |
 |---|---|---|
-| `py_control_proyectos_web` | `0739b8e`, `6760750`, `f25cf50` | en `main` (Vercel) |
-| `pg_control_proyectos` | este commit | flujos 06, 14, 20, 22 y este plan |
+| `py_control_proyectos_web` | `0739b8e`, `6760750`, `f25cf50`, `dacd550` | en `main` (Vercel) |
+| `pg_control_proyectos` | `d513467`, `1ecfad5`, `ceb3d57` y este commit | flujos 06, 14, 20, 22, 26 y este plan |
 
 ## Avance
 
@@ -32,9 +32,11 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - [x] Por orden de Victor: borrada la fila repetida de Aquino (RDT de PS-108 del 05-11, la del nombre antiguo, 10 h MOI), con su foto en el historial del RDT (acción CORRECCION y motivo).
 - [x] Cargos antiguos pasados al nombre del presupuesto con la misma función del servidor: 174 filas de RDT (PS-108 y PS-131), las 3 plantillas de RDT que existen (de todos los usuarios) y 0 borradores. Consolidado recalculado en los dos servicios: solo cambió lo esperado (HH indirectas de PS-108 de 620 a 610; metrado, HH directas y costo iguales). Revisión final de todos los RDT: 0 personas repetidas y 0 cargos fuera del presupuesto en PS-108, PS-131 y PS-167. Respaldo previo en el equipo local (carpeta temporal de la sesión; no se sube al repositorio porque lleva nombres y DNI).
 - [x] **Tanda 3 (Victor, 2026-11-06):** «Avance por nivel» completo cortado por subpresupuesto (cada trozo con su encabezado, entero en la hoja; tope de 32 filas cortando en un nivel), en vista previa y PDF; botón «Elegir de la galería o de WhatsApp» en el selector de la caja (Victor aclaró que basta elegir la foto desde la carpeta de WhatsApp del celular, sin traer los grupos al sistema); filas y alto de las cajas de fotos editables en el celular; emojis fuera del PDF. Flujo 22 actualizado. Sin cambio de permisos (la Matriz no cambia por esta tanda).
+- [x] **Tanda 4 (Victor, 2026-11-06):** «Elegir de un chat de WhatsApp» en el selector de la caja: grupos y contactos con fotos del último mes, fotos por día, la elegida entra al banco y a la caja. Visor local `scripts/whatsapp/visor_fotos.py` (solo 127.0.0.1 y solo responde a la app) e instalador `instalar-visor.ps1`. Flujos 22 y 26 actualizados. Sin cambio de permisos (usa el de subir foto).
 
 ## Evidencia
 
+- Tanda 4: tipos y lint limpios, 2726 pruebas de la app y 15 del script de WhatsApp pasan. Con los datos reales: 70 chats con fotos del último mes (29 grupos); en la app local se abrió «Villa Fase 2», el día más reciente mostró sus 31 fotos con hora y autor, y al elegir una quedó en la caja 1 («Figura N°01») y en el banco. Esa foto de prueba se quitó de la caja y se borró (registro y archivo) con la misma app; el informe quedó como estaba.
 - Tanda 3: tipos y lint limpios, 2722 pruebas pasan; vista previa (1366 px) y PDF de `PS-108-2026-ID-2` en «Metrado completo»: 5 hojas, cada subpresupuesto con su encabezado y ninguno partido a media hoja; el modo del bloque se devolvió a «Metrado por subpresupuesto». Selector a 390 px: el botón abre el explorador de archivos (no se subió foto de prueba para no dejar registros en la base real).
 - Tipos limpios; 2716 pruebas pasan (una corrida tuvo 2 fallos intermitentes que no se repitieron); lint sin errores nuevos (los 8 que salen son de archivos no tocados).
 - Pantalla (Playwright, 1366 px): Status de RDTs con el interruptor (deshabilitado hasta db/138) y el lápiz en filas validadas; informe `PS-108-2026-ID-2` con «Metrado por subpresupuesto» (1: 8.76 %, 2: 0.29 %, 3: 0.00 %, 4: 55.69 %, total 8.76 %; coincide con el Consolidado) y «Metrado completo» con niveles en negrita. El modo del bloque se devolvió a como estaba.
@@ -45,8 +47,12 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 1. Victor actualiza la Matriz de permisos con las dos filas nuevas del flujo 14.
 2. Título del bloque del informe `PS-108-2026-ID-2`: dice «Avance por nivelñ» (ya estaba así guardado; lo corrige Victor si quiere).
 3. Victor revisa en producción.
+4. Victor corre una vez `scripts/whatsapp/instalar-visor.ps1` (enciende el visor de fotos con el puente al entrar a Windows y cada hora si se cayó). El agente no pudo hacerlo: cambiar lo que arranca con Windows quedó bloqueado por seguridad.
 
 ## Mejoras (de trabajo)
+
+- Con mensajes dictados por voz que no se entienden del todo, mirar primero la captura que manda Victor (qué pantalla y qué equipo) antes de construir: la primera lectura («la galería del celular») no era lo que pedía (sus chats de WhatsApp en la PC).
+- Lo que arranca con Windows (accesos de Inicio, scripts que corren al iniciar) no lo cambia el agente: se entrega un instalador en la app y Victor lo corre.
 
 - Antes de aprobar un Plan Maestro desde la app, guardar el PV por partida y fecha y el Consolidado, y compararlos después: así se demuestra que la versión nueva no cambió nada que no debía.
 

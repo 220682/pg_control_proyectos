@@ -1,5 +1,5 @@
 # 26 — Fuente-WhatsApp
-> Lee si: la tarea toca el apartado «Fuente-WhatsApp» (el grupo de WhatsApp del servicio, la conversación por día con sus integrantes, el resumen diario, los contactos por celular), el panel de **Notas** de Restricciones-Notas y su vigencia, el origen «WhatsApp» de una restricción con su emisor, o el script local que envía el grupo a la app.
+> Lee si: la tarea toca el apartado «Fuente-WhatsApp» (el grupo de WhatsApp del servicio, la conversación por día con sus integrantes, el resumen diario, los contactos por celular), el panel de **Notas** de Restricciones-Notas y su vigencia, el origen «WhatsApp» de una restricción con su emisor, el script local que envía el grupo a la app, o el visor local que muestra las fotos de cualquier chat para las cajas del informe.
 
 Origen: plan [Fuente-WhatsApp](../02-trabajo-activo/01-planes/2026-10-25-fuente-whatsapp.md) (pedido de Victor el 2026-10-25; paso 2 de la reestructuración Fuentes / Gestión documentaria). Hermana de [Fuente-Gmail](23-estado-del-servicio.md) y de Fuente-Drive (pendiente). Quién puede cada acción: tablas 1 y 2 del [flujo 14](14-accesos-y-restricciones.md), nota 23; la lista de pantallas, en el [flujo 16](16-paneles.md). **Estado (2026-11-05): rediseñada y publicada; ya no se clasifican mensajes (ver «La conversación del día»). Grupo «Villa Fase 2» con 643 mensajes del 22/10 al 05/11. Falta la copia de archivos a R2.**
 
@@ -16,6 +16,15 @@ Teléfono de Victor → **puente de WhatsApp** en su PC (`mcp_whatsapp`, vincula
 * **Idempotente:** cada mensaje se guarda una sola vez (por su id en WhatsApp). La misma información repetida por el mismo emisor en el mismo minuto entra ya **descartada**. Un fallo a medio envío se reintenta sin duplicar.
 * **Envío automático:** una tarea de Windows en el PC de Victor ejecuta el script **cada hora** (Victor, 2026-11-05: «cada hora, no menos»; antes cada 10 minutos) (solo con la sesión de Windows abierta y el puente corriendo); el secreto, el último mensaje enviado y el registro viven en una carpeta privada del PC, fuera de los repositorios.
 * **Riesgos asumidos:** el puente usa una conexión **no oficial**; el teléfono debe abrir WhatsApp al menos cada ~14 días; el PC debe estar encendido para recibir. **El puente debe estar corriendo:** el 2026-11-05 se halló apagado desde el 03/11 (no arranca solo al reiniciar el PC) y se volvió a encender; la pantalla muestra el «último envío del PC» para notarlo. Para que arranque solo al entrar a Windows hay un acceso directo en la carpeta Inicio que corre `iniciar-puente.ps1` (carpeta privada del PC); si el puente ya corre, no abre otro.
+
+## Fotos de cualquier chat para el informe (visor local)
+
+Pedido de Victor (2026-11-06): «al colocar desde WhatsApp, que me muestre los chats de WhatsApp y elegir una foto de algún grupo o de algún contacto». Es distinto del ingreso del grupo del servicio: **no sube chats a la app**.
+
+* **Visor local** (`scripts/whatsapp/visor_fotos.py` de la app): corre en la PC donde está enlazado el puente y lee su base **en solo lectura**. Lista los chats —**grupos y contactos**— con fotos del **último mes**, las fotos de cada chat (con quién la mandó, su texto y su hora) y entrega cada foto descifrada.
+* **Privacidad:** escucha solo en `127.0.0.1:8765` (no se alcanza desde otra máquina) y **solo responde a la app** (el dominio estable de producción y la app local en el puerto 3100); cualquier otra página web recibe «origen no permitido». Al sistema solo llega **la foto que el usuario elige**, subida por su propio navegador como una foto de la galería.
+* **Límites reales:** funciona **solo en esa PC** (en el celular se usa la galería, donde WhatsApp guarda las fotos en «WhatsApp Images»); WhatsApp borra de sus servidores las fotos de más de unas **3 semanas** (el visor las muestra como «Ya no está en WhatsApp»); solo aparecen las fotos que llegaron mientras el puente estaba corriendo.
+* **Encendido:** `iniciar-puente.ps1` enciende el puente y el visor al entrar a Windows, y la tarea de cada hora (`enviar.ps1`) lo vuelve a llamar por si alguno se cayó (el 2026-11-06 el puente no arrancó porque al encender la PC aún no había internet). Lo instala Victor con `scripts/whatsapp/instalar-visor.ps1`; el agente no cambia por su cuenta lo que arranca con Windows.
 
 ## La conversación del día
 

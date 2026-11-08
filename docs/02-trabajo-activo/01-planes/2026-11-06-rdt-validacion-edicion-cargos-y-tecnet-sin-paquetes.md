@@ -53,11 +53,13 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 3. Victor revisa en producción.
 4. Victor corre una vez `scripts/whatsapp/instalar-visor.ps1` (enciende el visor de fotos con el puente al entrar a Windows y cada hora si se cayó). El agente no pudo hacerlo: cambiar lo que arranca con Windows quedó bloqueado por seguridad.
 5. En los RDT de Tecnet se reporta el avance de 1.1, 1.2 y 4.1 (ya no se calcula solo): hasta entonces su avance ganado es 0.
-6. Victor vuelve a conectar Gmail en la app nueva (Gestión de interesados) y avisa al equipo la dirección nueva (correo redactado, a 9 personas, espera su «envíalo»).
+6. Victor vuelve a conectar Gmail en la app nueva (Gestión de interesados). El correo al equipo con la dirección nueva (redactado, 9 personas sin las cuentas de Victor ni las de prueba) queda en pausa por decisión de Victor (2026-11-08) hasta que diga «envíalo».
 7. Aprobar una versión del Plan Maestro no recalcula el Dashboard de inmediato (Tecnet mostró los valores de antes de la v5 hasta que se validó un RDT): revisar si al aprobar se debe recalcular el Consolidado.
 8. ~~Braulio Huamán Díaz no aparecía en la lista de personal del RDT~~ — estaba desactivado en Recursos › Personal (la app no guarda quién ni cuándo). Por orden de Victor (2026-11-08) se activaron Braulio (cargo SUPERVISOR OPERATIVO), Ciro Calachihua y Cayo Gutiérrez Juan Wilfredo; Abran Castro sigue desactivado (ya no trabaja). Verificado: los tres salen en la lista del formulario.
 
 ## Mejoras (de trabajo)
+
+Trasladadas el 2026-11-08 a [`03-aprendizaje-continuo/2026-11-08-cambio-a-cloud-run-y-aprendizajes-del-plan-rdt.md`](../../03-aprendizaje-continuo/2026-11-08-cambio-a-cloud-run-y-aprendizajes-del-plan-rdt.md).
 
 - Con mensajes dictados por voz que no se entienden del todo, mirar primero la captura que manda Victor (qué pantalla y qué equipo) antes de construir: la primera lectura («la galería del celular») no era lo que pedía (sus chats de WhatsApp en la PC).
 - Lo que arranca con Windows (accesos de Inicio, scripts que corren al iniciar) no lo cambia el agente: se entrega un instalador en la app y Victor lo corre.
@@ -68,7 +70,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 
 ## Reglas de negocio acordadas en esta tarea
 
-Integradas en los flujos: validación opcional por servicio y edición de RDT validado (06, 14), cargo con nombre del presupuesto y persona no repetida (06), versión «Sin paquetes» del Plan Maestro (20, 14), «Avance por nivel» en cuatro opciones con total del servicio (22).
+Integradas en los flujos: dónde vive la app y sus direcciones (07), validación opcional por servicio y edición de RDT validado (06, 14), cargo con nombre del presupuesto y persona no repetida (06), versión «Sin paquetes» del Plan Maestro (20, 14), «Avance por nivel» en cuatro opciones con total del servicio (22).
 
 ## Observaciones sobre la política
 

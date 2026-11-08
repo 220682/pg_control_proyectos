@@ -34,6 +34,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - [x] **Tanda 3 (Victor, 2026-11-06):** «Avance por nivel» completo cortado por subpresupuesto (cada trozo con su encabezado, entero en la hoja; tope de 32 filas cortando en un nivel), en vista previa y PDF; botón «Elegir de la galería o de WhatsApp» en el selector de la caja (Victor aclaró que basta elegir la foto desde la carpeta de WhatsApp del celular, sin traer los grupos al sistema); filas y alto de las cajas de fotos editables en el celular; emojis fuera del PDF. Flujo 22 actualizado. Sin cambio de permisos (la Matriz no cambia por esta tanda).
 - [x] **Tecnet sin transversales (Victor, 2026-11-07: «todas las partidas normales, no quiero nada de eso»):** la v4 había dejado 1.1 Movilización, 1.2 Seguridad y señalización y 4.1 Supervisión como transversales. Desde la app local contra la base real: marcas quitadas; cada una ligada a su actividad del cronograma (2, 3 y 17) con su metrado contractual; versión 5 «Sin paquetes» creada y aprobada con las 12 partidas normales; su programación repartida por igual en los días de trabajo (lunes a sábado) de su actividad (1.1: 2 viajes el 19 y 2 el 20/10; 1.2 y 4.1 en los 30 días del servicio); disciplina Preliminares (1.1, 1.2) y Civil (4.1).
 - [x] **Tanda 4 (Victor, 2026-11-06):** «Elegir de un chat de WhatsApp» en el selector de la caja: grupos y contactos con fotos del último mes, fotos por día, la elegida entra al banco y a la caja. Visor local `scripts/whatsapp/visor_fotos.py` (solo 127.0.0.1 y solo responde a la app) e instalador `instalar-visor.ps1`. Flujos 22 y 26 actualizados. Sin cambio de permisos (usa el de subir foto).
+- [x] **Cambio de proveedor a Google Cloud Run (Victor, 2026-11-07: Vercel gratis pausó la app por consumo; «no voy a pagar»):** imagen Docker de la app y script `scripts/despliegue/publicar-cloud-run.ps1` (proyecto `control-proyectos-promcoser`, us-east1, 0 a 3 instancias, alerta de gasto de 4 soles). Dirección nueva: https://control-proyectos-917220987246.us-east1.run.app. Claves nuevas de Cloudflare (solo el almacén `controldeproyectos`) y de Gmail (segundo secreto del cliente «Estado del servicio» y su dirección de retorno); Site URL y direcciones permitidas de Supabase Auth; lectura de correos (GitHub) y visor de fotos apuntan a la dirección nueva. Flujo 07 actualizado.
 
 ## Evidencia
 
@@ -43,6 +44,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - Tipos limpios; 2716 pruebas pasan (una corrida tuvo 2 fallos intermitentes que no se repitieron); lint sin errores nuevos (los 8 que salen son de archivos no tocados).
 - Pantalla (Playwright, 1366 px): Status de RDTs con el interruptor (deshabilitado hasta db/138) y el lápiz en filas validadas; informe `PS-108-2026-ID-2` con «Metrado por subpresupuesto» (1: 8.76 %, 2: 0.29 %, 3: 0.00 %, 4: 55.69 %, total 8.76 %; coincide con el Consolidado) y «Metrado completo» con niveles en negrita. El modo del bloque se devolvió a como estaba.
 - Tecnet: v4 con 58 líneas, 0 de paquete, 9 partidas; PV por partida y fecha igual a v3 (215 combinaciones, 0 diferencias); Consolidado igual antes y después; 14 RDT reposicionados; 8 paquetes archivados; el catálogo del RDT lista las 9 partidas directas con el acumulado del Consolidado.
+- Cloud Run (2026-11-08): la app responde, sin errores en los registros; Cloudflare probado (subir y borrar un archivo). Prueba completa en la app publicada, en Tecnet PS-167 con el 04-11: RDT creado desde el formulario (borrador → enviar, 8 personas, 80 HH, partida 2.3), validado en Status de RDTs, visto en el Dashboard (HH reales 850 → 930) y en un informe diario nuevo (2 actividades 0.34 y 3.50 ml, 8 personas, 80 HH). Después se borraron el informe, el RDT, su borrador y sus 3 avisos: el Dashboard volvió a HH 177 / 850, EV 5,400.70 y AC 12,227.12, igual a la Curva S tras la v5 (antes de la prueba el Dashboard aún mostraba 7,582.46 y 14,357.91: no se había recalculado al aprobar la v5; la validación lo recalculó).
 
 ## Pendientes
 
@@ -51,6 +53,9 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 3. Victor revisa en producción.
 4. Victor corre una vez `scripts/whatsapp/instalar-visor.ps1` (enciende el visor de fotos con el puente al entrar a Windows y cada hora si se cayó). El agente no pudo hacerlo: cambiar lo que arranca con Windows quedó bloqueado por seguridad.
 5. En los RDT de Tecnet se reporta el avance de 1.1, 1.2 y 4.1 (ya no se calcula solo): hasta entonces su avance ganado es 0.
+6. Victor vuelve a conectar Gmail en la app nueva (Gestión de interesados) y avisa al equipo la dirección nueva (correo redactado, a 9 personas, espera su «envíalo»).
+7. Aprobar una versión del Plan Maestro no recalcula el Dashboard de inmediato (Tecnet mostró los valores de antes de la v5 hasta que se validó un RDT): revisar si al aprobar se debe recalcular el Consolidado.
+8. Braulio Huamán Díaz (supervisor operativo de Tecnet) no aparece en la lista de personal del formulario del RDT.
 
 ## Mejoras (de trabajo)
 
@@ -58,6 +63,8 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 - Lo que arranca con Windows (accesos de Inicio, scripts que corren al iniciar) no lo cambia el agente: se entrega un instalador en la app y Victor lo corre.
 
 - Antes de aprobar un Plan Maestro desde la app, guardar el PV por partida y fecha y el Consolidado, y compararlos después: así se demuestra que la versión nueva no cambió nada que no debía.
+- Vercel no entrega sus variables secretas (salen como «[SENSITIVE]»): al cambiar de proveedor, las claves se sacan nuevas en cada servicio (Cloudflare, Google) y se guardan solo en el equipo de Victor, fuera de los repositorios.
+- Al publicar desde la carpeta de la app, excluir `.worktrees/`: con ella la subida pesaba 192 MB y 33 mil archivos y se trababa.
 
 ## Reglas de negocio acordadas en esta tarea
 

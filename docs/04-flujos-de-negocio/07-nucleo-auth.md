@@ -2,7 +2,9 @@
 > Lee si: la tarea toca el login por correo/contraseña, la sesión con cookie, `NEXT_PUBLIC_SITE_URL`, o el cambio de la propia contraseña o del propio correo.
 
 
-Login correo/contraseña, sesión cookie, `NEXT_PUBLIC_SITE_URL` en Vercel. Spec `2026-08-15-nucleo`.
+Login correo/contraseña, sesión cookie, `NEXT_PUBLIC_SITE_URL`. Spec `2026-08-15-nucleo`.
+
+**Dónde vive la app (Victor, 2026-11-07).** Desde el 2026-11-07 la app se publica en Google Cloud Run: https://control-proyectos-917220987246.us-east1.run.app (Vercel gratis la pausó por consumo y Victor no quiso pagar el plan). Se publica con `scripts/despliegue/publicar-cloud-run.ps1` de la app; un push a `main` ya no publica. `NEXT_PUBLIC_SITE_URL`, la Site URL de Supabase Auth (con `…run.app/**` entre las direcciones permitidas, para invitaciones y cambio de correo) y la dirección de retorno de Gmail apuntan a esa dirección.
 
 ## Cambio de la propia contraseña y del propio correo (Victor, 2026-10-17)
 

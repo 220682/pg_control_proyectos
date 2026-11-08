@@ -55,7 +55,7 @@ Lote de trabajo tradicional por orden directa de Victor. No siguió el flujo con
 5. En los RDT de Tecnet se reporta el avance de 1.1, 1.2 y 4.1 (ya no se calcula solo): hasta entonces su avance ganado es 0.
 6. Victor vuelve a conectar Gmail en la app nueva (Gestión de interesados) y avisa al equipo la dirección nueva (correo redactado, a 9 personas, espera su «envíalo»).
 7. Aprobar una versión del Plan Maestro no recalcula el Dashboard de inmediato (Tecnet mostró los valores de antes de la v5 hasta que se validó un RDT): revisar si al aprobar se debe recalcular el Consolidado.
-8. Braulio Huamán Díaz (supervisor operativo de Tecnet) no aparece en la lista de personal del formulario del RDT.
+8. ~~Braulio Huamán Díaz no aparecía en la lista de personal del RDT~~ — estaba desactivado en Recursos › Personal (la app no guarda quién ni cuándo). Por orden de Victor (2026-11-08) se activaron Braulio (cargo SUPERVISOR OPERATIVO), Ciro Calachihua y Cayo Gutiérrez Juan Wilfredo; Abran Castro sigue desactivado (ya no trabaja). Verificado: los tres salen en la lista del formulario.
 
 ## Mejoras (de trabajo)
 

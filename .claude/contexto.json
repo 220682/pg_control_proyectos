@@ -1,0 +1,8 @@
+{
+  "slug": "pg_control_proyectos",
+  "nombre": "pg_control_proyectos",
+  "indices": ["AGENTS.md", "docs/README.md", "docs/04-flujos-de-negocio/README.md"],
+  "pendientes": [{"archivo": "docs/02-trabajo-activo/01-planes", "patron": "\\s*- \\[ \\]", "modo": "contar"}],
+  "rag": {"incluir": ["AGENTS.md", "README.md", "docs/0[0-1]*/**/*.md", "docs/0[3-6]*/**/*.md", "docs/02-trabajo-activo/*.md", "docs/02-trabajo-activo/01-planes/**/*.md", ".claude/skills/**/*.md"]},
+  "nota": "Reglas de negocio van al flujo de docs/04-flujos-de-negocio/, nunca a nota aparte. La app real es py_control_proyectos_web. No borrar archivos sin OK."
+}

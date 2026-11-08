@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -X utf8 \"D:/VICTOR/CLAUDE CODE/victor_brain/_herramientas/hooks/contexto_inicio.py\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -I -X utf8 \"D:/VICTOR/CLAUDE CODE/victor_brain/_herramientas/hooks/nudge_aprendizaje.py\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

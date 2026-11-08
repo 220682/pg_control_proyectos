@@ -1,5 +1,12 @@
 # AGENTS.md
 
+## Cerebro y protocolo común
+- Cerebro: `D:\VICTOR\CLAUDE CODE\victor_brain`. Ficha de este repo: `proyectos/pg_control_proyectos/contexto.md`.
+- Protocolo de entrada, lectura y guardado: `victor_brain/_comun/AGENTE-VIAJERO.md` (el hook de inicio lo resume).
+- Memoria buscable (Qdrant, MCP `qdrant`): el hook de cada mensaje ya trae lo relacionado; para buscar más, `qdrant-find`. Los archivos `.md` son el original: nada se guarda solo en Qdrant.
+- Skills comunes (a nivel usuario): `guardar-aprendizaje`, `cerebro-mantener`, `cerebro-conectar-repo`, `plan-con-orquestador`. En este repo manda su propio flujo de Orquestador (abajo).
+- Tabla de destinos de este repo: reglas de negocio → flujo de `docs/04-flujos-de-negocio/`; mejoras de trabajo → `docs/03-aprendizaje-continuo/`; tareas → `docs/02-trabajo-activo/01-planes/`; lo que sirve a otros repos → cerebro `conocimiento/` o `aprendizajes/`.
+
 ## Propósito y alcance
 
 Este repositorio funciona como fuente documental y arquitectónica del sistema de control de proyectos. No es la aplicación web de producción; aquí se guarda la lógica de negocio, los flujos, los formatos, las decisiones de diseño y la documentación que luego se materializa en la app real.
